@@ -10,4 +10,5 @@
 
 export const environment = {
   production: false,
+  apiUrl: "http://13.235.71.124:8080/"
 };
