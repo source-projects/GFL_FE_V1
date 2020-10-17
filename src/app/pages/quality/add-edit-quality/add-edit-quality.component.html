@@ -1,29 +1,49 @@
 <nb-card>
-    <nb-card-header style="font-size: medium;"><b>Add Quality</b></nb-card-header>
+    <nb-card-header style="font-size: medium;"><h2>Add Quality</h2></nb-card-header>
     <nb-card-body>
-        <form [formGroup]="addQualityForm">
+        <form [formGroup]="addQualityForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label class="required">Quality ID:</label>
-                <input type="text" class="form-control" id="qualityId" formControlName="qualityId">
+                <input type="number" class="form-control" id="qualityId" formControlName="qualityId" placeholder="Enter Quality ID" required>
             </div>
             <div class="form-group">
                 <label class="required">Quality Name:</label>
-                <input type="text"  class="form-control" id="qualityName" formControlName="qualityName">
+                <input type="text"  class="form-control" id="qualityName" formControlName="qualityName" placeholder="Enter Quality Name">
             </div>
             <div class="form-group" >
                 <label class="required">Quality Type:</label>
-                <select id="qualityType" formControlName=""  class="form-control">
-                    <option>Fabric</option>
-                    <option>Yarn</option>
+                <select id="qualityType" formControlName="qualityType"  class="form-control">
+                    <option disabled>Select QualityType</option>
+                    <option value="Fabric">Fabric</option>
+                    <option value="Yarn">Yarn</option>
+                </select>
+            </div>
+            <div class="form-group" >
+                <label class="required">Quality Sub-Type:</label>
+                <select id="qualitySubType" formControlName="qualitySubType"  class="form-control">
+                    <option disabled>Select Sub QualityType</option>
+                    <option value="SUB-Fabric">SUB-Fabric</option>
+                    <option value="SUB-Yarn">SUB-Yarn</option>
+                </select>
+            </div> 
+            <div class="form-group" >
+                <label class="required">Party Name:</label>
+                <select  name="party" id="partyName" formControlName="partyName" #partyName class="form-control">
+                    <option disabled>Select Party Name</option>
+                    <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="required">Wt / 100 mtrs:</label>
-                <input type="number" id="wtPer100m" formControlName="wtPer100m"  class="form-control">
+                <label>Wt / 100 mtrs:</label>
+                <input type="number" id="wtPer100m" formControlName="wtPer100m"  class="form-control" placeholder="Wt Per 100m">
             </div>
             <div class="form-group">
-                <label class="required">Remark:</label>
-                <input type="text" id="remark" formControlName="remark"  class="form-control">
+                <label>Remark:</label>
+                <input type="text" id="remark" formControlName="remark"  class="form-control input-sm" placeholder="Enter Remark">
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-sm" value="Add Quality">&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary btn-sm" routerLink="/pages/quality">Cancel</button>
             </div>
         </form>
     </nb-card-body>

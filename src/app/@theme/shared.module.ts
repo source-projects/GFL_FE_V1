@@ -19,7 +19,7 @@ import {
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
-import { FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -41,6 +41,7 @@ const NB_MODULES = [
   NbRadioModule,
   NbDatepickerModule,
   ngFormsModule,
+  FormsModule,
   ReactiveFormsModule
 ];
 
