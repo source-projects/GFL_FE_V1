@@ -19,6 +19,21 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
+      path: 'party',
+      loadChildren: () => import('./party/party.module')
+        .then(m => m.PartyModule),
+    },
+    {
+      path: 'quality',
+      loadChildren: () => import('./quality/quality.module')
+        .then(m => m.QualityModule),
+    },
+    {
+      path: 'supplier',
+      loadChildren: () => import('./supplier/supplier.module')
+        .then(m => m.SupplierModule),
+    },
+    {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
         .then(m => m.FormsModule),

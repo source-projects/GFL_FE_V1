@@ -7,6 +7,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { PartyModule } from './party/party.module';
+import { QualityModule } from './quality/quality.module';
+import { SupplierModule } from './supplier/supplier.module';
 
 @NgModule({
   imports: [
@@ -15,6 +18,9 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
     NbMenuModule,
     DashboardModule,
     ECommerceModule,
+    PartyModule,
+    QualityModule,
+    SupplierModule,
     MiscellaneousModule,
   ],
   declarations: [
