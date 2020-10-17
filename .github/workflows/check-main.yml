@@ -1,0 +1,36 @@
+name: PR to main notification
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  message-to-slack-about-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install dependencies and create a build
+        run: |
+          npm install
+          npm run build
+        
+#       - name: message to slack
+#         run: |
+#           curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: ${{ github.actor }} made a pr to master"}' https://hooks.slack.com/services/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
+          
+      - name: slack the message for success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build success - ${{ github.actor }} made a pr to master"}' https://hooks.slack.com/services/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
+      
+      - name: slack the message for faliure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }}'s  pr to master"}' https://hooks.slack.com/services/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
+          
+          
