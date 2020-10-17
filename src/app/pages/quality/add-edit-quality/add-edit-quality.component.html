@@ -1,1 +1,30 @@
-<p>add-edit-quality works!</p>
+<nb-card>
+    <nb-card-header style="font-size: medium;"><b>Add Quality</b></nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="addQualityForm">
+            <div class="form-group">
+                <label class="required">Quality ID:</label>
+                <input type="text" class="form-control" id="qualityId" formControlName="qualityId">
+            </div>
+            <div class="form-group">
+                <label class="required">Quality Name:</label>
+                <input type="text"  class="form-control" id="qualityName" formControlName="qualityName">
+            </div>
+            <div class="form-group" >
+                <label class="required">Quality Type:</label>
+                <select id="qualityType" formControlName=""  class="form-control">
+                    <option>Fabric</option>
+                    <option>Yarn</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="required">Wt / 100 mtrs:</label>
+                <input type="number" id="wtPer100m" formControlName="wtPer100m"  class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="required">Remark:</label>
+                <input type="text" id="remark" formControlName="remark"  class="form-control">
+            </div>
+        </form>
+    </nb-card-body>
+  </nb-card>
