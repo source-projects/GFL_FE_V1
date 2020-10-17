@@ -2,7 +2,7 @@ name: PR to main notification
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ development ]
 
 jobs:
   message-to-slack-about-pr:
@@ -26,11 +26,11 @@ jobs:
       - name: slack the message for success
         if: success()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build success - ${{ github.actor }} made a pr to master"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build success - ${{ github.actor }} made a pr to development"}' https://hooks.slack.com/services/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
       
       - name: slack the message for faliure
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }}'s  pr to master"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }}'s  pr to development"}' https://hooks.slack.com/services/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
           
           
