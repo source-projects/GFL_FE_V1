@@ -23,6 +23,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/quality',
   },
   {
+    title: 'Fabric-In',
+    icon: 'home-outline',
+    link: '/pages/fabric-in',
+  },
+  {
+    title: 'Batch',
+    icon: 'home-outline',
+    link: '/pages/batch',
+  },
+  {
+    title: 'Color',
+    icon: 'home-outline',
+    link: '/pages/color',
+  },
+  {
+    title: 'Shade',
+    icon: 'home-outline',
+    link: '/pages/shade',
+  },
+  {
     title: 'Supplier',
     icon: 'home-outline',
     link: '/pages/supplier',
