@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ThemeModule } from "./theme.module";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -20,7 +19,6 @@ import {
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
-import { FormsRoutingModule } from "../pages/forms/forms-routing.module";
 import { FormsModule as ngFormsModule } from '@angular/forms';
 
 const NB_MODULES = [
@@ -42,7 +40,6 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbRadioModule,
   NbDatepickerModule,
-  FormsRoutingModule,
   ngFormsModule
 ];
 
