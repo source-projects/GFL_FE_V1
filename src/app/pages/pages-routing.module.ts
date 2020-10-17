@@ -29,6 +29,26 @@ const routes: Routes = [{
         .then(m => m.QualityModule),
     },
     {
+      path: 'fabric-in',
+      loadChildren: () => import('./fabric-in/fabric-in.module')
+        .then(m => m.FabricInModule),
+    },
+    {
+      path: 'batch',
+      loadChildren: () => import('./batch/batch.module')
+        .then(m => m.BatchModule),
+    },
+    {
+      path: 'color',
+      loadChildren: () => import('./color/color.module')
+        .then(m => m.ColorModule),
+    },
+    {
+      path: 'shade',
+      loadChildren: () => import('./shade/shade.module')
+        .then(m => m.ShadeModule),
+    },
+    {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
