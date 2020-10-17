@@ -1,1 +1,45 @@
-<p>add-edit-supplier works!</p>
+
+    <nb-card>
+        <nb-card-header>
+            <h2>ADD SUPPLIER</h2>
+        </nb-card-header>       
+        
+    <nb-card-body>        
+      <form [formGroup]="addSupplier" (ngSubmit)="addSupplierInfo()">
+        <div class="form-group">
+            <label class="required">Supplier Name</label>
+            <input type="text" class="form-control" name="supplierName" placeholder="Enter Supplier Name" formControlName="supplierName" 
+            [ngClass]="{'is-invalid': (addSupplier.get('supplierName').touched || addSupplier.get('supplierName')).invalid && formSubmitted}">
+            <div class="invalid-feedback">
+                <span></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Discount %</label>
+            <input type="number" class="form-control" id="discountPercentage" placeholder="Enter Discount %" formControlName="discountPercentage">
+        </div>
+
+        <div class="form-group" >
+            <label class="required">GST %</label>
+            <input type="number" class="form-control" id="gstPercentage" placeholder="Enter GST %" formControlName="gstPercentage">
+        </div>
+
+        <div class="form-group">
+            <label class="required">Payment Terms</label>
+            <input type="number" class="form-control" id="paymentTerms" placeholder="Enter Payment Terms" formControlName="paymentTerms" required>
+        </div>
+
+        <div class="form-group">
+            <label>Remark</label>
+            <input type="text" class="form-control" id="remark" placeholder="Enter Remark" formControlName="remark">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-sm btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-sm btn-primary" (click)="goBackToPreviousPage()">Cancel</button>
+            </div>
+        </div>      
+    </form>
+</nb-card-body>
+</nb-card>
