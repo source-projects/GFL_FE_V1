@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { QualityRoutingModule } from './quality-routing.module';
 import { SharedModule } from '../../@theme/shared.module';
 import { QualityComponent } from './quality.component';
 import { AddEditQualityComponent } from './add-edit-quality/add-edit-quality.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { AddEditQualityComponent } from './add-edit-quality/add-edit-quality.com
   imports: [
     CommonModule,
     SharedModule,
-    QualityRoutingModule
+    QualityRoutingModule,
+    ReactiveFormsModule
   ]
 })
-export class QualityModule { }
+export class QualityModule{ }
