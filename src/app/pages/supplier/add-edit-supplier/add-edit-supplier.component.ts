@@ -41,15 +41,16 @@ export class AddEditSupplierComponent implements OnInit {
       console.log(myResponse)
       this.supplierService.getAllSupplierById(myResponse).subscribe(
         data=>{
-          this.currentSupplier=data['data'][0]
+          this.currentSupplier=data['data']
+          console.log(this.addSupplier.value)
           this.addSupplier.patchValue({
             "supplierName": this.currentSupplier.supplierName,
             "discountPercentage":this.currentSupplier.discountPercentage,             
-            "gstPercentage": new FormControl(null,Validators.required),
-            "paymentTerms": new FormControl(null,Validators.required),
-            "remark": new FormControl(null),
-            "userId": new FormControl(this.user.userId),
-            "createdBy": new FormControl(this.user.userId)
+            "gstPercentage": this.currentSupplier.gstPercentage,
+            "paymentTerms": this.currentSupplier.paymentTerms,
+            "remark": this.currentSupplier.remark,
+            "userId": this.currentSupplier.userId,
+            "createdBy": this.currentSupplier.user
            })
           console.log(data)
         },

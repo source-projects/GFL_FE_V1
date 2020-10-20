@@ -17,8 +17,7 @@
             <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
             <ngx-datatable-column name="Action" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;&nbsp;
-                    <nb-icon  status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"></nb-icon>
+                    <nb-icon  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
