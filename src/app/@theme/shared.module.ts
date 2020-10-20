@@ -44,8 +44,7 @@ const NB_MODULES = [
   ngFormsModule,
   FormsModule,
   ReactiveFormsModule,
-  NgxDatatableModule,
-
+  NgxDatatableModule
 ];
 
 @NgModule({
