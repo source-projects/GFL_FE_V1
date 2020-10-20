@@ -20,6 +20,7 @@ import {
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -42,7 +43,8 @@ const NB_MODULES = [
   NbDatepickerModule,
   ngFormsModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  NgxDatatableModule
 ];
 
 @NgModule({
