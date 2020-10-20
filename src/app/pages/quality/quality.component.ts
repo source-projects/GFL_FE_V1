@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QualityService } from '../../@theme/services/quality.service';
 
 @Component({
   selector: 'ngx-quality',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quality.component.scss']
 })
 export class QualityComponent implements OnInit {
-
-  constructor() { }
+  qualityList
+  tableStyle = 'bootstrap'
+  constructor(private qualityService: QualityService) { }
 
   ngOnInit(): void {
+    
+    this.qualityService.getallQuality().subscribe(
+      data =>{
+        this.qualityList = data['data']
+      },
+      error=>{
+        console.log(error)
+      }
+    )
   }
-
 }
