@@ -5,6 +5,7 @@ import { SupplierRoutingModule } from './supplier-routing.module';
 import { SharedModule } from '../../@theme/shared.module';
 import { SupplierComponent } from './supplier.component';
 import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.
   imports: [
     CommonModule,
     SharedModule,
-    SupplierRoutingModule
+    SupplierRoutingModule,
+    ReactiveFormsModule,
   ]
 })
 export class SupplierModule { }
