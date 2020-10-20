@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path:'cancel',
     component:SupplierComponent
+  },
+  {
+    path:'edit/:id',
+    component:AddEditSupplierComponent
   }
 ];
 
