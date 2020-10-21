@@ -1,5 +1,8 @@
 <nb-card>
-    <nb-card-header style="font-size: medium;"><h2>ADD QUALITY</h2></nb-card-header>
+    <nb-card-header style="font-size: medium;">
+        <div *ngIf="this.myQualityId == null; else updateQ"><h2>ADD QUALITY</h2></div>
+        <ng-template #updateQ><h2>UPDATE QUALITY</h2></ng-template>
+    </nb-card-header>
     <nb-card-body>
         <div class="container">
         <form [formGroup]="addEditQualityForm" (ngSubmit)="onSubmit()">

@@ -50,7 +50,7 @@ export class AddEditQualityComponent implements OnInit {
     if (this.myQualityId != null) {
       this.qualityService.getQualityById(this.myQualityId).subscribe(
         (data) => {
-          this.qualityList = data["data"][0];
+          this.qualityList = data["data"];
           this.addEditQualityForm.patchValue({
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
