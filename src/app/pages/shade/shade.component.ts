@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
   selector: 'ngx-shade',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shade.component.scss']
 })
 export class ShadeComponent implements OnInit {
-
-  constructor() { }
+  shadeList;
+  tableStyle = 'bootstrap';
+  constructor(private shadeService: ShadeService) { }
 
   ngOnInit(): void {
+    this.shadeService.getallShade().subscribe(
+      data =>{
+        this.shadeList = data['data']
+      },
+      error=>{
+        console.log(error)
+      }
+    )
   }
 
 }
