@@ -11,6 +11,9 @@ const routes: Routes = [
   {
     path:'add',
     component:AddEditQualityComponent
+  },{
+    path:'edit/:id',
+    component:AddEditQualityComponent
   }
 ];
 
