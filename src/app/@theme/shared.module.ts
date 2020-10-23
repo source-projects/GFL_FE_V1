@@ -15,7 +15,8 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbDatepickerModule
+  NbDatepickerModule,
+  NbTooltipModule
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
@@ -44,7 +45,8 @@ const NB_MODULES = [
   ngFormsModule,
   FormsModule,
   ReactiveFormsModule,
-  NgxDatatableModule
+  NgxDatatableModule,
+  NbTooltipModule
 ];
 
 @NgModule({
