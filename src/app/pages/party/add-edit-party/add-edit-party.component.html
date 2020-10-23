@@ -1,1 +1,160 @@
-<p>add-edit-party works!</p>
+<nb-card>
+  <nb-card-header style="font-size: medium;">
+    <div *ngIf="this.myPartyId == null; else updateP">
+      <h2>ADD PARTY</h2>
+    </div>
+    <ng-template #updateP>
+      <h2>UPDATE PARTY</h2>
+    </ng-template>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container">
+      <form [formGroup]="partyForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Party Name</label><span class="required">*</span>
+            <input type="text" id="partyName" class="form-control" formControlName="partyName"
+              placeholder="Enter party name"
+              [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid ) && formSubmitted}">
+             
+            <div class="invalid-feedback"
+              *ngIf="partyForm.get('partyName').errors?.required ">
+              <span>Party Name is required</span>
+            </div>
+            <div class="invalid-feedback" *ngIf=" partyForm.get('partyName').errors?.pattern">
+              <span>Please enter valid Party Name </span>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Address 1</label><span class="required">*</span>
+            <textarea class="form-control" id=" partyAddress1" nbinput fullwidth formControlName="partyAddress1"
+              placeholder="Enter Address 1"
+              [ngClass]="{'is-invalid':(partyForm.get('partyAddress1').invalid ) && formSubmitted}">
+              </textarea>
+            <div class="invalid-feedback"
+              *ngIf="(partyForm.get('partyAddress1').invalid || (partyForm.get('partyAddress1').dirty || partyForm.get('partyAddress1').untouched) ) && formSubmitted">
+              <span>Address is required</span>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Address 2</label>
+            <textarea class="form-control" nbinput fullwidth formControlName="partyAddress2"
+              placeholder="Enter Address 2"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>City</label><span class="required">*</span>
+            <input type="text" id="city" class="form-control" nbinput fullwidth fieldsize="small" formControlName="city"
+              placeholder="Enter city"
+              [ngClass]="{'is-invalid':(partyForm.get('city').invalid ) && formSubmitted}">
+            <div class="invalid-feedback"
+            *ngIf="partyForm.get('city').errors?.required ">
+              <span>City is required</span>
+            </div>
+            <div class="invalid-feedback" *ngIf="partyForm.get('city').errors?.pattern">
+              <span>Please enter valid City</span>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>State</label><span class="required">*</span>
+            <input type="text" id="state" class="form-control" nbinput fullwidth fieldsize="small"
+              formControlName="state" placeholder="Enter state"
+              [ngClass]="{'is-invalid':(partyForm.get('state').invalid ) && formSubmitted}">
+            <div class="invalid-feedback"
+            *ngIf="partyForm.get('state').errors?.required ">
+              <span>State is required</span>
+            </div>
+            <div class="invalid-feedback" *ngIf="partyForm.get('state').errors?.pattern">
+              <span>Please enter valid State</span>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Pin</label><span class="required">*</span>
+            <input type="text" ng-pattern-restrict="[A-Za-z]" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
+              formControlName="pincode" placeholder="Enter pin code"
+              [ngClass]="{'is-invalid':(partyForm.get('pincode').invalid ) && formSubmitted}">
+            <div class="invalid-feedback"
+            *ngIf="partyForm.get('pincode').errors?.required ">
+              <span>Pin number is required</span>
+            </div>
+
+            <div class="invalid-feedback" *ngIf="partyForm.get('pincode').errors?.pattern">
+              <span>Please enter 6 digit pin</span>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4 mb-3">
+            <label>Contact No.</label><span class="required">*</span>
+            <input type="text" ng-pattern-restrict="[A-Za-z]" id="contactNo" class="form-control" nbinput fullwidth fieldsize="small"
+              formControlName="contactNo" placeholder="Enter contact no"
+              [ngClass]="{'is-invalid':(partyForm.get('contactNo').invalid ) && formSubmitted}">
+            <div class="invalid-feedback"
+              *ngIf="partyForm.get('contactNo').errors?.required">
+              <span>Contact is required</span>
+            </div>
+            <div class="invalid-feedback" *ngIf="partyForm.get('contactNo').errors?.pattern">
+              <span>Please enter 10 digit contact</span>
+            </div>
+          </div>
+
+            <div class="form-group col-md-4">
+              <label>GSTIN</label><span class="required">*</span>
+              <input type="text" id="gst" class="form-control" nbinput fullwidth fieldsize="small"
+                formControlName="gstin" placeholder="Enter gst"
+                [ngClass]="{'is-invalid':partyForm.get('gstin').invalid  && formSubmitted}">
+              <div class="invalid-feedback"
+                *ngIf="(partyForm.get('gstin').invalid || (partyForm.get('gstin').dirty || partyForm.get('gstin').touched) ) && formSubmitted">
+                <span>Gst is required</span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Email</label><span class="required">*</span>
+              <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small"
+                formControlName="mailId" placeholder="Enter email"
+                [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid ) && formSubmitted}">
+              <div class="invalid-feedback"
+                *ngIf="partyForm.get('mailId').errors?.required">
+                <span>Email is required</span>
+              </div>
+              <div class="invalid-feedback" *ngIf="partyForm.get('mailId').errors?.pattern ">
+                <span>Please enter valid Email</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <nb-checkbox class="status-basic nb-transition">
+              <input type="checkbox" id="creditor" formControlName="creditor" class="native-input visually-hidden">
+
+              <span class="text">Creditors</span>
+            </nb-checkbox>
+
+            <nb-checkbox class="status-basic nb-transition" style="margin-left: 50px;">
+              <input type="checkbox" id="debtor" formControlName="debtor" class="native-input visually-hidden">
+
+              <span class="text">Debitors</span>
+            </nb-checkbox>
+          </div>
+
+
+          <div class="row">
+            <button *ngIf="this.myPartyId == null" type="submit" class="btn btn-primary"
+              style="margin-right:20px">Save</button>
+            <button *ngIf="this.myPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary"
+              style="margin-right:20px">Update</button>
+            <button class="btn btn-primary" (click)="goBackToPreviousPage()">Cancel</button>
+          </div>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>
