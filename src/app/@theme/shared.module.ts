@@ -21,6 +21,7 @@ import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+//import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const NB_MODULES = [
   NbLayoutModule,
