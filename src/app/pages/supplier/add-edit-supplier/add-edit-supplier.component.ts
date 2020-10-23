@@ -5,7 +5,6 @@ import { Validators } from '@angular/forms';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
 import {ActivatedRoute, Router } from '@angular/router';
-import { id } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'ngx-add-edit-supplier',
@@ -19,6 +18,7 @@ export class AddEditSupplierComponent implements OnInit {
   currentSupplier
   public userId:number 
   addSupplier:FormGroup;
+  mySupplierId
   formSubmitted:boolean=false;
 
   constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute) { }
@@ -33,13 +33,11 @@ export class AddEditSupplierComponent implements OnInit {
       "paymentTerms": new FormControl(null,Validators.required),
       "remark": new FormControl(null),
       "userId": new FormControl(this.user.userId),
-      "createdBy": new FormControl(this.user.userId)
-      
+      "createdBy": new FormControl(this.user.userId) 
     }) 
-    let myResponse=this._route.snapshot.paramMap.get('id');
-    if(myResponse!=null){
-      console.log(myResponse)
-      this.supplierService.getAllSupplierById(myResponse).subscribe(
+     this.mySupplierId=this._route.snapshot.paramMap.get('id');
+    if(this.mySupplierId!=null){
+      this.supplierService.getAllSupplierById(this.mySupplierId).subscribe(
         data=>{
           this.currentSupplier=data['data']
           console.log(this.addSupplier.value)
@@ -50,12 +48,12 @@ export class AddEditSupplierComponent implements OnInit {
             "paymentTerms": this.currentSupplier.paymentTerms,
             "remark": this.currentSupplier.remark,
             "userId": this.currentSupplier.userId,
-            "createdBy": this.currentSupplier.user
+            "createdBy": this.currentSupplier.user,
+            "id":this.mySupplierId
            })
-          console.log(data)
         },
         error=>{
-          console.log(error.Message)
+
         }
       )
      }
@@ -75,7 +73,6 @@ export class AddEditSupplierComponent implements OnInit {
           },1000)
         },
         error=>{
-          console.log("Some Error Occure");
           console.log(error.errorMessage);
           alert("Some Error Occured");
         }
@@ -84,11 +81,28 @@ export class AddEditSupplierComponent implements OnInit {
     else{
       return;  
     }
-    console.log("submitted fdfsgsd");
   }
 
   public goBackToPreviousPage():any{
-    this.location.back();
+    this.router.navigate(['pages/supplier']);
+  }
+
+  updateSupplier(){
+    let body = {
+      ...this.addSupplier.value,
+      id:this.mySupplierId
+    }
+    this.supplierService.updateSupplierById(body).subscribe(
+      data=>{
+        alert("Supplier Updated Successfully");
+        setTimeout(()=>{
+          this.router.navigate(["pages/supplier"])
+        },1000)
+      },
+      error=>{
+        
+      }
+    )
   }
 
 }
