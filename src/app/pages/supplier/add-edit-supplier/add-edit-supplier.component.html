@@ -1,7 +1,8 @@
 
     <nb-card>
         <nb-card-header>
-            <h2>ADD SUPPLIER</h2>
+           <div *ngIf="mySupplierId == null; else updateS"> <h2>ADD SUPPLIER</h2></div>
+           <ng-template #updateS><h2>UPDATE SUPPLIER</h2></ng-template>
         </nb-card-header>       
         
     <nb-card-body>        
@@ -57,7 +58,8 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input *ngIf="mySupplierId == null; else update" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
+                <ng-template #update><input  type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm" value="Update">&nbsp;&nbsp;&nbsp;</ng-template>
                 <button class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage()">Cancel</button>
             </div>
         </div>      

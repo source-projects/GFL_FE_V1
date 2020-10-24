@@ -12,6 +12,7 @@ import { SupplierService } from 'app/@theme/services/supplier.service';
 export class SupplierComponent implements OnInit {
   tableStyle="bootstrap";
   supplierList
+  
   constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router) { }
    
   ngOnInit(): void {
