@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path:'add',
     component:AddEditSupplierComponent
+  },
+  {
+    path:'cancel',
+    component:SupplierComponent
+  },
+  {
+    path:'edit/:id',
+    component:AddEditSupplierComponent
   }
 ];
 

@@ -15,11 +15,14 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbDatepickerModule
+  NbDatepickerModule,
+  NbTooltipModule
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
-import { FormsModule as ngFormsModule } from '@angular/forms';
+import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+//import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -40,7 +43,11 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbRadioModule,
   NbDatepickerModule,
-  ngFormsModule
+  ngFormsModule,
+  FormsModule,
+  ReactiveFormsModule,
+  NgxDatatableModule,
+  NbTooltipModule
 ];
 
 @NgModule({
