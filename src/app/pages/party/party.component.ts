@@ -38,11 +38,22 @@ export class PartyComponent implements OnInit {
     this.partyService.getAllPartyList().subscribe(
       (data) => {
         this.partyList = data["data"];
-        console.log(data);
       },
       (error) => {
-        console.log("Error occured");
-        console.log(error.errorMessage);
+         //toaster
+         this.status = "danger"
+         const config = {
+          status: this.status,
+          destroyByClick: this.destroyByClick,
+          duration: this.duration,
+          hasIcon: this.hasIcon,
+          position: this.position,
+          preventDuplicates: this.preventDuplicates,
+        };
+        this.toastrService.show(
+          "No internet access or Server failuer",
+          "Party",
+          config);
       }
     );
   }
