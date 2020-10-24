@@ -107,11 +107,6 @@ export class AddEditQualityComponent implements OnInit {
     } else return;
   }
 
-  cancel() {
-    console.log("called.");
-    this.location.back();
-  }
-
   updateQuality() {
     this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
       (data) => {

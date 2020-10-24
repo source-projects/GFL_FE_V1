@@ -5,6 +5,7 @@ import { FabricInRoutingModule } from './fabric-in-routing.module';
 import { FabricInComponent } from './fabric-in.component';
 import { AddEditFabricInComponent } from './add-edit-fabric-in/add-edit-fabric-in.component';
 import { SharedModule } from '../../@theme/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SharedModule } from '../../@theme/shared.module';
   imports: [
     CommonModule,
     FabricInRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class FabricInModule { }

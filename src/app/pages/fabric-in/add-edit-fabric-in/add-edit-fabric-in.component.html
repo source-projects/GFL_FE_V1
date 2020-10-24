@@ -1,1 +1,129 @@
-<p>add-edit-fabric-in works!</p>
+<div class="container">
+    <nb-card>
+        <nb-card-header>
+            <h2>ADD FABRIC-IN</h2>
+        </nb-card-header>
+        <nb-card-body>
+            <div>
+                <form >
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="required">Stock In Type:</label>
+                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control" [(ngModel)]='stockInType'
+                                required readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="required">Party Name:</label>
+                            <select name="partyId" class="form-control" #partyId1="ngModel" [(ngModel)]='partyId' required>
+                                <option *ngFor="let p of this.party" [value]="p.id">{{p.partyName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label></label>
+                            <nb-checkbox name="batch" class="form-control" #batch1="ngModel" [(ngModel)]='batch' style="border: none;">Batch
+                            </nb-checkbox>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="required">Bill No:</label>
+                            <input type="number" name="billNo"  class="form-control" #billNo1="ngModel" [(ngModel)]='billNo' required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required">Bill Date:</label>
+                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='billDate' required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required">Challan No:</label>
+                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='chlNo' required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required">Challan Date:</label>
+                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='chlDate' required>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="required">Lot:</label>
+                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='lot' required>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Remark:</label>
+                            <input type="text" name="remark" class="form-control" #remark1="ngModel" [(ngModel)]='remark' required>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="row" >
+                        <div class="col-md-12">
+                            <ngx-datatable #table class="material common-table datatable-auto-height"
+                                [rows]="qualityListEmpty" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                [columnMode]="'force'">
+
+                                <ngx-datatable-column name="Gr" prop="gr" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" (keyup.enter)="onKeyUp(rowIndex,0,'gr')"
+                                            [id]="'qualityList'+rowIndex+'-0'" [(ngModel)]="row.gr" #tableGr1="ngModel"  name='tableGr{{rowIndex}}'>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Quality ID" [sortable]="false" [width]="300"
+                                    prop="qualityId">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <select (change)="qualityIdSelected(rowIndex)" #tableQualityId1="ngModel" name='tableQualityId{{rowIndex}}'
+                                            class="tableForm" id="tableQualityId" [(ngModel)]="row.qualityId"
+                                            (keyup.enter)="onKeyUp(rowIndex,1,'qualityId')" [id]="'qualityList'+rowIndex+'-1'">
+                                            <option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}} -
+                                                {{q.qualityName}}</option>
+                                        </select>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Quality Name" prop="qualityName" [sortable]="false"
+                                    [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="text" #tableQualityName1="ngModel" name='tableQualityName{{rowIndex}}'
+                                            [(ngModel)]="row.qualityName" (keyup.enter)="onKeyUp(rowIndex,2,'qualityName')"
+                                            [id]="'qualityList'+rowIndex+'-2'" disabled>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Quality Type" prop="qualityType" [sortable]="false"
+                                    [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="text" #tableQualityType1="ngModel" name='tableQualityType{{rowIndex}}'
+                                            [(ngModel)]="row.qualityType" (keyup.enter)="onKeyUp(rowIndex,3,'qualityType')"
+                                            [id]="'qualityList'+rowIndex+'-3'" disabled>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Meter" prop="meter" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" #tableMeter1="ngModel" name='tableMeter{{rowIndex}}'
+                                            [(ngModel)]="row.meter" (keyup.enter)="onKeyUp(rowIndex,4,'meter')"
+                                            [id]="'qualityList'+rowIndex+'-4'">
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <button type="button " class="btn btn-primary btn-sm" (click)="onSubmit();$event.preventDefault()">Add</button> 
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary btn-sm"
+                                routerLink="/pages/fabric-in">Cancel</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>
