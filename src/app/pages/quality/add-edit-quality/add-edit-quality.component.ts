@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -16,6 +17,15 @@ import { QualityService } from "app/@theme/services/quality.service";
   styleUrls: ["./add-edit-quality.component.scss"],
 })
 export class AddEditQualityComponent implements OnInit {
+  //toaster config
+  config: NbToastrConfig;
+  destroyByClick = true;
+  duration = 2000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbComponentStatus = 'primary';
+
   formSubmitted: boolean = false;
   user: any;
   qualityList;
@@ -28,7 +38,8 @@ export class AddEditQualityComponent implements OnInit {
     private commonService: CommonService,
     private qualityService: QualityService,
     private route: Router,
-    private location: Location
+    private location: Location,
+    private toastrService: NbToastrService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +49,7 @@ export class AddEditQualityComponent implements OnInit {
       qualityId: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
       qualityType: new FormControl(null, Validators.required),
-      wtPer100m: new FormControl(null),
+      wtPer100m: new FormControl(null, Validators.required),
       qualitySubType: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
@@ -64,7 +75,20 @@ export class AddEditQualityComponent implements OnInit {
           });
         },
         (error) => {
-          console.log(error.message);
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Quality",
+           config);
         }
       );
     }
@@ -76,11 +100,37 @@ export class AddEditQualityComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.party = data["data"];
         } else {
-          console.log("NO PARTY YET ADDED>>>>>>>>");
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No party added yet",
+           "Quality",
+           config);
         }
       },
       (error) => {
-        console.log(error);
+        //toaster
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No internet access or Server failuer",
+         "Quality",
+         config);
       }
     );
   }
@@ -90,37 +140,80 @@ export class AddEditQualityComponent implements OnInit {
     if (this.addEditQualityForm.valid) {
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
-          console.log("Quality Added!");
-          alert("Quality added successfully!");
-          //console.log(data);
-          setTimeout(() => {
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Quality Added Succesfully",
+            "Quality",
+            config);
             this.route.navigate(["/pages/quality"]);
-          }, 1000);
         },
         (error) => {
-          console.log("Error occured");
-          console.log(error.errorMessage);
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Quality",
+           config);
         }
       );
-
-      console.log("Success");
     } else return;
   }
 
   updateQuality() {
-    this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
-      (data) => {
-        console.log("Quality Updated!");
-        alert("Quality updated successfully!");
-        //console.log(data);
-        setTimeout(() => {
+    this.formSubmitted = true;
+    if (this.addEditQualityForm.valid) {
+      this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
+        (data) => {
+          //Toaster config
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Quality Updated Succesfully",
+            "Quality",
+            config);
           this.route.navigate(["/pages/quality"]);
-        }, 1000);
-      },
-      (error) => {
-        console.log("Error occured");
-        console.log(error.message);
-      }
-    );
+        },
+        (error) => {
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Quality",
+           config);
+        }
+      );
+    }
   }
 }

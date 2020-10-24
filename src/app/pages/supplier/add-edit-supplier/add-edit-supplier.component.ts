@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
 import {ActivatedRoute, Router } from '@angular/router';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-add-edit-supplier',
@@ -13,6 +14,15 @@ import {ActivatedRoute, Router } from '@angular/router';
   providers:[Location]
 })
 export class AddEditSupplierComponent implements OnInit {
+   //toaster config
+   config: NbToastrConfig;
+   destroyByClick = true;
+   duration = 2000;
+   hasIcon = true;
+   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+   preventDuplicates = false;
+   status: NbComponentStatus = 'primary';
+   
   public createdBy:string 
   user:any
   currentSupplier
@@ -21,7 +31,7 @@ export class AddEditSupplierComponent implements OnInit {
   mySupplierId
   formSubmitted:boolean=false;
 
-  constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute) { }
+  constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute, private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
     
@@ -40,7 +50,6 @@ export class AddEditSupplierComponent implements OnInit {
       this.supplierService.getAllSupplierById(this.mySupplierId).subscribe(
         data=>{
           this.currentSupplier=data['data']
-          console.log(this.addSupplier.value)
           this.addSupplier.patchValue({
             "supplierName": this.currentSupplier.supplierName,
             "discountPercentage":this.currentSupplier.discountPercentage,             
@@ -53,13 +62,23 @@ export class AddEditSupplierComponent implements OnInit {
            })
         },
         error=>{
-
+          //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No internet access or Server failuer",
+            "Supplier",
+            config);
         }
       )
      }
-    else{
-      console.log("Error");
-    }
   }
 
   public addSupplierInfo():any{
@@ -67,14 +86,38 @@ export class AddEditSupplierComponent implements OnInit {
     if(this.addSupplier.valid){
       this.supplierService.addSupplierInSystem(this.addSupplier.value).subscribe(
         data =>{
-          alert("Supplier Added Successfully")
-          setTimeout(()=>{
-            this.router.navigate(['pages/supplier']);
-          },1000)
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Supplier Added Succesfully",
+            "Supplier",
+            config);
+          this.router.navigate(['pages/supplier']);
+          
         },
         error=>{
-          console.log(error.errorMessage);
-          alert("Some Error Occured");
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Supplier",
+           config);
         }
       )
     }
@@ -88,21 +131,48 @@ export class AddEditSupplierComponent implements OnInit {
   }
 
   updateSupplier(){
-    let body = {
-      ...this.addSupplier.value,
-      id:this.mySupplierId
-    }
-    this.supplierService.updateSupplierById(body).subscribe(
-      data=>{
-        alert("Supplier Updated Successfully");
-        setTimeout(()=>{
-          this.router.navigate(["pages/supplier"])
-        },1000)
-      },
-      error=>{
-        
+    this.formSubmitted=true;
+    if(this.addSupplier.valid){
+      let body = {
+        ...this.addSupplier.value,
+        id:this.mySupplierId
       }
-    )
+      this.supplierService.updateSupplierById(body).subscribe(
+        data=>{
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Supplier Updated Succesfully",
+            "Supplier",
+            config);
+          this.router.navigate(['pages/supplier']);
+        },
+        error=>{
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Supplier",
+           config);
+        }
+      )
+    }
   }
 
 }

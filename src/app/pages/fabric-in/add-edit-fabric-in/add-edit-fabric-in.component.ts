@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
 import { sample } from 'rxjs/operators';
@@ -10,6 +11,15 @@ import { setInterval } from 'timers';
   styleUrls: ["./add-edit-fabric-in.component.scss"],
 })
 export class AddEditFabricInComponent implements OnInit {
+  //toaster config
+  config: NbToastrConfig;
+  destroyByClick = true;
+  duration = 2000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status
+
   //form valiables...
   stockInType = "Fabric";
   partyId:Number;
@@ -45,7 +55,8 @@ export class AddEditFabricInComponent implements OnInit {
 
   constructor(
     private partyService: PartyService,
-    private qualityService: QualityService
+    private qualityService: QualityService,
+    private toastrService: NbToastrService
   ) {}
 
   ngOnInit(): void {
@@ -108,11 +119,37 @@ export class AddEditFabricInComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.party = data["data"];
         } else {
-          console.log("NO PARTY YET ADDED>>>>>>>>");
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No party added yet",
+            "Fabric-in",
+            config);
         }
       },
       (error) => {
-        console.log(error);
+        //toaster
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No internet access or Server failuer",
+         "Fabric-in",
+         config);
       }
     );
   }
@@ -123,11 +160,37 @@ export class AddEditFabricInComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.qualityList = data["data"];
         } else {
-          console.log("NO Quality yet ADDED>>>>>>>>");
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No quality added yet",
+            "Fabric-in",
+            config);
         }
       },
       (error) => {
-        console.log(error);
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No internet access or Server failuer",
+            "Fabric-in",
+            config);
       }
     );
   }
