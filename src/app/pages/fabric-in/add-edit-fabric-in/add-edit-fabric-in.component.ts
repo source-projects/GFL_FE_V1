@@ -48,7 +48,7 @@ export class AddEditFabricInComponent implements OnInit {
         weight:null,
         noOfCones: null,
         noOfBox: null
-      },
+      }
     ]
   };
 
@@ -79,7 +79,7 @@ export class AddEditFabricInComponent implements OnInit {
   }
 
   //calculcte weight field from meter
-  calculateWeight(rowIndex, colIndex, ){
+  calculateWeight(rowIndex){
     //w = (m/100) * wt 
     let w;
     let id = this.formValues.qualityListEmpty[rowIndex].qualityId;
@@ -94,8 +94,7 @@ export class AddEditFabricInComponent implements OnInit {
   }
 
   //calculcte meter field from weight
-  calculateMeter(rowIndex, colIndex, ){
-    //m = (w/100) * wt 
+  calculateMeter(rowIndex){
     let m;
     let id = this.formValues.qualityListEmpty[rowIndex].qualityId;
     let w = this.formValues.qualityListEmpty[rowIndex].weight;
@@ -152,14 +151,14 @@ export class AddEditFabricInComponent implements OnInit {
           return;
         }
       }else if(colName == 'noOfBox'){
-        if (!item.noOfCones) {
+        if (!item.noOfBox) {
           this.toastrService.show(
               "Enter No. of Boxes",
               '"No. of Boxes Field required',config);
           return;
         }
       }else if(colName == 'noOfCones'){
-        if (!item.noOfBox) {
+        if (!item.noOfCones) {
           this.toastrService.show(
               "Enter No. of Cones/ Taka",
               'No. of Cones/ Taka Field required',config);
@@ -197,7 +196,7 @@ export class AddEditFabricInComponent implements OnInit {
     console.log(id)
     this.formValues.qualityListEmpty.forEach( (item, index) => {
       if(id > 0){
-        this.formValues.qualityListEmpty.splice(index,1);
+        this.formValues.qualityListEmpty.splice(id,1);
       }else{
         this.formValues.qualityListEmpty[0].gr = null;
         this.formValues.qualityListEmpty[0].qualityId = null;

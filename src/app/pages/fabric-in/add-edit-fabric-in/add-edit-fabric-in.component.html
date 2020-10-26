@@ -14,11 +14,12 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Party Name:</label>
-                            <select name="partyId" class="form-control" #partyId1="ngModel" [(ngModel)]='formValues.partyId' required>
+                            <select name="partyId" class="form-control"  [(ngModel)]='formValues.partyId' required #partyId1="ngModel"
+                            [ngClass]="{'is-invalid': formSubmitted && (partyId1.invalid || (partyId1.touched || partyId1.dirty))}">
                                 <option *ngFor="let p of this.party" [value]="p.id">{{p.partyName}}</option>
                             </select>
-                            <div class="invalid-feedback" *ngIf="partyId1.invalid">
-                                <span>Enter Party Name</span>
+                            <div class="invalid-feedback" *ngIf="formSubmitted && partyId1.invalid" >
+                                <span>Party name is required.</span>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -32,22 +33,35 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label class="required">Bill No:</label>
-                            <input type="number" name="billNo"  class="form-control" #billNo1="ngModel" [(ngModel)]='formValues.billNo' required>
-                            <div class="invalid-feedback" *ngIf="!billNo1.valid && formSubmitted">
-                                <span>Enter Bill No</span>
+                            <input type="number" name="billNo"  class="form-control" #billNo1="ngModel" [(ngModel)]='formValues.billNo' required
+                            [ngClass]="{'is-invalid': formSubmitted && billNo1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && !billNo1.valid">
+                                <span>Bill no. is required.</span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Bill Date:</label>
-                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='formValues.billDate' required>
+                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='formValues.billDate' required
+                            [ngClass]="{'is-invalid': formSubmitted && billDate1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && !billDate1.valid">
+                                <span>Bill date is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Challan No:</label>
-                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='formValues.chlNo' required>
+                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='formValues.chlNo' required
+                            [ngClass]="{'is-invalid': formSubmitted && chlNo1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && !chlNo1.valid">
+                                <span>Challan no. is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Challan Date:</label>
-                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='formValues.chlDate' required>
+                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='formValues.chlDate' required
+                            [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && !chlDate1.valid">
+                                <span>Challan date is required.</span>
+                            </div>
                         </div>
                     </div>
                     <br><br>
@@ -55,7 +69,11 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label class="required">Lot:</label>
-                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='formValues.lot' required>
+                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='formValues.lot' required
+                            [ngClass]="{'is-invalid': formSubmitted && lot1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && !lot1.valid">
+                                <span>Lot is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label>Remark:</label>
