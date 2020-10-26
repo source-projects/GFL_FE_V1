@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
+import { FabricInService } from 'app/@theme/services/fabric-in.service';
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
 import { sample } from 'rxjs/operators';
@@ -10,21 +12,14 @@ import { sample } from 'rxjs/operators';
   styleUrls: ["./add-edit-fabric-in.component.scss"],
 })
 export class AddEditFabricInComponent implements OnInit {
-  //Toaster
+  //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
   duration = 2000;
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
-  status: NbComponentStatus = 'danger';
-  types: NbComponentStatus[] = [
-    'primary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-  ];
+  status
 
   //form valiables...
   formValues = {
@@ -61,7 +56,9 @@ export class AddEditFabricInComponent implements OnInit {
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private fabricService: FabricInService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -108,10 +105,14 @@ export class AddEditFabricInComponent implements OnInit {
   }
 
   //On enter pressed -> check empty field, add new row
-  onKeyUp(rowIndex, colIndex, colName) {
-    //toaster config
-    const config = {
-      status: this.types[4],
+  onKeyUp(e, rowIndex, colIndex, colName) {
+    var keyCode = (e.keyCode ? e.keyCode : e.which);
+    if (keyCode == 13){
+
+      //toaster
+      this.status = "danger"
+      const config = {
+      status: this.status,
       destroyByClick: this.destroyByClick,
       duration: this.duration,
       hasIcon: this.hasIcon,
@@ -119,102 +120,144 @@ export class AddEditFabricInComponent implements OnInit {
       preventDuplicates: this.preventDuplicates,
     };
 
-    this.index = "qualityList" + (rowIndex + 1) + "-" + colIndex;
-    if (rowIndex === this.formValues.qualityListEmpty.length - 1) {
-      let item = this.formValues.qualityListEmpty[rowIndex];
-      if(colName == 'gr'){
-        if (!item.gr) {
-          this.toastrService.show(
-            "Enter Gr",
-            'Gr Field required',config);
-          return;
-        }
-      }else if(colName == 'qualityId'){
-        if (!item.qualityId) {
-          this.toastrService.show(
-            "Select Quality Id",
-            'QualityId Field required',config);
-          return;
-        }
-      }else if(colName == 'meter'){
-        if (!item.meter) {
-          this.toastrService.show(
-            "Enter Meter",
-            'Meter Field required',config);
-          return;
-        }
-      }else if(colName == 'weight'){
-        if (!item.weight) {
-          this.toastrService.show(
-              "Enter Weight",
-              'Weight Field required',config);
-          return;
-        }
-      }else if(colName == 'noOfBox'){
-        if (!item.noOfBox) {
-          this.toastrService.show(
-              "Enter No. of Boxes",
-              '"No. of Boxes Field required',config);
-          return;
-        }
-      }else if(colName == 'noOfCones'){
-        if (!item.noOfCones) {
-          this.toastrService.show(
-              "Enter No. of Cones/ Taka",
-              'No. of Cones/ Taka Field required',config);
-          return;
-        }
-      }   
-      let obj = {
-        id: null,
-        gr: null,
-        qualityId: null,
-        qualityName: null,
-        qualityType: null,
-        meter: null,
-        weight: null,
-        noOfCones: null,
-        noOfBox: null
-      };
-      let list = this.formValues.qualityListEmpty;
-      list.push(obj);
-      this.formValues.qualityListEmpty = [...list];
-      let interval = setInterval(()=>{
-        let field = document.getElementById(this.index)
-        if(field != null){
-          field.focus()
-          clearInterval(interval)
-        }
-      }, 500)
-    } else {
-      alert("go to any last row input to add new row");
+      this.index = "qualityList" + (rowIndex + 1) + "-" + colIndex;
+      if (rowIndex === this.formValues.qualityListEmpty.length - 1) {
+        let item = this.formValues.qualityListEmpty[rowIndex];
+        if(colName == 'gr'){
+          if (!item.gr) {
+            this.toastrService.show(
+              "Enter Gr",
+              'Gr Field required',config);
+            return;
+          }
+        }else if(colName == 'qualityId'){
+          if (!item.qualityId) {
+            this.toastrService.show(
+              "Select Quality Id",
+              'QualityId Field required',config);
+            return;
+          }
+        }else if(colName == 'meter'){
+          if (!item.meter) {
+            this.toastrService.show(
+              "Enter Meter",
+              'Meter Field required',config);
+            return;
+          }
+        }else if(colName == 'weight'){
+          if (!item.weight) {
+            this.toastrService.show(
+                "Enter Weight",
+                'Weight Field required',config);
+            return;
+          }
+        }else if(colName == 'noOfBox'){
+          if (!item.noOfBox) {
+            this.toastrService.show(
+                "Enter No. of Boxes",
+                '"No. of Boxes Field required',config);
+            return;
+          }
+        }else if(colName == 'noOfCones'){
+          if (!item.noOfCones) {
+            this.toastrService.show(
+                "Enter No. of Cones/ Taka",
+                'No. of Cones/ Taka Field required',config);
+            return;
+          }
+        }   
+        let obj = {
+          id: null,
+          gr: null,
+          qualityId: null,
+          qualityName: null,
+          qualityType: null,
+          meter: null,
+          weight: null,
+          noOfCones: null,
+          noOfBox: null
+        };
+        let list = this.formValues.qualityListEmpty;
+        list.push(obj);
+        this.formValues.qualityListEmpty = [...list];
+        let interval = setInterval(()=>{
+          let field = document.getElementById(this.index)
+          if(field != null){
+            field.focus()
+            clearInterval(interval)
+          }
+        }, 500)
+      } else {
+        alert("go to any last row input to add new row");
+      }
     }
-    //console.log(this.addEditFabricInForm);
   }
 
   removeItem(id){
-    console.log(id)
-    this.formValues.qualityListEmpty.forEach( (item, index) => {
-      if(id > 0){
-        this.formValues.qualityListEmpty.splice(id,1);
-      }else{
-        this.formValues.qualityListEmpty[0].gr = null;
-        this.formValues.qualityListEmpty[0].qualityId = null;
-        this.formValues.qualityListEmpty[0].qualityName = null;
-        this.formValues.qualityListEmpty[0].qualityType = null;
-        this.formValues.qualityListEmpty[0].meter = null;
-        this.formValues.qualityListEmpty[0].weight = null;
-        this.formValues.qualityListEmpty[0].noOfBox = null;
-        this.formValues.qualityListEmpty[0].noOfCones = null;
-      }
-    });
+    let idCount = this.formValues.qualityListEmpty.length
+    let item = this.formValues.qualityListEmpty;
+    if(idCount == 1){
+      item[0].gr = null;
+      item[0].qualityId = null;
+      item[0].qualityName = null;
+      item[0].qualityType = null;
+      item[0].meter = null;
+      item[0].weight = null;
+      item[0].noOfCones = null;
+      item[0].noOfBox = null;
+      let list = item;
+      this.formValues.qualityListEmpty = [...list];
+    }
+    else{
+      let removed = item.splice(id,1);
+      let list = item;
+      this.formValues.qualityListEmpty = [...list];
+    }
  }
 
   onSubmit(myForm) {
     this.formSubmitted = true;
-    console.log(this.formSubmitted);
-    console.log(myForm);
+    console.log("not submitted")
+    if(myForm.valid){
+      this.fabricService.saveFabricIn(this.formValues).subscribe(
+        data=>{
+          //toaster
+          this.status = "primary"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "Fabric Added Succesfully",
+           "Fabric",
+           config);
+           this.route.navigate(["/pages/fabric-in"]);
+        },
+        error=>{
+          //toaster
+          this.status = "danger"
+          const config = {
+          status: this.status,
+          destroyByClick: this.destroyByClick,
+          duration: this.duration,
+          hasIcon: this.hasIcon,
+          position: this.position,
+          preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+          "No internet access or Server failure",
+          "Fabrics",
+          config);
+        }
+      )
+    }
   }
+
+  
 
   getPartyList() {
     this.partyService.getAllPartyList().subscribe(
@@ -222,11 +265,37 @@ export class AddEditFabricInComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.party = data["data"];
         } else {
-          console.log("NO PARTY YET ADDED>>>>>>>>");
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No party added yet",
+            "Fabric-in",
+            config);
         }
       },
       (error) => {
-        console.log(error);
+        //toaster
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No internet access or Server failuer",
+         "Fabric-in",
+         config);
       }
     );
   }
@@ -237,11 +306,37 @@ export class AddEditFabricInComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.qualityList = data["data"];
         } else {
-          console.log("NO Quality yet ADDED>>>>>>>>");
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No quality added yet",
+            "Fabric-in",
+            config);
         }
       },
       (error) => {
-        console.log(error);
+           //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No internet access or Server failuer",
+            "Fabric-in",
+            config);
       }
     );
   }

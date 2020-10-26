@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'app/@theme/services/common.service';
 import { PartyService } from 'app/@theme/services/party.service';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-add-edit-party',
@@ -14,6 +15,14 @@ import { PartyService } from 'app/@theme/services/party.service';
 })
 
 export class AddEditPartyComponent implements OnInit {
+  //toaster config
+  config: NbToastrConfig;
+  destroyByClick = true;
+  duration = 2000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status: NbComponentStatus = 'primary';
 
   formSubmitted: boolean = false;
   user: any;
@@ -21,7 +30,7 @@ export class AddEditPartyComponent implements OnInit {
   currentParty;
   myPartyId;
 
-  constructor(private location: Location, private partyService: PartyService,
+  constructor(private location: Location, private partyService: PartyService, private toastrService: NbToastrService,
     private commonService: CommonService, private route: Router, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -50,7 +59,6 @@ export class AddEditPartyComponent implements OnInit {
       this.partyService.getPartyDetailsById(this.myPartyId).subscribe(
         data => {
           this.currentParty = data['data']
-
           this.partyForm.patchValue({
             "partyName": this.currentParty.partyName,
             "partyAddress1": this.currentParty.partyAddress1,
@@ -66,10 +74,22 @@ export class AddEditPartyComponent implements OnInit {
             "createdBy": this.currentParty.user,
             "id": this.myPartyId
           })
-          console.log(data)
         },
         error => {
-          console.log(error.Message)
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Party",
+           config);
         }
       )
     }
@@ -79,48 +99,91 @@ export class AddEditPartyComponent implements OnInit {
   onSubmit() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
-      console.log(this.partyForm.value);
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
-          console.log(data);
           this.currentParty = data["data"];
-          //alert('party added successfully!');
-          setTimeout(() => {
-            this.route.navigate(['/pages/party'])
-          }, 1000)
+           //toaster
+           this.status = "primary"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Party Added Succesfully",
+            "Party",
+            config);
+            this.route.navigate(["/pages/party"]);
         },
         error => {
-          console.log('Error occured');
-          console.log(error.errorMessage);
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Party",
+           config);
         }
       )
-      console.log("Success")
-    }
-    else {
-      console.log("error");
     }
   }
   public goBackToPreviousPage(): any {
     this.location.back();
   }
   updateParty() {
-    let body = {
-      ...this.partyForm.value,
-      id: this.myPartyId
-    }
-    this.partyService.updateParty(body).subscribe(
-      data => {
-        
-        //alert("Party Updated Successfully");
-        setTimeout(() => {
-          this.route.navigate(["pages/party"])
-        }, 1000)
-      },
-      error => {
-        console.log("Error Occured");
-        console.log(error.Message)
+    this.formSubmitted = true;
+    if (this.partyForm.valid) {
+      let body = {
+        ...this.partyForm.value,
+        id: this.myPartyId
       }
-    )
+      this.partyService.updateParty(body).subscribe(
+        data => {
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Party Updated Succesfully",
+            "Party",
+            config);
+            this.route.navigate(["/pages/party"]);
+        },
+        error => {
+          
+          //toaster
+          this.status = "danger"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No internet access or Server failure",
+            "Party",
+            config);
+        }
+      )
+    }
   }
  
 }
