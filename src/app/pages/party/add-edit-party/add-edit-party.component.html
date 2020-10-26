@@ -13,10 +13,10 @@
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Party Name</label><span class="required">*</span>
+            <label class="required">Party Name:</label>
             <input type="text" id="partyName" class="form-control" formControlName="partyName"
               placeholder="Enter party name"
-              [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('partyName').invalid )}">
              
             <div class="invalid-feedback"
               *ngIf="partyForm.get('partyName').errors?.required ">
@@ -28,13 +28,13 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label>Address 1</label><span class="required">*</span>
+            <label class="required">Address 1:</label>
             <textarea class="form-control" id=" partyAddress1" nbinput fullwidth formControlName="partyAddress1"
               placeholder="Enter Address 1"
-              [ngClass]="{'is-invalid':(partyForm.get('partyAddress1').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('partyAddress1').invalid )}">
               </textarea>
             <div class="invalid-feedback"
-              *ngIf="(partyForm.get('partyAddress1').invalid || (partyForm.get('partyAddress1').dirty || partyForm.get('partyAddress1').untouched) ) && formSubmitted">
+              *ngIf="formSubmitted && (partyForm.get('partyAddress1').invalid || (partyForm.get('partyAddress1').dirty || partyForm.get('partyAddress1').untouched) )">
               <span>Address is required</span>
             </div>
           </div>
@@ -47,10 +47,10 @@
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label>City</label><span class="required">*</span>
+            <label class="required">City:</label>
             <input type="text" id="city" class="form-control" nbinput fullwidth fieldsize="small" formControlName="city"
               placeholder="Enter city"
-              [ngClass]="{'is-invalid':(partyForm.get('city').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('city').invalid )}">
             <div class="invalid-feedback"
             *ngIf="partyForm.get('city').errors?.required ">
               <span>City is required</span>
@@ -61,10 +61,10 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label>State</label><span class="required">*</span>
+            <label class="required">State:</label>
             <input type="text" id="state" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="state" placeholder="Enter state"
-              [ngClass]="{'is-invalid':(partyForm.get('state').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('state').invalid )}">
             <div class="invalid-feedback"
             *ngIf="partyForm.get('state').errors?.required ">
               <span>State is required</span>
@@ -75,10 +75,10 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label>Pin</label><span class="required">*</span>
+            <label class="required">Pin:</label>
             <input type="text" ng-pattern-restrict="[A-Za-z]" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="pincode" placeholder="Enter pin code"
-              [ngClass]="{'is-invalid':(partyForm.get('pincode').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('pincode').invalid )}">
             <div class="invalid-feedback"
             *ngIf="partyForm.get('pincode').errors?.required ">
               <span>Pin number is required</span>
@@ -93,10 +93,10 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-4 mb-3">
-            <label>Contact No.</label><span class="required">*</span>
+            <label class="required">Contact No.:</label>
             <input type="text" ng-pattern-restrict="[A-Za-z]" id="contactNo" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="contactNo" placeholder="Enter contact no"
-              [ngClass]="{'is-invalid':(partyForm.get('contactNo').invalid ) && formSubmitted}">
+              [ngClass]="{'is-invalid':formSubmitted && partyForm.get('contactNo').invalid}">
             <div class="invalid-feedback"
               *ngIf="partyForm.get('contactNo').errors?.required">
               <span>Contact is required</span>
@@ -107,18 +107,18 @@
           </div>
 
             <div class="form-group col-md-4">
-              <label>GSTIN</label><span class="required">*</span>
+              <label class="required">GSTIN:</label>
               <input type="text" id="gst" class="form-control" nbinput fullwidth fieldsize="small"
                 formControlName="gstin" placeholder="Enter gst"
-                [ngClass]="{'is-invalid':partyForm.get('gstin').invalid  && formSubmitted}">
+                [ngClass]="{'is-invalid':formSubmitted && partyForm.get('gstin').invalid}">
               <div class="invalid-feedback"
-                *ngIf="(partyForm.get('gstin').invalid || (partyForm.get('gstin').dirty || partyForm.get('gstin').touched) ) && formSubmitted">
+                *ngIf="formSubmitted &&(partyForm.get('gstin').invalid || (partyForm.get('gstin').dirty || partyForm.get('gstin').touched) )">
                 <span>Gst is required</span>
               </div>
             </div>
 
             <div class="form-group col-md-4">
-              <label>Email</label><span class="required">*</span>
+              <label class="required">Email:</label>
               <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small"
                 formControlName="mailId" placeholder="Enter email"
                 [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid ) && formSubmitted}">
@@ -146,7 +146,7 @@
             </nb-checkbox>
           </div>
 
-
+          <br><br>
           <div class="row">
             <button *ngIf="this.myPartyId == null" type="submit" class="btn btn-primary"
               style="margin-right:20px">Save</button>
