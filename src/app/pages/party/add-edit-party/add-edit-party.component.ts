@@ -99,10 +99,8 @@ export class AddEditPartyComponent implements OnInit {
   onSubmit() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
-      console.log(this.partyForm.value);
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
-          console.log(data);
           this.currentParty = data["data"];
            //toaster
            this.status = "primary"
