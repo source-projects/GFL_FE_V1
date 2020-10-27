@@ -1,1 +1,123 @@
-<p>add-edit-batch works!</p>
+<div class="container">
+    <nb-card>
+        <nb-card-header>
+            <h2>ADD BATCH</h2>
+        </nb-card-header>
+        <nb-card-body>
+            <div>
+                <form #myForm="ngForm">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label class="required">Quality ID:</label>
+                            <select name="qualityId" class="form-control" [(ngModel)]='formValues.qualityId' required (change)="getQualityDataOnSelect()"
+                                #qualityId1="ngModel" [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}">
+                                <option *ngFor="let q of quality" [value]="q.id">{{q.qualityId}} - {{q.qualityName}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (qualityId1.invalid || qualityId1.dirty || qualityId1.touched)">
+                                <span>Quality ID is required.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="required">Quality Name:</label>
+                            <input type="text" name="qualityName" #qualityName1="ngModel" class="form-control"
+                                [(ngModel)]='formValues.qualityName' required readonly>
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (qualityName1.invalid || qualityName1.dirty || qualityName1.touched)">
+                                <span>Quality name is required.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="required">Quality Type:</label>
+                            <input type="text" name="qualityType" #qualityType1="ngModel" class="form-control"
+                                [(ngModel)]='formValues.qualityType' required readonly>
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (qualityType1.invalid || qualityType1.dirty || qualityType1.touched)">
+                                <span>Quality type is required.</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ngx-datatable #table class="material common-table datatable-auto-height"
+                                [rows]="formValues.grData" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                [columnMode]="'force'">
+
+                                <ngx-datatable-column name="GR" [sortable]="false" [width]="300"
+                                    prop="gr">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <select (change)="grDataSelected(rowIndex,1)" #grId1="ngModel"
+                                            name='gr{{rowIndex}}' class="tableForm" id="gr"
+                                            [(ngModel)]="row.gr" required
+                                            (keyup)="onKeyUp($event,rowIndex,1,'qualityId')"
+                                            [id]="'grData'+rowIndex+'-0'"
+                                            [ngClass]="{'is-invalid': formSubmitted && grId1.invalid}">
+                                            <option>option1</option>
+                                            <option>option2</option>
+                                            <option>option3</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="formSubmitted && (grId1.invalid)"
+                                            style="display: inline-block;">
+                                            <span>Required</span>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Meter" prop="meter" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'gr')"
+                                            [id]="'grData'+rowIndex+'-1'" [(ngModel)]="row.meter" #meter1="ngModel"
+                                            name='meter{{rowIndex}}' required readonly
+                                            [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}">
+                                        <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)"
+                                            style="display: inline-block;">
+                                            <span>Required</span>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Weight" prop="weight" [sortable]="false"
+                                    [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="text" #weight1="ngModel"
+                                            name='weight{{rowIndex}}' [(ngModel)]="row.weight"
+                                            (keyup)="onKeyUp($event,rowIndex,2,'weight')" required
+                                            [id]="'grData'+rowIndex+'-2'" readonly
+                                            [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}">
+                                        <div class="invalid-feedback"
+                                            *ngIf="formSubmitted && (weight1.invalid)"
+                                            style="display: inline-block;">
+                                            <span>Required</span>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Action" sortable="false">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                        let-rowIndex="rowIndex">
+                                        <nb-icon icon="trash" status="danger"
+                                            [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)">
+                                        </nb-icon>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary btn-sm"
+                            (click)="onSubmit(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/batch">Cancel</button>
+                    </div>
+
+                </form>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

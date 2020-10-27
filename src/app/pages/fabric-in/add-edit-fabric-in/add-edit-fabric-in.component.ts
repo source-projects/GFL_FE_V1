@@ -25,7 +25,7 @@ export class AddEditFabricInComponent implements OnInit {
   formValues = {
     stockInType: "Fabric",
     partyId:null,
-    batch:null,
+    batch:false,
     billNo:null,
     billDate:null,
     chlNo:null,
@@ -217,7 +217,6 @@ export class AddEditFabricInComponent implements OnInit {
 
   onSubmit(myForm) {
     this.formSubmitted = true;
-    console.log("not submitted")
     if(myForm.valid){
       this.fabricService.saveFabricIn(this.formValues).subscribe(
         data=>{
