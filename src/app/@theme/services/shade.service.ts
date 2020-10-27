@@ -10,7 +10,21 @@ export class ShadeService {
   constructor(private httpClient:HttpClient,private commonService:CommonService) { }
 
   getallShade(): any{
-    console.log(this.commonService.envUrl()+'api/shade/original/all')
     return this.httpClient.get(this.commonService.envUrl()+'api/shade/original/all');
+  }
+  addShadeData(shadeData):any{
+    return this.httpClient.post(this.commonService.envUrl()+'api/shade',shadeData);
+  }
+  deleteShadeData(id):any{
+    return this.httpClient.delete(this.commonService.envUrl()+'api/shade'+id);
+  } 
+  getQualityProcessList():any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/qualityprocess/all');
+  }
+  getCurrentShadeData(id):any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current'+id);
+  }
+  getShadeMastList():any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/shade/all');
   }
 }
