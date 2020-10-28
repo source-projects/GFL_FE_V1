@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path:'add',
     component:AddEditBatchComponent
+  },
+  {
+    path: 'edit',
+    component:AddEditBatchComponent
   }
 ];
 
