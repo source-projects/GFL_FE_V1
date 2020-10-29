@@ -16,14 +16,17 @@ export class ShadeService {
     return this.httpClient.post(this.commonService.envUrl()+'api/shade',shadeData);
   }
   deleteShadeData(id):any{
-    return this.httpClient.delete(this.commonService.envUrl()+'api/shade'+id);
+    return this.httpClient.delete(this.commonService.envUrl()+'api/shade/'+id);
   } 
   getQualityProcessList():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/qualityprocess/all');
   }
   getCurrentShadeData(id):any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current'+id);
+    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/'+id);
   }
+ /* getAllCurrentShadeData():any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/all');
+  }*/
   getShadeMastList():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/shade/all');
   }

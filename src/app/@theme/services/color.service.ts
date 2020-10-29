@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColorService {
 
-  constructor() { }
+  constructor(private httpClient:HttpClient,private commonService:CommonService) {}
+  getColor():any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/color/all');
+  }
+  addColor():any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/color');
+  }
+   
 }

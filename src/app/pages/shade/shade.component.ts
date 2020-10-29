@@ -42,6 +42,7 @@ export class ShadeComponent implements OnInit {
   this.shadeService.getShadeMastList().subscribe(
     data =>{
       this.shadeList = data['data']
+      console.log(this.shadeList);
     },
     error=>{
       //toaster

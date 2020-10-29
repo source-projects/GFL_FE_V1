@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
 import {SupplierService} from "app/@theme/services/supplier.service";
 import{ShadeService} from "app/@theme/services/shade.service";
-import { Location } from '@angular/common';
-import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 import {Shade} from "app/@theme/model/shade";
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 @Component({
@@ -26,7 +23,8 @@ export class AddEditShadeComponent implements OnInit {
   preventDuplicates = false;
   status
 
-  shades=new Shade();
+  shades=new Shade('','','','','','','','0','','','shailaja',0,0,0,
+    [{'itemName':null,'concentration':null,'supplierName':null,'rate':null,'amount':null,'supplierId':0,'supplierItemId':0}],0);
     
   index:any;
   formSubmitted: boolean = false;
@@ -36,17 +34,15 @@ export class AddEditShadeComponent implements OnInit {
   supplierList;
   quality: any[];
   processList: any[];
-  public color: string ="";
-  q_name:any;
-  q_type:any;
-  p_name:any;
-  supplierListEmpty: any = [
+  public color: string ='';updateColor(){this.shades.colorTone=this.color}
+  iname:any;
+ irow:any;
+  
+ qualityListEmpty: any = [
     {
-      itemName: null,
-      concentration: null,
-      supplierName: null,
-      rate: null,
-      amount: null,
+      qualityName:null,
+      qualityType:null,
+      partyName:null
      
     },
   ];
@@ -61,31 +57,59 @@ export class AddEditShadeComponent implements OnInit {
     private shadeService: ShadeService,
     private toastrService: NbToastrService,
     private route: Router,
-    private location:Location,
-    private cpService: ColorPickerService,
     public vcRef: ViewContainerRef, 
     ) { }
-
+  
   ngOnInit(): void {
     this.user = this.commonService.getUser();
+    //console.log(this.shades);
     this.getQualityList();
     this.getProcessList();
     this.getSupplierList();
     this.getCurrentShade();
-   
-    
+  //  console.log(this.shades.shadeDataList);
   }
-
 
   getSupplierList(){
   this.supplierService.getAllSupplierRates().subscribe(
     data =>{
-      this.supplierList = data['data'];
-     this.getAllSupplier();
-      console.log(this.supplierList);
-    },
+      if (data["data"] && data["data"].length > 0) {
+        this.supplierList = data['data'];
+        this.getAllSupplier();
+        console.log(this.supplierList);
+      }
+      else {
+        //toaster
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No supplier added yet",
+         "Shade",
+         config);
+     }
+   },
+    
     error=>{
-      console.log(error)
+      this.status = "danger"
+      const config = {
+       status: this.status,
+       destroyByClick: this.destroyByClick,
+       duration: this.duration,
+       hasIcon: this.hasIcon,
+       position: this.position,
+       preventDuplicates: this.preventDuplicates,
+     };
+     this.toastrService.show(
+       "No internet access or Server failuer",
+       "Shade",
+       config);
     }
   )
   }
@@ -102,6 +126,7 @@ export class AddEditShadeComponent implements OnInit {
       }
     ) 
   }
+
   getProcessList(){
     this.shadeService.getQualityProcessList().subscribe(
       data =>{
@@ -121,14 +146,42 @@ export class AddEditShadeComponent implements OnInit {
         if (data["data"] && data["data"].length > 0) {
           this.quality = data["data"];
         } else {
-          console.log("NO QUALITY YET ADDED>>>>>>>>");
+          //toaster
+          this.status = "danger"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No quality added yet",
+            "Shade",
+            config);
         }
+      
       },
       (error) => {
-        console.log(error);
+        //toaster
+        this.status = "danger"
+        const config = {
+          status: this.status,
+          destroyByClick: this.destroyByClick,
+          duration: this.duration,
+          hasIcon: this.hasIcon,
+          position: this.position,
+          preventDuplicates: this.preventDuplicates,
+        };
+        this.toastrService.show(
+          "No internet access or Server failuer",
+          "Shade",
+          config);
       }
     );
   }
+  
   
   getCurrentShade(){
     this.myShadeId = this._route.snapshot.paramMap.get('id');
@@ -161,31 +214,47 @@ export class AddEditShadeComponent implements OnInit {
 
 
   qualityIdSelected(q1_id) {
-
-    let q_id=this.quality.findIndex(v=> v.id == q1_id);
-   this.q_name=this.quality[q_id].qualityName;
-  this.q_type=this.quality[q_id].qualityType;
-   this.p_name=this.quality[q_id].partyName;
   
+    let q_id=this.quality.findIndex(v=> v.id == q1_id);
+    this.shades.qualityName=this.quality[q_id].qualityName;
+    this.shades.qualityType=this.quality[q_id].qualityType;
+    this.shades.partyName=this.quality[q_id].partyName;
+  }
+  itemSelected(rowIndex) {  
+    this.irow=rowIndex;
+    let id=this.shades.shadeDataList[rowIndex].itemName;
+   let supId ;
+    for(let s of this.supplierList){
+      if(id==s.id){
+        this.shades.shadeDataList[rowIndex].rate=s.rate;
+        supId=s.supplierId;
+        this.iname=s.itemName;
+       //this.shades.shadeDataList[rowIndex].itemName=s.itemName;
+      }
+    }
+    for(let s1 of this.supplierList1){
+      if(supId==s1.id){
+        this.shades.shadeDataList[rowIndex].supplierName=s1.supplierName;
+      }
+    }
+   // this.shades.shadeDataList[rowIndex].itemName=this.iname; 
+  }
+  calculateAmount(rowIndex){
+ 
+   let con=this.shades.shadeDataList[rowIndex].concentration;
+ // console.log(con);
+   let rate1=this.shades.shadeDataList[rowIndex].rate;
+ // console.log(rate1);
+ let amount=Number(con)*Number(rate1);
+  this.shades.shadeDataList[rowIndex].amount=amount;
+ 
   }
 
-  itemSelected(rowIndex) {
-    let iname=this.supplierListEmpty[rowIndex].itemName;
-    let item=this.supplierListEmpty[rowIndex];
-    item.rate=this.supplierList[iname].rate;
-  }
-
-calculateAmount(rowIndex){
-  let item=this.supplierListEmpty[rowIndex];
-  let con=this.supplierListEmpty[rowIndex].concentration;
-  let rate1=this.supplierListEmpty[rowIndex].rate;
-item.amount=con*rate1;
-}
   onKeyUp(e,rowIndex, colIndex, colName) {
-    console.log("onkeyup");
+   // console.log("onkeyup");
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13){
-
+      console.log("key 13");
       //toaster
       this.status = "danger"
       const config = {
@@ -197,8 +266,8 @@ item.amount=con*rate1;
       preventDuplicates: this.preventDuplicates,
     };
     this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
-    if (rowIndex === this.supplierListEmpty.length - 1) {
-      let item = this.supplierListEmpty[rowIndex];
+    if (rowIndex === this.shades.shadeDataList.length - 1) {
+      let item = this.shades.shadeDataList[rowIndex];
       console.log(item);
       if(colName == 'itemName'){
         if (!item.itemName) {
@@ -246,11 +315,14 @@ item.amount=con*rate1;
         supplierName: null,
         rate: null,
         amount: null,
+        //createdBy:null,
+        supplierId:null,
+        supplierItemId:null
         
       };
-      let list = this.supplierListEmpty;
+      let list = this.shades.shadeDataList;
       list.push(obj);
-      this.supplierListEmpty = [...list];
+      this.shades.shadeDataList = [...list];
       let interval = setInterval(()=>{
         let field = document.getElementById(this.index)
         if(field != null){
@@ -263,12 +335,34 @@ item.amount=con*rate1;
       alert("go to any last row input to add new row");
     }
   }
+  }
+
+  removeItem(id){
+    let idCount = this.shades.shadeDataList.length;
+    let item = this.shades.shadeDataList;
+    if(idCount == 1){
+      item[0].itemName = null;
+      item[0].concentration = null;
+      item[0].supplierName = null;
+      item[0].rate = null;
+      item[0].amount = null;
+     
+      let list = item;
+      this.shades.shadeDataList = [...list];
     }
+    else{
+      let removed = item.splice(id,1);
+      let list = item;
+      this.shades.shadeDataList = [...list];
+    }
+ }
 
   
-  onSubmit() {
+  onSubmit(shadeForm) {
     this.formSubmitted = true;
-    
+    //console.log(this.shades);
+    if(shadeForm.valid){
+      this.shades.shadeDataList[this.irow].itemName=this.iname; 
       this.shadeService.addShadeData(this.shades).subscribe(
         data => {
           console.log(data);
@@ -303,8 +397,55 @@ item.amount=con*rate1;
            config);
         }
       )
-    }
- }
+    }}
+
+    /*updateShade(shadeForm) {
+      this.formSubmitted = true;
+      if (this.shadeForm.valid) {
+        let body = {
+          ...this.shadeForm.value,
+          id: this.myShadeId
+        }
+        this.shadeService.updateParty(body).subscribe(
+          data => {
+            //toaster
+            this.status = "primary"
+            const config = {
+              status: this.status,
+              destroyByClick: this.destroyByClick,
+              duration: this.duration,
+              hasIcon: this.hasIcon,
+              position: this.position,
+              preventDuplicates: this.preventDuplicates,
+            };
+            this.toastrService.show(
+              "Party Updated Succesfully",
+              "Party",
+              config);
+              this.route.navigate(["/pages/party"]);
+          },
+          error => {
+            
+            //toaster
+            this.status = "danger"
+            const config = {
+              status: this.status,
+              destroyByClick: this.destroyByClick,
+              duration: this.duration,
+              hasIcon: this.hasIcon,
+              position: this.position,
+              preventDuplicates: this.preventDuplicates,
+            };
+            this.toastrService.show(
+              "No internet access or Server failure",
+              "Party",
+              config);
+          }
+        )
+      }
+    }*/
+   
+}
      
   
   
