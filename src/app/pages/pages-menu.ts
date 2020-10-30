@@ -38,6 +38,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/color',
   },
   {
+    title: 'Program',
+    icon: 'home-outline',
+    link: '/pages/program',
+  },
+  {
     title: 'Shade',
     icon: 'home-outline',
     link: '/pages/shade',
