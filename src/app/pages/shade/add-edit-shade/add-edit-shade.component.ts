@@ -23,7 +23,7 @@ export class AddEditShadeComponent implements OnInit {
   preventDuplicates = false;
   status
 
-  shades=new Shade('','','','','','','','0','','','shailaja',0,0,0,
+  shades=new Shade('','','','','','','','','','','shailaja',0,0,0,
     [{'itemName':null,'concentration':null,'supplierName':null,'rate':null,'amount':null,'supplierId':0,'supplierItemId':0}],0);
     
   index:any;
@@ -35,8 +35,8 @@ export class AddEditShadeComponent implements OnInit {
   quality: any[];
   processList: any[];
   public color: string ='';updateColor(){this.shades.colorTone=this.color}
-  iname:any;
- irow:any;
+  //iname:any[];
+ //irow:any[];
   
  qualityListEmpty: any = [
     {
@@ -187,10 +187,31 @@ export class AddEditShadeComponent implements OnInit {
     this.myShadeId = this._route.snapshot.paramMap.get('id');
       if (this.myShadeId != null) {
   
-        this.partyService.getPartyDetailsById(this.myShadeId).subscribe(
+        this.shadeService.getCurrentShadeData(this.myShadeId).subscribe(
           data => {
             this.currentShade = data['data']
-           console.log(this.currentShade);
+            console.log(this.currentShade);
+            let counter=this.currentShade.shadeDataList.length;
+            console.log(counter);
+            
+            this.shades.partyShadeNo=this.currentShade.partyShadeNo;
+            this.shades.processName=this.currentShade.processName;
+            this.shades.qualityId=this.currentShade.qualityId;
+            this.shades.qualityName=this.currentShade.qualityName;
+            this.shades.qualityType=this.currentShade.qualityType;
+            this.shades.partyName=this.currentShade.partyName;
+            this.shades.colorTone=this.currentShade.colorTone;
+            this.shades.labColorNo=this.currentShade.labColorNo;
+            this.shades.category=this.currentShade.category;
+            this.shades.remark=this.currentShade.remark;
+            for(let i=0;i<counter;i++){
+           this.shades.shadeDataList[i].itemName=this.currentShade.itemName;
+            this.shades.shadeDataList[i].concentration=this.currentShade.concentration;
+            this.shades.shadeDataList[i].supplierName=this.currentShade.supplierName;
+            this.shades.shadeDataList[i].rate=this.currentShade.rate;
+            this.shades.shadeDataList[i].amount=this.currentShade.amount;
+          }
+
           },
           error => {
             //toaster
@@ -220,15 +241,25 @@ export class AddEditShadeComponent implements OnInit {
     this.shades.qualityType=this.quality[q_id].qualityType;
     this.shades.partyName=this.quality[q_id].partyName;
   }
-  itemSelected(rowIndex) {  
-    this.irow=rowIndex;
+
+
+ itemSelected(rowIndex) {  
+  //  this.irow=rowIndex;
+  console.log (rowIndex);
     let id=this.shades.shadeDataList[rowIndex].itemName;
+    console.log(id);
    let supId ;
     for(let s of this.supplierList){
-      if(id==s.id){
+     // console.log(s.itemName);
+      if(id==s.itemName){
+        console.log(s.rate);
         this.shades.shadeDataList[rowIndex].rate=s.rate;
+        console.log(this.shades.shadeDataList[rowIndex].rate);
+      // 
         supId=s.supplierId;
-        this.iname=s.itemName;
+        console.log(supId);
+       // this.iname[rowIndex]=s.itemName;
+        //console.log(this.iname);
        //this.shades.shadeDataList[rowIndex].itemName=s.itemName;
       }
     }
@@ -237,8 +268,10 @@ export class AddEditShadeComponent implements OnInit {
         this.shades.shadeDataList[rowIndex].supplierName=s1.supplierName;
       }
     }
-   // this.shades.shadeDataList[rowIndex].itemName=this.iname; 
+    //this.shades.shadeDataList[rowIndex].itemName=this.iname; 
   }
+
+  
   calculateAmount(rowIndex){
  
    let con=this.shades.shadeDataList[rowIndex].concentration;
@@ -254,7 +287,6 @@ export class AddEditShadeComponent implements OnInit {
    // console.log("onkeyup");
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13){
-      console.log("key 13");
       //toaster
       this.status = "danger"
       const config = {
@@ -360,9 +392,15 @@ export class AddEditShadeComponent implements OnInit {
   
   onSubmit(shadeForm) {
     this.formSubmitted = true;
-    //console.log(this.shades);
+    console.log(this.shades);
     if(shadeForm.valid){
-      this.shades.shadeDataList[this.irow].itemName=this.iname; 
+      //console.log(this.iname);
+      console.log(this.shades.shadeDataList);
+    /*  for(let i=0;i<this.shades.shadeDataList.length;i++)
+      {
+        this.shades.shadeDataList[i].itemName=this.iname[i];
+      } */
+      console.log(this.shades.shadeDataList);
       this.shadeService.addShadeData(this.shades).subscribe(
         data => {
           console.log(data);

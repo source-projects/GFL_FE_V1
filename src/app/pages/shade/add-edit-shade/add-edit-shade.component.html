@@ -112,7 +112,7 @@
                                     class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
                                     (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
                                     >
-                                    <option *ngFor="let s of supplierList" [value]="s.id" >{{s.itemName}}</option>
+                                    <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}}</option>
                                     </select>
                                    
                                 </ng-template>

@@ -1,4 +1,5 @@
 export class Shade {
+   [x: string]: any;
 
    constructor(
        public partyShadeNo:String,

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/@theme/services/common.service";
-import { QualityService } from "app/@theme/services/quality.service";
 import {SupplierService} from "app/@theme/services/supplier.service";
 import{ColorService} from "app/@theme/services/color.service";
 import {Color} from "app/@theme/model/color";
@@ -30,13 +29,13 @@ export class AddEditColorComponent implements OnInit {
     myColorId;
     index:any;
     user: any;
-    supplier:any[];
+    supplierList:any[];
+    supplierList1:any[];
     fabric: any[];
   constructor(
     private _route: ActivatedRoute,
    // private partyService: PartyService,
     private commonService: CommonService,
-    private qualityService: QualityService,
     private supplierService: SupplierService,
     private colorService: ColorService,
     private toastrService: NbToastrService,
@@ -45,10 +44,108 @@ export class AddEditColorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getSupplierList();
+    this.getAllSupplier();
+  }
+  getSupplierList(){
+    this.supplierService.getAllSupplier().subscribe(
+      data =>{
+        if (data["data"] && data["data"].length > 0) {
+          this.supplierList = data['data'];
+         // this.getAllSupplier();
+          console.log(this.supplierList);
+        }
+        else {
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No supplier added yet",
+           "Color",
+           config);
+       }
+     },
+      
+      error=>{
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No internet access or Server failuer",
+         "Color",
+         config);
+      }
+    )
+  }
+getAllSupplier(){
+  this.supplierService.getAllSupplierRates().subscribe(
+    data =>{
+      if (data["data"] && data["data"].length > 0) {
+        this.supplierList1 = data['data'];
+        //this.getAllSupplier();
+        console.log(this.supplierList1);
+      }
+      else {
+        //toaster
+        this.status = "danger"
+        const config = {
+         status: this.status,
+         destroyByClick: this.destroyByClick,
+         duration: this.duration,
+         hasIcon: this.hasIcon,
+         position: this.position,
+         preventDuplicates: this.preventDuplicates,
+       };
+       this.toastrService.show(
+         "No supplier added yet",
+         "Color",
+         config);
+     }
+   },
+    
+    error=>{
+      this.status = "danger"
+      const config = {
+       status: this.status,
+       destroyByClick: this.destroyByClick,
+       duration: this.duration,
+       hasIcon: this.hasIcon,
+       position: this.position,
+       preventDuplicates: this.preventDuplicates,
+     };
+     this.toastrService.show(
+       "No internet access or Server failuer",
+       "Color",
+       config);
+    }
+  )
+}
+  itemSelected(rowIndex){
+    console.log(rowIndex);
+    let id=this.color.colorDataList[rowIndex].itemId;
+    //console.log(id);
+    /*for(let s of this.supplierList){
+      if(id==s.itemName){
+        this.color.colorDataList[rowIndex].rate=s.rate;
+      }
+    }*/
   }
 
   onKeyUp(e,rowIndex, colIndex, colName) {
-    // console.log("onkeyup");
+   
      var keyCode = (e.keyCode ? e.keyCode : e.which);
      if (keyCode == 13){
        console.log("key 13");
@@ -66,15 +163,7 @@ export class AddEditColorComponent implements OnInit {
      if (rowIndex === this.color.colorDataList.length - 1) {
        let item = this.color.colorDataList[rowIndex];
        console.log(item);
-       /*if(colName == 'itemName'){
-         if (!item.itemName) {
-           this.toastrService.show(
-             "Enter item name",
-             'item name required',config);
-           return;
-         }
-       }
-        else*/ if(colName == 'quantityPerBox'){
+      if(colName == 'quantityPerBox'){
          if (!item.quantityPerBox) {
            this.toastrService.show(
              "Enter quantity per box",

@@ -76,7 +76,7 @@
 
           <div class="form-group col-md-4">
             <label class="required">Pin:</label>
-            <input type="text" ng-pattern-restrict="[A-Za-z]" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
+            <input type="text" ng-pattern-restrict="/^[A-Za-z]*$/" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="pincode" placeholder="Enter pin code"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('pincode').invalid )}">
             <div class="invalid-feedback"
