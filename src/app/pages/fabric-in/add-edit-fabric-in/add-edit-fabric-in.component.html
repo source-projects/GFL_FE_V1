@@ -5,22 +5,26 @@
         </nb-card-header>
         <nb-card-body>
             <div>
-                <form >
+                <form #myForm="ngForm">
                     <div class="row">
                         <div class="col-md-4">
                             <label class="required">Stock In Type:</label>
-                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control" [(ngModel)]='stockInType'
+                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control" [(ngModel)]='formValues.stockInType'
                                 required readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Party Name:</label>
-                            <select name="partyId" class="form-control" #partyId1="ngModel" [(ngModel)]='partyId' required>
-                                <option *ngFor="let p of this.party" [value]="p.id">{{p.partyName}}</option>
+                            <select name="partyId" class="form-control"  [(ngModel)]='formValues.partyId' required #partyId1="ngModel"
+                            [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}">
+                                <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
                             </select>
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (partyId1.invalid || partyId1.dirty || partyId1.touched)" >
+                                <span>Party name is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-2">
                             <label></label>
-                            <nb-checkbox name="batch" class="form-control" #batch1="ngModel" [(ngModel)]='batch' style="border: none;">Batch
+                            <nb-checkbox name="batch" class="form-control" #batch1="ngModel" [required]=false [(ngModel)]='formValues.batch' style="border: none;">Batch
                             </nb-checkbox>
                         </div>
                     </div>
@@ -29,19 +33,35 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label class="required">Bill No:</label>
-                            <input type="number" name="billNo"  class="form-control" #billNo1="ngModel" [(ngModel)]='billNo' required>
+                            <input type="number" name="billNo"  class="form-control" #billNo1="ngModel" [(ngModel)]='formValues.billNo' required
+                            [ngClass]="{'is-invalid': formSubmitted && billNo1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (billNo1.invalid || billNo1.dirty || billNo1.touched)" >
+                                <span>Bill no. is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Bill Date:</label>
-                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='billDate' required>
+                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='formValues.billDate' required
+                            [ngClass]="{'is-invalid': formSubmitted && billDate1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (billDate1.invalid || billDate1.dirty || billDate1.touched)" >
+                                <span>Bill date is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Challan No:</label>
-                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='chlNo' required>
+                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='formValues.chlNo' required
+                            [ngClass]="{'is-invalid': formSubmitted && chlNo1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (chlNo1.invalid || chlNo1.dirty || chlNo1.touched)" >
+                                <span>Challan no. is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="required">Challan Date:</label>
-                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='chlDate' required>
+                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='formValues.chlDate' required
+                            [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (chlDate1.invalid || chlDate1.dirty || chlDate1.touched)" >
+                                <span>Challan date is required.</span>
+                            </div>
                         </div>
                     </div>
                     <br><br>
@@ -49,11 +69,15 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label class="required">Lot:</label>
-                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='lot' required>
+                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='formValues.lot' required
+                            [ngClass]="{'is-invalid': formSubmitted && lot1.invalid}">
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (lot1.invalid || lot1.dirty || lot1.touched)" >
+                                <span>Lot is required.</span>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label>Remark:</label>
-                            <input type="text" name="remark" class="form-control" #remark1="ngModel" [(ngModel)]='remark' required>
+                            <input type="text" name="remark" class="form-control" #remark1="ngModel" [(ngModel)]='formValues.remark'>
                         </div>
                     </div>
                     <br><br>
@@ -61,25 +85,33 @@
                     <div class="row" >
                         <div class="col-md-12">
                             <ngx-datatable #table class="material common-table datatable-auto-height"
-                                [rows]="qualityListEmpty" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                [rows]="formValues.qualityListEmpty" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
                                 [columnMode]="'force'">
 
                                 <ngx-datatable-column name="Gr" prop="gr" [sortable]="false" [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                        <input class="tableForm" type="number" (keyup.enter)="onKeyUp(rowIndex,0,'gr')"
-                                            [id]="'qualityList'+rowIndex+'-0'" [(ngModel)]="row.gr" #tableGr1="ngModel"  name='tableGr{{rowIndex}}'>
+                                        <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'gr')"
+                                            [id]="'qualityList'+rowIndex+'-0'" [(ngModel)]="row.gr" #tableGr1="ngModel"  name='tableGr{{rowIndex}}' required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableGr1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableGr1.invalid)" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
                                     </ng-template>
                                 </ngx-datatable-column>
 
                                 <ngx-datatable-column name="Quality ID" [sortable]="false" [width]="300"
                                     prop="qualityId">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                        <select (change)="qualityIdSelected(rowIndex)" #tableQualityId1="ngModel" name='tableQualityId{{rowIndex}}'
-                                            class="tableForm" id="tableQualityId" [(ngModel)]="row.qualityId"
-                                            (keyup.enter)="onKeyUp(rowIndex,1,'qualityId')" [id]="'qualityList'+rowIndex+'-1'">
+                                        <select (change)="qualityIdSelected(rowIndex,1)" #tableQualityId1="ngModel" name='tableQualityId{{rowIndex}}'
+                                            class="tableForm" id="tableQualityId" [(ngModel)]="row.qualityId" required
+                                            (keyup)="onKeyUp($event,rowIndex,1,'qualityId')" [id]="'qualityList'+rowIndex+'-1'"
+                                            [ngClass]="{'is-invalid': formSubmitted && tableQualityId1.invalid}">
                                             <option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}} -
                                                 {{q.qualityName}}</option>
                                         </select>
+                                        <div class="invalid-feedback" *ngIf="formSubmitted && (tableQualityId1.invalid)" style="display: inline-block;">
+                                            <span>Required</span>
+                                        </div>
                                     </ng-template>
                                 </ngx-datatable-column>
 
@@ -87,8 +119,12 @@
                                     [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                         <input class="tableForm" type="text" #tableQualityName1="ngModel" name='tableQualityName{{rowIndex}}'
-                                            [(ngModel)]="row.qualityName" (keyup.enter)="onKeyUp(rowIndex,2,'qualityName')"
-                                            [id]="'qualityList'+rowIndex+'-2'" disabled>
+                                            [(ngModel)]="row.qualityName" (keyup)="onKeyUp($event,rowIndex,2,'qualityName')" required
+                                            [id]="'qualityList'+rowIndex+'-2'" readonly
+                                            [ngClass]="{'is-invalid': formSubmitted && tableQualityName1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableQualityName1.invalid)" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
                                     </ng-template>
                                 </ngx-datatable-column>
 
@@ -96,30 +132,76 @@
                                     [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                         <input class="tableForm" type="text" #tableQualityType1="ngModel" name='tableQualityType{{rowIndex}}'
-                                            [(ngModel)]="row.qualityType" (keyup.enter)="onKeyUp(rowIndex,3,'qualityType')"
-                                            [id]="'qualityList'+rowIndex+'-3'" disabled>
+                                            [(ngModel)]="row.qualityType" (keyup)="onKeyUp($event,rowIndex,3,'qualityType')"
+                                            [id]="'qualityList'+rowIndex+'-3'" readonly required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableQualityType1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableQualityType1.invalid)" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
                                     </ng-template>
                                 </ngx-datatable-column>
 
                                 <ngx-datatable-column name="Meter" prop="meter" [sortable]="false" [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                         <input class="tableForm" type="number" #tableMeter1="ngModel" name='tableMeter{{rowIndex}}'
-                                            [(ngModel)]="row.meter" (keyup.enter)="onKeyUp(rowIndex,4,'meter')"
-                                            [id]="'qualityList'+rowIndex+'-4'">
+                                            [(ngModel)]="row.meter" (keyup)="onKeyUp($event,rowIndex,4,'meter')" disabled (input)="calculateWeight(rowIndex,4)"
+                                            [id]="'qualityList'+rowIndex+'-4'" required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableMeter1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableMeter1.invalid )" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
                                     </ng-template>
                                 </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Weight" prop="weight" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" #tableWeight1="ngModel" name='tableWeight{{rowIndex}}'
+                                            [(ngModel)]="row.weight" (keyup)="onKeyUp($event,rowIndex,5,'weight')" disabled
+                                            [id]="'qualityList'+rowIndex+'-5'" (input)="calculateMeter(rowIndex,4)" required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableWeight1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableWeight1.invalid )" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                
+                                <ngx-datatable-column name="No. of Cones/ Taka" prop="noOfCones" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" #tableNoOfCones1="ngModel" name='tableNoOfCones{{rowIndex}}'
+                                            [(ngModel)]="row.noOfCones" (keyup)="onKeyUp($event,rowIndex,6,'noOfCones')"
+                                            [id]="'qualityList'+rowIndex+'-6'" required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableNoOfCones1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableNoOfCones1.invalid )" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="No. of Boxes" prop="noOfBox" [sortable]="false" [width]="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                        <input class="tableForm" type="number" #tableNoOfBox1="ngModel" name='tableNoOfBox{{rowIndex}}'
+                                            [(ngModel)]="row.noOfBox" (keyup)="onKeyUp($event,rowIndex,7,'noOfBox')"
+                                            [id]="'qualityList'+rowIndex+'-7'" required
+                                            [ngClass]="{'is-invalid': formSubmitted && tableNoOfBox1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (tableNoOfBox1.invalid)" style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column name="Action" sortable="false">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template  let-rowIndex="rowIndex">
+                                        <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                                    </ng-template>
+                                </ngx-datatable-column>
+
                             </ngx-datatable>
                         </div>
                     </div>
                     <br><br>
                     <div class="row">
-                        <div class="col-md-1">
-                            <button type="button " class="btn btn-primary btn-sm" (click)="onSubmit();$event.preventDefault()">Add</button> 
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-primary btn-sm"
-                                routerLink="/pages/fabric-in">Cancel</button>
-                        </div>
+                            <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/fabric-in" >Cancel</button>
                     </div>
 
                 </form>
