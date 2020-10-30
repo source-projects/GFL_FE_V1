@@ -141,13 +141,13 @@
                                 [id]="'supplierList'+rowIndex+'-4'" >
                         </ng-template>
                     </ngx-datatable-column>
-                   <!-- <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
+                   <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #amount1="ngModel" name='amount{{rowIndex}}'
                                 [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
                                 [id]="'supplierList'+rowIndex+'-4'" >
                         </ng-template>
-                    </ngx-datatable-column>-->
+                    </ngx-datatable-column>
                     <ngx-datatable-column name="Action"  [sortable]="false" [width]="200">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>

@@ -11,7 +11,7 @@ export class ColorService {
   getColor():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/color/all');
   }
-  addColor():any{
+  addColor(colorData):any{
     return this.httpClient.get(this.commonService.envUrl()+'api/color');
   }
    

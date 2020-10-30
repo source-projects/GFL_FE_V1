@@ -41,7 +41,9 @@ export class ShadeComponent implements OnInit {
     //getShadeList(){
   this.shadeService.getShadeMastList().subscribe(
     data =>{
-      this.shadeList = data['data']
+      console.log(data['data']);
+      this.shadeList = data['data'];
+    //  this.shadeList.shadeD
       console.log(this.shadeList);
     },
     error=>{

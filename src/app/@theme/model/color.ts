@@ -14,7 +14,8 @@ export class Color {
           quantity:Number,
           quantityPerBox:Number
           quantityUnit:String,
-          rate:Number
+          rate:Number,
+
          }],
          public ddate:String,
          public id:Number,

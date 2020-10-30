@@ -23,8 +23,10 @@ export class AddEditShadeComponent implements OnInit {
   preventDuplicates = false;
   status
 
-  shades=new Shade('','','','','','','','','','','shailaja',0,0,0,
-    [{'itemName':null,'concentration':null,'supplierName':null,'rate':null,'amount':null,'supplierId':0,'supplierItemId':0}],0);
+  shades=new Shade('','','','','','','','0','','','shailaja',0,0,0,0,
+    [{'itemName':null,'concentration':null,'supplierName':null,'rate':null,'amount':null,'supplierId':0,'supplierItemId':0}]);
+    //shades=new Shade();
+
     
   index:any;
   formSubmitted: boolean = false;
@@ -67,6 +69,7 @@ export class AddEditShadeComponent implements OnInit {
     this.getProcessList();
     this.getSupplierList();
     this.getCurrentShade();
+   
   //  console.log(this.shades.shadeDataList);
   }
 
@@ -189,29 +192,9 @@ export class AddEditShadeComponent implements OnInit {
   
         this.shadeService.getCurrentShadeData(this.myShadeId).subscribe(
           data => {
-            this.currentShade = data['data']
-            console.log(this.currentShade);
-            let counter=this.currentShade.shadeDataList.length;
-            console.log(counter);
-            
-            this.shades.partyShadeNo=this.currentShade.partyShadeNo;
-            this.shades.processName=this.currentShade.processName;
-            this.shades.qualityId=this.currentShade.qualityId;
-            this.shades.qualityName=this.currentShade.qualityName;
-            this.shades.qualityType=this.currentShade.qualityType;
-            this.shades.partyName=this.currentShade.partyName;
-            this.shades.colorTone=this.currentShade.colorTone;
-            this.shades.labColorNo=this.currentShade.labColorNo;
-            this.shades.category=this.currentShade.category;
-            this.shades.remark=this.currentShade.remark;
-            for(let i=0;i<counter;i++){
-           this.shades.shadeDataList[i].itemName=this.currentShade.itemName;
-            this.shades.shadeDataList[i].concentration=this.currentShade.concentration;
-            this.shades.shadeDataList[i].supplierName=this.currentShade.supplierName;
-            this.shades.shadeDataList[i].rate=this.currentShade.rate;
-            this.shades.shadeDataList[i].amount=this.currentShade.amount;
-          }
-
+            this.shades = data['data']
+            console.log(this.shades);
+           
           },
           error => {
             //toaster

@@ -136,7 +136,7 @@ getAllSupplier(){
   itemSelected(rowIndex){
     console.log(rowIndex);
     let id=this.color.colorDataList[rowIndex].itemId;
-    //console.log(id);
+    console.log(id);
     /*for(let s of this.supplierList){
       if(id==s.itemName){
         this.color.colorDataList[rowIndex].rate=s.rate;
@@ -217,4 +217,52 @@ getAllSupplier(){
    }
    }
 
-}
+   onSubmit(colorForm){
+    this.formSubmitted = true;
+    
+    if(colorForm.valid){
+      //console.log(this.iname);
+      console.log(this.color.colorDataList);
+    /*  for(let i=0;i<this.shades.shadeDataList.length;i++)
+      {
+        this.shades.shadeDataList[i].itemName=this.iname[i];
+      } */
+      console.log(this.color.colorDataList);
+      this.colorService.addColor(this.color).subscribe(
+        data => {
+          console.log(data);
+          this.status = "primary"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+           };
+           this.toastrService.show(
+            "Color Added Succesfully",
+            "Color",
+            config);
+          this.route.navigate(["/pages/color"]);
+        },
+        error => {
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Color",
+           config);
+        }
+      )
+    }}
+   }
+
+
