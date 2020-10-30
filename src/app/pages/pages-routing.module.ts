@@ -44,6 +44,11 @@ const routes: Routes = [{
         .then(m => m.ColorModule),
     },
     {
+      path: 'program',
+      loadChildren: () => import('./program/program.module')
+        .then(m => m.ProgramModule),
+    },
+    {
       path: 'shade',
       loadChildren: () => import('./shade/shade.module')
         .then(m => m.ShadeModule),
