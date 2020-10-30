@@ -222,7 +222,10 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   public updateSupplierRateInfo(myForm){
     this.formSubmitted=true
+    this.user = this.commonService.getUser();
     this.formValues.id=this.formValues.supplierRates[0].supplierId
+    this.formValues.supplierRates[0].createdBy=this.user.toString()
+    this.formValues.supplierRates[0].updatedBy=this.user.toString()
     this.formValues.supplierRates.forEach(element => {
       delete this.formValues.supplierRates[0].discountedRate
       delete this.formValues.supplierRates[0].gstRate
