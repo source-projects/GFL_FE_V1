@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies and create a build
         run: |
           npm install
-          npm run build
+          npm run build --prod
         
 #       - name: message to slack
 #         run: |
@@ -31,6 +31,6 @@ jobs:
       - name: slack the message for faliure
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }}'s  pr to development"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }} pr to development"}' https://hooks.slack.com/services/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
           
           

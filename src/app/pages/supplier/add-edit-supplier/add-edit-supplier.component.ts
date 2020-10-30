@@ -5,7 +5,7 @@ import { Validators } from '@angular/forms';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
 import {ActivatedRoute, Router } from '@angular/router';
-import { id } from '@swimlane/ngx-charts';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-add-edit-supplier',
@@ -14,14 +14,24 @@ import { id } from '@swimlane/ngx-charts';
   providers:[Location]
 })
 export class AddEditSupplierComponent implements OnInit {
+   //toaster config
+   config: NbToastrConfig;
+   destroyByClick = true;
+   duration = 2000;
+   hasIcon = true;
+   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+   preventDuplicates = false;
+   status: NbComponentStatus = 'primary';
+   
   public createdBy:string 
   user:any
   currentSupplier
   public userId:number 
   addSupplier:FormGroup;
+  mySupplierId
   formSubmitted:boolean=false;
 
-  constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute) { }
+  constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute, private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
     
@@ -33,16 +43,13 @@ export class AddEditSupplierComponent implements OnInit {
       "paymentTerms": new FormControl(null,Validators.required),
       "remark": new FormControl(null),
       "userId": new FormControl(this.user.userId),
-      "createdBy": new FormControl(this.user.userId)
-      
+      "createdBy": new FormControl(this.user.userId) 
     }) 
-    let myResponse=this._route.snapshot.paramMap.get('id');
-    if(myResponse!=null){
-      console.log(myResponse)
-      this.supplierService.getAllSupplierById(myResponse).subscribe(
+     this.mySupplierId=this._route.snapshot.paramMap.get('id');
+    if(this.mySupplierId!=null){
+      this.supplierService.getAllSupplierById(this.mySupplierId).subscribe(
         data=>{
           this.currentSupplier=data['data']
-          console.log(this.addSupplier.value)
           this.addSupplier.patchValue({
             "supplierName": this.currentSupplier.supplierName,
             "discountPercentage":this.currentSupplier.discountPercentage,             
@@ -50,18 +57,28 @@ export class AddEditSupplierComponent implements OnInit {
             "paymentTerms": this.currentSupplier.paymentTerms,
             "remark": this.currentSupplier.remark,
             "userId": this.currentSupplier.userId,
-            "createdBy": this.currentSupplier.user
+            "createdBy": this.currentSupplier.user,
+            "id":this.mySupplierId
            })
-          console.log(data)
         },
         error=>{
-          console.log(error.Message)
+          //toaster
+           this.status = "danger"
+           const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "No internet access or Server failuer",
+            "Supplier",
+            config);
         }
       )
      }
-    else{
-      console.log("Error");
-    }
   }
 
   public addSupplierInfo():any{
@@ -69,26 +86,93 @@ export class AddEditSupplierComponent implements OnInit {
     if(this.addSupplier.valid){
       this.supplierService.addSupplierInSystem(this.addSupplier.value).subscribe(
         data =>{
-          alert("Supplier Added Successfully")
-          setTimeout(()=>{
-            this.router.navigate(['pages/supplier']);
-          },1000)
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Supplier Added Succesfully",
+            "Supplier",
+            config);
+          this.router.navigate(['pages/supplier']);
+          
         },
         error=>{
-          console.log("Some Error Occure");
-          console.log(error.errorMessage);
-          alert("Some Error Occured");
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Supplier",
+           config);
         }
       )
     }
     else{
       return;  
     }
-    console.log("submitted fdfsgsd");
   }
 
   public goBackToPreviousPage():any{
-    this.location.back();
+    this.router.navigate(['pages/supplier']);
+  }
+
+  updateSupplier(){
+    this.formSubmitted=true;
+    if(this.addSupplier.valid){
+      let body = {
+        ...this.addSupplier.value,
+        id:this.mySupplierId
+      }
+      this.supplierService.updateSupplierById(body).subscribe(
+        data=>{
+          //toaster
+          this.status = "primary"
+          const config = {
+            status: this.status,
+            destroyByClick: this.destroyByClick,
+            duration: this.duration,
+            hasIcon: this.hasIcon,
+            position: this.position,
+            preventDuplicates: this.preventDuplicates,
+          };
+          this.toastrService.show(
+            "Supplier Updated Succesfully",
+            "Supplier",
+            config);
+          this.router.navigate(['pages/supplier']);
+        },
+        error=>{
+          //toaster
+          this.status = "danger"
+          const config = {
+           status: this.status,
+           destroyByClick: this.destroyByClick,
+           duration: this.duration,
+           hasIcon: this.hasIcon,
+           position: this.position,
+           preventDuplicates: this.preventDuplicates,
+         };
+         this.toastrService.show(
+           "No internet access or Server failuer",
+           "Supplier",
+           config);
+        }
+      )
+    }
   }
 
 }
