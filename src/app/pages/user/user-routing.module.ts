@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShadeComponent } from './shade.component';
-import { AddEditShadeComponent } from './add-edit-shade/add-edit-shade.component';
+import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
+import { UserComponent } from './user.component';
 
 const routes: Routes = [
   {
     path:'',
-    component:ShadeComponent
+    component:UserComponent
   },
   {
     path:'add',
-    component:AddEditShadeComponent
+    component:AddEditUserComponent
   },
   {
     path:'edit/:id',
-    component:AddEditShadeComponent
+    component:AddEditUserComponent
   }
 ];
 
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ShadeRoutingModule { }
+export class UserRoutingModule { }

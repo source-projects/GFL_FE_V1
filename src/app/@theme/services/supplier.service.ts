@@ -30,4 +30,7 @@ export class SupplierService {
   updateSupplierById(supplierData){
     return this.httpClient.put(this.commonService.envUrl()+'api/supplier',supplierData);
   }
+  getAllSupplierRates(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/supplier/rates/all'); 
+  }
 }

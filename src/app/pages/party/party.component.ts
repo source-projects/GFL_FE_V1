@@ -62,7 +62,6 @@ export class PartyComponent implements OnInit {
       size: "sm",
     });
     modalRef.result.then((result) => {
-      console.log(result);
       if (result) {
         this.partyService.deletePartyDetailsById(id).subscribe(
           (data) => {
