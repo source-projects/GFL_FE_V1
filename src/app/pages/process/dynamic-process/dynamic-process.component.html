@@ -1,0 +1,41 @@
+<div class="container">
+    <nb-card>
+        <nb-card-header>
+            <h2>DYNAMIC PROCESS</h2>
+        </nb-card-header>
+        <nb-card-body>
+            <form #myForm>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="required">Process Name:</label>
+                        <input type="text" name="processName" class="form-control" [(ngModel)]='formValues.processName'
+                            required #processName1="ngModel"
+                            [ngClass]="{'is-invalid': formSubmitted && processName1.invalid}">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (processName1.invalid || processName1.dirty || processName1.touched)">
+                            <span>Process name is required.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="required">Time(minutes):</label>
+                        <input type="text" name="time" class="form-control" [(ngModel)]='formValues.time' required 
+                            #time1="ngModel" [ngClass]="{'is-invalid': formSubmitted && time1.invalid}"
+                            (keypress)="numberOnly($event)">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (time1.invalid || time1.dirty || time1.touched)">
+                            <span>Time is required.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <i _ngcontent-c18="" class="form-control fa fa-plus-circle mr-2" (click)="onAddStep()"
+                            style="border:none;color:#0e82f5;font-size:25px;cursor: pointer;margin: 23px;"></i>
+                    </div>
+                </div>
+                <br><br>
+                
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>

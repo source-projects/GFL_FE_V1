@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Step</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form #stepForm="ngForm">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label>Step Name</label>
+          <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name="ngModel">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="errors">
+            <div *ngIf="name.errors && name.errors.required">
+              Step Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label>Step Position</label>
+            <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo"
+              #position="ngModel" required>
+              <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
+            </select>
+            <div *ngIf="position.invalid && (position.dirty || position.touched)" class="errors">
+              <div *ngIf="position.errors && position.errors.required">
+                Step Position is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-5" *ngIf="stepList.length">
+          <h5>Current Steps:</h5>
+          <div *ngFor="let i of stepList;let z=index">
+            <span>{{z+1}}.</span>&nbsp;<span>{{i.stepName}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button nbButton [disabled]="stepForm.invalid" (click)="onCreate()">{{submitButton}}</button>
+      <button nbButton (click)="activeModal.close(false)">Cancel</button>
+    </div>
+  </form>

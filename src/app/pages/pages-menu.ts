@@ -48,6 +48,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/supplier',
   },
   {
+    title: 'Process',
+    icon: 'home-outline',
+    link: '/pages/process',
+  },
+  {
     title: 'FEATURES',
     group: true,
   },

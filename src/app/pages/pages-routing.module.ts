@@ -54,6 +54,11 @@ const routes: Routes = [{
         .then(m => m.SupplierModule),
     },
     {
+      path: 'process',
+      loadChildren: () => import('./process/process.module')
+        .then(m => m.ProcessModule),
+    },
+    {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
         .then(m => m.FormsModule),
