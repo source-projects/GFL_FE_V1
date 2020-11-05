@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="this.myShadeId == null; else updateS">
+        <div *ngIf="this.currentShadeId == null; else updateS">
             <h2>ADD SHADE</h2>
         </div>
         <ng-template #updateS>
@@ -164,9 +164,9 @@
                 <br><br>
                 <div class="row">
                     <div>
-                        <button *ngIf="this.myShadeId == null" type="submit"  class="btn btn-primary btn-sm"
-                            style="margin-right:20px" (click)="onSubmit(shadeForm)">Save</button>
-                        <button *ngIf="this.myShadeId != null" type="button" (click)="updateShade(shadeForm)"
+                        <button *ngIf="this.currentShadeId == null" type="submit"  class="btn btn-primary btn-sm"
+                            style="margin-right:20px" (click)="addShade(shadeForm)">Save</button>
+                        <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                             class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
                         <button class="btn btn-primary btn-sm" routerLink='/pages/shade'>Cancel</button>
                     </div>

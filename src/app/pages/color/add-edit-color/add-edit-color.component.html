@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="this.myColorId == null; else updateC">
+        <div *ngIf="this.currentColorId == null; else updateC">
             <h2>ADD COLOR STOCK</h2>
         </div>
         <ng-template #updateC>
@@ -160,9 +160,9 @@
         <br><br>
         <div class="row">
             <div>
-                <button *ngIf="this.myColorId == null" type="submit" class="btn btn-primary btn-sm"
-                    style="margin-right:20px" (click)="onSubmit(colorForm)">Save</button>
-                <button *ngIf="this.myColorId != null" type="button" (click)="updateColor(colorForm)"
+                <button *ngIf="this.currentColorId == null" type="submit" class="btn btn-primary btn-sm"
+                    style="margin-right:20px" (click)="addColor(colorForm)">Save</button>
+                <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
                     class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
                 <button class="btn btn-primary btn-sm" routerLink='/pages/color'>Cancel</button>
             </div>

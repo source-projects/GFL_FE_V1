@@ -1,25 +1,24 @@
 export class Program{
-
-    constructor(
-   public id: Number,
-   public partyId: Number,
-   public priority: string,
-   public programGivenBy:string ,
-   public quality_entry_id: number,
-   public qualityId: number,
-   public qualityName: string,
-   public qualityType: string,
-   public remark: string,
-   public programRecord:[{
-        batch: string
-        colour_tone: string
-        id: string
-        lot_no: string
-        partyShadeNo: string
-        programControlId:string
-        quantity: string
-        remark: string
-        shade_no: string
-    }]
-    ){}
+    id: Number
+    partyId: Number
+    priority: string
+    programGivenBy:string 
+    quality_entry_id: number
+    qualityId: number
+    qualityName: string
+    qualityType: string
+    remark: string
+    programRecord:ProgramRecord[]
 }
+export class ProgramRecord{
+    batch: number
+    colour_tone: string
+    id: number
+    lot_no: number
+    partyShadeNo: number
+    programControlId:number
+    quantity: number
+    remark: string
+    shade_no: number
+}
+

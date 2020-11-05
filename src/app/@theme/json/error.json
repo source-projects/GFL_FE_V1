@@ -1,0 +1,9 @@
+{"Serever_Error":"No internet access or Server failuer",
+ "Internal_Error":"Something Went Wrong",
+ "Add_Success":"Added SuccessFully!",
+ "Update_Success":"Update Successfully",
+ "Add_Error":"Something Went Wrong. Not Added Successfully",
+ "Update_Error":"Something Went Wrong. Not Update Successfully",
+ "Delete":"Delete Successully",
+ "Not_added":"Nothing Added Yet"
+}
