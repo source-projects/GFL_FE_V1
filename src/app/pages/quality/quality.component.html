@@ -12,7 +12,8 @@
         </nb-card-header>
         <nb-card-body>
             <!--  ngx- DataTable  -->
-            <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" >
+            <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" 
+            [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
                 <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
                 <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
                 <ngx-datatable-column name="Quality Type" prop="qualityType"></ngx-datatable-column>

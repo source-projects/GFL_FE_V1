@@ -58,6 +58,8 @@
                 [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('partyId').invalid )}">
                     <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
                 </select>
+                <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
+                </ng-select> -->
                 <div class="invalid-feedback" *ngIf="formSubmitted && (addEditQualityForm.get('partyId').invalid || (addEditQualityForm.get('partyId').dirty || addEditQualityForm.get('partyId').touched))">
                     <span>Quality type is required</span>
                 </div>

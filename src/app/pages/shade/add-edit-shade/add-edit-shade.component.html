@@ -24,12 +24,13 @@
                     
                     <div class="form-group col-md-4">
                         <label class="required">Process Name:</label>
-                        <select class="form-control" aria-placeholder="Select process name" [(ngModel)]="shades.processName"
-                            #processName1="ngModel" name="processName" required
-                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }">
-                            <option value="Process 1">Process1</option>
-                            <option value="Process 2">Process2</option>
-                        </select>
+                        <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processName"
+                            #processName1="ngModel" name="processName" required [items]="processList"
+                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }" bindLabel="processName" 
+                            bindValue="id">
+                            
+                        </ng-select>
+                    
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (processName1.invalid || (processName1.dirty || processName1.untouched) )">
                         
@@ -41,13 +42,13 @@
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label class="required">Quality Id:</label>
-                        <select class="form-control" placeholder="Select quality id" [(ngModel)]="shades.qualityId"
+                        <ng-select placeholder="Select quality id" [(ngModel)]="shades.qualityId"
                             #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected(shades.qualityId)" required
                             [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }" >
-                            <option *ngFor="let q of quality" [value]="q.id">
+                            <ng-option *ngFor="let q of quality" [value]="q.id">
                                 {{q.qualityId}}  :  {{q.qualityName}}
-                            </option>
-                        </select>
+                            </ng-option>
+                        </ng-select>
                         <div class="invalid-feedback"
                         *ngIf="formSubmitted && (qualityId1.invalid || (qualityId1.dirty || qualityId1.untouched) )">
                     

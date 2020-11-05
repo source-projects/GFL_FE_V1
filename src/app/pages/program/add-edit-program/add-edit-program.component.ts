@@ -32,6 +32,11 @@ export class AddEditProgramComponent implements OnInit {
   party:any[];
   qualityList:any[];
   partyShade:any;
+
+  priorityData=[{id:1,name:'Very High'},
+  {id:2,name:'High'},
+  {id:3,name:'Medium'},
+  {id:4 ,name:'Low'}]
   
   //for knowing the row index
   index:any;
