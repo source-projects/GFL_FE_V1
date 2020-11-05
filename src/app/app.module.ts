@@ -15,11 +15,14 @@ import {
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbGlobalPhysicalPosition,
   NbMenuModule,
   NbSidebarModule,
+  NbToastrConfig,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,12 +36,17 @@ import {
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
-    NbToastrModule.forRoot(),
+    NbToastrModule.forRoot(
+    ),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      preventDuplicates: true,
+    }),
   ],
   bootstrap: [AppComponent],
 })

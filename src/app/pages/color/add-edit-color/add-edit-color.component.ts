@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/@theme/services/common.service";
 import {SupplierService} from "app/@theme/services/supplier.service";
 import{ColorService} from "app/@theme/services/color.service";
-import {Color} from "app/@theme/model/color";
+import {Color, ColorDataList} from "app/@theme/model/color";
+import * as errorData from 'app/@theme/json/error.json';
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
@@ -21,26 +23,39 @@ export class AddEditColorComponent implements OnInit {
    preventDuplicates = false;
    status
 
-   color=new Color(null,'','','','',
-    [{'id':null,'itemId':null,'noOfBox':null,'purchaseId':null,'quantity':null,'quantityPerBox':0,'quantityUnit':'',
-    'rate':null}],'',null,null,'',null,'',null);
+   public errorData: any = (errorData as any).default;
 
+   color:Color=new Color();
+   colorDataList:ColorDataList=new ColorDataList();
+
+    //Form Validation
     formSubmitted: boolean = false;
-    myColorId;
+    
+    //to store current color Id
+    currentColorId;
+
     index:any;
+
+    //To store usreID
     user: any;
+
+    //To Store Supplier Data
     supplierList:any[];
-    supplierList1:any[];
+
+    //To store Supplier Rate Data
+    supplierListRate:any[];
+
+    //To Store fabric Data
     fabric: any[];
+
   constructor(
     private _route: ActivatedRoute,
-   // private partyService: PartyService,
     private commonService: CommonService,
     private supplierService: SupplierService,
     private colorService: ColorService,
     private toastrService: NbToastrService,
     private route: Router,
- //   public vcRef: ViewContainerRef, 
+    private toastr:ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -50,103 +65,51 @@ export class AddEditColorComponent implements OnInit {
   getSupplierList(){
     this.supplierService.getAllSupplier().subscribe(
       data =>{
-        if (data["data"] && data["data"].length > 0) {
-          this.supplierList = data['data'];
-         // this.getAllSupplier();
-          console.log(this.supplierList);
+        if(data['success']){
+          if (data["data"] && data["data"].length > 0) {
+            this.supplierList = data['data'];
+          }
+          else {
+            this.toastr.error(errorData.Not_added)
+         }
         }
-        else {
-          //toaster
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No supplier added yet",
-           "Color",
-           config);
-       }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
      },
-      
       error=>{
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Color",
-         config);
+        this.toastr.error(errorData.Serever_Error)
       }
     )
   }
+
 getAllSupplier(){
   this.supplierService.getAllSupplierRates().subscribe(
     data =>{
-      if (data["data"] && data["data"].length > 0) {
-        this.supplierList1 = data['data'];
-        //this.getAllSupplier();
-        console.log(this.supplierList1);
+      if(data['success']){
+        if (data["data"] && data["data"].length > 0) {
+          this.supplierListRate = data['data'];
+        }
+        else {
+          this.toastr.error(errorData.Not_added)
+       }
       }
-      else {
-        //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No supplier added yet",
-         "Color",
-         config);
-     }
-   },
-    
+      else{
+        this.toastr.error(errorData.Internal_Error)
+      }
+    },
     error=>{
-      this.status = "danger"
-      const config = {
-       status: this.status,
-       destroyByClick: this.destroyByClick,
-       duration: this.duration,
-       hasIcon: this.hasIcon,
-       position: this.position,
-       preventDuplicates: this.preventDuplicates,
-     };
-     this.toastrService.show(
-       "No internet access or Server failuer",
-       "Color",
-       config);
+      this.toastr.error(errorData.Serever_Error)
     }
   )
 }
+
   itemSelected(rowIndex){
-    console.log(rowIndex);
     let id=this.color.colorDataList[rowIndex].itemId;
-    console.log(id);
-    /*for(let s of this.supplierList){
-      if(id==s.itemName){
-        this.color.colorDataList[rowIndex].rate=s.rate;
-      }
-    }*/
   }
 
   onKeyUp(e,rowIndex, colIndex, colName) {
-   
-     var keyCode = (e.keyCode ? e.keyCode : e.which);
+    var keyCode = (e.keyCode ? e.keyCode : e.which);
      if (keyCode == 13){
        console.log("key 13");
        //toaster
@@ -217,52 +180,23 @@ getAllSupplier(){
    }
    }
 
-   onSubmit(colorForm){
-    this.formSubmitted = true;
-    
+   addColor(colorForm){
+    this.formSubmitted = true;  
     if(colorForm.valid){
-      //console.log(this.iname);
-      console.log(this.color.colorDataList);
-    /*  for(let i=0;i<this.shades.shadeDataList.length;i++)
-      {
-        this.shades.shadeDataList[i].itemName=this.iname[i];
-      } */
-      console.log(this.color.colorDataList);
       this.colorService.addColor(this.color).subscribe(
         data => {
-          console.log(data);
-          this.status = "primary"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-           };
-           this.toastrService.show(
-            "Color Added Succesfully",
-            "Color",
-            config);
-          this.route.navigate(["/pages/color"]);
+          if(data['sucess']){
+            this.route.navigate(["/pages/color"]);
+            this.toastr.success(errorData.Add_Success)
+          }
+          else{
+            this.toastr.error(errorData.Internal_Error)
+          }
         },
         error => {
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Color",
-           config);
+          this.toastr.error(errorData.Serever_Error)
         }
       )
-    }}
-   }
-
-
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-supplier',
@@ -11,48 +11,29 @@ import { SupplierService } from 'app/@theme/services/supplier.service';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent implements OnInit {
-   //toaster config
-   config: NbToastrConfig;
-   destroyByClick = true;
-   duration = 2000;
-   hasIcon = true;
-   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-   preventDuplicates = false;
-   status: NbComponentStatus = 'primary';
-   
   tableStyle="bootstrap";
-  supplierList
+
+  public errorData: any = (errorData as any).default;
+
+  //to get SupplierList
+  supplierList=[];
   
-  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastrService: NbToastrService) { }
+  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
    
   ngOnInit(): void {
-    console.log("OnInit")
+    this.getSupplierList()
+  }
+
+  public getSupplierList(){
     this.supplierService.getAllSupplier().subscribe(
       data=>{
         this.supplierList=data['data']
-        console.log(data)
+        this.router.navigate(['pages/supplier']);
       },
       error=>{
         //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Supplier",
-         config);
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }
-
-  
-
-  
-
 }

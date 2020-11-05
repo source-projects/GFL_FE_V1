@@ -4,7 +4,9 @@ import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastr
 import { FabricInService } from 'app/@theme/services/fabric-in.service';
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { sample } from 'rxjs/operators';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
+import { FabricIn, QualityListEmpty } from 'app/@theme/model/fabric-in';
 
 @Component({
   selector: "ngx-add-edit-fabric-in",
@@ -21,44 +23,30 @@ export class AddEditFabricInComponent implements OnInit {
   preventDuplicates = false;
   status
 
-  //form valiables...
-  formValues = {
-    stockInType: "Fabric",
-    partyId:null,
-    batch:false,
-    billNo:null,
-    billDate:null,
-    chlNo:null,
-    chlDate:null,
-    lot:null,
-    remark:null,
-    qualityListEmpty:[
-      {
-        id: null,
-        gr: null,
-        qualityId: null,
-        qualityName: null,
-        qualityType: null,
-        meter: null,
-        weight:null,
-        noOfCones: null,
-        noOfBox: null
-      }
-    ]
-  };
+  public errorData: any = (errorData as any).default;
 
-  qualityList;
+  //form valiables...
+  formValues: FabricIn=new FabricIn();
+  qualityListEmpty:QualityListEmpty=new QualityListEmpty();
+
+  //to store Quality Data
+  qualityList:any;
+
+  //to Store Party Data
   party: any[];
+
   index: any;
+
+  //form Validation
   formSubmitted: boolean = false;
   
-
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
     private toastrService: NbToastrService,
     private fabricService: FabricInService,
-    private route: Router
+    private route: Router,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -75,12 +63,52 @@ export class AddEditFabricInComponent implements OnInit {
     document.getElementById(this.index = "qualityList" + (rowIndex) + "-5").removeAttribute("disabled");
   }
 
+  getPartyList() {
+    this.partyService.getAllPartyList().subscribe(
+      (data) => {
+        if(data['success']){
+          if (data["data"] && data["data"].length > 0) {
+            this.party = data["data"];
+          } else {
+             this.toastr.error(errorData.Add_Error)
+          }
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error)
+      }
+    );
+  }
+
+  getQualityList() {
+    this.qualityService.getallQuality().subscribe(
+      (data) => {
+        if(data['success']){
+          if (data["data"] && data["data"].length > 0) {
+            this.qualityList = data["data"];
+          } else {
+            this.toastr.error(errorData.Not_added)
+          }
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error)
+      }
+    );
+  }
+
   //calculcte weight field from meter
   calculateWeight(rowIndex){
     //w = (m/100) * wt 
     let w;
     let id = this.formValues.qualityListEmpty[rowIndex].qualityId;
-    let m = this.formValues.qualityListEmpty[rowIndex].meter;
+    let m:any = this.formValues.qualityListEmpty[rowIndex].meter;
     this.qualityList.forEach(function (quality) {
       if(quality.id == id){
         let wtPer100m = quality.wtPer100m;
@@ -94,7 +122,7 @@ export class AddEditFabricInComponent implements OnInit {
   calculateMeter(rowIndex){
     let m;
     let id = this.formValues.qualityListEmpty[rowIndex].qualityId;
-    let w = this.formValues.qualityListEmpty[rowIndex].weight;
+    let w:any = this.formValues.qualityListEmpty[rowIndex].weight;
     this.qualityList.forEach(function (quality) {
       if(quality.id == id){
         let wtPer100m = quality.wtPer100m;
@@ -108,7 +136,6 @@ export class AddEditFabricInComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13){
-
       //toaster
       this.status = "danger"
       const config = {
@@ -119,7 +146,6 @@ export class AddEditFabricInComponent implements OnInit {
       position: this.position,
       preventDuplicates: this.preventDuplicates,
     };
-
       this.index = "qualityList" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.formValues.qualityListEmpty.length - 1) {
         let item = this.formValues.qualityListEmpty[rowIndex];
@@ -193,6 +219,26 @@ export class AddEditFabricInComponent implements OnInit {
     }
   }
 
+  addFabricIn(myForm) {
+    this.formSubmitted = true;
+    if(myForm.valid){
+      this.fabricService.saveFabricIn(this.formValues).subscribe(
+        data=>{
+          if(data['success']){
+            this.route.navigate(["/pages/fabric-in"]);
+            this.toastr.success(errorData.Add_Success)
+          }
+          else{
+            this.toastr.error(errorData.Add_Error)
+          }
+        },
+        error=>{
+          this.toastr.error(errorData.Add_Error)
+        }
+      )
+    }
+  }
+
   removeItem(id){
     let idCount = this.formValues.qualityListEmpty.length
     let item = this.formValues.qualityListEmpty;
@@ -214,129 +260,5 @@ export class AddEditFabricInComponent implements OnInit {
       this.formValues.qualityListEmpty = [...list];
     }
  }
-
-  onSubmit(myForm) {
-    this.formSubmitted = true;
-    if(myForm.valid){
-      this.fabricService.saveFabricIn(this.formValues).subscribe(
-        data=>{
-          //toaster
-          this.status = "primary"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "Fabric Added Succesfully",
-           "Fabric",
-           config);
-           this.route.navigate(["/pages/fabric-in"]);
-        },
-        error=>{
-          //toaster
-          this.status = "danger"
-          const config = {
-          status: this.status,
-          destroyByClick: this.destroyByClick,
-          duration: this.duration,
-          hasIcon: this.hasIcon,
-          position: this.position,
-          preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-          "No internet access or Server failure",
-          "Fabrics",
-          config);
-        }
-      )
-    }
-  }
-
-  
-
-  getPartyList() {
-    this.partyService.getAllPartyList().subscribe(
-      (data) => {
-        if (data["data"] && data["data"].length > 0) {
-          this.party = data["data"];
-        } else {
-           //toaster
-           this.status = "danger"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No party added yet",
-            "Fabric-in",
-            config);
-        }
-      },
-      (error) => {
-        //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Fabric-in",
-         config);
-      }
-    );
-  }
-
-  getQualityList() {
-    this.qualityService.getallQuality().subscribe(
-      (data) => {
-        if (data["data"] && data["data"].length > 0) {
-          this.qualityList = data["data"];
-        } else {
-           //toaster
-           this.status = "danger"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No quality added yet",
-            "Fabric-in",
-            config);
-        }
-      },
-      (error) => {
-           //toaster
-           this.status = "danger"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No internet access or Server failuer",
-            "Fabric-in",
-            config);
-      }
-    );
-  }
+ 
 }

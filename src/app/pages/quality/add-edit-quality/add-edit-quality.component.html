@@ -1,11 +1,11 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="myQualityId == null; else updateQ"><h2>ADD QUALITY</h2></div>
+        <div *ngIf="currentQualityId == null; else updateQ"><h2>ADD QUALITY</h2></div>
         <ng-template #updateQ><h2>UPDATE QUALITY</h2></ng-template>
     </nb-card-header>
     <nb-card-body>
         <div class="container">
-        <form [formGroup]="addEditQualityForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="addEditQualityForm" (ngSubmit)="addQuality()">
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="required">Quality ID:</label>
@@ -80,7 +80,7 @@
             </div>
         </div>
             <div>
-                <input *ngIf="myQualityId == null; else updateqty" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
+                <input *ngIf="currentQualityId == null; else updateqty" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
                 <ng-template #updateqty><input type="button" (click)="updateQuality()" class="btn btn-primary btn-sm" value="Update">&nbsp;&nbsp;&nbsp;</ng-template>
                 <button class="btn btn-primary btn-sm" routerLink="/pages/quality">Cancel</button>
             </div>
