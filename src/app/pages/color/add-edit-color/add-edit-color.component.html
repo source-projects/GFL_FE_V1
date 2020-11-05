@@ -13,12 +13,12 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name:</label>
-                        <select class="form-control" aria-placeholder="Select supplier name"
+                        <ng-select aria-placeholder="Select supplier name"
                             [(ngModel)]="color.supplierName" #supplierName1="ngModel" name="supplierName" required>
-                            <option *ngFor="let s of supplierList" [value]="s.id">
+                            <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                {{s.supplierName}}
-                            </option>
-                        </select>
+                            </ng-option>
+                        </ng-select>
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (supplierName1.invalid || (supplierName1.dirty || supplierName1.untouched) )">
                             <span>Supplier Name is required</span>

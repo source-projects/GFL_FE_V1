@@ -14,10 +14,10 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Party Name:</label>
-                            <select name="partyId" class="form-control"  [(ngModel)]='formValues.partyId' required #partyId1="ngModel"
+                            <ng-select name="partyId"  [(ngModel)]='formValues.partyId' required #partyId1="ngModel"
                             [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}">
-                                <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
-                            </select>
+                                <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
+                            </ng-select>
                             <div class="invalid-feedback" *ngIf="formSubmitted && (partyId1.invalid || partyId1.dirty || partyId1.touched)" >
                                 <span>Party name is required.</span>
                             </div>
