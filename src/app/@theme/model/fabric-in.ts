@@ -1,23 +1,23 @@
 export class FabricIn {
-    stockInType: "Fabric"
-    partyId:number
-    batch:string
-    billNo:number
-    billDate:Date
-    chlNo:number
-    chlDate:Date
-    lot:number
-    remark:string
-    qualityListEmpty:QualityListEmpty[]
+    stockInType:string= "Fabric";
+    partyId:number;
+    batch:boolean;
+    billNo:string;
+    billDate:Date;
+    chlNo:string;
+    chlDate:Date;
+    lotNo:number;
+    remark:string;
+    userId:string;
+    fabStockData:QualityListEmpty[];
 }
 export class QualityListEmpty{
-    id: number
-    gr: number
-    qualityId: number
-    qualityName: string
-    qualityType: string
-    meter: string
-    weight:string
-    noOfCones: number
-    noOfBox: number
+    gr: number;
+    qualityId: number;
+    qualityName: string;
+    qualityType: string;
+    mtr: number;
+    wt:number;
+    noOfCones: number;
+    noOfBox: number;
 }

@@ -1,7 +1,8 @@
 <div class="container">
     <nb-card>
         <nb-card-header>
-            <h2>ADD FABRIC-IN</h2>
+            <div *ngIf="selectedFabricId == null; else updateF"> <h2>ADD FABRIC-IN</h2></div>
+           <ng-template #updateF><h2>UPDATE FABRIC-IN</h2></ng-template>
         </nb-card-header>
         <nb-card-body>
             <div>
@@ -69,7 +70,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label class="required">Lot:</label>
-                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='formValues.lot' required
+                            <input type="text" name="lot" class="form-control" #lot1="ngModel" [(ngModel)]='formValues.lotNo' required
                             [ngClass]="{'is-invalid': formSubmitted && lot1.invalid}">
                             <div class="invalid-feedback" *ngIf="formSubmitted && (lot1.invalid || lot1.dirty || lot1.touched)" >
                                 <span>Lot is required.</span>
@@ -85,7 +86,7 @@
                     <div class="row" >
                         <div class="col-md-12">
                             <ngx-datatable #table class="material common-table datatable-auto-height"
-                                [rows]="formValues.qualityListEmpty" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                [rows]="formValues.fabStockData" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
                                 [columnMode]="'force'">
 
                                 <ngx-datatable-column name="Gr" prop="gr" [sortable]="false" [width]="300">
@@ -141,10 +142,10 @@
                                     </ng-template>
                                 </ngx-datatable-column>
 
-                                <ngx-datatable-column name="Meter" prop="meter" [sortable]="false" [width]="300">
+                                <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false" [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                         <input class="tableForm" type="number" #tableMeter1="ngModel" name='tableMeter{{rowIndex}}'
-                                            [(ngModel)]="row.meter" (keyup)="onKeyUp($event,rowIndex,4,'meter')" disabled (input)="calculateWeight(rowIndex,4)"
+                                            [(ngModel)]="row.mtr" (keyup)="onKeyUp($event,rowIndex,4,'meter')" disabled (input)="calculateWeight(rowIndex,4)"
                                             [id]="'qualityList'+rowIndex+'-4'" required
                                             [ngClass]="{'is-invalid': formSubmitted && tableMeter1.invalid}">
                                             <div class="invalid-feedback" *ngIf="formSubmitted && (tableMeter1.invalid )" style="display: inline-block;">
@@ -153,10 +154,10 @@
                                     </ng-template>
                                 </ngx-datatable-column>
 
-                                <ngx-datatable-column name="Weight" prop="weight" [sortable]="false" [width]="300">
+                                <ngx-datatable-column name="Weight" prop="wt" [sortable]="false" [width]="300">
                                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                         <input class="tableForm" type="number" #tableWeight1="ngModel" name='tableWeight{{rowIndex}}'
-                                            [(ngModel)]="row.weight" (keyup)="onKeyUp($event,rowIndex,5,'weight')" disabled
+                                            [(ngModel)]="row.wt" (keyup)="onKeyUp($event,rowIndex,5,'weight')" disabled
                                             [id]="'qualityList'+rowIndex+'-5'" (input)="calculateMeter(rowIndex,4)" required
                                             [ngClass]="{'is-invalid': formSubmitted && tableWeight1.invalid}">
                                             <div class="invalid-feedback" *ngIf="formSubmitted && (tableWeight1.invalid )" style="display: inline-block;">
@@ -200,7 +201,8 @@
                     </div>
                     <br><br>
                     <div class="row">
-                            <button type="button" class="btn btn-primary btn-sm" (click)="addFabricIn(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
+                            <button *ngIf="selectedFabricId == null; else update" type="button" class="btn btn-primary btn-sm" (click)="addFabricIn(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
+                            <ng-template #update><input  type="button" (click)="updateFabricIn(myForm)" class="btn btn-primary btn-sm" value="Update">&nbsp;&nbsp;&nbsp;</ng-template>
                             <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/fabric-in" >Cancel</button>
                     </div>
 
