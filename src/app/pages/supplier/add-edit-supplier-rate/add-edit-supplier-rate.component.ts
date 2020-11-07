@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-add-edit-supplier-rate',
@@ -11,8 +13,8 @@ import { SupplierService } from 'app/@theme/services/supplier.service';
   styleUrls: ['./add-edit-supplier-rate.component.scss']
 })
 export class AddEditSupplierRateComponent implements OnInit {
-  //Form 
-  addSupplierRate: FormGroup;
+
+  public errorData: any = (errorData as any).default;
 
   //data fatch supplier Name
   supplier:[]
@@ -72,146 +74,74 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   mySupplierRateId
 
-  constructor( private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute, private toastrService: NbToastrService) { }
+  constructor( private commonService:CommonService, private supplierService:SupplierService, private router:Router, 
+    private _route:ActivatedRoute, private toastrService: NbToastrService, private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.getSupplierName();
+    this.getData();
+    this.getUpdateData();
+  }
+
+  getData(){
     this.user = this.commonService.getUser();
-    //this.mySupplierId=this._route.snapshot.paramMap.get('id');
     this.mySupplierRateId=this._route.snapshot.paramMap.get('id');
+  }
+
+  getUpdateData(){
     if(this.mySupplierRateId!=null){
       this.supplierService.getAllSupplierById(this.mySupplierRateId).subscribe(
         data=>{
           if(data["success"]){
-            this.formValues=data["data"]
-            console.log(this.formValues)
-            this.discount=this.formValues.discountPercentage
-            this.gst=this.formValues.gstPercentage
+            this.formValues=data["data"];
+            this.discount=this.formValues.discountPercentage;
+            this.gst=this.formValues.gstPercentage;
           }
         },
         error=>{
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Supplier Rate",
-           config);
+         this.toastr.error(errorData.Serever_Error);
         }
       )
     }
-    
   }
 
 
   public getSupplierName(){
     this.user = this.commonService.getUser();
-    this.formValues.supplierRates[0].createdBy=this.user.toString()
+    this.formValues.supplierRates[0].createdBy=this.user.toString();
     this.supplierService.getAllSupplier().subscribe(
       data=>{
-        console.log(data)
         if(data["success"]){
           if(data["data"] && data["data"].length>0){
             this.supplier=data["data"];
           }
           else{
-            this.status = "danger"
-            const config = {
-             status: this.status,
-             destroyByClick: this.destroyByClick,
-             duration: this.duration,
-             hasIcon: this.hasIcon,
-             position: this.position,
-             preventDuplicates: this.preventDuplicates,
-           };
-           this.toastrService.show(
-             "NO SUPPLIER ADDED",
-             config);
+            this.toastr.error(errorData.Not_added);
           }
         }
       },
       error=>{
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Supplier",
-         config);
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }
 
   public addSupplierRateInfo(myForm){
-    this.formSubmitted=true
-    this.formValues.id=this.formValues.supplierRates[0].supplierId
-    this.formValues.supplierRates.forEach(element => {
-      delete this.formValues.supplierRates[0].discountedRate
-      delete this.formValues.supplierRates[0].gstRate
-      delete this.formValues.discountPercentage
-      delete this.formValues.gstPercentage
-      delete this.formValues.supplierName
-      delete this.formValues.gstPercentage
-      delete this.formValues.discountPercentage
-      delete this.formValues.remark
-      delete this.formValues.createdBy
-      delete this.formValues.createdDate
-      delete this.formValues.updatedDate
-      delete this.formValues.paymentTerms
-      delete this.formValues.updatedBy
-      delete this.formValues.userId
-      delete this.formValues.supplierRates[0].createdDate
-      delete this.formValues.supplierRates[0].updatedDate
-      delete this.formValues.supplierRates[0].updatedBy
-    });
-    console.log(this.formValues.supplierRates)
+    this.formSubmitted=true;
+    this.formValues.id=this.formValues.supplierRates[0].supplierId;
     if(myForm.valid){
       this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
         data =>{
           if(data["success"]){
-            //toaster
-            this.status = "primary"
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "Supplier Rate Added Succesfully",
-              "Supplier",
-              config);
             this.router.navigate(['pages/supplier']);
+            this.toastr.success(errorData.Add_Success);
+          }
+          else{
+            this.toastr.error(errorData.Add_Error);
           }
         },
         error=>{
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Supplier",
-           config);
+          this.toastr.error(errorData.Serever_Error);
         }
       )
     }
@@ -221,65 +151,22 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   public updateSupplierRateInfo(myForm){
-    this.formSubmitted=true
+    this.formSubmitted=true;
     this.user = this.commonService.getUser();
-    this.formValues.id=this.formValues.supplierRates[0].supplierId
-    this.formValues.supplierRates[0].createdBy=this.user.toString()
-    this.formValues.supplierRates[0].updatedBy=this.user.toString()
-    this.formValues.supplierRates.forEach(element => {
-      delete this.formValues.supplierRates[0].discountedRate
-      delete this.formValues.supplierRates[0].gstRate
-      delete this.formValues.discountPercentage
-      delete this.formValues.gstPercentage
-      delete this.formValues.supplierName
-      delete this.formValues.gstPercentage
-      delete this.formValues.discountPercentage
-      delete this.formValues.remark
-      delete this.formValues.createdBy
-      delete this.formValues.createdDate
-      delete this.formValues.updatedDate
-      delete this.formValues.paymentTerms
-      delete this.formValues.updatedBy
-      delete this.formValues.userId
-      delete this.formValues.supplierRates[0].createdDate
-      delete this.formValues.supplierRates[0].updatedDate
-    });
-
+    this.formValues.id=this.formValues.supplierRates[0].supplierId;
     if(myForm.valid){
       this.supplierService.updateSupplierRateInSystem(this.formValues).subscribe(
         data =>{
           if(data["success"]){
-            //toaster
-            this.status = "primary"
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "Supplier Rate Updated Succesfully",
-              "Supplier",
-              config);
             this.router.navigate(['pages/supplier']);
+            this.toastr.success(errorData.Update_Success);
+          }
+          else{
+            this.toastr.error(errorData.Update_Error);
           }
         },
         error=>{
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Supplier",
-           config);
+          this.toastr.error(errorData.Serever_Error);
         }
       )
     }
@@ -293,18 +180,17 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   getDetail(value){
-    this.formValues.supplierRates[0].supplierId=value
+    this.formValues.supplierRates[0].supplierId=value;
     for(let item of this.supplier){
       if(item['id']==value){
-        this.discount=item['discountPercentage']
-        this.gst=item['gstPercentage']
+        this.discount=item['discountPercentage'];
+        this.gst=item['gstPercentage'];
       }
     }
   }
   
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
-    console.log(this.formValues.supplierRates)
     if (keyCode == 13){
 
       //toaster
@@ -371,21 +257,19 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
   
   calculateGstDiscountPercentage(rowIndex){
-    console.log(this.discount)
-    console.log(this.gst)
-    let calculatedDiscount
-    let calculatedGst
-    let itemRate = Number(this.formValues.supplierRates[rowIndex].rate )
-    let D = Number((itemRate * this.discount)/100)
-    calculatedDiscount=Number(itemRate-D)
-    let CGst =Number( (calculatedDiscount + this.gst)/100)
-    calculatedGst = Number(calculatedDiscount+CGst)
-    this.formValues.supplierRates[rowIndex].discountedRate = parseFloat(calculatedDiscount).toFixed(2);
-    this.formValues.supplierRates[rowIndex].gstRate = parseFloat(calculatedGst).toFixed(2);
+    let calculatedDiscount;
+    let calculatedGst;
+    let itemRate = Number(this.formValues.supplierRates[rowIndex].rate );
+    let D = Number((itemRate * this.discount)/100);
+    calculatedDiscount=Number(itemRate-D);
+    let CGst =Number( (calculatedDiscount + this.gst)/100);
+    calculatedGst = Number(calculatedDiscount+CGst);
+    this.formValues.supplierRates[rowIndex].discountedRate = Number(parseFloat(calculatedDiscount).toFixed(2));
+    this.formValues.supplierRates[rowIndex].gstRate = Number(parseFloat(calculatedGst).toFixed(2));
   }
   
   removeItem(id){
-    let idCount = this.formValues.supplierRates.length
+    let idCount = this.formValues.supplierRates.length;
     let item = this.formValues.supplierRates;
     if(idCount == 1){
       item[0].itemName = null;
