@@ -29,6 +29,11 @@ const routes: Routes = [{
         .then(m => m.QualityModule),
     },
     {
+      path: 'user',
+      loadChildren: () => import('./user/user.module')
+        .then(m => m.UserModule),
+    },
+    {
       path: 'fabric-in',
       loadChildren: () => import('./fabric-in/fabric-in.module')
         .then(m => m.FabricInModule),
@@ -42,6 +47,11 @@ const routes: Routes = [{
       path: 'color',
       loadChildren: () => import('./color/color.module')
         .then(m => m.ColorModule),
+    },
+    {
+      path: 'program',
+      loadChildren: () => import('./program/program.module')
+        .then(m => m.ProgramModule),
     },
     {
       path: 'shade',

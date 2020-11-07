@@ -1,11 +1,11 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="myQualityId == null; else updateQ"><h2>ADD QUALITY</h2></div>
+        <div *ngIf="currentQualityId == null; else updateQ"><h2>ADD QUALITY</h2></div>
         <ng-template #updateQ><h2>UPDATE QUALITY</h2></ng-template>
     </nb-card-header>
     <nb-card-body>
         <div class="container">
-        <form [formGroup]="addEditQualityForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="addEditQualityForm" (ngSubmit)="addQuality()">
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="required">Quality ID:</label>
@@ -58,13 +58,15 @@
                 [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('partyId').invalid )}">
                     <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
                 </select>
+                <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
+                </ng-select> -->
                 <div class="invalid-feedback" *ngIf="formSubmitted && (addEditQualityForm.get('partyId').invalid || (addEditQualityForm.get('partyId').dirty || addEditQualityForm.get('partyId').touched))">
                     <span>Quality type is required</span>
                 </div>
             </div>
 
             <div class="form-group col-md-6">
-                <label>Wt / 100 mtrs:</label>
+                <label class="required">Wt / 100 mtrs:</label>
                 <input type="number" id="wtPer100m" formControlName="wtPer100m"  class="form-control" placeholder="Wt Per 100m"
                 [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('wtPer100m').invalid )}">
                 <div class="invalid-feedback" *ngIf="formSubmitted && (addEditQualityForm.get('wtPer100m').invalid || (addEditQualityForm.get('wtPer100m').dirty || addEditQualityForm.get('wtPer100m').touched))">
@@ -80,7 +82,7 @@
             </div>
         </div>
             <div>
-                <input *ngIf="myQualityId == null; else updateqty" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
+                <input *ngIf="currentQualityId == null; else updateqty" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
                 <ng-template #updateqty><input type="button" (click)="updateQuality()" class="btn btn-primary btn-sm" value="Update">&nbsp;&nbsp;&nbsp;</ng-template>
                 <button class="btn btn-primary btn-sm" routerLink="/pages/quality">Cancel</button>
             </div>

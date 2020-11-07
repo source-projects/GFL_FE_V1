@@ -1,0 +1,16 @@
+.required:after {
+    content:" *";
+    color: red;
+  }
+tr {
+    border-bottom: 1pt solid #ddd;
+}
+table{
+    width:100%;
+}
+th, td {
+    padding: 15px;
+}
+button{
+    margin-right:20px;
+}

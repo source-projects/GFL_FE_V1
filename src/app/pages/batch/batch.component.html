@@ -1,1 +1,31 @@
-<p>batch works!</p>
+<div class="container">
+    <nb-card>
+        <nb-card-header>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Batch</h2>
+                </div>
+                <div class="col-md-6" style="text-align: right;">
+                    <button class="btn btn-primary btn-sm" routerLink="add">Add</button> 
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <!--  ngx- DataTable  -->
+            <ngx-datatable [rows]="batchList" [ngClass]="tableStyle" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" 
+            [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
+                <ngx-datatable-column name="Batch No." prop="batchNo"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Type" prop="qualityType"></ngx-datatable-column>
+                <ngx-datatable-column name="Action" sortable="false">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
+                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/batch/edit',row.id]"></nb-icon>
+                        <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="deleteBatch(row.id)"></nb-icon>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+
+        </nb-card-body>
+    </nb-card>
+</div>

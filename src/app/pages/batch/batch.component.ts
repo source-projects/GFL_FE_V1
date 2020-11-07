@@ -1,15 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { BatchService } from 'app/@theme/services/batch.service';
+import { QualityService } from "app/@theme/services/quality.service";
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'ngx-batch',
-  templateUrl: './batch.component.html',
-  styleUrls: ['./batch.component.scss']
+  selector: "ngx-batch",
+  templateUrl: "./batch.component.html",
+  styleUrls: ["./batch.component.scss"],
 })
 export class BatchComponent implements OnInit {
 
-  constructor() { }
+  public errorData: any = (errorData as any).default;
 
-  ngOnInit(): void {
+  batchList:any;
+  
+  tableStyle = "bootstrap";
+  constructor(
+    private qualityService: QualityService,
+    private modalService: NgbModal,
+    private batchService: BatchService,
+    private toastr:ToastrService,
+  ) {}
+
+  ngOnInit(): void {}
+
+  getAllBatch() {
+    this.batchService.getAllBatchList().subscribe(
+      (data) => {
+        if(data["success"]){
+          this.batchList = data["data"];
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error)
+      }
+    );
   }
 
+  deleteBatch(id){
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.batchService.deletePartyDetailsById(id).subscribe(
+          (data) => {
+            this.toastr.success(errorData.Delete)
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error)
+          }
+        );
+      }
+    });
+  }
 }

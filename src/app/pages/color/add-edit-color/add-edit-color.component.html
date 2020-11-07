@@ -1,1 +1,173 @@
-<p>add-edit-color works!</p>
+<nb-card>
+    <nb-card-header style="font-size: medium;">
+        <div *ngIf="this.currentColorId == null; else updateC">
+            <h2>ADD COLOR STOCK</h2>
+        </div>
+        <ng-template #updateC>
+            <h2>UPDATE COLOR STOCK</h2>
+        </ng-template>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="container">
+            <form #colorForm="ngForm" (keydown.enter)="$event.preventDefault()">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="required">Supplier Name:</label>
+                        <ng-select aria-placeholder="Select supplier name"
+                            [(ngModel)]="color.supplierId" #supplierName1="ngModel" name="supplierName" required>
+                            <ng-option *ngFor="let s of supplierList" [value]="s.id">
+                               {{s.supplierName}}
+                            </ng-option>
+                        </ng-select>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (supplierName1.invalid || (supplierName1.dirty || supplierName1.untouched) )">
+                            <span>Supplier Name is required</span>
+                        </div>
+                    </div>
+                        
+                    <div class="form-group col-md-4">
+                        <label>Remark:</label>
+                        <textarea name="remark" #remark1="ngModel" [(ngModel)]="color.remark" class="form-control"></textarea>
+                    </div>
+            </div>
+       
+
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="required">Bill No:</label>
+                <input class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
+                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }" >
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (billNo1.invalid || (billNo1.dirty || billNo1.untouched) )">
+                        <span>Bill no is required</span>
+                    </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label class="required">Bill Date:</label>
+                <input type="date" class="form-control" name="billDate" #billDate1="ngModel"
+                    [(ngModel)]="color.billDate"
+                  [ngClass]="{'is-invalid':formSubmitted && !(billDate1.valid) }" >
+                       <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (billDate1.invalid || (billDate1.dirty || billDate1.untouched) )">
+                        <span>Bill date is required</span>
+                    </div>
+                        
+                   
+            </div>
+            <div class="form-group col-md-2">
+                <label class="required">Challan No:</label>
+                <input class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo" required
+                    [ngClass]="{'is-invalid':formSubmitted && !(chlNo1.valid) }" >
+                        <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (chlNo1.invalid || (chlNo1.dirty || chlNo1.untouched) )">
+                        <span>Challan no is required</span>
+                    </div>
+                        
+                  
+            </div>
+            <div class="form-group col-md-3">
+                <label class="required">Challan Date:</label>
+                <input type="date" class="form-control" name="chlDate" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
+                [ngClass]="{'is-invalid':formSubmitted && !(chlDate1.valid) }" >
+                       <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (chlDate1.invalid || (chlDate1.dirty || chlDate1.untouched) )">
+                        <span>Challan date is required</span>
+                    </div>
+                        
+            </div>
+            <div class="form-group col-md-2">
+                <label class="required">Bill Amount:</label>
+                <input class="form-control" [(ngModel)]="color.billAmount" #billAmount1="ngModel" name="billAmount"
+                    required
+                 [ngClass]="{'is-invalid':formSubmitted && !(billAmount1.valid) }" >
+                        <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (billAmount1.invalid || (billAmount1.dirty || billAmount1.untouched) )">
+                        <span>Bill Amount is required</span>
+                    </div>   
+                  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="color.colorDataList"
+                    [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'">
+
+                    <ngx-datatable-column name="Item Name" prop="color.itemId" [sortable]="false" [width]="250">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <select  #itemName1="ngModel" name='itemName{{rowIndex}}'
+                            class="tableForm" id="itemName" [(ngModel)]="row.itemId" required
+                            (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
+                            (change)="itemSelected(rowIndex,0)">
+                            <option  *ngFor="let s of supplierListRate" [value]="s.id" >
+                                {{s.itemName}}
+                            </option>
+                            </select>
+                           
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Quantity per box" [sortable]="false" [width]="300"
+                        prop="color.quantiyPerBox">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <input #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}' class="tableForm"
+                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  (input)="calculateAmount(rowIndex)"
+                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" >
+                              
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="No. of box" prop="noOfBox" [sortable]="false"
+                        [width]="300">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <input class="tableForm" type="text" #noOfBox1="ngModel"
+                                name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox"
+                                (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')"
+                                [id]="'supplierList'+rowIndex+'-2'" >
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Total quantity" prop="quantity" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <input class="tableForm" type="text" #quantity1="ngModel" name='quantity{{rowIndex}}'
+                                [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')"
+                                [id]="'supplierList'+rowIndex+'-3'" >
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <input class="tableForm" type="text" #rate1="ngModel" name='rate{{rowIndex}}'
+                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
+                                [id]="'supplierList'+rowIndex+'-4'" >
+                        </ng-template>
+                    </ngx-datatable-column>
+                   <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <input class="tableForm" type="text" #amount1="ngModel" name='amount{{rowIndex}}'
+                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
+                                [id]="'supplierList'+rowIndex+'-4'" >
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Action"  [sortable]="false" [width]="200">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                   
+                </ngx-datatable>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div>
+                <button *ngIf="this.currentColorId == null" type="submit" class="btn btn-primary btn-sm"
+                    style="margin-right:20px" (click)="addColor(colorForm)">Save</button>
+                <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
+                    class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
+                <button class="btn btn-primary btn-sm" routerLink='/pages/color'>Cancel</button>
+            </div>
+        </div>
+        </form>
+        </div>
+    </nb-card-body>
+</nb-card>

@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header style="font-size: medium;">
-    <div *ngIf="this.myPartyId == null; else updateP">
+    <div *ngIf="this.currentPartyId == null; else updateP">
       <h2>ADD PARTY</h2>
     </div>
     <ng-template #updateP>
@@ -9,7 +9,7 @@
   </nb-card-header>
   <nb-card-body>
     <div class="container">
-      <form [formGroup]="partyForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="partyForm" (ngSubmit)="addParty()">
 
         <div class="row">
           <div class="form-group col-md-4">
@@ -76,7 +76,7 @@
 
           <div class="form-group col-md-4">
             <label class="required">Pin:</label>
-            <input type="text" ng-pattern-restrict="[A-Za-z]" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
+            <input type="text" ng-pattern-restrict="/^[A-Za-z]*$/" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="pincode" placeholder="Enter pin code"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('pincode').invalid )}">
             <div class="invalid-feedback"
@@ -148,9 +148,9 @@
 
           <br><br>
           <div class="row">
-            <button *ngIf="this.myPartyId == null" type="submit" class="btn btn-primary"
+            <button *ngIf="this.currentPartyId == null" type="submit" class="btn btn-primary"
               style="margin-right:20px">Save</button>
-            <button *ngIf="this.myPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary"
+            <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary"
               style="margin-right:20px">Update</button>
             <button class="btn btn-primary" (click)="goBackToPreviousPage()">Cancel</button>
           </div>

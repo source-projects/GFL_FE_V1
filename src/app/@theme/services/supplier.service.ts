@@ -17,7 +17,6 @@ export class SupplierService {
     return this.httpClient.post(this.commonService.envUrl()+'/api/supplier',supplierData);
   }
   getAllSupplier():any{
-    console.log(this.commonService.envUrl()+'/api/supplier/all');
     return this.httpClient.get(this.commonService.envUrl()+'/api/supplier/all');
   }
   editSupplierInfo(supplierData){
@@ -39,4 +38,7 @@ export class SupplierService {
     return this.httpClient.put(this.commonService.envUrl()+'api/supplier/rates',supplierData)
   }
 
+  getAllSupplierRates(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/supplier/rates/all'); 
+  }
 }
