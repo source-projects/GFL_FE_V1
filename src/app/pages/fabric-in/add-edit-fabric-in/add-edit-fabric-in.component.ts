@@ -73,7 +73,9 @@ export class AddEditFabricInComponent implements OnInit {
 
   public getDataId(){
     this.user = this.commonService.getUser();
-    this.formValues.userId=this.user;
+    console.log(this.user.userId);
+    this.formValues.userId=this.user.userId;
+    this.formValues.userHeadId=this.user.userId;
     this.selectedFabricId=this._route.snapshot.paramMap.get('id');
   }
 

@@ -64,9 +64,31 @@ export class AddEditColorComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.getData();
+    this.getUpdateData();
     this.getSupplierList();
-    this.getAllSupplier();
+    this.getAllSupplierRate();
   }
+
+  getData(){
+    this.user=this.commonService.getUser();
+    this.color.userId=this.user.userId;
+    this.currentColorId=this._route.snapshot.paramMap.get('id');
+  }
+
+  getUpdateData(){
+    if(this.currentColorId!=null){
+      this.colorService.getColorDataById(this.currentColorId).subscribe(
+        data=>{
+          this.color=data["data"];
+        },
+        error=>{
+          this.toastr.error(errorData.Serever_Error)
+        }
+      )
+    }
+  }
+
   getSupplierList(){
     this.supplierService.getAllSupplier().subscribe(
       data =>{
@@ -88,7 +110,7 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
-getAllSupplier(){
+getAllSupplierRate(){
   this.supplierService.getAllSupplierRates().subscribe(
     data =>{
       if(data['success']){
@@ -162,10 +184,10 @@ getAllSupplier(){
          noOfBox: null,
          quantity: null,
          id:null,
-         purchaseId:null,
          quantityUnit:null,
           itemId:null,
-          rate:null
+          rate:null,
+          controlId:null
          
        };
        let list = this.color.colorDataList;
@@ -190,7 +212,7 @@ getAllSupplier(){
     if(colorForm.valid){
       this.colorService.addColor(this.color).subscribe(
         data => {
-          if(data['sucess']){
+          if(data['success']){
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Add_Success)
           }
@@ -204,4 +226,43 @@ getAllSupplier(){
       )
     }
   }
+
+  removeItem(id){
+    let idCount = this.color.colorDataList.length
+    let item = this.color.colorDataList;
+    if(idCount == 1){
+      item[0].id = null;
+      item[0].itemId = null;
+      item[0].quantity = null;
+      item[0].quantityPerBox = null;
+      item[0].quantity = null;
+      item[0].rate = null;
+      item[0].noOfBox = null;
+      let list = item;
+      this.color.colorDataList = [...list];
+    }
+    else{
+      let removed = item.splice(id,1);
+      let list = item;
+      this.color.colorDataList = [...list];
+    }
+  }
+
+  updateColor(myForm){
+    this.formSubmitted=true;
+    if(myForm.valid){
+      this.colorService.updateColor(this.color).subscribe(
+        data=>{
+          if(data['success']){
+            this.route.navigate(["/pages/color"]);
+            this.toastr.success(errorData.Update_Success);
+          }
+        },
+        error=>{
+          this.toastr.error(errorData.Update_Error);
+        }
+      )
+    }
+  }
+
 }

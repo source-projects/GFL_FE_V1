@@ -1,26 +1,22 @@
 export class Color {
     billAmount:Number;
-    billDate:String;
+    billDate:Date;
     billNo:String;
-    chlDate:String;
+    chlDate:Date;
     chlNo:String;
-    ddate:String;
-    id:Number;
-    lotNo:Number;
+    id:Number=null;
     remark:String;
     supplierId:Number;
-    supplierName:String;
     userId:Number;
     colorDataList:ColorDataList[];
 }
 export class ColorDataList{
-    id:Number;
+    id:Number=null;
     itemId:Number;
     noOfBox:Number;
-    purchaseId:Number;
     quantity:Number;
     quantityPerBox:Number;
-    quantityUnit:String;
+    quantityUnit:String="kg";
     rate:Number;
 }
 

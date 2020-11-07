@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {NgbModal}  from '@ng-bootstrap/ng-bootstrap'; 
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'ngx-color',
@@ -40,7 +41,25 @@ export class ColorComponent implements OnInit {
     );
     }
 
-    
+    deleteColor(rowId) {
+      const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+        size: "sm"
+      });
+      modalRef.result.then((result) => {
+        if (result) {
+          this.colorService.deleteColorById(rowId).subscribe(
+            (data) => {
+              this.getColor();
+              this.toastr.success(errorData.Delete)
+            },
+            (error) => {
+            this.toastr.error(errorData.Serever_Error)
+            }
+          );
+        }
+      });
+    }
+
   }
 
 

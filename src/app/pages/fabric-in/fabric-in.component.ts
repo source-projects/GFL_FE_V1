@@ -48,12 +48,9 @@ export class FabricInComponent implements OnInit {
       size: "sm"
     });
     modalRef.result.then((result) => {
-      console.log(rowId)
-      console.log(result)
       if (result) {
         this.fabricService.deleteById(rowId).subscribe(
           (data) => {
-            console.log(result)
             this.getFabricList();
             this.toastr.success(errorData.Delete)
           },
