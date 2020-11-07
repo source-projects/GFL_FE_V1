@@ -10,7 +10,7 @@
         </div>
     </nb-card-header>
     <nb-card-body>
-        <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" class="material" [headerHeight]="50" 
+        <ngx-datatable class="bootstrap" [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="50" 
         [columnMode]="'force'" [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
             <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
             <ngx-datatable-column name="Discount %" prop="discountPercentage"></ngx-datatable-column>

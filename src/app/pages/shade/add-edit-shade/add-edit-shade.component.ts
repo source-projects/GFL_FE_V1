@@ -28,6 +28,8 @@ export class AddEditShadeComponent implements OnInit {
   preventDuplicates = false;
   status
 
+  shadeDataListArray:ShadeDataList[]=[];
+
   shades: Shade=new Shade();
   shadeDataList:ShadeDataList=new ShadeDataList();
   qualityListEmpty:QualityListEmpty=new QualityListEmpty();
@@ -68,7 +70,10 @@ export class AddEditShadeComponent implements OnInit {
     private route: Router,
     public vcRef: ViewContainerRef, 
     private toastr:ToastrService,
-    ) { }
+    ) { 
+      this.shadeDataListArray.push(this.shadeDataList);
+      this.shades.shadeDataList=this.shadeDataListArray;
+    }
   
   ngOnInit(): void {
     this.getUserId();

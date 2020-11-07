@@ -25,6 +25,8 @@ export class AddEditColorComponent implements OnInit {
 
    public errorData: any = (errorData as any).default;
 
+    colorDataListArray:ColorDataList[]=[];
+
    color:Color=new Color();
    colorDataList:ColorDataList=new ColorDataList();
 
@@ -56,7 +58,10 @@ export class AddEditColorComponent implements OnInit {
     private toastrService: NbToastrService,
     private route: Router,
     private toastr:ToastrService
-  ) { }
+  ) {
+      this.colorDataListArray.push(this.colorDataList);
+      this.color.colorDataList=this.colorDataListArray;
+    }
 
   ngOnInit(): void {
     this.getSupplierList();
