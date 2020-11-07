@@ -9,6 +9,7 @@ export class FabricIn {
     lotNo:number;
     remark:string;
     userId:string;
+    userHeadId:string;
     fabStockData:QualityListEmpty[];
 }
 export class QualityListEmpty{
