@@ -50,6 +50,9 @@ export class AddEditColorComponent implements OnInit {
     //To Store fabric Data
     fabric: any[];
 
+    //To store Total quantity for Calculation
+    calculationTotalQuantity:any;
+
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -110,7 +113,7 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
-getAllSupplierRate(){
+  getAllSupplierRate(){
   this.supplierService.getAllSupplierRates().subscribe(
     data =>{
       if(data['success']){
@@ -129,7 +132,7 @@ getAllSupplierRate(){
       this.toastr.error(errorData.Serever_Error)
     }
   )
-}
+  }
 
   itemSelected(rowIndex){
     let id=this.color.colorDataList[rowIndex].itemId;
@@ -184,11 +187,11 @@ getAllSupplierRate(){
          noOfBox: null,
          quantity: null,
          id:null,
-         quantityUnit:null,
+         quantityUnit:"kg",
           itemId:null,
           rate:null,
-          controlId:null
-         
+          controlId:null,
+          amount:null,
        };
        let list = this.color.colorDataList;
        list.push(obj);
@@ -205,6 +208,16 @@ getAllSupplierRate(){
        alert("go to any last row input to add new row");
      }
    }
+   }
+
+   calculateAmount(rowIndex){
+    let calcAmount;
+    let rate;
+    let qun;
+    qun=this.color.colorDataList[rowIndex].quantity;
+    rate=this.color.colorDataList[rowIndex].rate;
+    calcAmount=Number(rate*qun);
+    this.color.colorDataList[rowIndex].amount=parseInt(calcAmount);
    }
 
    addColor(colorForm){

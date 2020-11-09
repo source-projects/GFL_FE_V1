@@ -16,7 +16,8 @@ export class ColorDataList{
     noOfBox:Number;
     quantity:Number;
     quantityPerBox:Number;
-    quantityUnit:String="kg";
+    quantityUnit:string="kg";
     rate:Number;
+    amount:Number;
 }
 

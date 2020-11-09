@@ -15,7 +15,7 @@ export class ColorService {
     return this.httpClient.post(this.commonService.envUrl()+'api/color',colorData);
   }
   updateColor(colorData){
-    return this.httpClient.put(this.commonService.envUrl()+'/api/color',colorData);
+    return this.httpClient.put(this.commonService.envUrl()+'api/color',colorData);
   }
   deleteColorById(colorId){
     return this.httpClient.delete(this.commonService.envUrl()+'api/color/'+colorId);
