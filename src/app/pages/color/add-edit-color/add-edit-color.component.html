@@ -111,7 +111,7 @@
                         prop="color.quantiyPerBox">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}' class="tableForm"
-                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  (input)="calculateAmount(rowIndex)"
+                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  
                                 (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" >
                               
                         </ng-template>
@@ -130,22 +130,22 @@
                     <ngx-datatable-column name="Total quantity" prop="quantity" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #quantity1="ngModel" name='quantity{{rowIndex}}'
-                                [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')"
+                                [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" 
                                 [id]="'supplierList'+rowIndex+'-3'" >
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #rate1="ngModel" name='rate{{rowIndex}}'
-                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
+                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')" (input)="calculateAmount(rowIndex,4)"
                                 [id]="'supplierList'+rowIndex+'-4'" >
                         </ng-template>
                     </ngx-datatable-column>
                    <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #amount1="ngModel" name='amount{{rowIndex}}'
-                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
-                                [id]="'supplierList'+rowIndex+'-4'" >
+                                [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,5,'amount')"
+                                [id]="'supplierList'+rowIndex+'-5'" >
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Action"  [sortable]="false" [width]="200">
