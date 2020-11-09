@@ -1,3 +1,4 @@
+import { HttpInterceptor } from '@angular/common/http';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -11,9 +12,23 @@ import { SeoService } from './@core/utils/seo.service';
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, HttpInterceptor {
 
   constructor(private analytics: AnalyticsService, private seoService: SeoService) {
+  }
+
+  getToken(){
+    return localStorage.getItem('token')
+  }
+
+  intercept(req, next)
+  {
+    let tokenizedReq = req.clone({
+      setHeaders:{
+        Authorization: `Bearer xx.yy.zz`
+      }
+    })
+    return next.handle(tokenizedReq)
   }
 
   ngOnInit(): void {
