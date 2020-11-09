@@ -1,0 +1,28 @@
+<h1 class="title">Login</h1>
+
+<form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm" aria-labelledby="title">
+
+    <div class="form-control-group">
+        <label class="label" for="email">Email address:</label>
+        <input nbInput fullWidth type="email" name="email" placeholder="Email address" autofocus
+            [(ngModel)]="loginReq.userName" required #email="ngModel" class="form-control"
+            [ngClass]="{'is-invalid': formSubmitted && email.invalid}">
+            <div class="invalid-feedback" *ngIf="formSubmitted && (email.invalid || email.dirty || email.touched)" >
+                <span>Email is required</span>
+            </div>
+    </div>
+
+    <div class="form-control-group">
+        <label class="label" for="password">Password:</label>
+        <input nbInput fullWidth name="password" type="password" placeholder="Password"
+            [(ngModel)]="loginReq.password" required #pass="ngModel" class="form-control"
+            [ngClass]="{'is-invalid': formSubmitted && pass.invalid}">
+        <div class="invalid-feedback"  *ngIf="formSubmitted && (pass.invalid || pass.dirty || pass.touched)">
+            <span>Password is required</span>
+        </div>
+    </div>
+
+    <button nbButton fullWidth status="success">
+        Log In
+    </button>
+</form>

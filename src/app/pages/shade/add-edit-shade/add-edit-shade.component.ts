@@ -81,6 +81,7 @@ export class AddEditShadeComponent implements OnInit {
     this.getProcessList();
     this.getSupplierList();
     this.getCurrentShade();
+    this.getUpdateData();
   }
 
   updateColor(){
@@ -89,6 +90,7 @@ export class AddEditShadeComponent implements OnInit {
 
   public getUserId(){
     this.user = this.commonService.getUser();
+    this.currentShadeId=this._route.snapshot.paramMap.get('id');
   }
 
   getSupplierList(){
@@ -184,6 +186,19 @@ export class AddEditShadeComponent implements OnInit {
       )
     }
   }  
+
+  getUpdateData(){
+    if(this.currentShadeId!=null){
+      this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
+        data=>{
+          this.shades=data["data"];
+        },
+        error=>{
+          this.toastr.error(errorData.Serever_Error);
+        }
+      )
+    }
+  }
 
   qualityIdSelected(q1_id) {  
     let q_id=this.quality.findIndex(v=> v.id == q1_id);
@@ -326,52 +341,26 @@ export class AddEditShadeComponent implements OnInit {
       this.shades.shadeDataList = [...list];
     }
  }
-    /*updateShade(shadeForm) {
-      this.formSubmitted = true;
-      if (this.shadeForm.valid) {
-        let body = {
-          ...this.shadeForm.value,
-          id: this.currentShadeId
-        }
-        this.shadeService.updateParty(body).subscribe(
-          data => {
-            //toaster
-            this.status = "primary"
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "Party Updated Succesfully",
-              "Party",
-              config);
-              this.route.navigate(["/pages/party"]);
-          },
-          error => {
-            
-            //toaster
-            this.status = "danger"
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "No internet access or Server failure",
-              "Party",
-              config);
-          }
-        )
-      }
-    }*/
-   
+  // updateShade(shadeForm) {
+  //   this.formSubmitted = true;
+  //   if(shadeForm.valid){
+  //     this.shadeService.(this.shades).subscribe(
+  //       data => {
+  //         if(data['success']){
+  //           this.route.navigate(["/pages/party"]);
+  //           this.toastr.success(errorData.Update_Success);
+  //         }
+  //         else{
+  //           this.toastr.error(errorData.Update_Error);
+  //         }
+  //       },
+  //       error => {
+  //         this.toastr.error(errorData.Serever_Error)
+  //       }
+  //     )
+  //   }
+  //   }      
+  // }
 }
      
   

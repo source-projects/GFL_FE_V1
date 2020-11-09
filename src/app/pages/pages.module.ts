@@ -26,6 +26,7 @@ import {UserModule} from './user/user.module';
   ],
   declarations: [
     PagesComponent,
+    
   ],
 })
 export class PagesModule {
