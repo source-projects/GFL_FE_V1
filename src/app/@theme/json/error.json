@@ -1,9 +1,11 @@
 {"Serever_Error":"No internet access or Server failuer",
  "Internal_Error":"Something Went Wrong",
- "Add_Success":"Added SuccessFully!",
- "Update_Success":"Update Successfully",
- "Add_Error":"Something Went Wrong. Not Added Successfully",
- "Update_Error":"Something Went Wrong. Not Update Successfully",
- "Delete":"Delete Successully",
- "Not_added":"Nothing Added Yet"
+ "Add_Success":"Added Successfully!",
+ "Update_Success":"Updated Successfully",
+ "Add_Error":"ERROR Not Added Successfully",
+ "Update_Error":"ERROR Not Updated Successfully",
+ "Delete":"Delete Successful",
+ "Not_added":"Nothing Added Yet",
+ "Login_Success":"Login Successful",
+ "login_Error":"Invalid UserName Or Password"
 }
