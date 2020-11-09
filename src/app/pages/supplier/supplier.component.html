@@ -1,11 +1,14 @@
 <nb-card>
     <nb-card-header>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <h2>SUPPLIER</h2>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <button class="btn btn-primary  btn-sm" style="float: right;" routerLink="add">ADD SUPPLIER</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary  btn-sm" style="float: left;" routerLink="addSupplierRate">ADD SUPPLIER RATE</button>
             </div>
         </div>
     </nb-card-header>
@@ -19,8 +22,8 @@
             <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
             <ngx-datatable-column name="Action" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon ngbTooltip="Tooltip on bottom"  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>
-                    <button nbTooltip="Add Supplier Rate" class="btn primary-status" [routerLink]="['']" placement="auto" nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton >
+                    <nb-icon ngbTooltip="Tooltip on bottom"  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;&nbsp;
+                    <button nbTooltip="Add Supplier Rate" class="btn primary-status" [routerLink]="['editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton >
                         <nb-icon  status="primary" [options]="{animation:{type:'zoom'}}" icon="menu" style="color: burlywood;" ></nb-icon>
                     </button>
                 </ng-template>
