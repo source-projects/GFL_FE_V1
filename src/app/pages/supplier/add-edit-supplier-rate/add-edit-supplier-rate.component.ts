@@ -19,6 +19,9 @@ export class AddEditSupplierRateComponent implements OnInit {
   //data fatch supplier Name
   supplier:[]
 
+  itemTypeData=[{id:'dye',name:'Dye'},
+  {id:'chemical',name:'chemical'}]
+
   //For Toaster
   config: NbToastrConfig;
   destroyByClick = true;
@@ -40,25 +43,19 @@ export class AddEditSupplierRateComponent implements OnInit {
   gstPercentage:null,
   discountPercentage:null,
   remark: null,
-  createdBy: null,
-  createdDate: null,
-  updatedDate: null,
   paymentTerms: null,
-  updatedBy: null,
   userId: null,
+  supplierId:null,
   supplierRates:[
     {
+      itemType:null,
       supplierId:null,
       userId:1,
-      createdBy:null,
       itemName: null,
       rate: null,
       discountedRate:null,
       gstRate:null,
       id:null,
-      createdDate: null,
-      updatedBy: null,
-      updatedDate: null
     }
   ]
 }
@@ -108,7 +105,6 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   public getSupplierName(){
     this.user = this.commonService.getUser();
-    this.formValues.supplierRates[0].createdBy=this.user.toString();
     this.supplierService.getAllSupplier().subscribe(
       data=>{
         if(data["success"]){
@@ -129,6 +125,15 @@ export class AddEditSupplierRateComponent implements OnInit {
   public addSupplierRateInfo(myForm){
     this.formSubmitted=true;
     this.formValues.id=this.formValues.supplierRates[0].supplierId;
+    delete this.formValues.discountPercentage;
+    delete this.formValues.supplierName;
+    delete this.formValues.supplierId;
+    delete this.formValues.gstPercentage;
+    delete this.formValues.remark;
+    delete this.formValues.paymentTerms;
+    delete this.formValues.userId;
+    delete this.formValues.supplierRates[0].discountedRate;
+    delete this.formValues.supplierRates[0].gstRate;
     if(myForm.valid){
       this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
         data =>{
@@ -153,7 +158,16 @@ export class AddEditSupplierRateComponent implements OnInit {
   public updateSupplierRateInfo(myForm){
     this.formSubmitted=true;
     this.user = this.commonService.getUser();
-    this.formValues.id=this.formValues.supplierRates[0].supplierId;
+    this.formValues.supplierId=this.formValues.supplierRates[0].supplierId;
+    delete this.formValues.discountPercentage;
+    delete this.formValues.supplierName;
+    delete this.formValues.id;
+    delete this.formValues.gstPercentage;
+    delete this.formValues.remark;
+    delete this.formValues.paymentTerms;
+    delete this.formValues.userId;
+    delete this.formValues.supplierRates[0].discountedRate;
+    delete this.formValues.supplierRates[0].gstRate;
     if(myForm.valid){
       this.supplierService.updateSupplierRateInSystem(this.formValues).subscribe(
         data =>{
@@ -214,7 +228,15 @@ export class AddEditSupplierRateComponent implements OnInit {
               'Item Name Field required',config);
             return;
           }
-        }else if(colName == 'rate'){
+        }else if(colName == 'itemType'){
+          if (!item.itemType) {
+            this.toastrService.show(
+              "Enter Item Rate",
+              'Rate Field required',config);
+            return;
+          }
+        }   
+        else if(colName == 'rate'){
           if (!item.rate) {
             this.toastrService.show(
               "Enter Item Rate",
@@ -235,6 +257,7 @@ export class AddEditSupplierRateComponent implements OnInit {
           updatedBy: null,
           userId: null,
           supplierId:null,
+          itemType:null,
           itemName: null,
           rate: null,
           discountedRate:null,
