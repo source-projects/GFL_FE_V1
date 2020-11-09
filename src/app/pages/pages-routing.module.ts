@@ -78,6 +78,11 @@ const routes: Routes = [{
         canActivate:[SupplierGuard]
     },
     {
+      path: 'stock-batch',
+      loadChildren: () => import('./stock-batch/stock-batch.module')
+        .then(m => m.StockBatchModule),
+    },
+    {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
         .then(m => m.FormsModule),

@@ -11,8 +11,6 @@ import { PartyModule } from './party/party.module';
 import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
 import {UserModule} from './user/user.module';
-import { StockBatchComponent } from './stock-batch/stock-batch.component';
-import { AddEditStockBatchComponent } from './stock-batch/add-edit-stock-batch/add-edit-stock-batch.component';
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -28,8 +26,7 @@ import { AddEditStockBatchComponent } from './stock-batch/add-edit-stock-batch/a
   ],
   declarations: [
     PagesComponent,
-    StockBatchComponent,
-    AddEditStockBatchComponent,
+    
   ],
 })
 export class PagesModule {

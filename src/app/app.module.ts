@@ -25,10 +25,9 @@ import {
   
 } from '@nebular/theme';
 import { ToastrModule } from 'ngx-toastr';
-import { StockBatchComponent } from './stock-batch/stock-batch.component';
 
 @NgModule({
-  declarations: [AppComponent, StockBatchComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
