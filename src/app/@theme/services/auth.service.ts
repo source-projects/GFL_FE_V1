@@ -10,17 +10,17 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AuthService {
-  
-  
-  constructor(private httpClient:HttpClient, private commonService:CommonService) { }
 
-  public isAuthenticated():boolean{
-    const token=localStorage.getItem('token');
-    return !!token?true:false;
+
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token ? true : false;
   }
 
-  checkUserLogin(data): any{
-    return this.httpClient.post(this.commonService.envUrl()+'api/login',data);
+  checkUserLogin(data): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/login', data);
   }
 
 }

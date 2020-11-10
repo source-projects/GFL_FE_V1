@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path:'add',
     component:AddEditColorComponent
+  },
+  {
+    path:'edit/:id',
+    component:AddEditColorComponent
   }
 ];
 

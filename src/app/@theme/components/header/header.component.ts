@@ -36,18 +36,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-  currentUser$:Subscription;
+  currentUser$: Subscription;
   currentTheme = 'default';
   currentUser;
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: UserData,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
