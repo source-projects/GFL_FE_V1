@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PartyComponent } from './party.component';
 import { AddEditPartyComponent } from './add-edit-party/add-edit-party.component';
+import { PartyGuard } from 'app/@theme/guards/party.guard';
 
 const routes: Routes = [
   {
@@ -10,8 +11,7 @@ const routes: Routes = [
   },
   {
     path:'add',
-    component:AddEditPartyComponent
-   
+    component:AddEditPartyComponent   
   },
   {
     path:'edit/:id',

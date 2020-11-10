@@ -8,12 +8,15 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { AuthService } from './@theme/services/auth.service';
+import { PartyGuard } from './@theme/guards/party.guard';
 
 export const routes: Routes = [
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
+      canActivate:[PartyGuard]
   },
   {
     path: 'auth',

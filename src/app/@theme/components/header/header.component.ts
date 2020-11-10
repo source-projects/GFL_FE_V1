@@ -4,7 +4,7 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-header',
@@ -36,7 +36,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
+  currentUser$:Subscription;
   currentTheme = 'default';
+  currentUser;
 
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
