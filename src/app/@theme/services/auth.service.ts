@@ -23,4 +23,9 @@ export class AuthService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/login', data);
   }
 
+  public isAuthenticated():boolean{
+    const token=localStorage.getItem('token');
+    return !!token?true:false;
+  }
+
 }
