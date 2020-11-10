@@ -53,7 +53,7 @@ const NB_MODULES = [
   NgxDatatableModule,
   NbTooltipModule,
   ColorPickerModule,
-  NgSelectModule
+  NgSelectModule,
 ];
 
 @NgModule({
