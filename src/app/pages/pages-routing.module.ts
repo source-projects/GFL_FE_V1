@@ -29,13 +29,14 @@ const routes: Routes = [{
       path: 'party',
       loadChildren: () => import('./party/party.module')
         .then(m => m.PartyModule),
-      canActivate:[PartyGuard]
+        canActivate:[PartyGuard]
     },
     {
       path: 'quality',
       loadChildren: () => import('./quality/quality.module')
         .then(m => m.QualityModule),
-        canActivate:[QualityGuard]
+        canActivate:[QualityGuard],
+        canLoad: [QualityGuard]
     },
     {
       path: 'user',

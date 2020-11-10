@@ -15,4 +15,9 @@ export class CommonService {
   envUrl(){
     return environment.apiUrl;
   }
+
+  decToBin(n): any{
+    var bin = (+n).toString(2);
+    return bin;
+  }
 }
