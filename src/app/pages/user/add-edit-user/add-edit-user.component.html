@@ -1,120 +1,126 @@
-    <nb-card>
-        <nb-card-header>
-            <h2>ADD USER</h2>
-        </nb-card-header>
-        <nb-card-body>
-            <div class="container">
-                <form #myForm="ngForm" >
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="required">First Name:</label>
-                            <input type="text" name="firstName" #firstName1="ngModel" class="form-control" [(ngModel)]="user.firstName"
-                           [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}" required>
+<nb-card>
+    <nb-card-header>
+        <h2>ADD USER</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="container">
+            <form #myForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="required">First Name:</label>
+                        <input type="text" name="firstName" #firstName1="ngModel" class="form-control"
+                            [(ngModel)]="user.firstName"
+                            [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}" required>
 
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (firstName1.invalid || firstName1.dirty || firstName1.touched)" >
-                                <span>First name is required.</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="required">Last Name:</label>
-                            <input name="lastName" class="form-control"  [(ngModel)]="user.lastName" required #lastName1="ngModel"
-                          [ngClass]="{'is-invalid': formSubmitted && !(lastName1.valid)}">
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (lastName1.invalid || lastName1.dirty || lastName1.touched)" >
-                                <span>Last name is required.</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="required">User Name:</label>
-                            <input name="userName" class="form-control"  [(ngModel)]="user.userName" required #userName1="ngModel"
-                         [ngClass]="{'is-invalid': formSubmitted && !(userName1.valid)}">
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (userName1.invalid || userName1.dirty || userName1.touched)" >
-                                <span>User name is required.</span>
-                            </div>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (firstName1.invalid || firstName1.dirty || firstName1.touched)">
+                            <span>First name is required.</span>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <label class="required">Last Name:</label>
+                        <input name="lastName" class="form-control" [(ngModel)]="user.lastName" required
+                            #lastName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(lastName1.valid)}">
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="required">Email:</label>
-                            <input name="email" class="form-control"  [(ngModel)]="user.email" required #email1="ngModel"
-                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (lastName1.invalid || lastName1.dirty || lastName1.touched)">
+                            <span>Last name is required.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="required">User Name:</label>
+                        <input name="userName" class="form-control" [(ngModel)]="user.userName" required
+                            #userName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(userName1.valid)}">
+
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (userName1.invalid || userName1.dirty || userName1.touched)">
+                            <span>User name is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="required">Email:</label>
+                        <input name="email" class="form-control" [(ngModel)]="user.email" required #email1="ngModel"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                             [ngClass]="{'is-invalid': formSubmitted && !(email1.valid)}">
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (email1.invalid || (email1.dirty || email1.touched))" >
-                                <span>Email is required.</span>
-                            </div>
+
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (email1.invalid || (email1.dirty || email1.touched))">
+                            <span>Email is required.</span>
                         </div>
-                        <div class="col-md-4">
-                            <label class="required">Mobile No.:</label>
-                            <input name="mobile" class="form-control"  [(ngModel)]="user.mobile" required #mobile1="ngModel"
+                    </div>
+                    <div class="col-md-4">
+                        <label class="required">Mobile No.:</label>
+                        <input name="mobile" class="form-control" [(ngModel)]="user.mobile" required #mobile1="ngModel"
                             [ngClass]="{'is-invalid': formSubmitted && !(mobile1.valid)}">
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (mobile1.invalid || mobile1.dirty || mobile1.touched)" >
-                                <span> Mobile No is required.</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="required">Password:</label>
-                            <input type="password" name="password" class="form-control"  [(ngModel)]="user.password" required #password1="ngModel"
-                            [ngClass]="{'is-invalid': formSubmitted && !(password1.valid)}">
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (password1.invalid || password1.dirty || password1.touched)" >
-                                <span>Password is required.</span>
-                            </div>
-                        </div>
-                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="required">Company:</label>
-                            <select  name="company" class="form-control" #company1="ngModel" [(ngModel)]="user.company" required
-                            [ngClass]="{'is-invalid': formSubmitted && !(company1.valid)}">
-                                <option>company 1</option>
-                            </select>
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (company1.invalid || company1.dirty || company1.touched)" >
-                                <span>Company is required.</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="required">Department:</label>
-                           <select name="department" class="form-control"  [(ngModel)]="user.department" required #department1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && !(department1.valid)}">
-                            <option *ngFor ="let dsgn of designation">{{dsgn}}</option>      
-                            </select>
-                                
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (department1.invalid || department1.dirty || department1.touched)" >
-                                <span>Department is required.</span>
-                            </div>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (mobile1.invalid || mobile1.dirty || mobile1.touched)">
+                            <span> Mobile No is required.</span>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="required">Designation:</label>
-                            <select  name="designation" class="form-control" #designation1="ngModel" [(ngModel)]="user.designation" required
-                           [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
-                                <option>company 1</option>
-                            </select>
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (designation1.invalid || designation1.dirty || designation1.touched)" >
-                                <span>Designation is required.</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label></label>
-                            <nb-checkbox name="assign" class="form-control" style="border: none;" >Assign Under Group Head
-                               <!-- <input type="checkbox" id="assign" ngModel="assign" class="native-input visually-hidden">
-                  
-                                <span class="text">Assign Under Group Head</span>-->
-                            </nb-checkbox>
+                    <div class="col-md-4">
+                        <label class="required">Password:</label>
+                        <input type="password" name="password" class="form-control" [(ngModel)]="user.password" required
+                            #password1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(password1.valid)}">
+
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (password1.invalid || password1.dirty || password1.touched)">
+                            <span>Password is required.</span>
                         </div>
                     </div>
-                </form>
-            </div>
-        </nb-card-body>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="required">Company:</label>
+                        <select name="company" class="form-control" #company1="ngModel" [(ngModel)]="user.company"
+                            required [ngClass]="{'is-invalid': formSubmitted && !(company1.valid)}">
+                            <option>company 1</option>
+                        </select>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (company1.invalid || company1.dirty || company1.touched)">
+                            <span>Company is required.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required">Department:</label>
+
+                        <input type="text" name="department" class="form-control" [(ngModel)]="user.department" required
+                            #department1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(department1.valid)}">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (department1.invalid || department1.dirty || department1.touched)">
+                            <span>Department is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="required">Designation:</label>
+                        <select name="designation" class="form-control" #designation1="ngModel"
+                            [(ngModel)]="user.designation" required
+                            [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
+                            <option *ngFor="let dsgn of designation">{{dsgn}}</option>
+                        </select>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (designation1.invalid || designation1.dirty || designation1.touched)">
+                            <span>Designation is required.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label></label>
+                        <nb-checkbox name="assign" class="form-control" style="border: none;">Assign Under Group Head
+                        </nb-checkbox>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
 </nb-card>
-     
+
 <nb-card>
     <nb-card-header style="font-size: medium;">
         <div>
@@ -125,469 +131,22 @@
         <div class="container">
             <table>
                 <tr>
-
                     <th>Forms</th>
-                    <th>View</th>
-                    <th>Add</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th>View Group</th>
-                    <th>View All</th>
-                    <th>Edit Group</th>
-                    <th>Edit All</th>
-                    <th>Delete Group</th>
-                    <th>Delete All</th>
-
+                    <th *ngFor="let per of permissions">{{per}}</th>
                 </tr>
 
-                <tr>
-                    <td>Party</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
+                <tr *ngFor="let form of forms;let i=index">
+                    <td>{{form}}</td>
+                    <td *ngFor="let no of permissions;let j=index">
+                        <nb-checkbox [id]="'forms[i]'+j" [name]="'forms[i]'+j" #chk+i [checked]="false" ></nb-checkbox>
                     </td>
                 </tr>
 
-                <tr>
-                    <td>Quality</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>User</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Fabric In</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Batch</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Program</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Shade</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Supplier</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Supplier Rate</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Color Stock</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Process</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Process Planning</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Jet Planning</td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox></nb-checkbox>
-                    </td>
-                </tr>
             </table>
         </div>
     </nb-card-body>
 </nb-card>
-        <div class="row">
-            <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit(myForm)">Save</button>
-            <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/user">Cancel</button>
-        </div>
-
-              
+<div class="row">
+    <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit(myForm)">Save</button>
+    <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/user">Cancel</button>
+</div>
