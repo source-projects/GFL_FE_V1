@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ColorComponent } from './color.component';
 import { AddEditColorComponent } from './add-edit-color/add-edit-color.component';
+import { ColorGuard } from 'app/@theme/guards/color.guard';
 
 const routes: Routes = [
   {
     path:'',
-    component:ColorComponent
+    component:ColorComponent,
+    canLoad:[ColorGuard]
   },
   {
     path:'add',

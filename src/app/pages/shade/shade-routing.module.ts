@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ShadeComponent } from './shade.component';
 import { AddEditShadeComponent } from './add-edit-shade/add-edit-shade.component';
+import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 
 const routes: Routes = [
   {
     path:'',
-    component:ShadeComponent
+    component:ShadeComponent,
+    canLoad:[ShadeGuard]
   },
   {
     path:'add',

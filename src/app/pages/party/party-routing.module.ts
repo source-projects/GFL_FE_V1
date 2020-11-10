@@ -7,7 +7,8 @@ import { PartyGuard } from 'app/@theme/guards/party.guard';
 const routes: Routes = [
   {
     path:'',
-    component:PartyComponent
+    component:PartyComponent,
+    canLoad:[PartyGuard]
   },
   {
     path:'add',

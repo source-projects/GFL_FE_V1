@@ -7,5 +7,6 @@
  "Delete":"Delete Successful",
  "Not_added":"Nothing Added Yet",
  "Login_Success":"Login Successful",
- "login_Error":"Invalid UserName Or Password"
+ "login_Error":"Invalid UserName Or Password",
+ "NoPermission":"You have No permission to view these Module"
 }

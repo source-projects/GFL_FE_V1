@@ -1,18 +1,35 @@
 import { Injectable } from '@angular/core';
-import { CanActivate,Router  } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { ActivatedRouteSnapshot, CanActivate,Router, RouterStateSnapshot, UrlTree  } from '@angular/router';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from '../services/common.service';
+import { JwtTokenService } from '../services/jwt-token.service';
+import { StoreTokenService } from '../services/store-token.service';
+import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartyGuard implements CanActivate {
-constructor(private _router: Router,public auth: AuthService){}
+  public errorData: any = (errorData as any).default;
+
+  constructor(private commonService: CommonService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService, private toastr:ToastrService) { }
 
   canActivate(): boolean  {
-    if(!this.auth.isAuthenticated()){
-      this._router.navigate(['auth']);
-      return false;
-    }
     return true;
+  }
+
+  canLoad(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
+    this.jwtToken.setToken(this.storeTokenService.get('token'));
+    var permission = this.jwtToken.getDecodeToken('party');
+    let permis: String = this.commonService.decToBin(permission);
+    if (permis[0] == '1')
+      return true;
+    else
+    this.toastr.error(errorData.NoPermission);
+      return false;
   }
 }
