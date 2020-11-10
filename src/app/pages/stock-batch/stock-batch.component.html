@@ -1,1 +1,33 @@
-<p>stock-batch works!</p>
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>
+                <div class="row">
+                    <div class="col-md-11">
+                        <h2>STOCK-BATCH</h2>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary btn-md" routerLink="add">Add</button>        
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="50"
+                    [columnMode]="'force'" class="material" style="text-align: justify"
+                    [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
+                    <ngx-datatable-column name="Stock In" props="stockInType"></ngx-datatable-column>
+                    <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
+                    <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
+                    <ngx-datatable-column name="Bill Date" props="billDate"></ngx-datatable-column>
+                    <ngx-datatable-column name="Chl No" props="chlNo"></ngx-datatable-column>
+                    <ngx-datatable-column name="Chl Date" props="chlDate"></ngx-datatable-column>
+                  
+                   
+                    <ngx-datatable-column name="Actions" sortable="false">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['edit',row.id]"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" ></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-card-body>
