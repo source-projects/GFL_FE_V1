@@ -25,7 +25,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ToastrModule } from 'ngx-toastr/toastr/toastr.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const NB_MODULES = [
@@ -60,9 +59,6 @@ const NB_MODULES = [
   declarations: [],
   imports: [CommonModule, ...NB_MODULES],
   exports: [...NB_MODULES],
-  providers:[
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService
-  ]
+  providers:[  ]
 })
 export class SharedModule {}
