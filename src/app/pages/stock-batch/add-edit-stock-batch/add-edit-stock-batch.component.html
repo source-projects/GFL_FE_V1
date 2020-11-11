@@ -78,59 +78,98 @@
                         </div>
                     </div>
                     <br><br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ngx-datatable #table class="material common-table datatable-auto-height"
-                                [rows]="stockBatch.stockBatchData" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                                [columnMode]="'force'">
 
-                               
+                    <button class="btn-primary" (click)=addNew($event)>
+                        <nb-icon status="primary" style="color: aliceblue;" [options]="{animation:{type:'zoom'}}" icon="plus"></nb-icon>ADD BATCH
+                    </button>
 
-                                <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false" [width]="300">
-                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                        <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'mtr')"
-                                            [id]="'grData'+rowIndex+'-0'" [(ngModel)]="row.mtr" #meter1="ngModel"
-                                            name='mtr{{rowIndex}}' required 
-                                            [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}">
-                                        <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)"
-                                            style="display: inline-block;">
-                                            <span>Required</span>
-                                        </div>
-                                    </ng-template>
-                                </ngx-datatable-column>
+                    <br><br>
 
-                                <ngx-datatable-column name="Weight" prop="wt" [sortable]="false"
-                                    [width]="300">
-                                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                        <input class="tableForm" type="text" #weight1="ngModel"
-                                            name='wt{{rowIndex}}' [(ngModel)]="row.wt"
-                                            (keyup)="onKeyUp($event,rowIndex,1,'wt')" required
-                                            [id]="'grData'+rowIndex+'-1'" 
-                                            [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}">
-                                        <div class="invalid-feedback"
-                                            *ngIf="formSubmitted && (weight1.invalid)"
-                                            style="display: inline-block;">
-                                            <span>Required</span>
-                                        </div>
-                                    </ng-template>
-                                </ngx-datatable-column>
-
-                                <ngx-datatable-column name="Action" sortable="false">
-                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                        let-rowIndex="rowIndex">
-                                        <nb-icon icon="trash" status="danger"
-                                            [options]="{ animation: { type: 'zoom' } }"  (click)="removeItem(rowIndex)" >
-                                        </nb-icon>
-                                    </ng-template>
-                                </ngx-datatable-column>
-
-                            </ngx-datatable>
+                    <div id="repeat" *ngFor="let block of blocks; let i=index ">
+                    <nb-card id="new">
+                        <br>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label  style="float: right; margin-top: 5%;">Batch No:</label>
+                            </div>
+                            <div>
+                                <input id="'batchNo'+i"  type="number" [(ngModel)]='stockBatch.batchNo' class="form-control" name="batchNo">
+                            </div>
+                            <!-- <div>
+                                <label style="float: right; margin-top: 5%;">{{block.name}}</label>
+                                <input type="number" [(ngModel)]='block.name' class="form-control" name="batchNo">
+                            </div> -->
                         </div>
-                    </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ngx-datatable #table class="material common-table datatable-auto-height"
+                                    [rows]="stockBatch.stockBatchData" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                    [columnMode]="'force'">
+
+                                    <ngx-datatable-column name="BatchNo" prop="batchNo" [sortable]="false" [width]="300">
+                                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                            <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'mtr')"
+                                                [id]="'grData'+rowIndex+'-0'+i" [(ngModel)]="row.batchNo" #meter1="ngModel"
+                                                name='batchNo{{rowIndex}}' required 
+                                                [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}" disabled value="34">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)"
+                                                style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false" [width]="300">
+                                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                            <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'mtr')"
+                                                [id]="'grData'+rowIndex+'-0'+i" [(ngModel)]="row.mtr" #meter1="ngModel"
+                                                name='mtr{{rowIndex}}' required 
+                                                [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}">
+                                            <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)"
+                                                style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column name="Weight" prop="wt" [sortable]="false"
+                                        [width]="300">
+                                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                            <input class="tableForm" type="text" #weight1="ngModel"
+                                                name='wt{{rowIndex}}' [(ngModel)]="row.wt"
+                                                (keyup)="onKeyUp($event,rowIndex,1,'wt')" required
+                                                [id]="'grData'+rowIndex+'-1'+i" 
+                                                [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}">
+                                            <div class="invalid-feedback"
+                                                *ngIf="formSubmitted && (weight1.invalid)"
+                                                style="display: inline-block;">
+                                                <span>Required</span>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column name="Action" sortable="false">
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                            let-rowIndex="rowIndex">
+                                            <nb-icon icon="trash" status="danger"
+                                                [options]="{ animation: { type: 'zoom' } }"  (click)="removeItem(rowIndex)" >
+                                            </nb-icon>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </nb-card>
+                </div>
                     <br><br>
                     <div class="row">
-                        <button type="button" class="btn btn-primary btn-sm"
-                           >Add</button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="selectedFabricId == null" type="submit" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addStockBatch(stockBatch)">Add</button>&nbsp;&nbsp;&nbsp;
+                        
+                        <button *ngIf="selectedFabricId != null" type="button" (click)="updateStockBatch(stockBatch)" class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>&nbsp;&nbsp;&nbsp;
+
                         <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/stock-batch"
                        >Cancel</button>
                     </div>

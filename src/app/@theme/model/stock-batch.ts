@@ -15,5 +15,6 @@ export class StockBatchData{
    
     mtr: number;
     wt:number;
+    batchNo:number;
    
 }

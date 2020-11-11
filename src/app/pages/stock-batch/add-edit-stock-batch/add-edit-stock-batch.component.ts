@@ -6,6 +6,8 @@ import * as errorData from 'app/@theme/json/error.json';
 import { PartyService } from 'app/@theme/services/party.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { StockBatchService } from 'app/@theme/services/stock-batch.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-edit-stock-batch',
@@ -30,15 +32,25 @@ status
   user:any;
   index;
   stockList;
+  blocks=[
+    {
+      batchNo:null,
+    },
+  ];
 
   stockBatchArray:StockBatchData[]=[];
   stockBatch :StockBatch=new StockBatch();
   stockBatchData: StockBatchData= new StockBatchData();
 
+  
+  blockNumber;
+
   constructor(
     private partyService: PartyService,
     private toastr:ToastrService,
-    private commonService:CommonService
+    private route:Router,
+    private commonService:CommonService,
+    private stockBatchService:StockBatchService
 
   ) { 
     this.stockBatchArray.push(this.stockBatchData);
@@ -103,6 +115,7 @@ status
          
           mtr: null,
           wt: null,
+          batchNo:null,
          
         };
         let list = this.stockBatch.stockBatchData;
@@ -137,5 +150,62 @@ status
       this.stockBatch.stockBatchData = [...list];
     }
  }
+
+ addStockBatch(stockBatch){
+   console.log(this.stockBatch)
+  this.formSubmitted = true;
+    if (stockBatch.valid) {
+      this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
+        data => {
+          if (data['success']) {
+            this.route.navigate(["/pages/stock-batch"]);
+            this.toastr.success(errorData.Add_Success)
+          }
+          else {
+            this.toastr.error(errorData.Internal_Error)
+          }
+        },
+        error => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      )
+    }
+ }
+
+ updateStockBatch(stockBatch){
+  this.formSubmitted = true;
+    if (stockBatch.valid) {
+      this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+        data => {
+          if (data['success']) {
+            this.route.navigate(["/pages/stock-batch"]);
+            this.toastr.success(errorData.Update_Success);
+          }
+        },
+        error => {
+          this.toastr.error(errorData.Update_Error);
+        }
+      )
+    }
+ }
+
+ addNew(event){
+   let item = this.blocks;
+   let ob={
+    batchNo:null,
+   }
+  console.log("called");
+  item.push(ob)
+  this.blocks=item;
+  debugger
+  document.getElementById("new").style.visibility='visible';
+  const className = 'collapsible-panel--expanded';
+    if (event.target.classList.contains(className)) {
+        event.target.classList.remove(className);
+    } else {
+        event.target.classList.add(className);
+    }
+  }
+
 
 }
