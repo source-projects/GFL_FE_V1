@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path:'',
     component:ShadeComponent,
+    canActivate:[ShadeGuard],
     canLoad:[ShadeGuard]
   },
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[ShadeGuard]
 })
 export class ShadeRoutingModule { }

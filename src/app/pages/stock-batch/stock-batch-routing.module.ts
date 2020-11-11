@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path:'',
     component:StockBatchComponent,
+    canActivate:[BatchGuard],
     canLoad:[BatchGuard]
   },
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[BatchGuard]
 })
 export class StockBatchRoutingModule { }

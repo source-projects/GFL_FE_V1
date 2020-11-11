@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path:'',
     component:ProgramComponent,
+    canActivate:[ProgramGuard],
     canLoad:[ProgramGuard]
   },
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[ProgramGuard]
 })
 export class ProgramRoutingModule { }

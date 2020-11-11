@@ -9,6 +9,7 @@ const routes: Routes = [
   {
     path:'',
     component:SupplierComponent,
+    canActivate:[SupplierGuard],
     canLoad:[SupplierGuard]
   },
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[SupplierGuard]
 })
 export class SupplierRoutingModule { }

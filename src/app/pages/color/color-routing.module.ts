@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path:'',
     component:ColorComponent,
+    canActivate:[ColorGuard],
     canLoad:[ColorGuard]
   },
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[ColorGuard]
 })
 export class ColorRoutingModule { }

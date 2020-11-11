@@ -32,10 +32,18 @@ status
   user:any;
   index;
   stockList;
+  blocks=[
+    {
+      batchNo:null,
+    },
+  ];
 
   stockBatchArray:StockBatchData[]=[];
   stockBatch :StockBatch=new StockBatch();
   stockBatchData: StockBatchData= new StockBatchData();
+
+  
+  blockNumber;
 
   constructor(
     private partyService: PartyService,
@@ -107,6 +115,7 @@ status
          
           mtr: null,
           wt: null,
+          batchNo:null,
          
         };
         let list = this.stockBatch.stockBatchData;
@@ -143,6 +152,7 @@ status
  }
 
  addStockBatch(stockBatch){
+   console.log(this.stockBatch)
   this.formSubmitted = true;
     if (stockBatch.valid) {
       this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
@@ -178,5 +188,24 @@ status
       )
     }
  }
+
+ addNew(event){
+   let item = this.blocks;
+   let ob={
+    batchNo:null,
+   }
+  console.log("called");
+  item.push(ob)
+  this.blocks=item;
+  debugger
+  document.getElementById("new").style.visibility='visible';
+  const className = 'collapsible-panel--expanded';
+    if (event.target.classList.contains(className)) {
+        event.target.classList.remove(className);
+    } else {
+        event.target.classList.add(className);
+    }
+  }
+
 
 }
