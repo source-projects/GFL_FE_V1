@@ -18,10 +18,14 @@ export class StockBatchService {
   // }
 
   addStockBatch(myForm){
-    return this.httpClient.post(this.commonService.envUrl()+'api/stockBatchCreate',myForm);
+    return this.httpClient.post(this.commonService.envUrl()+'api/stockBatch',myForm);
   }
 
   updateStockBatch(myForm){
-    return this.httpClient.post(this.commonService.envUrl()+'api/stockBatchCreate',myForm);
+    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch',myForm);
+  }
+
+  getStockBatchById(id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/'+id);
   }
 }

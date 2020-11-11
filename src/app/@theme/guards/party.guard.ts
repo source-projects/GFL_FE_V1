@@ -7,7 +7,6 @@ import { StoreTokenService } from '../services/store-token.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
 
 
 @Injectable({

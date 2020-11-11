@@ -16,7 +16,7 @@ const routes: Routes = [
     component:AddEditStockBatchComponent
   },
   {
-    path:'edit',
+    path:'edit/:id',
     component:AddEditStockBatchComponent
   }
 ];
