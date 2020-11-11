@@ -27,4 +27,7 @@ export class PartyService {
   getPartyDetailsById(id){
     return this.httpClient.get(this.commonService.envUrl()+'api/party/'+id);
   }
+  getAllMaster(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/userHead');
+  }
 }

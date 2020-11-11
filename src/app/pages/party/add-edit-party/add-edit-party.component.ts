@@ -33,12 +33,15 @@ export class AddEditPartyComponent implements OnInit {
   //to store the id of selected party
   currentPartyId:any;
 
+  master:[];
+
   constructor(private location: Location, private partyService: PartyService, private commonService: CommonService, 
     private route: Router, private _route: ActivatedRoute, private toastr:ToastrService) { }
 
   ngOnInit(): void {
-    this.getData()
-    this.getUpdateData()
+    this.getData();
+    this.getUpdateData();
+    this.getMaster();
   }
 
   public getData(){
@@ -56,7 +59,24 @@ export class AddEditPartyComponent implements OnInit {
       creditor: new FormControl(null),
       debtor: new FormControl(null),
       createdBy: new FormControl(this.user.userId.toString()),
+      userHeadId:new FormControl(null),
     });
+  }
+
+  public getMaster(){
+    this.partyService.getAllMaster().subscribe(
+      data=>{
+        if(data['success']){
+          this.master=data['data'];
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error);
+        }
+      },
+      error=>{
+        this.toastr.error(errorData.Serever_Error);
+      }
+    )
   }
 
   public getUpdateData(){
@@ -78,7 +98,8 @@ export class AddEditPartyComponent implements OnInit {
             "creditor": this.currentParty.creditor,
             "debtor": this.currentParty.debtor,
             "createdBy": this.currentParty.user,
-            "id": this.currentPartyId
+            "id": this.currentPartyId,
+            "userHeadId":this.currentParty.userHeadId
           })
         },
         error => {
@@ -90,6 +111,7 @@ export class AddEditPartyComponent implements OnInit {
 
   public addParty() {
     this.formSubmitted = true;
+    console.log(this.partyForm)
     if (this.partyForm.valid) {
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
@@ -136,5 +158,10 @@ export class AddEditPartyComponent implements OnInit {
   public goBackToPreviousPage(): any {
     this.route.navigate(['pages/party']);
   }
+
+  setCheckedStatus(checked) {
+    console.log('checked', checked.target.checked);
+    
+}
 
 }

@@ -84,6 +84,11 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
           this.color = data["data"];
+          let amount:any
+          this.color.colorDataList.forEach(element => {
+            amount=Number(element.rate)*Number(element.quantity)
+            element.amount=parseInt(amount);
+          });
         },
         error => {
           this.toastr.error(errorData.Serever_Error)
