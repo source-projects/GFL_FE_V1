@@ -59,8 +59,8 @@ export class AddEditPartyComponent implements OnInit {
       pincode: new FormControl(null, [Validators.pattern(/^[0-9]{6}$/), Validators.required]),
       gstin: new FormControl(null, Validators.required),
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
-      creditor: new FormControl(false),
-      debtor: new FormControl(false),
+      creditor: new FormControl(false,Validators.required),
+      debtor: new FormControl(false,Validators.required),
       createdBy: new FormControl(this.user.userId.toString()),
       userHeadId:new FormControl(null),
     });
@@ -113,10 +113,6 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public addParty() {
-    if(this.creditor==false && this.debtor==false){
-      this.toastr.error("Select Creditor or Debtor ")
-      return
-    }
     this.formSubmitted = true;
     if(this.partyForm.valid) {
       this.partyService.saveParty(this.partyForm.value).subscribe(
