@@ -144,17 +144,18 @@
 
           <br>
 
-          <div>
-            <nb-checkbox class="status-basic nb-transition">
-              <input type="checkbox" id="creditor" formControlName="creditor" class="native-input visually-hidden" (change)="setCheckedStatus($event)">
+          <div >
+            <nb-checkbox class="status-basic nb-transition"  id="creditor" formControlName="creditor" (checkedChange)="setCheckedStatusCreditor($event)"  [ngClass]="{'is-invalid':formSubmitted && creditor && debtor}">
               <span class="text">Creditors</span>
             </nb-checkbox>
 
-            <nb-checkbox class="status-basic nb-transition" style="margin-left: 50px;">
-              <input type="checkbox" id="debtor" formControlName="debtor" class="native-input visually-hidden">
+            <nb-checkbox class="status-basic nb-transition" style="margin-left: 50px;" (checkedChange)="setCheckedStatusDebtor($event)" type="checkbox" id="debtor" formControlName="debtor" [ngClass]="{'is-invalid':formSubmitted==true && creditor==false && debtor==false}">
 
               <span class="text">Debitors</span>
             </nb-checkbox>
+          </div>
+          <div class="inline-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
+            <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
           </div>
 
           <br><br>

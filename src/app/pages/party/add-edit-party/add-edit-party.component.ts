@@ -35,6 +35,9 @@ export class AddEditPartyComponent implements OnInit {
 
   master:[];
 
+  creditor:boolean=false;
+  debtor:boolean=false;
+
   constructor(private location: Location, private partyService: PartyService, private commonService: CommonService, 
     private route: Router, private _route: ActivatedRoute, private toastr:ToastrService) { }
 
@@ -56,8 +59,8 @@ export class AddEditPartyComponent implements OnInit {
       pincode: new FormControl(null, [Validators.pattern(/^[0-9]{6}$/), Validators.required]),
       gstin: new FormControl(null, Validators.required),
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
-      creditor: new FormControl(null),
-      debtor: new FormControl(null),
+      creditor: new FormControl(false,Validators.required),
+      debtor: new FormControl(false,Validators.required),
       createdBy: new FormControl(this.user.userId.toString()),
       userHeadId:new FormControl(null),
     });
@@ -111,8 +114,7 @@ export class AddEditPartyComponent implements OnInit {
 
   public addParty() {
     this.formSubmitted = true;
-    console.log(this.partyForm)
-    if (this.partyForm.valid) {
+    if(this.partyForm.valid) {
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
           if(data["success"]){
@@ -128,6 +130,9 @@ export class AddEditPartyComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error)
         }
       )
+    }
+    else{
+      return
     }
   }
 
@@ -159,9 +164,18 @@ export class AddEditPartyComponent implements OnInit {
     this.route.navigate(['pages/party']);
   }
 
-  setCheckedStatus(checked) {
-    console.log('checked', checked.target.checked);
-    
-}
+  setCheckedStatusCreditor(checked) {
+    this.creditor=checked;
+    this.partyForm.patchValue({
+      "creditor":this.creditor
+    })
+  }
+
+  setCheckedStatusDebtor(checked) {
+    this.debtor=checked;
+    this.partyForm.patchValue({
+      "debtor":this.debtor
+    })
+  }
 
 }
