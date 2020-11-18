@@ -1,4 +1,3 @@
-import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
@@ -6,7 +5,6 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -58,9 +56,9 @@ export class AddEditQualityComponent implements OnInit {
     this.addEditQualityForm = new FormGroup({
       qualityId: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
-      qualityType: new FormControl(null, Validators.required),
+      qualityType: new FormControl("Fabric", Validators.required),
+      unit:new FormControl(null,Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
-      qualitySubType: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
       createdBy: new FormControl(this.user.userId.toString()),
@@ -78,8 +76,8 @@ export class AddEditQualityComponent implements OnInit {
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
             qualityType: this.qualityList.qualityType,
+            unit:this.qualityList.unit,
             wtPer100m: this.qualityList.wtPer100m,
-            qualitySubType: this.qualityList.qualitySubType,
             partyId: this.qualityList.partyId,
             remark: this.qualityList.remark,
             createdBy: this.qualityList.createdBy,

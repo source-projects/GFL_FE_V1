@@ -52,12 +52,13 @@ const NB_MODULES = [
   NgxDatatableModule,
   NbTooltipModule,
   ColorPickerModule,
-  NgSelectModule
+  NgSelectModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES]
+  exports: [...NB_MODULES],
+  providers:[  ]
 })
 export class SharedModule {}
