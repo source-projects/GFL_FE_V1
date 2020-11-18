@@ -7,23 +7,30 @@ export class User{
  password:String;
  company:String;
  department:String;
- designation:String;
+ designationData: DesignationData[];
  id:Number;
- userPermissionData:  UserPermissionData[];
+ userHeadId:Number;
+ userPermissionData:{}
+     
+ 
 }
-export class UserPermissionData{
-    pa:Number;
-    qu:Number;
-    u:Number;
-    f:Number;
-    b:Number;
-    prg:Number;
-    sh:Number;
-    su:Number;
-    sr:Number;
-    cs:Number;
-    pr:Number;
-    pp:Number;
-    jp:Number
+export class DesignationData{
+    designation:String;
+    id:Number
+};
+
+export class Permissions{
+    module:String = null;
+   view:boolean = false;
+   add:boolean = false;
+   edit:boolean = false;
+   delete:boolean = false;
+   viewGroup:boolean = false;
+   viewAll:boolean = false;
+   editGroup:boolean = false;
+   editAll:boolean = false;
+   deleteGroup:boolean = false;
+   deleteAll:boolean = false;
+   selectAll:boolean = false;
 
 }

@@ -1,6 +1,11 @@
 <nb-card>
     <nb-card-header>
-        <h2>ADD USER</h2>
+        <div *ngIf="this.currentUserId == null; else updateU">
+            <h2>ADD USER</h2>
+        </div>
+        <ng-template #updateU>
+            <h2>UPDATE USER</h2>
+        </ng-template>
     </nb-card-header>
     <nb-card-body>
         <div class="container">
@@ -53,11 +58,12 @@
                     </div>
                     <div class="col-md-4">
                         <label class="required">Mobile No.:</label>
-                        <input name="mobile" class="form-control" [(ngModel)]="user.mobile" required #mobile1="ngModel"
-                            [ngClass]="{'is-invalid': formSubmitted && !(mobile1.valid)}">
+                        <input name="contact" class="form-control" [(ngModel)]="user.contact" required #contact1="ngModel"
+                            [ngClass]="{'is-invalid': formSubmitted && !(contact1.valid)}"
+                           >
 
                         <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (mobile1.invalid || mobile1.dirty || mobile1.touched)">
+                            *ngIf="formSubmitted && (contact1.invalid || contact1.dirty || contact1.touched)">
                             <span> Mobile No is required.</span>
                         </div>
                     </div>
@@ -79,6 +85,10 @@
                         <select name="company" class="form-control" #company1="ngModel" [(ngModel)]="user.company"
                             required [ngClass]="{'is-invalid': formSubmitted && !(company1.valid)}">
                             <option>company 1</option>
+                            <option>company 2</option>
+                            <option>company 3</option>
+                            <option>company 4</option>
+                            <option>company 5</option>
                         </select>
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (company1.invalid || company1.dirty || company1.touched)">
@@ -100,10 +110,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label class="required">Designation:</label>
-                        <select name="designation" class="form-control" #designation1="ngModel"
-                            [(ngModel)]="user.designation" required
+                        <select name="designation" class="form-control" #designation1="ngModel" 
+                            [(ngModel)]="user.designationData" required
                             [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
-                            <option *ngFor="let dsgn of designation">{{dsgn}}</option>
+                            <option *ngFor="let dsgn of desiList" [ngValue]="dsgn" >{{dsgn.designation}}</option>
                         </select>
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (designation1.invalid || designation1.dirty || designation1.touched)">
@@ -132,14 +142,49 @@
             <table>
                 <tr>
                     <th>Forms</th>
-                    <th *ngFor="let per of permissions">{{per}}</th>
+                    <th>Select All</th>
+                    <th *ngFor="let per of perName">{{per}}</th>
                 </tr>
 
-                <tr *ngFor="let form of forms;let i=index">
-                    <td>{{form}}</td>
-                    <td *ngFor="let no of permissions;let j=index">
-                        <nb-checkbox [id]="'forms[i]'+j" [name]="'forms[i]'+j" #chk+i [checked]="false" ></nb-checkbox>
+                <tr *ngFor="let perm of permissionArray;let i=index;">
+                    <td>{{perm.module}}</td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'" (change)="checkUncheckAll(perm.module,$event)" ></nb-checkbox>
                     </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'" ></nb-checkbox>
+                    </td>
+                    
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'" ></nb-checkbox>
+                    </td>
+                    <td >
+                        <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'" ></nb-checkbox>
+                    </td>
+                   
+                   
+
                 </tr>
 
             </table>
@@ -147,6 +192,8 @@
     </nb-card-body>
 </nb-card>
 <div class="row">
-    <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit(myForm)">Save</button>
-    <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/user">Cancel</button>
+    <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm" 
+    style="margin-right:20px" (click)="addUser(myForm)">Save</button>
+    <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm" 
+    style="margin-right:20px" routerLink="/pages/user">Cancel</button>
 </div>
