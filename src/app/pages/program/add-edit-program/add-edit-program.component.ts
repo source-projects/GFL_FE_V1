@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { PartyService } from 'app/@theme/services/party.service';
 import { QualityService } from 'app/@theme/services/quality.service';
-import{Program} from 'app/@theme/model/program';
+import{Program, ProgramRecord} from 'app/@theme/model/program';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-add-edit-program',
@@ -14,43 +15,31 @@ export class AddEditProgramComponent implements OnInit {
 
   constructor( private partyService: PartyService,
     private qualityService: QualityService,
-    private toastrService: NbToastrService,
-    private route: Router) { 
+    private route: Router,
+    private toastr: ToastrService) { 
    }
 
-   //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: any
+  //programValues
+  programValues: Program = new Program();
+  programRecord:ProgramRecord= new ProgramRecord();
 
-  //FormValues
-  formValues= new Program(null,null,null,null,null,null,null,null,null,
-    [{batch: "string",
-      colour_tone: "string",
-      id: "string",
-      lot_no: "string",
-      partyShadeNo: "string",
-      programControlId:"string",
-      quantity: "string",
-      remark: "string",
-      shade_no: "string",}]);
-
-  
+  public errorData: any = (errorData as any).default;
 
   //form Validation
-  formSubmitted:boolean=false
+  formSubmitted:boolean=false;
 
   //for fatching dropdown list data
-  party:any[]
-  qualityList:any[]
-  partyShade
+  party:any[];
+  qualityList:any[];
+  partyShade:any;
+
+  priorityData=[{id:1,name:'Very High'},
+  {id:2,name:'High'},
+  {id:3,name:'Medium'},
+  {id:4 ,name:'Low'}]
   
   //for knowing the row index
-  index
+  index:any;
 
   ngOnInit(): void {
     this.getPartyList();
@@ -64,39 +53,17 @@ export class AddEditProgramComponent implements OnInit {
         if(data['successs']){
           if (data["data"] && data["data"].length > 0) {
             this.party = data["data"];
-          } else {
-             //toaster
-             this.status = "danger"
-             const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "No party added yet",
-              "Fabric-in",
-              config);
+          } 
+          else {
+            this.toastr.error(errorData.Internal_Error)
           }
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
         }
       },
       (error) => {
-        //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Fabric-in",
-         config);
+        this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -104,40 +71,19 @@ export class AddEditProgramComponent implements OnInit {
   public getQualityList() {
     this.qualityService.getallQuality().subscribe(
       (data) => {
-        if (data["data"] && data["data"].length > 0) {
-          this.qualityList = data["data"];
-        } else {
-           //toaster
-           this.status = "danger"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No quality added yet",
-            "Fabric-in",
-            config);
+        if(data["success"]){
+          if (data["data"] && data["data"].length > 0) {
+            this.qualityList = data["data"];
+          } else {
+            this.toastr.error(errorData.Internal_Error);
+          }
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error);
         }
       },
       (error) => {
-           //toaster
-           this.status = "danger"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No internet access or Server failuer",
-            "Fabric-in",
-            config);
+        this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -145,69 +91,45 @@ export class AddEditProgramComponent implements OnInit {
   //put quality name and quality type
   public getQualityInfo(value){
     let id = value
-    this.formValues.qualityName = this.qualityList[id-1].qualityName;
-    this.formValues.qualityType = this.qualityList[id-1].qualityType;
+    this.programValues.qualityName = this.qualityList[id-1].qualityName;
+    this.programValues.qualityType = this.qualityList[id-1].qualityType;
   }
 
   //On enter pressed -> check empty field, add new row
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13){
-
-      //toaster
-      this.status = "danger"
-      const config = {
-      status: this.status,
-      destroyByClick: this.destroyByClick,
-      duration: this.duration,
-      hasIcon: this.hasIcon,
-      position: this.position,
-      preventDuplicates: this.preventDuplicates,
-    };
-
       this.index = "qualityList" + (rowIndex + 1) + "-" + colIndex;
-      if (rowIndex === this.formValues.programRecord.length - 1) {
-        let item = this.formValues.programRecord[rowIndex];
+      if (rowIndex === this.programValues.programRecord.length - 1) {
+        let item = this.programValues.programRecord[rowIndex];
         if(colName == 'partyShadeNo'){
           if (!item.partyShadeNo) {
-            this.toastrService.show(
-              "Enter Party Shade No",
-              'Party shade No Field required',config);
+            this.toastr.error("Enter Party Shade No","Party shade No Field required");
             return;
           }
         }else if(colName == 'shade_no'){
           if (!item.shade_no) {
-            this.toastrService.show(
-              "Select Shade No",
-              'Shade No Field required',config);
+            this.toastr.error("Select Shade No","Shade No Field required");
             return;
           }
         }else if(colName == 'colour_tone'){
           if (!item.colour_tone) {
-            this.toastrService.show(
-              "Enter Colour Tone",
-              'Colour Tone Field required',config);
+            this.toastr.error("Enter Colour Tone","Colour Tone Field required");
             return;
           }
         }else if(colName == 'quantity'){
           if (!item.quantity) {
-            this.toastrService.show(
-                "Enter quantity",
-                'quantity Field required',config);
+            this.toastr.error("Enter quantity","quantity Field required");
             return;
           }
         }else if(colName == 'batch'){
           if (!item.batch) {
-            this.toastrService.show(
-                "Enter No. of Batch",
-                'Batch Field required',config);
+            this.toastr.error("Enter No. of Batch","Batch Field required");
             return;
           }
         }else if(colName == 'lot_no'){
           if (!item.lot_no) {
-            this.toastrService.show(
-                "Enter Lot No",
-                'Lot No Field required',config);
+            this.toastr.error("Enter Lot No","Lot No Field required");
             return;
           }
         }   
@@ -228,9 +150,9 @@ export class AddEditProgramComponent implements OnInit {
           qualityName: null,
           qualityType: null,
         };
-        let list = this.formValues.programRecord;
+        let list = this.programValues.programRecord;
         list.push(obj);
-        this.formValues.programRecord = [...list];
+        this.programValues.programRecord = [...list];
         let interval = setInterval(()=>{
           let field = document.getElementById(this.index)
           if(field != null){
@@ -245,8 +167,8 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   removeItem(id){
-    let idCount = this.formValues.programRecord.length
-    let item = this.formValues.programRecord;
+    let idCount = this.programValues.programRecord.length
+    let item = this.programValues.programRecord;
     if(idCount == 1){
       item[0].partyShadeNo = null;
       item[0].shade_no = null;
@@ -256,26 +178,23 @@ export class AddEditProgramComponent implements OnInit {
       item[0].lot_no = null;
       item[0].remark = null;
       let list = item;
-      this.formValues.programRecord = [...list];
+      this.programValues.programRecord = [...list];
     }
     else{
       let removed = item.splice(id,1);
       let list = item;
-      this.formValues.programRecord = [...list];
+      this.programValues.programRecord = [...list];
     }
  }
 
  public addProgram(myForm){
   this.formSubmitted=true
   if(myForm.valid){
-    console.log("Success")
-    console.log(this.formValues)
   }
   else{
     return
   }
-}
-
+ }
 }
 
 

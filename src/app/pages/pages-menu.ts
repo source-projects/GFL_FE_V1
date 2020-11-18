@@ -48,6 +48,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/program',
   },
   {
+    title: 'Stock-batch',
+    icon: 'home-outline',
+    link: '/pages/stock-batch',
+  },
+  {
     title: 'Shade',
     icon: 'home-outline',
     link: '/pages/shade',

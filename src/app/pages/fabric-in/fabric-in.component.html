@@ -12,19 +12,24 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <ngx-datatable [rows]="fabricList" [ngClass]="tablestyle" [rowHeight]="'auto'" [headerHeight]="50"
-                    [columnMode]="'force'" class="material" style="text-align: justify">
+                <ngx-datatable [rows]="fabricList" [ngClass]="tablestyle" [headerHeight]="50"
+                    [columnMode]="'force'" class="material" style="text-align: justify"
+                    [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
                     <ngx-datatable-column name="Stock In" props="stockInType"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
                     <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
                     <ngx-datatable-column name="Bill Date" props="billDate"></ngx-datatable-column>
                     <ngx-datatable-column name="Chl No" props="chlNo"></ngx-datatable-column>
                     <ngx-datatable-column name="Chl Date" props="chlDate"></ngx-datatable-column>
-                    <ngx-datatable-column name="Batch" props="batch"></ngx-datatable-column>
+                    <ngx-datatable-column name="Batch" props="batch">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <input type="checkbox" [value]="fabricList.batch" [(ngModel)]="row.batch" readonly >
+                        </ng-template>
+                    </ngx-datatable-column>
                     <ngx-datatable-column name="Record Count" props="recordCount"></ngx-datatable-column>
                     <ngx-datatable-column name="Actions" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/fabric-in/edit',row.id]"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['edit',row.id]"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="deleteFabric(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>

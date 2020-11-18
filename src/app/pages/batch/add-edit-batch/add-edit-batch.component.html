@@ -10,11 +10,11 @@
 
                         <div class="col-md-4">
                             <label class="required">Quality ID:</label>
-                            <select name="qualityId" class="form-control" [(ngModel)]='formValues.qualityId' required (change)="getQualityDataOnSelect()"
+                            <ng-select name="qualityId" [(ngModel)]='formValues.qualityId' required (change)="getQualityDataOnSelect()"
                                 #qualityId1="ngModel" [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}">
-                                <option *ngFor="let q of quality" [value]="q.id">{{q.qualityId}} - {{q.qualityName}}
-                                </option>
-                            </select>
+                                <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityId}} - {{q.qualityName}}
+                                </ng-option>
+                            </ng-select>
                             <div class="invalid-feedback"
                                 *ngIf="formSubmitted && (qualityId1.invalid || qualityId1.dirty || qualityId1.touched)">
                                 <span>Quality ID is required.</span>
@@ -112,7 +112,7 @@
                     <br><br>
                     <div class="row">
                         <button type="button" class="btn btn-primary btn-sm"
-                            (click)="onSubmit(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
+                            (click)="addBatch(myForm)">Add</button>&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/batch">Cancel</button>
                     </div>
 

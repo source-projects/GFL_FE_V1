@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { QualityService } from 'app/@theme/services/quality.service';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
+import { Batch, GrData } from 'app/@theme/model/batch';
 
 @Component({
   selector: "ngx-add-edit-batch",
@@ -16,25 +19,22 @@ export class AddEditBatchComponent implements OnInit {
    position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
    preventDuplicates = false;
    status
-   
-   index;
-  formSubmitted = false;
-  quality;
-  //form Variables..
-  formValues = {
-    qualityId: null,
-    qualityName: null,
-    qualityType: null,
-    grData: [
-      {
-        gr: null,
-        meter: null,
-        weight: null,
-      },
-    ],
-  };
 
-  constructor(private qualityService:QualityService, private toastrService: NbToastrService) {}
+  public errorData: any = (errorData as any).default;
+   
+  index;
+
+  //form Validation
+  formSubmitted = false;
+
+  //to store Quality data
+  quality:any;
+  
+  //form Variables..
+  formValues :Batch=new Batch();
+  grData: GrData= new GrData();
+
+  constructor(private qualityService:QualityService, private toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.getAllQuality();
@@ -46,20 +46,7 @@ export class AddEditBatchComponent implements OnInit {
         this.quality = data['data'];
       },
       error=>{
-          //toaster
-          this.status = "danger"
-          const config = {
-          status: this.status,
-          destroyByClick: this.destroyByClick,
-          duration: this.duration,
-          hasIcon: this.hasIcon,
-          position: this.position,
-          preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-          "No internet access or Server failure",
-          "Batch",
-          config);
+        this.toastr.error(errorData.Serever_Error)
       }
     )
   }
@@ -93,9 +80,7 @@ export class AddEditBatchComponent implements OnInit {
         let item = this.formValues.grData[rowIndex];
         if(colName == 'gr'){
           if (!item.gr) {
-            this.toastrService.show(
-              "Enter Gr",
-              'Gr Field required',config);
+            this.toastr.error("Enter Gr",'Gr Field required');
             return;
           }
         }   
@@ -114,16 +99,17 @@ export class AddEditBatchComponent implements OnInit {
             clearInterval(interval)
           }
         }, 500)
-      } else {
+      } 
+      else {
         alert("go to any last row input to add new row");
       }
     }
   }
 
-  onSubmit(myForm) {
+  addBatch(myForm) {
     this.formSubmitted = true;
     if(myForm.valid){
-      console.log("Submitted.");
+      
     }
   }
 

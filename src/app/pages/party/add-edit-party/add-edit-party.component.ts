@@ -5,7 +5,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'app/@theme/services/common.service';
 import { PartyService } from 'app/@theme/services/party.service';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-add-edit-party',
@@ -15,28 +16,40 @@ import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastr
 })
 
 export class AddEditPartyComponent implements OnInit {
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
 
-  formSubmitted: boolean = false;
-  user: any;
+  public errorData: any = (errorData as any).default;
+
   partyForm: FormGroup;
-  currentParty;
-  myPartyId;
 
-  constructor(private location: Location, private partyService: PartyService, private toastrService: NbToastrService,
-    private commonService: CommonService, private route: Router, private _route: ActivatedRoute) { }
+  //form Validation
+  formSubmitted: boolean = false;
+
+  //to Store UserID
+  user: any;
+
+  //To store the data of selected Party
+  currentParty:any;
+
+  //to store the id of selected party
+  currentPartyId:any;
+
+  master:[];
+
+  creditor:boolean=false;
+  debtor:boolean=false;
+
+  constructor(private location: Location, private partyService: PartyService, private commonService: CommonService, 
+    private route: Router, private _route: ActivatedRoute, private toastr:ToastrService) { }
 
   ngOnInit(): void {
+    this.getData();
+    this.getUpdateData();
+    this.getMaster();
+  }
+
+  public getData(){
     this.user = this.commonService.getUser()
     this.partyForm = new FormGroup({
-
       partyName: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
       partyAddress1: new FormControl(null, Validators.required),
       partyAddress2: new FormControl(null),
@@ -46,17 +59,33 @@ export class AddEditPartyComponent implements OnInit {
       pincode: new FormControl(null, [Validators.pattern(/^[0-9]{6}$/), Validators.required]),
       gstin: new FormControl(null, Validators.required),
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
-      creditor: new FormControl(null),
-      debtor: new FormControl(null),
+      creditor: new FormControl(false,Validators.required),
+      debtor: new FormControl(false,Validators.required),
       createdBy: new FormControl(this.user.userId.toString()),
-
+      userHeadId:new FormControl(null),
     });
+  }
 
- 
-    this.myPartyId = this._route.snapshot.paramMap.get('id');
-    if (this.myPartyId != null) {
+  public getMaster(){
+    this.partyService.getAllMaster().subscribe(
+      data=>{
+        if(data['success']){
+          this.master=data['data'];
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error);
+        }
+      },
+      error=>{
+        this.toastr.error(errorData.Serever_Error);
+      }
+    )
+  }
 
-      this.partyService.getPartyDetailsById(this.myPartyId).subscribe(
+  public getUpdateData(){
+    this.currentPartyId = this._route.snapshot.paramMap.get('id');
+    if (this.currentPartyId != null) {
+      this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
         data => {
           this.currentParty = data['data']
           this.partyForm.patchValue({
@@ -72,118 +101,81 @@ export class AddEditPartyComponent implements OnInit {
             "creditor": this.currentParty.creditor,
             "debtor": this.currentParty.debtor,
             "createdBy": this.currentParty.user,
-            "id": this.myPartyId
+            "id": this.currentPartyId,
+            "userHeadId":this.currentParty.userHeadId
           })
         },
         error => {
-          //toaster
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Party",
-           config);
+          this.toastr.error(errorData.Serever_Error)
         }
       )
     }
-    
   }
 
-  onSubmit() {
+  public addParty() {
     this.formSubmitted = true;
-    if (this.partyForm.valid) {
+    if(this.partyForm.valid) {
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
-          this.currentParty = data["data"];
-           //toaster
-           this.status = "primary"
-           const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "Party Added Succesfully",
-            "Party",
-            config);
-            this.route.navigate(["/pages/party"]);
+          if(data["success"]){
+            this.currentParty = data["data"];
+            this.route.navigate(['pages/party']);
+            this.toastr.success(errorData.Add_Success)
+          }
+          else{
+            this.toastr.error(errorData.Add_Error)
+          }
         },
         error => {
-          //toaster
-          this.status = "danger"
-          const config = {
-           status: this.status,
-           destroyByClick: this.destroyByClick,
-           duration: this.duration,
-           hasIcon: this.hasIcon,
-           position: this.position,
-           preventDuplicates: this.preventDuplicates,
-         };
-         this.toastrService.show(
-           "No internet access or Server failuer",
-           "Party",
-           config);
+          this.toastr.error(errorData.Serever_Error)
         }
       )
     }
+    else{
+      return
+    }
   }
-  public goBackToPreviousPage(): any {
-    this.location.back();
-  }
-  updateParty() {
+
+  public updateParty() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       let body = {
         ...this.partyForm.value,
-        id: this.myPartyId
+        id: this.currentPartyId
       }
       this.partyService.updateParty(body).subscribe(
         data => {
-          //toaster
-          this.status = "primary"
-          const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "Party Updated Succesfully",
-            "Party",
-            config);
+          if(data["success"]){
+            this.toastr.success(errorData.Update_Success)
             this.route.navigate(["/pages/party"]);
+          }
+          else{
+            this.toastr.error(errorData.Update_Error)
+          }
         },
         error => {
-          
-          //toaster
-          this.status = "danger"
-          const config = {
-            status: this.status,
-            destroyByClick: this.destroyByClick,
-            duration: this.duration,
-            hasIcon: this.hasIcon,
-            position: this.position,
-            preventDuplicates: this.preventDuplicates,
-          };
-          this.toastrService.show(
-            "No internet access or Server failure",
-            "Party",
-            config);
+          this.toastr.error(errorData.Update_Error)
         }
       )
     }
   }
  
+  public goBackToPreviousPage(): any {
+    this.route.navigate(['pages/party']);
+  }
+
+  setCheckedStatusCreditor(checked) {
+    this.creditor=checked;
+    this.partyForm.patchValue({
+      "creditor":this.creditor
+    })
+  }
+
+  setCheckedStatusDebtor(checked) {
+    this.debtor=checked;
+    this.partyForm.patchValue({
+      "debtor":this.debtor
+    })
+  }
+
 }

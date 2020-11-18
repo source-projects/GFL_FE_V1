@@ -24,4 +24,8 @@ export class FabricInService {
   editFabricData(fabricData):any{
     return this.httpClient.put(this.commonService.envUrl()+'api/fabric',fabricData);
   }
+
+  getFabStockDataById(id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/fabric/'+id);
+  }
 }

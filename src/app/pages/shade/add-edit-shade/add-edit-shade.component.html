@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="this.myShadeId == null; else updateS">
+        <div *ngIf="this.currentShadeId == null; else updateS">
             <h2>ADD SHADE</h2>
         </div>
         <ng-template #updateS>
@@ -24,12 +24,13 @@
                     
                     <div class="form-group col-md-4">
                         <label class="required">Process Name:</label>
-                        <select class="form-control" aria-placeholder="Select process name" [(ngModel)]="shades.processName"
-                            #processName1="ngModel" name="processName" required
-                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }">
-                            <option value="Process 1">Process1</option>
-                            <option value="Process 2">Process2</option>
-                        </select>
+                        <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processName"
+                            #processName1="ngModel" name="processName" required [items]="processList"
+                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }" bindLabel="processName" 
+                            bindValue="id">
+                            
+                        </ng-select>
+                    
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (processName1.invalid || (processName1.dirty || processName1.untouched) )">
                         
@@ -41,13 +42,13 @@
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label class="required">Quality Id:</label>
-                        <select class="form-control" placeholder="Select quality id" [(ngModel)]="shades.qualityId"
+                        <ng-select placeholder="Select quality id" [(ngModel)]="shades.qualityId"
                             #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected(shades.qualityId)" required
                             [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }" >
-                            <option *ngFor="let q of quality" [value]="q.id">
+                            <ng-option *ngFor="let q of quality" [value]="q.id">
                                 {{q.qualityId}}  :  {{q.qualityName}}
-                            </option>
-                        </select>
+                            </ng-option>
+                        </ng-select>
                         <div class="invalid-feedback"
                         *ngIf="formSubmitted && (qualityId1.invalid || (qualityId1.dirty || qualityId1.untouched) )">
                     
@@ -164,9 +165,9 @@
                 <br><br>
                 <div class="row">
                     <div>
-                        <button *ngIf="this.myShadeId == null" type="submit"  class="btn btn-primary btn-sm"
-                            style="margin-right:20px" (click)="onSubmit(shadeForm)">Save</button>
-                        <button *ngIf="this.myShadeId != null" type="button" (click)="updateShade(shadeForm)"
+                        <button *ngIf="this.currentShadeId == null" type="submit"  class="btn btn-primary btn-sm"
+                            style="margin-right:20px" (click)="addShade(shadeForm)">Save</button>
+                        <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                             class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
                         <button class="btn btn-primary btn-sm" routerLink='/pages/shade'>Cancel</button>
                     </div>

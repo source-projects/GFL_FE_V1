@@ -1,50 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { QualityService } from '../../@theme/services/quality.service';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-quality',
   templateUrl: './quality.component.html',
   styleUrls: ['./quality.component.scss']
 })
+
 export class QualityComponent implements OnInit {
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
-  
-  qualityList
-  tableStyle = 'bootstrap'
-  constructor(private qualityService: QualityService, private toastrService: NbToastrService) { }
+
+  public errorData: any = (errorData as any).default;
+  permissions: Number;
+  qualityList:[];
+  tableStyle = 'bootstrap';
+  constructor(private commonService: CommonService, private qualityService: QualityService, private toastr:ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
   ngOnInit(): void {
     this.getQualityList();
   }
 
+
   getQualityList(){
     this.qualityService.getallQuality().subscribe(
       data =>{
-        this.qualityList = data['data']
+        if(data['success']){
+          this.qualityList = data['data']
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
       },
       error=>{
-        //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Quality",
-         config);
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }

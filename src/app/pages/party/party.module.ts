@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PartyRoutingModule } from './party-routing.module';
 import { SharedModule } from '../../@theme/shared.module';
 import { PartyComponent } from './party.component';
@@ -18,6 +17,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ReactiveFormsModule,
     NbCheckboxModule,
     NgxDatatableModule
-  ]
+  ],
+ 
 })
 export class PartyModule { }

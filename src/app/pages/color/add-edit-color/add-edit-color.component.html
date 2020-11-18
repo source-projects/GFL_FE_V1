@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="font-size: medium;">
-        <div *ngIf="this.myColorId == null; else updateC">
+        <div *ngIf="this.currentColorId == null; else updateC">
             <h2>ADD COLOR STOCK</h2>
         </div>
         <ng-template #updateC>
@@ -13,12 +13,12 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name:</label>
-                        <select class="form-control" aria-placeholder="Select supplier name"
-                            [(ngModel)]="color.supplierName" #supplierName1="ngModel" name="supplierName" required>
-                            <option *ngFor="let s of supplierList" [value]="s.id">
+                        <ng-select aria-placeholder="Select supplier name"
+                            [(ngModel)]="color.supplierId" #supplierName1="ngModel" name="supplierName" required>
+                            <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                {{s.supplierName}}
-                            </option>
-                        </select>
+                            </ng-option>
+                        </ng-select>
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (supplierName1.invalid || (supplierName1.dirty || supplierName1.untouched) )">
                             <span>Supplier Name is required</span>
@@ -93,13 +93,13 @@
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="color.colorDataList"
                     [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'">
 
-                    <ngx-datatable-column name="Item Name" prop="color.itemName" [sortable]="false" [width]="250">
+                    <ngx-datatable-column name="Item Name" prop="color.itemId" [sortable]="false" [width]="250">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <select  #itemName1="ngModel" name='itemName{{rowIndex}}'
-                            class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
+                            class="tableForm" id="itemName" [(ngModel)]="row.itemId" required
                             (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
                             (change)="itemSelected(rowIndex,0)">
-                            <option  *ngFor="let s of supplierList1" [value]="s.id" >
+                            <option  *ngFor="let s of supplierListRate" [value]="s.id" >
                                 {{s.itemName}}
                             </option>
                             </select>
@@ -111,8 +111,8 @@
                         prop="color.quantiyPerBox">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}' class="tableForm"
-                                id="quantiyPerBox" [(ngModel)]="row.quantiyPerBox"  (input)="calculateAmount(rowIndex)"
-                                (keyup)="onKeyUp($event,rowIndex,1,'quantiyPerBox')" [id]="'supplierList'+rowIndex+'-1'" >
+                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  
+                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" >
                               
                         </ng-template>
                     </ngx-datatable-column>
@@ -130,22 +130,22 @@
                     <ngx-datatable-column name="Total quantity" prop="quantity" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #quantity1="ngModel" name='quantity{{rowIndex}}'
-                                [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')"
+                                [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" 
                                 [id]="'supplierList'+rowIndex+'-3'" >
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #rate1="ngModel" name='rate{{rowIndex}}'
-                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
+                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')" (input)="calculateAmount(rowIndex,4)"
                                 [id]="'supplierList'+rowIndex+'-4'" >
                         </ng-template>
                     </ngx-datatable-column>
                    <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="text" #amount1="ngModel" name='amount{{rowIndex}}'
-                                [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')"
-                                [id]="'supplierList'+rowIndex+'-4'" >
+                                [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,5,'amount')"
+                                [id]="'supplierList'+rowIndex+'-5'" >
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Action"  [sortable]="false" [width]="200">
@@ -160,9 +160,9 @@
         <br><br>
         <div class="row">
             <div>
-                <button *ngIf="this.myColorId == null" type="submit" class="btn btn-primary btn-sm"
-                    style="margin-right:20px" (click)="onSubmit(colorForm)">Save</button>
-                <button *ngIf="this.myColorId != null" type="button" (click)="updateColor(colorForm)"
+                <button *ngIf="this.currentColorId == null" type="submit" class="btn btn-primary btn-sm"
+                    style="margin-right:20px" (click)="addColor(colorForm)">Save</button>
+                <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
                     class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
                 <button class="btn btn-primary btn-sm" routerLink='/pages/color'>Cancel</button>
             </div>

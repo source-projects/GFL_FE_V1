@@ -12,7 +12,15 @@ export class ColorService {
     return this.httpClient.get(this.commonService.envUrl()+'api/color/all');
   }
   addColor(colorData):any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/color');
+    return this.httpClient.post(this.commonService.envUrl()+'api/color',colorData);
   }
-   
+  updateColor(colorData){
+    return this.httpClient.put(this.commonService.envUrl()+'api/color',colorData);
+  }
+  deleteColorById(colorId){
+    return this.httpClient.delete(this.commonService.envUrl()+'api/color/'+colorId);
+  }
+  getColorDataById(colorId){
+    return this.httpClient.get(this.commonService.envUrl()+'api/color/'+colorId);
+  }
 }
