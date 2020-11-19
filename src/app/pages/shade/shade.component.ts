@@ -50,6 +50,7 @@ export class ShadeComponent implements OnInit {
         this.shadeService.deleteShadeData(id).subscribe(
           (data) => {
             this.getallShades();
+            this.toastr.success(errorData.Delete)
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error)
