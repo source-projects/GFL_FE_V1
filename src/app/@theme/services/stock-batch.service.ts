@@ -9,13 +9,13 @@ export class StockBatchService {
 
   constructor(private httpClient:HttpClient,private commonService:CommonService) { }
 
-  // deletePartyDetailsById(id): any{
-  //   return this.httpClient.delete(this.commonService.envUrl()+'api/batch/'+id);
-  // }
+   deleteStockBatchById(id): any{
+     return this.httpClient.delete(this.commonService.envUrl()+'api/stockBatch/'+id);
+   }
 
-  // getAllBatchList(): any{
-  //   return this.httpClient.get(this.commonService.envUrl()+'api/batch/all');
-  // }
+   getAllStockBatchList(): any{
+     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all');
+   }
 
   addStockBatch(myForm){
     return this.httpClient.post(this.commonService.envUrl()+'api/stockBatch',myForm);
