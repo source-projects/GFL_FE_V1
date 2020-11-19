@@ -7,6 +7,7 @@ import { Color, ColorDataList } from "app/@theme/model/color";
 import * as errorData from 'app/@theme/json/error.json';
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
@@ -53,6 +54,7 @@ export class AddEditColorComponent implements OnInit {
   //To store Total quantity for Calculation
   calculationTotalQuantity: any;
 
+  convertedDate: any;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -60,7 +62,9 @@ export class AddEditColorComponent implements OnInit {
     private colorService: ColorService,
     private toastrService: NbToastrService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private datepipe: DatePipe,
+
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
@@ -84,10 +88,14 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
           this.color = data["data"];
-          let amount:any
+          this.convertedDate = this.datepipe.transform(this.color.billDate, 'dd/mm/yyyy');
+          this.color.billDate = this.convertedDate;
+          // this.convertedDate = this.color.billDate.setDate;
+          console.log(this.color.billDate);
+          let amount: any
           this.color.colorDataList.forEach(element => {
-            amount=Number(element.rate)*Number(element.quantity)
-            element.amount=parseInt(amount);
+            amount = Number(element.rate) * Number(element.quantity)
+            element.amount = parseInt(amount);
           });
         },
         error => {
@@ -223,6 +231,16 @@ export class AddEditColorComponent implements OnInit {
     rate = this.color.colorDataList[rowIndex].rate;
     calcAmount = Number(rate * qun);
     this.color.colorDataList[rowIndex].amount = parseInt(calcAmount);
+  }
+
+  calculateTotalQuantity(rowIndex) {
+    let totalquantity;
+    let quantityPerBoxTempValue;
+    let noOfBoxTempValue;
+    quantityPerBoxTempValue = this.color.colorDataList[rowIndex].quantityPerBox;
+    noOfBoxTempValue = this.color.colorDataList[rowIndex].noOfBox;
+    totalquantity = (quantityPerBoxTempValue * noOfBoxTempValue);
+    this.color.colorDataList[rowIndex].quantity = parseInt(totalquantity);
   }
 
   addColor(colorForm) {

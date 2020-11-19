@@ -16,16 +16,16 @@ export class PartyComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
   tablestyle = "bootstrap";
-  
+
   partyList = [];
-  
+
   constructor(
     private partyService: PartyService,
     private route: Router,
     private modalService: NgbModal,
     public changeRef: ChangeDetectorRef,
-    private toastr:ToastrService
-  ) {}
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.getAllParty();
@@ -34,15 +34,15 @@ export class PartyComponent implements OnInit {
   getAllParty() {
     this.partyService.getAllPartyList().subscribe(
       (data) => {
-        if(data["success"]){
+        if (data["success"]) {
           this.partyList = data["data"];
         }
-        else{
+        else {
           this.toastr.error(errorData.Internal_Error)
         }
       },
       (error) => {
-         this.toastr.error(errorData.Serever_Error)
+        this.toastr.error(errorData.Serever_Error)
       }
     );
   }
@@ -56,9 +56,10 @@ export class PartyComponent implements OnInit {
         this.partyService.deletePartyDetailsById(id).subscribe(
           (data) => {
             this.getAllParty();
+            this.toastr.success(errorData.Delete);
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error)
+            this.toastr.error(errorData.Serever_Error);
           }
         );
       }
