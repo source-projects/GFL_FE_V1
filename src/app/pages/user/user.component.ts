@@ -15,7 +15,6 @@ export class UserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
   tableStyle = 'bootstrap';
-  
   userList=[];
 
   constructor(
@@ -32,7 +31,10 @@ export class UserComponent implements OnInit {
   getAllUser(){
     this.userService.getAllUser().subscribe(
       data =>{
-        this.userList = data['data'];
+        if(data["success"])
+          this.userList = data['data'];
+        else
+          this.toastr.error(data["msg"])
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)

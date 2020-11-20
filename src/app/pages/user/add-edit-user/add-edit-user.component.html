@@ -111,9 +111,9 @@
                     <div class="col-md-4">
                         <label class="required">Designation:</label>
                         <select name="designation" class="form-control" #designation1="ngModel" 
-                            [(ngModel)]="user.designationData" required
+                            [(ngModel)]="user.designationId" required
                             [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
-                            <option *ngFor="let dsgn of desiList" [ngValue]="dsgn" >{{dsgn.designation}}</option>
+                            <option  *ngFor="let dsgn of desiList" [ngValue]="dsgn.id" >{{dsgn.designation}}</option>
                         </select>
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (designation1.invalid || designation1.dirty || designation1.touched)">
@@ -122,8 +122,20 @@
                     </div>
                     <div class="col-md-4">
                         <label></label>
-                        <nb-checkbox name="assign" class="form-control" style="border: none;">Assign Under Group Head
+                        <nb-checkbox name="assign" [(ngModel)]=user.isUserHead (change)="getUserHrads($event)" class="form-control" style="border: none;">Assign Under Group Head
                         </nb-checkbox>
+                    </div>
+                    <div class="col-md-4" *ngIf="user.isUserHead">
+                        <label class="required">User Head List:</label>
+                        <select name="designation" class="form-control" #userHeadList="ngModel" 
+                            [(ngModel)]="user.userHeadId" required
+                            [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">
+                            <option  *ngFor="let head of userHradIdList" [ngValue]="head.id" >{{head.userName}}</option>
+                        </select>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (userHeadList.invalid || userHeadList.dirty || userHeadList.touched)">
+                            <span>UserHead is required.</span>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -195,5 +207,7 @@
     <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm" 
     style="margin-right:20px" (click)="addUser(myForm)">Save</button>
     <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm" 
+    style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+    <button type="button" class="btn btn-primary btn-sm" 
     style="margin-right:20px" routerLink="/pages/user">Cancel</button>
 </div>

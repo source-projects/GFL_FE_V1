@@ -30,7 +30,7 @@ export class UserService {
     return this.httpClient.get(this.commonService.envUrl()+'api/userHead/');
   }
   getAllUser():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/userAllUsers/');
+    return this.httpClient.get(this.commonService.envUrl()+'api/user/AllUsers/');
   }
   getDesignation():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/designation');

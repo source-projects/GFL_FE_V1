@@ -7,14 +7,13 @@ export class User{
  password:String;
  company:String;
  department:String;
- designationData: DesignationData[];
+ designationId: DesignationId[];
  id:Number;
  userHeadId:Number;
+ isUserHead:boolean;
  userPermissionData:{}
-     
- 
 }
-export class DesignationData{
+export class DesignationId{
     designation:String;
     id:Number
 };
