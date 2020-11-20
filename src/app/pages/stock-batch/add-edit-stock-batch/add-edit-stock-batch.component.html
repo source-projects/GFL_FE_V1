@@ -19,7 +19,7 @@
                             [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}">
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
-                            <div class="invalid-feedback" *ngIf="formSubmitted && (partyId1.invalid || partyId1.dirty || partyId1.touched)" >
+                            <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid || partyId1.dirty || partyId1.touched)" >
                                 <span>Party name is required.</span>
                             </div>
                         </div>
