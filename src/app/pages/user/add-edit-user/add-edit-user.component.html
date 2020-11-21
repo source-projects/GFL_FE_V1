@@ -58,10 +58,8 @@
                     </div>
                     <div class="col-md-4">
                         <label class="required">Mobile No.:</label>
-                        <input name="contact" class="form-control" [(ngModel)]="user.contact" required #contact1="ngModel"
-                            [ngClass]="{'is-invalid': formSubmitted && !(contact1.valid)}"
-                           >
-
+                        <input name="contact" class="form-control" (keypress)="checkIsDigit($event)" [(ngModel)]="user.contact" required #contact1="ngModel"
+                            [ngClass]="{'is-invalid': formSubmitted && !(contact1.valid)}" maxlength="10">
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (contact1.invalid || contact1.dirty || contact1.touched)">
                             <span> Mobile No is required.</span>
@@ -127,7 +125,7 @@
                     </div>
                     <div class="col-md-4" *ngIf="user.isUserHead">
                         <label class="required">User Head List:</label>
-                        <select name="designation" class="form-control" #userHeadList="ngModel" 
+                        <select name="userHeadId" class="form-control" #userHeadList="ngModel" 
                             [(ngModel)]="user.userHeadId" required
                             [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">
                             <option  *ngFor="let head of userHradIdList" [ngValue]="head.id" >{{head.userName}}</option>

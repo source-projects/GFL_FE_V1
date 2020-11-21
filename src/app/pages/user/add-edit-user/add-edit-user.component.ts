@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from "@angular/core";
-import { User, Permissions, DesignationId } from "app/@theme/model/user";
+import { User, Permissions } from "app/@theme/model/user";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "app/@theme/services/user.service";
 import * as errorData from "app/@theme/json/error.json";
@@ -33,8 +33,7 @@ export class AddEditUserComponent implements OnInit {
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
 
-  desiList: DesignationId[] = [];
-  designation: DesignationId = new DesignationId();
+  desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
@@ -106,12 +105,12 @@ export class AddEditUserComponent implements OnInit {
     this.getDesignation();
     this.getAllUserHrads();
     this.getUserId();
-    if (this.currentUserId) this.getCurrentUser();
+    if (this.currentUserId){
+      this.getCurrentUser();
+    } 
+    else
+      this.user.isUserHead = false;
     this.createPermission();
-  }
-
-  desiSelected(data) {
-    console.log(data);
   }
 
   getAllUserHrads(){
@@ -119,7 +118,6 @@ export class AddEditUserComponent implements OnInit {
       data=>{
         if(data["success"]){
           this.userHradIdList = data["data"]
-          this.user.isUserHead = true;
         }
         else
           this.toastr.error(data["msg"])
@@ -155,7 +153,6 @@ export class AddEditUserComponent implements OnInit {
     }else{
       this.user.userHeadId = null;
     }
-    console.log(`is: `,this.user.isUserHead,`   : `,this.user.userHeadId)
   }
 
   createPermission() {
@@ -346,8 +343,6 @@ export class AddEditUserComponent implements OnInit {
       } else binArray1[key] += "0";
     });
 
-    console.log(binArray1);
-
     // get decimal
     let val;
 
@@ -377,13 +372,10 @@ export class AddEditUserComponent implements OnInit {
     let sliceArray = [];
     let temp = Object.keys(user.userPermissionData).map((key) => {
       val = user.userPermissionData[key];
-      console.log(val);
       arr[i] = val;
       i++;
     });
-    // console.log(arr);
     sliceArray = arr.slice(1, arr.length);
-    console.log(sliceArray);
     for (let i = 0; i < sliceArray.length; i++) {
       array1[i] = this.dec2bin(sliceArray[i]);
       array1[i] = this.pad(array1[i], this.perName.length);
@@ -412,12 +404,25 @@ export class AddEditUserComponent implements OnInit {
     return s;
   }
 
+  checkIsDigit(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
   getCurrentUser() {
     if (this.currentUserId != null) {
       this.userService.getUserById(this.currentUserId).subscribe(
         (data) => {
           if (data["success"]) {
             this.user = data["data"];
+            this.user.designationId = data["data"].designationId.id
+            console.log(this.user)
+            if(this.user.userHeadId != null)
+              this.user.isUserHead = true;
             this.getCurrentCheckValue(this.user);
           } else {
             this.toastr.error(errorData.Internal_Error);
@@ -434,6 +439,7 @@ export class AddEditUserComponent implements OnInit {
     this.formSubmitted = true;
     if (userForm.valid) {
       this.getCheckedItem();
+      //this.user.designationId = this.user.designationId.id;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -451,7 +457,6 @@ export class AddEditUserComponent implements OnInit {
   }
 
   addUser(myForm) {
-    console.log(myForm);
     this.getCheckedItem();
     //this.user.userPermissionData=this.userPermissionData;
 
@@ -479,7 +484,6 @@ export class AddEditUserComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.desiList = data["data"];
-          // console.log(this.desiList);
         } else {
           this.toastr.error(errorData.Internal_Error);
         }
