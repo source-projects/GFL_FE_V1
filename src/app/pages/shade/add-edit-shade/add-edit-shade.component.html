@@ -24,14 +24,18 @@
                     
                     <div class="form-group col-md-4">
                         <label class="required">Process Name:</label>
-                        <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processName"
-                            #processName1="ngModel" name="processName" required [items]="processList"
-                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }" bindLabel="processName" 
-                            bindValue="id">
-                            
+                        <ng-select aria-placeholder="Select process name" 
+                            [(ngModel)]="shades.processId" 
+                            (change)="setProcessName(shades.processId)"
+                            #processName1="ngModel" name="processName" required 
+                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }" >
+                            <ng-option *ngFor="let p of processList" [value]="p.id">
+                                {{p.name}}
+                            </ng-option>
                         </ng-select>
+                        
                     
-                        <div class="invalid-feedback"
+                        <div class="required-class"
                             *ngIf="formSubmitted && (processName1.invalid || (processName1.dirty || processName1.untouched) )">
                         
                         <span>process Name  is required</span></div>
@@ -45,11 +49,11 @@
                         <ng-select placeholder="Select quality id" [(ngModel)]="shades.qualityId"
                             #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected(shades.qualityId)" required
                             [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }" >
-                            <ng-option *ngFor="let q of quality" [value]="q.id">
-                                {{q.qualityId}}  :  {{q.qualityName}}
+                            <ng-option *ngFor="let q of quality" [value]="q.qualityId">
+                                {{q.qualityId}}
                             </ng-option>
                         </ng-select>
-                        <div class="invalid-feedback"
+                        <div class="required-class"
                         *ngIf="formSubmitted && (qualityId1.invalid || (qualityId1.dirty || qualityId1.untouched) )">
                     
                     <span>Quality id  is required</span></div>
@@ -68,8 +72,12 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Party Name:</label>
-                        <input type="text" name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyName"
-                            class="form-control" #partyName1="ngModel" >
+                        <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
+                        #partyName1="ngModel">
+                            <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                {{p.partyName}}
+                            </ng-option>
+                        </ng-select>
 
                     </div>
 
@@ -93,8 +101,11 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Category:</label>
-                        <input type="text" name="category" category1="ngModel" [(ngModel)]="shades.category"
-                            class="form-control">
+                        <ng-select name="category" category1="ngModel" [(ngModel)]="shades.category" >
+                            <ng-option *ngFor="let c of categoryList" [value]="c.name">
+                                {{c.name}}
+                            </ng-option>
+                        </ng-select>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Remark:</label>
@@ -122,20 +133,20 @@
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300"
                                 prop="shades.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
+                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
                                         id="concentration" [(ngModel)]="row.concentration"  (input)="calculateAmount(rowIndex)"
                                         (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" >
                                       
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Supplier Name" prop="supplierName" [sortable]="false"
+                            <ngx-datatable-column name="Supplier Name" prop="supplierId" [sortable]="false"
                                 [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm" type="text" #supplierName1="ngModel"
                                         name='supplierName{{rowIndex}}' [(ngModel)]="row.supplierName"
                                         (keyup)="onKeyUp($event,rowIndex,2,'supplierName')"
-                                        [id]="'supplierList'+rowIndex+'-2'" >
+                                        [id]="'supplierList'+rowIndex+'-2'" readonly >
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -143,14 +154,14 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm" type="text" #rate1="ngModel" name='rate{{rowIndex}}'
                                         [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,3,'rate')"
-                                        [id]="'supplierList'+rowIndex+'-3'" >
+                                        [id]="'supplierList'+rowIndex+'-3'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm" type="text" #rate1="ngModel" name='amount{{rowIndex}}'
                                         [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,4,'amount')"
-                                        [id]="'supplierList'+rowIndex+'-4'" >
+                                        [id]="'supplierList'+rowIndex+'-4'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Action"  [sortable]="false" [width]="300">

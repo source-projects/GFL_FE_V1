@@ -7,27 +7,30 @@ import { CommonService } from './common.service';
 })
 export class ShadeService {
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
-  getallShade(): any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/shade/original/all');
+  getallShade(): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/original/all');
   }
-  addShadeData(shadeData):any{
-    return this.httpClient.post(this.commonService.envUrl()+'api/shade',shadeData);
+  addShadeData(shadeData): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/shade', shadeData);
   }
-  deleteShadeData(id):any{
-    return this.httpClient.delete(this.commonService.envUrl()+'api/shade/'+id);
-  } 
-  getQualityProcessList():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/qualityprocess/all');
+  updateShadeData(shadeData) {
+    return this.httpClient.put(this.commonService.envUrl() + 'api/shade', shadeData);
   }
-  getCurrentShadeData(id):any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/'+id);
+  deleteShadeData(id): any {
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/shade/' + id);
   }
- /* getAllCurrentShadeData():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/all');
-  }*/
-  getShadeMastList():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/shade/all');
+  getQualityProcessList(): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/qualityprocess/all');
+  }
+  getCurrentShadeData(id): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/' + id);
+  }
+  /* getAllCurrentShadeData():any{
+     return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/all');
+   }*/
+  getShadeMastList(): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all');
   }
 }
