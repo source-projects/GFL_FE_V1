@@ -65,7 +65,7 @@
                             <span> Mobile No is required.</span>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" *ngIf="!this.currentUserId">
                         <label class="required">Password:</label>
                         <input type="password" name="password" class="form-control" [(ngModel)]="user.password" required
                             #password1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(password1.valid)}">
@@ -153,7 +153,7 @@
                 <tr>
                     <th>Forms</th>
                     <th>Select All</th>
-                    <th *ngFor="let per of perName">{{per}}</th>
+                    <th *ngFor="let per of perName;let i=index;">{{per}}</th>
                 </tr>
 
                 <tr *ngFor="let perm of permissionArray;let i=index;">
@@ -162,35 +162,35 @@
                         <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'" (change)="checkUncheckAll(perm.module,$event)" ></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'" (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" (change)="checkUncheckSelectAll(perm.add,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'" (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'" (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
                     </td>
                     
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'" (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'" (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'" (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'" (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'" (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
                     </td>
                     <td >
-                        <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'" ></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'" (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
                     </td>
                    
                    

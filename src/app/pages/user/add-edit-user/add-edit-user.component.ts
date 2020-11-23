@@ -295,6 +295,28 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
+  checkUncheckSelectAll(value,i){
+    if(value == false){
+      this.permissionArray[i].selectAll = false;
+    }
+
+    this.checkIfAllSelected(i);
+  }
+
+  checkIfAllSelected(i){
+    if(this.permissionArray[i].view)
+      if(this.permissionArray[i].add)
+        if(this.permissionArray[i].edit)
+          if(this.permissionArray[i].delete)
+            if(this.permissionArray[i].viewAll)
+              if(this.permissionArray[i].viewGroup)
+                if(this.permissionArray[i].editGroup)
+                  if(this.permissionArray[i].editAll)
+                    if(this.permissionArray[i].deleteGroup)
+                      if(this.permissionArray[i].deleteAll)
+                        this.permissionArray[i].selectAll = true;
+  }
+
   getCheckedItem() {
     let binArray1 = {
       pa: "",
@@ -383,15 +405,27 @@ export class AddEditUserComponent implements OnInit {
 
     let index = [];
     let len = array1.length;
+    let perString = "";
     for (let i1 = 0; i1 < this.forms.length; i1++) {
       let j = 0;
       this.perName1.forEach((element) => {
         if (element != "module") {
-          if (array1[i1][j] == "1") this.permissionArray[i1][element] = true;
-          else this.permissionArray[i1][element] = false;
+          if (array1[i1][j] == "1"){
+            this.permissionArray[i1][element] = true;
+            perString += "1";
+          } 
+          else{
+            perString += "0";
+            this.permissionArray[i1][element] = false;
+          }
           j++;
         }
       });
+      if(perString == "1111111111")
+        this.permissionArray[i1].selectAll = true;
+      else
+        this.permissionArray[i1].selectAll = false;
+      perString = "";
     }
   }
 
@@ -420,10 +454,12 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.user = data["data"];
             this.user.designationId = data["data"].designationId.id
-            console.log(this.user)
             if(this.user.userHeadId != null)
               this.user.isUserHead = true;
+            else
+              this.user.isUserHead = false;
             this.getCurrentCheckValue(this.user);
+
           } else {
             this.toastr.error(errorData.Internal_Error);
           }
