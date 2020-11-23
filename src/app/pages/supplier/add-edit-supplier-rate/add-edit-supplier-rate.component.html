@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div *ngIf="mySupplierRateId == null; else updateName">
-                        <label class="required">Supplier Name:</label>
+                        <label class="required">Supplier Name</label>
                         <ng-select  name="supplierId" id="supplierId" [(ngModel)]="formValues.supplierRates[0].supplierId"
                         required (change)="getDetail($event.target.value)" #tableitem3="ngModel">
                             <ng-option *ngFor="let s of supplier" [value]="s.id">{{s.supplierName}}-{{s.id}}</ng-option>
@@ -105,11 +105,11 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <input *ngIf="mySupplierRateId == null; else updateadd" type="button" class="btn btn-primary btn-sm" value="Add" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">&nbsp;&nbsp;&nbsp;
+                    <input *ngIf="mySupplierRateId == null; else updateadd" type="button" class="btn btn-primary btn-sm" value="ADD" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">&nbsp;&nbsp;&nbsp;
                     <ng-template #updateadd>
-                        <input type="button" class="btn btn-primary btn-sm" value="Update" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">&nbsp;&nbsp;&nbsp;
+                        <input type="button" class="btn btn-primary btn-sm" value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">&nbsp;&nbsp;&nbsp;
                     </ng-template>
-                    <button type="button" class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage();$event.preventDefault()">Cancel</button>
+                    <button type="button" class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage();$event.preventDefault()">CANCEL</button>
                 </div> 
             </div>      
         </form>

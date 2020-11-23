@@ -58,9 +58,9 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <input *ngIf="selectedSupplierId == null; else update" type="submit" class="btn btn-primary btn-sm" value="Add">&nbsp;&nbsp;&nbsp;
-                <ng-template #update><input  type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm" value="Update">&nbsp;&nbsp;&nbsp;</ng-template>
-                <button class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage()">Cancel</button>
+                <input *ngIf="selectedSupplierId == null; else update" type="submit" class="btn btn-primary btn-sm" value="ADD">&nbsp;&nbsp;&nbsp;
+                <ng-template #update><input  type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm" value="UPDATE">&nbsp;&nbsp;&nbsp;</ng-template>
+                <button class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage()">CANCEL</button>
             </div>
         </div>      
     </form>

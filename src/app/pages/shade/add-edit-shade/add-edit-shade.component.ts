@@ -117,11 +117,11 @@ export class AddEditShadeComponent implements OnInit {
             this.getAllSupplier();
           }
           else {
-            this.toastr.error(errorData.Internal_Error)
+            this.toastr.error(data['msg'])
           }
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -137,7 +137,7 @@ export class AddEditShadeComponent implements OnInit {
           this.supplierListRate = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -153,7 +153,7 @@ export class AddEditShadeComponent implements OnInit {
           this.processList = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -166,15 +166,10 @@ export class AddEditShadeComponent implements OnInit {
     this.qualityService.getallQuality().subscribe(
       (data) => {
         if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.quality = data["data"];
-          }
-          else {
-            this.toastr.error(errorData.Internal_Error)
-          }
+          this.quality = data["data"];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       (error) => {
@@ -192,7 +187,7 @@ export class AddEditShadeComponent implements OnInit {
             this.shades = data['data']
           }
           else {
-            this.toastr.error(errorData.Internal_Error)
+            this.toastr.error(data['msg'])
           }
         },
         error => {
@@ -203,18 +198,28 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   getUpdateData() {
+    console.log(this.currentShadeId)
     if (this.currentShadeId != null) {
       this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
         data => {
           this.shades = data["data"];
-          this.quality.forEach(element => {
-            if (this.shades.qualityId == element.qualityId) {
-              this.shades.qualityId = element.qualityId
-              this.shades.qualityName = element.qualityName
-              this.shades.qualityType = element.qualityType
-            }
-          });
-          this.setProcessName(this.shades.processId);
+          console.log(this.shades)
+          if (data['success']) {
+            this.shades = data["data"];
+            console.log("shade data" + this.shades);
+            console.log("quality data" + this.quality);
+            this.quality.forEach(element => {
+              if (this.shades.qualityId == element.qualityId) {
+                this.shades.qualityId = element.qualityId
+                this.shades.qualityName = element.qualityName
+                this.shades.qualityType = element.qualityType
+              }
+            });
+            this.setProcessName(this.shades.processId);
+          }
+          else {
+            this.toastr.error("not Loaded");
+          }
         },
         error => {
           this.toastr.error(errorData.Serever_Error);

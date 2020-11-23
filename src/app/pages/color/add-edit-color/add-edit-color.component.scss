@@ -5,3 +5,16 @@
     font-size: 80%;
     color: #dc3545
 }
+
+.tableForm{
+    border-bottom: 1px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .required:after {
+    content: " *";
+    color: red;
+  }
+

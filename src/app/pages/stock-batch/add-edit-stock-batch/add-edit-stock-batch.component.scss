@@ -8,3 +8,7 @@
   font-size: 80%;
   color: #dc3545
 }
+.required:after {
+  content:" *";
+  color: red;
+}

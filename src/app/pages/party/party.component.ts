@@ -38,7 +38,7 @@ export class PartyComponent implements OnInit {
           this.partyList = data["data"];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       (error) => {

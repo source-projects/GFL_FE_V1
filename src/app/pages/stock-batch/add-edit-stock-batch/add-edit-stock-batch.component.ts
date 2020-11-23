@@ -36,36 +36,36 @@ export class AddEditStockBatchComponent implements OnInit {
   user: any;
   index;
   stockList;
-  
-  newObj={
+
+  newObj = {
     stockInType: "Fabric",
-    partyId:null,
-    billNo:null,
-    billDate:null,
-    chlNo:null,
-    chlDate:null,
-    lotNo:null,
-    remark:null,
-    userId:null,
-    userHeadId:null,
-    batch:[{
+    partyId: null,
+    billNo: null,
+    billDate: null,
+    chlNo: null,
+    chlDate: null,
+    lotNo: null,
+    remark: null,
+    userId: null,
+    userHeadId: null,
+    batch: [{
       batchId: null,
-      batchMW:[
+      batchMW: [
         {
-        mtr:null,
-        wt:null
+          mtr: null,
+          wt: null
         }
       ],
     }]
   };
 
-  stockDataValues=[
+  stockDataValues = [
     {
       batchId: null,
-      batchMW:[
+      batchMW: [
         {
-        mtr:null,
-        wt:null
+          mtr: null,
+          wt: null
         }
       ],
     }
@@ -96,13 +96,9 @@ export class AddEditStockBatchComponent implements OnInit {
     this.partyService.getAllPartyList().subscribe(
       (data) => {
         if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.party = data["data"];
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
+          this.party = data["data"];
         } else {
-          this.toastr.error(errorData.Internal_Error);
+          this.toastr.error(data['msg']);
         }
       },
       (error) => {
@@ -111,7 +107,7 @@ export class AddEditStockBatchComponent implements OnInit {
     );
   }
 
-  onKeyUp(e, rowIndex, colIndex, colName,idx) {
+  onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       //toaster
@@ -144,7 +140,7 @@ export class AddEditStockBatchComponent implements OnInit {
           wt: null,
         };
         let list = this.stockDataValues[idx].batchMW;
-        list.push({...obj});
+        list.push({ ...obj });
         this.stockDataValues[idx].batchMW = [...list];
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -154,21 +150,21 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 500);
       } else {
-        alert("go to any last row input to add new row");
+        alert("Go to any last row input to add new row");
       }
     }
   }
 
-  removeCard($event,index){
+  removeCard($event, index) {
     let idCount = this.stockDataValues.length;
     let item = this.stockDataValues;
     if (idCount == 1) {
       item = null;
       let obj = {
-        batchId:null,
-        batchMW:[{
-          mtr:null,
-          wt:null
+        batchId: null,
+        batchMW: [{
+          mtr: null,
+          wt: null
         }]
       }
       this.stockDataValues = [obj];
@@ -179,7 +175,7 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  removeItem(id,row) {
+  removeItem(id, row) {
     let idCount = this.stockDataValues[row].batchMW.length;
     let item = this.stockDataValues[row].batchMW
     if (idCount == 1) {
@@ -217,7 +213,7 @@ export class AddEditStockBatchComponent implements OnInit {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Add_Success);
           } else {
-            this.toastr.error(errorData.Internal_Error);
+            this.toastr.error(data['msg']);
           }
         },
         (error) => {
@@ -244,20 +240,20 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  addNew(e,myForm) {
+  addNew(e, myForm) {
     //event.preventDefault();
     let item = this.stockDataValues;
     var ob = {
       batchId: null,
-      batchMW:[
+      batchMW: [
         {
-        mtr:null,
-        wt:null
+          mtr: null,
+          wt: null
         }
       ],
     };
     console.log("called");
-    item.push({...ob});
+    item.push({ ...ob });
     this.stockDataValues = item;
     //document.getElementById("new").style.visibility = "visible";
     const className = "collapsible-panel--expanded";
