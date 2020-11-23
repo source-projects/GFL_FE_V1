@@ -17,7 +17,8 @@ export class SupplierComponent implements OnInit {
 
   //to get SupplierList
   supplierList=[];
-  
+  radioSelect;
+
   constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
    
   ngOnInit(): void {

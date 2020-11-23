@@ -13,14 +13,16 @@ import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-
 })
 export class ColorComponent implements OnInit {
 
-  public errorData: any = (errorData as any).default;
 
-  tableStyle = 'bootstrap';
-  colorList = [];
-  constructor(private colorService: ColorService,
-    private route: Router,
-    private modalService: NgbModal,
-    private toastr: ToastrService) { }
+ public errorData: any = (errorData as any).default;
+ 
+ tableStyle = 'bootstrap';
+ colorList=[];
+ radioSelect;
+  constructor(private colorService: ColorService, 
+              private route:Router,
+              private modalService: NgbModal,
+              private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.getColor();

@@ -1,20 +1,21 @@
 export class StockBatch {
+    id: number;
     stockInType:string= "Fabric";
-    partyId:number; 
+    partyId:number;
+    qualityId:number;  
     billNo:string;
     billDate:Date;
     chlNo:string;
+    unit:string;
     chlDate:Date;
-    lotNo:number;
     remark:string;
     userId:string;
     userHeadId:string;
-    stockBatchData:StockBatchData[];
+    batchData:BatchData[];
+    isProductionPlanned: boolean;
 }
-export class StockBatchData{
-   
+export class BatchData{
     mtr: number;
     wt:number;
-    batchNo:number;
-   
+    batchId:number;
 }

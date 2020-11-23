@@ -16,7 +16,10 @@ export class QualityComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   permissions: Number;
-  qualityList: [];
+
+  qualityList:[];
+  radioSelect;
+
   tableStyle = 'bootstrap';
   constructor(private commonService: CommonService, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
