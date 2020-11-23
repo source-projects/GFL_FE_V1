@@ -17,6 +17,7 @@ export class ColorComponent implements OnInit {
  
  tableStyle = 'bootstrap';
  colorList=[];
+ radioSelect;
   constructor(private colorService: ColorService, 
               private route:Router,
               private modalService: NgbModal,

@@ -14,7 +14,7 @@ export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
   stockList;
-
+  radioSelect;
   tablestyle = "bootstrap";
 
   constructor(

@@ -18,6 +18,7 @@ export class PartyComponent implements OnInit {
   tablestyle = "bootstrap";
 
   partyList = [];
+  radioSelect;
 
   constructor(
     private partyService: PartyService,
