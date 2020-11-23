@@ -12,7 +12,7 @@
             <form #myForm="ngForm">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="required">First Name:</label>
+                        <label class="required">First Name</label>
                         <input type="text" name="firstName" #firstName1="ngModel" class="form-control"
                             [(ngModel)]="user.firstName"
                             [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}" required>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="required">Last Name:</label>
+                        <label class="required">Last Name</label>
                         <input name="lastName" class="form-control" [(ngModel)]="user.lastName" required
                             #lastName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(lastName1.valid)}">
 
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="required">User Name:</label>
+                        <label class="required">User Name</label>
                         <input name="userName" class="form-control" [(ngModel)]="user.userName" required
                             #userName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(userName1.valid)}">
 
@@ -46,7 +46,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="required">Email:</label>
+                        <label class="required">Email</label>
                         <input name="email" class="form-control" [(ngModel)]="user.email" required #email1="ngModel"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                             [ngClass]="{'is-invalid': formSubmitted && !(email1.valid)}">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="required">Mobile No.:</label>
+                        <label class="required">Mobile No.</label>
                         <input name="contact" class="form-control" (keypress)="checkIsDigit($event)" [(ngModel)]="user.contact" required #contact1="ngModel"
                             [ngClass]="{'is-invalid': formSubmitted && !(contact1.valid)}" maxlength="10">
                         <div class="invalid-feedback"
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="col-md-4" *ngIf="!this.currentUserId">
-                        <label class="required">Password:</label>
+                        <label class="required">Password</label>
                         <input type="password" name="password" class="form-control" [(ngModel)]="user.password" required
                             #password1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(password1.valid)}">
 
@@ -79,7 +79,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="required">Company:</label>
+                        <label class="required">Company</label>
                         <select name="company" class="form-control" #company1="ngModel" [(ngModel)]="user.company"
                             required [ngClass]="{'is-invalid': formSubmitted && !(company1.valid)}">
                             <option>company 1</option>
@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="required">Department:</label>
+                        <label class="required">Department</label>
 
                         <input type="text" name="department" class="form-control" [(ngModel)]="user.department" required
                             #department1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(department1.valid)}">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="required">Designation:</label>
+                        <label class="required">Designation</label>
                         <select name="designation" class="form-control" #designation1="ngModel" 
                             [(ngModel)]="user.designationId" required
                             [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
@@ -124,7 +124,7 @@
                         </nb-checkbox>
                     </div>
                     <div class="col-md-4" *ngIf="user.isUserHead">
-                        <label class="required">User Head List:</label>
+                        <label class="required">User Head List</label>
                         <select name="userHeadId" class="form-control" #userHeadList="ngModel" 
                             [(ngModel)]="user.userHeadId" required
                             [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">

@@ -16,7 +16,7 @@ export class ShadeComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
   tableStyle = 'bootstrap';
-  
+  radioSelect;
   shadeList=[];
   
   constructor(private shadeService: ShadeService, 

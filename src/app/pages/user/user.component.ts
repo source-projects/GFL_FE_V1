@@ -16,6 +16,7 @@ export class UserComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   userList=[];
+  radioSelect;
 
   constructor(
     private route:Router,
