@@ -27,7 +27,7 @@ export class AddEditQualityComponent implements OnInit {
   user: any;
 
   //to store Quality Data
-  qualityList:any;
+  qualityList: any;
 
   addEditQualityForm: FormGroup;
 
@@ -35,15 +35,15 @@ export class AddEditQualityComponent implements OnInit {
   party: any[];
 
   //to store selected QualityId
-  currentQualityId:any;
+  currentQualityId: any;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
     private commonService: CommonService,
     private qualityService: QualityService,
     private route: Router,
-    private toastr:ToastrService
-  ) {}
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -51,13 +51,13 @@ export class AddEditQualityComponent implements OnInit {
     this.getPartyList();
   }
 
-  public getData(){
+  public getData() {
     this.user = this.commonService.getUser();
     this.addEditQualityForm = new FormGroup({
       qualityId: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
       qualityType: new FormControl("Fabric", Validators.required),
-      unit:new FormControl(null,Validators.required),
+      unit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
@@ -66,7 +66,7 @@ export class AddEditQualityComponent implements OnInit {
     });
   }
 
-  public getUpdateData(){
+  public getUpdateData() {
     this.currentQualityId = this._route.snapshot.paramMap.get("id");
     if (this.currentQualityId != null) {
       this.qualityService.getQualityById(this.currentQualityId).subscribe(
@@ -76,7 +76,7 @@ export class AddEditQualityComponent implements OnInit {
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
             qualityType: this.qualityList.qualityType,
-            unit:this.qualityList.unit,
+            unit: this.qualityList.unit,
             wtPer100m: this.qualityList.wtPer100m,
             partyId: this.qualityList.partyId,
             remark: this.qualityList.remark,
@@ -94,15 +94,11 @@ export class AddEditQualityComponent implements OnInit {
   getPartyList() {
     this.partyService.getAllPartyList().subscribe(
       (data) => {
-        if(data["success"]){
-          if (data["data"] && data["data"].length > 0) {
-            this.party = data["data"];
-          } else {
-            this.toastr.error(errorData.Internal_Error)
-          }
+        if (data["success"]) {
+          this.party = data["data"];
         }
-        else{
-          this.toastr.error(errorData.Internal_Error)
+        else {
+          this.toastr.error(data['msg'])
         }
       },
       (error) => {
@@ -116,11 +112,11 @@ export class AddEditQualityComponent implements OnInit {
     if (this.addEditQualityForm.valid) {
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
-          if(data['success']){
+          if (data['success']) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Add_Success)
           }
-          else{
+          else {
             this.toastr.error(errorData.Add_Error)
           }
         },
@@ -128,7 +124,7 @@ export class AddEditQualityComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error)
         }
       );
-    } 
+    }
     else return;
   }
 
@@ -137,11 +133,11 @@ export class AddEditQualityComponent implements OnInit {
     if (this.addEditQualityForm.valid) {
       this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
         (data) => {
-          if(data["success"]){
+          if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Update_Success)
           }
-          else{
+          else {
             this.toastr.error(errorData.Update_Error)
           }
         },

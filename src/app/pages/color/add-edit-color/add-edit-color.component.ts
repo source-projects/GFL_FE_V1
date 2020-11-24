@@ -7,6 +7,7 @@ import { Color, ColorDataList } from "app/@theme/model/color";
 import * as errorData from 'app/@theme/json/error.json';
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
@@ -22,37 +23,26 @@ export class AddEditColorComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status
-
   public errorData: any = (errorData as any).default;
-
   colorDataListArray: ColorDataList[] = [];
-
   color: Color = new Color();
   colorDataList: ColorDataList = new ColorDataList();
-
   //Form Validation
   formSubmitted: boolean = false;
-
   //to store current color Id
   currentColorId;
-
   index: any;
-
   //To store usreID
   user: any;
-
   //To Store Supplier Data
   supplierList: any[];
-
   //To store Supplier Rate Data
   supplierListRate: any[];
-
   //To Store fabric Data
   fabric: any[];
-
   //To store Total quantity for Calculation
   calculationTotalQuantity: any;
-
+  convertedDate: any;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -60,7 +50,8 @@ export class AddEditColorComponent implements OnInit {
     private colorService: ColorService,
     private toastrService: NbToastrService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private datepipe: DatePipe,
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
@@ -84,10 +75,14 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
           this.color = data["data"];
-          let amount:any
+          this.convertedDate = this.datepipe.transform(this.color.billDate, 'dd/mm/yyyy');
+          this.color.billDate = this.convertedDate;
+          // this.convertedDate = this.color.billDate.setDate;
+          console.log(this.color.billDate);
+          let amount: any
           this.color.colorDataList.forEach(element => {
-            amount=Number(element.rate)*Number(element.quantity)
-            element.amount=parseInt(amount);
+            amount = Number(element.rate) * Number(element.quantity)
+            element.amount = parseInt(amount);
           });
         },
         error => {
@@ -101,15 +96,10 @@ export class AddEditColorComponent implements OnInit {
     this.supplierService.getAllSupplier().subscribe(
       data => {
         if (data['success']) {
-          if (data["data"] && data["data"].length > 0) {
-            this.supplierList = data['data'];
-          }
-          else {
-            this.toastr.error(errorData.Not_added)
-          }
+          this.supplierList = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -122,15 +112,10 @@ export class AddEditColorComponent implements OnInit {
     this.supplierService.getAllSupplierRates().subscribe(
       data => {
         if (data['success']) {
-          if (data["data"] && data["data"].length > 0) {
-            this.supplierListRate = data['data'];
-          }
-          else {
-            this.toastr.error(errorData.Not_added)
-          }
+          this.supplierListRate = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -185,7 +170,6 @@ export class AddEditColorComponent implements OnInit {
             return;
           }
         }
-
         let obj = {
           // itemName: null,
           quantityPerBox: null,
@@ -210,7 +194,7 @@ export class AddEditColorComponent implements OnInit {
         }, 500)
       }
       else {
-        alert("go to any last row input to add new row");
+        alert("Go to any last row input to add new row");
       }
     }
   }
@@ -225,6 +209,16 @@ export class AddEditColorComponent implements OnInit {
     this.color.colorDataList[rowIndex].amount = parseInt(calcAmount);
   }
 
+  calculateTotalQuantity(rowIndex) {
+    let totalquantity;
+    let quantityPerBoxTempValue;
+    let noOfBoxTempValue;
+    quantityPerBoxTempValue = this.color.colorDataList[rowIndex].quantityPerBox;
+    noOfBoxTempValue = this.color.colorDataList[rowIndex].noOfBox;
+    totalquantity = (quantityPerBoxTempValue * noOfBoxTempValue);
+    this.color.colorDataList[rowIndex].quantity = parseInt(totalquantity);
+  }
+
   addColor(colorForm) {
     this.formSubmitted = true;
     if (colorForm.valid) {
@@ -235,7 +229,7 @@ export class AddEditColorComponent implements OnInit {
             this.toastr.success(errorData.Add_Success)
           }
           else {
-            this.toastr.error(errorData.Internal_Error)
+            this.toastr.error(errorData.Add_Error)
           }
         },
         error => {
@@ -282,5 +276,4 @@ export class AddEditColorComponent implements OnInit {
       )
     }
   }
-
 }

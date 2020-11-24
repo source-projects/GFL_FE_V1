@@ -6,11 +6,17 @@
                     <h2>COLOR STOCK</h2>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <button class="btn btn-primary btn-sm" routerLink='/pages/color/add'>Add</button>  
+                    <button class="btn btn-primary btn-sm" routerLink='/pages/color/add'>ADD</button>  
                 </div>
             </div>
         </nb-card-header>
         <nb-card-body>
+
+            <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect">
+                <nb-radio value="1">View Own</nb-radio>
+                <nb-radio value="2">View Group</nb-radio>
+                <nb-radio value="3">View all</nb-radio>
+            </nb-radio-group>
             <!--  ngx- DataTable -->
             <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="50" 
             [columnMode]="'force'" class="material" style="text-align: justify;"
@@ -23,7 +29,7 @@
                
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
-                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['edit',row.id]"></nb-icon>
+                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
                         <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="deleteColor(row.id)"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>

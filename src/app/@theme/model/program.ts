@@ -1,24 +1,24 @@
-export class Program{
+export class Program {
     id: Number;
     partyId: Number;
     priority: string;
-    programGivenBy:string;
-    quality_entry_id: number;
+    programGivenBy: string;
+    qualityEntryId: number;
     qualityId: number;
     qualityName: string;
     qualityType: string;
     remark: string;
-    programRecord:ProgramRecord[];
+    createdBy: string;
+    programRecords: ProgramRecords[];
 }
-export class ProgramRecord{
-    batch: number;
-    colour_tone: string;
+export class ProgramRecords {
+    branchId: number;
+    colourTone: string;
     id: number;
-    lot_no: number;
+    stockId: number;
     partyShadeNo: number;
-    programControlId:number;
     quantity: number;
     remark: string;
-    shade_no: number;
+    shadeNo: number;
 }
 
