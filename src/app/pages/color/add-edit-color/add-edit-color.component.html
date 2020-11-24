@@ -36,7 +36,7 @@
             <div class="form-group col-md-2">
                 <label class="required">Bill No:</label>
                 <input class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
-                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }" >
+                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }"  >
                     <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billNo1.invalid || (billNo1.dirty || billNo1.untouched) )">
                         <span>Bill no is required</span>
@@ -45,13 +45,26 @@
 
             <div class="form-group col-md-3">
                 <label class="required">Bill Date:</label>
-                <input type="date" class="form-control" name="billDate" #billDate1="ngModel"
-                    [(ngModel)]="color.billDate"
-                  [ngClass]="{'is-invalid':formSubmitted && !(billDate1.valid) }" >
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp" #billDate="ngModel" [(ngModel)]="color.billDate" ngbDatepicker #dp="ngbDatepicker" required
+                           [ngClass]="{'is-invalid':formSubmitted && !(billDate.valid) }">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                    </div>
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (billDate.invalid || (billDate.dirty || billDate.untouched) )">
+                        <span>Bill date is required</span>
+                    </div>
+                  </div>
+                  
+                <!-- <input type="date" class="form-control" name="billDate" #billDate1="ngModel"
+                [(ngModel)]="color.billDate" 
+                [ngClass]="{'is-invalid':formSubmitted && !(billDate1.valid) }"  >
                        <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billDate1.invalid || (billDate1.dirty || billDate1.untouched) )">
                         <span>Bill date is required</span>
-                    </div>
+                    </div> -->
                         
                    
             </div>
@@ -68,12 +81,25 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="required">Challan Date:</label>
-                <input type="date" class="form-control" name="chlDate" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp2" #chlDate="ngModel" [(ngModel)]="color.chlDate" ngbDatepicker #dp2="ngbDatepicker" required
+                           [ngClass]="{'is-invalid':formSubmitted && !(chlDate.valid) }">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button"></button>
+                    </div>
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (chlDate.invalid || (chlDate.dirty || chlDate.untouched) )">
+                        <span>Challan date is required</span>
+                    </div>
+                  </div>
+
+                <!-- <input type="date" class="form-control" name="chlDate" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
                 [ngClass]="{'is-invalid':formSubmitted && !(chlDate1.valid) }" >
                        <div class="invalid-feedback"
                         *ngIf="formSubmitted && (chlDate1.invalid || (chlDate1.dirty || chlDate1.untouched) )">
                         <span>Challan date is required</span>
-                    </div>
+                    </div> -->
                         
             </div>
             <div class="form-group col-md-2">
