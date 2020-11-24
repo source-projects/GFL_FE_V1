@@ -16,27 +16,29 @@ export class QualityComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   permissions: Number;
+
   qualityList:[];
   radioSelect;
+
   tableStyle = 'bootstrap';
-  constructor(private commonService: CommonService, private qualityService: QualityService, private toastr:ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
+  constructor(private commonService: CommonService, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
   ngOnInit(): void {
     this.getQualityList();
   }
 
 
-  getQualityList(){
+  getQualityList() {
     this.qualityService.getallQuality().subscribe(
-      data =>{
-        if(data['success']){
+      data => {
+        if (data['success']) {
           this.qualityList = data['data']
         }
-        else{
-          this.toastr.error(errorData.Internal_Error)
+        else {
+          this.toastr.error(data['msg'])
         }
       },
-      error=>{
+      error => {
         this.toastr.error(errorData.Serever_Error);
       }
     )

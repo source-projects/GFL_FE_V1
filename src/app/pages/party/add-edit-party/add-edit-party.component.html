@@ -13,7 +13,7 @@
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label class="required">Party Name:</label>
+            <label class="required">Party Name</label>
             <input type="text" id="partyName" class="form-control" formControlName="partyName"
               placeholder="Enter party name"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('partyName').invalid )}">
@@ -28,7 +28,7 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label class="required">Address 1:</label>
+            <label class="required">Address 1</label>
             <textarea class="form-control" id=" partyAddress1" nbinput fullwidth formControlName="partyAddress1"
               placeholder="Enter Address 1"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('partyAddress1').invalid )}">
@@ -47,7 +47,7 @@
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label class="required">City:</label>
+            <label class="required">City</label>
             <input type="text" id="city" class="form-control" nbinput fullwidth fieldsize="small" formControlName="city"
               placeholder="Enter city"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('city').invalid )}">
@@ -61,7 +61,7 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label class="required">State:</label>
+            <label class="required">State</label>
             <input type="text" id="state" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="state" placeholder="Enter state"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('state').invalid )}">
@@ -75,7 +75,7 @@
           </div>
 
           <div class="form-group col-md-4">
-            <label class="required">Pin:</label>
+            <label class="required">Pin</label>
             <input type="text" ng-pattern-restrict="/^[A-Za-z]*$/" id="pincode" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="pincode" placeholder="Enter pin code"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('pincode').invalid )}">
@@ -87,13 +87,11 @@
             <div class="invalid-feedback" *ngIf="partyForm.get('pincode').errors?.pattern">
               <span>Please enter 6 digit pin</span>
             </div>
-
-
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4 mb-3">
-            <label class="required">Contact No.:</label>
+            <label class="required">Contact No</label>
             <input type="text" ng-pattern-restrict="[A-Za-z]" id="contactNo" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="contactNo" placeholder="Enter contact no"
               [ngClass]="{'is-invalid':formSubmitted && partyForm.get('contactNo').invalid}">
@@ -107,7 +105,7 @@
           </div>
 
             <div class="form-group col-md-4">
-              <label class="required">GSTIN:</label>
+              <label class="required">GSTIN</label>
               <input type="text" id="gst" class="form-control" nbinput fullwidth fieldsize="small"
                 formControlName="gstin" placeholder="Enter gst"
                 [ngClass]="{'is-invalid':formSubmitted && partyForm.get('gstin').invalid}">
@@ -118,7 +116,7 @@
             </div>
 
             <div class="form-group col-md-4">
-              <label class="required">Email:</label>
+              <label class="required">Email</label>
               <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small"
                 formControlName="mailId" placeholder="Enter email"
                 [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid ) && formSubmitted}">
@@ -131,14 +129,16 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-4">
-              <label class="required">Master Name:</label>
-                <select  name="userHeadId" id="userHeadId" formControlName="userHeadId" class="form-control"
+              <label class="required">Master Name</label>
+                <select  name="userHeadId" id="userHeadId" formControlName="userHeadId" class="form-control" required
                 [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('userHeadId').invalid )}">
                     <option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</option>
                 </select>
+            </div>
+            <div class="invalid-feedback" *ngIf="formSubmitted && (partyForm.get('userHeadId').invalid || (partyForm.get('userHeadId').dirty || partyForm.get('userHeadId').untouched) )">
+              <span>Master Name is required</span>
             </div>
           </div>
 
@@ -160,11 +160,11 @@
 
           <br><br>
           <div class="row">
-            <button *ngIf="this.currentPartyId == null" type="submit" class="btn btn-primary"
-              style="margin-right:20px">Save</button>
+            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary"
+              style="margin-right:20px">ADD</button>
             <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary"
-              style="margin-right:20px">Update</button>
-            <button class="btn btn-primary" (click)="goBackToPreviousPage()">Cancel</button>
+              style="margin-right:20px">UPDATE</button>
+            <button class="btn btn-primary" (click)="goBackToPreviousPage()">CANCEL</button>
           </div>
       </form>
     </div>
