@@ -31,6 +31,6 @@ export class ShadeService {
      return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/all');
    }*/
   getShadeMastList(id,getBy): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all'+getBy+'/'+id);
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all/'+getBy+'/'+id);
   }
 }

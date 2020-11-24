@@ -14,7 +14,7 @@ export class StockBatchService {
    }
 
    getAllStockBatchList(id,getBy): any{
-     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all'+getBy+'/'+id);
+     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all/'+getBy+'/'+id);
    }
 
   addStockBatch(myForm){
