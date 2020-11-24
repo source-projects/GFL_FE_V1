@@ -108,7 +108,7 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   public getSupplierName() {
     this.user = this.commonService.getUser();
-    this.supplierService.getAllSupplier().subscribe(
+    this.supplierService.getAllSupplier(0,"all").subscribe(
       data => {
         if (data["success"]) {
           this.supplier = data["data"];

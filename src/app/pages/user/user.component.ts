@@ -5,6 +5,7 @@ import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from "app/@theme/services/user.service";
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-user',
@@ -16,21 +17,49 @@ export class UserComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   userList=[];
-  radioSelect;
+  userId;
+  userHeadId;
+  radioSelect = 1;
+  radioArray = [
+    {id:1, value:"View Own"},
+    {id:2, value:"View Group"},
+    {id:3, value:"View All"}
+  ];
 
   constructor(
     private route:Router,
     private modalService: NgbModal,
     private toastr:ToastrService,
-    private userService:UserService
+    private userService:UserService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
-    this.getAllUser();
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
+    this.getAllUser(this.userId,"own");
   }
 
-  getAllUser(){
-    this.userService.getAllUser().subscribe(
+  onChange(event){
+    switch(event){
+      case 1: 
+              this.getAllUser(this.userId,"own");
+              break;
+
+      case 2: 
+              this.getAllUser(this.userHeadId,"group");
+              break;
+
+      case 3:
+              this.getAllUser(0,"all");
+              break;
+    }
+  }
+
+  getAllUser(id,getBy){
+    this.userService.getAllUser(id,getBy).subscribe(
       data =>{
         if(data["success"])
           this.userList = data['data'];
@@ -52,7 +81,7 @@ export class UserComponent implements OnInit {
       if (result) {
         this.userService.deleteUserDetailsById(id).subscribe(
           (data) => {
-            this.getAllUser();
+            this.onChange(this.radioSelect);
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error)

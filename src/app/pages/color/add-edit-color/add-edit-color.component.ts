@@ -93,7 +93,7 @@ export class AddEditColorComponent implements OnInit {
   }
 
   getSupplierList() {
-    this.supplierService.getAllSupplier().subscribe(
+    this.supplierService.getAllSupplier(0,"all").subscribe(
       data => {
         if (data['success']) {
           this.supplierList = data['data'];
