@@ -7,8 +7,8 @@ import { CommonService } from './common.service';
 })
 export class ProgramService {
     constructor(private httpClient: HttpClient, private commonService: CommonService) { }
-    getProgramList() {
-        return this.httpClient.get(this.commonService.envUrl() + 'api/program/all');
+    getProgramList(id,getBy) {
+        return this.httpClient.get(this.commonService.envUrl() + 'api/program/all'+getBy+'/'+id);
     }
     deleteProgramDetailsById(id) {
         return this.httpClient.delete(this.commonService.envUrl() + 'api/program/' + id);

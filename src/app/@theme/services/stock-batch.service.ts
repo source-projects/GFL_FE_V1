@@ -13,8 +13,8 @@ export class StockBatchService {
      return this.httpClient.delete(this.commonService.envUrl()+'api/stockBatch/'+id);
    }
 
-   getAllStockBatchList(): any{
-     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all');
+   getAllStockBatchList(id,getBy): any{
+     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all'+getBy+'/'+id);
    }
 
   addStockBatch(myForm){

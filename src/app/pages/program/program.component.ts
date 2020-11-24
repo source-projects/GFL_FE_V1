@@ -18,15 +18,43 @@ export class ProgramComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   programList: any[];
   tableStyle = "bootstrap";
-  radioSelect: any;
+  userId;
+  userHeadId;
+  radioSelect = 1;
+  radioArray = [
+    {id:1, value:"View Own"},
+    {id:2, value:"View Group"},
+    {id:3, value:"View All"}
+  ];
 
   constructor(private commonService: CommonService, private programService: ProgramService, private router: Router, private toastr: ToastrService, private modalService: NgbModal,) { }
 
   ngOnInit(): void {
-    this.getProgramList();
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
+    this.getProgramList(this.userId,"own");
   }
-  public getProgramList() {
-    this.programService.getProgramList().subscribe(
+
+  onChange(event){
+    switch(event){
+      case 1: 
+              this.getProgramList(this.userId,"own");
+              break;
+
+      case 2: 
+              this.getProgramList(this.userHeadId,"group");
+              break;
+
+      case 3:
+              this.getProgramList(0,"all");
+              break;
+    }
+  }
+
+  public getProgramList(id,getBy) {
+    this.programService.getProgramList(id,getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
@@ -49,7 +77,7 @@ export class ProgramComponent implements OnInit {
       if (result) {
         this.programService.deleteProgramDetailsById(id).subscribe(
           (data) => {
-            this.getProgramList();
+            this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete)
           },
           (error) => {
