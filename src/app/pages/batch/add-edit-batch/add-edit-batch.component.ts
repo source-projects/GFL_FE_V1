@@ -41,7 +41,7 @@ export class AddEditBatchComponent implements OnInit {
   }
 
   getAllQuality() {
-    this.qualityService.getallQuality().subscribe(
+    this.qualityService.getallQuality(0,"all").subscribe(
       data=>{
         this.quality = data['data'];
       },

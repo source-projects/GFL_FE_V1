@@ -139,7 +139,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality().subscribe(
+    this.qualityService.getallQuality(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -158,7 +158,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList().subscribe(
+    this.partyService.getAllPartyList(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];

@@ -12,8 +12,8 @@ export class PartyService {
   constructor(private httpClient:HttpClient,private commonService:CommonService) { 
   }
   
-  getAllPartyList(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/all');
+  getAllPartyList(id,getBy){
+    return this.httpClient.get(this.commonService.envUrl()+'api/party/all/'+getBy+'/'+id);
   }
   saveParty(partyData){
     return this.httpClient.post(this.commonService.envUrl()+'api/party',partyData);

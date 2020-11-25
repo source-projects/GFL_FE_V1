@@ -12,8 +12,8 @@ export class QualityService {
     return this.httpClient.post(this.commonService.envUrl()+'api/quality', qualityData);
   }
 
-  getallQuality(): any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/quality/all');
+  getallQuality(id,getBy): any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/quality/all/'+getBy+'/'+id);
   }
 
   getQualityById(id): any{
