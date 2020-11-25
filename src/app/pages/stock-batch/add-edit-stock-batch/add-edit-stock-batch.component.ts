@@ -22,7 +22,6 @@ export class AddEditStockBatchComponent implements OnInit {
   qualityList: any;
 
   formSubmitted = false;
-  selectedFabricId = null;
 
   party: any[];
   user: any;

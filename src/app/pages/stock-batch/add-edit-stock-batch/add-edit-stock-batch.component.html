@@ -1,7 +1,7 @@
 <div class="container">
     <nb-card>
         <nb-card-header>
-            <div *ngIf="selectedFabricId == null; else updateS"> <h2>ADD STOCK-BATCH</h2></div>
+            <div *ngIf="currentStockBatch == null; else updateS"> <h2>ADD STOCK-BATCH</h2></div>
            <ng-template #updateS><h2>UPDATE STOCK-BATCH</h2></ng-template>
         </nb-card-header>
         <nb-card-body>
@@ -156,9 +156,9 @@
                     <br><br>
                     <div class="row">
 
-                        <button *ngIf="selectedFabricId == null" type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="currentStockBatch == null" type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
                         
-                        <button *ngIf="selectedFabricId != null" type="button" (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="currentStockBatch != null" type="button" (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
 
                         <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/stock-batch">CANCEL</button>
                     </div>
