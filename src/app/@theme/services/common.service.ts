@@ -12,7 +12,16 @@ export class CommonService {
     return ({'userId':1});
   }
 
+  getUserHeadId(){
+    return ({'userHeadId':1});
+  }
+
   envUrl(){
     return environment.apiUrl;
+  }
+
+  decToBin(n): any{
+    var bin = (+n).toString(2);
+    return bin;
   }
 }

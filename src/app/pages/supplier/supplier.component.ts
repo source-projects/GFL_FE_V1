@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-supplier',
@@ -11,48 +11,57 @@ import { SupplierService } from 'app/@theme/services/supplier.service';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent implements OnInit {
-   //toaster config
-   config: NbToastrConfig;
-   destroyByClick = true;
-   duration = 2000;
-   hasIcon = true;
-   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-   preventDuplicates = false;
-   status: NbComponentStatus = 'primary';
-   
   tableStyle="bootstrap";
-  supplierList
-  
-  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastrService: NbToastrService) { }
+
+  public errorData: any = (errorData as any).default;
+
+  //to get SupplierList
+  supplierList=[];
+  radioSelect = 1;
+  radioArray = [
+    {id:1, value:"View Own"},
+    {id:2, value:"View Group"},
+    {id:3, value:"View All"}
+  ];
+  userHeadId;
+  userId;
+
+  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
    
   ngOnInit(): void {
-    console.log("OnInit")
-    this.supplierService.getAllSupplier().subscribe(
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
+    this.getSupplierList(this.userId,"own")
+  }
+
+  onChange(event){
+    switch(event){
+      case 1: 
+              this.getSupplierList(this.userId,"own");
+              break;
+
+      case 2: 
+              this.getSupplierList(this.userHeadId,"group");
+              break;
+
+      case 3:
+              this.getSupplierList(0,"all");
+              break;
+    }
+  }
+
+  public getSupplierList(id,getBy){
+    this.supplierService.getAllSupplier(id,getBy).subscribe(
       data=>{
         this.supplierList=data['data']
-        console.log(data)
+        this.router.navigate(['pages/supplier']);
       },
       error=>{
         //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Supplier",
-         config);
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }
-
-  
-
-  
-
 }

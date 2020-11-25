@@ -2,19 +2,27 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SupplierComponent } from './supplier.component';
 import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.component';
+import { AddEditSupplierRateComponent } from './add-edit-supplier-rate/add-edit-supplier-rate.component';
+import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 
 const routes: Routes = [
   {
     path:'',
-    component:SupplierComponent
+    component:SupplierComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard]
   },
   {
     path:'add',
     component:AddEditSupplierComponent
   },
   {
-    path:'cancel',
-    component:SupplierComponent
+    path:'addSupplierRate',
+    component:AddEditSupplierRateComponent
+  },
+  {
+    path:'editSupplierRate/:id',
+    component:AddEditSupplierRateComponent
   },
   {
     path:'edit/:id',
@@ -24,6 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[SupplierGuard]
 })
 export class SupplierRoutingModule { }

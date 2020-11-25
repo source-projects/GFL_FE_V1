@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-  NbToastrConfig,
-  NbToastrService,
-} from "@nebular/theme";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { FabricInService } from "app/@theme/services/fabric-in.service";
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: "ngx-fabric-in",
@@ -15,21 +11,16 @@ import { FabricInService } from "app/@theme/services/fabric-in.service";
   styleUrls: ["./fabric-in.component.scss"],
 })
 export class FabricInComponent implements OnInit {
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status;
+
+  public errorData: any = (errorData as any).default;
 
   fabricList;
+
   tablestyle = "bootstrap";
   constructor(
-    private toastrService: NbToastrService,
     private modalService: NgbModal,
-    private fabricService: FabricInService
+    private fabricService: FabricInService,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -39,71 +30,35 @@ export class FabricInComponent implements OnInit {
   getFabricList() {
     this.fabricService.getallFabric().subscribe(
       (data) => {
-        this.fabricList = data["data"];
+        if(data["success"]){
+          this.fabricList = data["data"];
+        }
+        else{
+          this.toastr.error(errorData.Internal_Error)
+        }
       },
       (error) => {
-        //toaster
-        this.status = "danger";
-        const config = {
-          status: this.status,
-          destroyByClick: this.destroyByClick,
-          duration: this.duration,
-          hasIcon: this.hasIcon,
-          position: this.position,
-          preventDuplicates: this.preventDuplicates,
-        };
-        this.toastrService.show(
-          "No internet access or server failure",
-          "Fabric-in",
-          config
-        );
+        this.toastr.error(errorData.Serever_Error)
       }
     );
   }
 
   deleteFabric(rowId) {
-    /*const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm"
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.fabricService.deleteById(this.fabricList[rowId].id).subscribe(
+        this.fabricService.deleteById(rowId).subscribe(
           (data) => {
-            //toaster
-            this.status = "primary";
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "Fabric data deleted.",
-              "Fabric-in",
-              config
-            );
+            this.getFabricList();
+            this.toastr.success(errorData.Delete)
           },
           (error) => {
-            //toaster
-            this.status = "danger";
-            const config = {
-              status: this.status,
-              destroyByClick: this.destroyByClick,
-              duration: this.duration,
-              hasIcon: this.hasIcon,
-              position: this.position,
-              preventDuplicates: this.preventDuplicates,
-            };
-            this.toastrService.show(
-              "No internet access or server failure",
-              "Fabric-in",
-              config
-            );
+          this.toastr.error(errorData.Serever_Error)
           }
         );
       }
-    });*/
+    });
   }
 }

@@ -6,7 +6,6 @@ import { ColorComponent } from './color.component';
 import { AddEditColorComponent } from './add-edit-color/add-edit-color.component';
 import { SharedModule } from '../../@theme/shared.module';
 
-
 @NgModule({
   declarations: [ColorComponent, AddEditColorComponent],
   imports: [

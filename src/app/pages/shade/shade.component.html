@@ -6,22 +6,28 @@
                     <h2>SHADE</h2>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <button class="btn btn-primary btn-sm" routerLink="add">Add</button>  
+                    <button class="btn btn-primary btn-sm" routerLink='/pages/shade/add'>Add</button>  
                 </div>
             </div>
         </nb-card-header>
         <nb-card-body>
+            <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect">
+                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+            </nb-radio-group>
+
             <!--  ngx- DataTable  -->
-            <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" >
+            <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" 
+            [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
                 <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
-                <ngx-datatable-column name="Process Name" prop="processName"></ngx-datatable-column>
+                <ngx-datatable-column name="Process Name" prop="processId"></ngx-datatable-column>
                 <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
                 <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
-                <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
+                <ngx-datatable-column name="Party Name" prop="partyId"></ngx-datatable-column>
                 <ngx-datatable-column name="Color Tone " prop="colorTone"></ngx-datatable-column>
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
-                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/quality/edit',row.id]"></nb-icon>
+                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
+                        <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="deleteShade(row.id)"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>
             </ngx-datatable>

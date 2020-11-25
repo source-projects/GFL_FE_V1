@@ -1,50 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { QualityService } from '../../@theme/services/quality.service';
+import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-quality',
   templateUrl: './quality.component.html',
   styleUrls: ['./quality.component.scss']
 })
+
 export class QualityComponent implements OnInit {
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
-  
-  qualityList
-  tableStyle = 'bootstrap'
-  constructor(private qualityService: QualityService, private toastrService: NbToastrService) { }
+
+  public errorData: any = (errorData as any).default;
+  permissions: Number;
+  radioArray = [
+    {id:1, value:"View Own"},
+    {id:2, value:"View Group"},
+    {id:3, value:"View All"}
+  ];
+  qualityList:[];
+  radioSelect = 1;
+  userId;
+  userHeadId;
+  tableStyle = 'bootstrap';
+  constructor(private commonService: CommonService, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
   ngOnInit(): void {
-    this.getQualityList();
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
+    this.getQualityList(this.userId, "own");
   }
 
-  getQualityList(){
-    this.qualityService.getallQuality().subscribe(
-      data =>{
-        this.qualityList = data['data']
+  onChange(event){
+    switch(event){
+      case 1: 
+              this.getQualityList(this.userId,"own");
+              break;
+
+      case 2: 
+              this.getQualityList(this.userHeadId,"group");
+              break;
+
+      case 3:
+              this.getQualityList(0,"all");
+              break;
+    }
+  }
+
+  getQualityList(id,getBy) {
+    this.qualityService.getallQuality(id,getBy).subscribe(
+      data => {
+        if (data['success']) {
+          this.qualityList = data['data']
+        }
+        else {
+          this.toastr.error(data['msg'])
+        }
       },
-      error=>{
-        //toaster
-        this.status = "danger"
-        const config = {
-         status: this.status,
-         destroyByClick: this.destroyByClick,
-         duration: this.duration,
-         hasIcon: this.hasIcon,
-         position: this.position,
-         preventDuplicates: this.preventDuplicates,
-       };
-       this.toastrService.show(
-         "No internet access or Server failuer",
-         "Quality",
-         config);
+      error => {
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }

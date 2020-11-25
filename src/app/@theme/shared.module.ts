@@ -22,6 +22,10 @@ import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { ToastrModule } from 'ngx-toastr/toastr/toastr.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const NB_MODULES = [
@@ -47,12 +51,16 @@ const NB_MODULES = [
   FormsModule,
   ReactiveFormsModule,
   NgxDatatableModule,
-  NbTooltipModule
+  NbTooltipModule,
+  ColorPickerModule,
+  NgSelectModule,
+  NgbDatepickerModule
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES]
+  exports: [...NB_MODULES],
+  providers:[  ]
 })
 export class SharedModule {}

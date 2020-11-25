@@ -10,7 +10,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { PartyModule } from './party/party.module';
 import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
-
+import {UserModule} from './user/user.module';
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -22,9 +22,11 @@ import { SupplierModule } from './supplier/supplier.module';
     QualityModule,
     SupplierModule,
     MiscellaneousModule,
+    UserModule
   ],
   declarations: [
     PagesComponent,
+    
   ],
 })
 export class PagesModule {

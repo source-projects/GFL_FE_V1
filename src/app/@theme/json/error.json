@@ -1,0 +1,14 @@
+{
+    "Serever_Error": "No internet access or Server failuer",
+    "Internal_Error": "Something Went Wrong",
+    "Add_Success": "Added Successfully!",
+    "Update_Success": "Updated Successfully",
+    "Add_Error": "ERROR Not Added Successfully",
+    "Update_Error": "ERROR Not Updated Successfully",
+    "Delete": "Delete Successful",
+    "Not_added": "Nothing Added Yet",
+    "Login_Success": "Login Successful",
+    "login_Error": "Invalid UserName Or Password",
+    "NoPermission": "You have No permission to view these Module",
+    "Add_quality_indicator": "Select quality id first"
+}
