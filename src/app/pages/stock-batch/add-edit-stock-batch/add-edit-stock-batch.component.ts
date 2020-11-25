@@ -175,6 +175,7 @@ export class AddEditStockBatchComponent implements OnInit {
     );
   }
 
+ 
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {

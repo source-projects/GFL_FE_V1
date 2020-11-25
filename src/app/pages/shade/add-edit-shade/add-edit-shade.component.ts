@@ -49,7 +49,7 @@ export class AddEditShadeComponent implements OnInit {
   quality: any[];
   processList: any[];
   qualityId: any;
-  public color: string = '';
+  public color: any;
   supplierListRate: any;
   partyList: any[];
   categoryList = [
@@ -72,7 +72,8 @@ export class AddEditShadeComponent implements OnInit {
     this.shadeDataListArray.push(this.shadeDataList);
     this.shades.shadeDataList = this.shadeDataListArray;
   }
-
+  
+  
   ngOnInit(): void {
     this.getUserId();
     this.getPartyList();
@@ -204,6 +205,7 @@ export class AddEditShadeComponent implements OnInit {
         data => {
           this.shades = data["data"];
           console.log(this.shades)
+          this.color=this.shades.colorTone;
           if (data['success']) {
             this.shades = data["data"];
             console.log("shade data" + this.shades);
