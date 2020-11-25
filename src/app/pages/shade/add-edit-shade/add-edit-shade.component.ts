@@ -93,7 +93,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   public getPartyList() {
-    this.partyService.getAllPartyList().subscribe(
+    this.partyService.getAllPartyList(0,"all").subscribe(
       data => {
         if (data['success']) {
           this.partyList = data['data'];
@@ -131,7 +131,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   getAllSupplier() {
-    this.supplierService.getAllSupplier().subscribe(
+    this.supplierService.getAllSupplier(0,"all").subscribe(
       data => {
         if (data["success"]) {
           this.supplierListRate = data['data'];
@@ -163,7 +163,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality().subscribe(
+    this.qualityService.getallQuality(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
           this.quality = data["data"];

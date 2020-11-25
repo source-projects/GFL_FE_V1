@@ -1,7 +1,7 @@
 <div class="container">
     <nb-card>
         <nb-card-header>
-            <div *ngIf="selectedFabricId == null; else updateS"> <h2>ADD STOCK-BATCH</h2></div>
+            <div *ngIf="currentStockBatch == null; else updateS"> <h2>ADD STOCK-BATCH</h2></div>
            <ng-template #updateS><h2>UPDATE STOCK-BATCH</h2></ng-template>
         </nb-card-header>
         <nb-card-body>
@@ -47,8 +47,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label class="required">Bill Date</label>
-                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' required
+                            <label class="required">Bill Date:</label>
+                            <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' ngbDatepicker #dp="ngbDatepicker" required
                             [ngClass]="{'is-invalid': formSubmitted && billDate1.invalid}">
                             <div class="required-class" *ngIf="formSubmitted && (billDate1.invalid)" >
                                 <span>Bill date is required</span>
@@ -63,8 +63,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label class="required">Challan Date</label>
-                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' required
+                            <label class="required">Challan Date:</label>
+                            <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' ngbDatepicker #dp="ngbDatepicker" required
                             [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}">
                             <div class="required-class" *ngIf="formSubmitted && (chlDate1.invalid)" >
                                 <span>Challan date is required</span>
@@ -156,9 +156,9 @@
                     <br><br>
                     <div class="row">
 
-                        <button *ngIf="selectedFabricId == null" type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="currentStockBatch == null" type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
                         
-                        <button *ngIf="selectedFabricId != null" type="button" (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="currentStockBatch != null" type="button" (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
 
                         <button type="button" class="btn btn-primary btn-sm" routerLink="/pages/stock-batch">CANCEL</button>
                     </div>

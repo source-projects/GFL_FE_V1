@@ -89,7 +89,7 @@ export class AddEditFabricInComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList().subscribe(
+    this.partyService.getAllPartyList(0,"all").subscribe(
       (data) => {
         if(data['success']){
           if (data["data"] && data["data"].length > 0) {
@@ -109,7 +109,7 @@ export class AddEditFabricInComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality().subscribe(
+    this.qualityService.getallQuality(0,"all").subscribe(
       (data) => {
         if(data['success']){
           if (data["data"] && data["data"].length > 0) {

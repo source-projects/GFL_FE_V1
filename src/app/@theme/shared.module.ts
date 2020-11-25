@@ -25,6 +25,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ToastrModule } from 'ngx-toastr/toastr/toastr.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const NB_MODULES = [
@@ -53,6 +54,7 @@ const NB_MODULES = [
   NbTooltipModule,
   ColorPickerModule,
   NgSelectModule,
+  NgbDatepickerModule
 ];
 
 @NgModule({

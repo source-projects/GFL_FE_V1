@@ -29,8 +29,8 @@ export class UserService {
   getAllHead():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/userHead/');
   }
-  getAllUser():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/user/AllUsers/');
+  getAllUser(id,getBy):any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/user/AllUsers/'+getBy+'/'+id);
   }
   getDesignation():any{
     return this.httpClient.get(this.commonService.envUrl()+'api/designation');
