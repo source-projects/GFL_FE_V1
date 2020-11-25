@@ -12,7 +12,7 @@
             <form #colorForm="ngForm" (keydown.enter)="$event.preventDefault()">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label class="required">Supplier Name:</label>
+                        <label class="required">Supplier Name</label>
                         <ng-select aria-placeholder="Select supplier name"
                             [(ngModel)]="color.supplierId" #supplierName1="ngModel" name="supplierName" required>
                             <ng-option *ngFor="let s of supplierList" [value]="s.id">
@@ -20,13 +20,13 @@
                             </ng-option>
                         </ng-select>
                         <div class="required-class"
-                            *ngIf="formSubmitted && (supplierName1.invalid || (supplierName1.dirty || supplierName1.untouched) )">
+                            *ngIf="formSubmitted && (supplierName1.invalid)">
                             <span>Supplier Name is required</span>
                         </div>
                     </div>
                         
                     <div class="form-group col-md-4">
-                        <label>Remark:</label>
+                        <label>Remark</label>
                         <textarea name="remark" #remark1="ngModel" [(ngModel)]="color.remark" class="form-control"></textarea>
                     </div>
             </div>
@@ -34,7 +34,7 @@
 
         <div class="row">
             <div class="form-group col-md-2">
-                <label class="required">Bill No:</label>
+                <label class="required">Bill No</label>
                 <input class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
                  [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }"  >
                     <div class="invalid-feedback"
@@ -69,7 +69,7 @@
                    
             </div>
             <div class="form-group col-md-2">
-                <label class="required">Challan No:</label>
+                <label class="required">Challan No</label>
                 <input class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo" required
                     [ngClass]="{'is-invalid':formSubmitted && !(chlNo1.valid) }" >
                         <div class="invalid-feedback"
@@ -96,14 +96,14 @@
 
                 <!-- <input type="date" class="form-control" name="chlDate" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
                 [ngClass]="{'is-invalid':formSubmitted && !(chlDate1.valid) }" >
-                       <div class="invalid-feedback"
-                        *ngIf="formSubmitted && (chlDate1.invalid || (chlDate1.dirty || chlDate1.untouched) )">
+                       <div class="required-class"
+                        *ngIf="formSubmitted && (chlDate1.invalid)">
                         <span>Challan date is required</span>
                     </div> -->
                         
             </div>
             <div class="form-group col-md-2">
-                <label class="required">Bill Amount:</label>
+                <label class="required">Bill Amount</label>
                 <input class="form-control" [(ngModel)]="color.billAmount" #billAmount1="ngModel" name="billAmount"
                     required
                  [ngClass]="{'is-invalid':formSubmitted && !(billAmount1.valid) }" >
@@ -129,6 +129,9 @@
                                 {{s.itemName}}
                             </option>
                             </select>
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
+                                <span>Required</span>
+                            </div>
                            
                         </ng-template>
                     </ngx-datatable-column>
@@ -138,7 +141,10 @@
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input type="number" #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}' class="tableForm"
                                 id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  
-                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" >
+                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" required>
+                                <div class="invalid-feedback" *ngIf="formSubmitted && (quantityPerBox1.invalid)" style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -149,7 +155,10 @@
                                 name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox"
                                 (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')" 
                                 (input)="calculateTotalQuantity(rowIndex,2)"
-                                [id]="'supplierList'+rowIndex+'-2'" >
+                                [id]="'supplierList'+rowIndex+'-2'" required>
+                                <div class="invalid-feedback" *ngIf="formSubmitted && (noOfBox1.invalid)" style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -186,11 +195,11 @@
         <br><br>
         <div class="row">
             <div>
-                <button *ngIf="this.currentColorId == null" type="submit" class="btn btn-primary btn-sm"
-                    style="margin-right:20px" (click)="addColor(colorForm)">Save</button>
+                <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm"
+                    style="margin-right:20px" (click)="addColor(colorForm)">ADD</button>
                 <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
-                    class="btn btn-primary btn-sm" style="margin-right:20px">Update</button>
-                <button class="btn btn-primary btn-sm" routerLink='/pages/color'>Cancel</button>
+                    class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>
+                <button class="btn btn-primary btn-sm" routerLink='/pages/color'>CANCEL</button>
             </div>
         </div>
         </form>

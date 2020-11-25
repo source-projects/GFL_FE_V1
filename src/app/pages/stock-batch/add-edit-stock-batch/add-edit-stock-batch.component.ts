@@ -29,6 +29,7 @@ export class AddEditStockBatchComponent implements OnInit {
   index;
   stockList;
 
+
   batch = {
     batchId: 0,
     mtr: 0,
@@ -38,6 +39,7 @@ export class AddEditStockBatchComponent implements OnInit {
   dummy = {
     batchId: 0,
     batchMW: null,
+
   };
 
   stockDataValues = [
@@ -46,8 +48,10 @@ export class AddEditStockBatchComponent implements OnInit {
       batchMW: [
         {
           mtr: null,
+
           wt: null,
         },
+
       ],
     },
   ];
@@ -139,7 +143,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality().subscribe(
+    this.qualityService.getallQuality(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -158,16 +162,12 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList().subscribe(
+    this.partyService.getAllPartyList(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.party = data["data"];
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
+          this.party = data["data"];
         } else {
-          this.toastr.error(errorData.Internal_Error);
+          this.toastr.error(data['msg']);
         }
       },
       (error) => {
@@ -209,6 +209,7 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 50);
       } else {
+
         this.toastr.error(
           "go to any last row input to add new row",
           "Empty Field"
@@ -278,7 +279,8 @@ export class AddEditStockBatchComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
           } else {
             this.stockBatchArray=[];
-            this.toastr.error(errorData.Internal_Error);
+            this.toastr.error(data['msg']);
+           
           }
         },
         (error) => {
@@ -332,8 +334,10 @@ export class AddEditStockBatchComponent implements OnInit {
       batchMW: [
         {
           mtr: null,
+
           wt: null,
         },
+
       ],
     };
     console.log("called");

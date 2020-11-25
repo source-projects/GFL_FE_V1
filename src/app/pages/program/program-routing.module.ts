@@ -6,20 +6,24 @@ import { ProgramComponent } from './program.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:ProgramComponent,
-    canActivate:[ProgramGuard],
-    canLoad:[ProgramGuard]
+    path: '',
+    component: ProgramComponent,
+    canActivate: [ProgramGuard],
+    canLoad: [ProgramGuard]
   },
   {
-    path:'add',
-    component:AddEditProgramComponent
+    path: 'add',
+    component: AddEditProgramComponent
+  },
+  {
+    path: 'edit/:id',
+    component: AddEditProgramComponent
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[ProgramGuard]
+  providers: [ProgramGuard]
 })
 export class ProgramRoutingModule { }

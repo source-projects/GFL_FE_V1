@@ -94,6 +94,9 @@ export class AddEditSupplierRateComponent implements OnInit {
             this.discount = this.formValues.discountPercentage;
             this.gst = this.formValues.gstPercentage;
           }
+          else {
+            this.toastr.error(data['msg'])
+          }
         },
         error => {
           this.toastr.error(errorData.Serever_Error);
@@ -105,15 +108,13 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   public getSupplierName() {
     this.user = this.commonService.getUser();
-    this.supplierService.getAllSupplier().subscribe(
+    this.supplierService.getAllSupplier(0,"all").subscribe(
       data => {
         if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.supplier = data["data"];
-          }
-          else {
-            this.toastr.error(errorData.Not_added);
-          }
+          this.supplier = data["data"];
+        }
+        else {
+          this.toastr.error(data['msg']);
         }
       },
       error => {
@@ -274,7 +275,7 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
         }, 500)
       } else {
-        alert("go to any last row input to add new row");
+        alert("Go to any last row input to add new row");
       }
     }
   }

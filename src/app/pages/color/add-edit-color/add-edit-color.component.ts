@@ -25,37 +25,25 @@ export class AddEditColorComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status
-
   public errorData: any = (errorData as any).default;
-
   colorDataListArray: ColorDataList[] = [];
-
   color: Color = new Color();
   colorDataList: ColorDataList = new ColorDataList();
-
   //Form Validation
   formSubmitted: boolean = false;
-
   //to store current color Id
   currentColorId;
-
   index: any;
-
   //To store usreID
   user: any;
-
   //To Store Supplier Data
   supplierList: any[];
-
   //To store Supplier Rate Data
   supplierListRate: any[];
-
   //To Store fabric Data
   fabric: any[];
-
   //To store Total quantity for Calculation
   calculationTotalQuantity: any;
-
   convertedDate: any;
   convertedDate2: any;
   constructor(
@@ -67,7 +55,6 @@ export class AddEditColorComponent implements OnInit {
     private route: Router,
     private toastr: ToastrService,
     private datepipe: DatePipe,
-
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
@@ -109,18 +96,13 @@ export class AddEditColorComponent implements OnInit {
   }
 
   getSupplierList() {
-    this.supplierService.getAllSupplier().subscribe(
+    this.supplierService.getAllSupplier(0,"all").subscribe(
       data => {
         if (data['success']) {
-          if (data["data"] && data["data"].length > 0) {
-            this.supplierList = data['data'];
-          }
-          else {
-            this.toastr.error(errorData.Not_added)
-          }
+          this.supplierList = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -133,15 +115,10 @@ export class AddEditColorComponent implements OnInit {
     this.supplierService.getAllSupplierRates().subscribe(
       data => {
         if (data['success']) {
-          if (data["data"] && data["data"].length > 0) {
-            this.supplierListRate = data['data'];
-          }
-          else {
-            this.toastr.error(errorData.Not_added)
-          }
+          this.supplierListRate = data['data'];
         }
         else {
-          this.toastr.error(errorData.Internal_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
@@ -196,7 +173,6 @@ export class AddEditColorComponent implements OnInit {
             return;
           }
         }
-
         let obj = {
           // itemName: null,
           quantityPerBox: null,
@@ -221,7 +197,7 @@ export class AddEditColorComponent implements OnInit {
         }, 500)
       }
       else {
-        alert("go to any last row input to add new row");
+        alert("Go to any last row input to add new row");
       }
     }
   }
@@ -256,7 +232,7 @@ export class AddEditColorComponent implements OnInit {
             this.toastr.success(errorData.Add_Success)
           }
           else {
-            this.toastr.error(errorData.Internal_Error)
+            this.toastr.error(errorData.Add_Error)
           }
         },
         error => {
@@ -303,5 +279,4 @@ export class AddEditColorComponent implements OnInit {
       )
     }
   }
-
 }

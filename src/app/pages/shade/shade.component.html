@@ -11,6 +11,10 @@
             </div>
         </nb-card-header>
         <nb-card-body>
+            <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect">
+                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+            </nb-radio-group>
+
             <!--  ngx- DataTable  -->
             <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" 
             [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">

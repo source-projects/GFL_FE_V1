@@ -28,18 +28,18 @@ export class AddEditPartyComponent implements OnInit {
   user: any;
 
   //To store the data of selected Party
-  currentParty:any;
+  currentParty: any;
 
   //to store the id of selected party
-  currentPartyId:any;
+  currentPartyId: any;
 
-  master:[];
+  master: [];
 
-  creditor:boolean=false;
-  debtor:boolean=false;
+  creditor: boolean = false;
+  debtor: boolean = false;
 
-  constructor(private location: Location, private partyService: PartyService, private commonService: CommonService, 
-    private route: Router, private _route: ActivatedRoute, private toastr:ToastrService) { }
+  constructor(private location: Location, private partyService: PartyService, private commonService: CommonService,
+    private route: Router, private _route: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -47,7 +47,7 @@ export class AddEditPartyComponent implements OnInit {
     this.getMaster();
   }
 
-  public getData(){
+  public getData() {
     this.user = this.commonService.getUser()
     this.partyForm = new FormGroup({
       partyName: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
@@ -59,30 +59,30 @@ export class AddEditPartyComponent implements OnInit {
       pincode: new FormControl(null, [Validators.pattern(/^[0-9]{6}$/), Validators.required]),
       gstin: new FormControl(null, Validators.required),
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
-      creditor: new FormControl(false,Validators.required),
-      debtor: new FormControl(false,Validators.required),
+      creditor: new FormControl(false, Validators.required),
+      debtor: new FormControl(false, Validators.required),
       createdBy: new FormControl(this.user.userId.toString()),
-      userHeadId:new FormControl(null),
+      userHeadId: new FormControl(null, Validators.required),
     });
   }
 
-  public getMaster(){
+  public getMaster() {
     this.partyService.getAllMaster().subscribe(
-      data=>{
-        if(data['success']){
-          this.master=data['data'];
+      data => {
+        if (data['success']) {
+          this.master = data['data'];
         }
-        else{
-          this.toastr.error(errorData.Internal_Error);
+        else {
+          this.toastr.error(data['msg']);
         }
       },
-      error=>{
+      error => {
         this.toastr.error(errorData.Serever_Error);
       }
     )
   }
 
-  public getUpdateData(){
+  public getUpdateData() {
     this.currentPartyId = this._route.snapshot.paramMap.get('id');
     if (this.currentPartyId != null) {
       this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
@@ -102,7 +102,7 @@ export class AddEditPartyComponent implements OnInit {
             "debtor": this.currentParty.debtor,
             "createdBy": this.currentParty.user,
             "id": this.currentPartyId,
-            "userHeadId":this.currentParty.userHeadId
+            "userHeadId": this.currentParty.userHeadId
           })
         },
         error => {
@@ -114,15 +114,15 @@ export class AddEditPartyComponent implements OnInit {
 
   public addParty() {
     this.formSubmitted = true;
-    if(this.partyForm.valid) {
+    if (this.partyForm.valid) {
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
-          if(data["success"]){
+          if (data["success"]) {
             this.currentParty = data["data"];
             this.route.navigate(['pages/party']);
             this.toastr.success(errorData.Add_Success)
           }
-          else{
+          else {
             this.toastr.error(errorData.Add_Error)
           }
         },
@@ -131,7 +131,7 @@ export class AddEditPartyComponent implements OnInit {
         }
       )
     }
-    else{
+    else {
       return
     }
   }
@@ -145,11 +145,11 @@ export class AddEditPartyComponent implements OnInit {
       }
       this.partyService.updateParty(body).subscribe(
         data => {
-          if(data["success"]){
+          if (data["success"]) {
             this.toastr.success(errorData.Update_Success)
             this.route.navigate(["/pages/party"]);
           }
-          else{
+          else {
             this.toastr.error(errorData.Update_Error)
           }
         },
@@ -159,22 +159,22 @@ export class AddEditPartyComponent implements OnInit {
       )
     }
   }
- 
+
   public goBackToPreviousPage(): any {
     this.route.navigate(['pages/party']);
   }
 
   setCheckedStatusCreditor(checked) {
-    this.creditor=checked;
+    this.creditor = checked;
     this.partyForm.patchValue({
-      "creditor":this.creditor
+      "creditor": this.creditor
     })
   }
 
   setCheckedStatusDebtor(checked) {
-    this.debtor=checked;
+    this.debtor = checked;
     this.partyForm.patchValue({
-      "debtor":this.debtor
+      "debtor": this.debtor
     })
   }
 

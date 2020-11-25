@@ -17,15 +17,43 @@ export class SupplierComponent implements OnInit {
 
   //to get SupplierList
   supplierList=[];
-  
+  radioSelect = 1;
+  radioArray = [
+    {id:1, value:"View Own"},
+    {id:2, value:"View Group"},
+    {id:3, value:"View All"}
+  ];
+  userHeadId;
+  userId;
+
   constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
    
   ngOnInit(): void {
-    this.getSupplierList()
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
+    this.getSupplierList(this.userId,"own")
   }
 
-  public getSupplierList(){
-    this.supplierService.getAllSupplier().subscribe(
+  onChange(event){
+    switch(event){
+      case 1: 
+              this.getSupplierList(this.userId,"own");
+              break;
+
+      case 2: 
+              this.getSupplierList(this.userHeadId,"group");
+              break;
+
+      case 3:
+              this.getSupplierList(0,"all");
+              break;
+    }
+  }
+
+  public getSupplierList(id,getBy){
+    this.supplierService.getAllSupplier(id,getBy).subscribe(
       data=>{
         this.supplierList=data['data']
         this.router.navigate(['pages/supplier']);

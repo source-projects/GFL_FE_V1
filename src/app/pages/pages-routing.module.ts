@@ -12,6 +12,7 @@ import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
+import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 
 const routes: Routes = [{
   path: '',
@@ -29,20 +30,22 @@ const routes: Routes = [{
       path: 'party',
       loadChildren: () => import('./party/party.module')
         .then(m => m.PartyModule),
-        canActivate:[PartyGuard]
+      canActivate: [PartyGuard],
+      canLoad: [PartyGuard]
     },
     {
       path: 'quality',
       loadChildren: () => import('./quality/quality.module')
         .then(m => m.QualityModule),
-        canActivate:[QualityGuard],
-        canLoad: [QualityGuard]
+      canActivate: [QualityGuard],
+      canLoad: [QualityGuard]
     },
     {
       path: 'user',
       loadChildren: () => import('./user/user.module')
         .then(m => m.UserModule),
-        canActivate:[UserGuard]
+      canActivate: [UserGuard],
+      canLoad: [UserGuard]
     },
     {
       path: 'fabric-in',
@@ -58,30 +61,36 @@ const routes: Routes = [{
       path: 'color',
       loadChildren: () => import('./color/color.module')
         .then(m => m.ColorModule),
-        canActivate:[ColorGuard]
+      canActivate: [ColorGuard],
+      canLoad: [ColorGuard]
     },
     {
       path: 'program',
       loadChildren: () => import('./program/program.module')
         .then(m => m.ProgramModule),
-        canActivate:[ProgramGuard]
+      canActivate: [ProgramGuard],
+      canLoad: [ProgramGuard]
     },
     {
       path: 'shade',
       loadChildren: () => import('./shade/shade.module')
         .then(m => m.ShadeModule),
-        canActivate:[ShadeGuard]
+      canActivate: [ShadeGuard],
+      canLoad: [ShadeGuard]
     },
     {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
-        canActivate:[SupplierGuard]
+      canActivate: [SupplierGuard],
+      canLoad: [SupplierGuard]
     },
     {
       path: 'stock-batch',
       loadChildren: () => import('./stock-batch/stock-batch.module')
         .then(m => m.StockBatchModule),
+      canActivate: [StockBatchGuard],
+      canLoad: [StockBatchGuard]
     },
     {
       path: 'forms',

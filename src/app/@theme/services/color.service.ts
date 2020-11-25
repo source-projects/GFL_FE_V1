@@ -8,8 +8,8 @@ import { CommonService } from './common.service';
 export class ColorService {
 
   constructor(private httpClient:HttpClient,private commonService:CommonService) {}
-  getColor():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/color/all');
+  getColor(id,getBy):any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/color/all/'+getBy+'/'+id);
   }
   addColor(colorData):any{
     return this.httpClient.post(this.commonService.envUrl()+'api/color',colorData);
