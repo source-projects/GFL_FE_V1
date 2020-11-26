@@ -9,7 +9,7 @@
   </nb-card-header>
   <nb-card-body>
     <div class="container">
-      <form [formGroup]="partyForm" (ngSubmit)="addParty()">
+      <form [formGroup]="partyForm" >
 
         <div class="row">
           <div class="form-group col-md-4">
@@ -161,10 +161,10 @@
           <br><br>
           <div class="row">
             <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary"
-              style="margin-right:20px">ADD</button>
+              style="margin-right:20px" (click)="addParty()" >ADD</button>
             <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary"
               style="margin-right:20px">UPDATE</button>
-            <button class="btn btn-primary" (click)="goBackToPreviousPage()">CANCEL</button>
+            <button class="btn btn-primary" type="button" (click)="goBackToPreviousPage()">CANCEL</button>
           </div>
       </form>
     </div>

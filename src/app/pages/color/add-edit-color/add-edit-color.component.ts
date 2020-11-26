@@ -127,6 +127,12 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
+  updateValueOfTotalQuantity(rowIndex){
+    let noBox:any = this.color.colorDataList[rowIndex].noOfBox;
+    let qtyPerBox:any = this.color.colorDataList[rowIndex].quantityPerBox;
+    this.color.colorDataList[rowIndex].quantity = noBox * qtyPerBox;
+  }
+
   itemSelected(rowIndex) {
     let id = this.color.colorDataList[rowIndex].itemId;
   }
