@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NbDialogModule, NbDialogService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Step } from 'app/@theme/model/process';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { QualityService } from 'app/@theme/services/quality.service';
-import { DialogNamePromptComponent } from 'app/pages/modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
+import { ToastrService } from 'ngx-toastr';
 import { AddStepComponent } from '../add-step/add-step.component';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-dynamic-process',
@@ -17,18 +18,14 @@ export class DynamicProcessComponent implements OnInit {
     processName: null,
     time: null,
   }
-  stepList: [
-    {
-      stepName: null,
-      stepNo: null,
-    }
-  ]
-  stepsName: string[] = [];
+  stepList: Step[] = [];
   qualityList;
   formSubmitted = false;
+  selectedStep: any;
+  public errorData: any = (errorData as any).default;
 
   constructor(private qualityService: QualityService, private processService: ProcessService,
-    private _modalService: NgbModal) { }
+    private _modalService: NgbModal, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getQualityList();
@@ -48,30 +45,49 @@ export class DynamicProcessComponent implements OnInit {
         if (data["success"])
           this.qualityList = data["data"];
       }, error => {
-        //error
+        this.toastr.error(errorData.Serever_Error);
       }
     )
   }
 
   onAddStep() {
     const modalRef = this._modalService.open(AddStepComponent);
-    // modalRef.componentInstance.position = this.stepList.length + 1;
-    // modalRef.componentInstance.stepList = this.stepList;
-    // modalRef.componentInstance.editStep = false;
-    // modalRef.result
-    //   .then((result) => {
-    //     if (result) {
-    //       let step = new Step();
-    //       step.stepName = result.name;
-    //       // step.stepPosition = result.position;
-    //       step.functionList = [];
-    //       if (!this.stepList.length || result.position == this.stepList.length + 1) {
-    //         this.stepList.push(step);
-    //       } else {
-    //         this.stepList.splice(result.position - 1, 0, step);
-    //       }
-    //     }
-    //   });
+    modalRef.componentInstance.position = this.stepList.length + 1;
+    modalRef.componentInstance.stepList = this.stepList;
+    modalRef.componentInstance.editStep = false;
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log(result);
+        let step = new Step();
+        step.stepName = result.name;
+        step.stepNo = result.position;
+        if (!this.stepList.length || result.position == this.stepList.length + 1) {
+          this.stepList.push(step);
+        } else {
+          this.stepList.splice(result.position - 1, 0, step);
+        }
+        console.log(this.stepList)
+        console.log(step)
+
+      }
+    });
+  }
+
+  onEditStep(step) {
+    const modalRef = this._modalService.open(AddStepComponent);
+    modalRef.componentInstance.position = step.stepPosition;
+    modalRef.componentInstance.stepList = this.stepList;
+    modalRef.componentInstance.editStep = true;
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          this.stepList[step.stepPosition - 1].stepName = result.name;
+        }
+      });
+  }
+
+  onStepClick(step) {
+    this.selectedStep = step.stepPosition;
   }
 
   onSubmit(myForm) {

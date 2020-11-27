@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-add-step',
@@ -15,8 +17,10 @@ export class AddStepComponent implements OnInit {
   @Input() stepList = [];
   @Input() editStep: any;
   submitButton = "Add";
+  modalSubmitted: boolean = false;
+  public errorData: any = (errorData as any).default;
 
-  constructor(public activeModal: NgbActiveModal) {
+  constructor(public activeModal: NgbActiveModal, private toastr: ToastrService) {
 
   }
 
@@ -38,13 +42,14 @@ export class AddStepComponent implements OnInit {
         }
       }
     }
-    this.positionValues.push(this.stepPosition)
-  }
-  onCreate() {
 
-    console.log(this.positionValues)
-    let obj = { 'name': this.stepName, 'position': this.stepPosition };
-    this.activeModal.close(obj);
-    console.log(this.stepName)
+  }
+  onCreate(myForm) {
+    this.modalSubmitted = true
+    if (myForm.valid) {
+      let obj = { 'name': this.stepName, 'position': this.stepPosition };
+      this.activeModal.close(obj);
+      console.log(this.stepName)
+    }
   }
 }

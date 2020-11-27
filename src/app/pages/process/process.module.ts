@@ -8,10 +8,11 @@ import { SharedModule } from 'app/@theme/shared.module';
 import { FormsModule } from '@angular/forms';
 import { DynamicProcessComponent } from './dynamic-process/dynamic-process.component';
 import { AddStepComponent } from './add-step/add-step.component';
+import { AddFunctionComponent } from './add-function/add-function.component';
 
 
 @NgModule({
-  declarations: [ProcessComponent, AddEditProcessComponent, AddStepComponent, DynamicProcessComponent],
+  declarations: [ProcessComponent, AddEditProcessComponent, AddStepComponent, DynamicProcessComponent, AddFunctionComponent],
   imports: [
     CommonModule,
     ProcessRoutingModule,

@@ -31,30 +31,27 @@
                     </div>
 
                     <div class="col-md-1">
-                        <i _ngcontent-c18="" class="form-control fa fa-plus-circle mr-2" 
-                        (click)="onAddStep()"
-                            style="border:none;color:#0e82f5;font-size:25px;cursor: pointer;margin: 23px;"></i>
+                        <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="onAddStep()" class="plus-add"></nb-icon>
                     </div>
 
                     <br>
-                  
-                    <!-- <div class="col-md-12" *ngIf="stepList.length"> 
+                    {{stepList}}
+                    <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;"> 
                         <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                          <nb-accordion *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag>
-                                <nb-accordion-item #item (click)="onStepClick(step)">
+                          <nb-accordion class="card-height" *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag>
+                                <nb-accordion-item style="margin-top: 40px !important;" #item (click)="onStepClick(step)">
                                     <nb-accordion-item-header class="item-header">
                                             {{step.stepName}}
-                                            <i class="fa fa-plus-circle" style="color:green;font-size:25px;cursor: pointer;margin-right: 69px;"
-                                            (click)="onAddFunction(step)"></i>
-                                            <i class="ft-edit-2 font-medium-1" style="color:#4ca6ff;margin-right: 41px;" (click)="onEditStep(step)">
-                                            </i>
-                                            <i class="ft-trash font-medium-1" style="color:red;margin-right: 17px;" (click)="onDeleteStep(step)">
-                                            </i>
+                                            <nb-icon icon="trash" status="danger" 
+                                            [options]="{ animation: { type: 'zoom' } }" 
+                                            (click)="onDeleteStep(step)" class="trash"></nb-icon>
+                                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="onEditStep(step)" class="edit"></nb-icon>
+                                            <nb-icon icon="plus-circle" status="success" [options]="{ animation: { type: 'zoom' } }" (click)="onAddFunction(step)" class="plus-function-add"></nb-icon>
                                     </nb-accordion-item-header>
                                 </nb-accordion-item>
                             </nb-accordion>
                         </div>
-                    </div>-->
+                    </div>
                     <br> 
                 </div>
                 <br><br>

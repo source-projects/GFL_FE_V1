@@ -172,8 +172,7 @@
         <br><br>
         <div class="row">
             <div>
-                <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm"
-                    style="margin-right:20px" (click)="addColor(colorForm)">ADD</button>
+                <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="addColor(colorForm)">ADD</button>
                 <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
                     class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>
                 <button class="btn btn-primary btn-sm" routerLink='/pages/color'>CANCEL</button>
