@@ -154,7 +154,8 @@ export class AddEditColorComponent implements OnInit {
       };
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
       console.log(this.index);
-      if (rowIndex === this.color.colorDataList.length - 1) {
+     
+      if (rowIndex === this.color.colorDataList.length - 1 ) {
         let item = this.color.colorDataList[rowIndex];
         console.log(item);
         if (colName == 'quantityPerBox') {
@@ -197,16 +198,27 @@ export class AddEditColorComponent implements OnInit {
         list.push(obj);
         this.color.colorDataList = [...list];     
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index)
         
+          let field = document.getElementById(this.index)
+     
           if (field != null) {
-            field.focus()
-            clearInterval(interval)
+            field.focus();
+            clearInterval(interval);
           }
         }, 500)
+        console.log(this.color.colorDataList.length);
       }
-      else {
-        alert("Go to any last row input to add new row");
+     else {
+      let interval = setInterval(() => {
+        
+        let field = document.getElementById(this.index)
+   
+        if (field != null) {
+          field.focus();
+          clearInterval(interval);
+        }
+      }, 500)
+        //alert("Go to any last row input to add new row");
       }
     }
   }

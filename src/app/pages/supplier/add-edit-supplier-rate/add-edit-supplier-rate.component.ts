@@ -275,7 +275,14 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
         }, 500)
       } else {
-        alert("Go to any last row input to add new row");
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index)
+          if (field != null) {
+            field.focus()
+            clearInterval(interval)
+          }
+        }, 500)
+       // alert("Go to any last row input to add new row");
       }
     }
   }

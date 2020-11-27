@@ -209,11 +209,17 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 50);
       } else {
-
-        this.toastr.error(
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50);
+       /* this.toastr.error(
           "go to any last row input to add new row",
           "Empty Field"
-        );
+        );*/
       }
     }
   }
