@@ -22,7 +22,7 @@
           <div class="form-group">
             <label>Step Position</label>
             <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo"
-              #position="ngModel" required>
+              #position="ngModel" required>{{positionValues}
               <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
             </select>
             <div *ngIf="position.invalid && (position.dirty || position.touched)" class="errors">

@@ -38,10 +38,13 @@ export class AddStepComponent implements OnInit {
         }
       }
     }
-
+    this.positionValues.push(this.stepPosition)
   }
   onCreate() {
+
+    console.log(this.positionValues)
     let obj = { 'name': this.stepName, 'position': this.stepPosition };
     this.activeModal.close(obj);
+    console.log(this.stepName)
   }
 }

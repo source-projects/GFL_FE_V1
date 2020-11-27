@@ -69,11 +69,7 @@
     "ng2-ckeditor": "^1.2.9",
     "ng2-completer": "^9.0.1",
     "ng2-smart-table": "^1.6.0",
-<<<<<<< HEAD
-    "ngb-modal": "^2.0.3",
-=======
     "ngx-color-picker": "^10.1.0",
->>>>>>> 450544d972c562a3d5357107972df9dd989fb3cb
     "ngx-echarts": "^4.2.2",
     "ngx-toastr": "^13.1.0",
     "node-sass": "^4.12.0",

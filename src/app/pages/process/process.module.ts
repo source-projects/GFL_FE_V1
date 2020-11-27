@@ -11,7 +11,7 @@ import { AddStepComponent } from './add-step/add-step.component';
 
 
 @NgModule({
-  declarations: [ProcessComponent, AddEditProcessComponent, DynamicProcessComponent, AddStepComponent],
+  declarations: [ProcessComponent, AddEditProcessComponent, AddStepComponent, DynamicProcessComponent],
   imports: [
     CommonModule,
     ProcessRoutingModule,

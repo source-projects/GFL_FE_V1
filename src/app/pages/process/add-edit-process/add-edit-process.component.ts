@@ -13,4 +13,8 @@ export class AddEditProcessComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  onCreate() {
+
+  }
 }
