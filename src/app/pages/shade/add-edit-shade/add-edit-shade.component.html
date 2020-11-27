@@ -137,7 +137,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
                                         id="concentration" [(ngModel)]="row.concentration"  (input)="calculateAmount(rowIndex)"
-                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" >
+                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" min="0" >
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>

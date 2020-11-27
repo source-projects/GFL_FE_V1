@@ -8,6 +8,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { error } from 'console';
 import { CommonService } from 'app/@theme/services/common.service';
+import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-add-edit-program',
@@ -22,6 +23,17 @@ export class AddEditProgramComponent implements OnInit {
   programRecord: ProgramRecords = new ProgramRecords();
 
   public errorData: any = (errorData as any).default;
+
+  
+  //toaster config
+  config: NbToastrConfig;
+  destroyByClick = true;
+  duration = 2000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  status
+  
   //form Validation
   formSubmitted: boolean = false;
   //for fatching dropdown list data
@@ -259,9 +271,20 @@ export class AddEditProgramComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13) {
-      this.index = "qualityList" + (rowIndex + 1) + "-" + colIndex;
+      this.status = "danger"
+      const config = {
+        status: this.status,
+        destroyByClick: this.destroyByClick,
+        duration: this.duration,
+        hasIcon: this.hasIcon,
+        position: this.position,
+        preventDuplicates: this.preventDuplicates,
+      };
+
+      this.index = "program" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.programValues.programRecords.length - 1) {
         let item = this.programValues.programRecords[rowIndex];
+       
         if (colName == 'partyShadeNo') {
           if (!item.partyShadeNo) {
             this.toastr.error("Enter Party Shade No", "Party shade No Field required");
@@ -319,8 +342,16 @@ export class AddEditProgramComponent implements OnInit {
             clearInterval(interval)
           }
         }, 500)
-      } else {
-        alert("Go to any last row input to add new row");
+      }
+       else {
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index)
+          if (field != null) {
+            field.focus()
+            clearInterval(interval)
+          }
+        }, 500)
+        //alert("Go to any last row input to add new row");
       }
     }
   }
