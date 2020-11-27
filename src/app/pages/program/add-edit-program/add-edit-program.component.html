@@ -101,7 +101,7 @@
                                             class="tableForm" id="tablePartyShadeNo" [(ngModel)]="row.partyShadeNo" required
                                             (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')" [id]="'partyShade'+rowIndex+'-0'"
                                             [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}">
-                                        <option *ngFor="let p of partyShade" [value]="p.partyShadeNo">
+                                        <option *ngFor="let p of 6" [value]="p.partyShadeNo">
                                             {{p.partyShadeNo}}
                                         </option>
                                     </select>

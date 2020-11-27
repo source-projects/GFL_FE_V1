@@ -148,7 +148,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   getProcessList() {
-    this.shadeService.getQualityProcessList().subscribe(
+    this.shadeService.getQualityProcessList("all",0).subscribe(
       data => {
         if (data["success"]) {
           this.processList = data['data'];

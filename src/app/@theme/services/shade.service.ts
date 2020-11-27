@@ -21,8 +21,8 @@ export class ShadeService {
   deleteShadeData(id): any {
     return this.httpClient.delete(this.commonService.envUrl() + 'api/shade/' + id);
   }
-  getQualityProcessList(): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/qualityprocess/all');
+  getQualityProcessList(getBy,id): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/qualityprocess/all/'+getBy+'/'+id);
   }
   getCurrentShadeData(id): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/shade/' + id);
