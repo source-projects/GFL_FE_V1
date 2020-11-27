@@ -49,7 +49,7 @@ export class AddEditShadeComponent implements OnInit {
   quality: any[];
   processList: any[];
   qualityId: any;
-  public color: string = '';
+  public color: any;
   supplierListRate: any;
   partyList: any[];
   categoryList = [
@@ -72,7 +72,8 @@ export class AddEditShadeComponent implements OnInit {
     this.shadeDataListArray.push(this.shadeDataList);
     this.shades.shadeDataList = this.shadeDataListArray;
   }
-
+  
+  
   ngOnInit(): void {
     this.getUserId();
     this.getPartyList();
@@ -204,6 +205,7 @@ export class AddEditShadeComponent implements OnInit {
         data => {
           this.shades = data["data"];
           console.log(this.shades)
+          this.color=this.shades.colorTone;
           if (data['success']) {
             this.shades = data["data"];
             console.log("shade data" + this.shades);
@@ -258,6 +260,15 @@ export class AddEditShadeComponent implements OnInit {
         this.shades.shadeDataList[rowIndex].supplierId = s1.id;
       }
     }
+
+    let con;
+    con = this.shades.shadeDataList[rowIndex].concentration;
+    let rate;
+    rate = this.shades.shadeDataList[rowIndex].rate;
+    let amt;
+    amt = this.shades.shadeDataList[rowIndex].amount;
+    amt = Number(con * rate);
+    this.shades.shadeDataList[rowIndex].amount=amt;
   }
 
   calculateAmount(rowIndex) {
@@ -343,7 +354,14 @@ export class AddEditShadeComponent implements OnInit {
         }, 500)
       }
       else {
-        alert("go to any last row input to add new row");
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index)
+          if (field != null) {
+            field.focus()
+            clearInterval(interval)
+          }
+        }, 500)
+        //alert("go to any last row input to add new row");
       }
     }
   }

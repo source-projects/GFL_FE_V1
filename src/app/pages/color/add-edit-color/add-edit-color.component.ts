@@ -83,8 +83,9 @@ export class AddEditColorComponent implements OnInit {
           this.color.chlDate =new Date(this.color.chlDate);
           
           let amount: any
+          console.log(this.color.colorDataList);
           this.color.colorDataList.forEach(element => {
-            amount = Number(element.rate) * Number(element.quantity)
+            amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
           });
         },
@@ -127,6 +128,12 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
+  updateValueOfTotalQuantity(rowIndex){
+    let noBox:any = this.color.colorDataList[rowIndex].noOfBox;
+    let qtyPerBox:any = this.color.colorDataList[rowIndex].quantityPerBox;
+    this.color.colorDataList[rowIndex].quantity = noBox * qtyPerBox;
+  }
+
   itemSelected(rowIndex) {
     let id = this.color.colorDataList[rowIndex].itemId;
   }
@@ -146,7 +153,9 @@ export class AddEditColorComponent implements OnInit {
         preventDuplicates: this.preventDuplicates,
       };
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
-      if (rowIndex === this.color.colorDataList.length - 1) {
+      console.log(this.index);
+     
+      if (rowIndex === this.color.colorDataList.length - 1 ) {
         let item = this.color.colorDataList[rowIndex];
         console.log(item);
         if (colName == 'quantityPerBox') {
@@ -174,7 +183,7 @@ export class AddEditColorComponent implements OnInit {
           }
         }
         let obj = {
-          // itemName: null,
+          itemName: null,
           quantityPerBox: null,
           noOfBox: null,
           quantity: null,
@@ -187,17 +196,29 @@ export class AddEditColorComponent implements OnInit {
         };
         let list = this.color.colorDataList;
         list.push(obj);
-        this.color.colorDataList = [...list];
+        this.color.colorDataList = [...list];     
         let interval = setInterval(() => {
+        
           let field = document.getElementById(this.index)
+     
           if (field != null) {
-            field.focus()
-            clearInterval(interval)
+            field.focus();
+            clearInterval(interval);
           }
         }, 500)
+        console.log(this.color.colorDataList.length);
       }
-      else {
-        alert("Go to any last row input to add new row");
+     else {
+      let interval = setInterval(() => {
+        
+        let field = document.getElementById(this.index)
+   
+        if (field != null) {
+          field.focus();
+          clearInterval(interval);
+        }
+      }, 500)
+        //alert("Go to any last row input to add new row");
       }
     }
   }
