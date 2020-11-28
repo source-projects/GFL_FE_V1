@@ -22,20 +22,11 @@ export class AddEditSupplierRateComponent implements OnInit {
   itemTypeData = [{ id: 'dye', name: 'Dye' },
   { id: 'chemical', name: 'chemical' }]
 
-  //For Toaster
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
-
   //Form Validation flag
   formSubmitted: boolean = false;
   discount: number
   gst: number
-
+  userHead;
   //form field values
   formValues = {
     id: null,
@@ -44,13 +35,15 @@ export class AddEditSupplierRateComponent implements OnInit {
     discountPercentage: null,
     remark: null,
     paymentTerms: null,
-    userId: null,
+    createdBy: null,
+    updatedBy: null,
     supplierId: null,
     supplierRates: [
       {
         itemType: null,
         supplierId: null,
-        userId: 1,
+        createdBy: null,
+        updatedBy: null,
         itemName: null,
         rate: null,
         discountedRate: null,
@@ -60,7 +53,7 @@ export class AddEditSupplierRateComponent implements OnInit {
     ]
   }
 
-  user: { userId: number; };
+  user;
 
   //for fatching selected supplier id
   //supplierId
@@ -132,10 +125,13 @@ export class AddEditSupplierRateComponent implements OnInit {
     delete this.formValues.gstPercentage;
     delete this.formValues.remark;
     delete this.formValues.paymentTerms;
-    delete this.formValues.userId;
+    delete this.formValues.updatedBy;
     delete this.formValues.supplierRates[0].discountedRate;
     delete this.formValues.supplierRates[0].gstRate;
     if (myForm.valid) {
+      this.formValues.supplierRates.forEach(e=>{
+        e.createdBy = this.user.userId;
+      });
       this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
         data => {
           if (data["success"]) {
@@ -166,10 +162,14 @@ export class AddEditSupplierRateComponent implements OnInit {
     delete this.formValues.gstPercentage;
     delete this.formValues.remark;
     delete this.formValues.paymentTerms;
-    delete this.formValues.userId;
+    delete this.formValues.createdBy;
     delete this.formValues.supplierRates[0].discountedRate;
     delete this.formValues.supplierRates[0].gstRate;
+    this.formValues.supplierRates.forEach(e=>{
+      e.updatedBy = this.user.userId;
+    });
     if (myForm.valid) {
+      this.formValues.updatedBy = this.user.userId;
       this.supplierService.updateSupplierRateInSystem(this.formValues).subscribe(
         data => {
           if (data["success"]) {
@@ -212,40 +212,23 @@ export class AddEditSupplierRateComponent implements OnInit {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13) {
 
-      //toaster
-      this.status = "danger"
-      const config = {
-        status: this.status,
-        destroyByClick: this.destroyByClick,
-        duration: this.duration,
-        hasIcon: this.hasIcon,
-        position: this.position,
-        preventDuplicates: this.preventDuplicates,
-      };
-
       this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.formValues.supplierRates.length - 1) {
         let item = this.formValues.supplierRates[rowIndex];
         if (colName == 'itemName') {
           if (!item.itemName) {
-            this.toastrService.show(
-              "Enter Item Name",
-              'Item Name Field required', config);
+            this.toastr.error('Item name is required');
             return;
           }
         } else if (colName == 'itemType') {
           if (!item.itemType) {
-            this.toastrService.show(
-              "Enter Item Rate",
-              'Rate Field required', config);
+            this.toastr.error('Item type is required');
             return;
           }
         }
         else if (colName == 'rate') {
           if (!item.rate) {
-            this.toastrService.show(
-              "Enter Item Rate",
-              'Rate Field required', config);
+            this.toastr.error('Rate is required');
             return;
           }
         }
@@ -256,10 +239,8 @@ export class AddEditSupplierRateComponent implements OnInit {
           discountPercentage: null,
           remark: null,
           createdBy: null,
-          createdDate: null,
-          updatedDate: null,
-          paymentTerms: null,
           updatedBy: null,
+          paymentTerms: null,
           userId: null,
           supplierId: null,
           itemType: null,
@@ -277,7 +258,7 @@ export class AddEditSupplierRateComponent implements OnInit {
             field.focus()
             clearInterval(interval)
           }
-        }, 500)
+        }, 50)
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index)
@@ -285,7 +266,7 @@ export class AddEditSupplierRateComponent implements OnInit {
             field.focus()
             clearInterval(interval)
           }
-        }, 500)
+        }, 50)
        // alert("Go to any last row input to add new row");
       }
     }
