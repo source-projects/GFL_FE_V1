@@ -1,41 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NbComponentStatus, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
-import { CommonService } from 'app/@theme/services/common.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import {
+  NbComponentStatus,
+  NbGlobalPhysicalPosition,
+  NbGlobalPosition,
+  NbToastrConfig,
+  NbToastrService,
+} from "@nebular/theme";
+import { CommonService } from "app/@theme/services/common.service";
+import { SupplierService } from "app/@theme/services/supplier.service";
+import * as errorData from "app/@theme/json/error.json";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'ngx-add-edit-supplier-rate',
-  templateUrl: './add-edit-supplier-rate.component.html',
-  styleUrls: ['./add-edit-supplier-rate.component.scss']
+  selector: "ngx-add-edit-supplier-rate",
+  templateUrl: "./add-edit-supplier-rate.component.html",
+  styleUrls: ["./add-edit-supplier-rate.component.scss"],
 })
 export class AddEditSupplierRateComponent implements OnInit {
-
   public errorData: any = (errorData as any).default;
 
   //data fatch supplier Name
-  supplier: []
+  supplier: [];
 
-  itemTypeData = [{ id: 'dye', name: 'Dye' },
-  { id: 'chemical', name: 'chemical' }]
-
-  //For Toaster
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status: NbComponentStatus = 'primary';
+  itemTypeData = [
+    { id: "dye", name: "Dye" },
+    { id: "chemical", name: "chemical" },
+  ];
 
   //Form Validation flag
   formSubmitted: boolean = false;
-  discount: number
-  gst: number
-
+  discount: number;
+  gst: number;
+  userHead;
   //form field values
   formValues = {
     id: null,
@@ -44,35 +42,44 @@ export class AddEditSupplierRateComponent implements OnInit {
     discountPercentage: null,
     remark: null,
     paymentTerms: null,
-    userId: null,
+    createdBy: null,
+    updatedBy: null,
     supplierId: null,
     supplierRates: [
       {
         itemType: null,
         supplierId: null,
-        userId: 1,
+        createdBy: null,
+        updatedBy: null,
+        userHeadId: null,
         itemName: null,
         rate: null,
         discountedRate: null,
         gstRate: null,
         id: null,
-      }
-    ]
-  }
+      },
+    ],
+  };
 
-  user: { userId: number; };
+  user;
 
   //for fatching selected supplier id
   //supplierId
 
-  supplierList
-  index: any
+  supplierList;
+  index: any;
   myForm: any;
 
-  mySupplierRateId
+  mySupplierRateId;
 
-  constructor(private commonService: CommonService, private supplierService: SupplierService, private router: Router,
-    private _route: ActivatedRoute, private toastrService: NbToastrService, private toastr: ToastrService) { }
+  constructor(
+    private commonService: CommonService,
+    private supplierService: SupplierService,
+    private router: Router,
+    private _route: ActivatedRoute,
+    private toastrService: NbToastrService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getSupplierName();
@@ -82,166 +89,176 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   getData() {
     this.user = this.commonService.getUser();
-    this.mySupplierRateId = this._route.snapshot.paramMap.get('id');
+    this.userHead = this.commonService.getUserHeadId();
+    this.mySupplierRateId = this._route.snapshot.paramMap.get("id");
   }
 
   getUpdateData() {
     if (this.mySupplierRateId != null) {
       this.supplierService.getAllSupplierById(this.mySupplierRateId).subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
             this.formValues = data["data"];
+            if (this.formValues.supplierRates.length == 0) {
+              let obj = {
+                id: null,
+                supplierName: null,
+                gstPercentage: null,
+                discountPercentage: null,
+                remark: null,
+                createdBy: null,
+                updatedBy: null,
+                paymentTerms: null,
+                userHeadId: null,
+                supplierId: null,
+                itemType: null,
+                itemName: null,
+                rate: null,
+                discountedRate: null,
+                gstRate: null,
+              };
+              let list = this.formValues.supplierRates;
+              list.push(obj);
+              this.formValues.supplierRates = [...list];
+            }
             this.discount = this.formValues.discountPercentage;
             this.gst = this.formValues.gstPercentage;
-          }
-          else {
-            this.toastr.error(data['msg'])
+          } else {
+            this.toastr.error(data["msg"]);
           }
         },
-        error => {
+        (error) => {
           this.toastr.error(errorData.Serever_Error);
         }
-      )
+      );
     }
   }
 
-
   public getSupplierName() {
     this.user = this.commonService.getUser();
-    this.supplierService.getAllSupplier(0,"all").subscribe(
-      data => {
+    this.supplierService.getAllSupplier(0, "all").subscribe(
+      (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
-        }
-        else {
-          this.toastr.error(data['msg']);
+        } else {
+          this.toastr.error(data["msg"]);
         }
       },
-      error => {
+      (error) => {
         this.toastr.error(errorData.Serever_Error);
       }
-    )
+    );
   }
 
   public addSupplierRateInfo(myForm) {
     this.formSubmitted = true;
-    this.formValues.id = this.formValues.supplierRates[0].supplierId;
-    delete this.formValues.discountPercentage;
-    delete this.formValues.supplierName;
-    delete this.formValues.supplierId;
-    delete this.formValues.gstPercentage;
-    delete this.formValues.remark;
-    delete this.formValues.paymentTerms;
-    delete this.formValues.userId;
-    delete this.formValues.supplierRates[0].discountedRate;
-    delete this.formValues.supplierRates[0].gstRate;
     if (myForm.valid) {
+      this.formValues.id = this.formValues.supplierRates[0].supplierId;
+      delete this.formValues.discountPercentage;
+      delete this.formValues.supplierName;
+      delete this.formValues.supplierId;
+      delete this.formValues.gstPercentage;
+      delete this.formValues.remark;
+      delete this.formValues.paymentTerms;
+      delete this.formValues.updatedBy;
+      delete this.formValues.supplierRates[0].discountedRate;
+      delete this.formValues.supplierRates[0].gstRate;
+      this.formValues.supplierRates.forEach((e) => {
+        e.createdBy = this.user.userId;
+        e.userHeadId = this.userHead.userHeadId;
+      });
       this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
-            this.router.navigate(['pages/supplier']);
+            this.router.navigate(["pages/supplier"]);
             this.toastr.success(errorData.Add_Success);
-          }
-          else {
+          } else {
             this.toastr.error(errorData.Add_Error);
           }
         },
-        error => {
+        (error) => {
           this.toastr.error(errorData.Serever_Error);
         }
-      )
-    }
-    else {
-      return
+      );
+    } else {
+      return;
     }
   }
 
   public updateSupplierRateInfo(myForm) {
     this.formSubmitted = true;
-    this.user = this.commonService.getUser();
-    this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
-    delete this.formValues.discountPercentage;
-    delete this.formValues.supplierName;
-    delete this.formValues.id;
-    delete this.formValues.gstPercentage;
-    delete this.formValues.remark;
-    delete this.formValues.paymentTerms;
-    delete this.formValues.userId;
-    delete this.formValues.supplierRates[0].discountedRate;
-    delete this.formValues.supplierRates[0].gstRate;
     if (myForm.valid) {
-      this.supplierService.updateSupplierRateInSystem(this.formValues).subscribe(
-        data => {
-          if (data["success"]) {
-            this.router.navigate(['pages/supplier']);
-            this.toastr.success(errorData.Update_Success);
+      this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
+      delete this.formValues.discountPercentage;
+      delete this.formValues.supplierName;
+      delete this.formValues.id;
+      delete this.formValues.gstPercentage;
+      delete this.formValues.remark;
+      delete this.formValues.paymentTerms;
+      delete this.formValues.createdBy;
+      delete this.formValues.supplierRates[0].discountedRate;
+      delete this.formValues.supplierRates[0].gstRate;
+      this.formValues.supplierRates.forEach((e) => {
+        e.updatedBy = this.user.userId;
+      });
+      this.formValues.updatedBy = this.user.userId;
+      this.supplierService
+        .updateSupplierRateInSystem(this.formValues)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.router.navigate(["pages/supplier"]);
+              this.toastr.success(errorData.Update_Success);
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
           }
-          else {
-            this.toastr.error(errorData.Update_Error);
-          }
-        },
-        error => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      )
-    }
-    else {
-      return
+        );
+    } else {
+      return;
     }
   }
 
   public goBackToPreviousPage(): any {
-    this.router.navigate(['pages/supplier']);
+    this.router.navigate(["pages/supplier"]);
   }
 
-  getDetail(value) {
-    this.formValues.supplierRates[0].supplierId = value;
+  getDetail(id) {
+    console.log(id);
+    this.formValues.supplierRates[0].supplierId = id;
     for (let item of this.supplier) {
-      if (item['id'] == value) {
-        this.discount = item['discountPercentage'];
-        this.gst = item['gstPercentage'];
+      console.log(item);
+      if (item["id"] == id) {
+        this.discount = item["discountPercentage"];
+        this.gst = item["gstPercentage"];
+        this.formValues.supplierRates[0].discountedRate = this.discount;
+        this.formValues.supplierRates[0].gstRate = this.gst;
       }
     }
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
-    var keyCode = (e.keyCode ? e.keyCode : e.which);
+    var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-
-      //toaster
-      this.status = "danger"
-      const config = {
-        status: this.status,
-        destroyByClick: this.destroyByClick,
-        duration: this.duration,
-        hasIcon: this.hasIcon,
-        position: this.position,
-        preventDuplicates: this.preventDuplicates,
-      };
-
       this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.formValues.supplierRates.length - 1) {
         let item = this.formValues.supplierRates[rowIndex];
-        if (colName == 'itemName') {
+        if (colName == "itemName") {
           if (!item.itemName) {
-            this.toastrService.show(
-              "Enter Item Name",
-              'Item Name Field required', config);
+            this.toastr.error("Item name is required");
             return;
           }
-        } else if (colName == 'itemType') {
+        } else if (colName == "itemType") {
           if (!item.itemType) {
-            this.toastrService.show(
-              "Enter Item Rate",
-              'Rate Field required', config);
+            this.toastr.error("Item type is required");
             return;
           }
-        }
-        else if (colName == 'rate') {
+        } else if (colName == "rate") {
           if (!item.rate) {
-            this.toastrService.show(
-              "Enter Item Rate",
-              'Rate Field required', config);
+            this.toastr.error("Rate is required");
             return;
           }
         }
@@ -252,11 +269,9 @@ export class AddEditSupplierRateComponent implements OnInit {
           discountPercentage: null,
           remark: null,
           createdBy: null,
-          createdDate: null,
-          updatedDate: null,
-          paymentTerms: null,
           updatedBy: null,
-          userId: null,
+          paymentTerms: null,
+          userHeadId: null,
           supplierId: null,
           itemType: null,
           itemName: null,
@@ -268,14 +283,21 @@ export class AddEditSupplierRateComponent implements OnInit {
         list.push(obj);
         this.formValues.supplierRates = [...list];
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index)
+          let field = document.getElementById(this.index);
           if (field != null) {
-            field.focus()
-            clearInterval(interval)
+            field.focus();
+            clearInterval(interval);
           }
-        }, 500)
+        }, 50);
       } else {
-        alert("Go to any last row input to add new row");
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50);
+        // alert("Go to any last row input to add new row");
       }
     }
   }
@@ -288,8 +310,12 @@ export class AddEditSupplierRateComponent implements OnInit {
     calculatedDiscount = Number(itemRate - D);
     let CGst = Number((calculatedDiscount + this.gst) / 100);
     calculatedGst = Number(calculatedDiscount + CGst);
-    this.formValues.supplierRates[rowIndex].discountedRate = Number(parseFloat(calculatedDiscount).toFixed(2));
-    this.formValues.supplierRates[rowIndex].gstRate = Number(parseFloat(calculatedGst).toFixed(2));
+    this.formValues.supplierRates[rowIndex].discountedRate = Number(
+      parseFloat(calculatedDiscount).toFixed(2)
+    );
+    this.formValues.supplierRates[rowIndex].gstRate = Number(
+      parseFloat(calculatedGst).toFixed(2)
+    );
   }
 
   removeItem(id) {
@@ -302,13 +328,10 @@ export class AddEditSupplierRateComponent implements OnInit {
       item[0].gstRate = null;
       let list = item;
       this.formValues.supplierRates = [...list];
-    }
-    else {
+    } else {
       let removed = item.splice(id, 1);
       let list = item;
       this.formValues.supplierRates = [...list];
     }
   }
-
 }
-

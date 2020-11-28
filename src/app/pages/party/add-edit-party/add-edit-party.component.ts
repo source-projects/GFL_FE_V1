@@ -37,7 +37,7 @@ export class AddEditPartyComponent implements OnInit {
 
   creditor: boolean = false;
   debtor: boolean = false;
-
+  userHead;
   constructor(private location: Location, private partyService: PartyService, private commonService: CommonService,
     private route: Router, private _route: ActivatedRoute, private toastr: ToastrService) { }
 
@@ -48,7 +48,8 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public getData() {
-    this.user = this.commonService.getUser()
+    this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
       partyName: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
       partyAddress1: new FormControl(null, Validators.required),
@@ -61,8 +62,9 @@ export class AddEditPartyComponent implements OnInit {
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
       creditor: new FormControl(false, Validators.required),
       debtor: new FormControl(false, Validators.required),
-      createdBy: new FormControl(this.user.userId.toString()),
-      userHeadId: new FormControl(null, Validators.required),
+      createdBy: new FormControl(null),
+      updatedBy: new FormControl(null),
+      userHeadId: new FormControl(null),
     });
   }
 
@@ -100,10 +102,13 @@ export class AddEditPartyComponent implements OnInit {
             "gstin": this.currentParty.gstin,
             "creditor": this.currentParty.creditor,
             "debtor": this.currentParty.debtor,
-            "createdBy": this.currentParty.user,
+            "createdBy": this.currentParty.createdBy,
+            "updatedBy": this.currentParty.updatedBy,
             "id": this.currentPartyId,
             "userHeadId": this.currentParty.userHeadId
           })
+          this.creditor = this.partyForm.get('creditor').value;
+          this.debtor = this.partyForm.get('debtor').value;
         },
         error => {
           this.toastr.error(errorData.Serever_Error)
@@ -115,6 +120,8 @@ export class AddEditPartyComponent implements OnInit {
   public addParty() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
+      this.partyForm.value.createdBy = this.user.userId;
+      this.partyForm.value.userHeadId = this.userHead.userHeadId;
       this.partyService.saveParty(this.partyForm.value).subscribe(
         data => {
           if (data["success"]) {
@@ -139,6 +146,7 @@ export class AddEditPartyComponent implements OnInit {
   public updateParty() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
+      this.partyForm.value.updatedBy = this.user.userId;
       let body = {
         ...this.partyForm.value,
         id: this.currentPartyId

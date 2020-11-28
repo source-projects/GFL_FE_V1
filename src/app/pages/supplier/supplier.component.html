@@ -1,14 +1,14 @@
 <nb-card>
     <nb-card-header>
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-9">
                 <h2>SUPPLIER</h2>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <button class="btn btn-primary  btn-sm" style="float: right;" routerLink="add">ADD</button>
             </div>
-            <div class="col-md-3">
-                <button class="btn btn-primary  btn-sm" style="float: left;" routerLink="addSupplierRate">ADD SUPPLIER RATE</button>
+            <div class="col-md-2">
+                <button class="btn btn-primary  btn-sm" style="float: right;" routerLink="addSupplierRate">ADD RATE</button>
             </div>
         </div>
     </nb-card-header>
@@ -18,7 +18,7 @@
             <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
         </nb-radio-group>
         
-        <ngx-datatable [ngClass]="tableStyle" [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="50" 
+        <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="50"  class="material"
         [columnMode]="'force'" [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
             <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
             <ngx-datatable-column name="Discount %" prop="discountPercentage"></ngx-datatable-column>
@@ -27,7 +27,7 @@
             <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
             <ngx-datatable-column name="Action" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon ngbTooltip="Tooltip on bottom"  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;&nbsp;
+                    <nb-icon ngbTooltip="Tooltip on bottom"  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
                     <button nbTooltip="Update Supplier Rate" class="btn primary-status" [routerLink]="['editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton >
                         <nb-icon  status="primary" [options]="{animation:{type:'zoom'}}" icon="menu" style="color: burlywood;" ></nb-icon>
                     </button>
