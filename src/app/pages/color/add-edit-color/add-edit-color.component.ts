@@ -8,10 +8,12 @@ import * as errorData from 'app/@theme/json/error.json';
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
-  styleUrls: ['./add-edit-color.component.scss']
+  styleUrls: ['./add-edit-color.component.scss'],
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class AddEditColorComponent implements OnInit {
 
@@ -43,6 +45,7 @@ export class AddEditColorComponent implements OnInit {
   //To store Total quantity for Calculation
   calculationTotalQuantity: any;
   convertedDate: any;
+  convertedDate2: any;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -75,13 +78,14 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
           this.color = data["data"];
-          this.convertedDate = this.datepipe.transform(this.color.billDate, 'dd/mm/yyyy');
-          this.color.billDate = this.convertedDate;
-          // this.convertedDate = this.color.billDate.setDate;
-          console.log(this.color.billDate);
+          
+          this.color.billDate =new Date(this.color.billDate);
+          this.color.chlDate =new Date(this.color.chlDate);
+          
           let amount: any
+          console.log(this.color.colorDataList);
           this.color.colorDataList.forEach(element => {
-            amount = Number(element.rate) * Number(element.quantity)
+            amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
           });
         },
@@ -124,6 +128,12 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
+  updateValueOfTotalQuantity(rowIndex){
+    let noBox:any = this.color.colorDataList[rowIndex].noOfBox;
+    let qtyPerBox:any = this.color.colorDataList[rowIndex].quantityPerBox;
+    this.color.colorDataList[rowIndex].quantity = noBox * qtyPerBox;
+  }
+
   itemSelected(rowIndex) {
     let id = this.color.colorDataList[rowIndex].itemId;
   }
@@ -143,7 +153,9 @@ export class AddEditColorComponent implements OnInit {
         preventDuplicates: this.preventDuplicates,
       };
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
-      if (rowIndex === this.color.colorDataList.length - 1) {
+      console.log(this.index);
+     
+      if (rowIndex === this.color.colorDataList.length - 1 ) {
         let item = this.color.colorDataList[rowIndex];
         console.log(item);
         if (colName == 'quantityPerBox') {
@@ -171,7 +183,7 @@ export class AddEditColorComponent implements OnInit {
           }
         }
         let obj = {
-          // itemName: null,
+          itemName: null,
           quantityPerBox: null,
           noOfBox: null,
           quantity: null,
@@ -184,17 +196,29 @@ export class AddEditColorComponent implements OnInit {
         };
         let list = this.color.colorDataList;
         list.push(obj);
-        this.color.colorDataList = [...list];
+        this.color.colorDataList = [...list];     
         let interval = setInterval(() => {
+        
           let field = document.getElementById(this.index)
+     
           if (field != null) {
-            field.focus()
-            clearInterval(interval)
+            field.focus();
+            clearInterval(interval);
           }
         }, 500)
+        console.log(this.color.colorDataList.length);
       }
-      else {
-        alert("Go to any last row input to add new row");
+     else {
+      let interval = setInterval(() => {
+        
+        let field = document.getElementById(this.index)
+   
+        if (field != null) {
+          field.focus();
+          clearInterval(interval);
+        }
+      }, 500)
+        //alert("Go to any last row input to add new row");
       }
     }
   }

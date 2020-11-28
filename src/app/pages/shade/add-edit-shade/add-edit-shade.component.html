@@ -44,10 +44,10 @@
                     <div class="form-group col-md-3">
                         <label class="required">Quality Id</label>
                         <ng-select placeholder="Select quality id" [(ngModel)]="shades.qualityId"
-                            #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected(shades.qualityId)" required
+                            #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected($event)" required
                             [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }" >
-                            <ng-option *ngFor="let q of quality" [value]="q.qualityId">
-                                {{q.qualityId}}
+                            <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
+                                {{q.qualityId}} - {{q.partyName}}
                             </ng-option>
                         </ng-select>
                         <div class="required-class"
@@ -59,18 +59,18 @@
                     <div class="form-group col-md-3">
                         <label>Quality Name</label>
                         <input type="text" name="qualityName" #qualityName1="ngModel" 
-                        [(ngModel)]="shades.qualityName"
+                        [(ngModel)]="shades.qualityName" readonly
                         class="form-control" >
                     </div>
                     <div class="form-group col-md-3">
                         <label>Quality Type</label>
-                        <input type="text" name="qualityType" #qualityType1="ngModel" [(ngModel)]="shades.qualityType"
+                        <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType"
                             class="form-control" >
                     </div>
                     <div class="form-group col-md-3">
                         <label>Party Name</label>
                         <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
-                        #partyName1="ngModel" required>
+                        #partyName1="ngModel" required (change)="getQualityFromParty($event)" >
                             <ng-option *ngFor="let p of partyList" [value]="p.id">
                                 {{p.partyName}}
                             </ng-option>
@@ -81,6 +81,7 @@
                         </div>
                     </div>
 
+                    
                 </div>
                 <div class="row">
                     <div class="form-group col-md-3">
@@ -119,11 +120,11 @@
 
                             <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="itemSelected(rowIndex,0)" #itemName1="ngModel" name='itemName{{rowIndex}}'
+                                    <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}'
                                     class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
                                     (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
                                     >
-                                    <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}}</option>
+                                    <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}} - {{s.supplierName}}</option>
                                     </select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
@@ -136,7 +137,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
                                         id="concentration" [(ngModel)]="row.concentration"  (input)="calculateAmount(rowIndex)"
-                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" >
+                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" min="0" >
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>

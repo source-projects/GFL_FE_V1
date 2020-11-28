@@ -29,14 +29,14 @@
                         <label>Remark</label>
                         <textarea name="remark" #remark1="ngModel" [(ngModel)]="color.remark" class="form-control"></textarea>
                     </div>
-            </div>
+                </div>
        
 
         <div class="row">
             <div class="form-group col-md-2">
                 <label class="required">Bill No</label>
                 <input class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
-                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }" >
+                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }"  >
                     <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billNo1.invalid || (billNo1.dirty || billNo1.untouched) )">
                         <span>Bill no is required</span>
@@ -44,17 +44,18 @@
             </div>
 
             <div class="form-group col-md-3">
-                <label class="required">Bill Date</label>
-                <input type="date" class="form-control" name="billDate" #billDate1="ngModel"
-                    [(ngModel)]="color.billDate"
-                  [ngClass]="{'is-invalid':formSubmitted && !(billDate1.valid) }" >
-                       <div class="required-class"
-                        *ngIf="formSubmitted && (billDate1.invalid)">
-                        <span>Bill date is required</span>
-                    </div>
-                        
-                   
+                <label class="required">Bill Date:</label>
+                <input type="date" name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]="color.billDate"
+                    ngbDatepicker #dp="ngbDatepicker" required [ngClass]="{'is-invalid': formSubmitted && billDate1.invalid}">
+            
+                <div class="invalid-feedback"
+                    *ngIf="formSubmitted && (billDate1.invalid)" >
+                    <span>Bill date is required</span>
+                </div>
             </div>
+                       
+           
+
             <div class="form-group col-md-2">
                 <label class="required">Challan No</label>
                 <input class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo" required
@@ -63,19 +64,21 @@
                         *ngIf="formSubmitted && (chlNo1.invalid || (chlNo1.dirty || chlNo1.untouched) )">
                         <span>Challan no is required</span>
                     </div>
-                        
-                  
             </div>
+
             <div class="form-group col-md-3">
-                <label class="required">Challan Date</label>
-                <input type="date" class="form-control" name="chlDate" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
-                [ngClass]="{'is-invalid':formSubmitted && !(chlDate1.valid) }" >
-                       <div class="required-class"
-                        *ngIf="formSubmitted && (chlDate1.invalid)">
+                <label class="required">Challan Date:</label>
+                <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]="color.chlDate"
+                    ngbDatepicker #dp1="ngbDatepicker" required [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}">
+            
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (billDate1.invalid)">
                         <span>Challan date is required</span>
                     </div>
-                        
             </div>
+
+                        
+           
             <div class="form-group col-md-2">
                 <label class="required">Bill Amount</label>
                 <input class="form-control" [(ngModel)]="color.billAmount" #billAmount1="ngModel" name="billAmount"
@@ -84,9 +87,9 @@
                         <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billAmount1.invalid || (billAmount1.dirty || billAmount1.untouched) )">
                         <span>Bill Amount is required</span>
-                    </div>   
-                  
+                        </div>   
             </div>
+
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -97,8 +100,8 @@
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <select  #itemName1="ngModel" name='itemName{{rowIndex}}'
                             class="tableForm" id="itemName" [(ngModel)]="row.itemId" required
-                            (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
-                            (change)="itemSelected(rowIndex,0)">
+                            (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'colorList'+rowIndex+'-0'"
+                            (change)="itemSelected(rowIndex,0)" >
                             <option  *ngFor="let s of supplierListRate" [value]="s.id" >
                                 {{s.itemName}}
                             </option>
@@ -114,8 +117,8 @@
                         prop="color.quantiyPerBox">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input type="number" #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}' class="tableForm"
-                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  
-                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'supplierList'+rowIndex+'-1'" required>
+                                id="quantityPerBox" [(ngModel)]="row.quantityPerBox"  (change)="updateValueOfTotalQuantity(rowIndex)"
+                                (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" [id]="'colorList'+rowIndex+'-1'" required min="0">
                                 <div class="invalid-feedback" *ngIf="formSubmitted && (quantityPerBox1.invalid)" style="display: inline-block;">
                                     <span>Required</span>
                                 </div>
@@ -129,7 +132,7 @@
                                 name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox"
                                 (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')" 
                                 (input)="calculateTotalQuantity(rowIndex,2)"
-                                [id]="'supplierList'+rowIndex+'-2'" required>
+                                [id]="'colorList'+rowIndex+'-2'" required min="0">
                                 <div class="invalid-feedback" *ngIf="formSubmitted && (noOfBox1.invalid)" style="display: inline-block;">
                                     <span>Required</span>
                                 </div>
@@ -140,21 +143,21 @@
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="number" #quantity1="ngModel" name='quantity{{rowIndex}}'
                                 [(ngModel)]="row.quantity" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" 
-                                [id]="'supplierList'+rowIndex+'-3'" readonly >
+                                [id]="'colorList'+rowIndex+'-3'" readonly >
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="number" #rate1="ngModel" name='rate{{rowIndex}}'
                                 [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,4,'rate')" (input)="calculateAmount(rowIndex,4)"
-                                [id]="'supplierList'+rowIndex+'-4'" >
+                                [id]="'colorList'+rowIndex+'-4'" min="0">
                         </ng-template>
                     </ngx-datatable-column>
                    <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                         <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <input class="tableForm" type="number" #amount1="ngModel" name='amount{{rowIndex}}'
                                 [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,5,'amount')"
-                                [id]="'supplierList'+rowIndex+'-5'" readonly>
+                                [id]="'colorList'+rowIndex+'-5'" readonly>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Action"  [sortable]="false" [width]="200">

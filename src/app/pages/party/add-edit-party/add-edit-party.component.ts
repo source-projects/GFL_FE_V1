@@ -61,7 +61,7 @@ export class AddEditPartyComponent implements OnInit {
       mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
       creditor: new FormControl(false, Validators.required),
       debtor: new FormControl(false, Validators.required),
-      createdBy: new FormControl(this.user.userId.toString()),
+      createdBy: new FormControl(this.user.userId),
       userHeadId: new FormControl(null, Validators.required),
     });
   }
@@ -100,10 +100,12 @@ export class AddEditPartyComponent implements OnInit {
             "gstin": this.currentParty.gstin,
             "creditor": this.currentParty.creditor,
             "debtor": this.currentParty.debtor,
-            "createdBy": this.currentParty.user,
+            "createdBy": this.currentParty.createdBy,
             "id": this.currentPartyId,
             "userHeadId": this.currentParty.userHeadId
           })
+          this.creditor = this.partyForm.get('creditor').value;
+          this.debtor = this.partyForm.get('debtor').value;
         },
         error => {
           this.toastr.error(errorData.Serever_Error)

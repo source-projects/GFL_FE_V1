@@ -8,18 +8,20 @@ import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
 import { DatePipe } from '@angular/common';
+import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
   templateUrl: "./add-edit-stock-batch.component.html",
   styleUrls: ["./add-edit-stock-batch.component.scss"],
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+
 })
 export class AddEditStockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   qualityList: any;
 
   formSubmitted = false;
-  selectedFabricId = null;
 
   party: any[];
   user: any;
@@ -88,12 +90,13 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockBatchService.getStockBatchById(this.currentStockBatch).subscribe(
       (data) => {
         if (data["success"]) {
-          this.stockBatch.billDate = data["data"].billDate;
+          this.stockBatch.billDate = new Date (data["data"].billDate);
+          console.log(this.stockBatch.billDate);
           this.stockBatch.qualityId = data["data"].qualityId;
           this.stockBatch.unit = data["data"].unit;
           this.stockBatch.stockInType = data["data"].stockInType;
           this.stockBatch.billNo = data["data"].billNo;
-          this.stockBatch.chlDate = data["data"].chlDate;
+          this.stockBatch.chlDate =new Date ( data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
           this.stockBatch.remark = data["data"].remark;
@@ -172,6 +175,7 @@ export class AddEditStockBatchComponent implements OnInit {
     );
   }
 
+ 
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
@@ -205,11 +209,17 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 50);
       } else {
-
-        this.toastr.error(
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50);
+       /* this.toastr.error(
           "go to any last row input to add new row",
           "Empty Field"
-        );
+        );*/
       }
     }
   }

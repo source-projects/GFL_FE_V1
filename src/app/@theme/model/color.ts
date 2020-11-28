@@ -8,6 +8,7 @@ export class Color {
     remark:String;
     supplierId:Number;
     userId:Number;
+    userHeadId:Number;
     colorDataList:ColorDataList[];
 }
 export class ColorDataList{

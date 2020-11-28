@@ -37,7 +37,9 @@ export class ColorComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
-    this.userId = this.userId['']
+    this.userId = this.userId['userId'];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId['userHeadId'];
     this.getColor(this.userId,"own");
   }
 
@@ -62,6 +64,7 @@ export class ColorComponent implements OnInit {
       data => {
         if (data["success"]) {
           this.colorList = data['data']
+          console.log(this.colorList);
         }
         else {
           this.toastr.error(data['msg'])
