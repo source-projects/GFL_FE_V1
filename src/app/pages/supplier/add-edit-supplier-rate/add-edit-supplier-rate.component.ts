@@ -194,12 +194,16 @@ export class AddEditSupplierRateComponent implements OnInit {
     this.router.navigate(['pages/supplier']);
   }
 
-  getDetail(value) {
-    this.formValues.supplierRates[0].supplierId = value;
+  getDetail(id) {
+    console.log(id);
+   this.formValues.supplierRates[0].supplierId = id;
     for (let item of this.supplier) {
-      if (item['id'] == value) {
+      console.log(item);
+      if (item['id'] == id) {
         this.discount = item['discountPercentage'];
         this.gst = item['gstPercentage'];
+        this.formValues.supplierRates[0].discountedRate=this.discount;
+        this.formValues.supplierRates[0].gstRate=this.gst;
       }
     }
   }
