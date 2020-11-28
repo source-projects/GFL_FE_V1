@@ -29,7 +29,6 @@ export class AddEditProgramComponent implements OnInit {
   partyShade: any[];
   batchData: any[];
   stockData: any[];
-  isPartySelected = false;
   priorityData = [
     { name: "Very High" },
     { name: "High" },
@@ -188,27 +187,47 @@ export class AddEditProgramComponent implements OnInit {
     }
   }
 
-  enableQuality(){
-    if(this.programValues.partyId){
-      this.isPartySelected = true;
-      //callQualityByParty..
+  enableQuality(event){
+    if(event != undefined){
+      // if(this.programValues.)
+      // this.party.forEach(e=>{
+      //   if(e.partyName == )
+      // })
+      if(this.programValues.partyId){
+        this.programService.getQualityByParty(this.programValues.partyId).subscribe(
+          data=>{
+            if(data['success']){
+              this.qualityList = data['data'].qualityDataList;
+            }
+            else
+              this.toastr.error(data['msg'])
+          },
+          error=>{
+            this.toastr.error(errorData.Internal_Error)
+          }
+        )
+      }
+
+    }else{
+      this.getPartyList();
     }
-    else
-      this.isPartySelected = false;
+    
   }
 
   //put quality name and quality type
-  public getQualityInfo(value) {
-    let id = value;
+  public getQualityInfo(e,value) {
+    if(e != undefined){
+      let id = value;
     this.qualityList.forEach((e) => {
-      if (e.qualityId == id && e.partyId == this.programValues.partyId) {
+      if (e.qualityId == id ) {
         this.programValues.qualityName = e.qualityName
         this.programValues.qualityType = e.qualityType;
-        this.programValues.qualityEntryId = e.id;
+        if(e.id != undefined)
+          this.programValues.qualityEntryId = e.id;
+        else
+          this.programValues.qualityEntryId = e.qualityEntryId
       }
     });
-    console.log(this.programValues);
-    debugger;
     this.programService
       .getBatchDetailByQualityId(this.programValues.qualityEntryId)
       .subscribe(
@@ -239,6 +258,23 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
+
+      // //getPartyByQuality...
+      // this.programService.getPartyByQuality(this.programValues.qualityEntryId).subscribe(
+      //   data=>{
+      //     if(data['success']){
+      //       this.party = data['data'];
+      //     }else
+      //     this.toastr.error(data["msg"]);
+      //   },
+      //   error=>{
+      //     this.toastr.error(errorData.Internal_Error);
+      //   }
+      // )
+
+    }else{
+      this.getQualityList();
+    }
   }
 
   public partyShadeNoSelected(rowIndex) {
@@ -268,14 +304,13 @@ export class AddEditProgramComponent implements OnInit {
       let id = this.programValues.programRecords[rowIndex].branchId;
       this.batchData.forEach((element) => {
         if (id == element.batchId) {
-          this.programValues.programRecords[rowIndex].quantity =
-            element.totalWt;
+          this.programValues.programRecords[rowIndex].quantity = element.totalWt;
         }
       });
     } else {
-      let id = this.programValues.programRecords[rowIndex].branchId;
-      this.batchData.forEach((element) => {
-        if (id == element.batchId) {
+      let id = this.programValues.programRecords[rowIndex].stockId;
+      this.stockData.forEach((element) => {
+        if (id == element.stockId) {
           this.programValues.programRecords[rowIndex].quantity = element.qty;
         }
       });
