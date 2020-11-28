@@ -17,14 +17,7 @@ import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 })
 export class AddEditColorComponent implements OnInit {
 
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status
+  userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
   color: Color = new Color();
@@ -69,7 +62,7 @@ export class AddEditColorComponent implements OnInit {
 
   getData() {
     this.user = this.commonService.getUser();
-    this.color.userId = this.user.userId;
+    this.userHead = this.commonService.getUserHeadId();
     this.currentColorId = this._route.snapshot.paramMap.get('id');
   }
 
@@ -142,16 +135,6 @@ export class AddEditColorComponent implements OnInit {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13) {
       console.log("key 13");
-      //toaster
-      this.status = "danger"
-      const config = {
-        status: this.status,
-        destroyByClick: this.destroyByClick,
-        duration: this.duration,
-        hasIcon: this.hasIcon,
-        position: this.position,
-        preventDuplicates: this.preventDuplicates,
-      };
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
       console.log(this.index);
      
@@ -160,25 +143,19 @@ export class AddEditColorComponent implements OnInit {
         console.log(item);
         if (colName == 'quantityPerBox') {
           if (!item.quantityPerBox) {
-            this.toastrService.show(
-              "Enter quantity per box",
-              'quantity per box required', config);
+            this.toastr.error('Quantity per box required');
             return;
           }
         }
         else if (colName == 'noOfBox') {
           if (!item.noOfBox) {
-            this.toastrService.show(
-              "Enter no of box",
-              ' No of box required', config);
+            this.toastr.error('No of box required');
             return;
           }
         }
         else if (colName == 'quantity') {
           if (!item.quantity) {
-            this.toastrService.show(
-              "Enter total quantity",
-              'total quantity is required', config);
+            this.toastr.error('Total quantity required');
             return;
           }
         }
@@ -205,7 +182,7 @@ export class AddEditColorComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 500)
+        }, 50)
         console.log(this.color.colorDataList.length);
       }
      else {
@@ -217,7 +194,7 @@ export class AddEditColorComponent implements OnInit {
           field.focus();
           clearInterval(interval);
         }
-      }, 500)
+      }, 50)
         //alert("Go to any last row input to add new row");
       }
     }
@@ -246,6 +223,8 @@ export class AddEditColorComponent implements OnInit {
   addColor(colorForm) {
     this.formSubmitted = true;
     if (colorForm.valid) {
+      this.color.userHeadId = this.userHead.userHeadId;
+      this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
         data => {
           if (data['success']) {
@@ -287,6 +266,7 @@ export class AddEditColorComponent implements OnInit {
   updateColor(myForm) {
     this.formSubmitted = true;
     if (myForm.valid) {
+      this.color.updatedBy = this.user.userId;
       this.colorService.updateColor(this.color).subscribe(
         data => {
           if (data['success']) {

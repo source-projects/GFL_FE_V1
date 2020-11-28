@@ -24,7 +24,7 @@ export class AddEditSupplierComponent implements OnInit {
   
   //to Store UserId
   user:any
-
+  userHead;
   //to store the data of selected supplier 
   currentSupplier:any;
 
@@ -43,14 +43,16 @@ export class AddEditSupplierComponent implements OnInit {
 
   public  getdata(){
     this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.addSupplier = new FormGroup({
       "supplierName": new FormControl(null,Validators.required),
       "discountPercentage": new FormControl(null,Validators.required),
       "gstPercentage": new FormControl(null,Validators.required),
       "paymentTerms": new FormControl(null,Validators.required),
       "remark": new FormControl(null),
-      "userId": new FormControl(this.user.userId),
-      "createdBy": new FormControl(this.user.userId) 
+      "userHeadId": new FormControl(null),
+      "createdBy": new FormControl(null),
+      "updatedBy": new FormControl(null),
     }) 
     this.selectedSupplierId=this._route.snapshot.paramMap.get('id');
   }
@@ -66,7 +68,6 @@ export class AddEditSupplierComponent implements OnInit {
             "gstPercentage": this.currentSupplier.gstPercentage,
             "paymentTerms": this.currentSupplier.paymentTerms,
             "remark": this.currentSupplier.remark,
-            "userId": this.currentSupplier.userId,
             "createdBy": this.currentSupplier.user,
             "id":this.selectedSupplierId
            })
@@ -82,6 +83,8 @@ export class AddEditSupplierComponent implements OnInit {
   public addSupplierInfo():any{
     this.formSubmitted=true;
     if(this.addSupplier.valid){
+      this.addSupplier.value.createdBy = this.user.userId;
+      this.addSupplier.value.userHeadId = this.userHead.userHeadId;
       this.supplierService.addSupplierInSystem(this.addSupplier.value).subscribe(
         data =>{
           if(data["success"]){
@@ -106,6 +109,7 @@ export class AddEditSupplierComponent implements OnInit {
   updateSupplier(){
     this.formSubmitted=true;
     if(this.addSupplier.valid){
+      this.addSupplier.value.updatedBy = this.user.userId;
       let body = {
         ...this.addSupplier.value,
         id:this.selectedSupplierId

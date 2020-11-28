@@ -9,8 +9,9 @@ export class StockBatch {
     unit:string;
     chlDate:Date;
     remark:string;
-    userId:string;
-    userHeadId:string;
+    createdBy:Number;
+    updatedBy:Number;
+    userHeadId:Number;
     batchData:BatchData[];
     isProductionPlanned: boolean;
 }
