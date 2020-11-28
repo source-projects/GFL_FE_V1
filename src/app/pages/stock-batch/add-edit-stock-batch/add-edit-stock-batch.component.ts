@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
 import { DatePipe } from '@angular/common';
 import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -25,6 +26,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   party: any[];
   user: any;
+  userHead;
   index;
   stockList;
 
@@ -67,10 +69,13 @@ export class AddEditStockBatchComponent implements OnInit {
     private route: Router,
     private qualityService: QualityService,
     private stockBatchService: StockBatchService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
+    this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.getPartyList();
     this.getQualityList();
     this.currentStockBatch = this._route.snapshot.paramMap.get("id");
@@ -266,6 +271,8 @@ export class AddEditStockBatchComponent implements OnInit {
     console.log(myForm);
     this.formSubmitted = true;
     if (myForm.valid) {
+      this.stockBatch.createdBy = this.user.userId;
+      this.stockBatch.userHeadId = this.userHead.userHeadId;
       let k = 0;
       for (let i = 0; i < this.stockDataValues.length; i++) {
         for (let j = 0; j < this.stockDataValues[i].batchMW.length; j++) {
@@ -300,6 +307,7 @@ export class AddEditStockBatchComponent implements OnInit {
   updateStockBatch(stockBatch) {
     this.formSubmitted = true;
     if (stockBatch.valid) {
+      this.stockBatch.updatedBy = this.user.userId;
       let k = 0;
       for (let i = 0; i < this.stockDataValues.length; i++) {
         for (let j = 0; j < this.stockDataValues[i].batchMW.length; j++) {
@@ -311,7 +319,6 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       }
       this.stockBatch.batchData = this.stockBatchArray;
-      console.log(this.stockBatch.batchData);
       this.stockBatch.id = parseInt(this.currentStockBatch);
       this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
         (data) => {

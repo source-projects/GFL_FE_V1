@@ -117,7 +117,7 @@
                                                 name="mtr{{rowIndex}}{{i}}" required (input)="calculateWt(meter1.value,i,rowIndex,0);"
                                                 [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}" min="0">
                                             <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)"
-                                                style="display: inline-block;">
+                                                style="display: inline-block;" min="0">
                                                 <span>Required</span>
                                             </div>
                                         </ng-template>
@@ -133,7 +133,7 @@
                                                 [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}" min="0">
                                             <div class="invalid-feedback"
                                                 *ngIf="formSubmitted && (weight1.invalid)"
-                                                style="display: inline-block;">
+                                                style="display: inline-block;" min="0">
                                                 <span>Required</span>
                                             </div>
                                         </ng-template>
