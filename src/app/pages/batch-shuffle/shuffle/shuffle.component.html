@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>BATCH-SHUFFLE</h2>
+          </div>
+
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+
+        <form [formGroup]="shuffleForm" >
+          <div class="row">
+
+            <div class="col-md-6">
+              <label class="required">Party Name:</label>
+              <ng-select name="partyId" formControlName="partyName" required>
+                <ng-option>
+                </ng-option>
+              </ng-select>
+              <!-- <div class="invalid-feedback"
+              *ngIf="formSubmitted && (partyId.invalid || partyId.dirty || partyId.touched)">
+              <span>Party ID is required.</span>
+          </div> -->
+            </div>
+            <div class="col-md-6">
+              <label class="required" >Quality Name:</label>
+              <ng-select name="qualityId" formControlName="qualityName" required>
+                <ng-option>
+                </ng-option>
+              </ng-select>
+              <!-- <div class="invalid-feedback"
+              *ngIf="formSubmitted && (qualityId.invalid || qualityId.dirty || qualityId.touched)">
+              <span>Quality ID is required.</span>
+          </div> -->
+
+            </div>
+          </div>
+
+
+
+      
+          <nb-radio-group style="display: flex;padding-top:  1%;" >
+            <nb-radio [value]="1" checked="true" (valueChange)="onChange($event)">Split</nb-radio>
+            <nb-radio [value]="2" (valueChange)="onChange($event)">Merge</nb-radio>
+          </nb-radio-group>
+
+
+
+          <div class="row" style="padding-top: 5%;">
+
+            <div class="col-md-6">
+              <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
+              <ng-select name="batchId" formControlName="batchName1" required>
+                <ng-option>
+                </ng-option>
+              </ng-select>
+              <!-- <div class="invalid-feedback"
+              *ngIf="formSubmitted && (batchId.invalid || batchId.dirty || batchId.touched)">
+              <span>Batch ID is required.</span>
+               </div> -->
+            </div>
+
+            <div class="col-md-6" [hidden]="flag">
+              <label class="required">Second Batch Name:</label>
+              <ng-select name="batchId" formControlName="batchName2"  required>
+                <ng-option>
+                </ng-option>
+              </ng-select>
+              <!-- <div class="invalid-feedback"
+              *ngIf="formSubmitted && (batchId.invalid || batchId.dirty || batchId.touched)">
+              <span>Batch ID is required.</span>
+               </div> -->
+            </div>
+
+            
+          </div>
+
+
+          
+        
+
+
+        <div class="example-container" style="padding-top: 7%;">
+          <h2>Batch Split Part 1</h2>
+        
+          <div cdkDropList [cdkDropListData]="part1" #part1List="cdkDropList" [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
+            
+            <div class="example-box" *ngFor="let item of part1" cdkDrag>{{item}}</div>
+          </div>
+        </div>
+
+
+        <div class="example-container"  style="padding-top: 7%;padding-left: 2%;">
+          <h2>Batch Split Part 2</h2>
+        
+          <div cdkDropList   class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList" [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
+            
+            <div class="example-box" *ngFor="let item of part2" cdkDrag>{{item}}</div>
+          </div>
+        </div>
+       
+
+      </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>

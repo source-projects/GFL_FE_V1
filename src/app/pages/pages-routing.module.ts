@@ -13,6 +13,7 @@ import { ColorGuard } from 'app/@theme/guards/color.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
+import { ShuffleComponent } from './batch-shuffle/shuffle/shuffle.component';
 
 const routes: Routes = [{
   path: '',
@@ -57,6 +58,16 @@ const routes: Routes = [{
       loadChildren: () => import('./batch/batch.module')
         .then(m => m.BatchModule),
     },
+
+    {
+      path: 'batch-shuffle',
+      component: ShuffleComponent,
+      // loadChildren: () => import('./batch-shuffle/batch-shuffle.module')
+      //   .then(m => m.BatchShuffleModule),
+    },
+
+
+
     {
       path: 'color',
       loadChildren: () => import('./color/color.module')
