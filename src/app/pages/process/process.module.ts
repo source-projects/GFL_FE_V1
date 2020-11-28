@@ -14,11 +14,11 @@ import { AddFunctionComponent } from './add-function/add-function.component';
 @NgModule({
   declarations: [ProcessComponent, AddEditProcessComponent, AddStepComponent, DynamicProcessComponent, AddFunctionComponent],
   imports: [
-    CommonModule,
     ProcessRoutingModule,
     CommonModule,
     SharedModule,
     FormsModule
-  ]
+  ],
+  entryComponents: [AddFunctionComponent, AddStepComponent]
 })
 export class ProcessModule { }

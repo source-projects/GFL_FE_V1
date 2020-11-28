@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Step } from 'app/@theme/model/process';
+import { FunctionObj, Step } from 'app/@theme/model/process';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { QualityService } from 'app/@theme/services/quality.service';
 import { ToastrService } from 'ngx-toastr';
 import { AddStepComponent } from '../add-step/add-step.component';
 import * as errorData from 'app/@theme/json/error.json';
+import { AddFunctionComponent } from '../add-function/add-function.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'ngx-dynamic-process',
@@ -50,6 +52,13 @@ export class DynamicProcessComponent implements OnInit {
     )
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
+    this.stepList.forEach((ele, index) => {
+      // ele.stepPosition = index + 1;
+    })
+  }
+
   onAddStep() {
     const modalRef = this._modalService.open(AddStepComponent);
     modalRef.componentInstance.position = this.stepList.length + 1;
@@ -61,6 +70,7 @@ export class DynamicProcessComponent implements OnInit {
         let step = new Step();
         step.stepName = result.name;
         step.stepNo = result.position;
+        step.functionList = [];
         if (!this.stepList.length || result.position == this.stepList.length + 1) {
           this.stepList.push(step);
         } else {
@@ -85,9 +95,34 @@ export class DynamicProcessComponent implements OnInit {
         }
       });
   }
-
   onStepClick(step) {
-    this.selectedStep = step.stepPosition;
+    console.log(step)
+    this.selectedStep = step.stepNo;
+  }
+  onAddFunction(step) {
+    console.log(this.stepList)
+    console.log("Step " + step)
+    if (step) {
+      this.selectedStep = step.stepNo;
+    }
+    console.log(this.selectedStep)
+    const modalRef = this._modalService.open(AddFunctionComponent);
+    let functionList = this.stepList[this.selectedStep - 1].functionList;
+    modalRef.componentInstance.position = functionList.length + 1;
+    modalRef.componentInstance.functionList = functionList;
+    modalRef.componentInstance.editFunction = false;
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          let func = new FunctionObj();
+          func = result;
+          if (!functionList.length || result.funcPosition == functionList.length + 1) {
+            functionList.push(func);
+          } else {
+            functionList.splice(result.funcPosition - 1, 0, func);
+          }
+        }
+      });
   }
 
   onSubmit(myForm) {

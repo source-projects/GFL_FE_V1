@@ -39,7 +39,7 @@
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;"> 
                         <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                           <nb-accordion class="card-height" *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag>
-                                <nb-accordion-item style="margin-top: 40px !important;" #item (click)="onStepClick(step)">
+                                <nb-accordion-item class="item" #item (click)="onStepClick(step)">
                                     <nb-accordion-item-header class="item-header">
                                             {{step.stepName}}
                                             <nb-icon icon="trash" status="danger" 

@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-md-12 form-group">
         <label>Step Name</label>
-        <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel" [ngClass]="{'is-invalid':modalSubmitted && name1.invalid}" required>
+        <input  class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel" [ngClass]="{'is-invalid':modalSubmitted && name1.invalid}" required>
         <div class="invalid-feedback" style="color: red;" *ngIf="modalSubmitted && (name1.invalid )" >
           Step Name is required.
         </div>
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button nbButton  (click)="onCreate(stepForm)">{{submitButton}}</button>
-    <button nbButton (click)="activeModal.close(false)">Cancel</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-right:20px"  (click)="onCreate(stepForm)">{{submitButton}}</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="activeModal.close(false)">Cancel</button>
   </div>
 </form>

@@ -27,6 +27,7 @@ export class AddStepComponent implements OnInit {
   ngOnInit() {
     if (!this.editStep) {
       if (this.position > 0) {
+        console.log(this.position)
         this.stepPosition = this.position;
         for (let i = 1; i <= this.position; i++) {
           this.positionValues.push(i);
