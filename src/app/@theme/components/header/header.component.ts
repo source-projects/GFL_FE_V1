@@ -1,11 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NB_WINDOW } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { NbLogoutComponent } from '@nebular/auth';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { Router } from '@angular/router';
 
@@ -52,8 +51,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserData,
     private layoutService: LayoutService,
     private tokenService: StoreTokenService,
-    private breakpointService: NbMediaBreakpointsService,
-    @Inject(NB_WINDOW) private window) {
+    private breakpointService: NbMediaBreakpointsService
+    ) {
   }
 
   ngOnInit() {
