@@ -90,6 +90,7 @@ export class AddEditUserComponent implements OnInit {
 
   userData: any;
   userId: any;
+  userHead;
   currentUserId: any;
 
   constructor(
@@ -130,6 +131,7 @@ export class AddEditUserComponent implements OnInit {
 
   public getUserId() {
     this.userId = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.currentUserId = this._route.snapshot.paramMap.get("id");
   }
 
@@ -474,6 +476,7 @@ export class AddEditUserComponent implements OnInit {
   updateUser(userForm) {
     this.formSubmitted = true;
     if (userForm.valid) {
+      this.user.updatedBy = this.userId.userId;
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
       this.userService.updateUser(this.user).subscribe(
@@ -495,9 +498,10 @@ export class AddEditUserComponent implements OnInit {
   addUser(myForm) {
     this.getCheckedItem();
     //this.user.userPermissionData=this.userPermissionData;
-
     this.formSubmitted = true;
     if (myForm.valid) {
+      this.user.createdBy = this.userId.userId;
+      this.user.userHeadId = this.userHead.userHeadId;
       if (!this.user.isUserHead) this.user.userHeadId = 0;
       this.userService.createUser(this.user).subscribe(
         (data) => {

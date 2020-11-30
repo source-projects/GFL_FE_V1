@@ -35,8 +35,8 @@
         <div class="row">
             <div class="form-group col-md-2">
                 <label class="required">Bill No</label>
-                <input class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
-                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }"  >
+                <input type="number" class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel" name="billNo" required
+                 [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }"  min="0">
                     <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billNo1.invalid || (billNo1.dirty || billNo1.untouched) )">
                         <span>Bill no is required</span>
@@ -58,8 +58,8 @@
 
             <div class="form-group col-md-2">
                 <label class="required">Challan No</label>
-                <input class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo" required
-                    [ngClass]="{'is-invalid':formSubmitted && !(chlNo1.valid) }" >
+                <input  type="number" class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo" required
+                    [ngClass]="{'is-invalid':formSubmitted && !(chlNo1.valid) }" min="0">
                         <div class="invalid-feedback"
                         *ngIf="formSubmitted && (chlNo1.invalid || (chlNo1.dirty || chlNo1.untouched) )">
                         <span>Challan no is required</span>
@@ -82,7 +82,7 @@
             <div class="form-group col-md-2">
                 <label class="required">Bill Amount</label>
                 <input class="form-control" [(ngModel)]="color.billAmount" #billAmount1="ngModel" name="billAmount"
-                    required
+                    required  type="number" min="0"
                  [ngClass]="{'is-invalid':formSubmitted && !(billAmount1.valid) }" >
                         <div class="invalid-feedback"
                         *ngIf="formSubmitted && (billAmount1.invalid || (billAmount1.dirty || billAmount1.untouched) )">

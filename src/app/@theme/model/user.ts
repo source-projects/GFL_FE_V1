@@ -8,6 +8,8 @@ export class User{
  company:String;
  department:String;
  designationId:number;
+ createdBy:Number;
+ updatedBy:Number;
  id:Number;
  userHeadId:Number;
  isUserHead:boolean;
