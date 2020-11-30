@@ -33,7 +33,7 @@ export class AddEditQualityComponent implements OnInit {
 
   //to store party info
   party: any[];
-
+  userHead;
   //to store selected QualityId
   currentQualityId: any;
   constructor(
@@ -53,6 +53,7 @@ export class AddEditQualityComponent implements OnInit {
 
   public getData() {
     this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.addEditQualityForm = new FormGroup({
       qualityId: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
@@ -61,7 +62,9 @@ export class AddEditQualityComponent implements OnInit {
       wtPer100m: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
-      createdBy: new FormControl(this.user.userId.toString()),
+      createdBy: new FormControl(null),
+      updatedBy: new FormControl(null),
+      userHeadId: new FormControl(null),
       id: new FormControl(null)
     });
   }
@@ -110,6 +113,8 @@ export class AddEditQualityComponent implements OnInit {
   addQuality() {
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
+      this.addEditQualityForm.value.createdBy = this.user.userId;
+      this.addEditQualityForm.value.userHeadId = this.userHead.userHeadId;
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
           if (data['success']) {
@@ -131,6 +136,7 @@ export class AddEditQualityComponent implements OnInit {
   updateQuality() {
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
+      this.addEditQualityForm.value.updatedBy = this.user.userId;
       this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
         (data) => {
           if (data["success"]) {

@@ -10,5 +10,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://13.235.71.124:8080/"
+  apiUrl: "http://150.107.188.188:8080/"
+  //apiUrl: "http://13.235.71.124:8080/"
 };

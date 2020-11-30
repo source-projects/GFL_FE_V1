@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
-  stockList;
+  stockList = [];
   
   tablestyle = "bootstrap";
   radioSelect = 1;
@@ -42,6 +42,7 @@ export class StockBatchComponent implements OnInit {
   }
 
   onChange(event){
+    this.stockList = [];
     switch(event){
       case 1: 
               this.getStockBatchList(this.userId,"own");

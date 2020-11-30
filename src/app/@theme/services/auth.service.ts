@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { CommonService } from './common.service';
 import { HttpClient } from '@angular/common/http';
+import { StoreTokenService } from './store-token.service';
 
 
 
@@ -12,10 +13,10 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
+  constructor(private httpClient: HttpClient, private commonService: CommonService, private token:StoreTokenService) { }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = this.token.get('token');
     return !!token ? true : false;
   }
 

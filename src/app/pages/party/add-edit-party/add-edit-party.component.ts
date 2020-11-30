@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonService } from 'app/@theme/services/common.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl } from "@angular/forms";
+import { Validators } from "@angular/forms";
+import { Location } from "@angular/common";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CommonService } from "app/@theme/services/common.service";
+import { PartyService } from "app/@theme/services/party.service";
+import * as errorData from "app/@theme/json/error.json";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'ngx-add-edit-party',
-  templateUrl: './add-edit-party.component.html',
-  styleUrls: ['./add-edit-party.component.scss'],
-  providers: [Location]
+  selector: "ngx-add-edit-party",
+  templateUrl: "./add-edit-party.component.html",
+  styleUrls: ["./add-edit-party.component.scss"],
+  providers: [Location],
 })
-
 export class AddEditPartyComponent implements OnInit {
-
   public errorData: any = (errorData as any).default;
 
   partyForm: FormGroup;
@@ -37,147 +35,177 @@ export class AddEditPartyComponent implements OnInit {
 
   creditor: boolean = false;
   debtor: boolean = false;
-
-  constructor(private location: Location, private partyService: PartyService, private commonService: CommonService,
-    private route: Router, private _route: ActivatedRoute, private toastr: ToastrService) { }
+  userHead;
+  constructor(
+    private partyService: PartyService,
+    private commonService: CommonService,
+    private route: Router,
+    private _route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getData();
-    this.getUpdateData();
     this.getMaster();
+    this.currentPartyId = this._route.snapshot.paramMap.get("id");
+    if (this.currentPartyId != null)
+      this.getUpdateData();
+    
   }
 
   public getData() {
-    this.user = this.commonService.getUser()
+    this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
-      partyName: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
+      partyName: new FormControl(null, [
+        Validators.pattern(/^[a-zA-Z ]*$/),
+        Validators.required,
+      ]),
       partyAddress1: new FormControl(null, Validators.required),
       partyAddress2: new FormControl(null),
-      contactNo: new FormControl(null, [Validators.required, Validators.pattern(/^((\\+91-?)|0)?[0-9]{10}$/)]),
-      city: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
-      state: new FormControl(null, [Validators.pattern(/^[a-zA-Z ]*$/), Validators.required]),
-      pincode: new FormControl(null, [Validators.pattern(/^[0-9]{6}$/), Validators.required]),
+      contactNo: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^((\\+91-?)|0)?[0-9]{10}$/),
+      ]),
+      city: new FormControl(null, [
+        Validators.pattern(/^[a-zA-Z ]*$/),
+        Validators.required,
+      ]),
+      state: new FormControl(null, [
+        Validators.pattern(/^[a-zA-Z ]*$/),
+        Validators.required,
+      ]),
+      pincode: new FormControl(null, [
+        Validators.pattern(/^[0-9]{6}$/),
+        Validators.required,
+      ]),
       gstin: new FormControl(null, Validators.required),
-      mailId: new FormControl(null, [Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/), Validators.required]),
+      mailId: new FormControl(null, [
+        Validators.pattern(
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/
+        ),
+        Validators.required,
+      ]),
       creditor: new FormControl(false, Validators.required),
       debtor: new FormControl(false, Validators.required),
-      createdBy: new FormControl(this.user.userId),
-      userHeadId: new FormControl(null, Validators.required),
+      createdBy: new FormControl(null),
+      updatedBy: new FormControl(null),
+      userHeadId: new FormControl(null),
     });
   }
 
   public getMaster() {
     this.partyService.getAllMaster().subscribe(
-      data => {
-        if (data['success']) {
-          this.master = data['data'];
-        }
-        else {
-          this.toastr.error(data['msg']);
+      (data) => {
+        if (data["success"]) {
+          this.master = data["data"];
+        } else {
+          this.toastr.error(data["msg"]);
         }
       },
-      error => {
+      (error) => {
         this.toastr.error(errorData.Serever_Error);
       }
-    )
+    );
   }
 
   public getUpdateData() {
-    this.currentPartyId = this._route.snapshot.paramMap.get('id');
-    if (this.currentPartyId != null) {
       this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
-        data => {
-          this.currentParty = data['data']
+        (data) => {
+          this.currentParty = data["data"];
           this.partyForm.patchValue({
-            "partyName": this.currentParty.partyName,
-            "partyAddress1": this.currentParty.partyAddress1,
-            "partyAddress2": this.currentParty.partyAddress2,
-            "contactNo": this.currentParty.contactNo,
-            "city": this.currentParty.city,
-            "state": this.currentParty.state,
-            "pincode": this.currentParty.pincode,
-            "mailId": this.currentParty.mailId,
-            "gstin": this.currentParty.gstin,
-            "creditor": this.currentParty.creditor,
-            "debtor": this.currentParty.debtor,
-            "createdBy": this.currentParty.createdBy,
-            "id": this.currentPartyId,
-            "userHeadId": this.currentParty.userHeadId
-          })
-          this.creditor = this.partyForm.get('creditor').value;
-          this.debtor = this.partyForm.get('debtor').value;
+            userHeadId: this.currentParty.userHeadId,
+            partyName: this.currentParty.partyName,
+            partyAddress1: this.currentParty.partyAddress1,
+            partyAddress2: this.currentParty.partyAddress2,
+            contactNo: this.currentParty.contactNo,
+            city: this.currentParty.city,
+            state: this.currentParty.state,
+            pincode: this.currentParty.pincode,
+            mailId: this.currentParty.mailId,
+            gstin: this.currentParty.gstin,
+            creditor: this.currentParty.creditor,
+            debtor: this.currentParty.debtor,
+            createdBy: this.currentParty.createdBy,
+            updatedBy: this.currentParty.updatedBy,
+            id: this.currentPartyId
+          });
+          this.creditor = this.partyForm.get("creditor").value;
+          this.debtor = this.partyForm.get("debtor").value;
+          console.log(this.partyForm.value.userHeadId)
         },
-        error => {
-          this.toastr.error(errorData.Serever_Error)
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      )
-    }
+      );
   }
 
   public addParty() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
-      this.partyService.saveParty(this.partyForm.value).subscribe(
-        data => {
-          if (data["success"]) {
-            this.currentParty = data["data"];
-            this.route.navigate(['pages/party']);
-            this.toastr.success(errorData.Add_Success)
+      if (this.creditor || this.debtor) {
+        this.partyForm.value.createdBy = this.user.userId;
+        this.partyService.saveParty(this.partyForm.value).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.currentParty = data["data"];
+              this.route.navigate(["pages/party"]);
+              this.toastr.success(errorData.Add_Success);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
           }
-          else {
-            this.toastr.error(errorData.Add_Error)
-          }
-        },
-        error => {
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
-    }
-    else {
-      return
+        );
+      } else {
+        return;
+      }
     }
   }
 
   public updateParty() {
     this.formSubmitted = true;
     if (this.partyForm.valid) {
-      let body = {
-        ...this.partyForm.value,
-        id: this.currentPartyId
+      if (this.creditor || this.debtor) {
+        this.partyForm.value.updatedBy = this.user.userId;
+        let body = {
+          ...this.partyForm.value,
+          id: this.currentPartyId,
+        };
+        this.partyService.updateParty(body).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.route.navigate(["/pages/party"]);
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Update_Error);
+          }
+        );
       }
-      this.partyService.updateParty(body).subscribe(
-        data => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success)
-            this.route.navigate(["/pages/party"]);
-          }
-          else {
-            this.toastr.error(errorData.Update_Error)
-          }
-        },
-        error => {
-          this.toastr.error(errorData.Update_Error)
-        }
-      )
     }
   }
 
   public goBackToPreviousPage(): any {
-    this.route.navigate(['pages/party']);
+    this.route.navigate(["pages/party"]);
   }
 
   setCheckedStatusCreditor(checked) {
     this.creditor = checked;
     this.partyForm.patchValue({
-      "creditor": this.creditor
-    })
+      creditor: this.creditor,
+    });
   }
 
   setCheckedStatusDebtor(checked) {
     this.debtor = checked;
     this.partyForm.patchValue({
-      "debtor": this.debtor
-    })
+      debtor: this.debtor,
+    });
   }
-
 }

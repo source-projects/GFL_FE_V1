@@ -6,14 +6,8 @@ import { QualityService } from "app/@theme/services/quality.service";
 import { SupplierService } from "app/@theme/services/supplier.service";
 import { ShadeService } from "app/@theme/services/shade.service";
 import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import {
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-  NbToastrConfig,
-} from "@nebular/theme";
 import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
-import { disableDebugTools } from "@angular/platform-browser";
 
 @Component({
   selector: "ngx-add-edit-shade",
@@ -22,15 +16,6 @@ import { disableDebugTools } from "@angular/platform-browser";
 })
 export class AddEditShadeComponent implements OnInit {
   public errorData: any = (errorData as any).default;
-
-  //toaster config
-  config: NbToastrConfig;
-  destroyByClick = true;
-  duration = 2000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-  status;
 
   shadeDataListArray: ShadeDataList[] = [];
 
@@ -43,6 +28,7 @@ export class AddEditShadeComponent implements OnInit {
   index: any;
   //to Store UserId
   user: any;
+  userHead;
   //To store current Shade Id
   currentShadeId: any;
   //to Store Current Shade data
@@ -87,6 +73,7 @@ export class AddEditShadeComponent implements OnInit {
 
   public getUserId() {
     this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.currentShadeId = this._route.snapshot.paramMap.get("id");
   }
 
@@ -177,6 +164,7 @@ export class AddEditShadeComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.shades = data["data"];
+            console.log(data['data'])
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -252,7 +240,10 @@ export class AddEditShadeComponent implements OnInit {
             this.quality.forEach((e) => {
               e.partyName = data["data"].partyName;
             });
-          } else this.toastr.error(data["msg"]);
+          } else{
+            this.toastr.error(data["msg"]);
+            this.quality = null;
+          }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
@@ -380,7 +371,7 @@ export class AddEditShadeComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 500);
+        }, 50);
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -397,6 +388,7 @@ export class AddEditShadeComponent implements OnInit {
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
+      this.shades.userHeadId = this.userHead.userHeadId;
       this.shadeService.addShadeData(this.shades).subscribe(
         (data) => {
           if (data["success"]) {
