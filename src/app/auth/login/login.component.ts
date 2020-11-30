@@ -32,7 +32,7 @@ export class LoginComponent {
                         this.storeTokenService.set('token',data["data"].accessToken);
                         this.storeTokenService.set('refreshToken',data["data"].refreshToken);
                         this.toast.success(errorData.Login_Success);
-                        this. route. navigate(['/pages']);
+                        this.route.navigate(['/pages']);
                     }else{
                         this.toast.error(errorData.login_Error);
                     }

@@ -37,6 +37,7 @@ export class SupplierComponent implements OnInit {
   }
 
   onChange(event){
+    this.supplierList=[];
     switch(event){
       case 1: 
               this.getSupplierList(this.userId,"own");
