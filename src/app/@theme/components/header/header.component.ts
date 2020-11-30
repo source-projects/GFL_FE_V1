@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NB_WINDOW } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { Router } from '@angular/router';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-header',
@@ -39,19 +42,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUser$: Subscription;
   currentTheme = 'default';
   currentUser;
-
+  userName;
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
+    private route: Router,
     private userService: UserData,
     private layoutService: LayoutService,
-    private breakpointService: NbMediaBreakpointsService) {
+    private tokenService: StoreTokenService,
+    private breakpointService: NbMediaBreakpointsService,
+    private commonService: CommonService
+    ) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
+    this.userName = this.commonService.getUserName();
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {if(title === 'Log out') this.logout();});
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
@@ -71,6 +85,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+  }
+
+  logout(){
+    //remove tokens from localstorage. and redirect to login.
+    this.tokenService.remove('token');
+    this.tokenService.remove('refreshToken');
+    this.route.navigate(['auth']);
   }
 
   ngOnDestroy() {

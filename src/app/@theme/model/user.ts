@@ -11,7 +11,7 @@ export class User{
  createdBy:Number;
  updatedBy:Number;
  id:Number;
- userHeadId:Number;
+ userHeadId:Number =0;
  isUserHead:boolean;
  userPermissionData:{}
 }
