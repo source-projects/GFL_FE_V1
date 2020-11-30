@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { NbCardModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -21,6 +21,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ThemeModule,
     NbCardModule,
     DragDropModule,
+    ReactiveFormsModule
     
   ]
 })

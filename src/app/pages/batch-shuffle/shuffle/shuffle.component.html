@@ -12,38 +12,38 @@
 
       <nb-card-body>
 
-        <form [formGroup]="shuffleForm" >
+        <form [formGroup]="shuffleForm">
           <div class="row">
 
             <div class="col-md-6">
               <label class="required">Party Name:</label>
-              <ng-select name="partyId" formControlName="partyName" required>
-                <ng-option>
+              <ng-select name="partyId" formControlName="partyName" (change)="dropSelect1($event)">
+
+                <ng-option *ngFor="let p of party" [value]="p.id"> {{p.partyName}}
                 </ng-option>
               </ng-select>
-              <!-- <div class="invalid-feedback"
-              *ngIf="formSubmitted && (partyId.invalid || partyId.dirty || partyId.touched)">
-              <span>Party ID is required.</span>
-          </div> -->
+              <div class="text-danger" *ngIf="formSubmitted && hasDropDownError()">
+                <span>Party Name is required.</span>
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="required" >Quality Name:</label>
-              <ng-select name="qualityId" formControlName="qualityName" required>
-                <ng-option>
+              <label class="required">Quality Name:</label>
+              <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect1($event)">
+
+                <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
                 </ng-option>
               </ng-select>
-              <!-- <div class="invalid-feedback"
-              *ngIf="formSubmitted && (qualityId.invalid || qualityId.dirty || qualityId.touched)">
-              <span>Quality ID is required.</span>
-          </div> -->
+              <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
+                <span>Quality Name is required.</span>
+              </div>
 
             </div>
           </div>
 
 
 
-      
-          <nb-radio-group style="display: flex;padding-top:  1%;" >
+
+          <nb-radio-group style="display: flex;padding-top:  1%;">
             <nb-radio [value]="1" checked="true" (valueChange)="onChange($event)">Split</nb-radio>
             <nb-radio [value]="2" (valueChange)="onChange($event)">Merge</nb-radio>
           </nb-radio-group>
@@ -54,8 +54,8 @@
 
             <div class="col-md-6">
               <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
-              <ng-select name="batchId" formControlName="batchName1" required>
-                <ng-option>
+              <ng-select name="batchId" formControlName="batchName1" (click)="getVal()">
+                <ng-option *ngFor="let b of qualityParty" [value]="b.id">{{b.batchId}}
                 </ng-option>
               </ng-select>
               <!-- <div class="invalid-feedback"
@@ -66,8 +66,8 @@
 
             <div class="col-md-6" [hidden]="flag">
               <label class="required">Second Batch Name:</label>
-              <ng-select name="batchId" formControlName="batchName2"  required>
-                <ng-option>
+              <ng-select name="batchId" formControlName="batchName2" (click)="getVal1()">
+                <ng-option *ngFor="let b of qualityParty" [value]="b.id">{{b.batchId}}
                 </ng-option>
               </ng-select>
               <!-- <div class="invalid-feedback"
@@ -76,35 +76,37 @@
                </div> -->
             </div>
 
-            
+
           </div>
 
 
-          
-        
 
 
-        <div class="example-container" style="padding-top: 7%;">
-          <h2>Batch Split Part 1</h2>
-        
-          <div cdkDropList [cdkDropListData]="part1" #part1List="cdkDropList" [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
-            
-            <div class="example-box" *ngFor="let item of part1" cdkDrag>{{item}}</div>
+
+
+          <div class="example-container" style="padding-top: 7%;">
+            <h2>Batch Part 1</h2>
+
+            <div cdkDropList [cdkDropListData]="part1" #part1List="cdkDropList" [cdkDropListConnectedTo]="[part2List]"
+              class="example-list" (cdkDropListDropped)="drop($event)">
+
+              <div class="example-box" *ngFor="let item of part1" cdkDrag>{{item}}</div>
+            </div>
           </div>
-        </div>
 
 
-        <div class="example-container"  style="padding-top: 7%;padding-left: 2%;">
-          <h2>Batch Split Part 2</h2>
-        
-          <div cdkDropList   class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList" [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
-            
-            <div class="example-box" *ngFor="let item of part2" cdkDrag>{{item}}</div>
+          <div class="example-container" style="padding-top: 7%;padding-left: 2%;" [hidden]="flag">
+            <h2>Batch Part 2</h2>
+
+            <div cdkDropList class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList"
+              [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
+
+              <div class="example-box" *ngFor="let item of part2" cdkDrag>{{item}}</div>
+            </div>
           </div>
-        </div>
-       
 
-      </form>
+
+        </form>
       </nb-card-body>
     </nb-card>
   </div>
