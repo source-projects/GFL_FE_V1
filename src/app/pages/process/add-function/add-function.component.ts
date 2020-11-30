@@ -24,12 +24,31 @@ export class AddFunctionComponent implements OnInit {
   chemicalSubRecordArray: ChemicalReq[] = [];
   chemicalSubRecord: ChemicalReq;
   rowChemicalData: any;
-  functionDropdown = [{ 'id': 'dosing', 'name': 'Dosing' }, { 'id': 'temperature', 'name': 'Temperature Control' }, { 'id': 'pump', 'name': 'Pump Control' }, { 'id': 'water', 'name': 'Water Control' }, { 'id': 'operator', 'name': 'Operator Message' }];
-  waterList = [{ 'id': 'water1', 'name': 'water1' }, { 'id': 'water2', 'name': 'water2' }];
-  drainTypeList = [{ 'id': 'Complete Drain (at 0 bar)', 'name': 'Complete Drain (at 0 bar)' }, { 'id': 'Pressurize Drain (at 1 bar)', 'name': 'Pressurize Drain (at 1 bar)' }];
-  fillList = [{ 'id': 'Post Fill Fresh Water', 'name': 'Post Fill Fresh Water' }, { 'id': 'Pre Fill Fresh Water', 'name': 'Pre Fill Fresh Water' }, { 'id': 'Post Fill Machine Water', 'name': 'Post Fill Machine Water' }, { 'id': 'Pre Fill Machine Water', 'name': 'Pre Fill Machine Water' }]
-  fillLevelList = [{ 'id': 'Level 1', 'name': 'Level 1' }, { 'id': 'Level 2', 'name': 'Level 2' }];
-  operatorMessageList = [{ 'id': '1', 'name': 'Load Fabric' }, { 'id': '2', 'name': 'UnLoad Fabric' }, { 'id': '3', 'name': 'Close the Door' }, { 'id': '4', 'name': 'Custom Message' }]
+  functionDropdown = [
+    { 'id': 'dosing', 'name': 'Dosing' },
+    { 'id': 'temperature', 'name': 'Temperature Control' },
+    { 'id': 'pump', 'name': 'Pump Control' },
+    { 'id': 'water', 'name': 'Water Control' },
+    { 'id': 'operator', 'name': 'Operator Message' }];
+  waterList = [
+    { 'id': 'water1', 'name': 'water1' },
+    { 'id': 'water2', 'name': 'water2' }];
+  drainTypeList = [
+    { 'id': 'Complete Drain (at 0 bar)', 'name': 'Complete Drain (at 0 bar)' },
+    { 'id': 'Pressurize Drain (at 1 bar)', 'name': 'Pressurize Drain (at 1 bar)' }];
+  fillList = [
+    { 'id': 'Post Fill Fresh Water', 'name': 'Post Fill Fresh Water' },
+    { 'id': 'Pre Fill Fresh Water', 'name': 'Pre Fill Fresh Water' },
+    { 'id': 'Post Fill Machine Water', 'name': 'Post Fill Machine Water' },
+    { 'id': 'Pre Fill Machine Water', 'name': 'Pre Fill Machine Water' }]
+  fillLevelList = [
+    { 'id': 'Level 1', 'name': 'Level 1' },
+    { 'id': 'Level 2', 'name': 'Level 2' }];
+  operatorMessageList = [
+    { 'id': '1', 'name': 'Load Fabric' },
+    { 'id': '2', 'name': 'UnLoad Fabric' },
+    { 'id': '3', 'name': 'Close the Door' },
+    { 'id': '4', 'name': 'Custom Message' }]
   modalSubmitted: boolean = false;
   submitButton = 'ADD';
   chemicalcolumnDefs = [
@@ -98,6 +117,12 @@ export class AddFunctionComponent implements OnInit {
       this.waterControl.jetLevel = 0;
       this.waterControl.fabricRatio = null;
       this.waterControl.waterType = null;
+    }
+  }
+
+  onDoseTypeChange() {
+    if (this.dosing.doseType == 'color') {
+      this.dosing.doseWhileHeating = false;
     }
   }
 

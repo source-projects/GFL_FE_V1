@@ -43,7 +43,56 @@
         </div>
 
         <!-- Dosing -->
-        <div></div>
+        <div *ngIf="funcObj.funcValue==='dosing'">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Fill Side Tank </label>
+                      <select class="form-control" name="fill" [(ngModel)]="dosing.fillType">
+                        <option *ngFor="let fill of fillList" [value]="fill.id">{{fill.name}}</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Fill Side Tank Level</label>
+                      <select class="form-control " name="filllevel" [(ngModel)]="dosing.dosingPercentage">
+                        <option *ngFor="let level of fillLevelList" [value]="level.id">{{level.name}}</option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            (Will dose after Operator Confirmation)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose"> dose at Temp
+                        (C) <input fieldSize="small" class="col-md-3" nbInput name="tempDosing"
+                          [(ngModel)]="dosingObj.doseAtTemp"></nb-checkbox>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="dosing.doseType !== 'color'">
+                    <div class="form-group">
+                      <nb-checkbox name="doseHeat" [(ngModel)]="dosing.doseWhileHeating"> Dose while Heating
+                      </nb-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Dose Type</label>
+                    <nb-radio-group fieldSize="small" class="form-control inline-block" name="dosetype"
+                      [(ngModel)]="dosing.doseType" (change)="onDoseTypeChange()">
+                      <nb-radio value="chemical">Chemical</nb-radio>
+                      <nb-radio value="color">Color</nb-radio>
+                    </nb-radio-group>
+                </div>
+            </div>
+            <div class="row" *ngIf="dosing.doseType != undefined && dosing.doseType === 'chemical'">
+
+            </div>
+        </div>
 
         <!-- Temprature Control -->
         <div *ngIf="funcObj.funcValue==='temperature'">
@@ -51,9 +100,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>S V (Set Value)(C)</label>
-                    <input type="number" class="form-control" [(ngModel)]="tempratureControl.setValue"
-                    name="setValue" #setValueC="ngModel"
-                    [ngClass]="{'is-invalid':modalSubmitted && setValueC.invalid}" required>
+                        <input type="number" class="form-control" [(ngModel)]="tempratureControl.setValue"
+                         name="setValue" #setValueC="ngModel"
+                        [ngClass]="{'is-invalid':modalSubmitted && setValueC.invalid}" required>
                     </div>
                     <div class="invalid-feedback" *ngIf="modalSubmitted && setValueC.invalid">
                         Required
@@ -70,7 +119,6 @@
                             Required
                         </div>
                     </div>
-                    
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
@@ -128,42 +176,41 @@
             </div>
         </div>
 
-        <div *ngIf="waterObj.type === 'water'" class="row">
+        <div *ngIf="waterControl.type === 'water'" class="row">
             <div class="col-md-12">
-              <div class="form-group">
-                <label>Water Type</label>
-                <nb-radio-group fieldSize="small" class="form-control inline-block" name="water"
-                  [(ngModel)]="waterControl.waterType">
-                  <nb-radio *ngFor="let w of waterList" [value]="w.id">{{w.name}}</nb-radio>
-                </nb-radio-group>
-              </div>
+                <div class="form-group">
+                    <label>Water Type</label>
+                    <nb-radio-group fieldSize="small" class="form-control inline-block" name="water"
+                    [(ngModel)]="waterControl.waterType">
+                        <nb-radio *ngFor="let w of waterList" [value]="w.id">{{w.name}}</nb-radio>
+                    </nb-radio-group>
+                </div>
             </div>
-          </div>
-          <div *ngIf="waterObj.type === 'water'" class="row">
-            <div class="col-md-5">
-              <div class="form-group">
-                <label>Fill By Fabric Ratio</label>
-                <input nbInput fullWidth type="number" fieldSize="small" class="form-control input-group input-group-sm"
-                  (keypress)="numberOnly($event)" max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
-              </div>
+            <div *ngIf="waterObj.type === 'water'" class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Fill By Fabric Ratio</label>
+                        <input nbInput fullWidth type="number" fieldSize="small" class="form-control input-group input-group-sm"
+                        (keypress)="numberOnly($event)" max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <nb-checkbox style="margin-top:13px" name="jet" [(ngModel)]="waterControl.jetLevel">Jet Level</nb-checkbox>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <nb-checkbox style="margin-top:13px" name="jet" [(ngModel)]="waterControl.jetLevel">Jet Level</nb-checkbox>
-              </div>
-            </div>
-          </div>
-          <br>
+         <br>
           <!-- <span *ngIf="waterObj.type !== 'water'">DRAIN</span> -->
           <div *ngIf="waterObj.type !== 'water'" class="row">
             <div class="col-md-12">
-              <div class="form-group">
-                <label>Drain Type</label>
-                <nb-radio-group fieldSize="small" name="water_drain" class="form-control inline-block"
+                <div class="form-group">
+                    <label>Drain Type</label>
+                    <nb-radio-group fieldSize="small" name="water_drain" class="form-control inline-block"
                   [(ngModel)]="waterControl.drainType">
                   <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
-                </nb-radio-group>
-              </div>
+                    </nb-radio-group>
+                </div>
             </div>
           </div>
         </div>
