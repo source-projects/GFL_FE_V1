@@ -55,6 +55,11 @@ import { EarningCardBackComponent } from './earning-card/back-side/earning-card-
 import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-chart.component';
 import { EarningCardFrontComponent } from './earning-card/front-side/earning-card-front.component';
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
+import { ReportComponent } from './report/report.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SharedModule } from 'app/@theme/shared.module';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   imports: [
@@ -66,11 +71,13 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     NbTabsetModule,
     NbSelectModule,
     NbListModule,
-    ChartModule,
+    ChartsModule,
     NbProgressBarModule,
     NgxEchartsModule,
     NgxChartsModule,
     LeafletModule,
+    NgSelectModule,
+    SharedModule
   ],
   declarations: [
     ECommerceComponent,
@@ -105,6 +112,7 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     EarningCardBackComponent,
     EarningPieChartComponent,
     EarningLiveUpdateChartComponent,
+    ReportComponent,
   ],
   providers: [
     CountryOrdersMapService,
