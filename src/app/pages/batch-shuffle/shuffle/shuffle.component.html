@@ -55,25 +55,19 @@
             <div class="col-md-6">
               <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
               <ng-select name="batchId" formControlName="batchName1" (click)="getVal()">
-                <ng-option *ngFor="let b of qualityParty" [value]="b.id">{{b.batchId}}
+                <ng-option *ngFor="let b of qualityParty" [value]="b.batchId">{{b.batchId}}
                 </ng-option>
               </ng-select>
-              <!-- <div class="invalid-feedback"
-              *ngIf="formSubmitted && (batchId.invalid || batchId.dirty || batchId.touched)">
-              <span>Batch ID is required.</span>
-               </div> -->
+              
             </div>
 
             <div class="col-md-6" [hidden]="flag">
               <label class="required">Second Batch Name:</label>
               <ng-select name="batchId" formControlName="batchName2" (click)="getVal1()">
-                <ng-option *ngFor="let b of qualityParty" [value]="b.id">{{b.batchId}}
+                <ng-option *ngFor="let b of qualityParty" [value]="b.batchId">{{b.batchId}}
                 </ng-option>
               </ng-select>
-              <!-- <div class="invalid-feedback"
-              *ngIf="formSubmitted && (batchId.invalid || batchId.dirty || batchId.touched)">
-              <span>Batch ID is required.</span>
-               </div> -->
+              
             </div>
 
 

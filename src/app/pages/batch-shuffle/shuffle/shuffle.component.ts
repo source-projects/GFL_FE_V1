@@ -95,7 +95,10 @@ export class ShuffleComponent implements OnInit {
   dropSelect1(event){
     this.pId=this.shuffleForm.controls['partyName'].value;
     this.qId=this.shuffleForm.controls['qualityName'].value;
-   
+   if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid  )
+   {
+    this.getBatches();
+   }
     // console.log(this.pId);
     // console.log(this.qId);
   }
@@ -104,14 +107,14 @@ export class ShuffleComponent implements OnInit {
     
     this.bId=this.shuffleForm.controls['batchName2'].value;
     console.log(this.bId);
-    this.getBatches();
+    //this.getBatches();
   }
   getVal(){
     this.getQualityParty();
     
     this.bId=this.shuffleForm.controls['batchName1'].value;
     console.log(this.bId);
-    this.getBatches();
+    //this.getBatches();
   }
 
   getPartyList() {
