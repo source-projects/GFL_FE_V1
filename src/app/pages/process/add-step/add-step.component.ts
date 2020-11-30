@@ -35,7 +35,9 @@ export class AddStepComponent implements OnInit {
       }
     } else {
       this.submitButton = "Update";
+      console.log("Out position")
       if (this.position > 0) {
+        console.log("In position" + this.position)
         this.stepPosition = this.position;
         this.stepName = this.stepList[this.position - 1].stepName;
         for (let i = 1; i <= this.stepList.length; i++) {

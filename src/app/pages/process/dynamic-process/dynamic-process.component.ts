@@ -59,6 +59,13 @@ export class DynamicProcessComponent implements OnInit {
     })
   }
 
+  dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
+    moveItemInArray(this.stepList[stepPosition - 1].functionList, event.previousIndex, event.currentIndex);
+    this.stepList[stepPosition - 1].functionList.forEach((ele, index) => {
+      ele.funcPosition = index + 1;
+    })
+  }
+
   onAddStep() {
     const modalRef = this._modalService.open(AddStepComponent);
     modalRef.componentInstance.position = this.stepList.length + 1;
@@ -78,13 +85,13 @@ export class DynamicProcessComponent implements OnInit {
         }
         console.log(this.stepList)
         console.log(step)
-
       }
     });
   }
 
   onEditStep(step) {
     const modalRef = this._modalService.open(AddStepComponent);
+    console.log(step.stepPosition)
     modalRef.componentInstance.position = step.stepPosition;
     modalRef.componentInstance.stepList = this.stepList;
     modalRef.componentInstance.editStep = true;
@@ -95,6 +102,27 @@ export class DynamicProcessComponent implements OnInit {
         }
       });
   }
+
+  onDeleteFunction(func) {
+    let functionList = this.stepList[this.selectedStep - 1].functionList;
+    let i = functionList.findIndex(v => v.funcPosition == func.funcPosition);
+    functionList.splice(i, 1);
+  }
+
+  onEditFunction(func) {
+    const modalRef = this._modalService.open(AddFunctionComponent);
+    let functionList = this.stepList[this.selectedStep - 1].functionList;
+    modalRef.componentInstance.position = func.funcPosition;
+    modalRef.componentInstance.functionList = functionList;
+    modalRef.componentInstance.editFunction = true;
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          functionList[func.funcPosition - 1] = result;
+        }
+      });
+  }
+
   onStepClick(step) {
     console.log(step)
     this.selectedStep = step.stepNo;

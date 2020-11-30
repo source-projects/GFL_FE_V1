@@ -8,11 +8,11 @@ export class FunctionObj {
     funcName: any;
     funcValue: string = '';
     funcPosition: any;
-    dosing: Dosing[];
-    tempratureControl: TempratureControl[];
-    pumpControl: PumpControl[];
-    waterControl: WaterControl[];
-    operatorMessage: OperatorMessage[];
+    dosingFunc: Dosing[];
+    tempratureControlFunc: TempratureControl[];
+    pumpControlFunc: PumpControl[];
+    waterControlFunc: WaterControl[];
+    operatorMessageFunc: OperatorMessage[];
 }
 export class Dosing {
     index: any;
@@ -47,7 +47,7 @@ export class PumpControl {
 }
 export class WaterControl {
     index: any;
-    type: any = 'water';
+    type: any = '';
     waterType: any = '';
     drainType: any = '';
     fabricRatio: any = 0;

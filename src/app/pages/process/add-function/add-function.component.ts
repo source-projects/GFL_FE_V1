@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChemicalReq, Dosing, FunctionObj, OperatorMessage, PumpControl, TempratureControl, WaterControl } from 'app/@theme/model/process';
+import { SupplierService } from 'app/@theme/services/supplier.service';
+import * as errorData from "app/@theme/json/error.json";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -9,7 +12,7 @@ import { ChemicalReq, Dosing, FunctionObj, OperatorMessage, PumpControl, Temprat
   styleUrls: ['./add-function.component.scss']
 })
 export class AddFunctionComponent implements OnInit {
-
+  public errorData: any = (errorData as any).default;
   @Input() position;
   @Input() functionList = [];
   @Input() editFunction: any;
@@ -17,10 +20,15 @@ export class AddFunctionComponent implements OnInit {
   tempFuncPosition = 1;
   funcObj = new FunctionObj();
   dosing = new Dosing();
+  tempDosing: any = [];
   tempratureControl = new TempratureControl();
+  tempTemprature: any = [];
   pumpControl = new PumpControl();
+  tempPump: any = [];
   waterControl = new WaterControl();
+  tempWater: any = [];
   operatorMessage = new OperatorMessage();
+  tempOperator: any = [];
   chemicalSubRecordArray: ChemicalReq[] = [];
   chemicalSubRecord: ChemicalReq;
   rowChemicalData: any;
@@ -58,7 +66,9 @@ export class AddFunctionComponent implements OnInit {
     { headerName: 'LR/F_WT', field: 'lr_or_fabric_wt', width: 90 },
     { headerName: 'Supplier Name', field: 'supplierName', width: 90 },
   ];
-  constructor(public activeModal: NgbActiveModal) {
+  supplierList: any = [];
+  constructor(public activeModal: NgbActiveModal, private supplierService: SupplierService,
+    private toastr: ToastrService) {
     this.chemicalSubRecord = new ChemicalReq();
   }
 
@@ -103,11 +113,26 @@ export class AddFunctionComponent implements OnInit {
         }
       }
     }
-
+    this.getItemData()
   }
 
-  toggle(checked: boolean) {
-    this.tempratureControl.pressure = checked;
+  getItemData() {
+    // this.supplierService.getAllSupplierRates().subscribe(
+    //   (data) => {
+    //     if (data["success"]) {
+    //       if (data["data"] && data["data"].length > 0) {
+    //         this.supplierList = data["data"];
+    //       } else {
+    //         this.toastr.error(data["msg"]);
+    //       }
+    //     } else {
+    //       this.toastr.error(data["msg"]);
+    //     }
+    //   },
+    //   (error) => {
+    //     this.toastr.error(errorData.Serever_Error);
+    //   }
+    // );
   }
 
   onWaterTypeChange() {
@@ -139,6 +164,33 @@ export class AddFunctionComponent implements OnInit {
       else {
         this.funcObj.funcName = '';
       }
+      if (this.funcObj.funcValue === 'temperature') {
+        this.tempTemprature = this.tempratureControl;
+        this.funcObj.tempratureControlFunc = this.tempTemprature;
+        console.log(this.funcObj.tempratureControlFunc);
+      } else if (this.funcObj.funcValue === 'dosing') {
+        this.tempDosing = this.dosing;
+        this.funcObj.dosingFunc = this.tempDosing;
+        console.log(this.funcObj.dosingFunc);
+      } else if (this.funcObj.funcValue === 'operator') {
+        let i = this.operatorMessageList.findIndex(v => v.id === this.operatorMessage.operatorCode);
+        if (i > -1 && i != 3) {
+          this.operatorMessage.operatorMessage = this.operatorMessageList[i].name;
+        }
+        this.tempOperator = this.operatorMessage;
+        this.funcObj.operatorMessageFunc = this.tempOperator;
+        console.log(this.funcObj.operatorMessageFunc);
+      }
+      else if (this.funcObj.funcValue === 'water') {
+        this.tempWater = this.waterControl;
+        this.funcObj.waterControlFunc = this.tempWater
+        console.log(this.funcObj.waterControlFunc);
+      } else if (this.funcObj.funcValue === 'pump') {
+        this.tempPump = this.pumpControl;
+        this.funcObj.pumpControlFunc = this.tempPump;
+        console.log(this.funcObj.pumpControlFunc);
+      }
+      this.activeModal.close(this.funcObj);
     }
     else {
       return;

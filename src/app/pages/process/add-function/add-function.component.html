@@ -64,15 +64,16 @@
             </div>
             <br>
             (Will dose after Operator Confirmation)
+            <br><br>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                      <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose"> dose at Temp
-                        (C) <input fieldSize="small" class="col-md-3" nbInput name="tempDosing"
-                          [(ngModel)]="dosingObj.doseAtTemp"></nb-checkbox>
+                      <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose">
+                          dose at Temp(C) <input type="number" class="form-control" fieldSize="small" class="col-md-1" name="tempDosing"
+                          [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
                     </div>
                 </div>
-                <div class="col-md-6" *ngIf="dosing.doseType !== 'color'">
+                <div class="col-md-5" *ngIf="dosing.doseType !== 'color'">
                     <div class="form-group">
                       <nb-checkbox name="doseHeat" [(ngModel)]="dosing.doseWhileHeating"> Dose while Heating
                       </nb-checkbox>
@@ -80,9 +81,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
+                <div class="form-group">&nbsp;&nbsp;&nbsp;
                     <label>Dose Type</label>
-                    <nb-radio-group fieldSize="small" class="form-control inline-block" name="dosetype"
+                    <nb-radio-group fieldSize="large" class="form-control inline-flex" style="display: inline-flex !important; width: 464px !important; margin-left: 15px ;" name="dosetype"
                       [(ngModel)]="dosing.doseType" (change)="onDoseTypeChange()">
                       <nb-radio value="chemical">Chemical</nb-radio>
                       <nb-radio value="color">Color</nb-radio>
@@ -90,7 +91,60 @@
                 </div>
             </div>
             <div class="row" *ngIf="dosing.doseType != undefined && dosing.doseType === 'chemical'">
+                <div class="col-md-12">
+                    hdgfhg
+                    <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="dosing.chemicalSubRecord" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'">
+                        <ngx-datatable-column name="Item Name" prop="dosing.chemicalSubRecord.itemName" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}'
+                                class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
+                                (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
+                                >
+                                <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}} - {{s.supplierName}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="modalSubmitted && (itemName1.invalid)" style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
 
+                        <ngx-datatable-column name="Supplier Name" prop="dosing.chemicalSubRecord.supplierName" [sortable]="false"
+                            [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input class="tableForm" type="text" #supplierName1="ngModel"
+                                    name='supplierName{{rowIndex}}' [(ngModel)]="row.supplierName"
+                                    (keyup)="onKeyUp($event,rowIndex,1,'supplierName')"
+                                    [id]="'supplierList'+rowIndex+'-1'" readonly >
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300"
+                            prop="dosing.chemicalSubRecord.concentration">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
+                                    id="concentration" [(ngModel)]="row.concentration"
+                                    (keyup)="onKeyUp($event,rowIndex,2,'concentration')" [id]="'supplierList'+rowIndex+'-2'" min="0" >
+                                <div class="invalid-feedback" *ngIf="modalSubmitted && (concentration1.invalid)" style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="LR/F.WT" prop="dosing.chemicalSubRecord.lrOrFabricWt" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input class="tableForm" type="text" #rate1="ngModel" name='lrOrFabricWt{{rowIndex}}'
+                                    [(ngModel)]="row.lrOrFabricWt" (keyup)="onKeyUp($event,rowIndex,3,'lrOrFabricWt')"
+                                    [id]="'supplierList'+rowIndex+'-3'">
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Action"  [sortable]="false" [width]="300">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable> -->
+                </div>
             </div>
         </div>
 
@@ -135,10 +189,8 @@
             </div>
             <div class="row">
                 <div class="col-ms-12">
-                    <nb-chechkbox name="pressure" class="form-control" 
-                    [(ngModel)]="tempratureControl.pressure"
-                    style="border: none;" 
-                    (change)="toggle($event)" value="fah">Pressure (Above 80 C)</nb-chechkbox>
+                    &nbsp;&nbsp;&nbsp;<nb-checkbox name="pv" [(ngModel)]="tempratureControl.pressure" > Pressure (Above 80 C)
+                    </nb-checkbox>
                 </div>
             </div>
         </div>
@@ -166,54 +218,56 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Control Type</label>
-                        <nb-radio-group (change)="onWaterTypeChange()" fieldSize="small" class=" inline-block" style="display: -webkit-inline-box-block;"
+                        <nb-radio-group (change)="onWaterTypeChange()" fieldSize="small" class=" inline-block" style="display: inline-flex !important;"
                         name="watertype" [(ngModel)]="waterControl.type">
                          <nb-radio value="water">Water</nb-radio>
                          <nb-radio value="drain">Drain</nb-radio>
                         </nb-radio-group>
+                        {{waterControl.type}}
                     </div>  
                 </div>
             </div>
+            <div *ngIf="waterControl.type === 'water'" class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Water Type</label>
+                        <nb-radio-group fieldSize="small" class="form-control inline-block" name="water"
+                        [(ngModel)]="waterControl.waterType" style="display: inline-flex !important;">
+                            <nb-radio *ngFor="let w of waterList" [value]="w.id">{{w.name}}</nb-radio>
+                        </nb-radio-group>
+                    </div>
+                </div>
+                <br><br>
+                <div *ngIf="waterControl.type === 'water'" class="row">
+                    <div class="col-md-8">
+                        <div class="form-group" style="margin-left: 15px;"> 
+                            <label>Fill By Fabric Ratio</label>
+                            <input  type="number" fieldSize="small" class="form-control input-group input-group-sm" max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <nb-checkbox style="margin-top:13px" name="jet" 
+                            [(ngModel)]="waterControl.jetLevel">Jet Level</nb-checkbox>
+                        </div>
+                    </div>
+                </div>
+             <br>
+              <div *ngIf="waterControl.type !== 'water'" class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Drain Type</label>
+                        <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
+                      [(ngModel)]="waterControl.drainType">
+                      <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
+                        </nb-radio-group>
+                    </div>
+                </div>
+              </div>
+            </div>
         </div>
 
-        <div *ngIf="waterControl.type === 'water'" class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Water Type</label>
-                    <nb-radio-group fieldSize="small" class="form-control inline-block" name="water"
-                    [(ngModel)]="waterControl.waterType">
-                        <nb-radio *ngFor="let w of waterList" [value]="w.id">{{w.name}}</nb-radio>
-                    </nb-radio-group>
-                </div>
-            </div>
-            <div *ngIf="waterObj.type === 'water'" class="row">
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Fill By Fabric Ratio</label>
-                        <input nbInput fullWidth type="number" fieldSize="small" class="form-control input-group input-group-sm"
-                        (keypress)="numberOnly($event)" max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <nb-checkbox style="margin-top:13px" name="jet" [(ngModel)]="waterControl.jetLevel">Jet Level</nb-checkbox>
-                    </div>
-                </div>
-            </div>
-         <br>
-          <!-- <span *ngIf="waterObj.type !== 'water'">DRAIN</span> -->
-          <div *ngIf="waterObj.type !== 'water'" class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Drain Type</label>
-                    <nb-radio-group fieldSize="small" name="water_drain" class="form-control inline-block"
-                  [(ngModel)]="waterControl.drainType">
-                  <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
-                    </nb-radio-group>
-                </div>
-            </div>
-          </div>
-        </div>
+       
         <!-- operator Message -->
         <div *ngIf="funcObj.funcValue==='operator'">
             <div class="row">
