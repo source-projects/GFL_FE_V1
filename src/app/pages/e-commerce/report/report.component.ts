@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'app/@theme/services/report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
-import {NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDateParserFormatter, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDateParserFormatter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { Color, Label } from 'ng2-charts';
 @Component({
   selector: 'ngx-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class ReportComponent implements OnInit {
 
   fromdateformat: any = [];
-  todateformat:any = [];
+  todateformat: any = [];
   hoveredDate: NgbDate | null = null;
 
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
 
-  time = {hour: 13, minute: 30};
+  time = { hour: 13, minute: 30 };
 
   selectedMachineCategory: number;
   selectedMachine: number;
@@ -38,10 +38,10 @@ export class ReportComponent implements OnInit {
   data: any = [];
   jsonData: any = [];
   flag: boolean = false;
-  flag1:boolean = false;
-  flag2:boolean = false;
-  flag3:boolean = false;
-  flag4:boolean = false;
+  flag1: boolean = false;
+  flag2: boolean = false;
+  flag3: boolean = false;
+  flag4: boolean = false;
 
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
@@ -58,10 +58,10 @@ export class ReportComponent implements OnInit {
   };
   lineChartPlugins = [];
 
-  constructor(private reportservice: ReportService,private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
+  constructor(private reportservice: ReportService, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-   }
+  }
 
   ngOnInit(): void {
     this.getMachineCategory();
@@ -74,12 +74,14 @@ export class ReportComponent implements OnInit {
   machine(value: any) {
     this.flag1 = true;
     this.obj.id = value.id;
-    // this.getMachineDataByMachineId(value.id)
 
   }
 
-  onChange(value:any){
+  onChange(value: any) {
     this.flag3 = true;
+    this.obj.shift = value;
+    console.log("Type",typeof(value))
+    this.collectData(this.obj)
   }
 
   getMachineCategory() {
@@ -87,7 +89,6 @@ export class ReportComponent implements OnInit {
       (res) => {
         this.machineCategory = res;
         this.machineCategory = this.machineCategory.data;
-        console.log("category", this.machineCategory)
       }
     )
   }
@@ -96,7 +97,6 @@ export class ReportComponent implements OnInit {
     this.reportservice.getMachineDataByCategoryId(id).subscribe(
       (res) => {
         this.machines = res['data'];
-        console.log("Machines", this.machines)
       }
     );
 
@@ -105,28 +105,19 @@ export class ReportComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-      console.log("From Date",this.fromDate)
-      console.log("To Date:",this.toDate)
     } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
       this.toDate = date;
-      console.log("For Date:",this.fromDate)
-      console.log("To Date:",this.toDate)
     } else {
       this.toDate = null;
       this.fromDate = date;
-      console.log("For Date:",this.fromDate)
-      console.log("To Date:",this.toDate)
     }
     this.flag2 = true;
     this.fromdateformat = this.fromDate.year + "-" + this.fromDate.month + "-" + this.fromDate.day;
-    console.log("date-format",this.fromdateformat)
     this.todateformat = this.toDate.year + "-" + this.toDate.month + "-" + this.toDate.day;
-    console.log("date-format",this.todateformat)
     this.obj.fromDate = this.fromdateformat;
     this.obj.toDate = this.todateformat;
-    console.log("OBJECT",this.obj)
 
-    this.collectData(this.obj)
+
   }
 
   isHovered(date: NgbDate) {
@@ -147,18 +138,18 @@ export class ReportComponent implements OnInit {
   }
 
 
-  collectData(datedata:any){
-      this.reportservice.getobjdata(datedata).subscribe(
-        (res)=>{
-          this.jsonData = res['data'];
-        console.log("data1", this.jsonData)
+  collectData(datedata: any) {
+    this.reportservice.getobjdata(datedata).subscribe(
+      (res) => {
+        this.jsonData = res['data'];
         this.lineChartData = [
           { data: this.jsonData.getAllMachineRecords.map(a => a.speed), label: 'Speed' },
         ];
         this.lineChartLabels = this.jsonData.getAllMachineRecords.map(e => e.createdDate);
         this.flag4 = true;
-        }
-      )
+      }
+    )
   }
-  
+
+
 }
