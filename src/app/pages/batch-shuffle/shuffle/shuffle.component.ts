@@ -20,7 +20,7 @@ export class ShuffleComponent implements OnInit {
 
   public flag = 0;
   public rval = 1;
-
+  public btnFlag=0;
   shuffleForm: FormGroup;
 
   //form Validation
@@ -45,6 +45,8 @@ export class ShuffleComponent implements OnInit {
   bId1: any;
   bId2: any;
   batches: any[];
+  i: number;
+  sum=0;
 
 
 
@@ -54,6 +56,11 @@ export class ShuffleComponent implements OnInit {
       qualityName: new FormControl(null, Validators.required),
       batchName1: new FormControl(null, Validators.required),
       batchName2: new FormControl(null, Validators.required),
+      totalmtr1:new FormControl(),
+      totalmtr2:new FormControl(),
+      totalwt1:new FormControl(),
+      totalwt2:new FormControl(),
+
     });
   }
 
@@ -62,6 +69,7 @@ export class ShuffleComponent implements OnInit {
     this.flag = 1;
     this.getPartyList();
     this.getQualtiyList();
+    this.btnFlag=0;
 
   }
 
@@ -146,10 +154,12 @@ export class ShuffleComponent implements OnInit {
       case 1:
         this.rval = 1;
         this.flag = 1;
+        this.btnFlag=0;
         break;
 
       case 2:
         this.rval = 2;
+        this.btnFlag=1;
         if (this.shuffleForm.controls['partyName'].invalid && this.shuffleForm.controls['qualityName'].invalid) {
           this.flag = 1;
         }
@@ -184,15 +194,59 @@ export class ShuffleComponent implements OnInit {
   getVal() {
     this.getQualityParty();   
   }
+  findmtrsum(){
+    console.log("ssss"+this.batches.length);
+    this.sum=0;
+    for(this.i=0;this.i<=this.batches.length-1;this.i++){
 
+      this.sum+=this.batches[this.i].mtr;
+      console.log(this.sum);
+      this.shuffleForm.patchValue({totalmtr1:this.sum});
+     }
+     this.sum=0;
+     for(this.i=0;this.i<=this.part2.length-1;this.i++){
+
+      this.sum+=this.part2[this.i].mtr;
+      console.log(this.sum);
+      this.shuffleForm.patchValue({totalmtr2:this.sum});
+     }
+
+
+     
+  }
+  findwtsum(){
+    console.log("weight"+this.batches.length);
+    this.sum=0;
+    for(this.i=0;this.i<=this.batches.length-1;this.i++){
+
+      this.sum+=this.batches[this.i].wt;
+      console.log(this.sum);
+      this.shuffleForm.patchValue({totalwt1:this.sum});
+     }
+     this.sum=0;
+     console.log("rrr"+this.part2.values);
+     for(this.i=0;this.i<=this.part2.length-1;this.i++){
+
+      this.sum+=this.part2[this.i].wt;
+      console.log(this.sum);
+      this.shuffleForm.patchValue({totalwt2:this.sum});
+     }
+    
+     
+  }
   // get list of all batches(meter-weight) inside selected batch
   temp() {
     this.bId1 = this.shuffleForm.controls['batchName1'].value;
     this.getBatches(this.bId1);
+    //this.findmtrsum();
+    // if(this.batches.length>0){
+    //  this.findmtrsum();
+    // }
   }
   temp1() {
     this.bId2 = this.shuffleForm.controls['batchName2'].value;
     this.getBatches(this.bId2);
+    // this.findmtrsum();
   }
 
 
@@ -204,7 +258,7 @@ export class ShuffleComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.batches = data["data"];
-          //console.log(this.batches);
+          console.log(this.batches);
         }
         else {
           this.toastr.error(data['msg'])
@@ -263,6 +317,26 @@ export class ShuffleComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+    }
+
+    this.findmtrsum();
+    console.log("vapsi");
+    this.findwtsum();
+  }
+
+  
+  splitsubmit(){
+    if (this.part2.length==0){
+      alert("No batch was splitted");
+        //console.log("e");
+    }
+    
+  }
+
+  mergesubmit(){
+    if (this.part2.length==0){
+      alert("No batch was choosen to merge");
+        //console.log("e");
     }
   }
 

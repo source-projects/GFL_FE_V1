@@ -58,7 +58,9 @@
                 <ng-option *ngFor="let b of qualityParty" [value]="b.batchId">{{b.batchId}}
                 </ng-option>
               </ng-select>
-              
+              <!-- <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
+                <span>Batch Name is required.</span>
+              </div> -->
             </div>
 
             <div class="col-md-6" [hidden]="flag">
@@ -88,6 +90,9 @@
             </div>
           </div>
 
+          
+
+
 
           <div class="example-container" style="padding-top: 7%;padding-left: 2%;" >
             <h2>Batch Part 2</h2>
@@ -97,9 +102,26 @@
 
               <div class="example-box" *ngFor="let item of part2" cdkDrag>Batch ID: {{item.id}}, Meter: {{item.mtr}}, Weight: {{item.wt}}</div>
             </div>
+
+            
           </div>
+          <hr>
+          <div class="col-md-12">
+            <label class="required" style="padding-right: 2%;margin-right: 10%;">Total:</label>
+            <input type="text" formControlName="totalmtr1" [readonly]="true" style="width: 5%;margin-right: 5%;background-color: lightgray;">
+            <input type="text" formControlName="totalwt1" [readonly]="true" style="width: 5%;background-color: lightgray;">
+            <input type="text" formControlName="totalmtr2" [readonly]="true" style="width: 5%;margin-right: 5%;margin-left: 25%;background-color: lightgray;">
+            <input type="text" formControlName="totalwt2" [readonly]="true" style="width: 5%;background-color: lightgray;">
+        
+          </div>
+          
 
-
+          <div class="col-md-12" style="text-align: right;">
+            <button class="btn btn-primary btn-sm" (click)="splitsubmit()" [hidden]="btnFlag" >Split</button>  
+        </div>
+        <div class="col-md-12" style="text-align: right;">
+          <button class="btn btn-primary btn-sm" (click)="mergesubmit()" [hidden]="!btnFlag">Merge</button>  
+      </div>
         </form>
       </nb-card-body>
     </nb-card>
