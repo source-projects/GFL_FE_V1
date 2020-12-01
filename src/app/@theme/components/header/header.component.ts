@@ -7,6 +7,7 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { Router } from '@angular/router';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-header',
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUser$: Subscription;
   currentTheme = 'default';
   currentUser;
-
+  userName;
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
@@ -51,13 +52,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserData,
     private layoutService: LayoutService,
     private tokenService: StoreTokenService,
-    private breakpointService: NbMediaBreakpointsService
+    private breakpointService: NbMediaBreakpointsService,
+    private commonService: CommonService
     ) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
+    this.userName = this.commonService.getUserName();
     this.menuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === 'my-context-menu'),

@@ -22,10 +22,10 @@ const routes: Routes = [{
       path: 'dashboard',
       component: ECommerceComponent,
     },
-    {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
-    },
+    // {
+    //   path: 'iot-dashboard',
+    //   component: DashboardComponent,
+    // },
     {
       path: 'party',
       loadChildren: () => import('./party/party.module')
@@ -47,16 +47,16 @@ const routes: Routes = [{
       canActivate: [UserGuard],
       canLoad: [UserGuard]
     },
-    {
-      path: 'fabric-in',
-      loadChildren: () => import('./fabric-in/fabric-in.module')
-        .then(m => m.FabricInModule),
-    },
-    {
-      path: 'batch',
-      loadChildren: () => import('./batch/batch.module')
-        .then(m => m.BatchModule),
-    },
+    // {
+    //   path: 'fabric-in',
+    //   loadChildren: () => import('./fabric-in/fabric-in.module')
+    //     .then(m => m.FabricInModule),
+    // },
+    // {
+    //   path: 'batch',
+    //   loadChildren: () => import('./batch/batch.module')
+    //     .then(m => m.BatchModule),
+    // },
     {
       path: 'color',
       loadChildren: () => import('./color/color.module')
@@ -92,36 +92,31 @@ const routes: Routes = [{
       canActivate: [StockBatchGuard],
       canLoad: [StockBatchGuard]
     },
-    {
-      path: 'process',
-      loadChildren: () => import('./process/process.module')
-        .then(m => m.ProcessModule),
-    },
-    {
-      path: 'forms',
-      loadChildren: () => import('./forms/forms.module')
-        .then(m => m.FormsModule),
-    },
-    {
-      path: 'ui-features',
-      loadChildren: () => import('./ui-features/ui-features.module')
-        .then(m => m.UiFeaturesModule),
-    },
-    {
-      path: 'modal-overlays',
-      loadChildren: () => import('./modal-overlays/modal-overlays.module')
-        .then(m => m.ModalOverlaysModule),
-    },
-    {
-      path: 'extra-components',
-      loadChildren: () => import('./extra-components/extra-components.module')
-        .then(m => m.ExtraComponentsModule),
-    },
-    {
-      path: 'tables',
-      loadChildren: () => import('./tables/tables.module')
-        .then(m => m.TablesModule),
-    },
+    // {
+    //   path: 'forms',
+    //   loadChildren: () => import('./forms/forms.module')
+    //     .then(m => m.FormsModule),
+    // },
+    // {
+    //   path: 'ui-features',
+    //   loadChildren: () => import('./ui-features/ui-features.module')
+    //     .then(m => m.UiFeaturesModule),
+    // },
+    // {
+    //   path: 'modal-overlays',
+    //   loadChildren: () => import('./modal-overlays/modal-overlays.module')
+    //     .then(m => m.ModalOverlaysModule),
+    // },
+    // {
+    //   path: 'extra-components',
+    //   loadChildren: () => import('./extra-components/extra-components.module')
+    //     .then(m => m.ExtraComponentsModule),
+    // },
+    // {
+    //   path: 'tables',
+    //   loadChildren: () => import('./tables/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
     {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')

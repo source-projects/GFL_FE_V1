@@ -456,7 +456,7 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.user = data["data"];
             this.user.designationId = data["data"].designationId.id
-            if(this.user.userHeadId != null)
+            if(this.user.userHeadId != 0)
               this.user.isUserHead = true;
             else
               this.user.isUserHead = false;
@@ -479,6 +479,8 @@ export class AddEditUserComponent implements OnInit {
       this.user.updatedBy = this.userId.userId;
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
+      if(!this.user.isUserHead) 
+        this.user.userHeadId = 0;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -501,7 +503,6 @@ export class AddEditUserComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
       this.user.createdBy = this.userId.userId;
-      this.user.userHeadId = this.userHead.userHeadId;
       if (!this.user.isUserHead) this.user.userHeadId = 0;
       this.userService.createUser(this.user).subscribe(
         (data) => {
