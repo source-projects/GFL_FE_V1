@@ -27,7 +27,6 @@ export class AddStepComponent implements OnInit {
   ngOnInit() {
     if (!this.editStep) {
       if (this.position > 0) {
-        console.log(this.position)
         this.stepPosition = this.position;
         for (let i = 1; i <= this.position; i++) {
           this.positionValues.push(i);
@@ -35,9 +34,7 @@ export class AddStepComponent implements OnInit {
       }
     } else {
       this.submitButton = "Update";
-      console.log("Out position")
       if (this.position > 0) {
-        console.log("In position" + this.position)
         this.stepPosition = this.position;
         this.stepName = this.stepList[this.position - 1].stepName;
         for (let i = 1; i <= this.stepList.length; i++) {
@@ -52,7 +49,6 @@ export class AddStepComponent implements OnInit {
     if (myForm.valid) {
       let obj = { 'name': this.stepName, 'position': this.stepPosition };
       this.activeModal.close(obj);
-      console.log(this.stepName)
     }
   }
 }

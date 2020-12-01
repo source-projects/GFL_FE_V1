@@ -30,7 +30,7 @@ export class DynamicProcessComponent implements OnInit {
     private _modalService: NgbModal, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.getQualityList();
+    //this.getQualityList();
   }
 
   numberOnly(event): boolean {
@@ -41,30 +41,16 @@ export class DynamicProcessComponent implements OnInit {
     return true;
   }
 
-  getQualityList() {
-    this.qualityService.getallQuality(0, "all").subscribe(
-      data => {
-        if (data["success"])
-          this.qualityList = data["data"];
-      }, error => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    )
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
-    this.stepList.forEach((ele, index) => {
-      // ele.stepPosition = index + 1;
-    })
-  }
-
-  dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
-    moveItemInArray(this.stepList[stepPosition - 1].functionList, event.previousIndex, event.currentIndex);
-    this.stepList[stepPosition - 1].functionList.forEach((ele, index) => {
-      ele.funcPosition = index + 1;
-    })
-  }
+  // getQualityList() {
+  //   this.qualityService.getallQuality(0, "all").subscribe(
+  //     data => {
+  //       if (data["success"])
+  //         this.qualityList = data["data"];
+  //     }, error => {
+  //       this.toastr.error(errorData.Serever_Error);
+  //     }
+  //   )
+  // }
 
   onAddStep() {
     const modalRef = this._modalService.open(AddStepComponent);
@@ -73,7 +59,6 @@ export class DynamicProcessComponent implements OnInit {
     modalRef.componentInstance.editStep = false;
     modalRef.result.then((result) => {
       if (result) {
-        console.log(result);
         let step = new Step();
         step.stepName = result.name;
         step.stepNo = result.position;
@@ -83,24 +68,26 @@ export class DynamicProcessComponent implements OnInit {
         } else {
           this.stepList.splice(result.position - 1, 0, step);
         }
-        console.log(this.stepList)
-        console.log(step)
       }
     });
   }
 
   onEditStep(step) {
     const modalRef = this._modalService.open(AddStepComponent);
-    console.log(step.stepPosition)
-    modalRef.componentInstance.position = step.stepPosition;
+    modalRef.componentInstance.position = step.stepNo;
     modalRef.componentInstance.stepList = this.stepList;
     modalRef.componentInstance.editStep = true;
     modalRef.result
       .then((result) => {
         if (result) {
-          this.stepList[step.stepPosition - 1].stepName = result.name;
+          this.stepList[step.stepNo - 1].stepName = result.name;
         }
       });
+  }
+
+  onDeleteStep(step) {
+    let i = this.stepList.findIndex(v => v.stepNo == step.stepPosition);
+    this.stepList.splice(i, 1);
   }
 
   onDeleteFunction(func) {
@@ -124,16 +111,12 @@ export class DynamicProcessComponent implements OnInit {
   }
 
   onStepClick(step) {
-    console.log(step)
     this.selectedStep = step.stepNo;
   }
   onAddFunction(step) {
-    console.log(this.stepList)
-    console.log("Step " + step)
     if (step) {
       this.selectedStep = step.stepNo;
     }
-    console.log(this.selectedStep)
     const modalRef = this._modalService.open(AddFunctionComponent);
     let functionList = this.stepList[this.selectedStep - 1].functionList;
     modalRef.componentInstance.position = functionList.length + 1;

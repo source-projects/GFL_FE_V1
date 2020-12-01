@@ -74,14 +74,11 @@ export class AddFunctionComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.editFunction) {
-      console.log("in EditFunction")
       if (this.position > 0) {
-        console.log("in Postion")
         this.funcObj.funcPosition = this.position;
         for (let i = 1; i <= this.position; i++) {
           this.positionValues.push(i);
         }
-        console.log(this.positionValues);
       }
     } else {
       this.submitButton = "Update";
@@ -90,23 +87,21 @@ export class AddFunctionComponent implements OnInit {
         let index = this.functionList.findIndex(v => v.funcPosition == this.position);
         if (index > -1) {
           let ele = this.functionList[index];
-          console.log('ele.dos', ele.dosingFunction)
           this.funcObj.funcName = ele.funcName;
           this.funcObj.funcPosition = ele.funcPosition;
           this.funcObj.funcValue = ele.funcValue;
-          this.dosing = ele.dosingFunction;
-          if (this.dosing.dosingChemical.length) {
-            this.dosing.dosingChemical.forEach((ele, index) => {
-              ele.index = index + 1;
-            });
-            this.chemicalSubRecordArray = this.dosing.dosingChemical;
-            this.rowChemicalData = [...this.chemicalSubRecordArray];
-
-          }
-          this.waterControl = ele.waterDrainFunction;
-          this.tempratureControl = ele.tempFunction;
-          this.pumpControl = ele.pumpMotorFunction;
-          this.operatorMessage = ele.operatorFunction;
+          this.dosing = ele.dosingFunc;
+          // if (this.dosing.dosingChemical.length) {
+          //   this.dosing.dosingChemical.forEach((ele, index) => {
+          //     ele.index = index + 1;
+          //   });
+          //   this.chemicalSubRecordArray = this.dosing.dosingChemical;
+          //   this.rowChemicalData = [...this.chemicalSubRecordArray];
+          // }
+          this.waterControl = ele.waterControlFunc;
+          this.tempratureControl = ele.tempratureControlFunc;
+          this.pumpControl = ele.pumpControlFunc;
+          this.operatorMessage = ele.operatorMessageFunc;
         }
         for (let i = 1; i <= this.functionList.length; i++) {
           this.positionValues.push(i);
@@ -155,11 +150,8 @@ export class AddFunctionComponent implements OnInit {
     this.modalSubmitted = true;
     if (myForm.valid) {
       let i = this.functionDropdown.findIndex(v => v.id === this.funcObj.funcValue);
-      console.log(i);
-      console.log(this.funcObj.funcValue)
       if (i > -1) {
         this.funcObj.funcName = this.functionDropdown[i].name;
-        console.log(this.funcObj.funcName)
       }
       else {
         this.funcObj.funcName = '';
@@ -167,11 +159,9 @@ export class AddFunctionComponent implements OnInit {
       if (this.funcObj.funcValue === 'temperature') {
         this.tempTemprature = this.tempratureControl;
         this.funcObj.tempratureControlFunc = this.tempTemprature;
-        console.log(this.funcObj.tempratureControlFunc);
       } else if (this.funcObj.funcValue === 'dosing') {
         this.tempDosing = this.dosing;
         this.funcObj.dosingFunc = this.tempDosing;
-        console.log(this.funcObj.dosingFunc);
       } else if (this.funcObj.funcValue === 'operator') {
         let i = this.operatorMessageList.findIndex(v => v.id === this.operatorMessage.operatorCode);
         if (i > -1 && i != 3) {
@@ -179,16 +169,13 @@ export class AddFunctionComponent implements OnInit {
         }
         this.tempOperator = this.operatorMessage;
         this.funcObj.operatorMessageFunc = this.tempOperator;
-        console.log(this.funcObj.operatorMessageFunc);
       }
       else if (this.funcObj.funcValue === 'water') {
         this.tempWater = this.waterControl;
         this.funcObj.waterControlFunc = this.tempWater
-        console.log(this.funcObj.waterControlFunc);
       } else if (this.funcObj.funcValue === 'pump') {
         this.tempPump = this.pumpControl;
         this.funcObj.pumpControlFunc = this.tempPump;
-        console.log(this.funcObj.pumpControlFunc);
       }
       this.activeModal.close(this.funcObj);
     }
