@@ -87,6 +87,13 @@ const routes: Routes = [{
       canLoad: [SupplierGuard]
     },
     {
+      path: 'batch-shuffle',
+      loadChildren: () => import('./batch-shuffle/batch-shuffle.module')
+        .then(m => m.BatchShuffleModule),
+      canActivate: [SupplierGuard],
+      canLoad: [SupplierGuard]
+    },
+    {
       path: 'stock-batch',
       loadChildren: () => import('./stock-batch/stock-batch.module')
         .then(m => m.StockBatchModule),

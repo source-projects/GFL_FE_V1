@@ -22,99 +22,76 @@ export class ShuffleComponent implements OnInit {
   public rval = 1;
 
   shuffleForm: FormGroup;
+
   //form Validation
   formSubmitted = false;
+
   //to store party info
   party: any[];
-  private pId:any;
-  private qId:any;
+  private pId: any;
+
+  //to store quality info
+  private qId: any;
+  quality: any[];
 
   part1 = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
+    
   ];
 
   part2 = [];
-  quality: any[];
+
+  //to store batch info based on party and quality
   qualityParty: any[];
-  bId: any;
+  bId1: any;
+  bId2: any;
   batches: any[];
+
+
+
+  constructor(private partyService: PartyService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private batchByQualityPartyService: BatchByQualityPartyService) {
+    this.shuffleForm = this.formBuilder.group({
+      partyName: new FormControl(null, Validators.required),
+      qualityName: new FormControl(null, Validators.required),
+      batchName1: new FormControl(null, Validators.required),
+      batchName2: new FormControl(null, Validators.required),
+    });
+  }
+
   ngOnInit(): void {
 
     this.flag = 1;
-
-
-
-
     this.getPartyList();
     this.getQualtiyList();
-    
 
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+  //party drop down validation
+  hasDropDownError() {
+
+    if (this.shuffleForm.controls['partyName'].invalid) {
+      this.flag = 1;
+      return true;
     }
-  }
-  onChange(event) {
-    this.formSubmitted = true;
-
-
-    switch (event) {
-
-      case 1:
-        this.rval = 1;
-        this.flag = 1;
-
-        break;
-
-      case 2:
-        this.rval = 2;
-        if (this.shuffleForm.controls['partyName'].invalid && this.shuffleForm.controls['qualityName'].invalid) {
-          this.flag = 1;
-        }
-
-        else {
-          this.flag = 0;
-        }
-
-        break;
-
-
+    else if (this.shuffleForm.controls['partyName'].valid && this.rval == 2) {
+      this.flag = 0;
+      return false;
     }
+
+
   }
 
-  dropSelect1(event){
-    this.pId=this.shuffleForm.controls['partyName'].value;
-    this.qId=this.shuffleForm.controls['qualityName'].value;
-   if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid  )
-   {
-    this.getBatches();
-   }
-    // console.log(this.pId);
-    // console.log(this.qId);
-  }
-  getVal1(){
-    this.getQualityParty();
-    
-    this.bId=this.shuffleForm.controls['batchName2'].value;
-    console.log(this.bId);
-    //this.getBatches();
-  }
-  getVal(){
-    this.getQualityParty();
-    
-    this.bId=this.shuffleForm.controls['batchName1'].value;
-    console.log(this.bId);
-    //this.getBatches();
+  //quality drop down validation
+  hasDropDownError1() {
+
+    if (this.shuffleForm.controls['qualityName'].invalid) {
+      this.flag = 1;
+      return true;
+    }
+    else if (this.shuffleForm.controls['qualityName'].valid && this.rval == 2) {
+      this.flag = 0;
+      return false;
+    }
+
   }
 
   getPartyList() {
@@ -150,45 +127,47 @@ export class ShuffleComponent implements OnInit {
     );
   }
 
-  hasDropDownError() {
 
-    if (this.shuffleForm.controls['partyName'].invalid) {
-      this.flag = 1;
-      return true;
-    }
-    else if (this.shuffleForm.controls['partyName'].valid && this.rval == 2) {
-      this.flag = 0;
-      return false;
-    }
-    
 
-  }
-  hasDropDownError1() {
 
-    if (this.shuffleForm.controls['qualityName'].invalid) {
-      this.flag = 1;
-      return true;
-    }
-    else if (this.shuffleForm.controls['qualityName'].valid && this.rval == 2) {
-      this.flag = 0;
-      return false;
-    }
-    else {
+  //get party and qulaity Id
+  dropSelect(event) {
 
-    }
+    this.pId = this.shuffleForm.controls['partyName'].value;
+    this.qId = this.shuffleForm.controls['qualityName'].value;
   }
 
+
+  //raido select for split and merge
+  onChange(event) {
+    this.formSubmitted = true;
+    switch (event) {
+
+      case 1:
+        this.rval = 1;
+        this.flag = 1;
+        break;
+
+      case 2:
+        this.rval = 2;
+        if (this.shuffleForm.controls['partyName'].invalid && this.shuffleForm.controls['qualityName'].invalid) {
+          this.flag = 1;
+        }
+
+        else {
+          this.flag = 0;
+        }
+        break;
+    }
+  }
 
   getQualityParty() {
-    
+
     this.batchByQualityPartyService.getBatchById(this.qId, this.pId).subscribe(
-      
+
       (data) => {
         if (data["success"]) {
-         
           this.qualityParty = data["data"];
-          console.log(this.qualityParty);
-
         }
         else {
           this.toastr.error(data['msg'])
@@ -200,14 +179,32 @@ export class ShuffleComponent implements OnInit {
     );
   }
 
-  getBatches(){
-    this.batchByQualityPartyService.getBatchesById(this.bId).subscribe(
+
+  //get list of batches based on partId and batchId
+  getVal() {
+    this.getQualityParty();   
+  }
+
+  // get list of all batches(meter-weight) inside selected batch
+  temp() {
+    this.bId1 = this.shuffleForm.controls['batchName1'].value;
+    this.getBatches(this.bId1);
+  }
+  temp1() {
+    this.bId2 = this.shuffleForm.controls['batchName2'].value;
+    this.getBatches(this.bId2);
+  }
+
+
+  getBatches(currentbId) {
+
+    if(this.shuffleForm.controls['batchName1'].valid && this.rval==1){
+
+        this.batchByQualityPartyService.getBatchesById(currentbId).subscribe(
       (data) => {
         if (data["success"]) {
-         
           this.batches = data["data"];
-          console.log(this.batches);
-
+          //console.log(this.batches);
         }
         else {
           this.toastr.error(data['msg'])
@@ -217,15 +214,56 @@ export class ShuffleComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error)
       }
     );
-  }
-  constructor(private partyService: PartyService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private batchByQualityPartyService: BatchByQualityPartyService) {
-    this.shuffleForm = this.formBuilder.group({
-      partyName: new FormControl(null, Validators.required),
-      qualityName: new FormControl(null, Validators.required),
-      batchName1: new FormControl(null, Validators.required),
-      batchName2: new FormControl(null, Validators.required),
-    });
+    }
+
+    else if( this.rval==2){
+      
+      if(this.shuffleForm.controls['batchName2'].valid){
+      this.batchByQualityPartyService.getBatchesById(currentbId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.part2 = data["data"];
+            //console.log(this.part2);
+          }
+          else {
+            this.toastr.error(data['msg'])
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      );
+    }
+    if(this.shuffleForm.controls['batchName1'].valid){
+      this.batchByQualityPartyService.getBatchesById(currentbId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.batches = data["data"];
+            //console.log(this.batches);
+          }
+          else {
+            this.toastr.error(data['msg'])
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      );
+    }
+
+    }
   }
 
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+  }
 
 }
