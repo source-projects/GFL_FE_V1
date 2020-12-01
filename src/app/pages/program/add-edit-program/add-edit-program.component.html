@@ -15,7 +15,7 @@
                     <div class="col-md-3">
                         <label class="required">Party Name</label>
                         <ng-select name="partyId" [(ngModel)]='programValues.partyId' required #partyId1="ngModel"
-                        [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}">
+                        [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="enableQuality($event)">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
                         <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)" >
@@ -27,8 +27,8 @@
                     <div class="col-md-3">
                         <label class="required">Quality Id</label>
                         <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required #qualityId1="ngModel"
-                        [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)=getQualityInfo(programValues.qualityId)>
-                            <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">{{q.qualityId}}</ng-option>
+                        [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)=getQualityInfo($event,programValues.qualityId)>
+                            <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">{{q.qualityId}} - {{q.partyName}}</ng-option>
                         </ng-select>
                         <div class="required-class" *ngIf="formSubmitted && (qualityId1.invalid)" >
                             <span>Quality id is required</span>
@@ -39,14 +39,14 @@
                     <div class="col-md-3">
                         <label class="required">Quality Name</label>
                         <input type="text" name="qualityName" #qualityName1="ngModel" class="form-control"
-                            [(ngModel)]='programValues.qualityName' readonly>
+                            [(ngModel)]='programValues.qualityName' readonly required>
                     </div>
 
                     <!-- Quality Type -->
                     <div class="col-md-3">
                         <label class="required">Quality Type</label>
                         <input type="text" name="qualityType" #qualityType1="ngModel" class="form-control"
-                            [(ngModel)]='programValues.qualityType' readonly>
+                            [(ngModel)]='programValues.qualityType' readonly required>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     <div class="col-md-4">
                         <label class="required">Program Given By</label>
                         <select id="programGivenBy" class="form-control"
-                        #pgb1="ngModel"
+                        #pgb1="ngModel" required
                         [(ngModel)]='programValues.programGivenBy' name="programGivenBy"
                         [ngClass]="{'is-invalid': formSubmitted && pgb1.invalid}">
                             <option value="master">Master</option>
@@ -70,7 +70,7 @@
                     <!-- Priority -->
                     <div class="col-md-4">
                         <label class="required">Priority</label>
-                        <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority"
+                        <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required
                         [ngClass]="{'is-invalid': formSubmitted && priority1.invalid}" #priority1="ngModel" [items]="priorityData"
                         bindLabel="name" bindValue="name" >
                         </ng-select>

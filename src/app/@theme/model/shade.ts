@@ -8,7 +8,8 @@ export class Shade {
   labColorNo: String;
   category: String;
   remark: String;
-  createdBy: String;
+  createdBy: Number;
+  updatedBy: Number;
   cuttingId: Number;
   partyId: Number;
   processId: Number;

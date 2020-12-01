@@ -8,7 +8,9 @@ export class Program {
     qualityName: string;
     qualityType: string;
     remark: string;
-    createdBy: string;
+    createdBy: Number;
+    updatedBy: Number;
+    userHeadId: Number;
     programRecords: ProgramRecords[];
 }
 export class ProgramRecords {

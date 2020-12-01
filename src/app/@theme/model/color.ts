@@ -7,7 +7,8 @@ export class Color {
     id:Number=null;
     remark:String;
     supplierId:Number;
-    userId:Number;
+    createdBy:Number;
+    updatedBy:Number;
     userHeadId:Number;
     colorDataList:ColorDataList[];
 }
