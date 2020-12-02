@@ -137,7 +137,7 @@
                     <option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</option>
                 </select>
             </div>
-            <div class="invalid-feedback" *ngIf="formSubmitted && (partyForm.get('userHeadId').invalid || (partyForm.get('userHeadId').dirty || partyForm.get('userHeadId').untouched) )">
+            <div class="invalid-feedback" *ngIf="formSubmitted && partyForm.get('userHeadId').invalid">
               <span>Master Name is required</span>
             </div>
           </div>
