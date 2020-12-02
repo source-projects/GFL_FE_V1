@@ -52,6 +52,20 @@ export class DynamicProcessComponent implements OnInit {
   //   )
   // }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
+    this.stepList.forEach((ele, index) => {
+      // ele.stepPosition = index + 1;
+    })
+  }
+
+  dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
+    moveItemInArray(this.stepList[stepPosition - 1].functionList, event.previousIndex, event.currentIndex);
+    this.stepList[stepPosition - 1].functionList.forEach((ele, index) => {
+      ele.funcPosition = index + 1;
+    })
+  }
+
   onAddStep() {
     const modalRef = this._modalService.open(AddStepComponent);
     modalRef.componentInstance.position = this.stepList.length + 1;

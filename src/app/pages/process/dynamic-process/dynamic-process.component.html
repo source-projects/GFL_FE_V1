@@ -36,9 +36,9 @@
                     <br>
                     {{stepList}}
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
-                        <div>
-                            <nb-accordion multi *ngFor="let step of stepList">
-                                <nb-accordion-item class="item" #item (click)="onStepClick(step)">
+                        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
+                            <nb-accordion multi *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag >
+                                <nb-accordion-item class="item" #item (click)="onStepClick(step)" cdkDropList (cdkDropListDropped)="drop($event)">
                                     <nb-accordion-item-header class="item-header"
                                         style="display: flex-end; justify-content: space-between;">
                                         <div style="font-size: 22px;">
@@ -58,8 +58,9 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body>
                                         <div *ngIf="step.functionList && step.functionList.length">
-                                            <nb-list>
-                                                <nb-list-item *ngFor="let func of step.functionList">
+                                            <nb-list cdkDropList class="example-list"
+                                            (cdkDropListDropped)="dropFunction($event,step.stepNo)"> 
+                                                <nb-list-item *ngFor="let func of step.functionList" cdkDragLockAxis="y" cdkDrag>
                                                     <div>
                                                         <h6 style="text-transform:uppercase !important;">
                                                             {{func.funcName}}</h6>
