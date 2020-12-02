@@ -59,6 +59,7 @@ import { ReportComponent } from './report/report.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/@theme/shared.module';
 import { ChartsModule } from 'ng2-charts';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -77,7 +78,9 @@ import { ChartsModule } from 'ng2-charts';
     NgxChartsModule,
     LeafletModule,
     NgSelectModule,
-    SharedModule
+    SharedModule,
+    OwlDateTimeModule,
+     OwlNativeDateTimeModule
   ],
   declarations: [
     ECommerceComponent,
