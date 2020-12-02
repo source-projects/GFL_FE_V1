@@ -47,6 +47,7 @@ export class QualityComponent implements OnInit {
   }
 
   onChange(event){
+    this.qualityList = [];
     switch(event){
       case 1: 
               this.getQualityList(this.userId,"own");

@@ -48,6 +48,7 @@ export class ProgramComponent implements OnInit {
   }
 
   onChange(event){
+    this.programList = [];
     switch(event){
       case 1: 
               this.getProgramList(this.userId,"own");

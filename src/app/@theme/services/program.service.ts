@@ -31,5 +31,10 @@ export class ProgramService {
     getStockQualityList(id) {
         return this.httpClient.get(this.commonService.envUrl() + 'api/program/StockQuality/' + id);
     }
-
+    getQualityByParty(id): any{
+        return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/' + id);
+    }
+    getPartyByQuality(id): any{
+        return this.httpClient.get(this.commonService.envUrl() + 'api/party/ByQuality/' + id);
+    }
 }

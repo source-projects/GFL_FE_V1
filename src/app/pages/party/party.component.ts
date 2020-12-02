@@ -74,6 +74,7 @@ export class PartyComponent implements OnInit {
   }
 
   onChange(event){
+    this.partyList = [];
     switch(event){
       case 1: 
               this.getAllParty(this.userId,"own");

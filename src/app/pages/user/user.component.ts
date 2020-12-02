@@ -48,6 +48,7 @@ export class UserComponent implements OnInit {
   }
 
   onChange(event){
+    this.userList = [];
     switch(event){
       case 1: 
               this.getAllUser(this.userId,"own");

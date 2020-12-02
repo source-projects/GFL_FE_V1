@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CommonService } from './common.service';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({
@@ -11,7 +9,7 @@ export class JwtTokenService {
   decodedToken: any;
   tokens;
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor() { }
 
   setToken(token: string) {
     if (token) {
@@ -63,12 +61,19 @@ export class JwtTokenService {
 
       case 'supplierRate':
         return this.tokens.permissions.sr;
+
+      case 'userId':
+        return this.tokens.sub;
+
+      case 'userHeadId':
+        return this.tokens.userHeadId;
+
+      case 'userName':
+          return this.tokens.userName;
       
       default:
         return null;
     }
-    //console.log(this.tokens);
-    return null;
   }
 
   getUser() {

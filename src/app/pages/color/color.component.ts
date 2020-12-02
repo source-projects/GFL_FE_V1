@@ -50,6 +50,7 @@ export class ColorComponent implements OnInit {
   }
 
   onChange(event){
+    this.colorList = [];
     switch(event){
       case 1: 
               this.getColor(this.userId,"own");

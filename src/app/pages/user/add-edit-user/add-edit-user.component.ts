@@ -90,6 +90,7 @@ export class AddEditUserComponent implements OnInit {
 
   userData: any;
   userId: any;
+  userHead;
   currentUserId: any;
 
   constructor(
@@ -130,6 +131,7 @@ export class AddEditUserComponent implements OnInit {
 
   public getUserId() {
     this.userId = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.currentUserId = this._route.snapshot.paramMap.get("id");
   }
 
@@ -454,7 +456,7 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.user = data["data"];
             this.user.designationId = data["data"].designationId.id
-            if(this.user.userHeadId != null)
+            if(this.user.userHeadId != 0)
               this.user.isUserHead = true;
             else
               this.user.isUserHead = false;
@@ -474,8 +476,11 @@ export class AddEditUserComponent implements OnInit {
   updateUser(userForm) {
     this.formSubmitted = true;
     if (userForm.valid) {
+      this.user.updatedBy = this.userId.userId;
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
+      if(!this.user.isUserHead) 
+        this.user.userHeadId = 0;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -495,9 +500,9 @@ export class AddEditUserComponent implements OnInit {
   addUser(myForm) {
     this.getCheckedItem();
     //this.user.userPermissionData=this.userPermissionData;
-
     this.formSubmitted = true;
     if (myForm.valid) {
+      this.user.createdBy = this.userId.userId;
       if (!this.user.isUserHead) this.user.userHeadId = 0;
       this.userService.createUser(this.user).subscribe(
         (data) => {

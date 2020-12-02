@@ -46,6 +46,7 @@ export class StockBatchComponent implements OnInit {
   }
 
   onChange(event){
+    this.stockList = [];
     switch(event){
       case 1: 
               this.getStockBatchList(this.userId,"own");

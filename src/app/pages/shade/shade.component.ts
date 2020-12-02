@@ -49,6 +49,7 @@ export class ShadeComponent implements OnInit {
   }
 
   onChange(event){
+    this.shadeList=[];
     switch(event){
       case 1: 
               this.getallShades(this.userId,"own");
