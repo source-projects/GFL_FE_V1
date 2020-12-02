@@ -4,6 +4,7 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from 'app/@theme/json/error.json';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: 'ngx-supplier',
@@ -17,6 +18,8 @@ export class SupplierComponent implements OnInit {
 
   //to get SupplierList
   supplierList=[];
+  supplier=[];
+  headers=["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark" ];
   radioSelect = 1;
   radioArray = [
     {id:1, value:"View Own"},
@@ -26,7 +29,13 @@ export class SupplierComponent implements OnInit {
   userHeadId;
   userId;
 
-  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
+  constructor(
+    private commonService:CommonService, 
+    private supplierService:SupplierService, 
+    private router:Router, 
+    private toastr: ToastrService,
+    private exportService: ExportService
+    ) { }
    
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -56,7 +65,10 @@ export class SupplierComponent implements OnInit {
     this.supplierService.getAllSupplier(id,getBy).subscribe(
       data=>{
         this.supplierList=data['data']
-        this.router.navigate(['pages/supplier']);
+        this.supplier=this.supplierList.map((element)=>({supplierName:element.supplierName, discountPercentage: element.discountPercentage,
+          gstPercentage: element.gstPercentage, paymentTerms:element.paymentTerms, remark:element.remark }))
+          console.log(this.supplier);
+        //this.router.navigate(['pages/supplier']);
       },
       error=>{
         //toaster

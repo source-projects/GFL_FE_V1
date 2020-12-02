@@ -6,6 +6,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: 'ngx-color',
@@ -19,6 +20,8 @@ export class ColorComponent implements OnInit {
  
  tableStyle = 'bootstrap';
  colorList=[];
+ color=[];
+ headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
  radioSelect=1;
  radioArray = [
   {id:1, value:"View Own"},
@@ -28,11 +31,14 @@ export class ColorComponent implements OnInit {
  userId;
  userHeadId;
 
-  constructor(private colorService: ColorService, 
-              private route:Router,
-              private modalService: NgbModal,
-              private toastr:ToastrService,
-              private commonService: CommonService
+  constructor(
+    private colorService: ColorService,
+    private route: Router,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private commonService: CommonService,
+    private exportService: ExportService
+
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +71,9 @@ export class ColorComponent implements OnInit {
         if (data["success"]) {
           this.colorList = data['data']
           console.log(this.colorList);
+          this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
+            billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
+            console.log(this.color);
         }
         else {
           this.toastr.error(data['msg'])

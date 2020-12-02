@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: 'ngx-shade',
@@ -18,6 +19,8 @@ export class ShadeComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   shadeList=[];
+  shade=[];
+  headers=["Party Shade No", "Process Name", "Quality Id", "Quality Name", "Party Name", "Color Tone" ];
   radioSelect = 1;
   radioArray = [
     {id:1, value:"View Own"},
@@ -27,12 +30,14 @@ export class ShadeComponent implements OnInit {
   userHeadId;
   userId;
   
-  constructor(private shadeService: ShadeService, 
-              private route:Router,
-              private modalService: NgbModal,
-              private toastr:ToastrService,
-              private commonService: CommonService
-              ) { }
+  constructor(
+    private shadeService: ShadeService,
+    private route: Router,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private commonService: CommonService,
+    private exportService: ExportService
+  ) { }
   
 
   ngOnInit(): void {
@@ -63,6 +68,9 @@ export class ShadeComponent implements OnInit {
   this.shadeService.getShadeMastList(id,getBy).subscribe(
       data =>{
         this.shadeList = data['data'];
+        this.shade=this.shadeList.map((element)=>({partyShadeNo:element.partyShadeNo, processName: element.processName,
+          qualityId: element.qualityId, qualityName:element.qualityName, partyName:element.partyName, colorTone:element.colorTone }))
+          console.log(this.shade);
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)

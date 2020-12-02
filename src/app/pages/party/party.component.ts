@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: "ngx-party",
@@ -19,6 +20,9 @@ export class PartyComponent implements OnInit {
   tablestyle = "bootstrap";
 
   partyList = [];
+  party=[];
+  arr=[];
+  headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
   radioSelect = 1;
   radioArray = [
     {id:1, value:"View Own"},
@@ -33,7 +37,8 @@ export class PartyComponent implements OnInit {
     private modalService: NgbModal,
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private exportService: ExportService
   ) { }
 
   ngOnInit(): void {
@@ -42,13 +47,19 @@ export class PartyComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getAllParty(this.userId,"own");
+   
   }
+
 
   getAllParty(id,getBy) {
     this.partyService.getAllPartyList(id,getBy).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
+         // console.log(this.partyList);
+          this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
+            city:element.city, state: element.state}))
+           // console.log(this.party);
         }
         else {
           this.toastr.error(data['msg'])
@@ -58,6 +69,8 @@ export class PartyComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error)
       }
     );
+   
+    
   }
 
   onChange(event){
@@ -94,4 +107,6 @@ export class PartyComponent implements OnInit {
       }
     });
   }
+
+ 
 }

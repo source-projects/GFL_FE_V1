@@ -6,6 +6,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class ProgramComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   programList: any[];
+  program=[];
+  headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
   tableStyle = "bootstrap";
   userId;
   userHeadId;
@@ -27,7 +30,14 @@ export class ProgramComponent implements OnInit {
     {id:3, value:"View All"}
   ];
 
-  constructor(private commonService: CommonService, private programService: ProgramService, private router: Router, private toastr: ToastrService, private modalService: NgbModal,) { }
+  constructor(
+    private commonService: CommonService, 
+    private programService: ProgramService, 
+    private router: Router, 
+    private toastr: ToastrService, 
+    private modalService: NgbModal,
+    private exportService: ExportService
+    ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -58,6 +68,9 @@ export class ProgramComponent implements OnInit {
       data => {
         if (data['success']) {
           this.programList = data['data']
+          this.program=this.programList.map((element)=>({partyName:element.partyName, programBy: element.programBy,
+            qualityId: element.qualityId, qualityName:element.qualityName, qualityType:element.qualityType, priority:element.priority }))
+            console.log(this.program);
         }
         else {
           this.toastr.error(errorData.Internal_Error);

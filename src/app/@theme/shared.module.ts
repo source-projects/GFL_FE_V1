@@ -28,6 +28,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
+import { ExportDirective } from './directives/export.directive';
+//import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -54,13 +57,14 @@ const NB_MODULES = [
   NbTooltipModule,
   ColorPickerModule,
   NgSelectModule,
-  NgbDatepickerModule
+  NgbDatepickerModule,
+  //NgbModal
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [ExportDirective],
   imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES],
+  exports: [...NB_MODULES,ExportDirective],
   providers:[  ]
 })
 export class SharedModule {}

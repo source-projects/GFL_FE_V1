@@ -6,6 +6,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from "app/@theme/services/user.service";
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: 'ngx-user',
@@ -17,6 +18,8 @@ export class UserComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   userList=[];
+  user=[];
+  headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
   userId;
   userHeadId;
   radioSelect = 1;
@@ -31,7 +34,9 @@ export class UserComponent implements OnInit {
     private modalService: NgbModal,
     private toastr:ToastrService,
     private userService:UserService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private exportService: ExportService
+
   ) { }
 
   ngOnInit(): void {
@@ -61,8 +66,12 @@ export class UserComponent implements OnInit {
   getAllUser(id,getBy){
     this.userService.getAllUser(id,getBy).subscribe(
       data =>{
-        if(data["success"])
+        if(data["success"]){
           this.userList = data['data'];
+          this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+            lastName: element.lastName, company:element.company, designation:element.designation }))
+            console.log(this.user);
+          }
         else
           this.toastr.error(data["msg"])
       },

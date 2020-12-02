@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { CommonService } from 'app/@theme/services/common.service';
-
+import { ExportService } from 'app/@theme/services/export.service';
 @Component({
   selector: 'ngx-quality',
   templateUrl: './quality.component.html',
@@ -21,12 +21,22 @@ export class QualityComponent implements OnInit {
     {id:2, value:"View Group"},
     {id:3, value:"View All"}
   ];
-  qualityList:[];
+  qualityList=[];
+  quality=[];
+  headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
+
   radioSelect = 1;
   userId;
   userHeadId;
   tableStyle = 'bootstrap';
-  constructor(private commonService: CommonService, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
+  constructor(
+    private commonService: CommonService,
+    private qualityService: QualityService,
+    private toastr: ToastrService,
+    private jwtToken: JwtTokenService,
+    private storeTokenService: StoreTokenService,
+    private exportService: ExportService
+    ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -57,6 +67,9 @@ export class QualityComponent implements OnInit {
       data => {
         if (data['success']) {
           this.qualityList = data['data']
+          this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+             qualityType: element.qualityType,partyName:element.partyName }))
+             console.log(this.quality);
         }
         else {
           this.toastr.error(data['msg'])

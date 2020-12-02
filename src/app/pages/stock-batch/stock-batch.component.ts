@@ -5,6 +5,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
 
 @Component({
   selector: 'ngx-stock-batch',
@@ -15,6 +16,8 @@ export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
 
   stockList;
+  stock=[];
+  headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
   
   tablestyle = "bootstrap";
   radioSelect = 1;
@@ -30,7 +33,8 @@ export class StockBatchComponent implements OnInit {
     private modalService: NgbModal,
     private toastr:ToastrService,
     private stockBatchService: StockBatchService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private exportService: ExportService
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +67,9 @@ export class StockBatchComponent implements OnInit {
         if(data["success"]){
           this.stockList = data["data"];
           console.log(this.stockList)
+          this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
+            console.log(this.stock);
         }else
           this.toastr.error(data["msg"]);
       },

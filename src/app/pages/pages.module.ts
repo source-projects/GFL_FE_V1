@@ -11,6 +11,7 @@ import { PartyModule } from './party/party.module';
 import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
 import {UserModule} from './user/user.module';
+
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -26,7 +27,7 @@ import {UserModule} from './user/user.module';
   ],
   declarations: [
     PagesComponent,
-    
+   
   ],
 })
 export class PagesModule {

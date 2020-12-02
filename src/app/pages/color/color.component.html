@@ -5,8 +5,12 @@
                 <div class="col-md-6">
                     <h2>COLOR STOCK</h2>
                 </div>
-                <div class="col-md-6" style="text-align: right;">
-                    <button class="btn btn-primary btn-sm" routerLink='/pages/color/add'>ADD</button>  
+                <div class="col-md-5">
+                    <button style="float:right; "  class="btn btn-primary btn-sm"
+                    [ngxExport]="color" fileName="export" [headers]="headers">EXPORT</button>
+                </div>
+                <div class="col-md-1" >
+                    <button class="btn btn-primary btn-sm" style="float:right; margin-left: 10px;" routerLink='/pages/color/add'>ADD</button>  
                 </div>
             </div>
         </nb-card-header>
