@@ -22,9 +22,9 @@ export class ProgramComponent implements OnInit {
   userHeadId;
   radioSelect = 1;
   radioArray = [
-    {id:1, value:"View Own"},
-    {id:2, value:"View Group"},
-    {id:3, value:"View All"}
+    { id: 1, value: "View Own" },
+    { id: 2, value: "View Group" },
+    { id: 3, value: "View All" }
   ];
 
   constructor(private commonService: CommonService, private programService: ProgramService, private router: Router, private toastr: ToastrService, private modalService: NgbModal,) { }
@@ -34,34 +34,34 @@ export class ProgramComponent implements OnInit {
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
-    this.getProgramList(this.userId,"own");
+    this.getProgramList(this.userId, "own");
   }
 
-  onChange(event){
+  onChange(event) {
     this.programList = [];
-    switch(event){
-      case 1: 
-              this.getProgramList(this.userId,"own");
-              break;
+    switch (event) {
+      case 1:
+        this.getProgramList(this.userId, "own");
+        break;
 
-      case 2: 
-              this.getProgramList(this.userHeadId,"group");
-              break;
+      case 2:
+        this.getProgramList(this.userHeadId, "group");
+        break;
 
       case 3:
-              this.getProgramList(0,"all");
-              break;
+        this.getProgramList(0, "all");
+        break;
     }
   }
 
-  public getProgramList(id,getBy) {
-    this.programService.getProgramList(id,getBy).subscribe(
+  public getProgramList(id, getBy) {
+    this.programService.getProgramList(id, getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
         }
         else {
-          this.toastr.error(errorData.Internal_Error);
+          this.toastr.error(data['msg']);
         }
       },
       error => {

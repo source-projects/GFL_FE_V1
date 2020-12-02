@@ -22,7 +22,7 @@ export class ShadeService {
     return this.httpClient.delete(this.commonService.envUrl() + 'api/shade/' + id);
   }
   getQualityProcessList(getBy, id): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/qualityprocess/all/'+getBy+'/'+id);
+    return this.httpClient.get(this.commonService.envUrl() + 'api/qualityprocess/all/' + getBy + '/' + id);
   }
   getCurrentShadeData(id): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/shade/' + id);
@@ -30,10 +30,13 @@ export class ShadeService {
   /* getAllCurrentShadeData():any{
      return this.httpClient.get(this.commonService.envUrl()+'api/shade/current/all');
    }*/
-  getShadeMastList(id,getBy): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all/'+getBy+'/'+id);
+  getShadeMastList(id, getBy): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all/' + getBy + '/' + id);
   }
-  getQualityFromParty(id): any{
-    return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/'+id);
+  getQualityFromParty(id): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/' + id);
+  }
+  getPartyFromQuality(id) {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/party/ByQuality/' + id);
   }
 }
