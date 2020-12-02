@@ -8,7 +8,9 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { QualityService } from 'app/@theme/services/quality.service';
 import { BatchByQualityPartyService } from 'app/@theme/services/batch-by-quality-party.service';
-
+import { Router } from '@angular/router';
+import { ShuffleService } from "app/@theme/services/shuffle.service";
+import { StockBatch, BatchData } from "app/@theme/model/stock-batch";
 
 @Component({
   selector: 'ngx-shuffle',
@@ -21,7 +23,13 @@ export class ShuffleComponent implements OnInit {
   public flag = 0;
   public rval = 1;
   public btnFlag=0;
+  public setBatchFlag=0;
   shuffleForm: FormGroup;
+
+
+  stockBatchArray: BatchData[] = [];
+  stockBatch: StockBatch = new StockBatch();
+  stockBatchData: BatchData = new BatchData();
 
   //form Validation
   formSubmitted = false;
@@ -47,10 +55,13 @@ export class ShuffleComponent implements OnInit {
   batches: any[];
   i: number;
   sum=0;
+  batchDataList=[];
+  mergeArray=[];
+  objectOfBatch1={};
+  objectOfBatch2={};
 
 
-
-  constructor(private partyService: PartyService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private batchByQualityPartyService: BatchByQualityPartyService) {
+  constructor(private partyService: PartyService, private shuffleService:ShuffleService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private route: Router,private batchByQualityPartyService: BatchByQualityPartyService) {
     this.shuffleForm = this.formBuilder.group({
       partyName: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
@@ -60,6 +71,7 @@ export class ShuffleComponent implements OnInit {
       totalmtr2:new FormControl(),
       totalwt1:new FormControl(),
       totalwt2:new FormControl(),
+      updatedBy: new FormControl(null),
 
     });
   }
@@ -195,19 +207,19 @@ export class ShuffleComponent implements OnInit {
     this.getQualityParty();   
   }
   findmtrsum(){
-    console.log("ssss"+this.batches.length);
+   // console.log("ssss"+this.batches.length);
     this.sum=0;
     for(this.i=0;this.i<=this.batches.length-1;this.i++){
 
       this.sum+=this.batches[this.i].mtr;
-      console.log(this.sum);
+      //console.log(this.sum);
       this.shuffleForm.patchValue({totalmtr1:this.sum});
      }
      this.sum=0;
      for(this.i=0;this.i<=this.part2.length-1;this.i++){
 
       this.sum+=this.part2[this.i].mtr;
-      console.log(this.sum);
+      //console.log(this.sum);
       this.shuffleForm.patchValue({totalmtr2:this.sum});
      }
 
@@ -215,20 +227,20 @@ export class ShuffleComponent implements OnInit {
      
   }
   findwtsum(){
-    console.log("weight"+this.batches.length);
+    //console.log("weight"+this.batches.length);
     this.sum=0;
     for(this.i=0;this.i<=this.batches.length-1;this.i++){
 
       this.sum+=this.batches[this.i].wt;
-      console.log(this.sum);
+     // console.log(this.sum);
       this.shuffleForm.patchValue({totalwt1:this.sum});
      }
      this.sum=0;
-     console.log("rrr"+this.part2.values);
+     //console.log("rrr"+this.part2.values);
      for(this.i=0;this.i<=this.part2.length-1;this.i++){
 
       this.sum+=this.part2[this.i].wt;
-      console.log(this.sum);
+      //console.log(this.sum);
       this.shuffleForm.patchValue({totalwt2:this.sum});
      }
     
@@ -238,15 +250,21 @@ export class ShuffleComponent implements OnInit {
   temp() {
     this.bId1 = this.shuffleForm.controls['batchName1'].value;
     this.getBatches(this.bId1);
-    //this.findmtrsum();
-    // if(this.batches.length>0){
+    
+    // if(this.bId1){
     //  this.findmtrsum();
+    //  console.log("www");
+    //  this.findwtsum();
     // }
   }
   temp1() {
     this.bId2 = this.shuffleForm.controls['batchName2'].value;
     this.getBatches(this.bId2);
-    // this.findmtrsum();
+    // if(this.bId2){
+    //   this.findmtrsum();
+    //   console.log("jjj");
+    //   this.findwtsum();
+    //  }
   }
 
 
@@ -258,11 +276,12 @@ export class ShuffleComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.batches = data["data"];
-          console.log(this.batches);
+          //console.log(this.batches);
         }
         else {
           this.toastr.error(data['msg'])
         }
+        this.setBatchFlag=1;
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error)
@@ -288,7 +307,8 @@ export class ShuffleComponent implements OnInit {
         }
       );
     }
-    if(this.shuffleForm.controls['batchName1'].valid){
+    if(this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag==0){
+      this.setBatchFlag=1;
       this.batchByQualityPartyService.getBatchesById(currentbId).subscribe(
         (data) => {
           if (data["success"]) {
@@ -320,7 +340,7 @@ export class ShuffleComponent implements OnInit {
     }
 
     this.findmtrsum();
-    console.log("vapsi");
+    
     this.findwtsum();
   }
 
@@ -328,7 +348,7 @@ export class ShuffleComponent implements OnInit {
   splitsubmit(){
     if (this.part2.length==0){
       alert("No batch was splitted");
-        //console.log("e");
+        
     }
     
   }
@@ -336,8 +356,45 @@ export class ShuffleComponent implements OnInit {
   mergesubmit(){
     if (this.part2.length==0){
       alert("No batch was choosen to merge");
-        //console.log("e");
+        
     }
+    else{
+      this.formSubmitted = true;
+    
+      
+      this.shuffleForm.value.updatedBy = this.batches;
+      
+
+    this.objectOfBatch1={"batchDataList":this.batches};
+    console.log(this.objectOfBatch1);
+
+    this.objectOfBatch2={"batchDataList":this.part2};
+    console.log(this.objectOfBatch2);
+
+      this.mergeArray.push(this.objectOfBatch1);
+      this.mergeArray.push(this.objectOfBatch2);
+      console.log(this.mergeArray);
+
+      
+       this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
+        (data) => {
+          console.log("in1"+this.shuffleForm.value.updatedBy);
+          if (data["success"]) {
+            this.route.navigate(["/pages/batch-shuffle"]);
+            this.toastr.success(errorData.Update_Success)
+          }
+          else {
+            this.toastr.error(errorData.Update_Error)
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+       );
+    }
+    
+    
   }
+  
 
 }
