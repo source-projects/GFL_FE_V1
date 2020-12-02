@@ -8,14 +8,16 @@ import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
 import { DatePipe } from '@angular/common';
-import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ColorService } from 'app/@theme/services/color.service';
+import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
   templateUrl: "./add-edit-stock-batch.component.html",
   styleUrls: ["./add-edit-stock-batch.component.scss"],
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 
 })
 export class AddEditStockBatchComponent implements OnInit {
@@ -65,13 +67,14 @@ export class AddEditStockBatchComponent implements OnInit {
 
   constructor(
     private partyService: PartyService,
+    private shadeService: ShadeService,
     private toastr: ToastrService,
     private route: Router,
     private qualityService: QualityService,
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -85,23 +88,55 @@ export class AddEditStockBatchComponent implements OnInit {
 
   getUnit() {
     this.qualityList.forEach((element) => {
+      console.log(this.qualityList)
       if (element.id == this.stockBatch.qualityId)
         this.stockBatch.unit = element.unit;
       console.log(element.unit);
     });
   }
 
+  setQualityByParty(event) {
+    if (event != undefined) {
+      if (this.stockBatch.partyId) {
+        this.shadeService.getQualityFromParty(this.stockBatch.partyId).subscribe(
+          data => {
+            this.qualityList = data['data'].qualityDataList;
+            //this.stockBatch.partyId = data['data'].partyId
+            console.log(this.qualityList);
+            this.qualityList.forEach((element) => {
+              console.log(this.qualityList)
+              if (element.id == this.stockBatch.qualityId)
+                this.stockBatch.unit = element.unit;
+              console.log(element.unit);
+            });
+
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        )
+      }
+    }
+    else {
+      this.stockBatch.partyId = null;
+      this.stockBatch.qualityId = null;
+      this.stockBatch.unit = null;
+      this.getPartyList();
+      this.getQualityList();
+    }
+  }
+
   getUpdateData() {
     this.stockBatchService.getStockBatchById(this.currentStockBatch).subscribe(
       (data) => {
         if (data["success"]) {
-          this.stockBatch.billDate = new Date (data["data"].billDate);
+          this.stockBatch.billDate = new Date(data["data"].billDate);
           console.log(this.stockBatch.billDate);
           this.stockBatch.qualityId = data["data"].qualityId;
           this.stockBatch.unit = data["data"].unit;
           this.stockBatch.stockInType = data["data"].stockInType;
           this.stockBatch.billNo = data["data"].billNo;
-          this.stockBatch.chlDate =new Date ( data["data"].chlDate);
+          this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
           this.stockBatch.remark = data["data"].remark;
@@ -147,7 +182,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality(0,"all").subscribe(
+    this.qualityService.getallQuality(0, "all").subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -166,7 +201,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList(0,"all").subscribe(
+    this.partyService.getAllPartyList(0, "all").subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -180,7 +215,7 @@ export class AddEditStockBatchComponent implements OnInit {
     );
   }
 
- 
+
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
@@ -221,10 +256,10 @@ export class AddEditStockBatchComponent implements OnInit {
             clearInterval(interval);
           }
         }, 50);
-       /* this.toastr.error(
-          "go to any last row input to add new row",
-          "Empty Field"
-        );*/
+        /* this.toastr.error(
+           "go to any last row input to add new row",
+           "Empty Field"
+         );*/
       }
     }
   }
@@ -291,13 +326,13 @@ export class AddEditStockBatchComponent implements OnInit {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Add_Success);
           } else {
-            this.stockBatchArray=[];
+            this.stockBatchArray = [];
             this.toastr.error(data['msg']);
-           
+
           }
         },
         (error) => {
-          this.stockBatchArray=[];
+          this.stockBatchArray = [];
           this.toastr.error(errorData.Serever_Error);
         }
       );
@@ -326,13 +361,13 @@ export class AddEditStockBatchComponent implements OnInit {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Update_Success);
           }
-          else{
-            this.stockBatchArray=[];
+          else {
+            this.stockBatchArray = [];
             this.toastr.error(data["msg"]);
           }
         },
         (error) => {
-          this.stockBatchArray=[];
+          this.stockBatchArray = [];
           this.toastr.error(errorData.Update_Error);
         }
       );
