@@ -1,19 +1,31 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { JwtTokenService } from './jwt-token.service';
+import { StoreTokenService } from './store-token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  constructor() { }
+  constructor(private token: StoreTokenService, private jwt:JwtTokenService) { }
 
   getUser(){
-    return ({'userId':1});
+    this.jwt.setToken(this.token.get('token'));
+    this.jwt.decodeToken();
+    return ({'userId': this.jwt.getDecodeToken('userId')});
   }
 
   getUserHeadId(){
-    return ({'userHeadId':1});
+    this.jwt.setToken(this.token.get('token'));
+    this.jwt.decodeToken();
+    return ({'userHeadId': this.jwt.getDecodeToken('userHeadId')});
+  }
+
+  getUserName(){
+    this.jwt.setToken(this.token.get('token'));
+    this.jwt.decodeToken();
+    return ({'name': this.jwt.getDecodeToken('userName')});
   }
 
   envUrl(){
