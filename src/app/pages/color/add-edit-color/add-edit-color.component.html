@@ -14,7 +14,7 @@
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name</label>
                         <ng-select aria-placeholder="Select supplier name"
-                            [(ngModel)]="color.supplierId" #supplierName1="ngModel" name="supplierName" required>
+                            [(ngModel)]="color.supplierId" #supplierName1="ngModel" name="supplierName" (click)="getAllSupplierRate($event)" required>
                             <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                {{s.supplierName}}
                             </ng-option>
@@ -24,7 +24,6 @@
                             <span>Supplier Name is required</span>
                         </div>
                     </div>
-                        
                     <div class="form-group col-md-4">
                         <label>Remark</label>
                         <textarea name="remark" #remark1="ngModel" [(ngModel)]="color.remark" class="form-control"></textarea>
