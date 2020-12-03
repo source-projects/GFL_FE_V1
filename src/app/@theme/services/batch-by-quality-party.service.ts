@@ -16,11 +16,11 @@ export class BatchByQualityPartyService {
     
   }
 
-  getBatchesById(bid): any{
+  // getBatchesById(bid): any{
     
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+bid);
+  //   return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+bid);
     
-  }
+  // }
 
 
 }
