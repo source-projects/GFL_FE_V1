@@ -17,7 +17,7 @@
 
             <div class="col-md-6">
               <label class="required">Party Name:</label>
-              <ng-select name="partyId" formControlName="partyName" (change)="dropSelect($event)">
+              <ng-select name="partyId" formControlName="partyName"  (change)="dropSelect($event)">
 
                 <ng-option *ngFor="let p of party" [value]="p.id"> {{p.partyName}}
                 </ng-option>
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-6">
               <label class="required">Quality Name:</label>
-              <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)">
+              <ng-select name="qualityId" formControlName="qualityName"  (change)="dropSelect($event)">
 
                 <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
                 </ng-option>
@@ -55,7 +55,7 @@
             <div class="col-md-6">
               <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
               <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()">
-                <ng-option *ngFor="let b of qualityParty" [value]="b.batchId">{{b.batchId}}
+                <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
                 </ng-option>
               </ng-select>
               <!-- <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
@@ -66,7 +66,7 @@
             <div class="col-md-6" [hidden]="flag">
               <label class="required">Second Batch Name:</label>
               <ng-select name="batchId" formControlName="batchName2" (click)="getVal()" (change)="temp1()">
-                <ng-option *ngFor="let b of qualityParty" [value]="b.batchId">{{b.batchId}}
+                <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
                 </ng-option>
               </ng-select>
               
@@ -108,10 +108,10 @@
           <hr>
           <div class="col-md-12">
             <label class="required" style="padding-right: 2%;margin-right: 10%;">Total:</label>
-            <input type="text" formControlName="totalmtr1" [readonly]="true" style="width: 5%;margin-right: 5%;background-color: lightgray;">
-            <input type="text" formControlName="totalwt1" [readonly]="true" style="width: 5%;background-color: lightgray;">
-            <input type="text" formControlName="totalmtr2" [readonly]="true" style="width: 5%;margin-right: 5%;margin-left: 25%;background-color: lightgray;">
-            <input type="text" formControlName="totalwt2" [readonly]="true" style="width: 5%;background-color: lightgray;">
+            <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true" style="width: 5%;margin-right: 5%;background-color: lightgray;">
+            <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true" style="width: 5%;background-color: lightgray;">
+            <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true" style="width: 5%;margin-right: 5%;margin-left: 25%;background-color: lightgray;">
+            <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true" style="width: 5%;background-color: lightgray;">
         
           </div>
           
