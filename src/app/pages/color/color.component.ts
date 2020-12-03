@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-color',
@@ -46,28 +47,28 @@ export class ColorComponent implements OnInit {
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
-    this.getColor(this.userId,"own");
+    this.getColor(this.userId, "own");
   }
 
-  onChange(event){
+  onChange(event) {
     this.colorList = [];
-    switch(event){
-      case 1: 
-              this.getColor(this.userId,"own");
-              break;
+    switch (event) {
+      case 1:
+        this.getColor(this.userId, "own");
+        break;
 
-      case 2: 
-              this.getColor(this.userHeadId,"group");
-              break;
+      case 2:
+        this.getColor(this.userHeadId, "group");
+        break;
 
       case 3:
-              this.getColor(0,"all");
-              break;
+        this.getColor(0, "all");
+        break;
     }
   }
 
-  getColor(id,getBy) {
-    this.colorService.getColor(id,getBy).subscribe(
+  getColor(id, getBy) {
+    this.colorService.getColor(id, getBy).subscribe(
       data => {
         if (data["success"]) {
           this.colorList = data['data']
@@ -75,9 +76,16 @@ export class ColorComponent implements OnInit {
           this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
             billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
             console.log(this.color);
+          this.colorList = data['data'];
+          let index = 0
+          this.colorList.forEach(element => {
+            this.colorList[index].billDate = new Date(element.billDate).toDateString();
+            this.colorList[index].chlDate = new Date(element.chlDate).toDateString();
+            index++;
+          });
         }
         else {
-          this.toastr.error(data['msg'])
+          this.toastr.error(data['msg']);
         }
       },
       error => {

@@ -7,6 +7,9 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: "ngx-party",
@@ -23,6 +26,7 @@ export class PartyComponent implements OnInit {
   party=[];
   arr=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
+  flag = false;
   radioSelect = 1;
   radioArray = [
     {id:1, value:"View Own"},
@@ -38,7 +42,8 @@ export class PartyComponent implements OnInit {
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private _NgbModal: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +94,13 @@ export class PartyComponent implements OnInit {
               break;
     }
   }
+
+open(){
+  this.flag=true;
+  this._NgbModal.open(ExportPopupComponent, {
+    windowClass: 'modal-job-scrollable'
+  });
+}
 
   deleteParty(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {

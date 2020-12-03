@@ -14,7 +14,7 @@ import * as errorData from 'app/@theme/json/error.json';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-    public errorData:any=(errorData as any).default;
+    public errorData: any = (errorData as any).default;
     formSubmitted = false;
     userPermission = [];
     loginReq: LoginModal;
@@ -25,18 +25,18 @@ export class LoginComponent {
     // On submit button click
     onSubmit(myForm) {
         this.formSubmitted = true;
-        if(myForm.valid){
+        if (myForm.valid) {
             this.authService.checkUserLogin(this.loginReq).subscribe(
-                data=>{
-                    if(data["success"]){
-                        this.storeTokenService.set('token',data["data"].accessToken);
-                        this.storeTokenService.set('refreshToken',data["data"].refreshToken);
+                data => {
+                    if (data["success"]) {
+                        this.storeTokenService.set('token', data["data"].accessToken);
+                        this.storeTokenService.set('refreshToken', data["data"].refreshToken);
                         this.toast.success(errorData.Login_Success);
-                        this.route.navigate(['/pages']);
-                    }else{
+                        this.route.navigate(['/pages/party']);
+                    } else {
                         this.toast.error(errorData.login_Error);
                     }
-                },error=>{
+                }, error => {
                     this.toast.error(errorData.Serever_Error);
                 }
             );

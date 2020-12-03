@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -67,4 +67,4 @@ const NB_MODULES = [
   exports: [...NB_MODULES,ExportDirective],
   providers:[  ]
 })
-export class SharedModule {}
+export class SharedModule { }
