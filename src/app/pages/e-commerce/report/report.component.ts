@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ReportComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
-  datetime:any;
+  datetime: any;
   fromdateformat: any = [];
   todateformat: any = [];
   hoveredDate: NgbDate | null = null;
@@ -94,118 +94,141 @@ export class ReportComponent implements OnInit {
     this.flag3 = true;
   }
 
-  change(){
-    let ft = String(this.datetime[0]).slice(16, 23);
-    let ft1 = ft.slice(6,);
-    let ft3 = ft.slice(0, 5);
-    if (Number(ft1) < 10 && Number(ft1) >= 0) {
-      ft1 = ft1.padStart(2, '0');
-    }
-    ft3 = ft3.concat(":");
-    ft3 = ft3.concat(ft1);
-    this.obj.fromTime = ft3;
+  change() {
 
-    let t = String(this.datetime[1]).slice(16, 23);
-    let t1 = t.slice(6,);
-    let t3 = t.slice(0, 5);
-    if (Number(t1) < 10 && Number(t1) >= 0) {
-      t1 = t1.padStart(2, '0');
-    }
-    t3 = t3.concat(":");
-    t3 = t3.concat(ft1);
-    this.obj.toTime = t3;
 
     let dt = String(this.datetime[0]).slice(4, 15);
-    let dt1 = dt.slice(0,3);
-    let dt2 = dt.slice(4,6)
-    let dt3 = dt.slice(7,11)
+    let dt1 = dt.slice(0, 3);
+    let dt2 = dt.slice(4, 6)
+    let dt3 = dt.slice(7, 11)
     if (dt1 == "Jan")
       dt1 = "01";
-    else if(dt1 == "Feb")
-    dt1 = "02"
-    else if(dt1 == "Mar")
-    dt1 = "03"
-    else if(dt1 == "Apr")
-    dt1 = "04"
-    else if(dt1 == "May")
-    dt1 = "05"
-    else if(dt1 == "Jun")
-    dt1 = "06"
-    else if(dt1 == "Jul")
-    dt1 = "07"
-    else if(dt1 == "Aug")
-    dt1 = "08"
-    else if(dt1 == "Sep")
-    dt1 = "09"
-    else if(dt1 == "Oct")
-    dt1 = "10"
-    else if(dt1 == "Nov")
-    dt1 = "11"
+    else if (dt1 == "Feb")
+      dt1 = "02"
+    else if (dt1 == "Mar")
+      dt1 = "03"
+    else if (dt1 == "Apr")
+      dt1 = "04"
+    else if (dt1 == "May")
+      dt1 = "05"
+    else if (dt1 == "Jun")
+      dt1 = "06"
+    else if (dt1 == "Jul")
+      dt1 = "07"
+    else if (dt1 == "Aug")
+      dt1 = "08"
+    else if (dt1 == "Sep")
+      dt1 = "09"
+    else if (dt1 == "Oct")
+      dt1 = "10"
+    else if (dt1 == "Nov")
+      dt1 = "11"
     else
-    dt1 = "12"
+      dt1 = "12"
 
     let dt4 = dt3 + "-" + dt1 + "-" + dt2;
     this.obj.fromDate = dt4;
 
 
     let dtt = String(this.datetime[1]).slice(4, 15);
-    let dtt1 = dtt.slice(0,3);
-    let dtt2 = dtt.slice(4,6)
-    let dtt3 = dtt.slice(7,11)
+    let dtt1 = dtt.slice(0, 3);
+    let dtt2 = dtt.slice(4, 6)
+    let dtt3 = dtt.slice(7, 11)
     if (dtt1 == "Jan")
       dtt1 = "01";
-    else if(dtt1 == "Feb")
-    dtt1 = "02"
-    else if(dtt1 == "Mar")
-    dtt1 = "03"
-    else if(dtt1 == "Apr")
-    dtt1 = "04"
-    else if(dtt1 == "May")
-    dtt1 = "05"
-    else if(dtt1 == "Jun")
-    dtt1 = "06"
-    else if(dtt1 == "Jul")
-    dtt1 = "07"
-    else if(dtt1 == "Aug")
-    dtt1 = "08"
-    else if(dtt1 == "Sep")
-    dtt1 = "09"
-    else if(dtt1 == "Oct")
-    dtt1 = "10"
-    else if(dtt1 == "Nov")
-    dtt1 = "11"
+    else if (dtt1 == "Feb")
+      dtt1 = "02"
+    else if (dtt1 == "Mar")
+      dtt1 = "03"
+    else if (dtt1 == "Apr")
+      dtt1 = "04"
+    else if (dtt1 == "May")
+      dtt1 = "05"
+    else if (dtt1 == "Jun")
+      dtt1 = "06"
+    else if (dtt1 == "Jul")
+      dtt1 = "07"
+    else if (dtt1 == "Aug")
+      dtt1 = "08"
+    else if (dtt1 == "Sep")
+      dtt1 = "09"
+    else if (dtt1 == "Oct")
+      dtt1 = "10"
+    else if (dtt1 == "Nov")
+      dtt1 = "11"
     else
-    dtt1 = "12"
+      dtt1 = "12"
 
     let dtt4 = dtt3 + "-" + dtt1 + "-" + dtt2;
     this.obj.toDate = dtt4;
-    this.collectData(this.obj)
+
+    if (Number(this.obj.shift) == 1) {
+      let ft = String(this.datetime[0]).slice(16, 23);
+      let hour = ft.slice(0, 2);
+      let t = String(this.datetime[1]).slice(16, 23);
+      let h = t.slice(0, 2);
+
+      if ((Number(hour) > 9 && Number(hour) < 21) && (Number(h) > 9 && Number(h) < 21)) {
+        let ft1 = ft.slice(6,);
+        let ft3 = ft.slice(0, 5);
+        if (Number(ft1) < 10 && Number(ft1) >= 0) {
+          ft1 = ft1.padStart(2, '0');
+        }
+        ft3 = ft3.concat(":");
+        ft3 = ft3.concat(ft1);
+        this.obj.fromTime = ft3;
+
+        let t1 = t.slice(6,);
+        let t3 = t.slice(0, 5);
+        if (Number(t1) < 10 && Number(t1) >= 0) {
+          t1 = t1.padStart(2, '0');
+        }
+        t3 = t3.concat(":");
+        t3 = t3.concat(t1);
+        this.obj.toTime = t3;
+
+        this.collectData(this.obj)
+      }
+      else {
+        this.toastr.error("Select time from 9AM to 9PM or 9:00 to 21:00")
+      }
+    }
+    else if (Number(this.obj.shift) == 2) {
+
+      let ft = String(this.datetime[0]).slice(16, 23);
+      let hour = ft.slice(0, 2);
+      let t = String(this.datetime[1]).slice(16, 23);
+      let h = t.slice(0, 2);
+      if ((Number(hour) > 21 || Number(hour) < 9) && (Number(h) > 21 || Number(h) < 9)) {
+        let ft1 = ft.slice(6,);
+        let ft3 = ft.slice(0, 5);
+        if (Number(ft1) < 10 && Number(ft1) >= 0) {
+          ft1 = ft1.padStart(2, '0');
+        }
+        ft3 = ft3.concat(":");
+        ft3 = ft3.concat(ft1);
+        this.obj.fromTime = ft3;
+
+        let t1 = t.slice(6,);
+        let t3 = t.slice(0, 5);
+        if (Number(t1) < 10 && Number(t1) >= 0) {
+          t1 = t1.padStart(2, '0');
+        }
+        t3 = t3.concat(":");
+        t3 = t3.concat(t1);
+        this.obj.toTime = t3;
+
+        this.collectData(this.obj)
+
+      }
+      else {
+        this.toastr.error("Select time from 9PM to 9AM or 21:00 to 9:00");
+      }
+    }
+    else {
+      this.toastr.error("Select date and time");
+    }
   }
-
-  // getfromtime(value: any) {
-  //   let ft = String(value.value).slice(16, 23);
-  //   let ft1 = ft.slice(6,);
-  //   let ft3 = ft.slice(0, 5);
-  //   if (Number(ft1) < 10 && Number(ft1) >= 0) {
-  //     ft1 = ft1.padStart(2, '0');
-  //   }
-  //   ft3 = ft3.concat(":");
-  //   ft3 = ft3.concat(ft1);
-  //   this.obj.fromTime = ft3;
-
-  // }
-  // gettotime(value: any) {
-  //   let ft = String(value.value).slice(16, 23);
-  //   let ft1 = ft.slice(6,);
-  //   let ft3 = ft.slice(0, 5);
-  //   if (Number(ft1) < 10 && Number(ft1) >= 0) {
-  //     ft1 = ft1.padStart(2, '0');
-  //   }
-  //   ft3 = ft3.concat(":");
-  //   ft3 = ft3.concat(ft1);
-  //   this.obj.toTime = ft3;
-  //   this.collectData(this.obj)
-  // }
 
   getMachineCategory() {
     this.data = this.reportservice.getAllMachinesCategory().subscribe(
@@ -225,43 +248,9 @@ export class ReportComponent implements OnInit {
 
   }
 
-  // onDateSelection(date: NgbDate) {
-  //   if (!this.fromDate && !this.toDate) {
-  //     this.fromDate = date;
-  //   } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
-  //     this.toDate = date;
-  //   } else {
-  //     this.toDate = null;
-  //     this.fromDate = date;
-  //   }
-  //   this.flag2 = true;
-  //   this.fromdateformat = this.fromDate.year + "-" + this.fromDate.month + "-" + this.fromDate.day;
-  //   this.todateformat = this.toDate.year + "-" + this.toDate.month + "-" + this.toDate.day;
-  //   this.obj.fromDate = this.fromdateformat;
-  //   this.obj.toDate = this.todateformat;
-
-  // }
-
-  // isHovered(date: NgbDate) {
-  //   return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  // }
-
-  // isInside(date: NgbDate) {
-  //   return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  // }
-
-  // isRange(date: NgbDate) {
-  //   return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
-  // }
-
-  // validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-  //   const parsed = this.formatter.parse(input);
-  //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  // }
-
-
   collectData(datedata: any) {
 
+    let count;
     this.reportservice.getobjdata(datedata).subscribe(
       (res) => {
         if (res["success"]) {
@@ -271,7 +260,12 @@ export class ReportComponent implements OnInit {
             { data: this.jsonData.getAllMachineRecords.map(a => a.speed), label: 'Speed' },
           ];
           let lab: Label = [] = this.jsonData.getAllMachineRecords.map(e => e.createdDate);
-          let count = Math.round(lab.length / 10);
+          if(lab.length > 10){
+            count = Math.round(lab.length / 10);
+          }
+          else{
+            count = 1;
+          }
           this.lineChartLabels[0] = String(lab[0]).slice(11, 19);
           let j = 1;
           for (let i = count; i <= lab.length; i = count + i) {
@@ -290,6 +284,4 @@ export class ReportComponent implements OnInit {
       }
     )
   }
-
-
 }

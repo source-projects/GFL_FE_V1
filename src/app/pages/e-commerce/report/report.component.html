@@ -78,7 +78,7 @@
                         </nb-radio-group>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="flag3">
                     <div class="form-group">
                         <strong><label>Select Date & Time</label></strong>
                         <input class="form-control" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime" [owlDateTimeTrigger]="dt1" placeholder="Date Time" >
