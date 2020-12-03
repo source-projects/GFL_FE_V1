@@ -16,13 +16,5 @@
     "../src/*.ts",
     "../src/**/*.ts",
     "../node_modules/@nebular/**/*.ts"
-<<<<<<< HEAD
-  ],
-  // "angularCompilerOptions": {
-  //   "enableIvy": false
-  // }
-}
-=======
   ]
 }
->>>>>>> 37d660ea1b60777575482449807ec240caca05e4
