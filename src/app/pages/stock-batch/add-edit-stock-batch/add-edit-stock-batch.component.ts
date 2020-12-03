@@ -136,6 +136,9 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
+          this.stockBatch.createdBy = data["data"].createdBy;
+          this.stockBatch.createdDate = data["data"].createdDate;
+          this.stockBatch.userHeadId = data["data"].userHeadId;
           this.stockBatch.remark = data["data"].remark;
           this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
           this.stockBatch.batchData = data["data"].batchData;
