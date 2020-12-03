@@ -52,12 +52,18 @@ export class DynamicProcessComponent implements OnInit {
   //   )
   // }
 
+  // drop(event: CdkDragDrop<string[]>) {
+  //   moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
+  //   this.stepList.forEach((ele, index) => {
+  //     // ele.stepPosition = index + 1;
+  //   })
+  // }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
-    this.stepList.forEach((ele, index) => {
-      // ele.stepPosition = index + 1;
-    })
+    console.log("CALLED IN")
   }
+
 
   dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
     moveItemInArray(this.stepList[stepPosition - 1].functionList, event.previousIndex, event.currentIndex);

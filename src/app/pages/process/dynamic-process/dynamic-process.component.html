@@ -37,8 +37,8 @@
                     {{stepList}}
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
                         <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
-                            <nb-accordion multi *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag >
-                                <nb-accordion-item class="item" #item (click)="onStepClick(step)" cdkDropList (cdkDropListDropped)="drop($event)">
+                            <nb-accordion multi *ngFor="let step of stepList"  cdkDrag >
+                                <nb-accordion-item class="item" #item (click)="onStepClick(step)" >
                                     <nb-accordion-item-header class="item-header"
                                         style="display: flex-end; justify-content: space-between;">
                                         <div style="font-size: 22px;">
