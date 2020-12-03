@@ -1,13 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import {
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-  NbToastrConfig,
-  NbToastrService,
-} from "@nebular/theme";
+import { NbToastrService } from "@nebular/theme";
 import { CommonService } from "app/@theme/services/common.service";
 import { SupplierService } from "app/@theme/services/supplier.service";
 import * as errorData from "app/@theme/json/error.json";
@@ -84,7 +78,7 @@ export class AddEditSupplierRateComponent implements OnInit {
   ngOnInit(): void {
     this.getSupplierName();
     this.getData();
-    this.getUpdateData();
+    if (this.mySupplierRateId != null) this.getUpdateData();
   }
 
   getData() {
@@ -94,44 +88,42 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   getUpdateData() {
-    if (this.mySupplierRateId != null) {
-      this.supplierService.getAllSupplierById(this.mySupplierRateId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.formValues = data["data"];
-            if (this.formValues.supplierRates.length == 0) {
-              let obj = {
-                id: null,
-                supplierName: null,
-                gstPercentage: null,
-                discountPercentage: null,
-                remark: null,
-                createdBy: null,
-                updatedBy: null,
-                paymentTerms: null,
-                userHeadId: null,
-                supplierId: null,
-                itemType: null,
-                itemName: null,
-                rate: null,
-                discountedRate: null,
-                gstRate: null,
-              };
-              let list = this.formValues.supplierRates;
-              list.push(obj);
-              this.formValues.supplierRates = [...list];
-            }
-            this.discount = this.formValues.discountPercentage;
-            this.gst = this.formValues.gstPercentage;
-          } else {
-            this.toastr.error(data["msg"]);
+    this.supplierService.getAllSupplierById(this.mySupplierRateId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.formValues = data["data"];
+          if (this.formValues.supplierRates.length == 0) {
+            let obj = {
+              id: null,
+              supplierName: null,
+              gstPercentage: null,
+              discountPercentage: null,
+              remark: null,
+              createdBy: null,
+              updatedBy: null,
+              paymentTerms: null,
+              userHeadId: null,
+              supplierId: null,
+              itemType: null,
+              itemName: null,
+              rate: null,
+              discountedRate: null,
+              gstRate: null,
+            };
+            let list = this.formValues.supplierRates;
+            list.push(obj);
+            this.formValues.supplierRates = [...list];
           }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          this.discount = this.formValues.discountPercentage;
+          this.gst = this.formValues.gstPercentage;
+        } else {
+          this.toastr.error(data["msg"]);
         }
-      );
-    }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+      }
+    );
   }
 
   public getSupplierName() {
@@ -191,15 +183,17 @@ export class AddEditSupplierRateComponent implements OnInit {
       this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
       delete this.formValues.discountPercentage;
       delete this.formValues.supplierName;
+      this.formValues.supplierId = this.formValues.id;
       delete this.formValues.id;
       delete this.formValues.gstPercentage;
       delete this.formValues.remark;
       delete this.formValues.paymentTerms;
       delete this.formValues.createdBy;
-      delete this.formValues.supplierRates[0].discountedRate;
-      delete this.formValues.supplierRates[0].gstRate;
       this.formValues.supplierRates.forEach((e) => {
+        delete e.discountedRate;
+        delete e.gstRate;
         e.updatedBy = this.user.userId;
+        e.supplierId = this.formValues.supplierId;
       });
       this.formValues.updatedBy = this.user.userId;
       this.supplierService
@@ -227,10 +221,8 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   getDetail(id) {
-    console.log(id);
     this.formValues.supplierRates[0].supplierId = id;
     for (let item of this.supplier) {
-      console.log(item);
       if (item["id"] == id) {
         this.discount = item["discountPercentage"];
         this.gst = item["gstPercentage"];
