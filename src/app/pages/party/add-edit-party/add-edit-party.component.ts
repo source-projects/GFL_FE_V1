@@ -132,7 +132,6 @@ export class AddEditPartyComponent implements OnInit {
         });
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
-        console.log(this.partyForm.value.userHeadId)
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
