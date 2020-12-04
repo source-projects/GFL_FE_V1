@@ -164,7 +164,6 @@ export class AddEditShadeComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.shades = data["data"];
-            console.log(data['data'])
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -240,7 +239,7 @@ export class AddEditShadeComponent implements OnInit {
             this.quality.forEach((e) => {
               e.partyName = data["data"].partyName;
             });
-          } else{
+          } else {
             this.toastr.error(data["msg"]);
             this.quality = null;
           }
@@ -252,12 +251,12 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
 
-  itemSelected(rowIndex,row) {
+  itemSelected(rowIndex, row) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
     let flag = false;
     let count = 0;
     this.shades.shadeDataList.forEach((e) => {
-      if(count != rowIndex){
+      if (count != rowIndex) {
         if (e.itemName == id)
           flag = true;
         count++;
@@ -283,7 +282,7 @@ export class AddEditShadeComponent implements OnInit {
         }
       }
     }
-    else{
+    else {
       this.toastr.error("This item name is already selected")
       //this.shades.shadeDataList[rowIndex].itemName = null;
       row.itemName = null;
@@ -303,7 +302,6 @@ export class AddEditShadeComponent implements OnInit {
       // list.push(obj);
       // this.shades.shadeDataList = [...list];
     }
-    console.log(this.shades.shadeDataList);
   }
 
   calculateAmount(rowIndex) {

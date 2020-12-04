@@ -20,20 +20,21 @@ export class ExportDirective {
 
   @Input('flag') flag: boolean;
 
-  //@Input() fileType: string;
+  @Input() fileType: string;
 
   @Input() fileName: string;
 
   @HostListener('click', ['$event']) onClick() {
-    //console.log(this.fileType);
+  console.log(this.fileType);
     console.log(this.fileName);
-
+    if(this.fileType=='excel')
+{
    if(this.flag==true)
   {
-    console.log(this.list);
+    //console.log(this.list);
 
     this.exportService.exportExcel(this.list, this.fileName, this.headers);
-  }
+  }}
   }
 
  

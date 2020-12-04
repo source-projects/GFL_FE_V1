@@ -16,7 +16,8 @@ import {
   NbCheckboxModule,
   NbRadioModule,
   NbDatepickerModule,
-  NbTooltipModule
+  NbTooltipModule,
+  NbAccordionModule
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
@@ -59,6 +60,7 @@ const NB_MODULES = [
   NgSelectModule,
   NgbDatepickerModule,
   //NgbModal
+  NbAccordionModule,
 ];
 
 @NgModule({

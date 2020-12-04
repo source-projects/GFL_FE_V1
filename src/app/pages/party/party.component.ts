@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { PartyService } from "app/@theme/services/party.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -26,6 +26,7 @@ export class PartyComponent implements OnInit {
   party=[];
   arr=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
+ fileType:string="abc";
   flag = false;
   radioSelect = 1;
   radioArray = [
@@ -52,7 +53,6 @@ export class PartyComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getAllParty(this.userId,"own");
-   
   }
 
 
@@ -97,10 +97,25 @@ export class PartyComponent implements OnInit {
 
 open(){
   this.flag=true;
-  this._NgbModal.open(ExportPopupComponent, {
-    windowClass: 'modal-job-scrollable'
+  // this._NgbModal.open(ExportPopupComponent, {
+  //   windowClass: 'modal-job-scrollable'
+  // });
+  const modalRef = this.modalService.open(ExportPopupComponent);
+  modalRef.result
+  .then((result) => {
+    if (result) {
+     this.fileType=result;
+      console.log(result);
+    }
   });
+  //this.getExportType();
 }
+
+// getExportType(type){
+
+//   console.log('hjefg');
+//   // this.fileType=type;
+// }
 
   deleteParty(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
