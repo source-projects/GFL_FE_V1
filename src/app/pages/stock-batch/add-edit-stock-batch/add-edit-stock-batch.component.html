@@ -19,7 +19,7 @@
                             [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}"
                              required>
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
-                            </ng-select>
+                            </ng-select>{{stockBatch.partyId}}
                             <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)" >
                                 <span>Party name is required</span>
                             </div>

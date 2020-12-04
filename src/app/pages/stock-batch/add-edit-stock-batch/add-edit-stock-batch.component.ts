@@ -136,6 +136,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
+          console.log(this.stockBatch.partyId)
           this.stockBatch.createdBy = data["data"].createdBy;
           this.stockBatch.createdDate = data["data"].createdDate;
           this.stockBatch.userHeadId = data["data"].userHeadId;
@@ -181,7 +182,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getQualityList() {
-    this.qualityService.getallQuality(0, "all").subscribe(
+    this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -200,7 +201,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList(0, "all").subscribe(
+    this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
