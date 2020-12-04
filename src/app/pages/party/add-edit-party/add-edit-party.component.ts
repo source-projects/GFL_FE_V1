@@ -42,7 +42,7 @@ export class AddEditPartyComponent implements OnInit {
     private route: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -50,7 +50,7 @@ export class AddEditPartyComponent implements OnInit {
     this.currentPartyId = this._route.snapshot.paramMap.get("id");
     if (this.currentPartyId != null)
       this.getUpdateData();
-    
+
   }
 
   public getData() {
@@ -90,7 +90,7 @@ export class AddEditPartyComponent implements OnInit {
       debtor: new FormControl(false, Validators.required),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
-      userHeadId: new FormControl(null),
+      userHeadId: new FormControl(null, Validators.required),
     });
   }
 
@@ -110,34 +110,33 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public getUpdateData() {
-      this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
-        (data) => {
-          this.currentParty = data["data"];
-          this.partyForm.patchValue({
-            userHeadId: this.currentParty.userHeadId,
-            partyName: this.currentParty.partyName,
-            partyAddress1: this.currentParty.partyAddress1,
-            partyAddress2: this.currentParty.partyAddress2,
-            contactNo: this.currentParty.contactNo,
-            city: this.currentParty.city,
-            state: this.currentParty.state,
-            pincode: this.currentParty.pincode,
-            mailId: this.currentParty.mailId,
-            gstin: this.currentParty.gstin,
-            creditor: this.currentParty.creditor,
-            debtor: this.currentParty.debtor,
-            createdBy: this.currentParty.createdBy,
-            updatedBy: this.currentParty.updatedBy,
-            id: this.currentPartyId
-          });
-          this.creditor = this.partyForm.get("creditor").value;
-          this.debtor = this.partyForm.get("debtor").value;
-          console.log(this.partyForm.value.userHeadId)
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
+    this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
+      (data) => {
+        this.currentParty = data["data"];
+        this.partyForm.patchValue({
+          userHeadId: this.currentParty.userHeadId,
+          partyName: this.currentParty.partyName,
+          partyAddress1: this.currentParty.partyAddress1,
+          partyAddress2: this.currentParty.partyAddress2,
+          contactNo: this.currentParty.contactNo,
+          city: this.currentParty.city,
+          state: this.currentParty.state,
+          pincode: this.currentParty.pincode,
+          mailId: this.currentParty.mailId,
+          gstin: this.currentParty.gstin,
+          creditor: this.currentParty.creditor,
+          debtor: this.currentParty.debtor,
+          createdBy: this.currentParty.createdBy,
+          updatedBy: this.currentParty.updatedBy,
+          id: this.currentPartyId
+        });
+        this.creditor = this.partyForm.get("creditor").value;
+        this.debtor = this.partyForm.get("debtor").value;
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+      }
+    );
   }
 
   public addParty() {

@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add Step</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #stepForm="ngForm">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <label>Step Name</label>
+        <input  class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel" [ngClass]="{'is-invalid':modalSubmitted && name1.invalid}" required>
+        <div class="invalid-feedback" style="color: red;" *ngIf="modalSubmitted && (name1.invalid )" >
+          Step Name is required.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label>Step Position</label>
+          <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo"
+            #position1="ngModel" [ngClass]="{'is-invalid':modalSubmitted &&position1.invalid}" required>
+            <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
+          </select>
+          <div class="invalid-feedback" *ngIf="modalSubmitted && position1.invalid">
+            Step Position is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-5" *ngIf="stepList.length">
+        <h5>Current Steps:</h5>
+        <div *ngFor="let s of stepList;let z=index">
+          <span>{{z+1}}.</span>&nbsp;<span>{{s.stepName}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" style="margin-right:20px"  (click)="onCreate(stepForm)">{{submitButton}}</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-right:20px" (click)="activeModal.close(false)">Cancel</button>
+  </div>
+</form>

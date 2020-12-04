@@ -72,6 +72,13 @@ const routes: Routes = [{
       canLoad: [ProgramGuard]
     },
     {
+      path: 'process',
+      loadChildren: () => import('./process/process.module')
+        .then(m => m.ProcessModule),
+      canActivate: [ProgramGuard],
+      canLoad: [ProgramGuard]
+    },
+    {
       path: 'shade',
       loadChildren: () => import('./shade/shade.module')
         .then(m => m.ShadeModule),

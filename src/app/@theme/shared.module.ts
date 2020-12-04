@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -16,7 +16,8 @@ import {
   NbCheckboxModule,
   NbRadioModule,
   NbDatepickerModule,
-  NbTooltipModule
+  NbTooltipModule,
+  NbAccordionModule
 } from "@nebular/theme";
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
@@ -54,13 +55,14 @@ const NB_MODULES = [
   NbTooltipModule,
   ColorPickerModule,
   NgSelectModule,
-  NgbDatepickerModule
+  NgbDatepickerModule,
+  NbAccordionModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...NB_MODULES],
   exports: [...NB_MODULES],
-  providers:[  ]
+  providers: []
 })
-export class SharedModule {}
+export class SharedModule { }

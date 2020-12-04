@@ -55,9 +55,8 @@ export class AddEditProgramComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentId();
-    if (this.currentProgramId) {
+    if (this.currentProgramId != null)
       this.getUpdateData();
-    }
     this.getPartyList();
     this.getQualityList();
     this.getPartyShadeList();
@@ -115,126 +114,120 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public getUpdateData() {
-    if (this.currentProgramId != null) {
-      console.log("update data");
-      this.programService
-        .getProgramDetailsById(this.currentProgramId)
-        .subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.programValues = data["data"];
-              this.qualityService.getallQuality(0, "all").subscribe(
-                (data) => {
-                  this.qualityList = data["data"];
-                  this.qualityList.forEach((element) => {
-                    if (this.programValues.qualityEntryId == element.id) {
-                      this.programValues.qualityId = element.qualityId;
-                      this.programValues.qualityName = element.qualityName;
-                      this.programValues.qualityType = element.qualityType;
-                    }
-                  });
 
-                  if (this.batchData == null) {
-                    this.programService
-                      .getBatchDetailByQualityId(
-                        this.programValues.qualityEntryId
-                      )
-                      .subscribe(
-                        (data) => {
-                          if (data["success"]) {
-                            this.batchData = data["data"];
-                            console.log(this.batchData);
-                          } else {
-                            this.toastr.error(data["msg"]);
-                          }
-                        },
-                        (error) => {
-                          this.toastr.error(errorData.Serever_Error);
-                        }
-                      );
+    this.programService
+      .getProgramDetailsById(this.currentProgramId)
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.programValues = data["data"];
+            this.qualityService.getallQuality(0, "all").subscribe(
+              (data) => {
+                this.qualityList = data["data"];
+                this.qualityList.forEach((element) => {
+                  if (this.programValues.qualityEntryId == element.id) {
+                    this.programValues.qualityId = element.qualityId;
+                    this.programValues.qualityName = element.qualityName;
+                    this.programValues.qualityType = element.qualityType;
                   }
+                });
 
-                  if (this.stockData == null) {
-                    this.programService
-                      .getStockQualityList(this.programValues.qualityEntryId)
-                      .subscribe(
-                        (data) => {
-                          if (data["success"]) {
-                            this.stockData = data["data"];
-                            console.log(this.stockData);
-                          } else {
-                            this.toastr.error(data["msg"]);
-                          }
-                        },
-                        (error) => {
-                          this.toastr.error(errorData.Serever_Error);
+                if (this.batchData == null) {
+                  this.programService
+                    .getBatchDetailByQualityId(
+                      this.programValues.qualityEntryId
+                    )
+                    .subscribe(
+                      (data) => {
+                        if (data["success"]) {
+                          this.batchData = data["data"];
+                        } else {
+                          this.toastr.error(data["msg"]);
                         }
-                      );
-                  }
-                },
-                (error) => {
-                  this.toastr.error(errorData.Serever_Error);
+                      },
+                      (error) => {
+                        this.toastr.error(errorData.Serever_Error);
+                      }
+                    );
                 }
-              );
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
+
+                if (this.stockData == null) {
+                  this.programService
+                    .getStockQualityList(this.programValues.qualityEntryId)
+                    .subscribe(
+                      (data) => {
+                        if (data["success"]) {
+                          this.stockData = data["data"];
+                        } else {
+                          this.toastr.error(data["msg"]);
+                        }
+                      },
+                      (error) => {
+                        this.toastr.error(errorData.Serever_Error);
+                      }
+                    );
+                }
+              },
+              (error) => {
+                this.toastr.error(errorData.Serever_Error);
+              }
+            );
+          } else {
+            this.toastr.error(data["msg"]);
           }
-        );
-    }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+
   }
 
-  enableQuality(event){
-    if(event != undefined){
-      // if(this.programValues.)
-      // this.party.forEach(e=>{
-      //   if(e.partyName == )
-      // })
-      if(this.programValues.partyId){
+  enableQuality(event) {
+    if (event != undefined) {
+      if (this.programValues.partyId) {
         this.programService.getQualityByParty(this.programValues.partyId).subscribe(
-          data=>{
-            if(data['success']){
+          data => {
+            if (data['success']) {
               this.qualityList = data['data'].qualityDataList;
+              this.qualityList.forEach(element => {
+                element.partyName = data['data'].partyName;
+              });
+              this.programValues.qualityId = this.qualityList[0].qualityId;
+              this.programValues.qualityName = this.qualityList[0].qualityName;
+              this.programValues.qualityType = this.qualityList[0].qualityType;
+              this.programValues.qualityEntryId = this.qualityList[0].qualityEntryId;
+              this.getStockBatchData()
             }
             else
               this.toastr.error(data['msg'])
           },
-          error=>{
-            this.toastr.error(errorData.Internal_Error)
+          error => {
+            this.toastr.error(errorData.Serever_Error)
           }
         )
       }
 
-    }else{
+    } else {
+      this.programValues.partyId = null;
+      this.programValues.qualityId = null;
+      this.programValues.qualityName = null;
+      this.programValues.qualityType = null;
       this.getPartyList();
+      this.getQualityList();
     }
-    
+
   }
 
-  //put quality name and quality type
-  public getQualityInfo(e,value) {
-    if(e != undefined){
-      let id = value;
-    this.qualityList.forEach((e) => {
-      if (e.qualityId == id ) {
-        this.programValues.qualityName = e.qualityName
-        this.programValues.qualityType = e.qualityType;
-        if(e.id != undefined)
-          this.programValues.qualityEntryId = e.id;
-        else
-          this.programValues.qualityEntryId = e.qualityEntryId
-      }
-    });
+  //get Stock Batch data
+  getStockBatchData() {
+    //to batch data
     this.programService
       .getBatchDetailByQualityId(this.programValues.qualityEntryId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
-            console.log(this.batchData);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -243,13 +236,13 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
+    //to add stock data
     this.programService
       .getStockQualityList(this.programValues.qualityEntryId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.stockData = data["data"];
-            console.log(this.stockData);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -258,22 +251,48 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
+  }
 
-      // //getPartyByQuality...
+  //put quality name and quality type
+  public getQualityInfo(e, value) {
+    if (e != undefined) {
+      let id = value;
+      this.qualityList.forEach((e) => {
+        if (e.qualityId == id) {
+          this.programValues.qualityName = e.qualityName
+          this.programValues.qualityType = e.qualityType;
+          if (e.id != undefined)
+            this.programValues.qualityEntryId = e.id;
+          else
+            this.programValues.qualityEntryId = e.qualityEntryId
+        }
+      });
+      this.getStockBatchData();
+      //getPartyByQuality...
       // this.programService.getPartyByQuality(this.programValues.qualityEntryId).subscribe(
-      //   data=>{
-      //     if(data['success']){
+      //   data => {
+      //     if (data['success']) {
       //       this.party = data['data'];
-      //     }else
-      //     this.toastr.error(data["msg"]);
+      //       console.log(this.party)
+      //     } else
+      //       this.toastr.error(data["msg"]);
       //   },
-      //   error=>{
-      //     this.toastr.error(errorData.Internal_Error);
+      //   error => {
+      //     this.toastr.error(errorData.Serever_Error);
       //   }
       // )
-
-    }else{
+    } else {
+      this.programValues.partyId = null;
+      this.programValues.qualityId = null;
+      this.programValues.qualityName = null;
+      this.programValues.qualityType = null;
       this.getQualityList();
+    }
+  }
+
+  clearData(event) {
+    if (event == undefined) {
+
     }
   }
 

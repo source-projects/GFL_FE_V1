@@ -8,12 +8,12 @@ import * as errorData from 'app/@theme/json/error.json';
 import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
-import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
   styleUrls: ['./add-edit-color.component.scss'],
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class AddEditColorComponent implements OnInit {
 
@@ -57,7 +57,6 @@ export class AddEditColorComponent implements OnInit {
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
-    this.getAllSupplierRate();
   }
 
   getData() {
@@ -71,12 +70,24 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
           this.color = data["data"];
-          
-          this.color.billDate =new Date(this.color.billDate);
-          this.color.chlDate =new Date(this.color.chlDate);
-          
+          //For Item Name List
+          this.supplierService.getSupplierItemWithRateById(this.color.supplierId).subscribe(
+            data => {
+              if (data['success']) {
+                this.supplierListRate = data['data'];
+              }
+              else {
+                this.toastr.error(data['msg'])
+              }
+            },
+            error => {
+              this.toastr.error(errorData.Serever_Error)
+            })
+          this.color.billDate = new Date(this.color.billDate);
+          this.color.chlDate = new Date(this.color.chlDate);
+          this.calculateTotalQuantity(0);
+          this.calculateAmount(0);
           let amount: any
-          console.log(this.color.colorDataList);
           this.color.colorDataList.forEach(element => {
             amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
@@ -90,7 +101,7 @@ export class AddEditColorComponent implements OnInit {
   }
 
   getSupplierList() {
-    this.supplierService.getAllSupplier(0,"all").subscribe(
+    this.supplierService.getSupplierName(0, "all").subscribe(
       data => {
         if (data['success']) {
           this.supplierList = data['data'];
@@ -105,42 +116,46 @@ export class AddEditColorComponent implements OnInit {
     )
   }
 
-  getAllSupplierRate() {
-    this.supplierService.getAllSupplierRates().subscribe(
-      data => {
-        if (data['success']) {
-          this.supplierListRate = data['data'];
-        }
-        else {
-          this.toastr.error(data['msg'])
-        }
-      },
-      error => {
-        this.toastr.error(errorData.Serever_Error)
+  getAllSupplierRate(event) {
+    if (event != undefined) {
+      if (this.color.supplierId) {
+        this.supplierService.getSupplierItemWithRateById(this.color.supplierId).subscribe(
+          data => {
+            if (data['success']) {
+              this.supplierListRate = data['data'];
+            }
+            else {
+              this.toastr.error(data['msg'])
+            }
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error)
+          }
+        )
       }
-    )
+    }
+    else {
+      this.getSupplierList();
+    }
   }
 
-  updateValueOfTotalQuantity(rowIndex){
-    let noBox:any = this.color.colorDataList[rowIndex].noOfBox;
-    let qtyPerBox:any = this.color.colorDataList[rowIndex].quantityPerBox;
-    this.color.colorDataList[rowIndex].quantity = noBox * qtyPerBox;
-  }
 
   itemSelected(rowIndex) {
     let id = this.color.colorDataList[rowIndex].itemId;
+    this.supplierListRate.forEach(element => {
+      if (id == element.id) {
+        this.color.colorDataList[rowIndex].rate = element.rate;
+      }
+    });
+
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13) {
-      console.log("key 13");
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
-      console.log(this.index);
-     
-      if (rowIndex === this.color.colorDataList.length - 1 ) {
+      if (rowIndex === this.color.colorDataList.length - 1) {
         let item = this.color.colorDataList[rowIndex];
-        console.log(item);
         if (colName == 'quantityPerBox') {
           if (!item.quantityPerBox) {
             this.toastr.error('Quantity per box required');
@@ -173,28 +188,27 @@ export class AddEditColorComponent implements OnInit {
         };
         let list = this.color.colorDataList;
         list.push(obj);
-        this.color.colorDataList = [...list];     
+        this.color.colorDataList = [...list];
         let interval = setInterval(() => {
-        
+
           let field = document.getElementById(this.index)
-     
+
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
         }, 50)
-        console.log(this.color.colorDataList.length);
       }
-     else {
-      let interval = setInterval(() => {
-        
-        let field = document.getElementById(this.index)
-   
-        if (field != null) {
-          field.focus();
-          clearInterval(interval);
-        }
-      }, 50)
+      else {
+        let interval = setInterval(() => {
+
+          let field = document.getElementById(this.index)
+
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50)
         //alert("Go to any last row input to add new row");
       }
     }

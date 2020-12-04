@@ -15,6 +15,9 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/grid";
 
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
 // loading progress bar theme
 @import "./pace.theme";
 
@@ -33,3 +36,111 @@
 
   @include nb-overrides();
 } ;
+.padding-box{
+  padding: 1.7rem;
+  margin-bottom: 30px;
+  border-radius: 0!important;
+}
+.padding-btn-box{
+  padding: 1.0rem;
+  padding-top: 0;
+}
+.btn-design{
+  margin: 0;
+  padding: 6px 16px;
+}
+.datatable-icon-up::before{
+  content: none;
+}
+.nb-header{
+  padding: 0.4rem 1.2rem !important;
+  background-color: #aa3634;
+  border-radius: 0!important;
+}
+.nb-text{
+  font-size: 1.3rem !important;
+  color: #ffffff !important;
+}
+.nb-style{
+  border-radius: 0;
+}
+.display-inline{
+  display: inline-block;
+}
+.form-group label{
+  font-weight: 600;
+  color: #aa3634;
+}
+input:focus{
+  outline: none !important;
+  border-color: unset;
+  box-shadow: none!important;
+  border-color: #bd3634!important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.batch-header{
+  background-color: #aa3634;
+  padding: 0 19px;
+  position: relative;
+}
+.batch-header h2{
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+.batch-heading{
+  margin: 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+.add-icon{
+  right: 15px;
+  position: absolute;
+  top: 8px;
+  color: #fff !important;
+  height: 24px !important;
+  width: 24px !important;
+}
+.batch-body{
+  margin: 30px 0;
+}
+.datatable-header-cell-label{
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+.datatable-header, .datatable-header-cell{
+  background-color: #aa3634!important;
+}
+.page-count{
+  color: #aa3634;
+}
+.datatable-header-cell-template-wrap{
+  text-align: center;
+}
+.box-shadow-none{
+  box-shadow: none!important;
+  border: 1px solid #e0e0e0;
+}
+.datatable-icon-sort-unset{
+  display: none!important;
+}
+.batch-card-margin{
+  margin: 32px 0;
+}
+.datatable-header-cell{
+  padding: 0.4rem 1.2rem !important;
+  border-right: 1px solid #fff;
+}
+.delete-icon{
+  margin-left: 0px;
+  padding: 7px 0;
+}
+.datatable-body-cell-label{
+  text-align: center;
+}
