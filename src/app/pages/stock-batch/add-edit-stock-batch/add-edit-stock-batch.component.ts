@@ -62,6 +62,7 @@ export class AddEditStockBatchComponent implements OnInit {
   blockNumber;
   currentStockBatch;
   isQualitySelected:Boolean = false;
+  flag=1;
 
   constructor(
     private partyService: PartyService,
@@ -128,6 +129,16 @@ export class AddEditStockBatchComponent implements OnInit {
         if (data["success"]) {
           this.stockBatch.billDate = new Date(data["data"].billDate);
           this.stockBatch.qualityId = data["data"].qualityId;
+          this.qualityList.forEach(element => {
+            if(element.id==this.stockBatch.qualityId)
+            {
+              this.wtPer100M = element.wtPer100m;
+              
+            }
+          
+            
+          });
+
           this.stockBatch.unit = data["data"].unit;
           this.stockBatch.stockInType = data["data"].stockInType;
           this.stockBatch.billNo = data["data"].billNo;
@@ -176,6 +187,9 @@ export class AddEditStockBatchComponent implements OnInit {
         i++;
       }
     });
+
+    this.flag=0;
+
   }
 
   getQualityList() {
