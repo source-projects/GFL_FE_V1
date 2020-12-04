@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FunctionObj, Step } from 'app/@theme/model/process';
+import { Dosing, FunctionObj, NewRecordData, OperatorMessage, ProcessValue, PumpControl, Step, StepsRecordData, TempratureControl, WaterControl } from 'app/@theme/model/process';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { QualityService } from 'app/@theme/services/quality.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,11 +16,15 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class DynamicProcessComponent implements OnInit {
   //form values..
-  formValues = {
-    processName: null,
-    time: null,
-  }
+  processValue: ProcessValue = new ProcessValue();
   stepList: Step[] = [];
+  newRecordData: NewRecordData[] = [];
+  functionListReq: FunctionObj[] = [];
+  dosingControl: Dosing[] = [];
+  pumpControl: PumpControl[] = [];
+  tempratureControl: TempratureControl[] = [];
+  waterControl: WaterControl[] = [];
+  operatorMessage: OperatorMessage[] = [];
   qualityList;
   formSubmitted = false;
   selectedStep: any;
@@ -52,12 +56,18 @@ export class DynamicProcessComponent implements OnInit {
   //   )
   // }
 
+  // drop(event: CdkDragDrop<string[]>) {
+  //   moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
+  //   this.stepList.forEach((ele, index) => {
+  //     // ele.stepPosition = index + 1;
+  //   })
+  // }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
-    this.stepList.forEach((ele, index) => {
-      // ele.stepPosition = index + 1;
-    })
+    console.log("CALLED IN")
   }
+
 
   dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
     moveItemInArray(this.stepList[stepPosition - 1].functionList, event.previousIndex, event.currentIndex);
@@ -140,7 +150,9 @@ export class DynamicProcessComponent implements OnInit {
       .then((result) => {
         if (result) {
           let func = new FunctionObj();
+          console.log(result)
           func = result;
+          this.functionListReq.push(func)
           if (!functionList.length || result.funcPosition == functionList.length + 1) {
             functionList.push(func);
           } else {
@@ -150,7 +162,140 @@ export class DynamicProcessComponent implements OnInit {
       });
   }
 
-  onSubmit(myForm) {
+  addProcess(myForm) {
     this.formSubmitted = true;
+    console.log("My FOrm", myForm)
+    console.log(this.processValue);
+    if (myForm.valid) {
+      if (this.stepList.length != 0) {
+        console.log(this.stepList);
+        console.log(this.processValue);
+        let i = 0
+
+        console.log(this.functionListReq)
+        this.stepList.forEach(step => {
+          if (step.functionList.length) {
+            step.functionList.forEach(func => {
+              let dataRecord = new NewRecordData();
+              dataRecord.stepName = step.stepName;
+              dataRecord.functionName = func.funcName;
+              dataRecord.stepPosotion = step.stepNo;
+              dataRecord.functionPosotion = func.funcPosition;
+              dataRecord.functionValue = func.funcValue;
+
+              if (dataRecord.functionValue == "pump") {
+                this.pumpControl.push({ pumpSpeed: func.pumpControlFunc.pumpSpeed })
+                this.pumpControl.forEach(element => {
+                  dataRecord.pumpSpeed = element.pumpSpeed;
+                });
+              }
+              else {
+                dataRecord.pumpSpeed = null;
+              }
+
+              if (dataRecord.functionValue == "operator") {
+                console.log(func.operatorMessageFunc)
+                this.operatorMessage.push(
+                  {
+                    operatorCode: func.operatorMessageFunc.operatorCode,
+                    operatorMessage: func.operatorMessageFunc.operatorMessage,
+                    startAtTemp: func.operatorMessageFunc.startAtTemp
+                  })
+                this.operatorMessage.forEach(element => {
+                  dataRecord.operatorCode = element.operatorCode;
+                  dataRecord.operatorMessage = element.operatorMessage;
+                  dataRecord.startAtTemp = element.startAtTemp;
+                });
+              } else {
+                dataRecord.operatorCode = null;
+                dataRecord.operatorMessage = null;
+                dataRecord.startAtTemp = null;
+              }
+
+              if (dataRecord.functionValue == "temperature") {
+                // this.tempratureControl.push(
+                //   setValue: func.tempratureControlFunc.setValue,
+                //   rateOfRise: func.tempratureControlFunc.rateOfRise,
+                //   holdTime: func.tempratureControlFunc.holdTime,
+                //   pressure: func.tempratureControlFunc.pressure,
+                // )
+                console.log(func.tempratureControlFunc)
+              }
+              else {
+                dataRecord.setValue = null;
+                dataRecord.rateOfRise = null;
+                dataRecord.holdTime = null;
+                dataRecord.pressure = null;
+              }
+
+              if (dataRecord.functionValue == "water") {
+                this.waterControl.push({
+                  type: func.waterControlFunc,
+                  waterType: func.waterControlFunc.waterType,
+                  drainType: func.waterControlFunc.drainType,
+                  fabricRatio: func.waterControlFunc.fabricRatio,
+                  jetLevel: func.waterControlFunc.jetLevel,
+                })
+                this.waterControl.forEach(element => {
+                  dataRecord.waterType = element.waterType;
+                  dataRecord.drainType = element.drainType;
+                  dataRecord.fabricRatio = element.fabricRatio;
+                  dataRecord.jetLevel = element.jetLevel;
+                });
+              } else {
+                dataRecord.waterType = null;
+                dataRecord.drainType = null;
+                dataRecord.fabricRatio = null;
+                dataRecord.jetLevel = null;
+              }
+
+              if (dataRecord.functionValue == "dosing") {
+                this.dosingControl.push({
+                  haveDose: func.dosingFunc.haveDose,
+                  doseAtTemp: func.dosingFunc.doseAtTemp,
+                  fillType: func.dosingFunc.fillType,
+                  dosingPercentage: func.dosingFunc.dosingPercentage,
+                  doseWhileHeating: func.dosingFunc.doseWhileHeating,
+                  doseType: func.dosingFunc.doseType,
+                  dosingChemical: func.dosingFunc.dosingChemical
+                })
+                this.dosingControl.forEach(element => {
+                  dataRecord.haveDose = element.haveDose;
+                  dataRecord.doesAtTemp = element.doseAtTemp;
+                  dataRecord.fillType = element.fillType;
+                  dataRecord.dosingPercentage = element.dosingPercentage;
+                  dataRecord.doseWhileHeating = element.doseWhileHeating;
+                  dataRecord.doesType = element.doseType;
+                });
+              } else {
+                dataRecord.haveDose = null;
+                dataRecord.doesAtTemp = null;
+                dataRecord.fillType = null;
+                dataRecord.dosingPercentage = null;
+                dataRecord.doseWhileHeating = null;
+                dataRecord.doesType = null;
+              }
+              this.newRecordData.push(dataRecord)
+            });
+          }
+          // this.functionListReq.forEach(elementFunction => {
+          //   this.processValue.steps[i].stepName = element.stepName;
+          //   this.processValue.steps[i].stepPosotion = element.stepNo;
+          //   console.log(elementFunction)
+          // });
+          i++;
+        });
+        this.processValue.steps = this.newRecordData;
+        console.log(this.processValue)
+        console.log(this.processValue.steps)
+      }
+      else {
+        console.log("Null");
+      }
+
+    }
+    else {
+      return
+    }
   }
 }

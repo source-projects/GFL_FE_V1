@@ -6,21 +6,24 @@ import { CommonService } from './common.service';
   providedIn: 'root'
 })
 export class QualityService {
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
-  addQuality(qualityData){
-    return this.httpClient.post(this.commonService.envUrl()+'api/quality', qualityData);
+  addQuality(qualityData) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/quality', qualityData);
   }
 
-  getallQuality(id,getBy): any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/quality/all/'+getBy+'/'+id);
+  getallQuality(id, getBy): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/quality/all/' + getBy + '/' + id);
   }
 
-  getQualityById(id): any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/quality/'+id);
+  getQualityById(id): any {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/quality/' + id);
   }
 
-  updateQualityById(qualityData):any{
-    return this.httpClient.put(this.commonService.envUrl()+'api/quality',qualityData);
+  updateQualityById(qualityData): any {
+    return this.httpClient.put(this.commonService.envUrl() + 'api/quality', qualityData);
+  }
+  getQualityNameData() {
+    return this.httpClient.get(this.commonService.envUrl() + 'api/quality/allQuality');
   }
 }

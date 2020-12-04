@@ -73,6 +73,9 @@
                     <option value="mtr">Meter</option>
                     <option value="wt">Weight</option>
                 </select>
+                <div class="required-class" *ngIf="formSubmitted && addEditQualityForm.get('unit').invalid">
+                    <span>Unit is required.</span>
+                </div>
             </div>
         </div>
             <div>
