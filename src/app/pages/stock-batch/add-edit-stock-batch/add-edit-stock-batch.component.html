@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
-                            <ng-select name="partyId"  [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
+                            <ng-select name="qualityId"  [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
                             [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)="getUnit()">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}}-{{q.qualityName}}</ng-option>
                             </ng-select>

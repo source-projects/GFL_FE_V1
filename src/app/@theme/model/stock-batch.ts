@@ -10,6 +10,7 @@ export class StockBatch {
     chlDate:Date;
     remark:string;
     createdBy:Number;
+    createdDate: Date;
     updatedBy:Number;
     userHeadId:Number;
     batchData:BatchData[];
