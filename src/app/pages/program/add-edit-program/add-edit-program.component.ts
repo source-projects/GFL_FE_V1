@@ -69,7 +69,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList(0, "all").subscribe(
+    this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -84,7 +84,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public getQualityList() {
-    this.qualityService.getallQuality(0, "all").subscribe(
+    this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
