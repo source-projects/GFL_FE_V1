@@ -75,7 +75,6 @@ export class AddEditColorComponent implements OnInit {
             data => {
               if (data['success']) {
                 this.supplierListRate = data['data'];
-                console.log(this.supplierListRate)
               }
               else {
                 this.toastr.error(data['msg'])
@@ -89,7 +88,6 @@ export class AddEditColorComponent implements OnInit {
           this.calculateTotalQuantity(0);
           this.calculateAmount(0);
           let amount: any
-          console.log(this.color.colorDataList);
           this.color.colorDataList.forEach(element => {
             amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
@@ -125,7 +123,6 @@ export class AddEditColorComponent implements OnInit {
           data => {
             if (data['success']) {
               this.supplierListRate = data['data'];
-              console.log(this.supplierListRate)
             }
             else {
               this.toastr.error(data['msg'])
@@ -156,13 +153,9 @@ export class AddEditColorComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
     if (keyCode == 13) {
-      console.log("key 13");
       this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
-      console.log(this.index);
-
       if (rowIndex === this.color.colorDataList.length - 1) {
         let item = this.color.colorDataList[rowIndex];
-        console.log(item);
         if (colName == 'quantityPerBox') {
           if (!item.quantityPerBox) {
             this.toastr.error('Quantity per box required');
@@ -205,7 +198,6 @@ export class AddEditColorComponent implements OnInit {
             clearInterval(interval);
           }
         }, 50)
-        console.log(this.color.colorDataList.length);
       }
       else {
         let interval = setInterval(() => {
