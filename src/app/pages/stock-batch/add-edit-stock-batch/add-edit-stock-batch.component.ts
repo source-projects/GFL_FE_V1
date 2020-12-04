@@ -7,11 +7,8 @@ import { ToastrService } from "ngx-toastr";
 import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
-import { DatePipe } from '@angular/common';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'app/@theme/services/common.service';
-import { ColorService } from 'app/@theme/services/color.service';
-import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -25,13 +22,13 @@ export class AddEditStockBatchComponent implements OnInit {
   qualityList: any;
 
   formSubmitted = false;
-
+  
   party: any[];
   user: any;
   userHead;
   index;
   stockList;
-
+  wtPer100M;
 
   batch = {
     batchId: 0,
@@ -64,10 +61,10 @@ export class AddEditStockBatchComponent implements OnInit {
   stockBatchData: BatchData = new BatchData();
   blockNumber;
   currentStockBatch;
+  isQualitySelected:Boolean = false;
 
   constructor(
     private partyService: PartyService,
-    private shadeService: ShadeService,
     private toastr: ToastrService,
     private route: Router,
     private qualityService: QualityService,
@@ -90,6 +87,7 @@ export class AddEditStockBatchComponent implements OnInit {
     this.qualityList.forEach((element) => {
       if (element.id == this.stockBatch.qualityId)
         this.stockBatch.unit = element.unit;
+        this.wtPer100M = element.wtPer100m;
     });
   }
 
@@ -139,8 +137,11 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.remark = data["data"].remark;
           this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
           this.stockBatch.batchData = data["data"].batchData;
+          this.stockBatch.createdBy = data["data"].createdBy;
+          this.stockBatch.createdDate = data["data"].createdDate;
+          this.stockBatch.userHeadId = data["data"].userHeadId;
           this.setStockDataValues();
-        } else this.toastr.error(errorData.Serever_Error);
+        } else this.toastr.error(data['msg']);
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
@@ -299,7 +300,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   addStockBatch(myForm) {
     this.formSubmitted = true;
-    if (myForm.valid) {
+    if (myForm.valid ) {
       this.stockBatch.createdBy = this.user.userId;
       this.stockBatch.userHeadId = this.userHead.userHeadId;
       let k = 0;
@@ -381,9 +382,9 @@ export class AddEditStockBatchComponent implements OnInit {
 
       ],
     };
+    //item.unshift({...ob});
     item.push({ ...ob });
     this.stockDataValues = item;
-    //document.getElementById("new").style.visibility = "visible";
     const className = "collapsible-panel--expanded";
     if (e.target.classList.contains(className)) {
       e.target.classList.remove(className);
@@ -393,24 +394,15 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   calculateWt(meter, i, j, col) {
-    //  //w = (m/100) * wt
-    //  let w;
-    //  this.qualityList.forEach(function (quality) {
-    //    if(quality.id == id){
-    //      let wtPer100m = quality.wtPer100m;
-    //      w = (meter / 100) * wtPer100m;
-    //    }
-    //  });
+    let w;
+    w = (meter / 100) * this.wtPer100M;
+    this.stockDataValues[i].batchMW[j].wt = parseInt(w);
   }
 
-  calculateMtr(weight, i, rowIndex, col) {
-    // let m;
-    // let w:any = this.qualityListEmptyArray[rowIndex].wt;
-    // this.qualityList.forEach(function (quality) {
-    //   if(quality.id == id){
-    //     let wtPer100m = quality.wtPer100m;
-    //     m = (w * 100) / wtPer100m;
-    //   }
-    // });
+  calculateMtr(weight, i, j, col) {
+    let m;
+    console.log(this.wtPer100M)
+    m = (weight * 100) / this.wtPer100M;
+    this.stockDataValues[i].batchMW[j].mtr = parseInt(m);
   }
 }
