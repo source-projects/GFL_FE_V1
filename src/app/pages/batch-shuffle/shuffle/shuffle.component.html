@@ -65,8 +65,8 @@
 
             <div class="col-md-6" [hidden]="flag">
               <label class="required">Second Batch Name:</label>
-              <ng-select name="batchId" formControlName="batchName2" (click)="getVal()" (change)="temp1()">
-                <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
+              <ng-select name="batchId" formControlName="batchName2"  (change)="temp1()">
+                <ng-option *ngFor="let b of qualityParty2[0]" [value]="b">{{b.batchId}}
                 </ng-option>
               </ng-select>
               

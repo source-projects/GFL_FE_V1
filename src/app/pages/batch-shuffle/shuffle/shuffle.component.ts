@@ -10,7 +10,6 @@ import { QualityService } from 'app/@theme/services/quality.service';
 import { BatchByQualityPartyService } from 'app/@theme/services/batch-by-quality-party.service';
 import { Router } from '@angular/router';
 import { ShuffleService } from "app/@theme/services/shuffle.service";
-import { StockBatch, BatchData } from "app/@theme/model/stock-batch";
 import { BatchListService } from "app/@theme/services/batch-list.service";
 
 @Component({
@@ -27,11 +26,6 @@ export class ShuffleComponent implements OnInit {
   public setBatchFlag = 0;
   shuffleForm: FormGroup;
 
-
-  stockBatchArray: BatchData[] = [];
-  stockBatch: StockBatch = new StockBatch();
-  stockBatchData: BatchData = new BatchData();
-
   //form Validation
   formSubmitted = false;
 
@@ -46,9 +40,11 @@ export class ShuffleComponent implements OnInit {
   part1 = [];
 
   part2 = [];
-  updateFlag=0;
+  updateFlag = 0;
   //to store batch info based on party and quality
   qualityParty: any[];
+  qualityParty2 = [];
+  qualityPartyLeft = [];
   bId1 = [];
   bId2 = [];
   batches: any[];
@@ -62,6 +58,7 @@ export class ShuffleComponent implements OnInit {
   cId2: any;
   batchId1: any;
   batchId2: any;
+  index: number;
 
   constructor(private partyService: PartyService, private shuffleService: ShuffleService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private route: Router, private batchByQualityPartyService: BatchByQualityPartyService, private batchList: BatchListService) {
     this.shuffleForm = this.formBuilder.group({
@@ -105,7 +102,7 @@ export class ShuffleComponent implements OnInit {
   //quality drop down validation
   hasDropDownError1() {
 
-    if (this.shuffleForm.controls['qualityName'].invalid && this.shuffleForm.controls['qualityName'].touched ) {
+    if (this.shuffleForm.controls['qualityName'].invalid && this.shuffleForm.controls['qualityName'].touched) {
       this.flag = 1;
       return true;
     }
@@ -160,11 +157,11 @@ export class ShuffleComponent implements OnInit {
 
     this.shuffleForm.controls['batchName1'].reset();
     this.shuffleForm.controls['batchName2'].reset();
-    
-    
+
+
   }
 
-  
+
   //raido select for split and merge
   onChange(event) {
     this.formSubmitted = true;
@@ -197,6 +194,16 @@ export class ShuffleComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityParty = data["data"];
+
+          //to avoid merging of same batches 
+          if (this.shuffleForm.controls['batchName1'].valid) {
+            this.index = this.qualityParty.findIndex(x => x.batchId === this.bId1['batchId']);
+            this.qualityParty2.push(this.qualityParty);
+            this.qualityParty2[0].splice(this.index, 1);
+            console.log(this.qualityParty2);
+          }
+
+
         }
         else {
           this.toastr.error(data['msg'])
@@ -221,8 +228,7 @@ export class ShuffleComponent implements OnInit {
       this.sum += this.batches[this.i].mtr;
       this.shuffleForm.patchValue({ totalmtr1: this.sum });
     }
-    if(this.batches.length==0)
-    {
+    if (this.batches.length == 0) {
       this.shuffleForm.patchValue({ totalmtr1: this.sum });
     }
     this.sum = 0;
@@ -231,8 +237,7 @@ export class ShuffleComponent implements OnInit {
       this.sum += this.part2[this.i].mtr;
       this.shuffleForm.patchValue({ totalmtr2: this.sum });
     }
-    if(this.part2.length==0)
-    {
+    if (this.part2.length == 0) {
       this.shuffleForm.patchValue({ totalmtr2: this.sum });
     }
 
@@ -245,8 +250,7 @@ export class ShuffleComponent implements OnInit {
       this.sum += this.batches[this.i].wt;
       this.shuffleForm.patchValue({ totalwt1: this.sum });
     }
-    if(this.batches.length==0)
-    {
+    if (this.batches.length == 0) {
       this.shuffleForm.patchValue({ totalwt1: this.sum });
     }
     this.sum = 0;
@@ -255,8 +259,7 @@ export class ShuffleComponent implements OnInit {
       this.sum += this.part2[this.i].wt;
       this.shuffleForm.patchValue({ totalwt2: this.sum });
     }
-    if(this.part2.length==0)
-    {
+    if (this.part2.length == 0) {
       this.shuffleForm.patchValue({ totalwt2: this.sum });
     }
 
@@ -280,10 +283,8 @@ export class ShuffleComponent implements OnInit {
     this.cId2 = this.bId2["controlId"];
     this.batchId2 = this.bId2["batchId"];
     this.getBatches(this.cId2, this.batchId2);
-    
-    
-    console.log(this.part2);
-    //this.batches.indexOf(this.)
+
+
 
   }
 
@@ -355,7 +356,7 @@ export class ShuffleComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    this.updateFlag=1;
+    this.updateFlag = 1;
     this.findmtrsum();
 
     this.findwtsum();
@@ -363,7 +364,7 @@ export class ShuffleComponent implements OnInit {
 
 
   splitsubmit() {
-    if (this.part2.length == 0 || this.batches.length==0) {
+    if (this.part2.length == 0 || this.batches.length == 0) {
       alert("No batch was splitted");
 
     }
@@ -372,94 +373,94 @@ export class ShuffleComponent implements OnInit {
     else {
       this.formSubmitted = true;
       //this.shuffleForm.value.updatedBy = this.batches;
-      if(this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid && this.shuffleForm.controls['batchName1'].valid){
+      if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid && this.shuffleForm.controls['batchName1'].valid) {
 
-      this.objectOfBatch1 = {
-        "batchDataList": this.batches,
-        "batchId": this.batchId1,
-        "controlId": this.cId1
-      };
-      
-      this.objectOfBatch2 = {
-        "batchDataList": this.part2,
-        "batchId": this.batchId1.concat("_Split_Part2"),
-        "controlId": this.cId1
-      };
+        this.objectOfBatch1 = {
+          "batchDataList": this.batches,
+          "batchId": this.batchId1,
+          "controlId": this.cId1
+        };
 
-      this.mergeArray.push(this.objectOfBatch1);
-      this.mergeArray.push(this.objectOfBatch2);
-      this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
-        (data) => {
+        this.objectOfBatch2 = {
+          "batchDataList": this.part2,
+          "batchId": this.batchId1.concat("_Split_Part2"),
+          "controlId": this.cId1
+        };
 
-          if (data["success"]) {
-            this.route.navigate(["/pages"]);
-            this.toastr.success(errorData.Update_Success)
+        this.mergeArray.push(this.objectOfBatch1);
+        this.mergeArray.push(this.objectOfBatch2);
+        this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
+          (data) => {
+
+            if (data["success"]) {
+              this.route.navigate(["/pages"]);
+              this.toastr.success(errorData.Update_Success)
+            }
+            else {
+              this.toastr.error(errorData.Update_Error)
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error)
           }
-          else {
-            this.toastr.error(errorData.Update_Error)
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error)
-        }
-      );
+        );
 
-    }
+      }
 
-    else{
-      alert("Please fill all the required fields");
-    }
+      else {
+        alert("Please fill all the required fields");
+      }
     }
 
   }
 
   mergesubmit() {
-    if (this.updateFlag==0) {
+    if (this.updateFlag == 0) {
       alert("No batch was choosen to merge");
 
     }
     else {
       this.formSubmitted = true;
 
-     // this.shuffleForm.value.updatedBy = this.batches;
-     if(this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid && this.shuffleForm.controls['batchName1'].valid && this.shuffleForm.controls['batchName2'].valid){
+      // this.shuffleForm.value.updatedBy = this.batches;
+      if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid && this.shuffleForm.controls['batchName1'].valid && this.shuffleForm.controls['batchName2'].valid) {
 
 
-      this.objectOfBatch1 = {
-        "batchDataList": this.batches,
-        "batchId": this.batchId1,
-        "controlId": this.cId1
-      };
+        this.objectOfBatch1 = {
+          "batchDataList": this.batches,
+          "batchId": this.batchId1,
+          "controlId": this.cId1
+        };
 
-      this.objectOfBatch2 = {
-        "batchDataList": this.part2,
-        "batchId": this.batchId2,
-        "controlId": this.cId2
-      };
+        this.objectOfBatch2 = {
+          "batchDataList": this.part2,
+          "batchId": this.batchId2,
+          "controlId": this.cId2
+        };
 
-      this.mergeArray.push(this.objectOfBatch1);
-      this.mergeArray.push(this.objectOfBatch2);
-      this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
-        (data) => {
+        this.mergeArray.push(this.objectOfBatch1);
+        this.mergeArray.push(this.objectOfBatch2);
+        this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
+          (data) => {
 
-          if (data["success"]) {
-            this.route.navigate(["/pages"]);
-            this.toastr.success(errorData.Update_Success)
+            if (data["success"]) {
+              this.route.navigate(["/pages"]);
+              this.toastr.success(errorData.Update_Success)
+            }
+            else {
+              this.toastr.error(errorData.Update_Error)
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error)
           }
-          else {
-            this.toastr.error(errorData.Update_Error)
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error)
-        }
-      );
-    }
-    else{
-      alert("Please fill all the required fields");
+        );
+      }
+      else {
+        alert("Please fill all the required fields");
 
+      }
     }
-  }
 
 
   }
