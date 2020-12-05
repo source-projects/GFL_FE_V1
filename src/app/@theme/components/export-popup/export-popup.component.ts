@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 //import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ExportService } from 'app/@theme/services/export.service';
 import { type } from 'os';
 import { BehaviorSubject } from 'rxjs';
+import { ExportService } from 'app/@theme/services/export.service';
 
 //import {NgbModal, ModalDismissReasons}  from '@ng-bootstrap/ng-bootstrap'; 
 // import { NbDialogService } from '@nebular/theme';
@@ -15,8 +15,17 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ExportPopupComponent implements OnInit {
 // @Input() type:string;
- //@Output() exportType = new EventEmitter<string>();
+@Input('list') list: any[];
 
+@Input('headers') headers: any[];
+
+fileName="export";
+// @Input() fileType;
+// @Input() fileName;
+// @Input() headers;
+// @Input() party;
+
+ //@Output() exportType = new EventEmitter();
 //public exportType: BehaviorSubject<string> = new BehaviorSubject<string>(this.type)
 //@Output() exportType = new EventEmitter<string>();
 //@Output() exportType: EventEmitter<any> = new EventEmitter<any>();
@@ -27,16 +36,47 @@ export class ExportPopupComponent implements OnInit {
 
   ngOnInit(): void {
     //this.onClick();
+    console.log(this.list);
+    console.log(this.headers);
+
   }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //     for (const propName in changes) {
+  //       const chng = changes[propName];
+  //        let current  = JSON.stringify(chng.currentValue);
+  //       console.log(current);
+  //       //this.fileType=current;
+  //       //console.log(prev);
+  //     }
+  //   }
+    
   get activeModal() {
     return this._NgbActiveModal;
   }
 
   onClick(type){
+    this.activeModal.close(type)
     console.log(type);
+    if(type=='excel')
+      this.exportService.exportExcel(this.list, this.fileName, this.headers);
+    else if(type=='text')
+    {
+      this.exportService.exportText(this.list, this.fileName, this.headers);
+
+    }
+    else if(type=='pdf'){
+      this.exportService.exportPdf(this.list, this.fileName, this.headers);
+
+    }
+   
+    else{
+      return;
+    }
+   // this.exportType.next({type});
+    //console.log(type);
    // this.type=type;
    // this.exportType.emit(type);
-    this.activeModal.close(type)
    // this.type=type;
    //this.id=true;
   }

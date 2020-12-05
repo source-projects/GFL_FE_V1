@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule} from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 //import { ExportDirective } from '../../@theme/directives/export.directive';
-
+//import {ExportService} from '../../@theme/services/export.service';
 @NgModule({
   declarations: [PartyComponent, AddEditPartyComponent ],
   imports: [
@@ -20,6 +20,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NbCheckboxModule,
     NgxDatatableModule
   ],
- 
+
 })
 export class PartyModule { }

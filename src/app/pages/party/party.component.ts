@@ -6,7 +6,7 @@ import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
+//import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -24,9 +24,8 @@ export class PartyComponent implements OnInit {
 
   partyList = [];
   party=[];
-  arr=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
- fileType:string="abc";
+  fileType:string="abc";
   flag = false;
   radioSelect = 1;
   radioArray = [
@@ -43,7 +42,7 @@ export class PartyComponent implements OnInit {
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private exportService: ExportService,
+    //private exportService: ExportService,
     private _NgbModal: NgbModal
   ) { }
 
@@ -101,13 +100,17 @@ open(){
   //   windowClass: 'modal-job-scrollable'
   // });
   const modalRef = this.modalService.open(ExportPopupComponent);
-  modalRef.result
-  .then((result) => {
-    if (result) {
-     this.fileType=result;
-      console.log(result);
-    }
-  });
+  //modalRef.componentInstance.fileType = this.fileType;
+   modalRef.componentInstance.headers = this.headers;
+   modalRef.componentInstance.list = this.party;
+
+  // modalRef.result
+  // .then((result) => {
+  //   if (result) {
+  //    this.fileType=result;
+  //     console.log(result);
+  //   }
+  // });
   //this.getExportType();
 }
 

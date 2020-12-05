@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, SimpleChanges } from '@angular/core';
 import {ExportService} from '../services/export.service';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,19 +24,24 @@ export class ExportDirective {
 
   @Input() fileName: string;
 
+  //current:string;
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   for (const propName in changes) {
+  //     const chng = changes[propName];
+  //      let current  = JSON.stringify(chng.currentValue);
+  //     //console.log(this.current);
+  //     this.fileType=current;
+  //     //console.log(prev);
+  //   }
+  // }
+
   @HostListener('click', ['$event']) onClick() {
+
   console.log(this.fileType);
-    console.log(this.fileName);
-    if(this.fileType=='excel')
-{
-   if(this.flag==true)
-  {
-    //console.log(this.list);
-
-    this.exportService.exportExcel(this.list, this.fileName, this.headers);
-  }}
-  }
-
- 
-
+  console.log(this.fileName);
+   
+        this.exportService.exportExcel(this.list, this.fileName, this.headers);
+    
+}
 }
