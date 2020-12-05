@@ -47,7 +47,10 @@
 }
 .btn-design{
   margin: 0;
-  padding: 6px 16px;
+  padding: 6px 20px;
+  background-color: #aa3634;
+  border-color: #aa3634;
+  border-radius: 0;
 }
 .datatable-icon-up::before{
   content: none;
@@ -143,4 +146,37 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .datatable-body-cell-label{
   text-align: center;
+}
+.ngx-datatable .datatable-footer{
+  overflow: hidden!important;
+}
+.ngx-datatable.material .datatable-header .resize-handle{
+  border-right: none!important;
+}
+.btn-list{
+  color: #000;
+  background: #fff;
+  border-radius: 0;
+  border-color: #fff;
+}
+@media (max-width: 767px){
+  .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
+    padding: 15px 0!important;
+  }
+  .container {
+    max-width: 100%;
+  }
+  .mobile-mr-bt{
+    margin-bottom: 1rem;
+  }
+  .nb-text{
+    font-size: 18px!important;
+  }
+  .btn-list{
+    color: #000;
+    background: #fff;
+    border-radius: 0;
+    border-color: #fff;
+  }
+
 }

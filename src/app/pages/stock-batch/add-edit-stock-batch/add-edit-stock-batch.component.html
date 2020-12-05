@@ -14,12 +14,12 @@
                     <div class="form-group">
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Stock In Type</label>
                                 <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control"
                                     [(ngModel)]='stockBatch.stockInType' required readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Party Name</label>
                                 <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                     [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" required>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Bill No</label>
                                 <input type="number" name="billNo" class="form-control" #billNo1="ngModel"
                                     [(ngModel)]='stockBatch.billNo' required
@@ -57,7 +57,7 @@
                                     <span>Bill no. is required</span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Bill Date:</label>
                                 <input type="date" name="billDate" class="form-control" #billDate1="ngModel"
                                     [(ngModel)]='stockBatch.billDate' ngbDatepicker #dp="ngbDatepicker" required
@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Challan Date:</label>
                                 <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel"
                                     [(ngModel)]='stockBatch.chlDate' ngbDatepicker #dp="ngbDatepicker" required
@@ -90,7 +90,7 @@
                                     <span>Challan date is required</span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mobile-mr-bt">
                                 <label>Unit:</label>
                                 <input type="text" name="unit" class="form-control" readonly #unit1="ngModel"
                                     [(ngModel)]='stockBatch.unit'>
@@ -114,12 +114,12 @@
                             <nb-card [attr.id]="'new'+i" class="padding-box">
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-8">
                                             <label style="float: left;">Batch No</label>
                                             <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId'
                                                 class="form-control" name="batchNo{{i}}" min="0">
-                                        </div>
-                                        <div class="col-md-8">
+                                        </div> 
+                                        <div class="col-md-8 col-4">
                                             <nb-icon status="danger" style="float: right;margin-right: 10px;;"
                                                 [options]="{animation:{type:'zoom'}}" icon="trash"
                                                 (click)="removeCard($event,i);"></nb-icon>
