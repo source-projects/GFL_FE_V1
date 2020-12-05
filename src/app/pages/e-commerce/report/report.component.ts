@@ -189,7 +189,7 @@ export class ReportComponent implements OnInit {
         this.collectData(this.obj)
       }
       else {
-        this.toastr.error("Select time from 9:00 to 21:00 for day shift")
+        this.toastr.error("Select time from 9:00 AM to 8:59 PM for day shift")
       }
     }
     else if (Number(this.obj.shift) == 2) {
@@ -221,7 +221,7 @@ export class ReportComponent implements OnInit {
 
       }
       else {
-        this.toastr.error("Select time from 21:00 to 9:00 for night shift");
+        this.toastr.error("Select time from 9:00 PM to 8:59 AM for night shift");
       }
     }
     else {
