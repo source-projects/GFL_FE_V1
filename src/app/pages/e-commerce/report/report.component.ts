@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ReportService } from 'app/@theme/services/report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
-import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDateParserFormatter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 import { Color, Label } from 'ng2-charts';
-import { Time } from '@angular/common';
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -168,7 +167,7 @@ export class ReportComponent implements OnInit {
       let t = String(this.datetime[1]).slice(16, 23);
       let h = t.slice(0, 2);
 
-      if ((Number(hour) >= 9 && Number(hour) <= 21) && (Number(h) >= 9 && Number(h) <= 21)) {
+      if ((Number(hour) >= 9 && Number(hour) < 21) && (Number(h) >= 9 && Number(h) < 21)) {
         let ft1 = ft.slice(6,);
         let ft3 = ft.slice(0, 5);
         if (Number(ft1) < 10 && Number(ft1) >= 0) {
@@ -190,7 +189,7 @@ export class ReportComponent implements OnInit {
         this.collectData(this.obj)
       }
       else {
-        this.toastr.error("Select time from 9:00 to 21:00 for day shift")
+        this.toastr.error("Select time from 9:00 AM to 8:59 PM for day shift")
       }
     }
     else if (Number(this.obj.shift) == 2) {
@@ -199,7 +198,7 @@ export class ReportComponent implements OnInit {
       let hour = ft.slice(0, 2);
       let t = String(this.datetime[1]).slice(16, 23);
       let h = t.slice(0, 2);
-      if ((Number(hour) >= 21 || Number(hour) <= 9) && (Number(h) >= 21 || Number(h) <= 9)) {
+      if ((Number(hour) >= 21 || Number(hour) < 9) && (Number(h) >= 21 || Number(h) < 9)) {
         let ft1 = ft.slice(6,);
         let ft3 = ft.slice(0, 5);
         if (Number(ft1) < 10 && Number(ft1) >= 0) {
@@ -222,7 +221,7 @@ export class ReportComponent implements OnInit {
 
       }
       else {
-        this.toastr.error("Select time from 21:00 to 9:00 for night shift");
+        this.toastr.error("Select time from 9:00 PM to 8:59 AM for night shift");
       }
     }
     else {
