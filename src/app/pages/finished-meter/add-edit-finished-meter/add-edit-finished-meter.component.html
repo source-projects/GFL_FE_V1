@@ -1,25 +1,47 @@
 <nb-card>
-    <nb-card-header style="font-size: medium;">
-      <div *ngIf="this.currentFinishedMeter == null; else updateP">
-        <h2>ADD PARTY</h2>
-      </div>
-      <ng-template #updateP>
-        <h2>UPDATE PARTY</h2>
-      </ng-template>
-    </nb-card-header>
-    <nb-card-body>
-      <div class="container">
-        <form>
-  
-            <br><br>
-            <div class="row">
-              <button *ngIf="this.currentFinishedMeter == null" type="button" class="btn btn-primary"
-                style="margin-right:20px" (click)="addFinishedMeter()" >ADD</button>
-              <button *ngIf="this.currentFinishedMeter != null" type="button" (click)="updateFinishedMeter()" class="btn btn-primary"
-                style="margin-right:20px">UPDATE</button>
-              <button class="btn btn-primary" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
-            </div>
-        </form>
-      </div>
-    </nb-card-body>
-  </nb-card>
+  <nb-card-header style="font-size: medium;">
+    <div *ngIf="this.currentFinishedMeter == null; else updateP">
+      <h2>ADD PARTY</h2>
+    </div>
+    <ng-template #updateP>
+      <h2>UPDATE PARTY</h2>
+    </ng-template>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container">
+      <form>
+        <div class="row">
+          <div class="col-md-4">
+            <label class="required">Master</label>
+            <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel"
+              [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="enableQuality($event)">
+              <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-md-4">
+            <label>Party</label>
+            <ng-select name="partyId" [(ngModel)]='finishedMeterForm.partyId' #partyId1="ngModel"
+              (change)="enableQuality($event)">
+              <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-md-4">
+            <label>Quality</label>
+            <ng-select name="qualityId" [(ngModel)]='finishedMeterForm.qualityId' #qualityId1="ngModel">
+              <ng-option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <br><br>
+        <div class="row">
+          <button *ngIf="this.currentFinishedMeter == null" type="button" class="btn btn-primary"
+            style="margin-right:20px" (click)="addFinishedMeter()">ADD</button>
+          <button *ngIf="this.currentFinishedMeter != null" type="button" (click)="updateFinishedMeter()"
+            class="btn btn-primary" style="margin-right:20px">UPDATE</button>
+          <button class="btn btn-primary" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>

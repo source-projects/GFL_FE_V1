@@ -11,6 +11,10 @@ export class PartyService {
 
   constructor(private httpClient:HttpClient,private commonService:CommonService) { 
   }
+
+  getAllPartyWithNameOnly(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/party/allPartyWithName');
+  }
   
   getAllPartyList(id,getBy){
     return this.httpClient.get(this.commonService.envUrl()+'api/party/all/'+getBy+'/'+id);
