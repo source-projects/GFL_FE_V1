@@ -68,6 +68,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/process',
   },
   {
+    title: 'Finished Meter',
+    icon: 'home-outline',
+    link: '/pages/finishedMeter',
+  },
+  {
     title: 'FEATURES',
     group: true,
   },

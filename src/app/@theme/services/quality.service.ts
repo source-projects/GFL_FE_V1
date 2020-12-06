@@ -16,8 +16,12 @@ export class QualityService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/quality/all/' + getBy + '/' + id);
   }
 
-  getQualityById(id): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/quality/' + id);
+  getAllQualityWithNameOnly(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/quality/allQuality');
+  }
+
+  getQualityById(id): any{
+    return this.httpClient.get(this.commonService.envUrl()+'api/quality/'+id);
   }
 
   updateQualityById(qualityData): any {

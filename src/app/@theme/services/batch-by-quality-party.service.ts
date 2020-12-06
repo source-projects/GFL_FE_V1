@@ -16,11 +16,5 @@ export class BatchByQualityPartyService {
     
   }
 
-  // getBatchesById(bid): any{
-    
-  //   return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+bid);
-    
-  // }
-
 
 }
