@@ -29,7 +29,8 @@ export class AddEditStockBatchComponent implements OnInit {
   index;
   stockList;
   wtPer100M;
-
+  j=0;
+  k=0;
   batch = {
     batchId: 0,
     mtr: 0,
@@ -62,6 +63,7 @@ export class AddEditStockBatchComponent implements OnInit {
   blockNumber;
   currentStockBatch;
   isQualitySelected:Boolean = false;
+  flag=1;
 
   constructor(
     private partyService: PartyService,
@@ -84,11 +86,23 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getUnit() {
+    if(this.stockBatch.qualityId==null)
+    {
+      
+      this.flag=1;
+      this.toastr.error("Please select quality first");
+    }
+    else{
+      this.flag=0;
+    
+
+
     this.qualityList.forEach((element) => {
       if (element.id == this.stockBatch.qualityId)
         this.stockBatch.unit = element.unit;
         this.wtPer100M = element.wtPer100m;
     });
+  }
   }
 
   // setQualityByParty(event) {
@@ -128,12 +142,26 @@ export class AddEditStockBatchComponent implements OnInit {
         if (data["success"]) {
           this.stockBatch.billDate = new Date(data["data"].billDate);
           this.stockBatch.qualityId = data["data"].qualityId;
+          this.qualityList.forEach(element => {
+            if(element.id==this.stockBatch.qualityId)
+            {
+              this.wtPer100M = element.wtPer100m;
+              
+            }
+          
+            
+          });
+
           this.stockBatch.unit = data["data"].unit;
           this.stockBatch.stockInType = data["data"].stockInType;
           this.stockBatch.billNo = data["data"].billNo;
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
+          console.log(this.stockBatch.partyId)
+          this.stockBatch.createdBy = data["data"].createdBy;
+          this.stockBatch.createdDate = data["data"].createdDate;
+          this.stockBatch.userHeadId = data["data"].userHeadId;
           this.stockBatch.remark = data["data"].remark;
           this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
           this.stockBatch.batchData = data["data"].batchData;
@@ -176,10 +204,13 @@ export class AddEditStockBatchComponent implements OnInit {
         i++;
       }
     });
+
+    this.flag=0;
+
   }
 
   getQualityList() {
-    this.qualityService.getallQuality(0, "all").subscribe(
+    this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -198,7 +229,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList(0, "all").subscribe(
+    this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -211,11 +242,27 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     );
   }
+  batchInsertCheck(){
+    if(this.stockBatch.qualityId==null)
+    {
+      
+      this.flag=1;
+      this.toastr.error("Please select quality first");
+    }
+    else{
+      this.flag=0;
+    }
+  }
 
+  // displayCondition(){
+
+  // }
 
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
+    
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
+      this.k=this.k+1;
       this.index = "grData" + (rowIndex + 1) + "-" + colIndex + "" + idx;
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
         let item = this.stockDataValues[idx].batchMW[rowIndex];
@@ -370,6 +417,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   addNew(e, myForm) {
     //event.preventDefault();
+  
     let item = this.stockDataValues;
     var ob = {
       batchId: null,
@@ -382,15 +430,25 @@ export class AddEditStockBatchComponent implements OnInit {
 
       ],
     };
-    //item.unshift({...ob});
-    item.push({ ...ob });
-    this.stockDataValues = item;
-    const className = "collapsible-panel--expanded";
-    if (e.target.classList.contains(className)) {
-      e.target.classList.remove(className);
-    } else {
-      e.target.classList.add(className);
+    if(this.flag==1 || this.stockDataValues[this.j].batchId==null||this.stockDataValues[this.j].batchMW[this.k].mtr==null  )
+    {
+      this.toastr.error("Please fill all the required fields");
     }
+    else{
+      //item.unshift({...ob});
+      item.push({ ...ob });
+      this.stockDataValues = item;
+      const className = "collapsible-panel--expanded";
+      if (e.target.classList.contains(className)) {
+        e.target.classList.remove(className);
+      } else {
+        e.target.classList.add(className);
+      }
+      this.j=this.j+1;
+      this.k=0;
+    }
+    
+    
   }
 
   calculateWt(meter, i, j, col) {
