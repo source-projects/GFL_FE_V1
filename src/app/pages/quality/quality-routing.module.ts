@@ -9,21 +9,26 @@ const routes: Routes = [
   {
     path: '',
     component: QualityComponent,
-    canActivate:[QualityGuard],
-    canLoad: [QualityGuard]
+    canActivate: [QualityGuard],
+    canLoad: [QualityGuard],
+    data: { PermissionName: ['view'] }
   },
   {
     path: 'add',
-    component: AddEditQualityComponent
+    component: AddEditQualityComponent,
+    canLoad: [QualityGuard],
+    data: { PermissionName: ['add'] }
   }, {
     path: 'edit/:id',
-    component: AddEditQualityComponent
+    component: AddEditQualityComponent,
+    canLoad: [QualityGuard],
+    data: { PermissionName: ['edit'] }
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[QualityGuard]
+  providers: [QualityGuard]
 })
 export class QualityRoutingModule { }

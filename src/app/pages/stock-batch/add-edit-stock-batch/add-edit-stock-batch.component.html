@@ -106,11 +106,11 @@
                     <div class="batch-body">
                         <header class="batch-header">
                             <h2 class="batch-heading display-inline">BATCH</h2>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
-                                (click)="addNew($event,myForm);" icon="plus" class="add-icon display-inline"></nb-icon>
+
                         </header>
 
-                        <div [attr.id]="'repeat'+i" *ngFor="let block of stockDataValues; let i=index " class="batch-card-margin">
+                        <div [attr.id]="'repeat'+i" *ngFor="let block of stockDataValues; let i=index "
+                            class="batch-card-margin">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
                                 <div class="form-group">
                                     <div class="row">
@@ -118,7 +118,7 @@
                                             <label style="float: left;">Batch No</label>
                                             <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId'
                                                 class="form-control" name="batchNo{{i}}" min="0">
-                                        </div> 
+                                        </div>
                                         <div class="col-md-8 col-4">
                                             <nb-icon status="danger" style="float: right;margin-right: 10px;;"
                                                 [options]="{animation:{type:'zoom'}}" icon="trash"
@@ -129,7 +129,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <ngx-datatable #table class="material common-table datatable-auto-height box-shadow-none"
+                                            <ngx-datatable #table
+                                                class="material common-table datatable-auto-height box-shadow-none"
                                                 [rows]="block.batchMW" [headerHeight]="35" [footerHeight]="35"
                                                 [rowHeight]="'auto'" [columnMode]="'force'">
 
@@ -186,21 +187,30 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </nb-card>
                         </div>
-
+                        <div class="col-md-12">
+                            <div class="nb-icon-add">
+                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
+                                    (click)="addNew($event,myForm);" icon="plus" class="add-icon display-inline">
+                                </nb-icon>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="padding-btn-box">
-                                <button *ngIf="currentStockBatch == null" type="button"
-                                    class="btn btn-primary btn-sm btn-design"
-                                    (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
+                            <div class="col-md-12 mobile-btn-center">
+                                <div class="padding-btn-box">
+                                    <button *ngIf="currentStockBatch == null" type="button"
+                                        class="btn btn-primary btn-sm btn-design"
+                                        (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
 
-                                <button *ngIf="currentStockBatch != null" type="button"
-                                    (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm"
-                                    style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
+                                    <button *ngIf="currentStockBatch != null" type="button"
+                                        (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm btn-design"
+                                        style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design"
-                                    routerLink="/pages/stock-batch">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design"
+                                        routerLink="/pages/stock-batch">CANCEL</button>
+                                </div>
                             </div>
                         </div>
                     </div>

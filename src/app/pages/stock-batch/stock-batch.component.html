@@ -6,19 +6,19 @@
                     <div class="col-md-11 col-8">
                         <h2 class="nb-text">STOCK-BATCH</h2>
                     </div>
-                    <div class="col-md-1 col-4">
+                    <div class="col-md-1 col-4 mobile-btn desktop-btn">
                         <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>        
                     </div>
                 </div>
             </nb-card-header>
             <nb-card-body>
 
-                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect">
+                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
                     <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
                 
                 <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="50"
-                    [columnMode]="'force'" class="material" style="text-align: justify"
+                    [columnMode]="'force'" class="material  table-responsive" style="text-align: justify"
                     [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
                     <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
