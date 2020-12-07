@@ -193,8 +193,11 @@ input[type=number]::-webkit-outer-spin-button {
   color: #ffffff!important;
   transition: .4s;
 }
-.nb-theme-default nb-menu .menu-item .menu-icon, .menu-title{
+.nb-theme-default nb-menu .menu-item .menu-icon, .nb-theme-default nb-checkbox.status-basic .text{
   color: #aa3634!important;
+}
+.menu-title{
+  color: #5e5b5e;
 }
 .nb-theme-default nb-menu .menu-item a:hover .menu-title{
   color: #fff!important;
@@ -221,12 +224,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .nb-theme-default nb-checkbox.status-basic .custom-checkbox.checked, .nb-theme-default nb-checkbox.status-basic .native-input:enabled:active + .custom-checkbox.indeterminate, .nb-theme-default nb-checkbox.status-basic .native-input:enabled:active + .custom-checkbox.checked{
   background-color: #aa3634!important;
-    border-color: #aa3634!important;
+  border-color: #aa3634!important;
 }
 .nb-theme-default nb-checkbox.status-basic .custom-checkbox{
   border-radius: 0;
 }
-.address-area{
+.address-area, .remark-resize{
   resize: none;
 }
 .padding-bt-tp{
@@ -234,6 +237,72 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .nb-check-user{
   padding-left: 0!important;
+}
+.add-modal{
+  color: #aa3634!important;
+  margin-right: 0;
+}
+.close-icon{
+  color: #fff!important;
+}
+.btn-foucs-none:focus{
+  outline: none!important;
+}
+.modal-content{
+  border-radius: 0!important;
+}
+.nb-badges{
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 13px!important;
+  margin: 0 10px;
+  background: #5e5b5e;
+  color: #fff!important;
+  display: inline;
+  margin-left: 0;
+}
+.nb-table-num{
+  font-weight: 700;
+}
+.list-step{
+  margin-top: 15px;
+}
+// process accordian
+.nb-accordian{
+  background-color: #aa363412!important;
+}
+.nb-item-body{
+  background-color: #eaeaea45!important;
+}
+.nb-theme-default nb-accordion{
+  box-shadow: none!important;
+}
+.nb-action{
+  margin-right: 24px!important;
+}
+.nb-accordian-fn-size{
+  font-size: 18px !important;
+  padding: 13px 20px!important;
+}
+.nb-p-text {
+  color: #aa3634!important;
+  font-weight: 600!important;
+}
+.status-basic label{
+  padding-top: 0!important;
+}
+.nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle{
+  background-color: #aa3634!important;
+}
+.outer-circle{
+  border-color:  #aa3634!important;
+}
+.nb-mr-0{
+  margin: 0;
+}
+.nb-dis-flx{
+  display: flex;
+  align-items: center;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{

@@ -1,68 +1,90 @@
-
-    <nb-card>
-        <nb-card-header>
-           <div *ngIf="selectedSupplierId == null; else updateS"> <h2>ADD SUPPLIER</h2></div>
-           <ng-template #updateS><h2>UPDATE SUPPLIER</h2></ng-template>
-        </nb-card-header>       
-        
-    <nb-card-body>        
-      <form [formGroup]="addSupplier" (ngSubmit)="addSupplierInfo()">
-          <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Supplier Name</label>
-                    <input type="text" class="form-control" name="supplierName" placeholder="Enter Supplier Name" formControlName="supplierName" 
-                    [ngClass]="{'is-invalid': formSubmitted && addSupplier.controls.supplierName.invalid}">
-                    <div class="invalid-feedback" *ngIf="formSubmitted && (addSupplier.controls.supplierName.invalid || (addSupplier.get('supplierName').dirty || addSupplier.get('supplierName').touched) )">
-                        <span>Supplier Name is Required</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Discount %</label>
-                    <input type="number" class="form-control" id="discountPercentage" placeholder="Enter Discount %" formControlName="discountPercentage" 
-                    [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.discountPercentage.invalid )}" min="0">
-                    <div class="invalid-feedback" *ngIf="formSubmitted && (addSupplier.controls.discountPercentage.invalid || (addSupplier.get('discountPercentage').dirty || addSupplier.get('discountPercentage').touched) )">
-                        <span>Discount % is Required</span>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <div class="form-group" >
-                    <label class="required">GST %</label>
-                    <input type="number" class="form-control" id="gstPercentage" placeholder="Enter GST %" formControlName="gstPercentage" 
-                    [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.gstPercentage.invalid )}" min="0">
-                    <div class="invalid-feedback" *ngIf="formSubmitted && (addSupplier.controls.gstPercentage.invalid || (addSupplier.get('gstPercentage').dirty || addSupplier.get('gstPercentage').touched) )">
-                        <span>GST % is Required</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Payment Terms</label>
-                    <input type="number" class="form-control" id="paymentTerms" placeholder="Enter Payment Terms" formControlName="paymentTerms" required 
-                    [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.paymentTerms.invalid )}" min="0">
-                    <div class="invalid-feedback" *ngIf="formSubmitted && (addSupplier.controls.paymentTerms.invalid || (addSupplier.get('paymentTerms').dirty || addSupplier.get('paymentTerms').touched) )">
-                        <span>Payment Terms is Required</span>
-                    </div>
-                </div>
-        
-            </div>
-          </div>        
-        <div class="form-group">
-            <label>Remark</label>
-            <input type="text" class="form-control" id="remark" placeholder="Enter Remark" formControlName="remark">
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div *ngIf="selectedSupplierId == null; else updateS">
+            <h2 class="nb-text">ADD SUPPLIER</h2>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <input *ngIf="selectedSupplierId == null; else update" type="submit" class="btn btn-primary btn-sm" value="ADD">&nbsp;&nbsp;&nbsp;
-                <ng-template #update><input  type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm" value="UPDATE">&nbsp;&nbsp;&nbsp;</ng-template>
-                <button class="btn btn-primary  btn-sm" (click)="goBackToPreviousPage()">CANCEL</button>
+        <ng-template #updateS>
+            <h2 class="nb-text">UPDATE SUPPLIER</h2>
+        </ng-template>
+    </nb-card-header>
+
+    <nb-card-body>
+        <form [formGroup]="addSupplier" (ngSubmit)="addSupplierInfo()">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Supplier Name</label>
+                        <input type="text" class="form-control" name="supplierName" placeholder="Supplier Name"
+                            formControlName="supplierName"
+                            [ngClass]="{'is-invalid': formSubmitted && addSupplier.controls.supplierName.invalid}">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (addSupplier.controls.supplierName.invalid || (addSupplier.get('supplierName').dirty || addSupplier.get('supplierName').touched) )">
+                            <span>Supplier Name is Required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Discount %</label>
+                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %"
+                            formControlName="discountPercentage"
+                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.discountPercentage.invalid )}"
+                            min="0">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (addSupplier.controls.discountPercentage.invalid || (addSupplier.get('discountPercentage').dirty || addSupplier.get('discountPercentage').touched) )">
+                            <span>Discount % is Required</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>      
-    </form>
-</nb-card-body>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">GST %</label>
+                        <input type="number" class="form-control" id="gstPercentage" placeholder="GST %"
+                            formControlName="gstPercentage"
+                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.gstPercentage.invalid )}"
+                            min="0">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (addSupplier.controls.gstPercentage.invalid || (addSupplier.get('gstPercentage').dirty || addSupplier.get('gstPercentage').touched) )">
+                            <span>GST % is Required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Payment Terms</label>
+                        <input type="number" class="form-control" id="paymentTerms" placeholder="Payment Terms"
+                            formControlName="paymentTerms" required
+                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.paymentTerms.invalid )}"
+                            min="0">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (addSupplier.controls.paymentTerms.invalid || (addSupplier.get('paymentTerms').dirty || addSupplier.get('paymentTerms').touched) )">
+                            <span>Payment Terms is Required</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Remark</label>
+                        <textarea type="text" class="form-control remark-resize" id="remark" placeholder="Remark"
+                            formControlName="remark"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center">
+                    <div class="padding-bt-tp">
+                        <input *ngIf="selectedSupplierId == null; else update" type="submit"
+                            class="btn btn-primary btn-sm btn-design" value="ADD">&nbsp;&nbsp;&nbsp;
+                        <ng-template #update><input type="button" (click)="updateSupplier()"
+                                class="btn btn-primary btn-sm btn-design" value="UPDATE">&nbsp;&nbsp;&nbsp;</ng-template>
+                        <button class="btn btn-primary btn-sm btn-design" (click)="goBackToPreviousPage()">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
 </nb-card>
