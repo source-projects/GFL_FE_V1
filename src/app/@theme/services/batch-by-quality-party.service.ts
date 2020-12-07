@@ -11,8 +11,7 @@ export class BatchByQualityPartyService {
   constructor(private httpClient:HttpClient,private commonService:CommonService) { }
 
   getBatchById(qid,pid): any{
-    
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+qid+'/'+pid);
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batchWithoutExtra/ByQualityAndParty/'+qid+'/'+pid);
     
   }
 
