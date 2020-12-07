@@ -22,6 +22,7 @@ export class QualityComponent implements OnInit {
     {id:2, value:"View Group"},
     {id:3, value:"View All"}
   ];
+  access:Boolean = false;
   qualityList:[];
   radioSelect = 1;
   userId;
@@ -30,12 +31,14 @@ export class QualityComponent implements OnInit {
   constructor(private commonService: CommonService,public qualityGuard: QualityGuard, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
   ngOnInit(): void {
+    this.access = this.qualityGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getQualityList(this.userId, "own");
   }
+
 
   onChange(event){
     this.qualityList = [];

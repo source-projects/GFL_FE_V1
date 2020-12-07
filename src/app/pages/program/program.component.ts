@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -26,8 +28,16 @@ export class ProgramComponent implements OnInit {
     { id: 2, value: "View Group" },
     { id: 3, value: "View All" }
   ];
-
-  constructor(private commonService: CommonService, private programService: ProgramService, private router: Router, private toastr: ToastrService, private modalService: NgbModal,) { }
+  permissions: Number;
+  access:Boolean = false;
+  constructor(
+     private commonService: CommonService,
+     private programService: ProgramService, 
+     private router: Router,
+     public programGuard: ProgramGuard,
+     private jwtToken: JwtTokenService,
+     private toastr: ToastrService, 
+     private modalService: NgbModal,) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();

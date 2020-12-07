@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
-
+  permissions: Number;
   stockList = [];
 
   tablestyle = "bootstrap";
@@ -26,14 +28,18 @@ export class StockBatchComponent implements OnInit {
   userHeadId;
   userId;
 
+  access:Boolean = false;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
+    public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
+    private jwtToken: JwtTokenService,
     private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
+    this.access = this.stockBatchGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

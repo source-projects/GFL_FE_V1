@@ -10,15 +10,22 @@ const routes: Routes = [
     path: '',
     component: StockBatchComponent,
     canActivate: [StockBatchGuard],
-    canLoad: [StockBatchGuard]
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['view']}
   },
   {
     path: 'add',
-    component: AddEditStockBatchComponent
+    component: AddEditStockBatchComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['add']}
   },
   {
     path: 'edit/:id',
-    component: AddEditStockBatchComponent
+    component: AddEditStockBatchComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['edit']}
   }
 ];
 

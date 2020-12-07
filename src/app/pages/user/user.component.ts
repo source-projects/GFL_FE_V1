@@ -4,8 +4,10 @@ import {NgbModal}  from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { UserService } from "app/@theme/services/user.service";
 import { CommonService } from 'app/@theme/services/common.service';
+import { UserGuard } from 'app/@theme/guards/user.guard';
 
 @Component({
   selector: 'ngx-user',
@@ -14,6 +16,7 @@ import { CommonService } from 'app/@theme/services/common.service';
 })
 export class UserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
+  
 
   tableStyle = 'bootstrap';
   userList=[];
@@ -25,16 +28,22 @@ export class UserComponent implements OnInit {
     {id:2, value:"View Group"},
     {id:3, value:"View All"}
   ];
-
+  
+  permissions: Number;
+  access:Boolean = false;
   constructor(
     private route:Router,
     private modalService: NgbModal,
     private toastr:ToastrService,
     private userService:UserService,
+
+    public userGuard: UserGuard,
+    private jwtToken: JwtTokenService,
     private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
+    this.access = this.userGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
