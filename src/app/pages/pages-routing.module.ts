@@ -94,6 +94,13 @@ const routes: Routes = [{
       canLoad: [SupplierGuard]
     },
     {
+      path: 'finishedMeter',
+      loadChildren: () => import('./finished-meter/finished-meter.module')
+        .then(m => m.FinishedMeterModule),
+      // canActivate: [FinishedMeterGuard],
+      // canLoad: [FinishedMeterGuard]
+    },
+    {
       path: 'batch-shuffle',
       loadChildren: () => import('./batch-shuffle/batch-shuffle.module')
         .then(m => m.BatchShuffleModule),
