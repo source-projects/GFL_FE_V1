@@ -6,6 +6,8 @@ import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
+import { QualityGuard } from 'app/@theme/guards/quality.guard';
+
 @Component({
   selector: 'ngx-quality',
   templateUrl: './quality.component.html',
@@ -29,14 +31,7 @@ export class QualityComponent implements OnInit {
   userId;
   userHeadId;
   tableStyle = 'bootstrap';
-  constructor(
-    private commonService: CommonService,
-    private qualityService: QualityService,
-    private toastr: ToastrService,
-    private jwtToken: JwtTokenService,
-    private storeTokenService: StoreTokenService,
-    private exportService: ExportService
-    ) { }
+  constructor(private commonService: CommonService,public qualityGuard: QualityGuard, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
