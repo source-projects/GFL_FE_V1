@@ -1,104 +1,55 @@
-<nb-card>
-  <nb-card-header style="font-size: medium;">
+<nb-card class="nb-style">
+  <nb-card-header class="nb-header">
     <div *ngIf="this.currentFinishedMeter == null; else updateP">
-      <h2>ADD FINISHED METER</h2>
+      <h2 class="nb-text">ADD PARTY</h2>
     </div>
     <ng-template #updateP>
-      <h2>UPDATE PARTY</h2>
+      <h2 class="nb-text">UPDATE PARTY</h2>
     </ng-template>
   </nb-card-header>
   <nb-card-body>
-    <div class="container">
-      <form #myForm="ngForm">
+    <div>
+      <form>
         <div class="row">
           <div class="col-md-4">
-            <label class="required">Master</label>
-            <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #masterId1="ngModel"
-              [ngClass]="{'is-invalid': formSubmitted && masterId1.invalid}" (change)="masterSelected($event)">
-              <ng-option *ngFor="let master of masterList" [value]="master.id">{{master.userName}}
-              </ng-option>
-            </ng-select>
+            <div class="form-group">
+              <label class="required">Master</label>
+              <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel"
+                [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="enableQuality($event)"
+                placeholder="Select Master">
+                <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+              </ng-select>
+            </div>
           </div>
           <div class="col-md-4">
-            <label>Party</label>
-            <ng-select name="partyId" [(ngModel)]='finishedMeterForm.partyId' #partyId1="ngModel"
-              (change)="enableQuality($event)">
-              <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
-            </ng-select>
+            <div class="form-group">
+              <label>Party</label>
+              <ng-select name="partyId" [(ngModel)]='finishedMeterForm.partyId' #partyId1="ngModel"
+                (change)="enableQuality($event)" placeholder="Select Party">
+                <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+              </ng-select>
+            </div>
           </div>
           <div class="col-md-4">
-            <label>Quality</label>
-            <ng-select name="qualityId" [(ngModel)]='finishedMeterForm.qualityId' #qualityId1="ngModel"
-              (change)="qualitySelected($event)">
-              <ng-option *ngFor="let q of qualityList" [value]="q.id? q.id : q.qualityEntryId">{{q.qualityId}} - {{q.partyName}}</ng-option>
-            </ng-select>
+            <div class="form-group">
+              <label>Quality</label>
+              <ng-select name="qualityId" [(ngModel)]='finishedMeterForm.qualityId' #qualityId1="ngModel"
+                placeholder="Select Quality">
+                <ng-option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}}</ng-option>
+              </ng-select>
+            </div>
           </div>
         </div>
-        <br>
         <div class="row">
-          <div class="col-md-4">
-            <label>Batch</label>
-            <ng-select name="batchId" [(ngModel)]='finishedMeterForm.batchId' #batchId1="ngModel"
-              (change)="batchSelected($event)">
-              <ng-option *ngFor="let b of batchList" [value]="b.controlId">{{b.batchId}}</ng-option>
-            </ng-select>
+          <div class="col-md-12 mobile-btn-center">
+            <div class="padding-bt-tp">
+              <button *ngIf="this.currentFinishedMeter == null" type="button" class="btn btn-primary btn-sm btn-design"
+                style="margin-right:20px" (click)="addFinishedMeter()">ADD</button>
+              <button *ngIf="this.currentFinishedMeter != null" type="button" (click)="updateFinishedMeter()"
+                class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+              <button class="btn btn-primary btn-sm btn-design" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
+            </div>
           </div>
-        </div>
-
-        <br>
-        <div *ngIf="finishedMeterForm.batchId != null">
-          <!-- batch gr data -->
-          <ngx-datatable [rows]="finishedMeterForm.batchData" [ngClass]="'bootstrap'" [headerHeight]="50"
-            [columnMode]="'force'" class="material" style="text-align: justify" [limit]="10" [headerHeight]="40"
-            [footerHeight]="40" [rowHeight]="40">
-            <ngx-datatable-column name="Id" props="id"></ngx-datatable-column>
-            <ngx-datatable-column name="Mtr" props="mtr"></ngx-datatable-column>
-
-            <ngx-datatable-column name="Finished Mtr" props="finishMtr">
-              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                <input class="tableForm" type="number" [id]="'batchList'+rowIndex+'-3'" [(ngModel)]="row.finishMtr"
-                  #finishMtr1="ngModel" name='finishMeter{{rowIndex}}' required (keyup)="onKeyUp($event,rowIndex,3,'mtr')"
-                  [ngClass]="{'is-invalid': formSubmitted && finishMtr1.invalid}">
-                <div class="invalid-feedback" *ngIf="formSubmitted && (finishMtr1.invalid)"
-                  style="display: inline-block;">
-                  <span>Required</span>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="Sequence" props="sequenceId">
-              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                <input class="tableForm" type="number" [id]="'batchList'+rowIndex+'-4'" [(ngModel)]="row.sequenceId"
-                  #sequenceId1="ngModel" name='sequenceId{{rowIndex}}' required
-                  [ngClass]="{'is-invalid': formSubmitted && sequenceId1.invalid}">
-                <div class="invalid-feedback" *ngIf="formSubmitted && (sequenceId1.invalid)"
-                  style="display: inline-block;">
-                  <span>Required</span>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- <ngx-datatable-column name="Actions" sortable="false">
-              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-
-                <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
-                  (click)="deleteParty(row.id)">
-                </nb-icon>
-
-              </ng-template>
-            </ngx-datatable-column> -->
-
-          </ngx-datatable>
-
-          <!-- <button name="arrangeGr" class="btn btn-sm btn-primary" (click)="arrange()">Arrange</button> -->
-        </div>
-        <br><br>
-        <div class="row">
-          <button *ngIf="this.currentFinishedMeter == null" type="button" class="btn btn-sm btn-primary"
-            style="margin-right:20px" (click)="addFinishedMeter(myForm)">ADD</button>
-          <button *ngIf="this.currentFinishedMeter != null" type="button" (click)="updateFinishedMeter()"
-            class="btn btn-primary" style="margin-right:20px">UPDATE</button>
-          <button class="btn btn-sm btn-primary" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
         </div>
       </form>
     </div>
