@@ -1,132 +1,159 @@
-<nb-card>
-    <nb-card-header style="font-size: medium;">
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
         <div *ngIf="this.currentShadeId == null; else updateS">
-            <h2>ADD SHADE</h2>
+            <h2 class="nb-text">ADD SHADE</h2>
         </div>
         <ng-template #updateS>
-            <h2>UPDATE SHADE</h2>
+            <h2 class="nb-text">UPDATE SHADE</h2>
         </ng-template>
     </nb-card-header>
     <nb-card-body>
-        <div class="container">
-            <form #shadeForm="ngForm" (keydown.enter)="$event.preventDefault()" >
+        <div>
+            <form #shadeForm="ngForm" (keydown.enter)="$event.preventDefault()">
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label class="required">Party Shade No</label>
-                            <input type="text" class="form-control" [(ngModel)]="shades.partyShadeNo" #partyShadeNo1="ngModel"
-                            name="partyShadeNo" required  
-                            [ngClass]="{'is-invalid':formSubmitted && !(partyShadeNo1.valid) }">
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (partyShadeNo1.invalid || (partyShadeNo1.dirty || partyShadeNo1.untouched) )">
-                        
-                        <span>Party Shade No is required</span></div>
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label class="required">Process Name</label>
-                        <ng-select aria-placeholder="Select process name" 
-                            [(ngModel)]="shades.processId" 
-                            (change)="setProcessName(shades.processId)"
-                            #processName1="ngModel" name="processName" required 
-                            [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }" >
-                            <ng-option *ngFor="let p of processList" [value]="p.id">
-                                {{p.name}}
-                            </ng-option>
-                        </ng-select>
-                        <div class="required-class"
-                        *ngIf="formSubmitted && (processName1.invalid )">
-                        <span>Process Name  is required</span></div>
-                       
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label class="required">Quality Id</label>
-                        <ng-select placeholder="Select quality id" [(ngModel)]="shades.qualityId"
-                            #qualityId1="ngModel" name="qualityId"  (change)="qualityIdSelected($event)" required
-                            [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }" >
-                            <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
-                                {{q.qualityId}} - {{q.partyName}}
-                            </ng-option>
-                        </ng-select>
-                        <div class="required-class"
-                        *ngIf="formSubmitted && (qualityId1.invalid)">
-                            <span>Quality id  is required</span>
-                        </div>  
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label>Quality Name</label>
-                        <input type="text" name="qualityName" #qualityName1="ngModel" 
-                        [(ngModel)]="shades.qualityName" readonly
-                        class="form-control" >
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Quality Type</label>
-                        <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType"
-                            class="form-control" >
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Party Name</label>
-                        <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
-                        #partyName1="ngModel" required (change)="getQualityFromParty($event)" >
-                            <ng-option *ngFor="let p of partyList" [value]="p.id">
-                                {{p.partyName}}
-                            </ng-option>
-                        </ng-select>
-                        <div class="required-class"
-                        *ngIf="formSubmitted && (partyName1.invalid)">
-                            <span>Party Name  is required</span>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Party Name</label>
+                            <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
+                                #partyName1="ngModel" required (change)="getQualityFromParty($event)">
+                                <ng-option *ngFor="let p of partyList" [value]="p.id" placeholder="Party Name">
+                                    {{p.partyName}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="required-class" *ngIf="formSubmitted && (partyName1.invalid)">
+                                <span>Party Name is required</span>
+                            </div>
                         </div>
                     </div>
 
-                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Party Shade No</label>
+                            <input type="text" class="form-control" [(ngModel)]="shades.partyShadeNo"
+                                #partyShadeNo1="ngModel" name="partyShadeNo" required
+                                [ngClass]="{'is-invalid':formSubmitted && !(partyShadeNo1.valid) }"
+                                placeholder="Party Shade No">
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (partyShadeNo1.invalid || (partyShadeNo1.dirty || partyShadeNo1.untouched) )">
+
+                                <span>Party Shade No is required</span></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Process Name</label>
+                            <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processId"
+                                (change)="setProcessName(shades.processId)" #processName1="ngModel" name="processName"
+                                required [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }"
+                                placeholder="Process Name">
+                                <ng-option *ngFor="let p of processList" [value]="p.id">
+                                    {{p.name}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="required-class" *ngIf="formSubmitted && (processName1.invalid )">
+                                <span>Process Name is required</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Quality Name</label>
+                            <input type="text" name="qualityName" #qualityName1="ngModel"
+                                [(ngModel)]="shades.qualityName" readonly class="form-control"
+                                placeholder="Quality Name">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Quality Id</label>
+                            <ng-select placeholder="Select Quality Id" [(ngModel)]="shades.qualityId"
+                                #qualityId1="ngModel" name="qualityId" (change)="qualityIdSelected($event)" required
+                                [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }">
+                                <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
+                                    {{q.qualityId}} - {{q.partyName}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="required-class" *ngIf="formSubmitted && (qualityId1.invalid)">
+                                <span>Quality id is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Quality Type</label>
+                            <input type="text" name="qualityType" readonly #qualityType1="ngModel"
+                                [(ngModel)]="shades.qualityType" class="form-control" placeholder="Quality Type">
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-3">
-                        <label class="required">Color Tone</label>
-                        <input class="form-control" [(colorPicker)]="color"  [style.background]="color"
-                            [value]="color" (colorPickerChange)="updateColor()" />
-                           <!--<div class="invalid-feedback"
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Color Tone</label>
+                            <input class="form-control" [(colorPicker)]="color" [style.background]="color"
+                                [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
+                        </div>
+                        <!--<div class="invalid-feedback"
                         *ngIf="formSubmitted && (color1.invalid || (color1.dirty || color1.untouched) )">
                     
                     <span>Color tone  is required</span></div>-->
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Lab Color No</label>
-                        <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo"
-                            class="form-control">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Lab Color No</label>
+                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo"
+                                class="form-control" placeholder="Lab Color No">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label>Category</label>
-                        <ng-select name="category" category1="ngModel" [(ngModel)]="shades.category" >
-                            <ng-option *ngFor="let c of categoryList" [value]="c.name">
-                                {{c.name}}
-                            </ng-option>
-                        </ng-select>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <ng-select name="category" category1="ngModel" [(ngModel)]="shades.category"
+                                placeholder="Category">
+                                <ng-option *ngFor="let c of categoryList" [value]="c.name">
+                                    {{c.name}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label>Remark</label>
-                        <textarea name="remark" remark1="ngModel" [(ngModel)]="shades.remark" class="form-control"></textarea>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Remark</label>
+                            <textarea name="remark" remark1="ngModel" [(ngModel)]="shades.remark"
+                                class="form-control remark-resize"></textarea>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="shades.shadeDataList"
-                            [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'">
+                        <ngx-datatable #table class="material common-table datatable-auto-height"
+                            [rows]="shades.shadeDataList" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                            [columnMode]="'force'">
 
-                            <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false" [width]="300">
+                            <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false"
+                                [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}'
-                                    class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
-                                    (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
-                                    >
-                                    <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}} - {{s.supplierName}}</option>
+                                    <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel"
+                                        name='itemName{{rowIndex}}' class="tableForm" id="itemName"
+                                        [(ngModel)]="row.itemName" required
+                                        (keyup)="onKeyUp($event,rowIndex,0,'itemName')"
+                                        [id]="'supplierList'+rowIndex+'-0'">
+                                        <option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
+                                            {{s.supplierName}}</option>
                                     </select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)"
+                                        style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -135,10 +162,13 @@
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300"
                                 prop="shades.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
-                                        id="concentration" [(ngModel)]="row.concentration"  (input)="calculateAmount(rowIndex)"
-                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'" min="0" >
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)" style="display: inline-block;">
+                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}'
+                                        class="tableForm" id="concentration" [(ngModel)]="row.concentration"
+                                        (input)="calculateAmount(rowIndex)"
+                                        (keyup)="onKeyUp($event,rowIndex,1,'concentration')"
+                                        [id]="'supplierList'+rowIndex+'-1'" min="0">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)"
+                                        style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -150,7 +180,7 @@
                                     <input class="tableForm" type="text" #supplierName1="ngModel"
                                         name='supplierName{{rowIndex}}' [(ngModel)]="row.supplierName"
                                         (keyup)="onKeyUp($event,rowIndex,2,'supplierName')"
-                                        [id]="'supplierList'+rowIndex+'-2'" readonly >
+                                        [id]="'supplierList'+rowIndex+'-2'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -168,23 +198,27 @@
                                         [id]="'supplierList'+rowIndex+'-4'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Action"  [sortable]="false" [width]="300">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                            <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
-                           
+
                         </ngx-datatable>
                     </div>
                 </div>
-                <br><br>
                 <div class="row">
-                    <div>
-                        <button *ngIf="this.currentShadeId == null" type="button"  class="btn btn-primary btn-sm"
-                            style="margin-right:20px" (click)="addShade(shadeForm)">ADD</button>
-                        <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
-                            class="btn btn-primary btn-sm" style="margin-right:20px">UPDATE</button>
-                        <button class="btn btn-primary btn-sm" routerLink='/pages/shade'>CANCEL</button>
+                    <div class="col-md-12 mobile-btn-center">
+                        <div class="padding-bt-tp">
+                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
+                                style="margin-right:20px" (click)="addShade(shadeForm)">ADD</button>
+                            <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+                            <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/shade'>CANCEL</button>
+                        </div>
+
                     </div>
                 </div>
             </form>

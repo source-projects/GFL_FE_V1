@@ -73,7 +73,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.addFlag = window.location.href.endsWith('add')
@@ -159,7 +159,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
-          console.log(this.stockBatch.partyId)
+         
           this.stockBatch.createdBy = data["data"].createdBy;
           this.stockBatch.createdDate = data["data"].createdDate;
           this.stockBatch.userHeadId = data["data"].userHeadId;

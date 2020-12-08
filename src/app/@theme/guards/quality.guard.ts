@@ -22,13 +22,78 @@ export class QualityGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
-    let PermissionName = route.data["PermissionName"]
-    //console.log(PermissionName)
-    if (localStorage.getItem('token')) {
-      return true;
+    this.jwtToken.setToken(this.storeTokenService.get('token'));
+    var permission = this.jwtToken.getDecodeToken('quality');
+    this.permis = this.commonService.decToBin(permission);
+    let PermissionName = route.data["PermissionName"];
+    console.log(PermissionName)
+    switch (PermissionName) {
+      case 'view':
+        if (this.permis[0] == '1')
+          return true;
+        else
+          return false;
+
+      case 'add':
+        if (this.permis[1] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit':
+        if (this.permis[2] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete':
+        if (this.permis[3] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view group':
+        if (this.permis[4] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view all':
+        if (this.permis[5] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit group':
+        if (this.permis[6] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit all':
+        if (this.permis[7] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete group':
+        if (this.permis[8] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete all':
+        if (this.permis[9] == '1')
+          return true;
+        else
+          return false;
+
     }
-    this._router.navigate(['auth']);
-    return true;
+    // if (localStorage.getItem('token')) {
+    //   return true;
+    // }
+    // this._router.navigate(['auth']);
+    // return true;
   }
 
 
@@ -44,71 +109,77 @@ export class QualityGuard implements CanActivate {
     else
       this.toastr.error(errorData.NoPermission);
     return false;
-    // let PermissionName = route.data["PermissionName"]
-    // console.log(PermissionName)
-    // switch (PermissionName) {
-    //   case 'view':
-    //     if (this.permis[0] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'add':
-    //     if (this.permis[1] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'edit':
-    //     if (this.permis[2] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'delete':
-    //     if (this.permis[3] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'view group':
-    //     if (this.permis[4] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'view all':
-    //     if (this.permis[5] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'edit group':
-    //     if (this.permis[6] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'edit all':
-    //     if (this.permis[7] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'delete group':
-    //     if (this.permis[8] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    //   case 'delete all':
-    //     if (this.permis[9] == '1')
-    //       return true;
-    //     else
-    //       return false;
-
-    // }
+    
 
   }
 
+  accessRights(PermissionName){
+    this.jwtToken.setToken(this.storeTokenService.get('token'));
+    var permission = this.jwtToken.getDecodeToken('quality');
+    this.permis = this.commonService.decToBin(permission);
+    
+    //console.log(PermissionName)
+    switch (PermissionName) {
+      case 'view':
+        if (this.permis[0] == '1')
+          return true;
+        else
+          return false;
+
+      case 'add':
+        if (this.permis[1] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit':
+        if (this.permis[2] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete':
+        if (this.permis[3] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view group':
+        if (this.permis[4] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view all':
+        if (this.permis[5] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit group':
+        if (this.permis[6] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit all':
+        if (this.permis[7] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete group':
+        if (this.permis[8] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete all':
+        if (this.permis[9] == '1')
+          return true;
+        else
+          return false;
+
+    }
+  }
 }
