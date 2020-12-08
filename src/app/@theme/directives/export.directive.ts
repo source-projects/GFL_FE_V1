@@ -24,18 +24,6 @@ export class ExportDirective {
 
   @Input() fileName: string;
 
-  //current:string;
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   for (const propName in changes) {
-  //     const chng = changes[propName];
-  //      let current  = JSON.stringify(chng.currentValue);
-  //     //console.log(this.current);
-  //     this.fileType=current;
-  //     //console.log(prev);
-  //   }
-  // }
-
   @HostListener('click', ['$event']) onClick() {
 
   console.log(this.fileType);

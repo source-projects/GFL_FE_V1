@@ -19,14 +19,14 @@
                             [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}"
                              required>
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
-                            </ng-select>
+                            </ng-select>{{stockBatch.partyId}}
                             <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)" >
                                 <span>Party name is required</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
-                            <ng-select name="partyId"  [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
+                            <ng-select name="qualityId"  [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
                             [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)="getUnit()">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}}-{{q.qualityName}}</ng-option>
                             </ng-select>

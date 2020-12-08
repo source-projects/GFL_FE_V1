@@ -31,7 +31,6 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import{ ExportService} from './services/export.service';
 import { ExportDirective } from './directives/export.directive';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -61,6 +60,7 @@ const NB_MODULES = [
   NgbDatepickerModule,
   //NgbModal
   NbAccordionModule,
+  
 ];
 
 @NgModule({

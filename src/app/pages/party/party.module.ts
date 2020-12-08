@@ -8,6 +8,7 @@ import { AddEditPartyComponent } from './add-edit-party/add-edit-party.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule} from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ThemeModule } from 'app/@theme/theme.module';
 //import { ExportDirective } from '../../@theme/directives/export.directive';
 //import {ExportService} from '../../@theme/services/export.service';
 @NgModule({
@@ -15,6 +16,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
   imports: [
     CommonModule,
     SharedModule,
+    ThemeModule,
     PartyRoutingModule,
     ReactiveFormsModule,
     NbCheckboxModule,

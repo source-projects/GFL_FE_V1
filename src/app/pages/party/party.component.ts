@@ -96,29 +96,11 @@ export class PartyComponent implements OnInit {
 
 open(){
   this.flag=true;
-  // this._NgbModal.open(ExportPopupComponent, {
-  //   windowClass: 'modal-job-scrollable'
-  // });
+ 
   const modalRef = this.modalService.open(ExportPopupComponent);
-  //modalRef.componentInstance.fileType = this.fileType;
    modalRef.componentInstance.headers = this.headers;
    modalRef.componentInstance.list = this.party;
-
-  // modalRef.result
-  // .then((result) => {
-  //   if (result) {
-  //    this.fileType=result;
-  //     console.log(result);
-  //   }
-  // });
-  //this.getExportType();
 }
-
-// getExportType(type){
-
-//   console.log('hjefg');
-//   // this.fileType=type;
-// }
 
   deleteParty(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {

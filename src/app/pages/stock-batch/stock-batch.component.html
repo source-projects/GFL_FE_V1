@@ -7,8 +7,7 @@
                         <h2>STOCK-BATCH</h2>
                     </div>
                     <div class="col-md-5">
-                        <button style="float:right; "  class="btn btn-primary btn-sm"
-                        [ngxExport]="stock" fileName="export" [headers]="headers">EXPORT</button>
+                        <button style="float:right; "  class="btn btn-primary btn-sm" (click)="open()">EXPORT</button>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-primary btn-sm" style="float: right; margin-left: 10px;" routerLink="add">ADD</button>        

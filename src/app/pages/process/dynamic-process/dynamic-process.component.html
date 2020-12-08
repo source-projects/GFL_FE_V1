@@ -4,12 +4,12 @@
             <h2>DYNAMIC PROCESS</h2>
         </nb-card-header>
         <nb-card-body>
-            <form #myForm>
+            <form #myForm='ngForm'>
                 <div class="row">
                     <div class="col-md-3">
                         <label class="required">Process Name:</label>
                         <input type="text" name="processName" class="form-control" #processName1="ngModel"
-                            [(ngModel)]='formValues.processName' required
+                            [(ngModel)]='processValue.processName' required
                             [ngClass]="{'is-invalid': formSubmitted && processName1.invalid}">
                         <div class="invalid-feedback"
                             *ngIf="formSubmitted && (processName1.invalid || processName1.dirty || processName1.touched)">
@@ -19,7 +19,7 @@
 
                     <div class="col-md-3">
                         <label class="required">Time(minutes):</label>
-                        <input type="text" name="time" class="form-control" [(ngModel)]='formValues.time' required
+                        <input type="text" name="time" class="form-control" [(ngModel)]='processValue.time' required
                             #time1="ngModel" [ngClass]="{'is-invalid': formSubmitted && time1.invalid}"
                             (keypress)="numberOnly($event)">
                         <div class="invalid-feedback"
@@ -36,9 +36,9 @@
                     <br>
                     {{stepList}}
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
-                        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
-                            <nb-accordion multi *ngFor="let step of stepList" cdkDragLockAxis="y" cdkDrag >
-                                <nb-accordion-item class="item" #item (click)="onStepClick(step)" cdkDropList (cdkDropListDropped)="drop($event)">
+                        <div cdkDropList (cdkDropListDropped)="drop($event)">
+                            <nb-accordion multi *ngFor="let step of stepList" cdkDrag>
+                                <nb-accordion-item class="item" #item (click)="onStepClick(step)">
                                     <nb-accordion-item-header class="item-header"
                                         style="display: flex-end; justify-content: space-between;">
                                         <div style="font-size: 22px;">
@@ -58,9 +58,9 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body>
                                         <div *ngIf="step.functionList && step.functionList.length">
-                                            <nb-list cdkDropList class="example-list"
-                                            (cdkDropListDropped)="dropFunction($event,step.stepNo)"> 
-                                                <nb-list-item *ngFor="let func of step.functionList" cdkDragLockAxis="y" cdkDrag>
+                                            <nb-list cdkDropList
+                                                (cdkDropListDropped)="dropFunction($event,step.stepNo)">
+                                                <nb-list-item *ngFor="let func of step.functionList" cdkDrag>
                                                     <div>
                                                         <h6 style="text-transform:uppercase !important;">
                                                             {{func.funcName}}</h6>
@@ -105,7 +105,7 @@
                                                             </div>
                                                             <hr>
                                                         </div>
-                                                        
+
 
                                                         <!-- Pump -->
                                                         <div *ngIf="func.funcValue==='pump'">
@@ -256,7 +256,7 @@
                 </div>
                 <br><br>
                 <div class="row">
-                    <button type="button" class="btn btn-primary" style="margin-right:20px">ADD</button>
+                    <button type="button" class="btn btn-primary" style="margin-right:20px" (click)="addProcess(myForm)">ADD</button>
                     <button type="button" class="btn btn-primary" style="margin-right:20px"
                         [routerLink]="['pages/process']">CANCEL</button>
                 </div>
