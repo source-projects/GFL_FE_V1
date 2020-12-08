@@ -2,11 +2,12 @@
     <nb-card class="nb-style">
         <nb-card-header class="nb-header">
             <div class="row">
-                <div class="col-md-11 col-8">
-                    <h2 class="nb-text">SUPPLIER</h2>
-                </div>
-                <div class="col-md-1 col-4 mobile-btn desktop-btn">
+                
+                <div class="col-md-1 col-3 mobile-btn desktop-btn">
                     <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>
+                </div>
+                <div class="col-md-11 col-9">
+                    <h2 class="nb-text">SUPPLIER</h2>
                 </div>
             </div>
         </nb-card-header>
@@ -17,13 +18,8 @@
                     {{radio.value}}</nb-radio>
             </nb-radio-group>
 
-            <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="50" class="material"
-                [columnMode]="'force'" [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
-                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
-                <ngx-datatable-column name="Discount %" prop="discountPercentage"></ngx-datatable-column>
-                <ngx-datatable-column name="GST %" prop="gstPercentage"></ngx-datatable-column>
-                <ngx-datatable-column name="Payment Terms" prop="paymentTerms"></ngx-datatable-column>
-                <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
+            <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+                [footerHeight]="40">
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                         <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}"
@@ -36,6 +32,12 @@
                         </button>
                     </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
+                <ngx-datatable-column name="Discount %" prop="discountPercentage"></ngx-datatable-column>
+                <ngx-datatable-column name="GST %" prop="gstPercentage"></ngx-datatable-column>
+                <ngx-datatable-column name="Payment Terms" prop="paymentTerms"></ngx-datatable-column>
+                <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
+                
             </ngx-datatable>
         </nb-card-body>
     </nb-card>

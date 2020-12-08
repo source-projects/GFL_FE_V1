@@ -2,11 +2,12 @@
     <nb-card class="nb-style">
         <nb-card-header class="nb-header">
             <div class="row">
-                <div class="col-md-11 col-8">
-                    <h2 class="nb-text">COLOR STOCK</h2>
-                </div>
-                <div class="col-md-1 col-4 mobile-btn desktop-btn">
+                
+                <div class="col-md-1 col-3 mobile-btn desktop-btn">
                     <button class="btn btn-primary btn-md btn-list" routerLink='/pages/color/add'>ADD</button>  
+                </div>
+                <div class="col-md-11 col-9">
+                    <h2 class="nb-text">COLOR STOCK</h2>
                 </div>
             </div>
         </nb-card-header>
@@ -16,21 +17,20 @@
                 <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
             </nb-radio-group>
             <!--  ngx- DataTable -->
-            <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="50" 
-            [columnMode]="'force'" class="material" style="text-align: justify;"
-            [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40" >
-                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
-                <ngx-datatable-column name="Bill No" prop="billNo"></ngx-datatable-column>
-                <ngx-datatable-column name="Bill Date" prop="billDate"></ngx-datatable-column>
-                <ngx-datatable-column name="Challan No" prop="chlNo"></ngx-datatable-column>
-                <ngx-datatable-column name="Challan Date" prop="chlDate"></ngx-datatable-column>
-               
+            <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
                         <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
                         <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="deleteColor(row.id)"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
+                <ngx-datatable-column name="Bill No" prop="billNo"></ngx-datatable-column>
+                <ngx-datatable-column name="Bill Date" prop="billDate"></ngx-datatable-column>
+                <ngx-datatable-column name="Challan No" prop="chlNo"></ngx-datatable-column>
+                <ngx-datatable-column name="Challan Date" prop="chlDate"></ngx-datatable-column>
+               
+                
             </ngx-datatable>
 
         </nb-card-body>
