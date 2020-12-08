@@ -312,6 +312,7 @@ export class AddEditStockBatchComponent implements OnInit {
     let idCount = this.stockDataValues.length;
     let item = this.stockDataValues;
     if (idCount == 1) {
+      let removed = item.splice(index, 1);
       item = null;
       let obj = {
         batchId: null,
@@ -327,6 +328,7 @@ export class AddEditStockBatchComponent implements OnInit {
       let removed = item.splice(index, 1);
       let list = item;
       this.stockDataValues = [...list];
+      this.j--;
     }
   }
 
