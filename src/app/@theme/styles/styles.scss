@@ -48,9 +48,10 @@
 .btn-design{
   margin: 0;
   padding: 6px 20px;
-  background-color: #aa3634;
-  border-color: #aa3634;
+  background-color: #5e5b5e;
+  border-color: #5e5b5e;
   border-radius: 0;
+  font-weight: 700;
 }
 .datatable-icon-up::before{
   content: none;
@@ -214,8 +215,8 @@ input[type=number]::-webkit-outer-spin-button {
   color: #aa3634!important;
 }
 .btn-design:hover{
-  border-color: #aa3634db;
-  background-color: #aa3634db;
+  border-color: #aa3634;
+  background-color: #aa3634;
 }
 .creditors-debitors{
   margin: 15px 0 25px 0;
@@ -291,6 +292,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .status-basic label{
   padding-top: 0!important;
+  padding-bottom: 0!important;
 }
 .nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle{
   background-color: #aa3634!important;
@@ -317,6 +319,22 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .ngx-datatable .datatable-header .datatable-header-cell .sort-btn{
   color: #fff;
+}
+
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 0.9em 1.2rem!important;
+  width: 100% !important;
+  height: 50px!important;
+  overflow: hidden;
+}
+.datatable-body-row{
+  height: 50px!important;
+}
+.datatable-row-wrapper:nth-child(even) { 
+  background-color: #5e5b5e21; 
+} 
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
+  background-color: transparent!important;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -364,9 +382,19 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: space-around;
   }
+  .datatable-row-wrapper, .datatable-row-center{
+    width: 100%!important;
+  }
+  .datatable-scroll.ng-star-inserted{
+    width: unset!important;
+  }
+
 }
 @media (min-width: 1024px){
   .datatable-header-inner, .datatable-row-center.ng-star-inserted{
+    width: 100%!important;
+  }
+  .datatable-scroll.ng-star-inserted, .datatable-body, .datatable-body-row {
     width: 100%!important;
   }
 }
