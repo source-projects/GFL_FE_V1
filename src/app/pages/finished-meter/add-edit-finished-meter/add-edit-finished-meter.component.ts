@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BatchData, FinishedMeter } from "app/@theme/model/finished-meter";
+import { FinishedMeter } from "app/@theme/model/finished-meter";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -23,6 +23,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
   partyList;
   batchList;
   qualityList;
+  index;
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
   constructor(
@@ -33,15 +34,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
     private _route: ActivatedRoute,
     private toastr: ToastrService,
     private finishedMeterService: FinishedMeterService
-  ) {
-    // this.finishedMeterForm.batchData = [
-    //   {id:1, mtr:50, finishMtr:null, sequenceId:null },
-    //   {id:2, mtr:10, finishMtr:null, sequenceId:null },
-    //   {id:3, mtr:5, finishMtr:null, sequenceId:null },
-    //   {id:4, mtr:20, finishMtr:null, sequenceId:null },
-    //   {id:null, mtr:null, finishMtr:null, sequenceId:null }
-    // ]
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getData();
@@ -150,8 +143,8 @@ export class AddEditFinishedMeterComponent implements OnInit {
               id: 0,
               mtr: null,
               wt: null,
-              batchId: data['data'][0].batchId,
-              controlId: data['data'][0].controlId,
+              batchId: data["data"][0].batchId,
+              controlId: data["data"][0].controlId,
               isProductionPlanned: false,
               isExtra: false,
               sequenceId: 0,
@@ -169,22 +162,24 @@ export class AddEditFinishedMeterComponent implements OnInit {
     if (event != undefined) {
       let pid;
       let qid;
-      this.qualityList.forEach(e => {
-        if(e.id?e.id:e.qualityEntryId == this.finishedMeterForm.qualityId){
+      this.qualityList.forEach((e) => {
+        if (
+          e.id ? e.id : e.qualityEntryId == this.finishedMeterForm.qualityId
+        ) {
           pid = e.partyId;
-          qid = e.id?e.id:e.qualityEntryId;
+          qid = e.id ? e.id : e.qualityEntryId;
         }
       });
-      this.finishedMeterService.getBatchesByPartyQuality(qid,pid).subscribe(
-        data=>{
-          if(data['success']){
-            this.batchList = data['data']
-          }else this.toastr.error(data['msg'])
+      this.finishedMeterService.getBatchesByPartyQuality(qid, pid).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.batchList = data["data"];
+          } else this.toastr.error(data["msg"]);
         },
-        error=>{
-          this.toastr.error(errorData.Internal_Error)
+        (error) => {
+          this.toastr.error(errorData.Internal_Error);
         }
-      )
+      );
     } else {
       this.getAllQuality();
     }
@@ -232,52 +227,100 @@ export class AddEditFinishedMeterComponent implements OnInit {
     }
   }
 
-  arrange() {
-    let flag = false;
-    let totalMtr = 0;
-    let totalFMtr = 0;
-    this.finishedMeterForm.batchData.forEach((b) => {
-      if (b.finishMtr == null) flag = true;
-      else {
-        totalMtr += b.mtr;
-        totalFMtr += b.finishMtr;
+  //On enter pressed -> check empty field, add new row
+  onKeyUp(e, rowIndex, colIndex, colName) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13 && colIndex == 3) {
+      this.index = "batchList" + (rowIndex + 1) + "-" + colIndex;
+      if (rowIndex === this.finishedMeterForm.batchData.length - 1) {
+        let item = this.finishedMeterForm.batchData[rowIndex];
+        if (colName == "mtr") {
+          if (!item.finishMtr) {
+            this.toastr.show("Enter finish meter", "required");
+            return;
+          }
+
+          let obj = {
+            id: 0,
+            mtr: null,
+            wt: null,
+            batchId: this.finishedMeterForm[0].batchId,
+            controlId: this.finishedMeterForm[0].controlId,
+            isProductionPlanned: false,
+            isExtra: false,
+            sequenceId: 0,
+            finishMtr: 0,
+            isBillGenrated: false,
+          };
+          let list = this.finishedMeterForm.batchData;
+          list.push(obj);
+          this.finishedMeterForm.batchData = [...list];
+          let interval = setInterval(() => {
+            let field = document.getElementById(this.index);
+            if (field != null) {
+              field.focus();
+              clearInterval(interval);
+            }
+          }, 10);
+        } else {
+          alert("go to any last row input to add new row");
+        }
       }
-    });
-    if (flag == false) {
-      if (totalMtr < totalFMtr)
-        this.toastr.error("Finished meter is more than actual meter");
-      else {
-        
-      }
-    } else {
-      this.toastr.error("Enter all data");
     }
   }
 
   //Add finished Meter data
   addFinishedMeter(myForm) {
     //console.log(myForm.value);
-    let count = 0;
-    this.finishedMeterForm.batchData.forEach(e => {
-      if(e.id == 0 && e.mtr == null){
-        this.finishedMeterForm.batchData.splice(count,1);
+    let flag1 = false;
+    let flag2 = false;
+    let totalMtr = 0;
+    let totalFMtr = 0;
+    this.finishedMeterForm.batchData.forEach((b) => {
+      if (b.finishMtr == null) {
+        flag1 = true;
       }
-      count++;
+      if (
+        b.id == 0 &&
+        b.finishMtr > 0 &&
+        (b.sequenceId == 0 || b.sequenceId == null)
+      )
+        flag2 = true;
+      else {
+        totalMtr += b.mtr;
+        totalFMtr += b.finishMtr;
+      }
     });
-    this.finishedMeterService.addFinishedMeter(this.finishedMeterForm.batchData).subscribe(
-      data=>{
-        if(data['success']){
-          this.toastr.success(data['msg'])
-          this.route.navigate(["/pages/finishedMeter"]);
-        }
-          
-        else
-          this.toastr.error(data['msg'])
-      },
-      error=>{
-        this.toastr.error(errorData.Internal_Error)
+    if (flag1 == false) {
+      if (totalMtr < totalFMtr)
+        this.toastr.error("Finished meter is more than actual meter");
+      else if (flag2) {
+        this.toastr.error("Please enter sequence id for extra meter");
+      } else {
+        let count = 0;
+        this.finishedMeterForm.batchData.forEach((e) => {
+          if (e.id == 0 && e.mtr == null) {
+            this.finishedMeterForm.batchData.splice(count, 1);
+          }
+          count++;
+        });
+        this.finishedMeterService
+          .addFinishedMeter(this.finishedMeterForm.batchData)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(data["msg"]);
+                this.route.navigate(["/pages/finishedMeter"]);
+              } else this.toastr.error(data["msg"]);
+            },
+            (error) => {
+              this.toastr.error(errorData.Internal_Error);
+            }
+          );
       }
-    )
+    } else {
+      this.toastr.error("Enter all data");
+    }
   }
 
   //Update finished Meter data

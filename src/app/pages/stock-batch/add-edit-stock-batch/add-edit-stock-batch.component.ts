@@ -64,7 +64,7 @@ export class AddEditStockBatchComponent implements OnInit {
   currentStockBatch;
   isQualitySelected:Boolean = false;
   flag=1;
-
+  addFlag = false;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -76,6 +76,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.addFlag = window.location.href.endsWith('add')
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.getPartyList();
