@@ -108,7 +108,7 @@
                             <h2 class="batch-heading display-inline">BATCH</h2>
 
                         </header>
-
+                        <div *ngIf="stockDataValues[0].batchId != null">
                         <div [attr.id]="'repeat'+i" *ngFor="let block of stockDataValues; let i=index "
                             class="batch-card-margin">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
@@ -189,6 +189,7 @@
                                 </div>
 
                             </nb-card>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <div class="nb-icon-add">
