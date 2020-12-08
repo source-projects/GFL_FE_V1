@@ -16,9 +16,8 @@
                     <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
 
-                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" [headerHeight]="50" [columnMode]="'force'"
-                    class="material" style="text-align: justify" [limit]="10" [headerHeight]="40" [footerHeight]="40"
-                    [rowHeight]="40">
+                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle"
+                    class="material" [headerHeight]="31" [footerHeight]="40">
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Address1" props="partyAddress1"></ngx-datatable-column>
                     <ngx-datatable-column name="Contact No" props="contactNo"></ngx-datatable-column>
