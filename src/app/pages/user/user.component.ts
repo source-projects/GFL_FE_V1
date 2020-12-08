@@ -44,6 +44,8 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.access = this.userGuard.accessRights('add');
+    this.access = this.userGuard.accessRights('edit');
+    this.access = this.userGuard.accessRights('delete');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

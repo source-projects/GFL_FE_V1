@@ -39,6 +39,7 @@ export class SupplierComponent implements OnInit {
    
   ngOnInit(): void {
     this.access = this.supplierGuard.accessRights('add');
+    this.access = this.supplierGuard.accessRights('edit');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

@@ -24,8 +24,8 @@
                     <ngx-datatable-column name="Record Count" props="recordCount"></ngx-datatable-column>
                     <ngx-datatable-column name="Actions" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/process/edit',row.id]"></nb-icon>
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"0 icon="edit" [routerLink]="['/pages/process/edit',row.id]"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="!this.access"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>

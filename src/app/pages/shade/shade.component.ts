@@ -43,6 +43,8 @@ export class ShadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.access = this.shadeGuard.accessRights('add');
+    this.access = this.shadeGuard.accessRights('edit');
+    this.access = this.shadeGuard.accessRights('delete');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

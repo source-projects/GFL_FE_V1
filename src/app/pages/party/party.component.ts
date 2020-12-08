@@ -38,12 +38,14 @@ export class PartyComponent implements OnInit {
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private jwtToken: JwtTokenService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    
   ) { }
 
   ngOnInit(): void {
     this.access = this.partyGuard.accessRights('add');
     this.access = this.partyGuard.accessRights('edit');
+    this.access = this.partyGuard.accessRights('delete'); //1 and go to html(disabled)
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

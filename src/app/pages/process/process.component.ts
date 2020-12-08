@@ -21,6 +21,8 @@ export class ProcessComponent implements OnInit {
 
   ngOnInit(): void {
     this.access = this.processGuard.accessRights('add');
+    this.access = this.processGuard.accessRights('edit');
+    this.access = this.processGuard.accessRights('delete');
     this.getProcessList();
   }
 

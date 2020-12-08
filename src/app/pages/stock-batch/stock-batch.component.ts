@@ -40,6 +40,8 @@ export class StockBatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.access = this.stockBatchGuard.accessRights('add');
+    this.access = this.stockBatchGuard.accessRights('edit');
+    this.access = this.stockBatchGuard.accessRights('delete');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

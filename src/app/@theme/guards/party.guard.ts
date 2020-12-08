@@ -25,7 +25,7 @@ export class PartyGuard implements CanActivate {
   canActivate(route:ActivatedRouteSnapshot,state:RouterStateSnapshot): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree  {
      //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
      this.jwtToken.setToken(this.storeTokenService.get('token'));
-     var permission = this.jwtToken.getDecodeToken('user');
+     var permission = this.jwtToken.getDecodeToken('party');
      this.permis = this.commonService.decToBin(permission);
      let PermissionName = route.data["PermissionName"];
      console.log(PermissionName);  

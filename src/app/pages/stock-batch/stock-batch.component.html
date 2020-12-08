@@ -29,7 +29,7 @@
                     <ngx-datatable-column name="Actions" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['edit',row.id]"></nb-icon>
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="deleteStockBatch(row.id)"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="!this.access? null:deleteStockBatch(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>

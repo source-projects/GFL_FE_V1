@@ -35,6 +35,9 @@ export class CommonService {
 
   decToBin(n): any{
     var bin = (+n).toString(2);
+    let count = 10 - bin.length
+    let zero = '0';
+    bin = zero.repeat(count) +bin
     return bin;
   }
 }
