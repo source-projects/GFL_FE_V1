@@ -109,7 +109,7 @@ export class UserGuard implements CanActivate {
 
   accessRights(PermissionName):Boolean{
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('quality');
+    var permission = this.jwtToken.getDecodeToken('user');
     this.permis = this.commonService.decToBin(permission);
     
     //console.log(PermissionName)

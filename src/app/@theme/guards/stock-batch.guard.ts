@@ -20,7 +20,7 @@ export class StockBatchGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('user');
+    var permission = this.jwtToken.getDecodeToken('stockBatch');
     this.permis = this.commonService.decToBin(permission);
     let PermissionName = route.data["PermissionName"];
     console.log(PermissionName);  
@@ -93,7 +93,7 @@ export class StockBatchGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('supplier');
+    var permission = this.jwtToken.getDecodeToken('stockBatch');
     let permis: String = this.commonService.decToBin(permission);
     if (permis[0] == '1')
       return true;
@@ -103,7 +103,7 @@ export class StockBatchGuard implements CanActivate {
   }
   accessRights(PermissionName):Boolean{
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('quality');
+    var permission = this.jwtToken.getDecodeToken('stockBatch');
     this.permis = this.commonService.decToBin(permission);
     
     //console.log(PermissionName)

@@ -8,15 +8,23 @@ const routes: Routes = [
   {
     path:'',
     component:BatchComponent,
-    canActivate:[BatchGuard]
+    canActivate:[BatchGuard],
+    canLoad: [BatchGuard],
+    data: { PermissionName: ['view']}
   },
   {
     path:'add',
-    component:AddEditBatchComponent
+    component:AddEditBatchComponent,
+    canActivate:[BatchGuard],
+    canLoad: [BatchGuard],
+    data: { PermissionName: ['add']}
   },
   {
     path: 'edit',
-    component:AddEditBatchComponent
+    component:AddEditBatchComponent,
+    canActivate:[BatchGuard],
+    canLoad: [BatchGuard],
+    data: { PermissionName: ['edit']}
   }
 ];
 

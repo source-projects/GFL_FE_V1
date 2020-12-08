@@ -4,8 +4,11 @@ import { ShadeService } from 'app/@theme/services/shade.service';
 import {NgbModal}  from '@ng-bootstrap/ng-bootstrap'; 
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import * as errorData from 'app/@theme/json/error.json';
+
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 
 @Component({
   selector: 'ngx-shade',
@@ -26,16 +29,20 @@ export class ShadeComponent implements OnInit {
   ];
   userHeadId;
   userId;
-  
+  permissions: Number;
+  access:Boolean = false;
   constructor(private shadeService: ShadeService, 
               private route:Router,
               private modalService: NgbModal,
               private toastr:ToastrService,
+              public shadeGuard: ShadeGuard,
+              private jwtToken: JwtTokenService,
               private commonService: CommonService
               ) { }
   
 
   ngOnInit(): void {
+    this.access = this.shadeGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

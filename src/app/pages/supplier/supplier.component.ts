@@ -4,6 +4,8 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from 'app/@theme/json/error.json';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 
 @Component({
   selector: 'ngx-supplier',
@@ -25,10 +27,18 @@ export class SupplierComponent implements OnInit {
   ];
   userHeadId;
   userId;
-
-  constructor(private commonService:CommonService, private supplierService:SupplierService, private router:Router, private toastr: ToastrService) { }
+  permissions: Number;
+  access:Boolean = false;
+  constructor(
+    private commonService:CommonService, 
+    private supplierService:SupplierService,
+    public supplierGuard: SupplierGuard,
+    private jwtToken: JwtTokenService,
+     private router:Router, 
+     private toastr: ToastrService) { }
    
   ngOnInit(): void {
+    this.access = this.supplierGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

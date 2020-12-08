@@ -40,6 +40,7 @@ export class ProgramComponent implements OnInit {
      private modalService: NgbModal,) { }
 
   ngOnInit(): void {
+    this.access = this.programGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

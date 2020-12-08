@@ -7,8 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from 'app/@theme/services/common.service';
 import { DatePipe } from '@angular/common';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { ColorGuard } from 'app/@theme/guards/color.guard';
 
 @Component({
+
   selector: 'ngx-color',
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.scss']
@@ -29,14 +32,20 @@ export class ColorComponent implements OnInit {
   userId;
   userHeadId;
 
+  permissions: Number;
+  access:Boolean = false;
   constructor(private colorService: ColorService,
     private route: Router,
     private modalService: NgbModal,
+
+    public colorGuard: ColorGuard,
+    private jwtToken: JwtTokenService,
     private toastr: ToastrService,
     private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
+    this.access = this.colorGuard.accessRights('add');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

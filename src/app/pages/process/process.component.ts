@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProcessGuard } from 'app/@theme/guards/process.guard';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
 
 @Component({
@@ -9,9 +11,16 @@ import { ProcessService } from 'app/@theme/services/process.service';
 export class ProcessComponent implements OnInit {
   processList;
   tablestyle : "bootstrap";
-  constructor(private processService: ProcessService) { }
+
+  permissions: Number;
+  access:Boolean = false;
+  constructor(private processService: ProcessService,
+    
+    public processGuard: ProcessGuard,
+    private jwtToken: JwtTokenService,) { }
 
   ngOnInit(): void {
+    this.access = this.processGuard.accessRights('add');
     this.getProcessList();
   }
 

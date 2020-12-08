@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
-  permissions: Number;
+  
   stockList = [];
 
   tablestyle = "bootstrap";
@@ -27,7 +27,7 @@ export class StockBatchComponent implements OnInit {
   ];
   userHeadId;
   userId;
-
+  permissions: Number;
   access:Boolean = false;
   constructor(
     private modalService: NgbModal,

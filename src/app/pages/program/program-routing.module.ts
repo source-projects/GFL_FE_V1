@@ -17,14 +17,14 @@ const routes: Routes = [
     component: AddEditProgramComponent,
     canActivate: [ProgramGuard],
     canLoad: [ProgramGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['add']}
   },
   {
     path: 'edit/:id',
     component: AddEditProgramComponent,
     canActivate: [ProgramGuard],
     canLoad: [ProgramGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['edit']}
   }
 ];
 

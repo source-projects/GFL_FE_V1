@@ -43,6 +43,7 @@ export class PartyComponent implements OnInit {
 
   ngOnInit(): void {
     this.access = this.partyGuard.accessRights('add');
+    this.access = this.partyGuard.accessRights('edit');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
