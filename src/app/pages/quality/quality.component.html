@@ -2,13 +2,14 @@
     <nb-card class="nb-style">
         <nb-card-header class="nb-header">
             <div class="row">
-                <div class="col-md-11 col-8">
+                <div class="col-md-1 col-3 mobile-btn desktop-btn">
+                    <button class="btn btn-primary btn-md btn-list" disabled="qualityGuard.accessRights('add')" routerLink="add">ADD</button> 
+                </div>
+                <div class="col-md-11 col-9">
                     <h2 class="nb-text">QUALITY</h2>
                 </div>
             
-                <div class="col-md-1 col-4 mobile-btn desktop-btn">
-                    <button class="btn btn-primary btn-md btn-list" disabled="qualityGuard.accessRights('add')" routerLink="add">ADD</button> 
-                </div>
+                
             </div>
         </nb-card-header>
         <nb-card-body>
@@ -18,17 +19,17 @@
             </nb-radio-group>
 
             <!--  ngx- DataTable  -->
-            <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="50" [columnMode]="'force'" class="material" style="text-align: justify;" 
-            [limit]="10" [headerHeight]="40" [footerHeight]="40" [rowHeight]="40">
-                <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
-                <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
-                <ngx-datatable-column name="Quality Type" prop="qualityType"></ngx-datatable-column>
-                <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
+            <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
                         <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/quality/edit',row.id]"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Type" prop="qualityType"></ngx-datatable-column>
+                <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
+                
             </ngx-datatable>
 
         </nb-card-body>
