@@ -64,7 +64,7 @@ export class AddEditStockBatchComponent implements OnInit {
   currentStockBatch;
   isQualitySelected:Boolean = false;
   flag=1;
-
+  addFlag = false;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -73,9 +73,10 @@ export class AddEditStockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.addFlag = window.location.href.endsWith('add')
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.getPartyList();
@@ -158,7 +159,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
-          console.log(this.stockBatch.partyId)
+         
           this.stockBatch.createdBy = data["data"].createdBy;
           this.stockBatch.createdDate = data["data"].createdDate;
           this.stockBatch.userHeadId = data["data"].userHeadId;
@@ -311,6 +312,7 @@ export class AddEditStockBatchComponent implements OnInit {
     let idCount = this.stockDataValues.length;
     let item = this.stockDataValues;
     if (idCount == 1) {
+      let removed = item.splice(index, 1);
       item = null;
       let obj = {
         batchId: null,
@@ -326,6 +328,7 @@ export class AddEditStockBatchComponent implements OnInit {
       let removed = item.splice(index, 1);
       let list = item;
       this.stockDataValues = [...list];
+      this.j--;
     }
   }
 

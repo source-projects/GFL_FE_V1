@@ -6,18 +6,19 @@ export class FinishedMeter {
     partyId:Number;
     qualityId:Number;
     masterId:Number;
+    batchId:Number = null;
     batchData: BatchData[];
 }
 
 export class BatchData{
-    id:Number;
-    mtr:Number;
-    wt:Number;
-    batchId:Number;
-    controlId:Number;
+    id:number;
+    mtr:number;
+    wt:number;
+    batchId:number;
+    controlId:number;
     isProductionPlanned:Boolean = false;
     isExtra:Boolean = false;
-    sequenceId:Number;
-    finishMtr:Number;
+    sequenceId:number;
+    finishMtr:number;
     isBillGenrated:Boolean = false;
 }

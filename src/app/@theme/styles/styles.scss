@@ -36,3 +36,375 @@
 
   @include nb-overrides();
 } ;
+.padding-box{
+  padding: 1.7rem;
+  margin-bottom: 30px;
+  border-radius: 0!important;
+}
+.padding-btn-box{
+  padding: 1.0rem;
+  padding-top: 0;
+}
+.btn-design{
+  margin: 0;
+  padding: 6px 20px;
+  background-color: #5e5b5e;
+  border-color: #5e5b5e;
+  border-radius: 0;
+  font-weight: 700;
+}
+.datatable-icon-up::before{
+  content: none;
+}
+.nb-header{
+  padding: 0.4rem 1.2rem !important;
+  background-color: #aa3634;
+  border-radius: 0!important;
+}
+.nb-text{
+  font-size: 1.3rem !important;
+  color: #ffffff !important;
+}
+.nb-style{
+  border-radius: 0;
+}
+.display-inline{
+  display: inline-block;
+}
+.form-group label{
+  font-weight: 600;
+  color: #aa3634;
+}
+input:focus, textarea:focus, select:focus{
+  outline: none !important;
+  border-color: unset;
+  box-shadow: none!important;
+  border-color: #bd3634!important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.batch-header{
+  background-color: #aa3634;
+  padding: 0 19px;
+}
+.nb-icon-add{
+  position: relative;
+}
+.batch-header h2{
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+.batch-heading{
+  margin: 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+.add-icon{
+  position: absolute;
+  color: #aa3634 !important;
+  height: 22px !important;
+  width: 29px !important;
+  bottom: 4px;
+  right: 0;
+}
+.batch-body{
+  margin: 30px 0;
+}
+.datatable-header-cell-label{
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+.datatable-header, .datatable-header-cell{
+  background-color: #5e5b5e!important
+}
+.page-count{
+  color: #aa3634;
+}
+.datatable-header-cell-template-wrap{
+  text-align: center;
+}
+.box-shadow-none{
+  box-shadow: none!important;
+  border: 1px solid #e0e0e0;
+}
+.datatable-icon-sort-unset{
+  display: none!important;
+}
+.batch-card-margin{
+  margin: 32px 0;
+}
+.datatable-header-cell{
+  padding: 0.3rem 1.2rem !important;
+  border-right: 1px solid #fff;
+  width: 100%!important;
+}
+.delete-icon{
+  margin-left: 0px;
+  padding: 7px 0;
+}
+.datatable-body-cell-label{
+  text-align: center;
+}
+.ngx-datatable .datatable-footer{
+  overflow: hidden!important;
+}
+.ngx-datatable.material .datatable-header .resize-handle{
+  border-right: none!important;
+}
+.btn-list{
+  color: #5e5b5e;
+  background: #fff;
+  border-radius: 0;
+  border-color: #fff;
+  padding: 1px 9px !important;
+  font-size: 15px !important;
+  font-weight: 700;
+}
+.ngx-datatable{
+  box-shadow: none!important;
+}
+.nb-radio{
+  margin: 0 0 16px;
+}
+.desktop-btn {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+.nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
+  padding: 1.4rem!important;
+}
+.nb-theme-default nb-layout-header nav{
+  height: 4.65rem;
+}
+.scrollable{
+  padding-top: 1.0rem!important;
+}
+// module color
+.nb-theme-default nb-menu .menu-item a:hover .menu-icon, .nb-theme-default nb-menu .menu-item a.active .menu-icon{
+  color: #ffffff!important;
+}
+.nb-theme-default nb-menu .menu-item a:hover, .ng-star-inserted.active {
+  background-color: #aa3634!important;
+  color: #ffffff!important;
+  transition: .4s;
+}
+.nb-theme-default nb-menu .menu-item .menu-icon, .nb-theme-default nb-checkbox.status-basic .text{
+  color: #aa3634!important;
+}
+.menu-title{
+  color: #5e5b5e;
+}
+.nb-theme-default nb-menu .menu-item a:hover .menu-title{
+  color: #fff!important;
+}
+.ng-star-inserted.active .menu-title{
+  color: #fff!important;
+}
+.form-control::placeholder{
+  font-size: 15px!important;
+}
+.dr-txt, .cr-txt{
+  padding: 0!important;
+  color: #aa3634!important;
+}
+.btn-design:hover{
+  border-color: #aa3634;
+  background-color: #aa3634;
+}
+.creditors-debitors{
+  margin: 15px 0 25px 0;
+}
+.nb-theme-default nb-card-body{
+  padding: 1.5rem!important;
+}
+.nb-theme-default nb-checkbox.status-basic .custom-checkbox.checked, .nb-theme-default nb-checkbox.status-basic .native-input:enabled:active + .custom-checkbox.indeterminate, .nb-theme-default nb-checkbox.status-basic .native-input:enabled:active + .custom-checkbox.checked{
+  background-color: #aa3634!important;
+  border-color: #aa3634!important;
+}
+.nb-theme-default nb-checkbox.status-basic .custom-checkbox{
+  border-radius: 0;
+}
+.address-area, .remark-resize{
+  resize: none;
+}
+.padding-bt-tp{
+  padding: 17px 0;
+}
+.nb-check-user{
+  padding-left: 0!important;
+}
+.add-modal{
+  color: #aa3634!important;
+  margin-right: 0;
+}
+.close-icon{
+  color: #fff!important;
+}
+.btn-foucs-none:focus{
+  outline: none!important;
+}
+.modal-content{
+  border-radius: 0!important;
+}
+.nb-badges{
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 13px!important;
+  margin: 0 10px;
+  background: #5e5b5e;
+  color: #fff!important;
+  display: inline;
+  margin-left: 0;
+}
+.nb-table-num{
+  font-weight: 700;
+}
+.list-step{
+  margin-top: 15px;
+}
+// process accordian
+.nb-accordian{
+  background-color: #aa363412!important;
+}
+.nb-item-body{
+  background-color: #eaeaea45!important;
+}
+.nb-theme-default nb-accordion{
+  box-shadow: none!important;
+}
+.nb-action{
+  margin-right: 24px!important;
+}
+.nb-accordian-fn-size{
+  font-size: 18px !important;
+  padding: 13px 20px!important;
+}
+.nb-p-text {
+  color: #aa3634!important;
+  font-weight: 600!important;
+}
+.status-basic label{
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+.nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle{
+  background-color: #aa3634!important;
+}
+.outer-circle{
+  border-color:  #aa3634!important;
+}
+.nb-mr-0{
+  margin: 0;
+}
+.nb-dis-flx{
+  display: flex;
+  align-items: center;
+}
+.desktop-btn .btn-list:hover, .desktop-btn .btn-list:focus, .desktop-btn .btn-list:active{
+  color: #fff;
+  background-color: #5e5b5e!important;
+  border-color: #5e5b5e!important;
+  outline: none!important;
+  box-shadow: none!important;
+}
+.datatable-header-cell:last-child {
+  border-right: none;
+}
+.ngx-datatable .datatable-header .datatable-header-cell .sort-btn{
+  color: #fff;
+}
+
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 0.9em 1.2rem!important;
+  width: 100% !important;
+  height: 50px!important;
+  overflow: hidden;
+}
+.datatable-body-row{
+  height: 50px!important;
+}
+.datatable-row-wrapper:nth-child(even) { 
+  background-color: #5e5b5e21; 
+} 
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
+  background-color: transparent!important;
+}
+@media (max-width: 767px){
+  .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
+    padding: 15px 0!important;
+  }
+  .container {
+    max-width: 100%;
+  }
+  .mobile-mr-bt{
+    margin-bottom: 1rem;
+  }
+  .nb-text{
+    font-size: 18px!important;
+  }
+  .btn-list{
+    color: #000;
+    background: #fff;
+    border-radius: 0;
+    border-color: #fff;
+    padding: 1px 10px!important;
+    font-size: 14px!important;
+  }
+  .mobile-btn{
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .nb-radio{
+    justify-content: space-between;
+  }
+  .status-basic label{
+    padding-right: 14px!important;
+  }
+  .columns{
+    overflow: hidden;
+  }
+  .mobile-btn-center{
+    text-align: center;
+  }
+  .nb-style, .mr-bt-0{
+    margin-bottom: 0!important;
+  }
+  // party page
+  .creditors-debitors{
+    display: flex;
+    justify-content: space-around;
+  }
+  .datatable-row-wrapper, .datatable-row-center{
+    width: 100%!important;
+  }
+  .datatable-scroll.ng-star-inserted{
+    width: unset!important;
+  }
+
+}
+@media (min-width: 1024px){
+  .datatable-header-inner, .datatable-row-center.ng-star-inserted{
+    width: 100%!important;
+  }
+  .datatable-scroll.ng-star-inserted, .datatable-body, .datatable-body-row {
+    width: 100%!important;
+  }
+}
+// ngx-table
+@media (max-width: 1023px){
+   .visible{
+    overflow-x: scroll;
+  }
+  .ngx-datatable .datatable-header{
+    overflow: unset!important;
+  }
+
+}

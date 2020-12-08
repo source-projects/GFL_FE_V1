@@ -30,6 +30,8 @@ export class CommonService {
   }
 
   envUrl(){
+    // let w = window.location;
+    // console.log(w.hostname)
     return window['myValue'];
   }
 
