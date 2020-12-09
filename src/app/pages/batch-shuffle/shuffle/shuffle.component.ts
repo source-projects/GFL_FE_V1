@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbWindowService } from '@nebular/theme';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { FormControl, FormGroup, Validators, FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -155,8 +155,19 @@ export class ShuffleComponent implements OnInit {
     this.pId = this.shuffleForm.controls['partyName'].value;
     this.qId = this.shuffleForm.controls['qualityName'].value;
 
+    
+    if(this.shuffleForm.controls['partyName'].value==null || this.shuffleForm.controls['qualityName'].value==null){
+
     this.shuffleForm.controls['batchName1'].reset();
     this.shuffleForm.controls['batchName2'].reset();
+    
+      this.batches=null;
+      this.part1=null;
+      this.part2=null;
+      this.qualityParty=null;
+      
+    }
+    
 
 
   }

@@ -22,7 +22,7 @@
                             <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Party Name</label>
                                 <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
-                                    [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" required>
+                                    [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="setQualityByParty($event)" required>
                                     <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                                 </ng-select>
                                 <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)">
@@ -35,7 +35,7 @@
                                     #qualityId1="ngModel"
                                     [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}"
                                     (change)="getUnit()">
-                                    <ng-option *ngFor="let q of qualityList" [value]="q.id">
+                                    <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                         {{q.qualityId}}-{{q.qualityName}}</ng-option>
                                 </ng-select>
                                 <div class="required-class" *ngIf="formSubmitted && qualityId1.invalid ">
