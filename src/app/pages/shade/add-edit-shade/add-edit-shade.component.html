@@ -138,9 +138,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height"
-                            [rows]="shades.shadeDataList" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                            [columnMode]="'force'">
-
+                            [rows]="shades.shadeDataList" [headerHeight]="31" [footerHeight]="31">
+                            <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)"></nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false"
                                 [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
@@ -198,13 +203,7 @@
                                         [id]="'supplierList'+rowIndex+'-4'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                    let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItem(rowIndex)"></nb-icon>
-                                </ng-template>
-                            </ngx-datatable-column>
+                            
 
                         </ngx-datatable>
                     </div>

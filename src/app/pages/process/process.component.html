@@ -7,7 +7,7 @@
                     <div class="col-md-1 col-3 mobile-btn desktop-btn">
                         <button class="btn btn-primary btn-md btn-list" routerLink="add-dynamic-process">Add</button>
                     </div>
-                    <div class="col-md-11 col-9">
+                    <div class="col-md-9 col-7">
                         <h2 class="nb-text">PROCESS</h2>
                     </div>
                 </div>
@@ -22,7 +22,6 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="!this.access" icon="trash"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                
                     <ngx-datatable-column name="Stock In" props="stockInType"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
                     <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
