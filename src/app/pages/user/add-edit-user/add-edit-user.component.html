@@ -124,8 +124,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Designation</label>
@@ -140,6 +138,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
@@ -149,15 +150,18 @@
                         </div>
                     </div>
                     <div class="col-md-4" *ngIf="user.isUserHead">
-                        <label class="required">User Head List</label>
-                        <select name="userHeadId" class="form-control" #userHeadList="ngModel"
-                            [(ngModel)]="user.userHeadId" required
-                            [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">
-                            <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}</option>
-                        </select>
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (userHeadList.invalid || userHeadList.dirty || userHeadList.touched)">
-                            <span>UserHead is required.</span>
+                        <div class="form-group">
+                            <label class="required">User Head List</label>
+                            <select name="userHeadId" class="form-control" #userHeadList="ngModel"
+                                [(ngModel)]="user.userHeadId" required
+                                [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">
+                                <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (userHeadList.invalid || userHeadList.dirty || userHeadList.touched)">
+                                <span>UserHead is required.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -236,25 +240,20 @@
             </table>
         </div>
     </nb-card-body>
-</nb-card>
-
-<nb-card class="mr-bt-0">
-    <nb-card-body>
+    <div class="nb-pd">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mobile-btn-center">
-                    <div class="padding-bt-tp">
-                        <button *ngIf="this.currentUserId == null" type="submit"
-                            class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                            (click)="addUser(myForm)">Save</button>
-                        <button *ngIf="this.currentUserId != null" type="button"
-                            class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                            (click)=updateUser(myForm)>Update</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                            routerLink="/pages/user">Cancel</button>
-                    </div>
+
+                    <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                        style="margin-right:20px" (click)="addUser(myForm)">Save</button>
+                    <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+                        style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                        routerLink="/pages/user">Cancel</button>
+
                 </div>
             </div>
         </div>
-    </nb-card-body>
+    </div>
 </nb-card>

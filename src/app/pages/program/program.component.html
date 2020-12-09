@@ -2,13 +2,17 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            
             <div class="col-md-1 col-3 mobile-btn desktop-btn">
                 <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>
             </div>
-            <div class="col-md-11 col-9">
+            <div class="col-md-9 col-7">
                 <h2 class="nb-text">PROGRAM</h2>
             </div>
+            <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+                <button style="float:right; "  class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
+            </div>
+            
+           
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -19,7 +23,7 @@
             <ngx-datatable-column name="Action" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon ngbTooltip="Tooltip on bottom"  status="primary" [options]="{animation:{type:'zoom'}}" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;&nbsp;
-                        <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="deleteProgram(row.id)"></nb-icon>
+                        <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="!this.access? null:deleteProgram(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Party name" prop="partyName"></ngx-datatable-column>

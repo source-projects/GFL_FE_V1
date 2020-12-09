@@ -1,11 +1,17 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { PartyService } from "app/@theme/services/party.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+//import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { PartyGuard } from 'app/@theme/guards/party.guard';
 
 @Component({
   selector: "ngx-party",
@@ -15,10 +21,14 @@ import { CommonService } from 'app/@theme/services/common.service';
 export class PartyComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
-
+  permissions: Number;
   tablestyle = "bootstrap";
 
   partyList = [];
+  party=[];
+  headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
+  fileType:string="abc";
+  flag = false;
   radioSelect = 1;
   radioArray = [
     {id:1, value:"View Own"},
@@ -27,16 +37,25 @@ export class PartyComponent implements OnInit {
   ];
   userHeadId;
   userId;
+  access:Boolean = false;
   constructor(
     private partyService: PartyService,
     private route: Router,
     private modalService: NgbModal,
+    public partyGuard: PartyGuard,
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    //private exportService: ExportService,
+    private _NgbModal: NgbModal,
+    private jwtToken: JwtTokenService,
+    
   ) { }
 
   ngOnInit(): void {
+    this.access = this.partyGuard.accessRights('add');
+    this.access = this.partyGuard.accessRights('edit');
+    this.access = this.partyGuard.accessRights('delete'); //1 and go to html(disabled)
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -44,11 +63,16 @@ export class PartyComponent implements OnInit {
     this.getAllParty(this.userId,"own");
   }
 
+
   getAllParty(id,getBy) {
     this.partyService.getAllPartyList(id,getBy).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
+         // console.log(this.partyList);
+          this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
+            city:element.city, state: element.state}))
+           // console.log(this.party);
         }
         else {
           this.toastr.error(data['msg'])
@@ -58,6 +82,8 @@ export class PartyComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error)
       }
     );
+   
+    
   }
 
   onChange(event){
@@ -77,6 +103,14 @@ export class PartyComponent implements OnInit {
     }
   }
 
+open(){
+  this.flag=true;
+ 
+  const modalRef = this.modalService.open(ExportPopupComponent);
+   modalRef.componentInstance.headers = this.headers;
+   modalRef.componentInstance.list = this.party;
+}
+
   deleteParty(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -95,4 +129,6 @@ export class PartyComponent implements OnInit {
       }
     });
   }
+
+ 
 }

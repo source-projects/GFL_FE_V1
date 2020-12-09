@@ -4,8 +4,13 @@ import { ShadeService } from 'app/@theme/services/shade.service';
 import {NgbModal}  from '@ng-bootstrap/ng-bootstrap'; 
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import * as errorData from 'app/@theme/json/error.json';
+
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 
 @Component({
   selector: 'ngx-shade',
@@ -18,7 +23,11 @@ export class ShadeComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   shadeList=[];
+  shade=[];
+  headers=["Party Shade No", "Process Name", "Quality Id", "Quality Name", "Party Name", "Color Tone" ];
   radioSelect = 1;
+  flag = false;
+
   radioArray = [
     {id:1, value:"View Own"},
     {id:2, value:"View Group"},
@@ -26,16 +35,26 @@ export class ShadeComponent implements OnInit {
   ];
   userHeadId;
   userId;
+  permissions: Number;
+  access:Boolean = false;
+  constructor(
+    private shadeService: ShadeService,
+    private route: Router,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    public shadeGuard: ShadeGuard,
+    private jwtToken: JwtTokenService,
+    private commonService: CommonService,
+    private exportService: ExportService
+  ) { }
+ 
   
-  constructor(private shadeService: ShadeService, 
-              private route:Router,
-              private modalService: NgbModal,
-              private toastr:ToastrService,
-              private commonService: CommonService
-              ) { }
   
 
   ngOnInit(): void {
+    this.access = this.shadeGuard.accessRights('add');
+    this.access = this.shadeGuard.accessRights('edit');
+    this.access = this.shadeGuard.accessRights('delete');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -60,10 +79,21 @@ export class ShadeComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.shade;
+  }
+
   getallShades(id,getBy){
   this.shadeService.getShadeMastList(id,getBy).subscribe(
       data =>{
         this.shadeList = data['data'];
+        this.shade=this.shadeList.map((element)=>({partyShadeNo:element.partyShadeNo, processName: element.processName,
+          qualityId: element.qualityId, qualityName:element.qualityName, partyName:element.partyName, colorTone:element.colorTone }))
+          console.log(this.shade);
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)

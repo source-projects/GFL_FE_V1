@@ -5,11 +5,16 @@
                 <div class="row">
                    
                     <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                        <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>
-                    </div>
-                    <div class="col-md-11 col-9">
+                        <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>   
+                    </div>     
+                    <div class="col-md-9 col-7">
                         <h2 class="nb-text">STOCK-BATCH</h2>
                     </div>
+                    <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+                        <button style="float:right; "  class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
+                    </div>
+                   
+                    
                 </div>
             </nb-card-header>
             <nb-card-body>
@@ -24,9 +29,9 @@
                     <ngx-datatable-column name="Actions" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                [routerLink]="['edit',row.id]"></nb-icon>
+                                [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
-                                (click)="deleteStockBatch(row.id)"></nb-icon>
+                            (click)="!this.access? null:deleteStockBatch(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>
