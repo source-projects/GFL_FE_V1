@@ -13,16 +13,84 @@ import { ToastrService } from 'ngx-toastr';
 export class UserGuard implements CanActivate {
 
   public errorData: any = (errorData as any).default;
-
-  constructor(private commonService: CommonService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService, private toastr:ToastrService, private _router:Router) { }
+  permis: String
+  constructor(
+    private commonService: CommonService, 
+    private jwtToken: JwtTokenService,
+    private storeTokenService: StoreTokenService,
+    private toastr:ToastrService,
+    private _router:Router) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(localStorage.getItem('token')){
-      return true;
+     //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
+     this.jwtToken.setToken(this.storeTokenService.get('token'));
+     var permission = this.jwtToken.getDecodeToken('user');
+     this.permis = this.commonService.decToBin(permission);
+     let PermissionName = route.data["PermissionName"];
+     console.log(PermissionName);  
+    switch (PermissionName[0]) {
+      case 'view':
+        if (this.permis[0] == '1')
+          return true;
+        else
+          return false;
+
+      case 'add':
+        if (this.permis[1] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit':
+        if (this.permis[2] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete':
+        if (this.permis[3] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view group':
+        if (this.permis[4] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view all':
+        if (this.permis[5] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit group':
+        if (this.permis[6] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit all':
+        if (this.permis[7] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete group':
+        if (this.permis[8] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete all':
+        if (this.permis[9] == '1')
+          return true;
+        else
+          return false;
+
     }
-    this._router.navigate(['auth'])
-    return true;
   }
 
   canLoad(
@@ -37,6 +105,76 @@ export class UserGuard implements CanActivate {
     else
     this.toastr.error(errorData.NoPermission);
       return false;
+  }
+
+  accessRights(PermissionName):Boolean{
+    this.jwtToken.setToken(this.storeTokenService.get('token'));
+    var permission = this.jwtToken.getDecodeToken('user');
+    this.permis = this.commonService.decToBin(permission);
+    
+    //console.log(PermissionName)
+    switch (PermissionName) {
+      case 'view':
+        if (this.permis[0] == '1')
+          return true;
+        else
+          return false;
+
+      case 'add':
+        if (this.permis[1] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit':
+        if (this.permis[2] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete':
+        if (this.permis[3] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view group':
+        if (this.permis[4] == '1')
+          return true;
+        else
+          return false;
+
+      case 'view all':
+        if (this.permis[5] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit group':
+        if (this.permis[6] == '1')
+          return true;
+        else
+          return false;
+
+      case 'edit all':
+        if (this.permis[7] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete group':
+        if (this.permis[8] == '1')
+          return true;
+        else
+          return false;
+
+      case 'delete all':
+        if (this.permis[9] == '1')
+          return true;
+        else
+          return false;
+
+    }
   }
   
 }

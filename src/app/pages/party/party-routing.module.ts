@@ -10,16 +10,24 @@ const routes: Routes = [
     component:PartyComponent,
     canActivate:[PartyGuard],
     canLoad:[PartyGuard],
+    data: { PermissionName: ['view']}
     
   },
   {
     path:'add',
-    component:AddEditPartyComponent   
+    component:AddEditPartyComponent,
+    canActivate: [PartyGuard],
+    canLoad: [PartyGuard],
+    data: { PermissionName: ['add']}  
   },
   {
     path:'edit/:id',
-    component:AddEditPartyComponent
+    component:AddEditPartyComponent,
+    canActivate: [PartyGuard],
+    canLoad: [PartyGuard],
+    data: { PermissionName: ['edit']} 
   }
+  
 ];
 
 @NgModule({

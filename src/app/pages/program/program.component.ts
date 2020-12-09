@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 
 @Component({
@@ -17,7 +21,11 @@ export class ProgramComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   programList: any[];
+  program=[];
+  headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
   tableStyle = "bootstrap";
+  flag = false;
+
   userId;
   userHeadId;
   radioSelect = 1;
@@ -26,10 +34,25 @@ export class ProgramComponent implements OnInit {
     { id: 2, value: "View Group" },
     { id: 3, value: "View All" }
   ];
-
-  constructor(private commonService: CommonService, private programService: ProgramService, private router: Router, private toastr: ToastrService, private modalService: NgbModal,) { }
+  permissions: Number;
+  access:Boolean = false;
+  constructor(
+    private commonService: CommonService, 
+    private programService: ProgramService, 
+    private router: Router, 
+    public programGuard: ProgramGuard,
+    private jwtToken: JwtTokenService,
+    private toastr: ToastrService, 
+    private modalService: NgbModal,
+    private exportService: ExportService
+    ) { }
+ 
+ 
 
   ngOnInit(): void {
+    this.access = this.programGuard.accessRights('add');
+    this.access = this.programGuard.accessRights('edit');
+    this.access = this.programGuard.accessRights('delete');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -54,11 +77,22 @@ export class ProgramComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.program;
+  }
+
   public getProgramList(id, getBy) {
     this.programService.getProgramList(id, getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
+          this.program=this.programList.map((element)=>({partyName:element.partyName, programBy: element.programBy,
+            qualityId: element.qualityId, qualityName:element.qualityName, qualityType:element.qualityType, priority:element.priority }))
+            console.log(this.program);
         }
         else {
           this.toastr.error(data['msg']);
