@@ -3,17 +3,18 @@
         <nb-card class="nb-style">
             <nb-card-header class="nb-header">
                 <div class="row">
-                    <div class="col-md-11 col-8">
-                        <h2 class="nb-text">PROCESS</h2>
+                    
+                    <div class="col-md-1 col-3 mobile-btn desktop-btn">
+                        <button class="btn btn-primary btn-md btn-list" routerLink="add-dynamic-process">Add</button>
                     </div>
-                    <div class="col-md-1 col-4 mobile-btn desktop-btn">
-                        <button class="btn btn-primary btn-md btn-list" routerLink="add-dynamic-process">Add</button>        
+                    <div class="col-md-11 col-9">
+                        <h2 class="nb-text">PROCESS</h2>
                     </div>
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <ngx-datatable [rows]="processList" [ngClass]="tablestyle" [rowHeight]="'auto'" [headerHeight]="50"
-                    [columnMode]="'force'" class="material" style="text-align: justify">
+                <ngx-datatable [rows]="processList" [ngClass]="tablestyle" [rowHeight]="'auto'" [headerHeight]="31"
+                    class="material">
                     <ngx-datatable-column name="Stock In" props="stockInType"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
                     <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
@@ -24,7 +25,8 @@
                     <ngx-datatable-column name="Record Count" props="recordCount"></ngx-datatable-column>
                     <ngx-datatable-column name="Actions" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/process/edit',row.id]"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                [routerLink]="['/pages/process/edit',row.id]"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
