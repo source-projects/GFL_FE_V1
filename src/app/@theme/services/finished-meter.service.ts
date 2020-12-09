@@ -38,5 +38,9 @@ export class FinishedMeterService {
   getBatchesByPartyQuality(qId,pId){
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+qId+'/'+pId);
   }
+
+  deleteBatchDataById(id){
+    return this.httpClient.delete(this.commonService.envUrl()+'api/batchDelete/'+id);
+  }
   
 }

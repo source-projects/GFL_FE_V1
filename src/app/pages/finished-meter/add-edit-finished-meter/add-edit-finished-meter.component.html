@@ -1,10 +1,10 @@
 <nb-card class="nb-style">
   <nb-card-header class="nb-header">
     <div *ngIf="this.currentFinishedMeter == null; else updateP">
-      <h2 class="nb-text">ADD PARTY</h2>
+      <h2 class="nb-text">ADD FINISHED METER</h2>
     </div>
     <ng-template #updateP>
-      <h2 class="nb-text">UPDATE PARTY</h2>
+      <h2 class="nb-text">UPDATE FINISHED METER</h2>
     </ng-template>
   </nb-card-header>
   <nb-card-body>
@@ -15,9 +15,9 @@
             <div class="form-group">
               <label class="required">Master</label>
               <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel"
-                [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="enableQuality($event)"
+                [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="masterSelected($event)"
                 placeholder="Select Master">
-                <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+                <ng-option *ngFor="let master of masterList" [value]="master.id">{{master.userName}}</ng-option>
               </ng-select>
             </div>
           </div>
@@ -34,12 +34,70 @@
             <div class="form-group">
               <label>Quality</label>
               <ng-select name="qualityId" [(ngModel)]='finishedMeterForm.qualityId' #qualityId1="ngModel"
-                placeholder="Select Quality">
-                <ng-option *ngFor="let q of qualityList" [value]="q.id">{{q.qualityId}}</ng-option>
+                placeholder="Select Quality" (change)="qualitySelected($event)">
+                <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">{{q.qualityId}}</ng-option>
               </ng-select>
             </div>
           </div>
         </div>
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+            <label>Batch</label>
+              <ng-select name="batchId" [(ngModel)]='finishedMeterForm.batchId' #batchId1="ngModel"
+                placeholder="Select Batch" (change)="batchSelected($event)">
+                <ng-option *ngFor="let b of batchList" [disabled]="b.prodctionPlanned" [value]="b.batchId">{{b.batchId}}</ng-option>
+              </ng-select>
+          </div>
+        </div>
+
+        <br>
+        <div class="row" *ngIf="finishedMeterForm.batchId">
+          <div class="col-md-12">
+              <ngx-datatable #table class="material common-table datatable-auto-height"
+                  [rows]="finishedMeterForm.batchData" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                  [columnMode]="'force'">
+                  
+                  <ngx-datatable-column name="Action" sortable="false" prop="mtr">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template  let-rowIndex="rowIndex">
+                        <nb-icon *ngIf="!row.mtr" icon="trash" status="danger" (click)="removeMeter($event, rowIndex)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Id" prop="id" [sortable]="false"
+                      [width]="300"></ngx-datatable-column>
+
+                  <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
+                      [width]="300"></ngx-datatable-column>
+
+                  <ngx-datatable-column name="Finish Meter" prop="finishMtr" [sortable]="false" [width]="300">
+                      <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                          <input class="tableForm" type="number" #tableMeter1="ngModel" name='tableFinishMeter{{rowIndex}}'
+                              [(ngModel)]="row.finishMtr" (keyup)="onKeyUp($event,rowIndex,3,'fMeter')"
+                              [id]="'batchData'+rowIndex+'-3'" required
+                              [ngClass]="{'is-invalid': formSubmitted && tableMeter1.invalid}">
+                              <div class="invalid-feedback" *ngIf="formSubmitted && (tableMeter1.invalid )" style="display: inline-block;">
+                                  <span>Required</span>
+                              </div>
+                      </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Sequence Id" prop="sequenceId" [sortable]="false" [width]="300">
+                      <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                          <input class="tableForm" type="number" #tableWeight1="ngModel" name='tableSequence{{rowIndex}}'
+                              [(ngModel)]="row.sequenceId" (keyup)="onKeyUp($event,rowIndex,4,'sequence')"
+                              [id]="'batchData'+rowIndex+'-4'" required
+                              [ngClass]="{'is-invalid': formSubmitted && tableWeight1.invalid}">
+                              <div class="invalid-feedback" *ngIf="formSubmitted && (tableWeight1.invalid )" style="display: inline-block;">
+                                  <span>Required</span>
+                              </div>
+                      </ng-template>
+                  </ngx-datatable-column>
+
+              </ngx-datatable>
+          </div>
+      </div>
+
         <div class="row">
           <div class="col-md-12 mobile-btn-center">
             <div class="padding-bt-tp">
