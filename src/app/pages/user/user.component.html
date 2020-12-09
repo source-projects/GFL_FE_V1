@@ -3,7 +3,7 @@
         <nb-card-header class="nb-header">
             <div class="row">
                 <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                    <button class="btn btn-primary btn-md btn-list" routerLink='/pages/user/add'>Add</button>  
+                    <button class="btn btn-primary btn-md btn-list" routerLink='/pages/user/add'>ADD</button>  
                 </div>
                 <div class="col-md-11 col-9">
                     <h2 class="nb-text">USER</h2>
@@ -23,10 +23,10 @@
             </nb-radio-group>
             
             <!--  ngx- DataTable  -->
-            <ngx-datatable [rows]="userList" [ngClass]="tableStyle" [headerHeight]="31" [columnMode]="'force'" class="material" [footerHeight]="40">
+            <ngx-datatable [rows]="userList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="31">
                 <ngx-datatable-column name="Action" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
-                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/user/edit',row.id]"></nb-icon>
+                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/user/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                         <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  (click)="!this.access? null:deleteUser(row.id)"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>
