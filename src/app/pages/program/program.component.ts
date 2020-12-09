@@ -8,6 +8,8 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 
 @Component({
@@ -19,7 +21,11 @@ export class ProgramComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   programList: any[];
+  program=[];
+  headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
   tableStyle = "bootstrap";
+  flag = false;
+
   userId;
   userHeadId;
   radioSelect = 1;
@@ -31,13 +37,17 @@ export class ProgramComponent implements OnInit {
   permissions: Number;
   access:Boolean = false;
   constructor(
-     private commonService: CommonService,
-     private programService: ProgramService, 
-     private router: Router,
-     public programGuard: ProgramGuard,
-     private jwtToken: JwtTokenService,
-     private toastr: ToastrService, 
-     private modalService: NgbModal,) { }
+    private commonService: CommonService, 
+    private programService: ProgramService, 
+    private router: Router, 
+    public programGuard: ProgramGuard,
+    private jwtToken: JwtTokenService,
+    private toastr: ToastrService, 
+    private modalService: NgbModal,
+    private exportService: ExportService
+    ) { }
+ 
+ 
 
   ngOnInit(): void {
     this.access = this.programGuard.accessRights('add');
@@ -67,11 +77,22 @@ export class ProgramComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.program;
+  }
+
   public getProgramList(id, getBy) {
     this.programService.getProgramList(id, getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
+          this.program=this.programList.map((element)=>({partyName:element.partyName, programBy: element.programBy,
+            qualityId: element.qualityId, qualityName:element.qualityName, qualityType:element.qualityType, priority:element.priority }))
+            console.log(this.program);
         }
         else {
           this.toastr.error(data['msg']);

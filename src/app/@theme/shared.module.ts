@@ -28,7 +28,9 @@ import { ToastrModule } from 'ngx-toastr/toastr/toastr.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
-
+import{ ExportService} from './services/export.service';
+import { ExportDirective } from './directives/export.directive';
+//import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -56,13 +58,15 @@ const NB_MODULES = [
   ColorPickerModule,
   NgSelectModule,
   NgbDatepickerModule,
+  //NgbModal
   NbAccordionModule,
+  
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [ExportDirective],
   imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES],
-  providers: []
+  exports: [...NB_MODULES,ExportDirective],
+  providers:[ ExportService ]
 })
 export class SharedModule { }
