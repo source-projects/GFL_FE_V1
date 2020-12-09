@@ -55,8 +55,9 @@ export class ExportPopupComponent implements OnInit {
 
   onClick(){
     //this.activeModal.close(type)
-    for(let i=this.startRow-1;i<this.endRow;i++){
-      this.list1[i-1]=this.list[i];
+    for(let i=this.startRow;i<=this.endRow;i++){
+     // for(let j=0;j<=(this.endRow-this.startRow);j++)
+          this.list1.push(this.list[i-1]);
     }
     console.log(this.list1);
 
