@@ -45,9 +45,11 @@ export class ColorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.access = this.colorGuard.accessRights('add');
-    this.access = this.colorGuard.accessRights('edit');
+    // this.access = this.colorGuard.accessRights('add');
+    // this.access = this.colorGuard.accessRights('edit');
     this.access = this.colorGuard.accessRights('delete');
+    this.access = this.colorGuard.accessRights('delete group');
+    this.access = this.colorGuard.accessRights('delete all');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
