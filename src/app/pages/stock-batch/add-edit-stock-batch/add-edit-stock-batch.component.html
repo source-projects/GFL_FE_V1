@@ -116,8 +116,8 @@
                                         <div class="row">
                                             <div class="col-md-4 col-8">
                                                 <label style="float: left;">Batch No</label>
-                                                <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId'
-                                                    class="form-control" name="batchNo{{i}}" min="0">
+                                                <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId' [disabled]="flag"
+                                                    class="form-control" name="batchNo{{i}}" min="0" (click)="batchInsertCheck()">
                                             </div>
                                             <div class="col-md-8 col-4">
                                                 <nb-icon status="danger" style="float: right;margin-right: 10px;;"
@@ -140,11 +140,11 @@
                                                             let-rowIndex="rowIndex">
                                                             <input class="tableForm form-control" type="number"
                                                                 (keyup)="onKeyUp($event,rowIndex,0,'mtr',i)"
-                                                                [id]="'grData'+rowIndex +'-0'+i" [(ngModel)]="row.mtr"
+                                                                 [(ngModel)]="row.mtr"
                                                                 #meter1="ngModel" name="mtr{{rowIndex}}{{i}}" required
                                                                 (input)="calculateWt(meter1.value,i,rowIndex,0);"
                                                                 [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}"
-                                                                min="0">
+                                                                min="0" [disabled]="flag">
                                                             <div class="invalid-feedback"
                                                                 *ngIf="formSubmitted && (meter1.invalid)"
                                                                 style="display: inline-block;" min="0">
@@ -161,10 +161,10 @@
                                                                 #weight1="ngModel" name="wt{{rowIndex}}{{i}}"
                                                                 [(ngModel)]="row.wt"
                                                                 (keyup)="onKeyUp($event,rowIndex,1,'wt',i)" required
-                                                                [id]="'grData'+rowIndex+'-1'+i"
+                                                                    
                                                                 (input)="calculateMtr(weight1.value,i,rowIndex,1);"
                                                                 [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
-                                                                min="0">
+                                                                min="0" [disabled]="flag">
                                                             <div class="invalid-feedback"
                                                                 *ngIf="formSubmitted && (weight1.invalid)"
                                                                 style="display: inline-block;" min="0">
@@ -187,7 +187,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </nb-card>
                             </div>
                         </div>
