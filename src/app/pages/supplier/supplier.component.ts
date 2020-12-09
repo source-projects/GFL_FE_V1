@@ -7,6 +7,8 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ExportService } from 'app/@theme/services/export.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 
 @Component({
   selector: 'ngx-supplier',
@@ -32,18 +34,25 @@ export class SupplierComponent implements OnInit {
   ];
   userHeadId;
   userId;
-
+  permissions: Number;
+  access:Boolean = false;
   constructor(
     private commonService:CommonService, 
     private supplierService:SupplierService, 
+    public supplierGuard: SupplierGuard,
+    private jwtToken: JwtTokenService,
     private router:Router, 
     private toastr: ToastrService,
     private exportService: ExportService,
     private modalService: NgbModal,
 
     ) { }
+ 
+ 
    
   ngOnInit(): void {
+    this.access = this.supplierGuard.accessRights('add');
+    this.access = this.supplierGuard.accessRights('edit');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();

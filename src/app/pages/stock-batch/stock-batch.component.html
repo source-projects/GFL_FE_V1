@@ -31,7 +31,7 @@
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
                                 [routerLink]="['edit',row.id]"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
-                                (click)="deleteStockBatch(row.id)"></nb-icon>
+                            (click)="!this.access? null:deleteStockBatch(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>

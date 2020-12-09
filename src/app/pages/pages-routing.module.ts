@@ -32,21 +32,24 @@ const routes: Routes = [{
       loadChildren: () => import('./party/party.module')
         .then(m => m.PartyModule),
       canActivate: [PartyGuard],
-      canLoad: [PartyGuard]
+      canLoad: [PartyGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'quality',
       loadChildren: () => import('./quality/quality.module')
         .then(m => m.QualityModule),
       canActivate: [QualityGuard],
-      canLoad: [QualityGuard]
+      canLoad: [QualityGuard],
+      data: { PermissionName: ['view'] }
     },
     {
       path: 'user',
       loadChildren: () => import('./user/user.module')
         .then(m => m.UserModule),
       canActivate: [UserGuard],
-      canLoad: [UserGuard]
+      canLoad: [UserGuard],
+      data: { PermissionName: ['view']}
     },
     // {
     //   path: 'fabric-in',
@@ -63,35 +66,40 @@ const routes: Routes = [{
       loadChildren: () => import('./color/color.module')
         .then(m => m.ColorModule),
       canActivate: [ColorGuard],
-      canLoad: [ColorGuard]
+      canLoad: [ColorGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'program',
       loadChildren: () => import('./program/program.module')
         .then(m => m.ProgramModule),
       canActivate: [ProgramGuard],
-      canLoad: [ProgramGuard]
+      canLoad: [ProgramGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'process',
       loadChildren: () => import('./process/process.module')
         .then(m => m.ProcessModule),
       canActivate: [ProgramGuard],
-      canLoad: [ProgramGuard]
+      canLoad: [ProgramGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'shade',
       loadChildren: () => import('./shade/shade.module')
         .then(m => m.ShadeModule),
       canActivate: [ShadeGuard],
-      canLoad: [ShadeGuard]
+      canLoad: [ShadeGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
       canActivate: [SupplierGuard],
-      canLoad: [SupplierGuard]
+      canLoad: [SupplierGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'finishedMeter',
@@ -105,14 +113,16 @@ const routes: Routes = [{
       loadChildren: () => import('./batch-shuffle/batch-shuffle.module')
         .then(m => m.BatchShuffleModule),
       canActivate: [SupplierGuard],
-      canLoad: [SupplierGuard]
+      canLoad: [SupplierGuard],
+      data: { PermissionName: ['view']}
     },
     {
       path: 'stock-batch',
       loadChildren: () => import('./stock-batch/stock-batch.module')
         .then(m => m.StockBatchModule),
       canActivate: [StockBatchGuard],
-      canLoad: [StockBatchGuard]
+      canLoad: [StockBatchGuard],
+      data: { PermissionName: ['view']}
     },
     // {
     //   path: 'forms',

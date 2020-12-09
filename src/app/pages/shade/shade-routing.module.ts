@@ -9,15 +9,22 @@ const routes: Routes = [
     path:'',
     component:ShadeComponent,
     canActivate:[ShadeGuard],
-    canLoad:[ShadeGuard]
+    canLoad:[ShadeGuard],
+    data: { PermissionName: ['view']}
   },
   {
     path:'add',
-    component:AddEditShadeComponent
+    component:AddEditShadeComponent,
+    canActivate:[ShadeGuard],
+    canLoad:[ShadeGuard],
+    data: { PermissionName: ['add']}
   },
   {
     path:'edit/:id',
-    component:AddEditShadeComponent
+    component:AddEditShadeComponent,
+    canActivate:[ShadeGuard],
+    canLoad:[ShadeGuard],
+    data: { PermissionName: ['edit']}
   }
 ];
 

@@ -30,6 +30,7 @@ export class QualityComponent implements OnInit {
   headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
   flag = false;
 
+  access:Boolean = false;
   radioSelect = 1;
   userId;
   userHeadId;
@@ -45,12 +46,15 @@ export class QualityComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.access = this.qualityGuard.accessRights('add');
+    this.access = this.qualityGuard.accessRights('edit');
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getQualityList(this.userId, "own");
   }
+
 
   onChange(event){
     this.qualityList = [];
