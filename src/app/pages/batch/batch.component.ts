@@ -5,6 +5,8 @@ import { BatchService } from 'app/@theme/services/batch.service';
 import { QualityService } from "app/@theme/services/quality.service";
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { BatchGuard } from 'app/@theme/guards/batch.guard';
 
 @Component({
   selector: "ngx-batch",
@@ -17,15 +19,22 @@ export class BatchComponent implements OnInit {
 
   batchList:any;
   
+  permissions: Number;
+  access:Boolean = false;
   tableStyle = "bootstrap";
   constructor(
     private qualityService: QualityService,
     private modalService: NgbModal,
     private batchService: BatchService,
+
+    public batchGuard: BatchGuard,
+    private jwtToken: JwtTokenService,
     private toastr:ToastrService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.access = this.batchGuard.accessRights('add');
+  }
 
   getAllBatch() {
     this.batchService.getAllBatchList().subscribe(

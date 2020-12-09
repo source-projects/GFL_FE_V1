@@ -23,7 +23,7 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="deleteParty(row.id)"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="!this.access? null:deleteParty(row.id)"></nb-icon>
 
                         </ng-template>
                     </ngx-datatable-column>

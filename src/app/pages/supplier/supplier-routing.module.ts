@@ -10,23 +10,36 @@ const routes: Routes = [
     path:'',
     component:SupplierComponent,
     canActivate:[SupplierGuard],
-    canLoad:[SupplierGuard]
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['view']}
   },
   {
     path:'add',
-    component:AddEditSupplierComponent
+    component:AddEditSupplierComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['add']}
   },
   {
     path:'addSupplierRate',
-    component:AddEditSupplierRateComponent
+    component:AddEditSupplierRateComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['addSupplierRate']}
   },
   {
     path:'editSupplierRate/:id',
-    component:AddEditSupplierRateComponent
+    component:AddEditSupplierRateComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['editSupplierRate']}
   },
   {
     path:'edit/:id',
-    component:AddEditSupplierComponent
+    component:AddEditSupplierComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['edit']}
   }
 ];
 
