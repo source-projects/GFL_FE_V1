@@ -8,6 +8,7 @@ import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
 import { DatePipe } from '@angular/common';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-color',
@@ -24,6 +25,8 @@ export class ColorComponent implements OnInit {
  color=[];
  headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
  radioSelect=1;
+ flag = false;
+
  radioArray = [
   {id:1, value:"View Own"},
   {id:2, value:"View Group"},
@@ -65,6 +68,14 @@ export class ColorComponent implements OnInit {
         this.getColor(0, "all");
         break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.color;
   }
 
   getColor(id, getBy) {

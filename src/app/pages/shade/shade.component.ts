@@ -7,6 +7,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-shade',
@@ -22,6 +23,8 @@ export class ShadeComponent implements OnInit {
   shade=[];
   headers=["Party Shade No", "Process Name", "Quality Id", "Quality Name", "Party Name", "Color Tone" ];
   radioSelect = 1;
+  flag = false;
+
   radioArray = [
     {id:1, value:"View Own"},
     {id:2, value:"View Group"},
@@ -63,6 +66,14 @@ export class ShadeComponent implements OnInit {
               this.getallShades(0,"all");
               break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.shade;
   }
 
   getallShades(id,getBy){

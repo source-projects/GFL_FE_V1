@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from "app/@theme/services/user.service";
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-user',
@@ -20,6 +21,8 @@ export class UserComponent implements OnInit {
   userList=[];
   user=[];
   headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
+  flag = false;
+
   userId;
   userHeadId;
   radioSelect = 1;
@@ -62,6 +65,14 @@ export class UserComponent implements OnInit {
               this.getAllUser(0,"all");
               break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.user;
   }
 
   getAllUser(id,getBy){

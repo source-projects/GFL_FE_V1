@@ -6,6 +6,7 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-stock-batch',
@@ -18,7 +19,8 @@ export class StockBatchComponent implements OnInit {
   stockList;
   stock=[];
   headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
-  
+  flag = false;
+
   tablestyle = "bootstrap";
   radioSelect = 1;
   radioArray = [
@@ -60,6 +62,14 @@ export class StockBatchComponent implements OnInit {
         this.getStockBatchList(0, "all");
         break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.stock;
   }
 
   getStockBatchList(id, getBy) {

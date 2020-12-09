@@ -7,6 +7,7 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class ProgramComponent implements OnInit {
   program=[];
   headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
   tableStyle = "bootstrap";
+  flag = false;
+
   userId;
   userHeadId;
   radioSelect = 1;
@@ -62,6 +65,14 @@ export class ProgramComponent implements OnInit {
         this.getProgramList(0, "all");
         break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.program;
   }
 
   public getProgramList(id, getBy) {

@@ -7,6 +7,8 @@ import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
 import { QualityGuard } from 'app/@theme/guards/quality.guard';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-quality',
@@ -26,12 +28,21 @@ export class QualityComponent implements OnInit {
   qualityList=[];
   quality=[];
   headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
+  flag = false;
 
   radioSelect = 1;
   userId;
   userHeadId;
   tableStyle = 'bootstrap';
-  constructor(private commonService: CommonService,public qualityGuard: QualityGuard, private qualityService: QualityService, private toastr: ToastrService, private jwtToken: JwtTokenService, private storeTokenService: StoreTokenService) { }
+  constructor(
+    private commonService: CommonService,
+    public qualityGuard: QualityGuard, 
+    private qualityService: QualityService, 
+    private toastr: ToastrService, 
+    private jwtToken: JwtTokenService, 
+    private storeTokenService: StoreTokenService,
+    private modalService: NgbModal,
+    ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -57,6 +68,14 @@ export class QualityComponent implements OnInit {
               break;
     }
   }
+
+open(){
+  this.flag=true;
+ 
+  const modalRef = this.modalService.open(ExportPopupComponent);
+   modalRef.componentInstance.headers = this.headers;
+   modalRef.componentInstance.list = this.quality;
+}
 
   getQualityList(id,getBy) {
     this.qualityService.getallQuality(id,getBy).subscribe(
