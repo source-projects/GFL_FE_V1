@@ -6,7 +6,9 @@ import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 import { DatePipe } from '@angular/common';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
 
@@ -19,29 +21,36 @@ import { ColorGuard } from 'app/@theme/guards/color.guard';
 export class ColorComponent implements OnInit {
 
 
-  public errorData: any = (errorData as any).default;
+ public errorData: any = (errorData as any).default;
+ 
+ tableStyle = 'bootstrap';
+ colorList=[];
+ color=[];
+ headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
+ radioSelect=1;
+ flag = false;
 
-  tableStyle = 'bootstrap';
-  colorList = [];
-  radioSelect = 1;
-  radioArray = [
-    { id: 1, value: "View Own" },
-    { id: 2, value: "View Group" },
-    { id: 3, value: "View All" }
-  ];
-  userId;
-  userHeadId;
-
-  permissions: Number;
-  access:Boolean = false;
-  constructor(private colorService: ColorService,
+ radioArray = [
+  {id:1, value:"View Own"},
+  {id:2, value:"View Group"},
+  {id:3, value:"View All"}
+];
+ userId;
+ userHeadId;
+ permissions: Number;
+ access:Boolean = false;
+  constructor(
+    private colorService: ColorService,
+  
     private route: Router,
     private modalService: NgbModal,
 
     public colorGuard: ColorGuard,
     private jwtToken: JwtTokenService,
     private toastr: ToastrService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private exportService: ExportService
+
   ) { }
 
   ngOnInit(): void {
@@ -72,10 +81,23 @@ export class ColorComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.color;
+  }
+
   getColor(id, getBy) {
     this.colorService.getColor(id, getBy).subscribe(
       data => {
         if (data["success"]) {
+          this.colorList = data['data']
+          console.log(this.colorList);
+          this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
+            billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
+            console.log(this.color);
           this.colorList = data['data'];
           let index = 0
           this.colorList.forEach(element => {

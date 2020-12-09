@@ -9,6 +9,9 @@
                 <div class="col-md-11 col-9">
                     <h2 class="nb-text">SUPPLIER</h2>
                 </div>
+                <div class="col-md-5">
+                    <button style="float:right; "  class="btn btn-primary btn-sm" (click)="open()" >EXPORT</button>
+                </div>
             </div>
         </nb-card-header>
         <nb-card-body>
@@ -24,7 +27,7 @@
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                         <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}"
                             [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
-                        <button nbTooltip="Update Supplier Rate" class="btn primary-status"
+                        <button nbTooltip="Update Supplier Rate" class="btn primary-status btn-listing-action"
                             [routerLink]="['editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success"
                             nbTooltipPlacement="bottom" nbButton>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="menu"
