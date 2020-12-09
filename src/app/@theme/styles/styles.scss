@@ -40,6 +40,7 @@
   padding: 1.7rem;
   margin-bottom: 30px;
   border-radius: 0!important;
+  padding-bottom: 17px;
 }
 .padding-btn-box{
   padding: 1.0rem;
@@ -52,6 +53,7 @@
   border-color: #5e5b5e;
   border-radius: 0;
   font-weight: 700;
+  margin-right: 20px;
 }
 .datatable-icon-up::before{
   content: none;
@@ -73,6 +75,10 @@
 }
 .form-group label{
   font-weight: 600;
+  color: #5e5b5e;
+}
+.required:after {
+  content: " *";
   color: #aa3634;
 }
 input:focus, textarea:focus, select:focus{
@@ -120,11 +126,11 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(255, 255, 255);
   font-size: 14px;
 }
-.datatable-header, .datatable-header-cell{
+.datatable-header, .datatable-header-cell, .nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle{
   background-color: #5e5b5e!important
 }
 .page-count{
-  color: #aa3634;
+  color: #5e5b5e;
 }
 .datatable-header-cell-template-wrap{
   text-align: center;
@@ -132,6 +138,9 @@ input[type=number]::-webkit-outer-spin-button {
 .box-shadow-none{
   box-shadow: none!important;
   border: 1px solid #e0e0e0;
+}
+.box-mr-bt{
+  margin-bottom: 15px;
 }
 .datatable-icon-sort-unset{
   display: none!important;
@@ -168,6 +177,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .ngx-datatable{
   box-shadow: none!important;
+  margin-top: 12px;
 }
 .nb-radio{
   margin: 0 0 16px;
@@ -175,7 +185,7 @@ input[type=number]::-webkit-outer-spin-button {
 .desktop-btn {
   align-items: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
   padding: 1.4rem!important;
@@ -190,13 +200,23 @@ input[type=number]::-webkit-outer-spin-button {
 .nb-theme-default nb-menu .menu-item a:hover .menu-icon, .nb-theme-default nb-menu .menu-item a.active .menu-icon{
   color: #ffffff!important;
 }
-.nb-theme-default nb-menu .menu-item a:hover, .ng-star-inserted.active {
+.nb-theme-default nb-menu .menu-item a:hover, .menu-item .ng-star-inserted.active {
   background-color: #aa3634!important;
   color: #ffffff!important;
   transition: .4s;
 }
-.nb-theme-default nb-menu .menu-item .menu-icon, .nb-theme-default nb-checkbox.status-basic .text{
+.nb-theme-default nb-menu .menu-item .menu-icon{
   color: #aa3634!important;
+}
+.nb-theme-default nb-checkbox.status-basic .text, .nb-theme-default nb-radio.status-basic .text{
+  color: #5e5b5e!important;
+}
+.tableForm{
+  border-bottom: 1px solid #5e5b5ecc;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 100%;
 }
 .menu-title{
   color: #5e5b5e;
@@ -235,7 +255,7 @@ input[type=number]::-webkit-outer-spin-button {
   resize: none;
 }
 .padding-bt-tp{
-  padding: 17px 0;
+  padding: 17px 0 0;
 }
 .nb-check-user{
   padding-left: 0!important;
@@ -287,21 +307,18 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 13px 20px!important;
 }
 .nb-p-text {
-  color: #aa3634!important;
+  color: #5e5b5e!important;
   font-weight: 600!important;
 }
 .status-basic label{
   padding-top: 0!important;
   padding-bottom: 0!important;
 }
-.nb-theme-default nb-radio.status-basic .native-input:enabled:checked ~ .inner-circle{
-  background-color: #aa3634!important;
-}
 .outer-circle{
-  border-color:  #aa3634!important;
+  border-color: #5e5b5e !important
 }
 .nb-mr-0{
-  margin: 0;
+  margin: 0;  
 }
 .nb-dis-flx{
   display: flex;
@@ -322,10 +339,28 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
-  padding: 0.9em 1.2rem!important;
+  padding: 0.5rem 1.2rem!important;
   width: 100% !important;
-  height: 50px!important;
+  // height: 50px!important;
   overflow: hidden;
+}
+.btn-listing-action{
+  padding: 6px 0.5625rem!important;
+}
+.nb-pd{
+  padding: 1.5rem;
+}
+.datatable-header-cell-template-wrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #fff;
+}
+.nb-theme-default nb-sidebar.compacted nb-menu .menu-item a.active::before{
+  background: #5e5b5e!important;
+}
+.ngx-datatable .datatable-body .datatable-row-wrapper{
+  height: 39px;
 }
 .datatable-body-row{
   height: 50px!important;
@@ -335,6 +370,18 @@ input[type=number]::-webkit-outer-spin-button {
 } 
 .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
   background-color: transparent!important;
+}
+.nb-theme-default nb-icon.status-danger{
+    color: #aa3634!important;
+}
+.nb-theme-default nb-icon.status-primary{
+  color: #5e5b5e!important;
+}
+.mr-0{
+  margin: 0;
+}
+.nb-theme-default nb-action nb-icon{
+  color: #aa3634;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -350,7 +397,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 18px!important;
   }
   .btn-list{
-    color: #000;
+    color: #5e5b5e;
     background: #fff;
     border-radius: 0;
     border-color: #fff;
@@ -360,7 +407,7 @@ input[type=number]::-webkit-outer-spin-button {
   .mobile-btn{
     align-items: center;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
   .nb-radio{
     justify-content: space-between;
@@ -407,4 +454,9 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: unset!important;
   }
 
+}
+@media (min-width: 768px) and (max-width: 992px){
+  .nb-text{
+    margin-left: 21px!important;
+  }
 }

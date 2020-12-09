@@ -109,9 +109,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height"
-                            [rows]="programValues.programRecords" [headerHeight]="50" [footerHeight]="50"
-                            [rowHeight]="'auto'" [columnMode]="'force'">
-
+                            [rows]="programValues.programRecords" [headerHeight]="31" [footerHeight]="31">
+                            <ngx-datatable-column name="Action" sortable="false">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)"></nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Party Shade No" [sortable]="false" [width]="300"
                                 prop="partyShadeNo">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
@@ -209,13 +214,7 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Action" sortable="false">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                    let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItem(rowIndex)"></nb-icon>
-                                </ng-template>
-                            </ngx-datatable-column>
+                            
                         </ngx-datatable>
                     </div>
                 </div>
@@ -225,13 +224,15 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center">
                         <div class="padding-bt-tp">
-                            <button *ngIf="this.currentProgramId == null" type="button" class="btn btn-primary btn-sm btn-design"
+                            <button *ngIf="this.currentProgramId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design"
                                 (click)="addProgram(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
                             <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design"
                                 routerLink="/pages/program">CANCEL</button>
                         </div>
+
                     </div>
                 </div>
             </form>
