@@ -7,7 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import * as errorData from "app/@theme/json/error.json";
 import { ProgramService } from "app/@theme/services/program.service";
 import { CommonService } from "app/@theme/services/common.service";
-
+import {StockBatchService} from "app/@theme/services/stock-batch.service";
 @Component({
   selector: "ngx-add-edit-program",
   templateUrl: "./add-edit-program.component.html",
@@ -24,6 +24,7 @@ export class AddEditProgramComponent implements OnInit {
   //form Validation
   formSubmitted: boolean = false;
   //for fatching dropdown list data
+  pName:any;
   party: any[];
   qualityList: any[];
   partyShade: any[];
@@ -40,6 +41,8 @@ export class AddEditProgramComponent implements OnInit {
   currentProgramId: any;
   user: any;
   userHead;
+  allBatchData: any[];
+
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -47,7 +50,8 @@ export class AddEditProgramComponent implements OnInit {
     private programService: ProgramService,
     private route: Router,
     private commonService: CommonService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private stockBatchService: StockBatchService
   ) {
     this.programRecordArray.push(this.programRecord);
     this.programValues.programRecords = this.programRecordArray;
@@ -60,6 +64,7 @@ export class AddEditProgramComponent implements OnInit {
     this.getPartyList();
     this.getQualityList();
     this.getPartyShadeList();
+    this.getAllBatchData()
   }
 
   getCurrentId() {
@@ -88,6 +93,7 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
+          console.log(this.qualityList);
         } else {
           this.toastr.error(data["msg"]);
         }
@@ -112,6 +118,21 @@ export class AddEditProgramComponent implements OnInit {
       }
     );
   }
+
+  public getAllBatchData(){
+    console.log("udjsb")
+    this.stockBatchService.getAllBatch().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.allBatchData = data["data"];
+          console.log(this.allBatchData);
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+      }
+    );
+    }
 
   public getUpdateData() {
 
@@ -228,6 +249,7 @@ export class AddEditProgramComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
+            console.log(this.batchData);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -257,10 +279,14 @@ export class AddEditProgramComponent implements OnInit {
   public getQualityInfo(e, value) {
     if (e != undefined) {
       let id = value;
+      console.log(this.qualityList)
       this.qualityList.forEach((e) => {
         if (e.qualityId == id) {
           this.programValues.qualityName = e.qualityName
           this.programValues.qualityType = e.qualityType;
+          //this.pName=e.partyName;
+          this.programValues.partyId = e.partyId;
+         // this.programValues.partyId = 
           if (e.id != undefined)
             this.programValues.qualityEntryId = e.id;
           else
@@ -320,12 +346,12 @@ export class AddEditProgramComponent implements OnInit {
 
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
-      let id = this.programValues.programRecords[rowIndex].branchId;
+      let id = this.programValues.programRecords[rowIndex].batchId;
       this.batchData.forEach((element) => {
         if (id == element.batchId) {
           this.programValues.programRecords[rowIndex].quantity = element.totalWt;
         }
-      });
+      }); 
     } else {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
@@ -371,7 +397,7 @@ export class AddEditProgramComponent implements OnInit {
             return;
           }
         } else if (colName == "batch") {
-          if (!item.branchId) {
+          if (!item.batchId) {
             this.toastr.error("Enter No. of Batch", "Batch Field required");
             return;
           }
@@ -386,7 +412,7 @@ export class AddEditProgramComponent implements OnInit {
           partyId: null,
           priority: null,
           programGivenBy: null,
-          branchId: null,
+          batchId: null,
           colourTone: null,
           stockId: null,
           partyShadeNo: null,
@@ -427,7 +453,7 @@ export class AddEditProgramComponent implements OnInit {
       item[0].shadeNo = null;
       item[0].colourTone = null;
       item[0].quantity = null;
-      item[0].branchId = null;
+      item[0].batchId = null;
       item[0].stockId = null;
       item[0].remark = null;
       let list = item;
@@ -447,7 +473,7 @@ export class AddEditProgramComponent implements OnInit {
       delete this.programValues.qualityId;
       delete this.programValues.qualityName;
       delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].branchId;
+      delete this.programValues.programRecords[0].batchId;
       delete this.programValues.programRecords[0].stockId;
       this.programService.saveProgram(this.programValues).subscribe(
         (data) => {
@@ -474,7 +500,7 @@ export class AddEditProgramComponent implements OnInit {
       delete this.programValues.qualityId;
       delete this.programValues.qualityName;
       delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].branchId;
+      delete this.programValues.programRecords[0].batchId;
       delete this.programValues.programRecords[0].stockId;
       this.programService.updateProgram(this.programValues).subscribe(
         (data) => {

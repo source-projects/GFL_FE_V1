@@ -164,11 +164,11 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Batch" prop="branchId" [sortable]="false" [width]="300">
+                            <ngx-datatable-column name="Batch" prop="batchId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
                                         (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
-                                        [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.branchId" #tableBatch1="ngModel"
+                                        [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
                                         name='tableBatch{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
                                         <option *ngFor="let b of batchData" [value]="b.batchId">

@@ -14,7 +14,7 @@ export class Program {
     programRecords: ProgramRecords[];
 }
 export class ProgramRecords {
-    branchId: number;
+    batchId: number;
     colourTone: string;
     id: number;
     stockId: number;
