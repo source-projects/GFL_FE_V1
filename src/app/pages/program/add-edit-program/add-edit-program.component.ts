@@ -40,6 +40,7 @@ export class AddEditProgramComponent implements OnInit {
   index: any;
   currentProgramId: any;
   user: any;
+  list=[];
   userHead;
   allBatchData: any[];
   partyQuality:any[];
@@ -333,14 +334,14 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public selectQualityId() {
-    if (
-      this.programValues.qualityId == null &&
-      (this.batchData == null || this.stockData == null)
-    ) {
-      if (this.qualityList[0].quantityId == null) {
-        this.toastr.warning(errorData.Add_quality_indicator);
-      }
-    }
+    // if (
+    //   this.programValues.qualityId == null &&
+    //   (this.batchData == null || this.stockData == null)
+    // ) {
+    //   if (this.qualityList[0].quantityId == null) {
+    //     this.toastr.warning(errorData.Add_quality_indicator);
+    //   }
+    // }
   }
 
   public setQuantity(rowIndex, col, value) {
@@ -351,11 +352,21 @@ export class AddEditProgramComponent implements OnInit {
       this.allBatchData.forEach((element) => {
         if (id == element.batchId) {
           let q_id=element.qualityId;
-          //this.programValues.programRecords[rowIndex].quantity = element.totalWt;
-          let list=this.qualityList.find(x=>x.id===q_id);
-          console.log(list);
+          this.programValues.programRecords[rowIndex].quantity = element.totalWt;
+          this.qualityList.filter((x) =>
+          { 
+            if(x.qualityId===q_id){
+              this.list.push(x);
+          }
+          });
+          console.log(this.list);
         }
       }); 
+  // if(this.programValues.qualityId == null || this.programValues.partyId == null){
+  //     this.qualityList=this.list;
+  //   }
+  //   console.log(this.list);
+
     } else {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
@@ -364,6 +375,10 @@ export class AddEditProgramComponent implements OnInit {
         }
       });
     }
+    // if(this.programValues.qualityId == null || this.programValues.partyId == null){
+    //   this.qualityList=this.list;
+    // }
+    // console.log(this.list);
   }
 
   //On enter pressed -> check empty field, add new row
