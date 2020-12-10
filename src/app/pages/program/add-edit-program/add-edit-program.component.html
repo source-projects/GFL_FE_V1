@@ -176,8 +176,8 @@
                                         [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
                                         name='tableBatch{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
-                                        <option *ngFor="let b of batchData" [value]="b.batchId">
-                                            {{b.batchId}}
+                                        <option *ngFor="let b of allBatchData" [value]="b.batchId">
+                                            {{b.batchId}} - {{b.qualityName}}
                                         <option>
                                     </select>
 

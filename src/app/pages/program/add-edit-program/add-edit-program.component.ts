@@ -42,7 +42,7 @@ export class AddEditProgramComponent implements OnInit {
   user: any;
   userHead;
   allBatchData: any[];
-
+  partyQuality:any[];
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -120,7 +120,6 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public getAllBatchData(){
-    console.log("udjsb")
     this.stockBatchService.getAllBatch().subscribe(
       (data) => {
         if (data["success"]) {
@@ -347,9 +346,14 @@ export class AddEditProgramComponent implements OnInit {
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
       let id = this.programValues.programRecords[rowIndex].batchId;
-      this.batchData.forEach((element) => {
+      console.log(id);
+     console.log(this.allBatchData)
+      this.allBatchData.forEach((element) => {
         if (id == element.batchId) {
-          this.programValues.programRecords[rowIndex].quantity = element.totalWt;
+          let q_id=element.qualityId;
+          //this.programValues.programRecords[rowIndex].quantity = element.totalWt;
+          let list=this.qualityList.find(x=>x.id===q_id);
+          console.log(list);
         }
       }); 
     } else {
