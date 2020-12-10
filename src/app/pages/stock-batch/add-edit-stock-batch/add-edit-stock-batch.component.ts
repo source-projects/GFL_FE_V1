@@ -29,8 +29,9 @@ export class AddEditStockBatchComponent implements OnInit {
   index;
   stockList;
   wtPer100M;
-  j = 0;
-  k = 0;
+  deleteFlag=0;
+  validationCardRowIndex=0;
+  ValidationTableRowIndex=0;
   batch = {
     batchId: 0,
     mtr: 0,
@@ -64,6 +65,9 @@ export class AddEditStockBatchComponent implements OnInit {
   isQualitySelected: Boolean = false;
   flag = 1;
   addFlag = false;
+  batchIdArray=[];
+  rearrangeStartIndex: any;
+
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -258,7 +262,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.k = this.k + 1;
+      this.ValidationTableRowIndex++;
       this.index = "grData" + (rowIndex + 1) + "-" + colIndex + "" + idx;
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
         let item = this.stockDataValues[idx].batchMW[rowIndex];
@@ -307,8 +311,6 @@ export class AddEditStockBatchComponent implements OnInit {
     let idCount = this.stockDataValues.length;
     let item = this.stockDataValues;
     if (idCount == 1) {
-      let removed = item.splice(index, 1);
-      item = null;
       let obj = {
         batchId: null,
         batchMW: [
@@ -320,10 +322,11 @@ export class AddEditStockBatchComponent implements OnInit {
       };
       this.stockDataValues = [obj];
     } else {
-      let removed = item.splice(index, 1);
-      let list = item;
-      this.stockDataValues = [...list];
-      this.j--;
+     
+      
+      item.splice(index, 1);
+      this.stockDataValues = [...item];
+      this.validationCardRowIndex--;
     }
   }
 
@@ -337,6 +340,9 @@ export class AddEditStockBatchComponent implements OnInit {
       let list = item;
       this.stockDataValues[row].batchMW = [...list];
     } else {
+
+      
+
       let removed = item.splice(id, 1);
       let list = item;
       this.stockDataValues[row].batchMW = [...list];
@@ -415,7 +421,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   addNew(e, myForm) {
     //event.preventDefault();
-
+ 
     let item = this.stockDataValues;
     var ob = {
       batchId: null,
@@ -428,25 +434,48 @@ export class AddEditStockBatchComponent implements OnInit {
 
       ],
     };
-    if (this.flag == 1 || this.stockDataValues[this.j].batchId == null || this.stockDataValues[this.j].batchMW[this.k].mtr == null) {
+    if(this.flag==1 || this.stockDataValues[this.validationCardRowIndex].batchId==null||this.stockDataValues[this.validationCardRowIndex].batchMW[this.ValidationTableRowIndex++].mtr==null  )
+    {
       this.toastr.error("Please fill all the required fields");
     }
     else {
       //item.unshift({...ob});
+
+      let autoId=this.stockDataValues[this.validationCardRowIndex].batchId;
+      ob.batchId=++autoId;
+
       item.push({ ...ob });
-      this.stockDataValues = item;
+      this.stockDataValues = [...item];
       const className = "collapsible-panel--expanded";
       if (e.target.classList.contains(className)) {
         e.target.classList.remove(className);
       } else {
         e.target.classList.add(className);
       }
-      this.j = this.j + 1;
-      this.k = 0;
+      this.validationCardRowIndex++;
+      this.ValidationTableRowIndex=0;
+
+
+      
     }
 
 
   }
+
+
+rearrangeBatchNo(){
+  
+  for(let x=0;x<this.validationCardRowIndex+1;x++){
+    this.batchIdArray[x]=this.stockDataValues[x].batchId;
+  }
+  this.rearrangeStartIndex=Math.min.apply(null,this.batchIdArray);
+  this.stockDataValues[0].batchId=this.rearrangeStartIndex;
+  for(let x=1;x<this.validationCardRowIndex+1;x++){
+    this.stockDataValues[x].batchId=++this.rearrangeStartIndex;
+  }
+
+  //console.log(this.batchIdArray);
+}
 
   calculateWt(meter, i, j, col) {
     let w;
