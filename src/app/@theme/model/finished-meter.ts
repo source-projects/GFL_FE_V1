@@ -11,10 +11,11 @@ export class FinishedMeter {
 }
 
 export class BatchData{
+    seqNo: number;
     id:number;
     mtr:number;
     wt:number;
-    batchId:number;
+    batchId:string;
     controlId:number;
     isProductionPlanned:Boolean = false;
     isExtra:Boolean = false;

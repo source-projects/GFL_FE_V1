@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbWindowService } from '@nebular/theme';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { FormControl, FormGroup, Validators, FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +43,7 @@ export class ShuffleComponent implements OnInit {
   updateFlag = 0;
   //to store batch info based on party and quality
   qualityParty: any[];
-  qualityParty2 = [];
+  qualityParty2= [];
   qualityPartyLeft = [];
   bId1 = [];
   bId2 = [];
@@ -155,8 +155,25 @@ export class ShuffleComponent implements OnInit {
     this.pId = this.shuffleForm.controls['partyName'].value;
     this.qId = this.shuffleForm.controls['qualityName'].value;
 
+    
+    if(this.shuffleForm.controls['partyName'].value==null || this.shuffleForm.controls['qualityName'].value==null){
+
     this.shuffleForm.controls['batchName1'].reset();
     this.shuffleForm.controls['batchName2'].reset();
+    
+      this.batches=[];
+      this.part1=[];
+      this.part2=[];
+      this.qualityParty=[];
+      this.qualityParty2=[];
+      this.qualityParty2[0]=[];
+      
+    }
+    
+    if(this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid )
+    {
+      this.getVal();
+    }
 
 
   }
@@ -171,6 +188,8 @@ export class ShuffleComponent implements OnInit {
         this.rval = 1;
         this.flag = 1;
         this.btnFlag = 0;
+        this.part2=[];
+        this.qualityParty2=[];
         break;
 
       case 2:
@@ -198,9 +217,11 @@ export class ShuffleComponent implements OnInit {
           //to avoid merging of same batches 
           if (this.shuffleForm.controls['batchName1'].valid) {
             this.index = this.qualityParty.findIndex(x => x.batchId === this.bId1['batchId']);
+            this.qualityParty2=[];
             this.qualityParty2.push(this.qualityParty);
             this.qualityParty2[0].splice(this.index, 1);
-            console.log(this.qualityParty2);
+           
+            //console.log(this.qualityParty2);
           }
 
 
@@ -218,7 +239,21 @@ export class ShuffleComponent implements OnInit {
 
   //get list of batches based on partId and batchId
   getVal() {
+
+    if(this.shuffleForm.controls['qualityName'].value==null)
+    {
+      this.toastr.error("Please select a Quality");
+    }
+
+    else if(this.shuffleForm.controls['partyName'].value==null)
+    {
+      this.toastr.error("Please select a Party");
+    }
+    else{
+    
     this.getQualityParty();
+   
+    }
   }
   findmtrsum() {
 
@@ -268,9 +303,18 @@ export class ShuffleComponent implements OnInit {
   temp() {
     this.bId1 = this.shuffleForm.controls['batchName1'].value;
 
+
+    if(this.shuffleForm.controls['batchName1'].value==null)
+    {
+      this.batches=[];
+    }
+
     this.cId1 = this.bId1["controlId"];
     this.batchId1 = this.bId1["batchId"];
+
+   
     this.getBatches(this.cId1, this.batchId1);
+   
 
     // if(this.bId1){
     //  this.findmtrsum();
@@ -280,16 +324,84 @@ export class ShuffleComponent implements OnInit {
   }
   temp1() {
     this.bId2 = this.shuffleForm.controls['batchName2'].value;
+
+    if(this.shuffleForm.controls['batchName2'].value==null)
+    {
+      this.part2=[];
+      this.qualityParty2=[];
+    }
+
     this.cId2 = this.bId2["controlId"];
     this.batchId2 = this.bId2["batchId"];
-    this.getBatches(this.cId2, this.batchId2);
-
+    this.getBatches1(this.cId2, this.batchId2);
+    //this.setBatchFlag = 1;
 
 
   }
 
 
   getBatches(currentCId, currentbId) {
+
+    if (this.shuffleForm.controls['batchName1'].valid && this.rval == 1) {
+
+      this.batchList.getBatchById(currentCId, currentbId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.batches = data["data"];
+          }
+          else {
+            this.toastr.error(data['msg'])
+          }
+          this.setBatchFlag = 1;
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      );
+    }
+
+    else if (this.rval == 2) {
+
+      // if (this.shuffleForm.controls['batchName2'].valid) {
+      //   this.batchList.getBatchById(currentCId, currentbId).subscribe(
+      //     (data) => {
+      //       if (data["success"]) {
+      //         this.part2 = data["data"];
+      //       }
+      //       else {
+      //         this.toastr.error(data['msg'])
+      //       }
+            
+      //     },
+      //     (error) => {
+      //       this.toastr.error(errorData.Serever_Error)
+      //     }
+      //   );
+      // }
+      // if (this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag == 0) {
+        if (this.shuffleForm.controls['batchName1'].valid ) {
+
+        this.setBatchFlag = 1;
+        this.batchList.getBatchById(currentCId, currentbId).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.batches = data["data"];
+            }
+            else {
+              this.toastr.error(data['msg'])
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error)
+          }
+        );
+      }
+
+    }
+  }
+
+
+  getBatches1(currentCId, currentbId) {
 
     if (this.shuffleForm.controls['batchName1'].valid && this.rval == 1) {
 
@@ -320,28 +432,29 @@ export class ShuffleComponent implements OnInit {
             else {
               this.toastr.error(data['msg'])
             }
+            
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error)
           }
         );
       }
-      if (this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag == 0) {
-        this.setBatchFlag = 1;
-        this.batchList.getBatchById(currentCId, currentbId).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.batches = data["data"];
-            }
-            else {
-              this.toastr.error(data['msg'])
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error)
-          }
-        );
-      }
+      // if (this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag == 0) {
+      //   this.setBatchFlag = 1;
+      //   this.batchList.getBatchById(currentCId, currentbId).subscribe(
+      //     (data) => {
+      //       if (data["success"]) {
+      //         this.batches = data["data"];
+      //       }
+      //       else {
+      //         this.toastr.error(data['msg'])
+      //       }
+      //     },
+      //     (error) => {
+      //       this.toastr.error(errorData.Serever_Error)
+      //     }
+      //   );
+      // }
 
     }
   }

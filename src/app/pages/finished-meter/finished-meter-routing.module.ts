@@ -7,18 +7,10 @@ import { FinishedMeterComponent } from './finished-meter.component';
 const routes: Routes = [
   {
     path:'',
-    component:FinishedMeterComponent,
+    component:AddEditFinishedMeterComponent,
     // canActivate:[FinishedMeterGuard],
     // canLoad:[FinishedMeterGuard],
     
-  },
-  {
-    path:'add',
-    component:AddEditFinishedMeterComponent
-  },
-  {
-    path:'edit/:id',
-    component:AddEditFinishedMeterComponent
   }
 ];
 

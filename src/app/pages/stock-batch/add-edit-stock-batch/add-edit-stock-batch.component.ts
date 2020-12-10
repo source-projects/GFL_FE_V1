@@ -22,7 +22,7 @@ export class AddEditStockBatchComponent implements OnInit {
   qualityList: any;
 
   formSubmitted = false;
-  
+
   party: any[];
   user: any;
   userHead;
@@ -57,14 +57,13 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     },
   ];
-
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   stockBatchData: BatchData = new BatchData();
   blockNumber;
   currentStockBatch;
-  isQualitySelected:Boolean = false;
-  flag=1;
+  isQualitySelected: Boolean = false;
+  flag = 1;
   addFlag = false;
   batchIdArray=[];
   rearrangeStartIndex: any;
@@ -77,7 +76,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.addFlag = window.location.href.endsWith('add')
@@ -91,55 +90,51 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   getUnit() {
-    if(this.stockBatch.qualityId==null)
-    {
-      
-      this.flag=1;
+    if (this.stockBatch.qualityId == null) {
+
+      this.flag = 1;
       this.toastr.error("Please select quality first");
     }
-    else{
-      this.flag=0;
-    
+    else {
+      this.flag = 0;
 
 
-    this.qualityList.forEach((element) => {
-      if (element.id == this.stockBatch.qualityId)
-        this.stockBatch.unit = element.unit;
+
+      this.qualityList.forEach((element) => {
+        if (element.id ? element.id : element.qualityEntryId == this.stockBatch.qualityId)
+          this.stockBatch.unit = element.unit;
         this.wtPer100M = element.wtPer100m;
-    });
-  }
+      });
+    }
   }
 
-  // setQualityByParty(event) {
-  //   if (event != undefined) {
-  //     if (this.stockBatch.partyId) {
-  //       this.shadeService.getQualityFromParty(this.stockBatch.partyId).subscribe(
-  //         data => {
-  //           this.qualityList = data['data'].qualityDataList;
-  //           //this.stockBatch.partyId = data['data'].partyId
-  //           console.log(this.qualityList);
-  //           this.qualityList.forEach((element) => {
-  //             console.log(this.qualityList)
-  //             if (element.id == this.stockBatch.qualityId)
-  //               this.stockBatch.unit = element.unit;
-  //             console.log(element.unit);
-  //           });
+  setQualityByParty(event) {
+    if (event != undefined) {
+      if (this.stockBatch.partyId) {
+        this.qualityList = null;
+        this.qualityService.getQualityByParty(this.stockBatch.partyId).subscribe(
+          data => {
 
-  //         },
-  //         error => {
-  //           this.toastr.error(errorData.Serever_Error);
-  //         }
-  //       )
-  //     }
-  //   }
-  //   else {
-  //     this.stockBatch.partyId = null;
-  //     this.stockBatch.qualityId = null;
-  //     this.stockBatch.unit = null;
-  //     this.getPartyList();
-  //     this.getQualityList();
-  //   }
-  // }
+            this.qualityList = data['data'].qualityDataList;
+            //this.stockBatch.partyId = data['data'].partyId
+            console.log(this.qualityList);
+
+
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        )
+      }
+    }
+    else {
+      this.stockBatch.partyId = null;
+      this.stockBatch.qualityId = null;
+      this.stockBatch.unit = null;
+      this.getPartyList();
+      this.getQualityList();
+    }
+  }
 
   getUpdateData() {
     this.stockBatchService.getStockBatchById(this.currentStockBatch).subscribe(
@@ -148,13 +143,12 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.billDate = new Date(data["data"].billDate);
           this.stockBatch.qualityId = data["data"].qualityId;
           this.qualityList.forEach(element => {
-            if(element.id==this.stockBatch.qualityId)
-            {
+            if (element.id == this.stockBatch.qualityId) {
               this.wtPer100M = element.wtPer100m;
-              
+
             }
-          
-            
+
+
           });
 
           this.stockBatch.unit = data["data"].unit;
@@ -163,7 +157,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatch.chlDate = new Date(data["data"].chlDate);
           this.stockBatch.chlNo = data["data"].chlNo;
           this.stockBatch.partyId = data["data"].partyId;
-         
+
           this.stockBatch.createdBy = data["data"].createdBy;
           this.stockBatch.createdDate = data["data"].createdDate;
           this.stockBatch.userHeadId = data["data"].userHeadId;
@@ -210,9 +204,13 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     });
 
-    this.flag=0;
+    this.flag = 0;
 
   }
+
+
+
+
 
   getQualityList() {
     this.qualityService.getQualityNameData().subscribe(
@@ -247,24 +245,21 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     );
   }
-  batchInsertCheck(){
-    if(this.stockBatch.qualityId==null)
-    {
-      
-      this.flag=1;
+  batchInsertCheck() {
+    if (this.stockBatch.qualityId == null) {
+
+      this.flag = 1;
       this.toastr.error("Please select quality first");
     }
-    else{
-      this.flag=0;
+    else {
+      this.flag = 0;
     }
   }
 
-  // displayCondition(){
-
-  // }
+  
 
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
-    
+
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.ValidationTableRowIndex++;
@@ -356,7 +351,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   addStockBatch(myForm) {
     this.formSubmitted = true;
-    if (myForm.valid ) {
+    if (myForm.valid) {
       this.stockBatch.createdBy = this.user.userId;
       this.stockBatch.userHeadId = this.userHead.userHeadId;
       let k = 0;
@@ -443,7 +438,7 @@ export class AddEditStockBatchComponent implements OnInit {
     {
       this.toastr.error("Please fill all the required fields");
     }
-    else{
+    else {
       //item.unshift({...ob});
 
       let autoId=this.stockDataValues[this.validationCardRowIndex].batchId;
@@ -463,8 +458,8 @@ export class AddEditStockBatchComponent implements OnInit {
 
       
     }
-    
-    
+
+
   }
 
 

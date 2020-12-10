@@ -31,9 +31,9 @@ const routes: Routes = [
   {
     path: 'add-dynamic-process',
     component: DynamicProcessComponent,
-    canActivate: [ProcessGuard],
-    canLoad: [ProcessGuard],
-    data: { PermissionName: ['add-dynamic-process']}
+    // canActivate: [ProcessGuard],
+    // canLoad: [ProcessGuard],
+    // data: { PermissionName: ['add-dynamic-process']}
   }
 ];
 

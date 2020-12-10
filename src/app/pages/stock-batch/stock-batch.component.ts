@@ -7,6 +7,8 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-stock-batch',
@@ -15,38 +17,82 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
+
+  stockList;
+  stock=[];
+  headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
+  flag = false;
   
-  stockList = [];
 
   tablestyle = "bootstrap";
   radioSelect = 1;
   radioArray = [
-    { id: 1, value: "View Own" },
-    { id: 2, value: "View Group" },
-    { id: 3, value: "View All" }
+    { id: 1, value: "View Own", disabled:false },
+    { id: 2, value: "View Group", disabled:false },
+    { id: 3, value: "View All" , disabled:false}
   ];
   userHeadId;
   userId;
   permissions: Number;
-  access:Boolean = false;
+   
+  hidden :boolean=true;
+  delete: Boolean = false;
+  delete_group: Boolean = false;
+  delete_all: Boolean =false;
+
+  hiddenEdit:boolean=true;
+  edit: Boolean = false;
+  edit_group: Boolean = false;
+  edit_all: Boolean =false;
+
+  hiddenView:boolean=true;
+  view: Boolean = false;
+  view_group: Boolean = false;
+  view_all: Boolean =false;
+
+  hiddenCol:boolean=true;
+
+  ownDelete=true;
+  allDelete=true;
+  groupDelete=true;
+
+  ownEdit=true;
+  allEdit=true;
+  groupEdit=true;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
+    private commonService: CommonService,
+    private exportService: ExportService,
     private jwtToken: JwtTokenService,
-    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
-    this.access = this.stockBatchGuard.accessRights('add');
-    this.access = this.stockBatchGuard.accessRights('edit');
-    this.access = this.stockBatchGuard.accessRights('delete');
+
+    this.edit = this.stockBatchGuard.accessRights('edit'); 
+    this.edit_group = this.stockBatchGuard.accessRights('edit group');
+    this.edit_all = this.stockBatchGuard.accessRights('edit all');
+
+
+    this.delete = this.stockBatchGuard.accessRights('delete'); 
+    this.delete_group = this.stockBatchGuard.accessRights('delete group');
+    this.delete_all = this.stockBatchGuard.accessRights('delete all');
+
+
+    this.view = this.stockBatchGuard.accessRights('view'); 
+    this.view_group = this.stockBatchGuard.accessRights('view group');
+    this.view_all = this.stockBatchGuard.accessRights('view all');
+
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
+    this.getViewAccess();
     this.getStockBatchList(this.userId, "own");
+    this.getDeleteAccess();
+    this.getEditAccess();
   }
 
   onChange(event) {
@@ -54,16 +100,30 @@ export class StockBatchComponent implements OnInit {
     switch (event) {
       case 1:
         this.getStockBatchList(this.userId, "own");
+        this.hidden=this.ownDelete; 
+        this.hiddenEdit=this.ownEdit;
         break;
 
       case 2:
         this.getStockBatchList(this.userHeadId, "group");
+        this.hidden=this.groupDelete;
+        this.hiddenEdit=this.groupEdit;
         break;
 
       case 3:
         this.getStockBatchList(0, "all");
+        this.hidden=this.allDelete;
+        this.hiddenEdit=this.allEdit;
         break;
     }
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.stock;
   }
 
   getStockBatchList(id, getBy) {
@@ -77,6 +137,12 @@ export class StockBatchComponent implements OnInit {
             this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
           });
+          console.log(this.stockList)
+          this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
+            console.log(this.stock);
+           
+          
         } else
           this.toastr.error(data["msg"]);
       },
@@ -108,6 +174,50 @@ export class StockBatchComponent implements OnInit {
         )
       }
     });
+  }
+
+  getViewAccess(){
+    if(!this.view){
+      this.radioArray[0].disabled=true;
+    }
+    else
+    this.radioArray[0].disabled=false;
+     if(!this.view_group){
+      this.radioArray[1].disabled=true;
+    }
+    else
+    this.radioArray[1].disabled=false;
+     if(!this.view_all){
+      this.radioArray[2].disabled=true;
+    }
+    else
+    this.radioArray[2].disabled=false;
+
+  }
+
+  getDeleteAccess(){
+    if(this.delete){
+      this.ownDelete=false;
+    }
+     if(this.delete_group){
+      this.groupDelete=false;
+    }
+     if(this.delete_all){
+      this.allDelete=false;
+    }
+  }
+
+  getEditAccess(){
+    if(this.edit){
+      this.ownEdit=false;
+    }
+     if(this.edit_group){
+      this.groupEdit=false;
+
+    }
+     if(this.edit_all){
+      this.allEdit=false;
+    }
   }
 
 }
