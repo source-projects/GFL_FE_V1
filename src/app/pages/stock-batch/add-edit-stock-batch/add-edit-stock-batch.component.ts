@@ -66,6 +66,8 @@ export class AddEditStockBatchComponent implements OnInit {
   isQualitySelected:Boolean = false;
   flag=1;
   addFlag = false;
+  batchIdArray=[];
+  rearrangeStartIndex: any;
 
   constructor(
     private partyService: PartyService,
@@ -466,7 +468,19 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
 
+rearrangeBatchNo(){
+  
+  for(let x=0;x<this.validationCardRowIndex+1;x++){
+    this.batchIdArray[x]=this.stockDataValues[x].batchId;
+  }
+  this.rearrangeStartIndex=Math.min.apply(null,this.batchIdArray);
+  this.stockDataValues[0].batchId=this.rearrangeStartIndex;
+  for(let x=1;x<this.validationCardRowIndex+1;x++){
+    this.stockDataValues[x].batchId=++this.rearrangeStartIndex;
+  }
 
+  //console.log(this.batchIdArray);
+}
 
   calculateWt(meter, i, j, col) {
     let w;

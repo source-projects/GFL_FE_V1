@@ -209,7 +209,8 @@
                                         style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
 
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
-                                        routerLink="/pages/stock-batch">CANCEL</button>
+                                        routerLink="/pages/stock-batch">CANCEL</button>&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-primary btn-sm btn-design" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                                 </div>
                             </div>
                         </div>
