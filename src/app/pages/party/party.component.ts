@@ -102,16 +102,13 @@ export class PartyComponent implements OnInit {
     
   }
 
-
   getAllParty(id,getBy) {
     this.partyService.getAllPartyList(id,getBy).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
-         // console.log(this.partyList);
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
-           // console.log(this.party);
         }
         else {
           this.toastr.error(data['msg'])
@@ -121,8 +118,6 @@ export class PartyComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error)
       }
     );
-   
-    
   }
 
   getViewAccess(){
@@ -131,12 +126,14 @@ export class PartyComponent implements OnInit {
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.view_group){
+
+    if(!this.view_group){
       this.radioArray[1].disabled=true;
     }
     else
     this.radioArray[1].disabled=false;
-     if(!this.view_all){
+
+    if(!this.view_all){
       this.radioArray[2].disabled=true;
     }
     else

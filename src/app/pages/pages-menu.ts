@@ -5,7 +5,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Dashboard',
     icon: 'shopping-cart-outline',
     link: '/pages/dashboard',
-    home: true,
+    home: false,
   },
   // {
   //   title: 'IoT Dashboard',
@@ -16,16 +16,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Party',
     icon: 'home-outline',
     link: '/pages/party',
+    hidden:false
+    
   },
   {
     title: 'Quality',
     icon: 'home-outline',
     link: '/pages/quality',
+    hidden:false
   },
   {
     title: 'User',
     icon: 'home-outline',
     link: '/pages/user',
+    hidden:false
   },
   // {
   //   title: 'Fabric-In',
@@ -41,41 +45,49 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Color',
     icon: 'home-outline',
     link: '/pages/color',
+    hidden:false
   },
   {
     title: 'Program',
     icon: 'home-outline',
     link: '/pages/program',
+    hidden:false
   },
   {
     title: 'Stock-batch',
     icon: 'home-outline',
     link: '/pages/stock-batch',
+    hidden:false
   },
   {
     title: 'Batch-shuffle',
     icon: 'home-outline',
     link: '/pages/batch-shuffle',
+    hidden:false
   },
   {
     title: 'Shade',
     icon: 'home-outline',
     link: '/pages/shade',
+    hidden:false
   },
   {
     title: 'Supplier',
     icon: 'home-outline',
     link: '/pages/supplier',
+    hidden:false
   },
   {
     title: 'Process',
     icon: 'home-outline',
     link: '/pages/process',
+    hidden:false
   },
   {
     title: 'Finished Meter',
     icon: 'home-outline',
     link: '/pages/finishedMeter',
+    hidden:false
   },
   {
     title: 'FEATURES',
