@@ -12,6 +12,7 @@ import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
+
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import { ShuffleComponent } from './batch-shuffle/shuffle/shuffle.component';
 

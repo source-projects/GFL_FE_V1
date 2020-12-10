@@ -103,6 +103,7 @@ export class PartyGuard implements CanActivate {
     if (permis[0] == '1')
       return true;
     else
+    
     this.toastr.error(errorData.NoPermission);
       return false;
   }
@@ -110,13 +111,12 @@ export class PartyGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('party');
     this.permis = this.commonService.decToBin(permission);
-    
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')
           return true;
         else
+
           return false;
 
       case 'add':
