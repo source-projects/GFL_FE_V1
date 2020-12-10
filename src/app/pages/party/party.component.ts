@@ -46,19 +46,13 @@ export class PartyComponent implements OnInit {
   view_group: Boolean = false;
   view_all: Boolean =false;
 
-  hiddenCol:boolean=true;
-
-  own=true;
-  all=true;
-  group=true;
+  ownDelete=true;
+  allDelete=true;
+  groupDelete=true;
 
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
-  
-  ownCol=true;
-  allCol=true;
-  groupCol=true;
 
   constructor(
     private partyService: PartyService,
@@ -73,7 +67,7 @@ export class PartyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.access = this.partyGuard.accessRights('edit');
+
     this.delete = this.partyGuard.accessRights('delete'); 
     this.delete_group = this.partyGuard.accessRights('delete group');
     this.delete_all = this.partyGuard.accessRights('delete all');
@@ -90,11 +84,11 @@ export class PartyComponent implements OnInit {
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
+
     this.getViewAccess();
     this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess();
-    // this.getColAccess();
     
   }
 
@@ -136,13 +130,13 @@ export class PartyComponent implements OnInit {
 
   getDeleteAccess(){
     if(this.delete){
-      this.own=false;
+      this.ownDelete=false;
     }
      if(this.delete_group){
-      this.group=false;
+      this.groupDelete=false;
     }
      if(this.delete_all){
-      this.all=false;
+      this.allDelete=false;
     }
   }
 
@@ -164,24 +158,20 @@ export class PartyComponent implements OnInit {
     switch(event){
       case 1: 
               this.getAllParty(this.userId,"own");
-                this.hidden=this.own; 
+                this.hidden=this.ownDelete; 
                 this.hiddenEdit=this.ownEdit;
-                this.hiddenCol=this.ownCol;
-                
               break;
 
       case 2: 
               this.getAllParty(this.userHeadId,"group");
-                this.hidden=this.group;
+                this.hidden=this.groupDelete;
                 this.hiddenEdit=this.groupEdit;
-                this.hiddenCol=this.groupCol;
               break;
 
       case 3:
               this.getAllParty(0,"all");
-                this.hidden=this.all;
+                this.hidden=this.allDelete;
                 this.hiddenEdit=this.allEdit;
-                this.hiddenCol=this.allCol;
               break;
     }
   }

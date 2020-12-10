@@ -15,14 +15,14 @@
         <nb-card-body>
 
             <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
             </nb-radio-group>
 
             <!--  ngx- DataTable  -->
             <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
-                <ngx-datatable-column name="Action" sortable="false">
+                <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
-                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/quality/edit',row.id]"></nb-icon>
+                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/quality/edit',row.id]"></nb-icon>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
