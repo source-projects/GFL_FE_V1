@@ -30,4 +30,7 @@ export class QualityService {
   getQualityNameData() {
     return this.httpClient.get(this.commonService.envUrl() + 'api/quality/allQuality');
   }
+  getQualityByParty(id): any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/' + id);
+}
 }

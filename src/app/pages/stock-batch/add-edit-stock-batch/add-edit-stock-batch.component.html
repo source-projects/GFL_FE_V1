@@ -22,7 +22,7 @@
                             <div class="col-md-4 mobile-mr-bt">
                                 <label class="required">Party Name</label>
                                 <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
-                                    [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" required>
+                                    [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="setQualityByParty($event)" required>
                                     <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                                 </ng-select>
                                 <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)">
@@ -35,7 +35,7 @@
                                     #qualityId1="ngModel"
                                     [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}"
                                     (change)="getUnit()">
-                                    <ng-option *ngFor="let q of qualityList" [value]="q.id">
+                                    <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                         {{q.qualityId}}-{{q.qualityName}}</ng-option>
                                 </ng-select>
                                 <div class="required-class" *ngIf="formSubmitted && qualityId1.invalid ">
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="batch-body">
+                    <div>
                         <header class="batch-header">
                             <h2 class="batch-heading display-inline">BATCH</h2>
 
@@ -126,19 +126,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mr-0">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-4 col-12">
                                                 <ngx-datatable #table
-                                                    class="material common-table datatable-auto-height box-shadow-none"
-                                                    [rows]="block.batchMW" [headerHeight]="35" [footerHeight]="35"
-                                                    [rowHeight]="'auto'" [columnMode]="'force'">
+                                                    class="material common-table datatable-auto-height box-shadow-none box-mr-bt"
+                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="31">
 
                                                     <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
                                                         [width]="300" class="table-row">
                                                         <ng-template let-row="row" ngx-datatable-cell-template
                                                             let-rowIndex="rowIndex">
-                                                            <input class="tableForm form-control" type="number"
+                                                            <input class="tableForm" type="number"
                                                                 (keyup)="onKeyUp($event,rowIndex,0,'mtr',i)"
                                                                 [id]="'grData'+rowIndex +'-0'+i" [(ngModel)]="row.mtr"
                                                                 #meter1="ngModel" name="mtr{{rowIndex}}{{i}}" required
@@ -157,7 +156,7 @@
                                                         [width]="300">
                                                         <ng-template let-row="row" ngx-datatable-cell-template
                                                             let-rowIndex="rowIndex">
-                                                            <input class="tableForm form-control" type="number"
+                                                            <input class="tableForm" type="number"
                                                                 #weight1="ngModel" name="wt{{rowIndex}}{{i}}"
                                                                 [(ngModel)]="row.wt"
                                                                 (keyup)="onKeyUp($event,rowIndex,1,'wt',i)" required
@@ -178,7 +177,7 @@
                                                             ngx-datatable-cell-template let-rowIndex="rowIndex">
                                                             <nb-icon icon="trash" status="danger"
                                                                 [options]="{ animation: { type: 'zoom' } }"
-                                                                (click)="removeItem(rowIndex,i)" class="delete-icon">
+                                                                (click)="removeItem(rowIndex,i)">
                                                             </nb-icon>
                                                         </ng-template>
                                                     </ngx-datatable-column>
@@ -200,18 +199,18 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 mobile-btn-center">
-                                <div class="padding-btn-box">
+                                
                                     <button *ngIf="currentStockBatch == null" type="button"
                                         class="btn btn-primary btn-sm btn-design"
-                                        (click)="addStockBatch(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
+                                        (click)="addStockBatch(myForm)">ADD</button>
 
                                     <button *ngIf="currentStockBatch != null" type="button"
                                         (click)="updateStockBatch(myForm)" class="btn btn-primary btn-sm btn-design"
-                                        style="margin-right:20px">UPDATE</button>&nbsp;&nbsp;&nbsp;
+                                        style="margin-right:20px">UPDATE</button>
 
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
                                         routerLink="/pages/stock-batch">CANCEL</button>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>

@@ -96,9 +96,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height"
-                            [rows]="color.colorDataList" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                            [columnMode]="'force'">
-
+                            [rows]="color.colorDataList" [headerHeight]="31" [footerHeight]="31">
+                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)"></nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Item Name" prop="color.itemId" [sortable]="false" [width]="250">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm"
@@ -169,13 +174,7 @@
                                         [id]="'colorList'+rowIndex+'-5'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                    let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItem(rowIndex)"></nb-icon>
-                                </ng-template>
-                            </ngx-datatable-column>
+                            
 
                         </ngx-datatable>
                     </div>

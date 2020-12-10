@@ -1,0 +1,36 @@
+<div class="modal-header">
+	<h4 class="modal-title">Export options</h4>
+	<button  class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="form-group col-md-6">
+        <input id="start" type="text" class="form-control" placeholder="Enter starting row to export" (keyup)="change($event)">
+        </div>
+        <div class="form-group col-md-6">
+        <input id="end" type="text" class="form-control" placeholder="Enter last row to export" (keyup)="change1($event)">
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-group col-md-4" >
+        <select class="form-control" (change)='onOptionsSelected($event)'>
+            <option selected>Export as</option>
+            <option value="text">Text</option>
+            <option value="pdf">PDF</option>
+            <option value="excel">Excel</option>
+    
+        </select>
+        </div>
+    </div>     
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"  (click)="onClick()">Ok</button>
+    <button type="button" class="btn btn-outline-dark"  (click)="emailClick()">E-Mail</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
+
+
+

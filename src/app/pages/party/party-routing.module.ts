@@ -27,6 +27,7 @@ const routes: Routes = [
     canLoad: [PartyGuard],
     data: { PermissionName: ['edit']} 
   }
+  
 ];
 
 @NgModule({

@@ -7,6 +7,8 @@ import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-stock-batch',
@@ -15,8 +17,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
+
+  stockList;
+  stock=[];
+  headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
+  flag = false;
   
-  stockList = [];
 
   tablestyle = "bootstrap";
   radioSelect = 1;
@@ -58,8 +64,9 @@ export class StockBatchComponent implements OnInit {
     private toastr: ToastrService,
     public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
+    private commonService: CommonService,
+    private exportService: ExportService,
     private jwtToken: JwtTokenService,
-    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -111,6 +118,14 @@ export class StockBatchComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.stock;
+  }
+
   getStockBatchList(id, getBy) {
     this.stockBatchService.getAllStockBatchList(id, getBy).subscribe(
       data => {
@@ -122,6 +137,12 @@ export class StockBatchComponent implements OnInit {
             this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
           });
+          console.log(this.stockList)
+          this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
+            console.log(this.stock);
+           
+          
         } else
           this.toastr.error(data["msg"]);
       },

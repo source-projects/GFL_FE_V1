@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { UserService } from "app/@theme/services/user.service";
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { UserGuard } from 'app/@theme/guards/user.guard';
 
 @Component({
@@ -20,6 +22,10 @@ export class UserComponent implements OnInit {
 
   tableStyle = 'bootstrap';
   userList=[];
+  user=[];
+  headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
+  flag = false;
+
   userId;
   userHeadId;
   radioSelect = 1;
@@ -62,10 +68,12 @@ export class UserComponent implements OnInit {
     private modalService: NgbModal,
     private toastr:ToastrService,
     private userService:UserService,
+    private commonService: CommonService,
+    private exportService: ExportService,
+
 
     public userGuard: UserGuard,
     private jwtToken: JwtTokenService,
-    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -119,11 +127,23 @@ export class UserComponent implements OnInit {
     }
   }
 
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.user;
+  }
+
   getAllUser(id,getBy){
     this.userService.getAllUser(id,getBy).subscribe(
       data =>{
-        if(data["success"])
+        if(data["success"]){
           this.userList = data['data'];
+          this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+            lastName: element.lastName, company:element.company, designation:element.designation }))
+            console.log(this.user);
+          }
         else
           this.toastr.error(data["msg"])
       },
