@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NbMenuService, NbSidebarService } from '@nebular/theme';
+import { LayoutService } from 'app/@core/utils';
 
 @Component({
   selector: 'ngx-one-column-layout',
@@ -23,4 +25,13 @@ import { Component } from '@angular/core';
     </nb-layout>
   `,
 })
-export class OneColumnLayoutComponent {}
+export class OneColumnLayoutComponent {
+  constructor(menu: NbMenuService, private layoutService: LayoutService, private sidebarService: NbSidebarService) {
+  menu.onItemClick().subscribe(() => {
+    this.sidebarService.toggle(true, 'menu-sidebar');
+    this.layoutService.changeLayoutSize();
+
+    return false; 
+ });
+}}
+

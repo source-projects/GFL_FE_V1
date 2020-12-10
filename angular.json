@@ -117,7 +117,8 @@
               "node_modules/echarts/dist/extension/bmap.min.js",
               "node_modules/chart.js/dist/Chart.min.js",
               "node_modules/jspdf/dist/jspdf.min.js",
-              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js",
+              "node_modules/jquery/dist/jquery.min.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
