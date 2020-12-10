@@ -25,7 +25,8 @@ const routes: Routes = [
     canActivate:[ColorGuard],
     canLoad:[ColorGuard],
     data: { PermissionName: ['edit']}
-  }
+  },
+
 ];
 
 @NgModule({

@@ -1,15 +1,12 @@
 <nb-card class="nb-style">
   <nb-card-header class="nb-header">
-    <div *ngIf="this.currentFinishedMeter == null; else updateP">
-      <h2 class="nb-text">ADD FINISHED METER</h2>
+    <div>
+      <h2 class="nb-text">FINISHED METER</h2>
     </div>
-    <ng-template #updateP>
-      <h2 class="nb-text">UPDATE FINISHED METER</h2>
-    </ng-template>
   </nb-card-header>
   <nb-card-body>
     <div>
-      <form>
+      <form #myForm="ngForm">
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -63,8 +60,8 @@
                     </ng-template>
                 </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Id" prop="id" [sortable]="false"
-                      [width]="300"></ngx-datatable-column>
+                  <ngx-datatable-column name="Gr Meter Sequence" prop="seqNo" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
 
                   <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
                       [width]="300"></ngx-datatable-column>
@@ -81,7 +78,7 @@
                       </ng-template>
                   </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Sequence Id" prop="sequenceId" [sortable]="false" [width]="300">
+                  <ngx-datatable-column name="Finish Meter Sequence" prop="sequenceId" [sortable]="false" [width]="300">
                       <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                           <input class="tableForm" type="number" #tableWeight1="ngModel" name='tableSequence{{rowIndex}}'
                               [(ngModel)]="row.sequenceId" (keyup)="onKeyUp($event,rowIndex,4,'sequence')"
@@ -100,10 +97,8 @@
         <div class="row">
           <div class="col-md-12 mobile-btn-center">
             <div class="padding-bt-tp">
-              <button *ngIf="this.currentFinishedMeter == null" type="button" class="btn btn-primary btn-sm btn-design"
-                style="margin-right:20px" (click)="addFinishedMeter()">ADD</button>
-              <button *ngIf="this.currentFinishedMeter != null" type="button" (click)="updateFinishedMeter()"
-                class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+              <button type="button" class="btn btn-primary btn-sm btn-design"
+                style="margin-right:20px" (click)="addFinishedMeter(myForm)">SAVE</button>
               <button class="btn btn-primary btn-sm btn-design" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
             </div>
           </div>
