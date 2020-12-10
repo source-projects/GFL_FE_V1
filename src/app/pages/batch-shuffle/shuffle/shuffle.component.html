@@ -51,12 +51,13 @@
             </div>
           </div>
 
-          <div class="row" style="padding-top: 5%;">
+          <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
-                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()" placeholder="Batch Name">
+                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()"
+                  placeholder="Batch Name">
                   <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
                   </ng-option>
                 </ng-select>
@@ -67,12 +68,13 @@
             </div>
 
             <div class="col-md-6" [hidden]="flag">
-              <label class="required">Second Batch Name:</label>
-              <ng-select name="batchId" formControlName="batchName2" (change)="temp1()">
-                <ng-option *ngFor="let b of qualityParty2[0]" [value]="b">{{b.batchId}}
-                </ng-option>
-              </ng-select>
-
+              <div class="form-group">
+                <label class="required">Second Batch Name:</label>
+                <ng-select name="batchId" formControlName="batchName2" (change)="temp1()">
+                  <ng-option *ngFor="let b of qualityParty2[0]" [value]="b">{{b.batchId}}
+                  </ng-option>
+                </ng-select>
+              </div>
             </div>
 
 

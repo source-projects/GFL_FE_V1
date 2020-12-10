@@ -388,6 +388,11 @@ input[type=number]::-webkit-outer-spin-button {
 .dek-jus{
   justify-content: flex-end!important;
 }
+// add function popup css
+.input-add-num{
+  padding: 4px 5px;
+}
+
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;

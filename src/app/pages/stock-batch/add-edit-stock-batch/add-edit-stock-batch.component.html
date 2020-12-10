@@ -130,9 +130,11 @@
                                     <div class="form-group mr-0">
                                         <div class="row">
                                             <div class="col-md-12 col-12">
-                                                <ngx-datatable #table
-                                                    class="material common-table datatable-auto-height box-shadow-none box-mr-bt"
-                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="31" [scrollbarV]="true">
+                                                <div>
+                                                    <ngx-datatable #table
+                                                        class="material common-table datatable-auto-height box-shadow-none box-mr-bt"
+                                                        [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="31"
+                                                        [scrollbarV]="true">
 
                                                         <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
                                                             [width]="300" class="table-row">
