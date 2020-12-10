@@ -252,9 +252,7 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  // displayCondition(){
-
-  // }
+  
 
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
 
