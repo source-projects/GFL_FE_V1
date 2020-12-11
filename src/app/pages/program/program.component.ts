@@ -38,21 +38,8 @@ export class ProgramComponent implements OnInit {
   
 
   hidden :boolean=true;
-  delete: Boolean = false;
-  delete_group: Boolean = false;
-  delete_all: Boolean =false;
-
   hiddenEdit:boolean=true;
-  edit: Boolean = false;
-  edit_group: Boolean = false;
-  edit_all: Boolean =false;
-
   hiddenView:boolean=true;
-  view: Boolean = false;
-  view_group: Boolean = false;
-  view_all: Boolean =false;
-
-  hiddenCol:boolean=true;
 
   ownDelete=true;
   allDelete=true;
@@ -73,24 +60,7 @@ export class ProgramComponent implements OnInit {
     private exportService: ExportService
     ) { }
  
- 
-
   ngOnInit(): void {
-
-    this.edit = this.programGuard.accessRights('edit'); 
-    this.edit_group = this.programGuard.accessRights('edit group');
-    this.edit_all = this.programGuard.accessRights('edit all');
-
-
-    this.delete = this.programGuard.accessRights('delete'); 
-    this.delete_group = this.programGuard.accessRights('delete group');
-    this.delete_all = this.programGuard.accessRights('delete all');
-
-
-    this.view = this.programGuard.accessRights('view'); 
-    this.view_group = this.programGuard.accessRights('view group');
-    this.view_all = this.programGuard.accessRights('view all');
-
 
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
@@ -173,17 +143,17 @@ export class ProgramComponent implements OnInit {
 
 
   getViewAccess(){
-    if(!this.view){
+    if(!this.programGuard.accessRights('view')){
       this.radioArray[0].disabled=true;
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.view_group){
+     if(!this.programGuard.accessRights('view group')){
       this.radioArray[1].disabled=true;
     }
     else
     this.radioArray[1].disabled=false;
-     if(!this.view_all){
+     if(!this.programGuard.accessRights('view all')){
       this.radioArray[2].disabled=true;
     }
     else
@@ -192,26 +162,26 @@ export class ProgramComponent implements OnInit {
   }
 
   getDeleteAccess(){
-    if(this.delete){
+    if(this.programGuard.accessRights('delete')){
       this.ownDelete=false;
     }
-     if(this.delete_group){
+     if(this.programGuard.accessRights('delete group')){
       this.groupDelete=false;
     }
-     if(this.delete_all){
+     if(this.programGuard.accessRights('delete all')){
       this.allDelete=false;
     }
   }
 
   getEditAccess(){
-    if(this.edit){
+    if(this.programGuard.accessRights('edit')){
       this.ownEdit=false;
     }
-     if(this.edit_group){
+     if(this.programGuard.accessRights('edit group')){
       this.groupEdit=false;
 
     }
-     if(this.edit_all){
+     if(this.programGuard.accessRights('edit all')){
       this.allEdit=false;
     }
   }
