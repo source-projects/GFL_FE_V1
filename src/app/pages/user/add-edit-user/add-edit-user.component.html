@@ -179,13 +179,13 @@
     <nb-card-body>
         <div class="container">
             <table>
-                <tr>
+                <tr class="table-checkbox">
                     <th>Forms</th>
                     <th>Select All</th>
                     <th *ngFor="let per of perName;let i=index;">{{per}}</th>
                 </tr>
 
-                <tr *ngFor="let perm of permissionArray;let i=index;">
+                <tr *ngFor="let perm of permissionArray;let i=index;" class="table-checkbox">
                     <td>{{perm.module}}</td>
                     <td>
                         <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
