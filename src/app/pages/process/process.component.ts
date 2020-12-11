@@ -44,6 +44,7 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success']){
           this.toastr.success(data['msg'])
+          this.processList = null;
           this.getProcessList();
         }
           else

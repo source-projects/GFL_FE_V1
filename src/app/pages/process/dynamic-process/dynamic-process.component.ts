@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Router } from '@angular/router';
 import {
   Dosing,
   FunctionObj,
@@ -17,7 +18,7 @@ import { AddStepComponent } from "../add-step/add-step.component";
 import * as errorData from "app/@theme/json/error.json";
 import { AddFunctionComponent } from "../add-function/add-function.component";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { CommonService } from 'app/@theme/services/common.service';
+import { CommonService } from "app/@theme/services/common.service";
 
 @Component({
   selector: "ngx-dynamic-process",
@@ -45,44 +46,45 @@ export class DynamicProcessComponent implements OnInit {
     private commonService: CommonService,
     private processService: ProcessService,
     private _modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
     //this.getQualityList();
     this.processValue.steps = [
       {
-      dosingPercentage: "",
-      drainType: "",
-      fabricRatio: "",
-      fillType: "",
-      functionName: "",
-      functionPosotion: 0,
-      functionValue: "",
-      haveDose: false,
-      holdTime: "",
-      isDosingControl: false,
-      isOperatorMessage: false,
-      isPumpControl: false,
-      isTempControl: false,
-      isWaterControl: false,
-      jetLevel: false,
-      doseWhileHeating: "",
-      operatorCode: "",
-      operatorMessage: "",
-      pressure: "",
-      pumpSpeed: 0,
-      rateOfRise: "",
-      setValue: "",
-      startAtTemp: "",
-      stepName: "",
-      stepPosotion: 0,
-      waterType: "",
-      doesAtTemp: "",
-      doesType: "",
-      dosingChemical: [],
-    }
-  ]
+        dosingPercentage: "",
+        drainType: "",
+        fabricRatio: "",
+        fillType: "",
+        functionName: "",
+        functionPosotion: 0,
+        functionValue: "",
+        haveDose: false,
+        holdTime: "",
+        isDosingControl: false,
+        isOperatorMessage: false,
+        isPumpControl: false,
+        isTempControl: false,
+        isWaterControl: false,
+        jetLevel: false,
+        doseWhileHeating: "",
+        operatorCode: "",
+        operatorMessage: "",
+        pressure: "",
+        pumpSpeed: 0,
+        rateOfRise: "",
+        setValue: "",
+        startAtTemp: "",
+        stepName: "",
+        stepPosotion: 0,
+        waterType: "",
+        doesAtTemp: "",
+        doesType: "",
+        dosingChemical: [],
+      },
+    ];
   }
 
   numberOnly(event): boolean {
@@ -198,40 +200,38 @@ export class DynamicProcessComponent implements OnInit {
     });
   }
 
-  pushAndSetNullInStep(){
-    this.processValue.steps.push(
-      {
-        dosingPercentage: "",
-        drainType: "",
-        fabricRatio: "",
-        fillType: "",
-        functionName: "",
-        functionPosotion: 0,
-        functionValue: "",
-        haveDose: false,
-        holdTime: "",
-        isDosingControl: false,
-        isOperatorMessage: false,
-        isPumpControl: false,
-        isTempControl: false,
-        isWaterControl: false,
-        jetLevel: false,
-        doseWhileHeating: "",
-        operatorCode: "",
-        operatorMessage: "",
-        pressure: "",
-        pumpSpeed: 0,
-        rateOfRise: "",
-        setValue: "",
-        startAtTemp: "",
-        stepName: "",
-        stepPosotion: 0,
-        waterType: "",
-        doesAtTemp: "",
-        doesType: "",
-        dosingChemical: [],
-      }
-    ) 
+  pushAndSetNullInStep() {
+    this.processValue.steps.push({
+      dosingPercentage: "",
+      drainType: "",
+      fabricRatio: "",
+      fillType: "",
+      functionName: "",
+      functionPosotion: 0,
+      functionValue: "",
+      haveDose: false,
+      holdTime: "",
+      isDosingControl: false,
+      isOperatorMessage: false,
+      isPumpControl: false,
+      isTempControl: false,
+      isWaterControl: false,
+      jetLevel: false,
+      doseWhileHeating: "",
+      operatorCode: "",
+      operatorMessage: "",
+      pressure: "",
+      pumpSpeed: 0,
+      rateOfRise: "",
+      setValue: "",
+      startAtTemp: "",
+      stepName: "",
+      stepPosotion: 0,
+      waterType: "",
+      doesAtTemp: "",
+      doesType: "",
+      dosingChemical: [],
+    });
     this.indexOfStep++;
   }
 
@@ -239,54 +239,78 @@ export class DynamicProcessComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
       if (this.stepList.length != 0) {
-        let i = 0
+        let i = 0;
         //this.pushAndSetNullInStep()
         this.stepList.forEach((step) => {
-          //let processData = new StepsRecordData(); 
+          //let processData = new StepsRecordData();
           if (step.functionList.length != 0) {
             let j = 0;
             step.functionList.forEach((func) => {
               this.processValue.steps[this.indexOfStep].stepPosotion = i;
-              this.processValue.steps[this.indexOfStep].stepName = step.stepName;
-              
-              this.processValue.steps[this.indexOfStep].functionName = func.funcName;
+              this.processValue.steps[this.indexOfStep].stepName =
+                step.stepName;
+
+              this.processValue.steps[this.indexOfStep].functionName =
+                func.funcName;
               this.processValue.steps[this.indexOfStep].functionPosotion = j;
-              this.processValue.steps[this.indexOfStep].functionValue = func.funcValue;
+              this.processValue.steps[this.indexOfStep].functionValue =
+                func.funcValue;
 
               if (func.funcValue == "pump") {
                 this.processValue.steps[this.indexOfStep].isPumpControl = true;
-                this.processValue.steps[this.indexOfStep].pumpSpeed = func.pumpControlFunc.pumpSpeed;
+                this.processValue.steps[this.indexOfStep].pumpSpeed =
+                  func.pumpControlFunc.pumpSpeed;
               } else if (func.funcValue == "operator") {
-                this.processValue.steps[this.indexOfStep].isOperatorMessage = true;
+                this.processValue.steps[
+                  this.indexOfStep
+                ].isOperatorMessage = true;
                 this.processValue.steps[this.indexOfStep].operatorCode =
                   func.operatorMessageFunc.operatorCode;
                 this.processValue.steps[this.indexOfStep].operatorMessage =
                   func.operatorMessageFunc.operatorMessage;
-                this.processValue.steps[this.indexOfStep].startAtTemp = func.operatorMessageFunc.startAtTemp;
+                this.processValue.steps[this.indexOfStep].startAtTemp =
+                  func.operatorMessageFunc.startAtTemp;
               } else if (func.funcValue == "temprature") {
                 this.processValue.steps[this.indexOfStep].isTempControl = true;
-                this.processValue.steps[this.indexOfStep].setValue = func.tempratureControlFunc.setValue;
-                this.processValue.steps[this.indexOfStep].rateOfRise = func.tempratureControlFunc.rateOfRise;
-                this.processValue.steps[this.indexOfStep].pressure = func.tempratureControlFunc.pressure;
-                this.processValue.steps[this.indexOfStep].holdTime = func.tempratureControlFunc.holdTime;
+                this.processValue.steps[this.indexOfStep].setValue =
+                  func.tempratureControlFunc.setValue;
+                this.processValue.steps[this.indexOfStep].rateOfRise =
+                  func.tempratureControlFunc.rateOfRise;
+                this.processValue.steps[this.indexOfStep].pressure =
+                  func.tempratureControlFunc.pressure;
+                this.processValue.steps[this.indexOfStep].holdTime =
+                  func.tempratureControlFunc.holdTime;
               } else if (func.funcValue == "water") {
                 this.processValue.steps[this.indexOfStep].isWaterControl = true;
-                this.processValue.steps[this.indexOfStep].drainType = func.waterControlFunc.drainType;
-                this.processValue.steps[this.indexOfStep].fabricRatio = func.waterControlFunc.fabricRatio;
-                this.processValue.steps[this.indexOfStep].jetLevel = func.waterControlFunc.jetLevel;
-                this.processValue.steps[this.indexOfStep].waterType = func.waterControlFunc.waterType;
+                this.processValue.steps[this.indexOfStep].drainType =
+                  func.waterControlFunc.drainType;
+                this.processValue.steps[this.indexOfStep].fabricRatio =
+                  func.waterControlFunc.fabricRatio;
+                this.processValue.steps[this.indexOfStep].jetLevel =
+                  func.waterControlFunc.jetLevel;
+                this.processValue.steps[this.indexOfStep].waterType =
+                  func.waterControlFunc.waterType;
               } else if (func.funcValue == "dosing") {
-                this.processValue.steps[this.indexOfStep].isDosingControl = true;
-                this.processValue.steps[this.indexOfStep].doesAtTemp = func.dosingFunc.doseAtTemp;
-                this.processValue.steps[this.indexOfStep].doesType = func.dosingFunc.doseType;
-                this.processValue.steps[this.indexOfStep].doseWhileHeating = func.dosingFunc.doseWhileHeating;
-                func.dosingFunc.dosingChemical.forEach(e=>{
-                  delete e.supplierName
-                })
-                this.processValue.steps[this.indexOfStep].dosingChemical = func.dosingFunc.dosingChemical;
-                this.processValue.steps[this.indexOfStep].dosingPercentage = func.dosingFunc.dosingPercentage;
-                this.processValue.steps[this.indexOfStep].fillType = func.dosingFunc.fillType;
-                this.processValue.steps[this.indexOfStep].haveDose = func.dosingFunc.haveDose;
+                this.processValue.steps[
+                  this.indexOfStep
+                ].isDosingControl = true;
+                this.processValue.steps[this.indexOfStep].doesAtTemp =
+                  func.dosingFunc.doseAtTemp;
+                this.processValue.steps[this.indexOfStep].doesType =
+                  func.dosingFunc.doseType;
+                this.processValue.steps[this.indexOfStep].doseWhileHeating =
+                  func.dosingFunc.doseWhileHeating;
+                func.dosingFunc.dosingChemical.forEach((e) => {
+                  delete e.supplierName;
+                });
+                this.processValue.steps[this.indexOfStep].dosingChemical =
+                  func.dosingFunc.dosingChemical;
+                this.processValue.steps[this.indexOfStep].dosingPercentage =
+                  func.dosingFunc.dosingPercentage;
+                this.processValue.steps[this.indexOfStep].fillType =
+                  func.dosingFunc.fillType;
+                this.processValue.steps[this.indexOfStep].haveDose =
+                  func.dosingFunc.haveDose;
               }
               j++;
               this.pushAndSetNullInStep();
@@ -294,21 +318,22 @@ export class DynamicProcessComponent implements OnInit {
           }
           i++;
         });
-        this.processValue.steps.splice(this.processValue.steps.length-1, 1)
+        this.processValue.steps.splice(this.processValue.steps.length - 1, 1);
         let userHead = this.commonService.getUserHeadId();
         let user = this.commonService.getUser();
-        this.processValue.userHeadId = userHead.userHeadId
-        this.processValue.createdBy = user.userId
+        this.processValue.userHeadId = userHead.userHeadId;
+        this.processValue.createdBy = user.userId;
         this.processService.saveProcess(this.processValue).subscribe(
-          data=>{
-            if(data['success'])
-              this.toastr.success(data['msg'])
-              else
-              this.toastr.error(data['msg'])
-          },error=>{
-            this.toastr.error(errorData.Internal_Error)
+          (data) => {
+            if (data["success"]) {
+              this.route.navigate(["/pages/process"]);
+              this.toastr.success(data["msg"]);
+            } else this.toastr.error(data["msg"]);
+          },
+          (error) => {
+            this.toastr.error(errorData.Internal_Error);
           }
-        )
+        );
       } else {
         console.log("Null");
       }

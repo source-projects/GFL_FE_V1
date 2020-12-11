@@ -77,13 +77,6 @@ export class AddFunctionComponent implements OnInit {
   ];
   modalSubmitted: boolean = false;
   submitButton = "ADD";
-  // chemicalcolumnDefs = [
-  //   { headerName: "Actions", field: "index", width: 70 },
-  //   { headerName: "Item Name", field: "itemName", width: 90 },
-  //   { headerName: "Concentration", field: "concentration", width: 90 },
-  //   { headerName: "LR/F_WT", field: "lr_or_fabric_wt", width: 90 },
-  //   { headerName: "Supplier Name", field: "supplierName", width: 90 },
-  // ];
   supplierList: any = [];
   constructor(
     public activeModal: NgbActiveModal,
@@ -115,13 +108,6 @@ export class AddFunctionComponent implements OnInit {
           this.funcObj.funcPosition = ele.funcPosition;
           this.funcObj.funcValue = ele.funcValue;
           this.dosing = ele.dosingFunc;
-          // if (this.dosing.dosingChemical.length) {
-          //   this.dosing.dosingChemical.forEach((ele, index) => {
-          //     ele.index = index + 1;
-          //   });
-          //   this.chemicalSubRecordArray = this.dosing.dosingChemical;
-          //   this.rowChemicalData = [...this.chemicalSubRecordArray];
-          // }
           this.waterControl = ele.waterControlFunc;
           this.tempratureControl = ele.tempratureControlFunc;
           this.pumpControl = ele.pumpControlFunc;
@@ -161,13 +147,7 @@ export class AddFunctionComponent implements OnInit {
       this.index = "program" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.dosing.dosingChemical.length - 1) {
         let item = this.dosing.dosingChemical[rowIndex];
-
-        // if (colName == "supplierName") {
-        //   if (!item.supplierName) {
-        //     this.toastr.error("Enter supplier name");
-        //     return;
-        //   }
-        // } 
+        
         if (colName == "concentration") {
           if (!item.concentration) {
             this.toastr.error("Enter concentration");
