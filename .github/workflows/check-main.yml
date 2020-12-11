@@ -16,6 +16,7 @@ jobs:
           node-version: '12.x'
       - name: Install dependencies and create a build
         run: |
+          rm -rf node_modules
           npm install
           npm run build --prod
         
