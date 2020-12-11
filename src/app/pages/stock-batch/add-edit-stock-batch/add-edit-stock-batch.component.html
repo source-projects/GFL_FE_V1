@@ -119,7 +119,7 @@
                                                 <label style="float: left;">Batch No</label>
                                                 <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId'
                                                     [disabled]="flag" class="form-control" name="batchNo{{i}}" min="0"
-                                                    (click)="batchInsertCheck()">
+                                                    (click)="batchInsertCheck()" (focusout)="checkDuplicates()">
                                             </div>
                                             <div class="col-md-8 col-4">
                                                 <nb-icon status="danger" style="float: right;margin-right: 10px;;"
