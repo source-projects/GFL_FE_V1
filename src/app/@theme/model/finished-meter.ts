@@ -11,6 +11,7 @@ export class FinishedMeter {
 }
 
 export class BatchData{
+    seqNo: number;
     id:number;
     mtr:number;
     wt:number;

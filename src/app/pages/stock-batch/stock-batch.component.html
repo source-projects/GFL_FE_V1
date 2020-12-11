@@ -20,17 +20,17 @@
             <nb-card-body>
 
                 <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">
+                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">
                         {{radio.value}}</nb-radio>
                 </nb-radio-group>
 
                 <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="31"
                     class="material  table-responsive" [footerHeight]="40">
-                    <ngx-datatable-column name="Actions" sortable="false">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                            [hidden]="hiddenEdit"   [routerLink]="['edit',row.id]"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden"
                             (click)="!this.access? null:deleteStockBatch(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>

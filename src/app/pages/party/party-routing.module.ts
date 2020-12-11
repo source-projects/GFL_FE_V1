@@ -13,6 +13,7 @@ const routes: Routes = [
     data: { PermissionName: ['view']}
     
   },
+
   {
     path:'add',
     component:AddEditPartyComponent,
