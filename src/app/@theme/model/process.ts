@@ -90,7 +90,6 @@ export class FunctionObj {
     operatorMessageFunc: OperatorMessage;
 }
 export class Dosing {
-
     haveDose: any = false;
     doseAtTemp: any;
     fillType: any = 'Pre Fill Machine Water';
@@ -101,7 +100,7 @@ export class Dosing {
 }
 export class ChemicalReq {
     id: any;
-    DynamicProcessRecordId: any;
+    dynamicProcessRecordId: any;
     itemId: any;
     itemName: any;
     supplierName: any;

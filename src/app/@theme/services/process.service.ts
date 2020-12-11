@@ -13,7 +13,7 @@ export class ProcessService {
     private commonService: CommonService
   ) {}
 
-  getAllProcessList() {
-    //return this.httpClient.get(this.commonService.envUrl() + "api/process/all");
+  getAllItemWithSupplier(){
+    return this.httpClient.get(this.commonService.envUrl() + "api/supplier/getItemWithSupplierName/all");
   }
 }
