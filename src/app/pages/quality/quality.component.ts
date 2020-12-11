@@ -37,20 +37,9 @@ export class QualityComponent implements OnInit {
   tableStyle = 'bootstrap';
 
   hidden :boolean=true;
-  delete: Boolean = false;
-  delete_group: Boolean = false;
-  delete_all: Boolean =false;
-
   hiddenEdit:boolean=true;
-  edit: Boolean = false;
-  edit_group: Boolean = false;
-  edit_all: Boolean =false;
-
   hiddenView:boolean=true;
-  view: Boolean = false;
-  view_group: Boolean = false;
-  view_all: Boolean =false;
-
+ 
   ownDelete=true;
   allDelete=true;
   groupDelete=true;
@@ -72,20 +61,6 @@ export class QualityComponent implements OnInit {
 
   ngOnInit(): void {
   
-    this.edit = this.qualityGuard.accessRights('edit'); 
-    this.edit_group = this.qualityGuard.accessRights('edit group');
-    this.edit_all = this.qualityGuard.accessRights('edit all');
-
-
-    this.delete = this.qualityGuard.accessRights('delete'); 
-    this.delete_group = this.qualityGuard.accessRights('delete group');
-    this.delete_all = this.qualityGuard.accessRights('delete all');
-
-
-    this.view = this.qualityGuard.accessRights('view'); 
-    this.view_group = this.qualityGuard.accessRights('view group');
-    this.view_all = this.qualityGuard.accessRights('view all');
-
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -148,17 +123,17 @@ open(){
   }
 
   getViewAccess(){
-    if(!this.view){
+    if(!this.qualityGuard.accessRights('view')){
       this.radioArray[0].disabled=true;
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.view_group){
+     if(!this.qualityGuard.accessRights('view group')){
       this.radioArray[1].disabled=true;
     }
     else
     this.radioArray[1].disabled=false;
-     if(!this.view_all){
+     if(!this.qualityGuard.accessRights('view all')){
       this.radioArray[2].disabled=true;
     }
     else
@@ -167,26 +142,26 @@ open(){
   }
 
   getDeleteAccess(){
-    if(this.delete){
+    if(this.qualityGuard.accessRights('delete')){
       this.ownDelete=false;
     }
-     if(this.delete_group){
+     if(this.qualityGuard.accessRights('delete group')){
       this.groupDelete=false;
     }
-     if(this.delete_all){
+     if(this.qualityGuard.accessRights('delete all')){
       this.allDelete=false;
     }
   }
 
   getEditAccess(){
-    if(this.edit){
+    if(this.qualityGuard.accessRights('edit')){
       this.ownEdit=false;
     }
-     if(this.edit_group){
+     if(this.qualityGuard.accessRights('edit group')){
       this.groupEdit=false;
 
     }
-     if(this.edit_all){
+     if(this.qualityGuard.accessRights('edit all')){
       this.allEdit=false;
     }
   }

@@ -80,18 +80,6 @@ export class ShadeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.edit = this.shadeGuard.accessRights("edit");
-    this.edit_group = this.shadeGuard.accessRights("edit group");
-    this.edit_all = this.shadeGuard.accessRights("edit all");
-
-    this.delete = this.shadeGuard.accessRights("delete");
-    this.delete_group = this.shadeGuard.accessRights("delete group");
-    this.delete_all = this.shadeGuard.accessRights("delete all");
-
-    this.view = this.shadeGuard.accessRights("view");
-    this.view_group = this.shadeGuard.accessRights("view group");
-    this.view_all = this.shadeGuard.accessRights("view all");
-
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -102,20 +90,20 @@ export class ShadeComponent implements OnInit {
     this.getEditAccess();
   }
 
-  onChange(event) {
-    this.shadeList = [];
-    switch (event) {
-      case 1:
-        this.getallShades(this.userId, "own");
-        this.hidden = this.ownDelete;
-        this.hiddenEdit = this.ownEdit;
-        break;
+  onChange(event){
+    this.shadeList=[];
+    switch(event){
+      case 1: 
+              this.getallShades(this.userId,"own");
+              this.hidden=this.ownDelete; 
+              this.hiddenEdit=this.ownEdit;
+              break;
 
-      case 2:
-        this.getallShades(this.userHeadId, "group");
-        this.hidden = this.groupDelete;
-        this.hiddenEdit = this.groupEdit;
-        break;
+      case 2: 
+              this.getallShades(this.userHeadId,"group");
+              this.hidden=this.groupDelete;
+              this.hiddenEdit=this.groupEdit;
+              break;
 
       case 3:
         this.getallShades(0, "all");
@@ -173,39 +161,48 @@ export class ShadeComponent implements OnInit {
     });
   }
 
-  getViewAccess() {
-    if (!this.view) {
-      this.radioArray[0].disabled = true;
-    } else this.radioArray[0].disabled = false;
-    if (!this.view_group) {
-      this.radioArray[1].disabled = true;
-    } else this.radioArray[1].disabled = false;
-    if (!this.view_all) {
-      this.radioArray[2].disabled = true;
-    } else this.radioArray[2].disabled = false;
+
+  getViewAccess(){
+    if(!this.shadeGuard.accessRights('view')){
+      this.radioArray[0].disabled=true;
+    }
+    else
+    this.radioArray[0].disabled=false;
+     if(!this.shadeGuard.accessRights('view group')){
+      this.radioArray[1].disabled=true;
+    }
+    else
+    this.radioArray[1].disabled=false;
+     if(!this.shadeGuard.accessRights('view all')){
+      this.radioArray[2].disabled=true;
+    }
+    else
+    this.radioArray[2].disabled=false;
+
   }
 
-  getDeleteAccess() {
-    if (this.delete) {
-      this.ownDelete = false;
+  getDeleteAccess(){
+    if(this.shadeGuard.accessRights('delete')){
+      this.ownDelete=false;
     }
-    if (this.delete_group) {
-      this.groupDelete = false;
+     if(this.shadeGuard.accessRights('delete group')){
+      this.groupDelete=false;
     }
-    if (this.delete_all) {
-      this.allDelete = false;
+     if(this.shadeGuard.accessRights('delete all')){
+      this.allDelete=false;
     }
   }
 
-  getEditAccess() {
-    if (this.edit) {
-      this.ownEdit = false;
+  getEditAccess(){
+    if(this.shadeGuard.accessRights('edit')){
+      this.ownEdit=false;
     }
-    if (this.edit_group) {
-      this.groupEdit = false;
+     if(this.shadeGuard.accessRights('edit group')){
+      this.groupEdit=false;
+
     }
-    if (this.edit_all) {
-      this.allEdit = false;
+     if(this.shadeGuard.accessRights('edit all')){
+      this.allEdit=false;
     }
   }
 }
