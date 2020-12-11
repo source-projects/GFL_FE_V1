@@ -46,7 +46,7 @@ export class AddFunctionComponent implements OnInit {
   index:string;
   functionDropdown = [
     { id: "dosing", name: "Dosing" },
-    { id: "temperature", name: "Temperature Control" },
+    { id: "temprature", name: "Temprature Control" },
     { id: "pump", name: "Pump Control" },
     { id: "water", name: "Water Control" },
     { id: "operator", name: "Operator Message" },
@@ -138,6 +138,7 @@ export class AddFunctionComponent implements OnInit {
       dynamicProcessRecordId: null,
       itemId: null,
       itemName: null,
+      supplierId: null,
       supplierName: null,
       concentration: null,
       lrOrFabricWt: null,
@@ -146,8 +147,11 @@ export class AddFunctionComponent implements OnInit {
 
   itemSelected(event, rowIndex  ) {
     this.itemListArray.forEach((e) => {
-      if (e.itemId == this.dosing.dosingChemical[rowIndex].itemId)
+      if (e.itemId == this.dosing.dosingChemical[rowIndex].itemId){
         this.dosing.dosingChemical[rowIndex].supplierName = e.supplierName;
+        this.dosing.dosingChemical[rowIndex].itemName = e.itemName;
+        this.dosing.dosingChemical[rowIndex].supplierId = e.supplierId
+      }
     });
   }
 
@@ -180,6 +184,7 @@ export class AddFunctionComponent implements OnInit {
           dynamicProcessRecordId: null,
           itemId: null,
           itemName: null,
+          supplierId: null,
           supplierName: null,
           concentration: null,
           lrOrFabricWt: null,
@@ -275,7 +280,7 @@ export class AddFunctionComponent implements OnInit {
       } else {
         this.funcObj.funcName = "";
       }
-      if (this.funcObj.funcValue === "temperature") {
+      if (this.funcObj.funcValue === "temprature") {
         this.tempTemprature = this.tempratureControl;
         this.funcObj.tempratureControlFunc = this.tempTemprature;
       } else if (this.funcObj.funcValue === "dosing") {

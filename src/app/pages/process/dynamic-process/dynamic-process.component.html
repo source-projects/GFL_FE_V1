@@ -77,7 +77,7 @@
                                                             [options]="{ animation: { type: 'zoom' } }"
                                                             (click)="onEditFunction(func)" class="edit"></nb-icon>
                                                         <br>
-                                                        <div *ngIf="func.funcValue==='temperature'">
+                                                        <div *ngIf="func.funcValue==='temprature'">
                                                             <div class="row">
                                                                 <div class="col-md-3">
                                                                     <label><b>S V (Set Value)(C):</b><br>
@@ -190,7 +190,7 @@
                                                         <!-- dosing -->
                                                         <div *ngIf="func.funcValue==='dosing'">
                                                             <!-- color -->
-                                                            <div *ngIf="func.dosingFunc.doseType==='color'">
+                                                            <div>
                                                                 <div class="row">
                                                                     <div class="col-md-4">
                                                                         <label><b>Fill Side Tank :</b>
@@ -237,15 +237,20 @@
                                                             <div
                                                                 *ngIf="func.dosingFunc.doseType != undefined && func.dosingFunc.doseType === 'chemical'">
                                                                 <div class="row">
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
+                                                                    <div class="col-md-3">Item Name</div>
+                                                                    <div class="col-md-3">Supplier Name</div>
+                                                                    <div class="col-md-3">Concentration</div>
+                                                                    <div class="col-md-3">LR/FabricWt</div>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
+                                                                <div class="row"
+                                                                    *ngFor="let ch of func.dosingFunc.dosingChemical">
+                                                                    <div class="col-md-3">{{ch.itemName}}</div>
+                                                                    <div class="col-md-3">{{ch.supplierName}}</div>
+                                                                    <div class="col-md-3">{{ch.concentration}}</div>
+                                                                    <div class="col-md-3">{{ch.lrOrFabricWt}}</div>
+                                                                    <hr>
                                                                 </div>
-                                                                <hr>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -266,7 +271,7 @@
                             <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                                 (click)="addProcess(myForm)">ADD</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                [routerLink]="['pages/process']">CANCEL</button>
+                                [routerLink]="['pages/add-dynamic-process']">CANCEL</button>
                         </div>
                     </div>
                 </div>

@@ -114,7 +114,7 @@
 
                         <tr *ngFor='let dc of dosing.dosingChemical;let i=index;'>
                             <td>
-                                <select name="itemId" itemId1="ngModel" [(ngModel)]="dc.itemId"
+                                <select name="itemId{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
                                     #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)">
                                     <option *ngFor="let item of itemListArray" [value]="item.itemId"
                                         placeholder="Select Item">
@@ -150,7 +150,7 @@
         </div>
 
         <!-- Temprature Control -->
-        <div *ngIf="funcObj.funcValue==='temperature'">
+        <div *ngIf="funcObj.funcValue==='temprature'">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProcessGuard } from 'app/@theme/guards/process.guard';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-process',
@@ -15,7 +16,7 @@ export class ProcessComponent implements OnInit {
   permissions: Number;
   access:Boolean = false;
   constructor(private processService: ProcessService,
-    
+    private toastr: ToastrService,
     public processGuard: ProcessGuard,
     private jwtToken: JwtTokenService,) { }
 
@@ -27,14 +28,34 @@ export class ProcessComponent implements OnInit {
   }
 
   getProcessList(){
-    /*this.processService.getAllProcessList().subscribe(
+    this.processService.getAllProcessList('all',0).subscribe(
       data=>{
-        this.processList = data["data"];
+        if(data['success'])
+          this.processList = data["data"];
+          else
+          this.toastr.error(data['msg'])
       },
       error=>{
+        this.toastr.error('Internal server error')
         //error... internal server.
       }
-    )*/
+    )
+  }
+
+  deleteProcess(id){
+    this.processService.deleteProcess(id).subscribe(
+      data=>{
+        if(data['success']){
+          this.toastr.success(data['msg'])
+          this.getProcessList();
+        }
+          else
+          this.toastr.success(data['msg'])
+      },
+      error=>{
+        this.toastr.success('Internal server error')
+      }
+    )
   }
 
 }

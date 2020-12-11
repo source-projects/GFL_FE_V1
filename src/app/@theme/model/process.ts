@@ -1,68 +1,42 @@
 export class ProcessValue {
-    processName: string;
+    processName: any;
     time: number;
     steps: StepsRecordData[];
+    createdDate: Date;
+    updatedDate: Date;
+    createdBy: number;
+    updatedBy: number;
+    userHeadId: number;
 }
 export class StepsRecordData {
-    dosingPercentage: string;
-    drainType: string;
-    fabricRatio: string;
-    fillType: string;
-    functionName: string;
+    functionName: any;
     functionPosotion: number;
-    functionValue: string;
-    haveDose: true;
-    holdTime: string;
-    isDosingControl: true;
-    isOperatorMessage: true;
-    isPumpControl: true;
-    isTempControl: true;
-    isWaterControl: true;
-    jetLevel: true;
-    doseWhileHeating: string;
-    operatorCode: string;
-    operatorMessage: string;
-    pressure: string;
+    functionValue: any;
+    dosingPercentage: any;
+    drainType: any;
+    fabricRatio: any;
+    fillType: any;
+    haveDose: any = false;
+    holdTime: any;
+    isDosingControl: any = false;
+    isOperatorMessage: any = false;
+    isPumpControl: any = false;
+    isTempControl: any = false;
+    isWaterControl: any = false;
+    jetLevel: any = false;
+    doseWhileHeating: any;
+    operatorCode: any;
+    operatorMessage: any;
+    pressure: any;
     pumpSpeed: number;
-    rateOfRise: string;
-    setValue: string;
-    startAtTemp: string;
-    stepName: string;
+    rateOfRise: any;
+    setValue: any;
+    startAtTemp: any;
+    stepName: any;
     stepPosotion: number;
-    waterType: string;
-    doesAtTemp: string;
-    doesType: string;
-    dosingChemical: DosingChemical[];
-}
-export class NewRecordData {
-    dosingPercentage: string;
-    drainType: string;
-    fabricRatio: string;
-    fillType: string;
-    functionName: string;
-    functionPosotion: number;
-    functionValue: string;
-    haveDose: true;
-    holdTime: string;
-    isDosingControl: true;
-    isOperatorMessage: true;
-    isPumpControl: true;
-    isTempControl: true;
-    isWaterControl: true;
-    jetLevel: true;
-    doseWhileHeating: string;
-    operatorCode: string;
-    operatorMessage: string;
-    pressure: string;
-    pumpSpeed: number;
-    rateOfRise: string;
-    setValue: string;
-    startAtTemp: string;
-    stepName: string;
-    stepPosotion: number;
-    waterType: string;
-    doesAtTemp: string;
-    doesType: string;
+    waterType: any;
+    doesAtTemp: any;
+    doesType: any;
     dosingChemical: DosingChemical[];
 }
 export class DosingChemical {
@@ -75,13 +49,13 @@ export class DosingChemical {
 }
 export class Step {
     id: any;
-    stepName: string;
+    stepName: any;
     stepNo: number;
     functionList: FunctionObj[];
 }
 export class FunctionObj {
     funcName: any;
-    funcValue: string = '';
+    funcValue: any = '';
     funcPosition: any;
     dosingFunc: Dosing;
     tempratureControlFunc: TempratureControl;
@@ -103,6 +77,7 @@ export class ChemicalReq {
     dynamicProcessRecordId: any;
     itemId: any;
     itemName: any;
+    supplierId: any;
     supplierName: any;
     concentration: any;
     lrOrFabricWt: any;

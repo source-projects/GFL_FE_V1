@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
-import { CommonModule, DatePipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
+import { AgGridModule } from 'ag-grid-angular';
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -17,8 +18,13 @@ import {
   NbRadioModule,
   NbDatepickerModule,
   NbTooltipModule,
-  NbAccordionModule
+  NbAccordionModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule
 } from "@nebular/theme";
+
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +38,7 @@ import{ ExportService} from './services/export.service';
 import { ExportDirective } from './directives/export.directive';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
+  AgGridModule,
   NbLayoutModule,
   NbMenuModule,
   NbUserModule,
@@ -58,6 +65,10 @@ const NB_MODULES = [
   ColorPickerModule,
   NgSelectModule,
   NgbDatepickerModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule,
   //NgbModal
   NbAccordionModule,
   
