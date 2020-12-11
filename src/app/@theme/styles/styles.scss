@@ -388,6 +388,91 @@ input[type=number]::-webkit-outer-spin-button {
 .dek-jus{
   justify-content: flex-end!important;
 }
+// add function popup css
+.input-add-num{
+  padding: 4px 5px;
+}
+// batch shuffle page
+.split-merged{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.h-100{
+  height: 100%;
+}
+.batch-shuffle{
+  margin: 20px 0;
+}
+.batch-text{
+  font-size: 18px!important;
+  text-align: center;
+  background: #a33635;
+  color: #fff!important;
+  border-radius: 21px;
+  letter-spacing: 0px;
+}
+.example-box {
+  margin: 12px;
+  text-align: center;
+  padding: 7px 15px;
+  border: 1px solid rgb(94, 91, 94);
+  background: rgb(94, 91, 94);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  box-sizing: border-box;
+  cursor: move;
+  font-size: 14px;
+}
+.mtr-wei{
+  margin: 15px;
+  padding: 4px;
+  border: 0;
+  text-align: center;
+  width: 100px;
+}
+.total-shuffle, .batch-1-input, .batch-2-input, .btn-split-merge{
+  display: inline-block;
+}
+.total-shuffle{
+  display: flex!important;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.batch-1-input, .batch-2-input{
+  width: 100%;
+}
+.btn-split-merge{
+  height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.batch-2-input{
+  text-align: right;
+}
+.total-shuffle label{
+  margin: 0;
+  font-weight: 700;
+  padding: 3px 13px;
+  color: #5e5b5e;
+  border-left: 2px solid #5e5b5e;
+}
+.table-checkbox td, .table-checkbox th{
+  text-align: center;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
+  background-color: #aa3634!important;
+  border-color: #aa3634!important;
+}
+.status-basic{
+  display: inline-block!important;
+}
+// machine report design
+.owl-dt-popup{
+  top: 237.172px!important;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
@@ -440,6 +525,29 @@ input[type=number]::-webkit-outer-spin-button {
   .datatable-scroll.ng-star-inserted{
     width: unset!important;
   }
+  // shuffle batch design
+  .mobile-pd{
+    padding: 10px 0 20px;
+  }
+  .example-container{
+    padding: 0!important;
+    margin-bottom: 30px;
+  }
+  .mtr-wei{
+    margin: 9px!important;
+    width: 66px!important;
+  }
+  .btn-split-merge{
+    margin: 11px 0;
+  }
+  .batch-1-input{
+    text-align: right;
+  }
+  // machine report date popup
+  .owl-dt-popup{
+    top: 179.172px !important;
+  }
+ 
 
 }
 @media (min-width: 1024px){
@@ -463,5 +571,15 @@ input[type=number]::-webkit-outer-spin-button {
 @media (min-width: 768px) and (max-width: 992px){
   .nb-text{
     margin-left: 21px!important;
+  }
+  // shuffle batch page
+  .example-container{
+    padding: 0!important;
+  }
+  .mtr-wei{
+    width: 70px!important;
+  }
+  .batch-text{
+    font-size: 15px!important;
   }
 }
