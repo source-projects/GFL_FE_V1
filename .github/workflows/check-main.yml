@@ -34,5 +34,5 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }} pr to development"}' https://hooks.slack.com/services/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
           cat /home/runner/.npm/_logs/*
-          
+          cat /tmp/ng-WlXLTY/angular-errors.log
           
