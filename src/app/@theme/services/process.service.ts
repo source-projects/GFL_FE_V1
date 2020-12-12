@@ -13,7 +13,19 @@ export class ProcessService {
     private commonService: CommonService
   ) {}
 
-  getAllProcessList() {
-    //return this.httpClient.get(this.commonService.envUrl() + "api/process/all");
+  getAllProcessList(getBy, id){
+    return this.httpClient.get(this.commonService.envUrl() + "api/qualityprocess/all/"+getBy+"/"+id);
+  }
+
+  getAllItemWithSupplier(){
+    return this.httpClient.get(this.commonService.envUrl() + "api/supplier/getItemWithSupplierName/all");
+  }
+
+  saveProcess(data){
+    return this.httpClient.post(this.commonService.envUrl() + "api/qualityprocess",data);
+  }
+
+  deleteProcess(id){
+    return this.httpClient.delete(this.commonService.envUrl() + "api/qualityProcess/"+id);
   }
 }

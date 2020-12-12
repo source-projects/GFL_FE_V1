@@ -43,6 +43,12 @@ export class AddEditFinishedMeterComponent implements OnInit {
     this.getAllMasters();
   }
 
+  //resetForm..
+  resetAll(myForm){
+    this.batchList = null;
+    myForm.reset();
+  }
+
   //get userId and userHeadId of logged in user and get current finishedMeter id from url
   getData() {
     this.user = this.commonService.getUser();
@@ -165,6 +171,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
   //Quality change event
   qualitySelected(event) {
     if (event != undefined) {
+      this.finishedMeterForm.batchId = null;
       this.batchList = null;
       let pid;
       let qid;
@@ -188,6 +195,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
         }
       );
     } else {
+      this.finishedMeterForm.batchId = null;
       this.batchList = null;
       this.getAllQuality();
     }
@@ -317,26 +325,6 @@ export class AddEditFinishedMeterComponent implements OnInit {
   removeMeter(event, rowIndex) {
     let idCount = this.finishedMeterForm.batchData.length;
     let item = this.finishedMeterForm.batchData;
-    if (item[rowIndex].id != 0 || item[rowIndex].id != 0) {
-      //call delete batchData by id
-      this.finishedMeterService
-        .deleteBatchDataById(item[rowIndex].id)
-        .subscribe(
-          (data) => {
-            if (data["success"]) {
-              let removed = item.splice(rowIndex, 1);
-              let list = item;
-              this.finishedMeterForm.batchData = [...list];
-              this.setSequenceNo();
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {
-            this.toastr.error(error["error"].error);
-          }
-        );
-    } else {
       if (idCount == 1) {
         item[0].seqNo = 0;
         item[0].id = 0;
@@ -359,7 +347,6 @@ export class AddEditFinishedMeterComponent implements OnInit {
         this.finishedMeterForm.batchData = [...list];
         this.sequenceArray.splice(rowIndex,1)
       }
-    }
     this.setSequenceNo();
   }
 
