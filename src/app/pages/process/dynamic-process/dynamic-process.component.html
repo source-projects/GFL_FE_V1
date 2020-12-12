@@ -1,7 +1,7 @@
 <div class="container">
     <nb-card class="nb-style">
         <nb-card-header class="nb-header">
-            <h2 class="nb-text">DYNAMIC PROCESS</h2>
+            <h2 class="nb-text">Dynamic Process</h2>
         </nb-card-header>
         <nb-card-body>
             <form #myForm='ngForm'>
@@ -39,7 +39,7 @@
                                 (click)="onAddStep()" class="plus-add add-modal"></nb-icon>
                         </div>
                     </div>
-                    {{stepList}}
+                    <!-- {{stepList}} -->
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
                         <div cdkDropList (cdkDropListDropped)="drop($event)">
                             <nb-accordion multi *ngFor="let step of stepList" cdkDrag>
@@ -271,7 +271,7 @@
                             <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                                 (click)="addProcess(myForm)">ADD</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                [routerLink]="['pages/add-dynamic-process']">CANCEL</button>
+                            routerLink='/pages/process'>CANCEL</button>
                         </div>
                     </div>
                 </div>
