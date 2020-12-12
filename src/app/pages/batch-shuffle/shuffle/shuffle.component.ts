@@ -59,8 +59,6 @@ export class ShuffleComponent implements OnInit {
   batchId1: any;
   batchId2: any;
   index: number;
-  colorFlag: boolean = false;
-  tempArray = [];
 
   constructor(private partyService: PartyService, private shuffleService: ShuffleService, private qualityService: QualityService, private toastr: ToastrService, private formBuilder: FormBuilder, private route: Router, private batchByQualityPartyService: BatchByQualityPartyService, private batchList: BatchListService) {
     this.shuffleForm = this.formBuilder.group({
@@ -461,22 +459,6 @@ export class ShuffleComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      // console.log(event.container.data)
-      // let bid
-
-      // event.container.data.map(element => {
-      //   this.colorFlag = false
-      //   bid = element;
-      //   if (bid.batchId == 35) {
-      //     this.tempArray.push(element)
-      //     this.colorFlag = true
-      //   }
-      //   console.log(this.colorFlag)
-      //   console.log(bid.batchId);
-      //   console.log("party2", this.part2)
-      //   console.log(bid)
-      // }
-      //);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
