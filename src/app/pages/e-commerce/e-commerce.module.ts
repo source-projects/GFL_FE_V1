@@ -15,7 +15,6 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { ECommerceComponent } from './e-commerce.component';
 import { ChartModule } from 'angular2-chartjs';
 
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ReportComponent } from './report/report.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/@theme/shared.module';
@@ -36,7 +35,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     ChartsModule,
     NbProgressBarModule,
     NgxChartsModule,
-    LeafletModule,
     NgSelectModule,
     SharedModule,
     OwlDateTimeModule,
