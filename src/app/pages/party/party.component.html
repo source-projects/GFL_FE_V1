@@ -7,7 +7,7 @@
                         <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list">ADD</button>
                     </div>
                     <div class="col-md-9 col-7">
-                        <h2 class="nb-text">PARTY</h2>
+                        <h2 class="nb-text">Party</h2>
                     </div>
                   
                     <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
@@ -17,7 +17,7 @@
             </nb-card-header>
             <nb-card-body>
                 <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                    <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
 
                 <ngx-datatable [rows]="partyList" [ngClass]="tablestyle"

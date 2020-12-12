@@ -1,10 +1,10 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div *ngIf="this.currentUserId == null; else updateU">
-            <h2 class="nb-text">ADD USER</h2>
+            <h2 class="nb-text">Add User</h2>
         </div>
         <ng-template #updateU>
-            <h2 class="nb-text">UPDATE USER</h2>
+            <h2 class="nb-text">Update User</h2>
         </ng-template>
     </nb-card-header>
     <nb-card-body>
@@ -173,87 +173,87 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div>
-            <h2 class="nb-text">USER PERMISSIONS</h2>
+            <h2 class="nb-text">User Permission</h2>
         </div>
     </nb-card-header>
     <nb-card-body>
-        <div class="container">
-            <table>
-                <tr>
-                    <th>Forms</th>
-                    <th>Select All</th>
-                    <th *ngFor="let per of perName;let i=index;">{{per}}</th>
-                </tr>
 
-                <tr *ngFor="let perm of permissionArray;let i=index;">
-                    <td>{{perm.module}}</td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
-                            (change)="checkUncheckAll(perm.module,$event)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
-                            (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'"
-                            (change)="checkUncheckSelectAll(perm.add,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
-                            (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
-                            (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
-                    </td>
+        <table class="user-per-table">
+            <tr class="table-checkbox">
+                <th>Forms</th>
+                <th>Select All</th>
+                <th *ngFor="let per of perName;let i=index;">{{per}}</th>
+            </tr>
 
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
-                            (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
-                            (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
-                            (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
-                            (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
-                            (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
-                            (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
-                    </td>
+            <tr *ngFor="let perm of permissionArray;let i=index;" class="table-checkbox">
+                <td>{{perm.module}}</td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
+                        (change)="checkUncheckAll(perm.module,$event)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
+                        (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'"
+                        (change)="checkUncheckSelectAll(perm.add,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
+                        (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
+                        (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
+                </td>
+
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
+                        (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
+                        (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
+                        (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
+                        (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
+                        (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
+                        (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
+                </td>
 
 
 
-                </tr>
+            </tr>
 
-            </table>
-        </div>
+        </table>
+
     </nb-card-body>
     <div class="nb-pd">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mobile-btn-center">
 
-                    <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-                        style="margin-right:20px" (click)="addUser(myForm)">Save</button>
-                    <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
-                        style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
-                    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                        routerLink="/pages/user">Cancel</button>
+        <div class="row">
+            <div class="col-md-12 mobile-btn-center">
 
-                </div>
+                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)="addUser(myForm)">Save</button>
+                <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                    routerLink="/pages/user">Cancel</button>
+
             </div>
         </div>
+
     </div>
 </nb-card>

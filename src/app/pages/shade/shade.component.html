@@ -1,42 +1,44 @@
-<div class="container">
-    <nb-card class="nb-style">
-        <nb-card-header class="nb-header">
-            <div class="row">
-                <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                    <button class="btn btn-primary btn-md btn-list" routerLink='/pages/shade/add'>Add</button>  
-                </div>
-                <div class="col-md-9 col-7">
-                    <h2 class="nb-text">SHADE</h2>
-                </div>
-                <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
-                    <button style="float:right; "  class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
-                </div>
-                
-               
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-1 col-3 mobile-btn desktop-btn">
+                <button class="btn btn-primary btn-md btn-list" routerLink='/pages/shade/add'>Add</button>
             </div>
-        </nb-card-header>
-        <nb-card-body>
-            <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
-            </nb-radio-group>
+            <div class="col-md-9 col-7">
+                <h2 class="nb-text">Shade</h2>
+            </div>
+            <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+                <button style="float:right; " class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
+            </div>
 
-            <!--  ngx- DataTable  -->
-            <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-                <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
-                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template >
-                        <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
-                        <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="!this.access? null:deleteShade(row.id)"></nb-icon>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
-                <ngx-datatable-column name="Process Name" prop="processId"></ngx-datatable-column>
-                <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
-                <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
-                <ngx-datatable-column name="Party Name" prop="partyId"></ngx-datatable-column>
-                <ngx-datatable-column name="Color Tone " prop="colorTone"></ngx-datatable-column>
-                
-            </ngx-datatable>
 
-        </nb-card-body>
-    </nb-card>
-</div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
+            <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
+                (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+        </nb-radio-group>
+
+        <!--  ngx- DataTable  -->
+        <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
+            [footerHeight]="40">
+            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                        [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
+                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
+                        (click)="!this.access? null:deleteShade(row.id)"></nb-icon>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
+            <ngx-datatable-column name="Process Name" prop="processId"></ngx-datatable-column>
+            <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
+            <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
+            <ngx-datatable-column name="Party Name" prop="partyId"></ngx-datatable-column>
+            <ngx-datatable-column name="Color Tone " prop="colorTone"></ngx-datatable-column>
+
+        </ngx-datatable>
+
+    </nb-card-body>
+</nb-card>

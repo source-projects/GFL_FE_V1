@@ -37,21 +37,8 @@ export class SupplierComponent implements OnInit {
   permissions: Number;
  
   hidden :boolean=true;
-  delete: Boolean = false;
-  delete_group: Boolean = false;
-  delete_all: Boolean =false;
-
   hiddenEdit:boolean=true;
-  edit: Boolean = false;
-  edit_group: Boolean = false;
-  edit_all: Boolean =false;
-
   hiddenView:boolean=true;
-  view: Boolean = false;
-  view_group: Boolean = false;
-  view_all: Boolean =false;
-
-  hiddenCol:boolean=true;
 
   ownDelete=true;
   allDelete=true;
@@ -73,24 +60,8 @@ export class SupplierComponent implements OnInit {
 
     ) { }
  
- 
-   
   ngOnInit(): void {
-    this.edit = this.supplierGuard.accessRights('edit'); 
-    this.edit_group = this.supplierGuard.accessRights('edit group');
-    this.edit_all = this.supplierGuard.accessRights('edit all');
 
-
-    this.delete = this.supplierGuard.accessRights('delete'); 
-    this.delete_group = this.supplierGuard.accessRights('delete group');
-    this.delete_all = this.supplierGuard.accessRights('delete all');
-
-
-    this.view = this.supplierGuard.accessRights('view'); 
-    this.view_group = this.supplierGuard.accessRights('view group');
-    this.view_all = this.supplierGuard.accessRights('view all');
-
-  
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -149,17 +120,17 @@ export class SupplierComponent implements OnInit {
   }
 
   getViewAccess(){
-    if(!this.view){
+    if(!this.supplierGuard.accessRights('view')){
       this.radioArray[0].disabled=true;
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.view_group){
+     if(!this.supplierGuard.accessRights('view group')){
       this.radioArray[1].disabled=true;
     }
     else
     this.radioArray[1].disabled=false;
-     if(!this.view_all){
+     if(!this.supplierGuard.accessRights('view all')){
       this.radioArray[2].disabled=true;
     }
     else
@@ -168,26 +139,26 @@ export class SupplierComponent implements OnInit {
   }
 
   getDeleteAccess(){
-    if(this.delete){
+    if(this.supplierGuard.accessRights('delete')){
       this.ownDelete=false;
     }
-     if(this.delete_group){
+     if(this.supplierGuard.accessRights('delete group')){
       this.groupDelete=false;
     }
-     if(this.delete_all){
+     if(this.supplierGuard.accessRights('delete all')){
       this.allDelete=false;
     }
   }
 
   getEditAccess(){
-    if(this.edit){
+    if(this.supplierGuard.accessRights('edit')){
       this.ownEdit=false;
     }
-     if(this.edit_group){
+     if(this.supplierGuard.accessRights('edit group')){
       this.groupEdit=false;
 
     }
-     if(this.edit_all){
+     if(this.supplierGuard.accessRights('edit all')){
       this.allEdit=false;
     }
   }

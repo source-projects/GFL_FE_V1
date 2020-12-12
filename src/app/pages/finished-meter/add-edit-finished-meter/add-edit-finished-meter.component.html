@@ -1,7 +1,7 @@
 <nb-card class="nb-style">
   <nb-card-header class="nb-header">
     <div>
-      <h2 class="nb-text">FINISHED METER</h2>
+      <h2 class="nb-text">Finished Meter</h2>
     </div>
   </nb-card-header>
   <nb-card-body>
@@ -99,7 +99,7 @@
             <div class="padding-bt-tp">
               <button type="button" class="btn btn-primary btn-sm btn-design"
                 style="margin-right:20px" (click)="addFinishedMeter(myForm)">SAVE</button>
-              <button class="btn btn-primary btn-sm btn-design" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
+              <button class="btn btn-primary btn-sm btn-design" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
             </div>
           </div>
         </div>
