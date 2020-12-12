@@ -1,0 +1,361 @@
+<!-- <div class="invoice" *ngFor="let invoice of invoiceIds; let i = index">
+  <h1>Invoice Num. {{ invoice }}</h1>
+  Amount: {{ (invoiceDetails[i] | async)?.amount }}
+</div> -->
+<div class="invoice">
+    <div class="row col-sm-12">
+      <div class="col-sm-6 border">
+        <div class="row">
+          <div class="col-md-4">
+            <b>Party Name :</b>
+          </div>
+          <div class="col-md-8 border">
+            INOX LEISURE LIMITED - BHUBANESWAR
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Address :</b>
+          </div>
+          <div class="col-md-8 border">
+            BHUBANESWER BHAWANI, BMC BHAWANI MALL
+            SAHEED NAGAR, BHUBANESWAR
+            BHUBANESWAR
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Phone No. :</b>
+          </div>
+          <div class="col-md-8 border">
+            9777453660
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>GSTIN :</b>
+          </div>
+          <div class="col-md-8 border">
+            21AAACI6063J1ZS
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Delivery Party :</b>
+          </div>
+          <div class="col-md-8 border">
+            21AAACI6063J1ZS
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Delivery Add :</b>
+          </div>
+          <div class="col-md-8 border">
+            21AAACI6063J1ZS
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 border">
+        <div class="row">
+          <div class="col-md-4">
+            <b>Bill No. :</b>
+          </div>
+          <div class="col-md-3 border">
+            1213132
+          </div>
+          <div class="col-md-2">
+            <b>Date :</b>
+          </div>
+          <div class="col-md-3 border">
+            26/Feb/2019
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Chl No. :</b>
+          </div>
+          <div class="col-md-3 border">
+            1213132
+          </div>
+          <div class="col-md-2">
+            <b>Date :</b>
+          </div>
+          <div class="col-md-3 border">
+            26/Feb/2019
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>LR.RR No : :</b>
+          </div>
+          <div class="col-md-8 border">
+            9777453660
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Party Po No :</b>
+          </div>
+          <div class="col-md-8 border">
+            21AAACI6063J1ZS
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Dispatch Through :</b>
+          </div>
+          <div class="col-md-8 border">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Agent :</b>
+          </div>
+          <div class="col-md-8 border">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="imp row col-sm-12">
+      <div class="col-sm-2">
+        <b class="imp">Net Rate</b>
+      </div>
+      <div class="col-sm-3 border">
+        <b class="imp">Payment Days:</b>
+      </div>
+      <div class="col-sm-1">
+        <b class="imp">45</b>
+      </div>
+      <div class="col-sm-6">
+        <b class="imp">INTEREST OF 2%/MONTH WILL BE CHARGED AFTER DUE DATE</b>
+      </div>
+    </div>
+    <div class="border">
+      <table class="table table-bordered responsive">
+        <tr>
+          <th rowspan="2">
+            Sr.
+          </th>
+          <th rowspan="2">
+            Particulars
+          </th>
+          <th rowspan="2">
+            HSN
+          </th>
+          <th rowspan="2">
+            Pcs
+          </th>
+          <th rowspan="2">
+            Pcs
+          </th>
+          <th rowspan="2">
+            Rate
+          </th>
+          <th rowspan="2">
+            Dis. %
+          </th>
+          <th rowspan="2">
+            Dis. Rate
+          </th>
+          <th rowspan="2">
+            Taxable Amount
+          </th>
+          <th colspan="2">
+            CGST
+          </th>
+          <th colspan="2">
+            SGST
+          </th>
+          <th colspan="2">
+            IGST
+          </th>
+        </tr>
+        <tr>
+          <th>
+            %
+          </th>
+          <th>
+            Amt
+          </th>
+          <th>
+            %
+          </th>
+          <th>
+            Amt
+          </th>
+          <th>
+            %
+          </th>
+          <th>
+            Amt
+          </th>
+        </tr>
+        <tr>
+          <td>
+            1
+          </td>
+          <td>
+            PB - 05 IFR - 8MM LAMINATED
+          </td>
+          <td>
+            5903
+          </td>
+          <td>
+            16
+          </td>
+          <td>
+            564.50
+          </td>
+          <td>
+            460.00
+          </td>
+          <td>
+            0%
+          </td>
+          <td>
+            460.00
+          </td>
+          <td>
+            259670.00
+          </td>
+          <td>
+  
+          </td>
+          <td>
+  
+          </td>
+  
+          <td>
+  
+          </td>
+  
+          <td>
+  
+          </td>
+  
+          <td>
+            12.00
+          </td>
+          <td>
+            31160.40
+          </td>
+        </tr>
+        <tr *ngFor="let i of rowd">
+          <td *ngFor="let j of col"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><b>16</b></td>
+          <td><b>564.5 Mtr</b></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><b>259670.00</b></td>
+          <td colspan="2"></td>
+          <td colspan="2"></td>
+          <td colspan="2"><b>31160.40</b></td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    &nbsp;
+    <div class="row col-sm-12">
+      <div class="col-sm-7">
+        <div class="row border">
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              BANK NAME
+            </div>
+            <div class="col-sm-8">
+              :- TAMILNAD MERCHANTILE BANK LTD.
+            </div>
+          </div>
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              A/c No.
+            </div>
+            <div class="col-sm-8">
+              :- 192700150950474
+            </div>
+          </div>
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              Branch IFS Code
+            </div>
+            <div class="col-sm-8">
+              :- TMBL0000192 RING ROAD , SURAT
+            </div>
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-sm-12">
+            <b>TERMS CONDITION :</b>
+          </div>
+          <div class="col-sm-12">
+            1 . Goods once sold will not be taken back .
+          </div>
+          <div class="col-sm-12">
+            2 . Our responsibility ceases once the goods is delivered to the carrier.
+          </div>
+          <div class="col-sm-12">
+            3. GST Payable on Reverse Charge : No
+          </div>
+          <div class="col-sm-12 row"></div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 border">
+            <b>Tax Amt:</b>
+          </div>
+          <div class="col-sm-8 border">
+            <b>259670.00</b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 border">
+            <b>
+              CGST:</b>
+          </div>
+          <div class="col-sm-8 border">
+            <b>2</b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 border">
+            <b>SGST:</b>
+          </div>
+          <div class="col-sm-8 border">
+            <b></b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 border">
+            <b>IGST:</b>
+          </div>
+          <div class="col-sm-8 border">
+            <b>31160.40</b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 border">
+            <b>Total:</b>
+          </div>
+          <div class="col-sm-8 border">
+            <b>290,830.00</b>
+          </div>
+        </div>
+        <div class="row">
+          <p class="text-center">For , GLORY FAB LLP</p>
+        </div>
+        <div class="row">
+          <p class="text-center">Authorised Signatory</p>
+        </div>
+      </div>
+    </div>
+  </div>

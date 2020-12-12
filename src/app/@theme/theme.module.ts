@@ -20,6 +20,7 @@ import {
   FooterComponent,
   HeaderComponent,
   SearchInputComponent,
+  
 } from './components';
 import {
   CapitalizePipe,
@@ -32,12 +33,13 @@ import {
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  
 } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
-
+import { PrintInvoiceService } from "./services/print-invoice.service";
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -59,6 +61,7 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  
 ];
 const PIPES = [
   CapitalizePipe,
@@ -84,6 +87,7 @@ export class ThemeModule {
           },
           [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
         ).providers,
+        PrintInvoiceService,
       ],
     };
   }

@@ -30,6 +30,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import{ ExportService} from './services/export.service';
 import { ExportDirective } from './directives/export.directive';
+import { PrintInvoiceService } from './services/print-invoice.service';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -67,6 +68,6 @@ const NB_MODULES = [
   declarations: [ExportDirective],
   imports: [CommonModule, ...NB_MODULES],
   exports: [...NB_MODULES,ExportDirective],
-  providers:[ ExportService ]
+  providers:[ ExportService,PrintInvoiceService]
 })
 export class SharedModule { }

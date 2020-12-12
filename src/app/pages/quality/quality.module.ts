@@ -6,6 +6,7 @@ import { SharedModule } from '../../@theme/shared.module';
 import { QualityComponent } from './quality.component';
 import { AddEditQualityComponent } from './add-edit-quality/add-edit-quality.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ThemeModule } from "../../@theme/theme.module";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     QualityRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ThemeModule
   ]
 })
 export class QualityModule{ }

@@ -9,6 +9,8 @@ import { ExportService } from 'app/@theme/services/export.service';
 import { QualityGuard } from 'app/@theme/guards/quality.guard';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { Router } from '@angular/router';
+import { PrintInvoiceService } from '../../@theme/services/print-invoice.service';
 
 @Component({
   selector: 'ngx-quality',
@@ -68,6 +70,8 @@ export class QualityComponent implements OnInit {
     private jwtToken: JwtTokenService, 
     private storeTokenService: StoreTokenService,
     private modalService: NgbModal,
+    private route:Router,
+    public invoiceService:PrintInvoiceService,
     ) { }
 
   ngOnInit(): void {
@@ -135,7 +139,7 @@ open(){
           this.qualityList = data['data']
           this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
              qualityType: element.qualityType,partyName:element.partyName }))
-             console.log(this.quality);
+             
         }
         else {
           this.toastr.error(data['msg'])
@@ -178,6 +182,10 @@ open(){
     }
   }
 
+  onPrintInvoice(data) {
+    const invoiceIds = ['101', '102'];
+    this.invoiceService.printDocument('invoice', invoiceIds, data);
+ }
   getEditAccess(){
     if(this.edit){
       this.ownEdit=false;

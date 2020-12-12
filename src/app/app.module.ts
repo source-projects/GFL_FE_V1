@@ -11,6 +11,9 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PrintLayoutComponent } from "./@theme/components/print-Layout/print-layout.component";
+import { InvoiceComponent } from "./@theme/components/invoice/invoice.component";
+
 //import { FileSaverModule } from 'ngx-filesaver';
 
 import {
@@ -27,7 +30,10 @@ import {
 } from '@nebular/theme';
 import { ToastrModule } from 'ngx-toastr';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,
+    PrintLayoutComponent,
+    InvoiceComponent
+  ],
   imports: [
    // FileSaverModule,
     BrowserModule,
