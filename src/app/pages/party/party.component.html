@@ -1,32 +1,39 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="row">
     <div class="col-lg-12">
         <nb-card class="nb-style">
             <nb-card-header class="nb-header">
                 <div class="row">
                     <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                        <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list">ADD</button>
+                        <button routerLink='add' style="float:right"
+                            class="btn btn-primary btn-md btn-list">ADD</button>
                     </div>
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">PARTY</h2>
                     </div>
-                  
+
                     <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
-                        <button style="float:right;" class="btn btn-primary btn-md btn-list" (click)="open()" >EXPORT</button>
+                        <button style="float:right;" class="btn btn-primary btn-md btn-list"
+                            (click)="open()">EXPORT</button>
                     </div>
                 </div>
             </nb-card-header>
+
             <nb-card-body>
                 <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                    <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                    <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id
+                        (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
 
-                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle"
-                    class="material" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31"
+                    [footerHeight]="31">
                     <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                                [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
 
                         </ng-template>
                     </ngx-datatable-column>
@@ -36,7 +43,11 @@
                     <ngx-datatable-column name="City" props="city"></ngx-datatable-column>
                     <ngx-datatable-column name="State" props="state"></ngx-datatable-column>
 
-                    
+
 
                 </ngx-datatable>
+
             </nb-card-body>
+        </nb-card>
+    </div>
+</div>

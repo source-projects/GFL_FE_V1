@@ -15,8 +15,10 @@ import { ToastrService } from "ngx-toastr";
   providers: [Location],
 })
 export class AddEditPartyComponent implements OnInit {
-  public errorData: any = (errorData as any).default;
 
+  public loading = false;
+  public errorData: any = (errorData as any).default;
+  
   partyForm: FormGroup;
 
   //form Validation
@@ -54,6 +56,7 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public getData() {
+    this.loading = true;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
@@ -92,26 +95,32 @@ export class AddEditPartyComponent implements OnInit {
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null, Validators.required),
     });
+    this.loading = false;
   }
-
   public getMaster() {
+    this.loading = true;
     this.partyService.getAllMaster().subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   public getUpdateData() {
+    this.loading = true;
     this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
       (data) => {
+       
         this.currentParty = data["data"];
         this.partyForm.patchValue({
           userHeadId: this.currentParty.userHeadId,
@@ -132,14 +141,17 @@ export class AddEditPartyComponent implements OnInit {
         });
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
+        this.loading = false;
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   public addParty() {
+   
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
@@ -150,6 +162,7 @@ export class AddEditPartyComponent implements OnInit {
               this.currentParty = data["data"];
               this.route.navigate(["pages/party"]);
               this.toastr.success(errorData.Add_Success);
+              
             } else {
               this.toastr.error(errorData.Add_Error);
             }
@@ -165,6 +178,7 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public updateParty() {
+    this.loading = true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
@@ -173,17 +187,21 @@ export class AddEditPartyComponent implements OnInit {
           ...this.partyForm.value,
           id: this.currentPartyId,
         };
+
         this.partyService.updateParty(body).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
               this.route.navigate(["/pages/party"]);
+              this.loading = false;
             } else {
               this.toastr.error(errorData.Update_Error);
+              this.loading = false;
             }
           },
           (error) => {
             this.toastr.error(errorData.Update_Error);
+            this.loading = false;
           }
         );
       }

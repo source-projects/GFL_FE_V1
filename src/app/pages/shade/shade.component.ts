@@ -18,7 +18,7 @@ import { ShadeGuard } from 'app/@theme/guards/shade.guard';
   styleUrls: ['./shade.component.scss']
 })
 export class ShadeComponent implements OnInit {
-
+  public loading = false;
   public errorData: any = (errorData as any).default;
 
   tableStyle = 'bootstrap';
@@ -108,15 +108,17 @@ export class ShadeComponent implements OnInit {
   }
 
   getallShades(id,getBy){
+    this.loading = true;
   this.shadeService.getShadeMastList(id,getBy).subscribe(
       data =>{
         this.shadeList = data['data'];
         this.shade=this.shadeList.map((element)=>({partyShadeNo:element.partyShadeNo, processName: element.processName,
           qualityId: element.qualityId, qualityName:element.qualityName, partyName:element.partyName, colorTone:element.colorTone }))
-          console.log(this.shade);
+          this.loading = false;
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
   }

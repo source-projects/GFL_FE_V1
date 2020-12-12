@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
+import { NgxLoadingModule } from 'ngx-loading';
+
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -65,8 +67,8 @@ const NB_MODULES = [
 
 @NgModule({
   declarations: [ExportDirective],
-  imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES,ExportDirective],
+  imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES],
+  exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule],
   providers:[ ExportService ]
 })
 export class SharedModule { }
