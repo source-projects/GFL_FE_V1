@@ -32,7 +32,8 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Quality Name:</label>
-                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)" placeholder="Quality Name">
+                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)"
+                  placeholder="Quality Name">
 
                   <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
                   </ng-option>
@@ -90,9 +91,18 @@
                     [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
                     <div class="row">
                       <div class="col-md-12 col-12">
-                        <div class="example-box" *ngFor="let item of batches" cdkDrag>Batch ID: {{item.id}}, Meter:
-                          {{item.mtr}},
-                          Weight: {{item.wt}}</div>
+                        <div *ngFor="let item of batches" cdkDrag>
+                          <div class="cdk-drop"  *ngIf="item.batchId==batchId2">
+                            Batch ID: {{item.id}}, Meter:
+                            {{item.mtr}},
+                            Weight: {{item.wt}}
+                          </div>
+                          <div class="example-box" *ngIf="item.batchId!=batchId2">
+                            Batch ID: {{item.id}}, Meter:
+                            {{item.mtr}},
+                            Weight: {{item.wt}}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -102,12 +112,21 @@
                 <div class="example-container">
                   <h2 class="batch-text">Batch Part 2</h2>
 
-                  <div cdkDropList class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList"
+                  <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2" #part2List="cdkDropList"
                     [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
 
-                    <div class="example-box" *ngFor="let item of part2" cdkDrag>Batch ID: {{item.id}}, Meter:
-                      {{item.mtr}},
-                      Weight: {{item.wt}}</div>
+                    <div  *ngFor="let item of part2" cdkDrag>
+                      <div class="cdk-drop"  *ngIf="item.batchId==batchId1">
+                        Batch ID: {{item.id}}, Meter:
+                        {{item.mtr}},
+                        Weight: {{item.wt}}
+                      </div>
+                      <div class="example-box" *ngIf="item.batchId!=batchId1">
+                        Batch ID: {{item.id}}, Meter:
+                        {{item.mtr}},
+                        Weight: {{item.wt}}
+                      </div>
+                    </div>
                   </div>
 
 
@@ -115,7 +134,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-6">
               <div class="row">
