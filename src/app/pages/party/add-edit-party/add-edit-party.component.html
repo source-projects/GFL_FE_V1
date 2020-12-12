@@ -1,10 +1,10 @@
 <nb-card class="nb-style">
   <nb-card-header class="nb-header">
     <div *ngIf="this.currentPartyId == null; else updateP">
-      <h2 class="nb-text">ADD PARTY</h2>
+      <h2 class="nb-text">Add Party</h2>
     </div>
     <ng-template #updateP>
-      <h2 class="nb-text">UPDATE PARTY</h2>
+      <h2 class="nb-text">Update Party</h2>
     </ng-template>
   </nb-card-header>
   <nb-card-body>
@@ -12,7 +12,7 @@
       <form [formGroup]="partyForm">
 
         <div class="row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label class="required">Party Name</label>
             <input type="text" id="partyName" class="form-control" formControlName="partyName" placeholder="Party Name"
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('partyName').invalid )}">
@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label class="required">Email</label>
             <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small"
               formControlName="mailId" placeholder="Email"
@@ -98,17 +98,7 @@
             </div>
           </div>
 
-          <div class="form-group col-md-4">
-            <label class="required">Master Name</label>
-            <ng-select name="userHeadId" id="userHeadId" formControlName="userHeadId" required
-              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('userHeadId').invalid )}"
-              placeholder="Select Master Name" class="dropdown-name">
-              <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</ng-option>
-            </ng-select>
-            <div class="required-class" *ngIf="formSubmitted && partyForm.get('userHeadId').invalid">
-              <span>Master Name is required</span>
-            </div>
-          </div>
+          
 
 
           <div class="form-group col-md-4">
@@ -127,6 +117,18 @@
             <textarea class="form-control address-area" nbinput fullwidth formControlName="partyAddress2"
               placeholder="Address 2"></textarea>
           </div>
+          <div class="form-group col-md-4">
+            <label class="required">Master Name</label>
+            <ng-select name="userHeadId" id="userHeadId" formControlName="userHeadId" required
+              [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('userHeadId').invalid )}"
+              placeholder="Select Master Name" class="dropdown-name">
+              <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</ng-option>
+            </ng-select>
+            <div class="required-class" *ngIf="formSubmitted && partyForm.get('userHeadId').invalid">
+              <span>Master Name is required</span>
+            </div>
+          </div>
+          
         </div>
 
         <div class="creditors-debitors">

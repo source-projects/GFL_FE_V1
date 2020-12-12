@@ -1,185 +1,229 @@
-<div class="container">
-    <nb-card class="nb-style">
-        <nb-card-header class="nb-header">
-            <h2 class="nb-text">DYNAMIC PROCESS</h2>
-        </nb-card-header>
-        <nb-card-body>
-            <form #myForm='ngForm'>
-                <div class="row">
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label class="required">Process Name</label>
-                            <input type="text" name="processName" class="form-control" #processName1="ngModel"
-                                [(ngModel)]='processValue.processName' required
-                                [ngClass]="{'is-invalid': formSubmitted && processName1.invalid}"
-                                placeholder="Process Name">
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (processName1.invalid || processName1.dirty || processName1.touched)">
-                                <span>Process name is required.</span>
-                            </div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <h2 class="nb-text">Dynamic Process</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <form #myForm='ngForm'>
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label class="required">Process Name</label>
+                        <input type="text" name="processName" class="form-control" #processName1="ngModel"
+                            [(ngModel)]='processValue.processName' required
+                            [ngClass]="{'is-invalid': formSubmitted && processName1.invalid}"
+                            placeholder="Process Name">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (processName1.invalid || processName1.dirty || processName1.touched)">
+                            <span>Process name is required.</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-4 col-8">
-                        <div class="form-group">
-                            <label class="required">Time(minutes)</label>
-                            <input type="text" name="time" class="form-control" [(ngModel)]='processValue.time' required
-                                #time1="ngModel" [ngClass]="{'is-invalid': formSubmitted && time1.invalid}"
-                                (keypress)="numberOnly($event)" placeholder="Time(minutes)">
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (time1.invalid || time1.dirty || time1.touched)">
-                                <span>Time is required.</span>
-                            </div>
+                <div class="col-md-4 col-8">
+                    <div class="form-group">
+                        <label class="required">Time(minutes)</label>
+                        <input type="text" name="time" class="form-control" [(ngModel)]='processValue.time' required
+                            #time1="ngModel" [ngClass]="{'is-invalid': formSubmitted && time1.invalid}"
+                            (keypress)="numberOnly($event)" placeholder="Time(minutes)">
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && (time1.invalid || time1.dirty || time1.touched)">
+                            <span>Time is required.</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-4 col-4">
-                        <div class="form-group text-right">
-                            <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="onAddStep()" class="plus-add add-modal"></nb-icon>
-                        </div>
+                <div class="col-md-4 col-4">
+                    <div class="form-group text-right">
+                        <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                            (click)="onAddStep()" class="plus-add add-modal"></nb-icon>
                     </div>
-                    {{stepList}}
-                    <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
-                        <div cdkDropList (cdkDropListDropped)="drop($event)">
-                            <nb-accordion multi *ngFor="let step of stepList" cdkDrag>
-                                <nb-accordion-item class="item" #item (click)="onStepClick(step)">
-                                    <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian"
-                                        style="display: flex-end; justify-content: space-between;">
-                                        <div class="">
-                                            {{step.stepName}}
-                                        </div>
-                                        <div class="nb-action">
-                                            <nb-icon icon="trash" status="danger"
-                                                [options]="{ animation: { type: 'zoom' } }" (click)="onDeleteStep(step)"
-                                                class="trash"></nb-icon>
-                                            <nb-icon icon="edit" status="primary"
-                                                [options]="{ animation: { type: 'zoom' } }" (click)="onEditStep(step)"
-                                                class="edit"></nb-icon>
-                                            <nb-icon icon="plus-circle" status="success"
-                                                [options]="{ animation: { type: 'zoom' } }"
-                                                (click)="onAddFunction(step)" class="plus-function-add"></nb-icon>
-                                        </div>
-                                    </nb-accordion-item-header>
-                                    <nb-accordion-item-body class="nb-item-body">
-                                        <div *ngIf="step.functionList && step.functionList.length">
-                                            <nb-list cdkDropList
-                                                (cdkDropListDropped)="dropFunction($event,step.stepNo)">
-                                                <nb-list-item *ngFor="let func of step.functionList" cdkDrag>
-                                                    <div>
-                                                        <h6 style="text-transform:uppercase !important;">
-                                                            {{func.funcName}}</h6>
+                </div>
+                {{stepList}}
+                <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
+                    <div cdkDropList (cdkDropListDropped)="drop($event)">
+                        <nb-accordion multi *ngFor="let step of stepList" cdkDrag>
+                            <nb-accordion-item class="item" #item (click)="onStepClick(step)">
+                                <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian"
+                                    style="display: flex-end; justify-content: space-between;">
+                                    <div class="">
+                                        {{step.stepName}}
+                                    </div>
+                                    <div class="nb-action">
+                                        <nb-icon icon="trash" status="danger"
+                                            [options]="{ animation: { type: 'zoom' } }" (click)="onDeleteStep(step)"
+                                            class="trash"></nb-icon>
+                                        <nb-icon icon="edit" status="primary"
+                                            [options]="{ animation: { type: 'zoom' } }" (click)="onEditStep(step)"
+                                            class="edit"></nb-icon>
+                                        <nb-icon icon="plus-circle" status="success"
+                                            [options]="{ animation: { type: 'zoom' } }" (click)="onAddFunction(step)"
+                                            class="plus-function-add"></nb-icon>
+                                    </div>
+                                </nb-accordion-item-header>
+                                <nb-accordion-item-body class="nb-item-body">
+                                    <div *ngIf="step.functionList && step.functionList.length">
+                                        <nb-list cdkDropList (cdkDropListDropped)="dropFunction($event,step.stepNo)">
+                                            <nb-list-item *ngFor="let func of step.functionList" cdkDrag>
+                                                <div>
+                                                    <h6 style="text-transform:uppercase !important;">
+                                                        {{func.funcName}}</h6>
 
-                                                        <nb-icon icon="trash" status="danger"
-                                                            [options]="{ animation: { type: 'zoom' } }"
-                                                            (click)="onDeleteFunction(func)" class="trash"></nb-icon>
-                                                        <nb-icon icon="edit" status="primary"
-                                                            [options]="{ animation: { type: 'zoom' } }"
-                                                            (click)="onEditFunction(func)" class="edit"></nb-icon>
-                                                        <br>
-                                                        <div *ngIf="func.funcValue==='temperature'">
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <label><b>S V (Set Value)(C):</b><br>
-                                                                        {{func.tempratureControlFunc.setValue}}</label>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label>
-                                                                        <b>
-                                                                            Rate of Rise (C/minute):
-                                                                        </b>
-                                                                        <div>
-                                                                            {{func.tempratureControlFunc.rateOfRise}}
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label><b>Hold Time:</b>
-                                                                        <div>
-                                                                            {{func.tempratureControlFunc.holdTime}}
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label><b>Pressure (Above 80 C):</b>
-                                                                        <div>
-                                                                            {{func.tempratureControlFunc.pressure}}
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
+                                                    <nb-icon icon="trash" status="danger"
+                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                        (click)="onDeleteFunction(func)" class="trash"></nb-icon>
+                                                    <nb-icon icon="edit" status="primary"
+                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                        (click)="onEditFunction(func)" class="edit"></nb-icon>
+                                                    <br>
+                                                    <div *ngIf="func.funcValue==='temperature'">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label><b>S V (Set Value)(C):</b><br>
+                                                                    {{func.tempratureControlFunc.setValue}}</label>
                                                             </div>
-                                                            <hr>
+                                                            <div class="col-md-3">
+                                                                <label>
+                                                                    <b>
+                                                                        Rate of Rise (C/minute):
+                                                                    </b>
+                                                                    <div>
+                                                                        {{func.tempratureControlFunc.rateOfRise}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label><b>Hold Time:</b>
+                                                                    <div>
+                                                                        {{func.tempratureControlFunc.holdTime}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label><b>Pressure (Above 80 C):</b>
+                                                                    <div>
+                                                                        {{func.tempratureControlFunc.pressure}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
                                                         </div>
+                                                        <hr>
+                                                    </div>
 
 
-                                                        <!-- Pump -->
-                                                        <div *ngIf="func.funcValue==='pump'">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <label><b>Pump speed (%) :</b>
-                                                                        <br>{{func.pumpControlFunc.pumpSpeed}}</label>
-                                                                </div>
+                                                    <!-- Pump -->
+                                                    <div *ngIf="func.funcValue==='pump'">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label><b>Pump speed (%) :</b>
+                                                                    <br>{{func.pumpControlFunc.pumpSpeed}}</label>
                                                             </div>
-                                                            <hr>
                                                         </div>
+                                                        <hr>
+                                                    </div>
 
-                                                        <!-- water -->
-                                                        <div *ngIf="func.funcValue==='water'">
-                                                            <div *ngIf="func.waterControlFunc.type !== 'water'">
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Drain Type</b>
-                                                                            <div>
-                                                                                {{func.waterControlFunc.drainType}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div *ngIf="func.waterControlFunc.type === 'water'">
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Water Type:</b>
-                                                                            <div>{{func.waterControlFunc.waterType}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Fabric Ratio:</b>
-                                                                            <div>{{func.waterControlFunc.fabricRatio}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Jet Level:</b>
-                                                                            <div>{{func.waterControlFunc.jetLevel}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr>
-                                                        </div>
-
-                                                        <!-- operator Message -->
-                                                        <div *ngIf="func.funcValue==='operator'">
+                                                    <!-- water -->
+                                                    <div *ngIf="func.funcValue==='water'">
+                                                        <div *ngIf="func.waterControlFunc.type !== 'water'">
                                                             <div class="row">
                                                                 <div class="col-md-4">
-                                                                    <label><b>Operator Code</b>
-                                                                        <div>{{func.operatorMessageFunc.operatorCode}}
+                                                                    <label><b>Drain Type</b>
+                                                                        <div>
+                                                                            {{func.waterControlFunc.drainType}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="func.waterControlFunc.type === 'water'">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label><b>Water Type:</b>
+                                                                        <div>{{func.waterControlFunc.waterType}}
                                                                         </div>
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <label><b>Operator Message</b>
-                                                                        <div>
-                                                                            {{func.operatorMessageFunc.operatorMessage}}
+                                                                    <label><b>Fabric Ratio:</b>
+                                                                        <div>{{func.waterControlFunc.fabricRatio}}
                                                                         </div>
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <label><b>Start At Temp</b>
-                                                                        <div>{{func.operatorMessageFunc.startAtTemp}}
+                                                                    <label><b>Jet Level:</b>
+                                                                        <div>{{func.waterControlFunc.jetLevel}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+
+                                                    <!-- operator Message -->
+                                                    <div *ngIf="func.funcValue==='operator'">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label><b>Operator Code</b>
+                                                                    <div>{{func.operatorMessageFunc.operatorCode}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label><b>Operator Message</b>
+                                                                    <div>
+                                                                        {{func.operatorMessageFunc.operatorMessage}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label><b>Start At Temp</b>
+                                                                    <div>{{func.operatorMessageFunc.startAtTemp}}
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+
+                                                    <!-- dosing -->
+                                                    <div *ngIf="func.funcValue==='dosing'">
+                                                        <!-- color -->
+                                                        <div *ngIf="func.dosingFunc.doseType==='color'">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label><b>Fill Side Tank :</b>
+                                                                        <div>
+                                                                            {{func.dosingFunc.fillType}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label><b>Fill Side Tank (%) :</b>
+                                                                        <div>
+                                                                            {{func.dosingFunc.dosingPercentage}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label><b>Dose at Temp :</b>
+                                                                        <div>
+                                                                            {{func.dosingFunc.doseAtTemp}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label><b>Dose Type :</b>
+                                                                        <div>
+                                                                            {{func.dosingFunc.doseType}}
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label><b>Dose while Heating :</b>
+                                                                        <div>
+                                                                            {{func.dosingFunc.doseWhileHeating}}
                                                                         </div>
                                                                     </label>
                                                                 </div>
@@ -187,90 +231,43 @@
                                                             <hr>
                                                         </div>
 
-                                                        <!-- dosing -->
-                                                        <div *ngIf="func.funcValue==='dosing'">
-                                                            <!-- color -->
-                                                            <div *ngIf="func.dosingFunc.doseType==='color'">
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Fill Side Tank :</b>
-                                                                            <div>
-                                                                                {{func.dosingFunc.fillType}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Fill Side Tank (%) :</b>
-                                                                            <div>
-                                                                                {{func.dosingFunc.dosingPercentage}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Dose at Temp :</b>
-                                                                            <div>
-                                                                                {{func.dosingFunc.doseAtTemp}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Dose Type :</b>
-                                                                            <div>
-                                                                                {{func.dosingFunc.doseType}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label><b>Dose while Heating :</b>
-                                                                            <div>
-                                                                                {{func.dosingFunc.doseWhileHeating}}
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <hr>
+                                                        <!-- chemical -->
+                                                        <div
+                                                            *ngIf="func.dosingFunc.doseType != undefined && func.dosingFunc.doseType === 'chemical'">
+                                                            <div class="row">
+                                                                <div class="col-md-4"></div>
+                                                                <div class="col-md-4"></div>
+                                                                <div class="col-md-4"></div>
                                                             </div>
-
-                                                            <!-- chemical -->
-                                                            <div
-                                                                *ngIf="func.dosingFunc.doseType != undefined && func.dosingFunc.doseType === 'chemical'">
-                                                                <div class="row">
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-4"></div>
-                                                                    <div class="col-md-4"></div>
-                                                                </div>
-                                                                <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-4"></div>
+                                                                <div class="col-md-4"></div>
                                                             </div>
+                                                            <hr>
                                                         </div>
                                                     </div>
-                                                </nb-list-item>
-                                            </nb-list>
-                                        </div>
-                                    </nb-accordion-item-body>
-                                </nb-accordion-item>
-                            </nb-accordion>
-                        </div>
+                                                </div>
+                                            </nb-list-item>
+                                        </nb-list>
+                                    </div>
+                                </nb-accordion-item-body>
+                            </nb-accordion-item>
+                        </nb-accordion>
                     </div>
-                    <br>
                 </div>
+                <br>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center">
-                        <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                (click)="addProcess(myForm)">ADD</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                [routerLink]="['pages/process']">CANCEL</button>
-                        </div>
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center">
+                    <div class="padding-bt-tp">
+                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                            (click)="addProcess(myForm)">ADD</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                            [routerLink]="['pages/process']">CANCEL</button>
                     </div>
                 </div>
-            </form>
-        </nb-card-body>
-    </nb-card>
-</div>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>
