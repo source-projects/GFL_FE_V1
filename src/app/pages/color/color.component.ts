@@ -50,7 +50,7 @@ export class ColorComponent implements OnInit {
  ownEdit=true;
  allEdit=true;
  groupEdit=true;
- access:Boolean = false;
+ disabled=false;
   constructor(
     private colorService: ColorService,
   
@@ -73,11 +73,19 @@ export class ColorComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getColor(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.colorGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event) {
     this.colorList = [];
     switch (event) {

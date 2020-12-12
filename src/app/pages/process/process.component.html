@@ -8,7 +8,7 @@
                         <button class="btn btn-primary btn-md btn-list" routerLink="add-dynamic-process">Add</button>
                     </div>
                     <div class="col-md-9 col-7">
-                        <h2 class="nb-text">PROCESS</h2>
+                        <h2 class="nb-text">Process</h2>
                     </div>
                 </div>
             </nb-card-header>
@@ -19,16 +19,11 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
                                 [routerLink]="['/pages/process/edit',row.id]"></nb-icon>
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="!this.access" icon="trash"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteProcess(row.id)" icon="trash"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Stock In" props="stockInType"></ngx-datatable-column>
-                    <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
-                    <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="Bill Date" props="billDate"></ngx-datatable-column>
-                    <ngx-datatable-column name="Chl No" props="chlNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="Chl Date" props="chlDate"></ngx-datatable-column>
-                    <ngx-datatable-column name="Batch" props="batch"></ngx-datatable-column>
-                    <ngx-datatable-column name="Record Count" props="recordCount"></ngx-datatable-column>
+                    <ngx-datatable-column name="Name" props="name"></ngx-datatable-column>
+                    <!-- <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column> -->
+                    
                 </ngx-datatable>
             </nb-card-body>

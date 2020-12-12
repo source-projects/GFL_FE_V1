@@ -19,8 +19,13 @@ import {
   NbRadioModule,
   NbDatepickerModule,
   NbTooltipModule,
-  NbAccordionModule
+  NbAccordionModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule
 } from "@nebular/theme";
+
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -60,6 +65,10 @@ const NB_MODULES = [
   ColorPickerModule,
   NgSelectModule,
   NgbDatepickerModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule,
   //NgbModal
   NbAccordionModule,
   
