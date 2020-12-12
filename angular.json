@@ -121,8 +121,6 @@
               "node_modules/jquery/dist/jquery.min.js"
             ],
             "styles": [
-              "../node_modules/ag-grid-community/dist/styles/ag-grid.css",
-              "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/typeface-exo/index.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",

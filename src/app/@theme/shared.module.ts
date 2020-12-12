@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { AgGridModule } from 'ag-grid-angular';
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -38,7 +37,6 @@ import{ ExportService} from './services/export.service';
 import { ExportDirective } from './directives/export.directive';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
-  AgGridModule,
   NbLayoutModule,
   NbMenuModule,
   NbUserModule,
