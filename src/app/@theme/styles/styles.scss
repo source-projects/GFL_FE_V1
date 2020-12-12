@@ -59,12 +59,12 @@
   content: none;
 }
 .nb-header{
-  padding: 0.4rem 1.2rem !important;
+  padding: 0 1.2rem !important;
   background-color: #aa3634;
   border-radius: 0!important;
 }
 .nb-text{
-  font-size: 1.3rem !important;
+  font-size: 1.2rem !important;
   color: #ffffff !important;
 }
 .nb-style{
@@ -188,7 +188,7 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: flex-start;
 }
 .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
-  padding: 1.4rem!important;
+  padding: 0.9rem!important;
 }
 .nb-theme-default nb-layout-header nav{
   height: 4.65rem;
@@ -365,7 +365,7 @@ input[type=number]::-webkit-outer-spin-button {
 .datatable-body-row{
   height: 50px!important;
 }
-.datatable-row-wrapper:nth-child(even) { 
+.datatable-row-wrapper:nth-child(even), .user-per-table tr:nth-child(odd) { 
   background-color: #5e5b5e21; 
 } 
 .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
@@ -461,6 +461,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .table-checkbox td, .table-checkbox th{
   text-align: center;
+  padding: 12px 11px!important;
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
   background-color: #aa3634!important;
@@ -469,9 +470,43 @@ input[type=number]::-webkit-outer-spin-button {
 .status-basic{
   display: inline-block!important;
 }
+.batch-2 .example-box{
+  border: 1px solid #5e5b5eb8!important;
+  background: #5e5b5eb8!important;
+  color: white!important
+}
 // machine report design
 .owl-dt-popup{
   top: 237.172px!important;
+}
+// side navbar width
+.nb-theme-default nb-sidebar .main-container, .nb-theme-default nb-sidebar.expanded, .nb-theme-default nb-sidebar{
+  width: 14rem!important;
+}
+.nb-theme-default nb-sidebar.compacted, .nb-theme-default nb-sidebar.compacted .main-container{
+  width: 3.5rem!important;
+}
+// checkbox width and height low
+.nb-theme-default nb-checkbox .custom-checkbox{
+  width: 1rem!important;
+  height: 1rem!important;
+}
+.nb-theme-default nb-layout-header.fixed ~ .layout-container{
+  padding-top: 4.35rem!important;
+}
+.nb-theme-default nb-layout-header nav{
+  height: 4.35rem!important;
+}
+.nb-theme-default nb-layout .layout .layout-container nb-sidebar.fixed, .nb-theme-default nb-layout .layout .layout-container nb-sidebar .main-container-fixed{
+  top: 3.75rem!important;
+}
+.nb-theme-default nb-menu .menu-group, .nb-theme-default nb-menu .menu-item a{
+  padding: 0.55rem 1rem!important;
+}
+// user table
+.table-checkbox th{
+  background: #5e5b5e;
+    color: #fff;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -547,7 +582,10 @@ input[type=number]::-webkit-outer-spin-button {
   .owl-dt-popup{
     top: 179.172px !important;
   }
- 
+  // mobile width changes
+  .nb-theme-default nb-sidebar.collapsed{
+    width: 0!important;
+  }
 
 }
 @media (min-width: 1024px){
