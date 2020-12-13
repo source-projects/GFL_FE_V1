@@ -27,7 +27,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status;
-
+  //allUserPermissionFlag=0;
   user: User = new User();
 
   permissions: Permissions = new Permissions();
@@ -200,6 +200,27 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewGroup = false;
   }
 
+  //select all user permissions
+  selectAllPermissions(e){
+      
+    if(e.target.checked==true)
+    {
+      for(var i=0;i<this.permissionArray.length;i++)
+      {
+        this.setPermissionTrue(i);
+        this.checkIfAllSelected(i);
+      }
+      
+    }
+    else{
+      for(var i=0;i<this.permissionArray.length;i++)
+      {
+        this.setPermissionFalse(i);
+        this.permissionArray[i].selectAll = false;
+      }
+    }
+    
+  }
   checkUncheckAll(module, e) {
     switch (module) {
       case "Party": {
@@ -317,6 +338,7 @@ export class AddEditUserComponent implements OnInit {
                     if(this.permissionArray[i].deleteGroup)
                       if(this.permissionArray[i].deleteAll)
                         this.permissionArray[i].selectAll = true;
+                        
   }
 
   getCheckedItem() {
