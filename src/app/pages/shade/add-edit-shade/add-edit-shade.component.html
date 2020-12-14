@@ -210,13 +210,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 mobile-btn-center">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                                style="margin-right:20px" (click)="addShade(shadeForm)">ADD</button>
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
                             <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/shade'>CANCEL</button>
+                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
+                                style="margin-right:20px" (click)="addShade(shadeForm)">SAVE</button>
                         </div>
 
                     </div>

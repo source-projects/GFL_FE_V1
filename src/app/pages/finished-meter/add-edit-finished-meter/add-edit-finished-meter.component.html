@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <br>
+       
         <div class="row">
           <div class="col-md-4">
             <label>Batch</label>
@@ -95,11 +95,11 @@
       </div>
 
         <div class="row">
-          <div class="col-md-12 mobile-btn-center">
+          <div class="col-md-12 mobile-btn-center text-btn-right">
             <div class="padding-bt-tp">
+              <button class="btn btn-primary btn-sm btn-design" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
               <button type="button" class="btn btn-primary btn-sm btn-design"
                 style="margin-right:20px" (click)="addFinishedMeter(myForm)">SAVE</button>
-              <button class="btn btn-primary btn-sm btn-design" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
             </div>
           </div>
         </div>
