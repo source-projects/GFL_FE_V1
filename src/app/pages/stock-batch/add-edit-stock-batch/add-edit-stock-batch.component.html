@@ -33,8 +33,8 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
-                            <ng-select name="partyId" [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)="getUnit()">
+                            <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
+                                [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)="getUnit($event)">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                     {{q.qualityId}}-{{q.qualityName}}</ng-option>
                             </ng-select>
@@ -133,7 +133,7 @@
                                             <div>
                                                 <ngx-datatable #table
                                                     class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height"
-                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="31"
+                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="0"
                                                     [scrollbarV]="true">
 
                                                     <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
