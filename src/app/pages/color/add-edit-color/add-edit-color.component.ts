@@ -134,12 +134,13 @@ export class AddEditColorComponent implements OnInit {
           data => {
             if (data['success']) {
               this.supplierListRate = data['data'];
-              this.loading=false;
+              
             }
             else {
               this.toastr.error(data['msg'])
-              this.loading=false;
+              
             }
+            this.loading=false;
           },
           error => {
             this.toastr.error(errorData.Serever_Error)
@@ -150,8 +151,9 @@ export class AddEditColorComponent implements OnInit {
     }
     else {
       this.getSupplierList();
-      this.loading=false;
+      
     }
+    this.loading=false;
   }
 
 

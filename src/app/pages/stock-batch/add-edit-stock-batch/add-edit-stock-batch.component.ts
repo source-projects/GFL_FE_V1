@@ -351,8 +351,6 @@ export class AddEditStockBatchComponent implements OnInit {
       };
       this.stockDataValues = [obj];
     } else {
-
-
       item.splice(index, 1);
       this.stockDataValues = [...item];
       this.validationCardRowIndex--;

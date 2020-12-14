@@ -142,10 +142,12 @@ export class ShadeComponent implements OnInit {
     this.loading = true;
   this.shadeService.getShadeMastList(id,getBy).subscribe(
       data =>{
-        this.shadeList = data['data'];
+        if(data['success']){
+          this.shadeList = data['data'];
         this.shade=this.shadeList.map((element)=>({partyShadeNo:element.partyShadeNo, processName: element.processName,
           qualityId: element.qualityId, qualityName:element.qualityName, partyName:element.partyName, colorTone:element.colorTone }))
           this.loading = false;
+        } 
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)
