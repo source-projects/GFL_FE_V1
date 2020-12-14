@@ -65,6 +65,7 @@ const NB_MODULES = [
   ColorPickerModule,
   NgSelectModule,
   NgbDatepickerModule,
+  NgxLoadingModule,
   NbListModule,
   NbRouteTabsetModule,
   NbStepperModule,
