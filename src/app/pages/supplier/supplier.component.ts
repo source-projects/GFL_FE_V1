@@ -16,6 +16,7 @@ import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent implements OnInit {
+  public loading = false;
   tableStyle="bootstrap";
 
   public errorData: any = (errorData as any).default;
@@ -102,19 +103,20 @@ export class SupplierComponent implements OnInit {
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.supplier;
   }
-
   public getSupplierList(id,getBy){
+    this.loading = true;
     this.supplierService.getAllSupplier(id,getBy).subscribe(
       data=>{
         this.supplierList=data['data']
         this.supplier=this.supplierList.map((element)=>({supplierName:element.supplierName, discountPercentage: element.discountPercentage,
           gstPercentage: element.gstPercentage, paymentTerms:element.paymentTerms, remark:element.remark }))
-          console.log(this.supplier);
+          this.loading = false;
         //this.router.navigate(['pages/supplier']);
       },
       error=>{
         //toaster
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     )
   }

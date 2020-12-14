@@ -20,6 +20,7 @@ import { ShadeGuard } from "app/@theme/guards/shade.guard";
   styleUrls: ["./shade.component.scss"],
 })
 export class ShadeComponent implements OnInit {
+  public loading = false;
   public errorData: any = (errorData as any).default;
 
 
@@ -144,9 +145,11 @@ export class ShadeComponent implements OnInit {
             colorTone: element.colorTone,
           }));
         }
+        this.loading = false;
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }

@@ -18,7 +18,7 @@ import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-
   styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit {
-
+  public loading = false;
   public errorData: any = (errorData as any).default;
   programList: any[];
   program=[];
@@ -97,27 +97,30 @@ export class ProgramComponent implements OnInit {
 
   open(){
     this.flag=true;
-   
+
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.program;
   }
 
   public getProgramList(id, getBy) {
+    this.loading=true;
     this.programService.getProgramList(id, getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
           this.program=this.programList.map((element)=>({partyName:element.partyName, programBy: element.programBy,
             qualityId: element.qualityId, qualityName:element.qualityName, qualityType:element.qualityType, priority:element.priority }))
-            console.log(this.program);
+            this.loading=false;
         }
         else {
           this.toastr.error(data['msg']);
+          this.loading=false;
         }
       },
       error => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading=false;
       }
     )
   }
