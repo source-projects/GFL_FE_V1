@@ -15,6 +15,7 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
+  public loading = false;
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
@@ -78,104 +79,130 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   public getPartyList() {
+    this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(errorData.Internal_Error);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   getSupplierList() {
+    this.loading = true;
     this.supplierService.getAllSupplierRates().subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
             this.supplierList = data["data"];
             this.getAllSupplier();
+            this.loading = false;
           } else {
             this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         } else {
           this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   getAllSupplier() {
+    this.loading = true;
     this.supplierService.getAllSupplier(0, "all").subscribe(
       (data) => {
         if (data["success"]) {
           this.supplierListRate = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   getProcessList() {
+    this.loading = true;
     this.shadeService.getQualityProcessList("all", 0).subscribe(
       (data) => {
         if (data["success"]) {
           this.processList = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   getQualityList() {
+    this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
           this.quality = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   getCurrentShade() {
+    this.loading = true;
     this.currentShadeId = this._route.snapshot.paramMap.get("id");
     if (this.currentShadeId != null) {
       this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
         (data) => {
           if (data["success"]) {
             this.shades = data["data"];
+            this.loading = false;
           } else {
             this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
   }
 
   getUpdateData() {
+    this.loading = true;
     if (this.currentShadeId != null) {
       this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
         (data) => {
@@ -189,14 +216,18 @@ export class AddEditShadeComponent implements OnInit {
                 this.shades.qualityId = e.qualityId;
               this.shades.qualityName = e.qualityName;
               this.shades.qualityType = e.qualityType;
+              this.loading = false;
             });
             this.setProcessName(this.shades.processId);
+            this.loading = false;
           } else {
             this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
@@ -222,12 +253,14 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   getQualityFromParty(event) {
+    this.loading = true;
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
       this.shades.qualityId = null;
       this.shades.qualityName = null;
       this.shades.qualityType = null;
+      this.loading = false;
     } else {
       this.shadeService.getQualityFromParty(this.shades.partyId).subscribe(
         (data) => {
@@ -238,14 +271,19 @@ export class AddEditShadeComponent implements OnInit {
             this.shades.qualityType = this.quality[0].qualityType;
             this.quality.forEach((e) => {
               e.partyName = data["data"].partyName;
+              this.loading = false;
             });
-          } else {
+            this.loading = false;
+          }
+          else {
             this.toastr.error(data["msg"]);
             this.quality = null;
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
@@ -422,6 +460,7 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   updateShade(shadeForm) {
+    this.loading = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.updatedBy = this.user.userId;
@@ -430,12 +469,15 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
+            this.loading = false;
           } else {
             this.toastr.error(errorData.Update_Error);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
