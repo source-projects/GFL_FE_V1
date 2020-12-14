@@ -27,7 +27,7 @@ export class SupplierComponent implements OnInit {
   headers=["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark" ];
   radioSelect = 1;
   flag = false;
-
+  disabled=false;
   radioArray = [
     {id:1, value:"View Own"  , disabled:false},
     {id:2, value:"View Group"  , disabled:false},
@@ -68,11 +68,19 @@ export class SupplierComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
+    this.getAddAcess();
     this.getSupplierList(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.supplierGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event){
     this.supplierList=[];
     switch(event){

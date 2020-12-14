@@ -22,7 +22,7 @@ export class StockBatchComponent implements OnInit {
   stock=[];
   headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
   flag = false;
-  
+  disabled=false;
 
   tablestyle = "bootstrap";
   radioSelect = 1;
@@ -63,11 +63,19 @@ export class StockBatchComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
+    this.getAddAcess();
     this.getStockBatchList(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.stockBatchGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event) {
     this.stockList = [];
     switch (event) {

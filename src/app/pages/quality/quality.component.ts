@@ -47,7 +47,7 @@ export class QualityComponent implements OnInit {
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
- 
+  disabled=false;
   
   constructor(
     private commonService: CommonService,
@@ -66,11 +66,19 @@ export class QualityComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
+    this.getAddAcess();
     this.getQualityList(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.qualityGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
 
   onChange(event){
     this.qualityList = [];

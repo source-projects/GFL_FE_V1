@@ -24,7 +24,7 @@ export class PartyComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   permissions: Number;
   tablestyle = "bootstrap";
-
+  disabled=false;
   partyList = [];
   party=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
@@ -72,6 +72,7 @@ export class PartyComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess();
@@ -148,6 +149,18 @@ export class PartyComponent implements OnInit {
     }
   }
 
+  getAddAcess(){
+    if(this.partyGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
+  // var disableButton = function() {
+    //   this.disabled = true;
+    //   OnClientClick="disableButton()"
+    // }
   onChange(event){
     this.partyList = [];
     switch(event){

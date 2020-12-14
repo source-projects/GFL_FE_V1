@@ -9,6 +9,8 @@ export class ProcessValue {
     userHeadId: number;
 }
 export class StepsRecordData {
+    id: number;
+    controlId: number;
     functionName: any;
     functionPosotion: number;
     functionValue: any;
@@ -37,16 +39,17 @@ export class StepsRecordData {
     waterType: any;
     doesAtTemp: any;
     doesType: any;
-    dosingChemical: DosingChemical[];
+    dosingChemical: ChemicalReq[];
 }
-export class DosingChemical {
-    concentration: null;
-    dynamicProcessRecordId: null;
-    itemId: null;
-    itemName: null;
-    lrOrFabricWt: null;
-    supplierId: null;
-}
+// export class DosingChemical {
+//     id: null;
+//     concentration: null;
+//     dynamicProcessRecordId: null;
+//     itemId: null;
+//     itemName: null;
+//     lrOrFabricWt: null;
+//     supplierId: null;
+// }
 export class Step {
     id: any;
     stepName: any;

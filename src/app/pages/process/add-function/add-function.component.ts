@@ -233,6 +233,7 @@ export class AddFunctionComponent implements OnInit {
   onDoseTypeChange() {
     if (this.dosing.doseType == "color") {
       this.dosing.doseWhileHeating = false;
+      this.dosing.dosingChemical = []
     }else{
       if(!this.itemListArray){
         this.processService.getAllItemWithSupplier().subscribe(

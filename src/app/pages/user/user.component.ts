@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
   allEdit=true;
   groupEdit=true;
   
-
+  disabled=false;
   constructor(
     private route:Router,
     private modalService: NgbModal,
@@ -71,11 +71,19 @@ export class UserComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess()
   }
-
+  getAddAcess(){
+    if(this.userGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event){
     this.userList = [];
     switch(event){
