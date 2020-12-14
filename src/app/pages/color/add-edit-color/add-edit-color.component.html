@@ -26,7 +26,7 @@
 
                     <div class="form-group col-md-4">
                         <label class="required">Bill No</label>
-                        <input type="number" class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel"
+                        <input type="text" class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel"
                             name="billNo" required [ngClass]="{'is-invalid':formSubmitted && !(billNo1.valid) }" min="0"
                             placeholder="Bill No">
                         <div class="invalid-feedback"
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Challan No</label>
-                        <input type="number" class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel"
+                        <input type="text" class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel"
                             name="chlNo" required [ngClass]="{'is-invalid':formSubmitted && !(chlNo1.valid) }" min="0"
                             placeholder="Challan No">
                         <div class="invalid-feedback"
