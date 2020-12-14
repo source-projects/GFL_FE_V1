@@ -4,7 +4,7 @@
       <nb-card-header class="nb-header">
         <div class="row">
           <div class="col-md-6">
-            <h2 class="nb-text">BATCH-SHUFFLE</h2>
+            <h2 class="nb-text">Batch-Shuffle</h2>
           </div>
 
         </div>
@@ -18,7 +18,8 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Party Name:</label>
-                <ng-select name="partyId" formControlName="partyName" (change)="dropSelect($event)">
+                <ng-select name="partyId" formControlName="partyName" (change)="dropSelect($event)" placeholder="Party Name
+                ">
 
                   <ng-option *ngFor="let p of party" [value]="p.id"> {{p.partyName}}
                   </ng-option>
@@ -31,7 +32,8 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Quality Name:</label>
-                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)">
+                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)"
+                  placeholder="Quality Name">
 
                   <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
                   </ng-option>
@@ -42,8 +44,8 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group mr-0">
-                <nb-radio-group style="display: flex;padding-top:  1%;">
+              <div class="form-group mr-0 h-100 mobile-pd">
+                <nb-radio-group class="split-merged h-100">
                   <nb-radio [value]="1" checked="true" (valueChange)="onChange($event)">Split</nb-radio>
                   <nb-radio [value]="2" (valueChange)="onChange($event)">Merge</nb-radio>
                 </nb-radio-group>
@@ -51,12 +53,13 @@
             </div>
           </div>
 
-          <div class="row" style="padding-top: 5%;">
+          <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
-                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()" placeholder="Batch Name">
+                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()"
+                  placeholder="Batch Name">
                   <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
                   </ng-option>
                 </ng-select>
@@ -67,69 +70,103 @@
             </div>
 
             <div class="col-md-6" [hidden]="flag">
-              <label class="required">Second Batch Name:</label>
-              <ng-select name="batchId" formControlName="batchName2" (change)="temp1()">
-                <ng-option *ngFor="let b of qualityParty2[0]" [value]="b">{{b.batchId}}
-                </ng-option>
-              </ng-select>
-
+              <div class="form-group">
+                <label class="required">Second Batch Name:</label>
+                <ng-select name="batchId" formControlName="batchName2" (change)="temp1()">
+                  <ng-option *ngFor="let b of qualityParty2[0]" [value]="b">{{b.batchId}}
+                  </ng-option>
+                </ng-select>
+              </div>
             </div>
 
 
           </div>
+          <div class="batch-shuffle">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="example-container">
+                  <h2 class="batch-text">Batch Part 1</h2>
 
+                  <div cdkDropList [cdkDropListData]="batches" #part1List="cdkDropList"
+                    [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <div *ngFor="let item of batches" cdkDrag >
+                          <div class="batch-2"  *ngIf="item.batchId==batchId2">
+                            Batch ID: {{item.id}}, Meter:
+                            {{item.mtr}},
+                            Weight: {{item.wt}}
+                          </div>
+                          <div class="example-box" *ngIf="item.batchId!=batchId2">
+                            Batch ID: {{item.id}}, Meter:
+                            {{item.mtr}},
+                            Weight: {{item.wt}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="example-container ">
+                  <h2 class="batch-text">Batch Part 2</h2>
 
+                  <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2" #part2List="cdkDropList"
+                    [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
 
-
-
-
-          <div class="example-container" style="padding-top: 7%;">
-            <h2>Batch Part 1</h2>
-
-            <div cdkDropList [cdkDropListData]="batches" #part1List="cdkDropList" [cdkDropListConnectedTo]="[part2List]"
-              class="example-list" (cdkDropListDropped)="drop($event)">
-
-              <div class="example-box" *ngFor="let item of batches" cdkDrag>Batch ID: {{item.id}}, Meter: {{item.mtr}},
-                Weight: {{item.wt}}</div>
+                    <div  *ngFor="let item of part2" cdkDrag 
+                    [ngClass]="item.batchId==batchId1 ? 'batch-2' : 'example-box' ">
+                        Batch ID: {{item.id}}, Meter:
+                        {{item.mtr}},
+                        Weight: {{item.wt}}
+                    </div>
+                  </div>
+                 </div>
+              </div>
             </div>
           </div>
 
-
-
-
-
-          <div class="example-container" style="padding-top: 7%;padding-left: 2%;">
-            <h2>Batch Part 2</h2>
-
-            <div cdkDropList class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList"
-              [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
-
-              <div class="example-box" *ngFor="let item of part2" cdkDrag>Batch ID: {{item.id}}, Meter: {{item.mtr}},
-                Weight: {{item.wt}}</div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-3 col-3">
+                  <div class="total-shuffle">
+                    <label>Total</label>
+                  </div>
+                </div>
+                <div class="col-md-9 col-9">
+                  <div class="batch-1-input">
+                    <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true"
+                      style="background-color: lightgray;" class="mtr-wei">
+                    <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true"
+                      style="background-color: lightgray;" class="mtr-wei">
+                  </div>
+                </div>
+              </div>
             </div>
 
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="batch-2-input">
+                    <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true"
+                      style="background-color: lightgray;" class="mtr-wei">
+                    <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true"
+                      style="background-color: lightgray;" class="mtr-wei">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="btn-split-merge">
+                    <button class="btn btn-primary btn-sm btn-design" (click)="splitsubmit()"
+                      [hidden]="btnFlag">Split</button>
 
-          </div>
-          <hr>
-          <div class="col-md-12">
-            <label class="required" style="padding-right: 2%;margin-right: 10%;">Total:</label>
-            <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true"
-              style="width: 5%;margin-right: 5%;background-color: lightgray;">
-            <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true"
-              style="width: 5%;background-color: lightgray;">
-            <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true"
-              style="width: 5%;margin-right: 5%;margin-left: 25%;background-color: lightgray;">
-            <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true"
-              style="width: 5%;background-color: lightgray;">
-
-          </div>
-
-
-          <div class="col-md-12" style="text-align: right;">
-            <button class="btn btn-primary btn-sm" (click)="splitsubmit()" [hidden]="btnFlag">Split</button>
-          </div>
-          <div class="col-md-12" style="text-align: right;">
-            <button class="btn btn-primary btn-sm" (click)="mergesubmit()" [hidden]="!btnFlag">Merge</button>
+                    <button class="btn btn-primary btn-sm btn-design" (click)="mergesubmit()"
+                      [hidden]="!btnFlag">Merge</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </nb-card-body>

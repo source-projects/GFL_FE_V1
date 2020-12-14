@@ -1,113 +1,107 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div *ngIf="currentQualityId == null; else updateQ">
-            <h2 class="nb-text">ADD QUALITY</h2>
+            <h2 class="nb-text">Add Quality</h2>
         </div>
         <ng-template #updateQ>
-            <h2 class="nb-text">UPDATE QUALITY</h2>
+            <h2 class="nb-text">Update Quality</h2>
         </ng-template>
     </nb-card-header>
     <nb-card-body>
-        <div class="container">
-            <form [formGroup]="addEditQualityForm" (ngSubmit)="addQuality()">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="required">Quality ID</label>
-                        <input type="text" class="form-control" id="qualityId" formControlName="qualityId"
-                            placeholder="Enter Quality ID"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityId').invalid )}">
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addEditQualityForm.get('qualityId').invalid || (addEditQualityForm.get('qualityId').dirty || addEditQualityForm.get('qualityId').touched) )">
-                            <span>Quality ID is required</span>
-                        </div>
+
+        <form [formGroup]="addEditQualityForm" (ngSubmit)="addQuality()">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="required">Quality ID</label>
+                    <input type="text" class="form-control" id="qualityId" formControlName="qualityId"
+                        placeholder="Enter Quality ID"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityId').invalid )}">
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (addEditQualityForm.get('qualityId').invalid || (addEditQualityForm.get('qualityId').dirty || addEditQualityForm.get('qualityId').touched) )">
+                        <span>Quality ID is required</span>
                     </div>
-                    <div class="form-group  col-md-6">
-                        <label class="required">Quality Name</label>
-                        <input type="text" class="form-control" id="qualityName" formControlName="qualityName"
-                            placeholder="Enter Quality Name"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityName').invalid )}">
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addEditQualityForm.get('qualityName').invalid || (addEditQualityForm.get('qualityName').dirty || addEditQualityForm.get('qualityName').touched))">
-                            <span>Quality Name is required</span>
-                        </div>
+                </div>
+                <div class="form-group  col-md-4">
+                    <label class="required">Quality Name</label>
+                    <input type="text" class="form-control" id="qualityName" formControlName="qualityName"
+                        placeholder="Enter Quality Name"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityName').invalid )}">
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (addEditQualityForm.get('qualityName').invalid || (addEditQualityForm.get('qualityName').dirty || addEditQualityForm.get('qualityName').touched))">
+                        <span>Quality Name is required</span>
+                    </div>
+                </div>
+            
+                <div class="form-group col-md-4">
+                    <label class="required">Quality Type</label>
+                    <input type="text" disabled id="qualityType" formControlName="qualityType" class="form-control"
+                        aria-placeholder="Select Quality type"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityType').invalid )}">
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (addEditQualityForm.get('qualityType').invalid || (addEditQualityForm.get('qualityType').dirty || addEditQualityForm.get('qualityType').touched))">
+                        <span>Quality type is required</span>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="required">Quality Type</label>
-                        <input type="text" disabled id="qualityType" formControlName="qualityType" class="form-control"
-                            aria-placeholder="Select Quality type"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('qualityType').invalid )}">
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addEditQualityForm.get('qualityType').invalid || (addEditQualityForm.get('qualityType').dirty || addEditQualityForm.get('qualityType').touched))">
-                            <span>Quality type is required</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="required">Party Name</label>
-                        <select name="partyId" id="partyId" formControlName="partyId" class="form-control"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('partyId').invalid )}"
-                            placeholder="Party Name">
-                            <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
-                        </select>
-                        <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
+                <div class="form-group col-md-4">
+                    <label class="required">Party Name</label>
+                    <select name="partyId" id="partyId" formControlName="partyId" class="form-control"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('partyId').invalid )}"
+                        placeholder="Party Name">
+                        <option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</option>
+                    </select>
+                    <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
                 </ng-select> -->
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addEditQualityForm.get('partyId').invalid || (addEditQualityForm.get('partyId').dirty || addEditQualityForm.get('partyId').touched))">
-                            <span>Party Name is required</span>
-                        </div>
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (addEditQualityForm.get('partyId').invalid || (addEditQualityForm.get('partyId').dirty || addEditQualityForm.get('partyId').touched))">
+                        <span>Party Name is required</span>
+                    </div>
+                </div>
+           
+                <div class="form-group col-md-4">
+                    <label class="required">Wt / 100 mtrs</label>
+                    <input type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control"
+                        placeholder="Wt Per 100m"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('wtPer100m').invalid )}"
+                        min="0">
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && (addEditQualityForm.get('wtPer100m').invalid || (addEditQualityForm.get('wtPer100m').dirty || addEditQualityForm.get('wtPer100m').touched))">
+                        <span>Wt / 100 mtrs is required</span>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="required">Wt / 100 mtrs</label>
-                        <input type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control"
-                            placeholder="Wt Per 100m"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('wtPer100m').invalid )}"
-                            min="0">
-                        <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addEditQualityForm.get('wtPer100m').invalid || (addEditQualityForm.get('wtPer100m').dirty || addEditQualityForm.get('wtPer100m').touched))">
-                            <span>Wt / 100 mtrs is required</span>
-                        </div>
+                <div class="form-group col-md-4">
+                    <label>Remark</label>
+                    <input type="text" id="remark" formControlName="remark" class="form-control input-sm"
+                        placeholder="Enter Remark">
+                </div>
+           
+                <div class="form-group col-md-4">
+                    <label class="required">Unit</label>
+                    <select id="unit" formControlName="unit" class="form-control"
+                        [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('unit').invalid )}"
+                        placeholder="Unit">
+                        <option value="mtr">Meter</option>
+                        <option value="wt">Weight</option>
+                    </select>
+                    <div class="required-class" *ngIf="formSubmitted && addEditQualityForm.get('unit').invalid">
+                        <span>Unit is required.</span>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center">
+                    <div class="padding-bt-tp">
+                        <input *ngIf="currentQualityId == null; else updateqty" type="submit"
+                            class="btn btn-primary btn-sm btn-design" value="ADD">&nbsp;&nbsp;&nbsp;
+                        <ng-template #updateqty><input type="button" (click)="updateQuality()"
+                                class="btn btn-primary btn-sm btn-design" value="UPDATE">&nbsp;&nbsp;&nbsp;
+                        </ng-template>
+                        <button class="btn btn-primary btn-sm btn-design" routerLink="/pages/quality">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-                    <div class="form-group col-md-6">
-                        <label>Remark</label>
-                        <input type="text" id="remark" formControlName="remark" class="form-control input-sm"
-                            placeholder="Enter Remark">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="required">Unit</label>
-                        <select id="unit" formControlName="unit" class="form-control"
-                            [ngClass]="{'is-invalid':formSubmitted && (addEditQualityForm.get('unit').invalid )}" placeholder="Unit">
-                            <option value="mtr">Meter</option>
-                            <option value="wt">Weight</option>
-                        </select>
-                        <div class="required-class" *ngIf="formSubmitted && addEditQualityForm.get('unit').invalid">
-                            <span>Unit is required.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center">
-                        <div class="padding-bt-tp">
-                            <input *ngIf="currentQualityId == null; else updateqty" type="submit"
-                                class="btn btn-primary btn-sm btn-design" value="ADD">&nbsp;&nbsp;&nbsp;
-                            <ng-template #updateqty><input type="button" (click)="updateQuality()"
-                                    class="btn btn-primary btn-sm btn-design" value="UPDATE">&nbsp;&nbsp;&nbsp;
-                            </ng-template>
-                            <button class="btn btn-primary btn-sm btn-design"
-                                routerLink="/pages/quality">CANCEL</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
     </nb-card-body>
 </nb-card>

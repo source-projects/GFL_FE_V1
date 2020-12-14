@@ -16,6 +16,7 @@ jobs:
           node-version: '12.x'
       - name: Install dependencies and create a build
         run: |
+          rm -rf node_modules
           npm install
           npm run build --prod
         
@@ -32,5 +33,6 @@ jobs:
         if: failure()
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"frontend: build failed for ${{ github.actor }} pr to development"}' https://hooks.slack.com/services/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
-          
+          cat /home/runner/.npm/_logs/*
+          cat /tmp/ng-WlXLTY/angular-errors.log
           
