@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2,ViewContainerRef } from "@angular/core";
 import { User, Permissions } from "app/@theme/model/user";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "app/@theme/services/user.service";
@@ -99,7 +99,8 @@ export class AddEditUserComponent implements OnInit {
     private userService: UserService,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -532,6 +533,11 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
+    }
   }
 
   addUser(myForm) {
@@ -554,6 +560,11 @@ export class AddEditUserComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
+    }
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { StockBatch, BatchData } from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
@@ -76,7 +76,8 @@ export class AddEditStockBatchComponent implements OnInit {
     private qualityService: QualityService,
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
@@ -411,6 +412,11 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       );
     }
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
+    }
   }
 
   updateStockBatch(stockBatch) {
@@ -450,6 +456,11 @@ export class AddEditStockBatchComponent implements OnInit {
           this.loading = false;
         }
       );
+    }
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
     }
   }
 
