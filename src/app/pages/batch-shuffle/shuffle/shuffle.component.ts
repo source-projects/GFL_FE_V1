@@ -120,11 +120,11 @@ export class ShuffleComponent implements OnInit {
           this.party = data["data"];
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
       }
     );
   }
@@ -137,11 +137,11 @@ export class ShuffleComponent implements OnInit {
 
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
       }
     );
   }
@@ -225,12 +225,12 @@ export class ShuffleComponent implements OnInit {
 
 
         }
-        else {
-          this.toastr.error(data['msg'])
-        }
+        // else {
+        //   this.toastr.error(data['msg'])
+        // }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
       }
     );
   }
@@ -240,11 +240,11 @@ export class ShuffleComponent implements OnInit {
   getVal() {
 
     if (this.shuffleForm.controls['qualityName'].value == null) {
-      this.toastr.error("Please select a Quality");
+      // this.toastr.error("Please select a Quality");
     }
 
     else if (this.shuffleForm.controls['partyName'].value == null) {
-      this.toastr.error("Please select a Party");
+      // this.toastr.error("Please select a Party");
     }
     else {
 
@@ -346,12 +346,12 @@ export class ShuffleComponent implements OnInit {
             this.batches = data["data"];
           }
           else {
-            this.toastr.error(data['msg'])
+            // this.toastr.error(data['msg'])
           }
           this.setBatchFlag = 1;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
         }
       );
     }
@@ -384,11 +384,11 @@ export class ShuffleComponent implements OnInit {
               this.batches = data["data"];
             }
             else {
-              this.toastr.error(data['msg'])
+              // this.toastr.error(data['msg'])
             }
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error)
+            // this.toastr.error(errorData.Serever_Error)
           }
         );
       }
@@ -407,12 +407,12 @@ export class ShuffleComponent implements OnInit {
             this.batches = data["data"];
           }
           else {
-            this.toastr.error(data['msg'])
+            // this.toastr.error(data['msg'])
           }
           this.setBatchFlag = 1;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
         }
       );
     }
@@ -426,12 +426,12 @@ export class ShuffleComponent implements OnInit {
               this.part2 = data["data"];
             }
             else {
-              this.toastr.error(data['msg'])
+              // this.toastr.error(data['msg'])
             }
 
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error)
+            // this.toastr.error(errorData.Serever_Error)
           }
         );
       }

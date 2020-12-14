@@ -88,16 +88,15 @@ export class PartyComponent implements OnInit {
           this.partyList = data["data"];
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
-            this.loading = false;
+    
         }
         else {
-          this.toastr.error(data['msg'])
-          this.loading = false;
+          // this.toastr.error(data['msg'])
         }
-        
+        this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -127,25 +126,31 @@ export class PartyComponent implements OnInit {
   getDeleteAccess(){
     if(this.partyGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownDelete;
     }
      if( this.partyGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
      if(this.partyGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
     if(this.partyGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
      if(this.partyGuard.accessRights('edit group')){
       this.groupEdit=false;
+      this.hiddenEdit=this.groupEdit;
 
     }
      if(this.partyGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 
@@ -157,10 +162,6 @@ export class PartyComponent implements OnInit {
       this.disabled=true;
     }
   }
-  // var disableButton = function() {
-    //   this.disabled = true;
-    //   OnClientClick="disableButton()"
-    // }
   onChange(event){
     this.partyList = [];
     switch(event){

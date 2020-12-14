@@ -94,7 +94,7 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.stockBatch.qualityId == null) {
 
       this.flag = 1;
-      this.toastr.error("Please select quality first");
+      // this.toastr.error("Please select quality first");
     }
     else {
       this.flag = 0;
@@ -122,7 +122,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
           },
           error => {
-            this.toastr.error(errorData.Serever_Error);
+            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         )
@@ -174,13 +174,13 @@ export class AddEditStockBatchComponent implements OnInit {
           this.loading = false;
         } 
         else {
-          this.toastr.error(data['msg']);
+          // this.toastr.error(data['msg']);
         this.loading = false;
       }
 
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -231,16 +231,16 @@ export class AddEditStockBatchComponent implements OnInit {
             this.qualityList = data["data"];
             this.loading = false;
           } else {
-            this.toastr.error(errorData.Not_added);
+            // this.toastr.error(errorData.Not_added);
             this.loading = false;
           }
         } else {
-          this.toastr.error(errorData.Internal_Error);
+          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -248,7 +248,7 @@ export class AddEditStockBatchComponent implements OnInit {
   checkDuplicates() {
     for (let x = 0; x < this.validationCardRowIndex + 1; x++) {
       if ((this.stockDataValues[this.validationCardRowIndex].batchId == this.stockDataValues[x].batchId) && x != this.validationCardRowIndex) {
-        this.toastr.error("Cannot add duplicate batch No.");
+        // this.toastr.error("Cannot add duplicate batch No.");
         this.stockDataValues[this.validationCardRowIndex].batchId = null;
         break;
       }
@@ -264,12 +264,12 @@ export class AddEditStockBatchComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data['msg']);
+          // this.toastr.error(data['msg']);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -278,7 +278,7 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.stockBatch.qualityId == null) {
 
       this.flag = 1;
-      this.toastr.error("Please select quality first");
+      // this.toastr.error("Please select quality first");
     }
     else {
       this.flag = 0;
@@ -401,7 +401,7 @@ export class AddEditStockBatchComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
           } else {
             this.stockBatchArray = [];
-            this.toastr.error(data['msg']);
+            // this.toastr.error(data['msg']);
 
           }
         },
@@ -469,7 +469,7 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     };
     if (this.flag == 1 || this.stockDataValues[this.validationCardRowIndex].batchId == null || this.stockDataValues[this.validationCardRowIndex].batchMW[this.ValidationTableRowIndex++].mtr == null) {
-      this.toastr.error("Please fill all the required fields");
+      // this.toastr.error("Please fill all the required fields");
     }
     else {
       //item.unshift({...ob});
