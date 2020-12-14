@@ -132,7 +132,7 @@
                                         <div class="col-md-12 col-12">
                                             <div>
                                                 <ngx-datatable #table
-                                                    class="material common-table datatable-auto-height box-shadow-none box-mr-bt"
+                                                    class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height"
                                                     [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="31"
                                                     [scrollbarV]="true">
 
@@ -200,19 +200,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 mobile-btn-center">
-
-                                <button *ngIf="currentStockBatch == null" type="button"
-                                    class="btn btn-primary btn-sm btn-design"
-                                    (click)="addStockBatch(myForm)">ADD</button>
-                                    <button *ngIf="currentStockBatch != null" type="button"
-                                    class="btn btn-primary btn-sm btn-design"
-                                    (click)="updateStockBatch(myForm)">Update</button>
+                        <div class="col-md-12 mobile-btn-center text-btn-right mt-16">
 
                             <button type="button" class="btn btn-primary btn-sm btn-design"
-                                routerLink="/pages/stock-batch">CANCEL</button>&nbsp;&nbsp;&nbsp;
+                                routerLink="/pages/stock-batch">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design" *ngIf="addFlag"
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                                <button *ngIf="currentStockBatch == null" type="button"
+                                class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)">SAVE</button>
                         </div>
                     </div>
                 </div>
