@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component,Renderer2, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -48,7 +48,8 @@ export class AddEditProgramComponent implements OnInit {
     private programService: ProgramService,
     private route: Router,
     private commonService: CommonService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private renderer: Renderer2
   ) {
     this.programRecordArray.push(this.programRecord);
     this.programValues.programRecords = this.programRecordArray;
@@ -498,8 +499,11 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    } else {
-      return;
+    } 
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
     }
   }
 
@@ -529,8 +533,12 @@ export class AddEditProgramComponent implements OnInit {
           this.loading = false;
         }
       );
-    } else {
-      return;
+    } 
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
+
     }
   }
 }

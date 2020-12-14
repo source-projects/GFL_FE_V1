@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { StockBatch, BatchData, BatchMrtWt, BatchCard } from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
@@ -77,9 +77,9 @@ export class AddEditStockBatchComponent implements OnInit {
     private qualityService: QualityService,
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
-    private commonService: CommonService
-  ) {
-  }
+    private commonService: CommonService,
+    private renderer: Renderer2
+  ) { }
 
   ngOnInit(): void {
     this.addFlag = window.location.href.endsWith("add");
@@ -402,6 +402,11 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       );
     }
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
+    }
   }
 
   updateStockBatch(stockBatch) {
@@ -431,14 +436,22 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatchArray = [];
             this.toastr.error(data["msg"]);
           }
+          this.loading = false;
         },
         (error) => {
           this.stockBatchArray = [];
           this.toastr.error(errorData.Update_Error);
+          this.loading = false;
         }
       );
+      this.loading = false; 
     }
-    this.loading = false;
+    
+    else
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
+    }
   }
 
   addNew(e, myForm) {
