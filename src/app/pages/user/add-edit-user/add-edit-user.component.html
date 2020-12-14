@@ -174,8 +174,14 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div>
-            <h2 class="nb-text" style="display: inline;">User Permission</h2>&nbsp;&nbsp;
-            <nb-checkbox (change)="selectAllPermissions($event)" ></nb-checkbox>
+            <div class="row">
+                <div class="col-md-11 col-10">
+                    <h2 class="nb-text" style="display: inline;">User Permission</h2>
+                </div>
+                <div class="col-md-1 col-2 user-per-check-display">
+                    <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check"></nb-checkbox>
+                </div>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
