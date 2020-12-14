@@ -17,12 +17,12 @@ import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
-
+  public loading = false;
   stockList;
   stock=[];
   headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
   flag = false;
-  
+  disabled=false;
 
   tablestyle = "bootstrap";
   radioSelect = 1;
@@ -63,11 +63,19 @@ export class StockBatchComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
+    this.getAddAcess();
     this.getStockBatchList(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.stockBatchGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event) {
     this.stockList = [];
     switch (event) {
@@ -100,6 +108,7 @@ export class StockBatchComponent implements OnInit {
   }
 
   getStockBatchList(id, getBy) {
+    this.loading = true;
     this.stockBatchService.getAllStockBatchList(id, getBy).subscribe(
       data => {
         if (data["success"]) {
@@ -109,18 +118,19 @@ export class StockBatchComponent implements OnInit {
             this.stockList[index].billDate = new Date(element.billDate).toDateString();
             this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
+            this.loading = false;
           });
-          console.log(this.stockList)
           this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
             billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
-            console.log(this.stock);
-           
+            this.loading = false;
           
         } else
           this.toastr.error(data["msg"]);
+          this.loading = false;
       },
       error => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     )
   }

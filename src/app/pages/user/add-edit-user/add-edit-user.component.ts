@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
-
+  public loading = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -27,7 +27,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status;
-
+  //allUserPermissionFlag=0;
   user: User = new User();
 
   permissions: Permissions = new Permissions();
@@ -115,16 +115,20 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getAllUserHrads(){
+    this.loading = true;
     this.userService.getAllHead().subscribe(
       data=>{
         if(data["success"]){
           this.userHradIdList = data["data"]
+          this.loading = false;
         }
         else
           this.toastr.error(data["msg"])
+          this.loading = false;
       },
       error=>{
         this.toastr.error(errorData.Internal_Error)
+        this.loading = false;
       }
     )
   }
@@ -136,6 +140,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getUserHrads(event){
+    this.loading = true;
     if(this.user.isUserHead){
       if(!this.userHradIdList){
         this.userService.getAllHead().subscribe(
@@ -143,12 +148,15 @@ export class AddEditUserComponent implements OnInit {
             if(data["success"]){
               this.userHradIdList = data["data"]
               this.user.isUserHead = true;
+              this.loading = false;
             }
             else
               this.toastr.error(data["msg"])
+              this.loading = false;
           },
           error=>{
             this.toastr.error(errorData.Internal_Error)
+            this.loading = false;
           }
         )
       }
@@ -200,6 +208,27 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewGroup = false;
   }
 
+  //select all user permissions
+  selectAllPermissions(e){
+      
+    if(e.target.checked==true)
+    {
+      for(var i=0;i<this.permissionArray.length;i++)
+      {
+        this.setPermissionTrue(i);
+        this.checkIfAllSelected(i);
+      }
+      
+    }
+    else{
+      for(var i=0;i<this.permissionArray.length;i++)
+      {
+        this.setPermissionFalse(i);
+        this.permissionArray[i].selectAll = false;
+      }
+    }
+    
+  }
   checkUncheckAll(module, e) {
     switch (module) {
       case "Party": {
@@ -317,6 +346,7 @@ export class AddEditUserComponent implements OnInit {
                     if(this.permissionArray[i].deleteGroup)
                       if(this.permissionArray[i].deleteAll)
                         this.permissionArray[i].selectAll = true;
+                        
   }
 
   getCheckedItem() {
@@ -450,6 +480,7 @@ export class AddEditUserComponent implements OnInit {
 }
 
   getCurrentUser() {
+    this.loading = true;
     if (this.currentUserId != null) {
       this.userService.getUserById(this.currentUserId).subscribe(
         (data) => {
@@ -461,19 +492,22 @@ export class AddEditUserComponent implements OnInit {
             else
               this.user.isUserHead = false;
             this.getCurrentCheckValue(this.user);
-
+            this.loading =false;
           } else {
             this.toastr.error(errorData.Internal_Error);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
   }
 
   updateUser(userForm) {
+    this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
       this.user.updatedBy = this.userId.userId;
@@ -486,12 +520,15 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
+            this.loading = false;
           } else {
             this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     }
@@ -521,16 +558,20 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getDesignation() {
+    this.loading = true;
     this.userService.getDesignation().subscribe(
       (data) => {
         if (data["success"]) {
           this.desiList = data["data"];
+          this.loading = false;
         } else {
           this.toastr.error(errorData.Internal_Error);
+          this.loading = false;
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }

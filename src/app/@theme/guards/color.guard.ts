@@ -28,7 +28,6 @@ export class ColorGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('color');
     this.permis = this.commonService.decToBin(permission);
     let PermissionName = route.data["PermissionName"];
-    console.log(PermissionName);  
    switch (PermissionName[0]) {
      case 'view':
        if (this.permis[0] == '1')
@@ -111,8 +110,6 @@ export class ColorGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('color');
     this.permis = this.commonService.decToBin(permission);
-    
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')
