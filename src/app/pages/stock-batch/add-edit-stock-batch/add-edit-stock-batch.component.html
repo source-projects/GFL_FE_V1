@@ -201,8 +201,12 @@
                     <div class="row">
                         <div class="col-md-12 mobile-btn-center">
 
-                            <button *ngIf="currentStockBatch == null" type="button"
-                                class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)">ADD</button>
+                                <button *ngIf="currentStockBatch == null" type="button"
+                                    class="btn btn-primary btn-sm btn-design"
+                                    (click)="addStockBatch(myForm)">ADD</button>
+                                    <button *ngIf="currentStockBatch != null" type="button"
+                                    class="btn btn-primary btn-sm btn-design"
+                                    (click)="updateStockBatch(myForm)">Update</button>
 
                             <button type="button" class="btn btn-primary btn-sm btn-design"
                                 routerLink="/pages/stock-batch">CANCEL</button>&nbsp;&nbsp;&nbsp;
