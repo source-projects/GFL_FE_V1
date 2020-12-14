@@ -208,6 +208,8 @@
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                                 <button *ngIf="currentStockBatch == null" type="button"
                                 class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)">SAVE</button>
+                            <button *ngIf="currentStockBatch != null" type="button"
+                                class="btn btn-primary btn-sm btn-design" (click)="updateStockBatch(myForm)">UPDATE</button>
                         </div>
                     </div>
                 </div>
