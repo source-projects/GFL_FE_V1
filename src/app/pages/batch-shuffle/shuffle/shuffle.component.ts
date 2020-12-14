@@ -72,7 +72,7 @@ export class ShuffleComponent implements OnInit {
       totalwt2: new FormControl(),
       updatedBy: new FormControl(null),
       newBatchName: new FormControl(),
-      totalrowsPart2:new FormControl(),
+      totalrowsPart2: new FormControl(),
       totalrowsPart1: new FormControl()
     });
   }
@@ -176,6 +176,7 @@ export class ShuffleComponent implements OnInit {
       this.shuffleForm.controls['totalwt2'].reset();
       this.shuffleForm.controls['totalmtr1'].reset();
       this.shuffleForm.controls['totalmtr2'].reset();
+      this.shuffleForm.controls['qualityName'].reset();
       this.getQualtiyList();
       this.getPartyList();
     }
@@ -281,7 +282,7 @@ export class ShuffleComponent implements OnInit {
     // let temp = this.shuffleForm.controls['qualityName'].value;
     // this.qId=QualityId;
 
-    this.qId=this.shuffleForm.controls['qualityName'].value;
+    this.qId = this.shuffleForm.controls['qualityName'].value;
     if (event == undefined) {
 
       this.shuffleForm.controls['batchName1'].reset();
@@ -299,7 +300,7 @@ export class ShuffleComponent implements OnInit {
       this.shuffleForm.controls['totalwt2'].reset();
       this.shuffleForm.controls['totalmtr1'].reset();
       this.shuffleForm.controls['totalmtr2'].reset();
-      
+
       // this.quality=[];
       this.getPartyList();
 
@@ -307,26 +308,26 @@ export class ShuffleComponent implements OnInit {
 
 
     if (this.qId != null) {
-      //console.log(this.qualityParty);
+
       let temp;
       this.programService.getPartyByQuality(this.qId).subscribe(
 
-              (data) => {
-                if (data["success"]) {
-      
-                  temp = data.data.partyName;
-                  this.shuffleForm.controls['partyName'].setValue(temp);
-                  this.pId=data.data.partyId;
-                }
-                else {
-                  this.toastr.error(data['msg'])
-                }
-              },
-              (error) => {
-                this.toastr.error(errorData.Serever_Error)
-              }
-            );
-    
+        (data) => {
+          if (data["success"]) {
+
+            temp = data.data.partyName;
+            this.shuffleForm.controls['partyName'].setValue(temp);
+            this.pId = data.data.partyId;
+          }
+          else {
+            this.toastr.error(data['msg'])
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      );
+
 
     }
     if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid) {
@@ -380,7 +381,7 @@ export class ShuffleComponent implements OnInit {
             this.qualityParty2.push(this.qualityParty);
             this.qualityParty2[0].splice(this.index, 1);
 
-            //console.log(this.qualityParty2);
+
           }
 
 
@@ -418,19 +419,19 @@ export class ShuffleComponent implements OnInit {
     for (this.i = 0; this.i <= this.batches.length - 1; this.i++) {
 
       this.sum += this.batches[this.i].mtr;
-      this.shuffleForm.patchValue({ totalmtr1: this.sum });
+      this.shuffleForm.patchValue({ totalmtr1: this.sum.toFixed(2) });
     }
     if (this.batches.length == 0) {
-      this.shuffleForm.patchValue({ totalmtr1: this.sum });
+      this.shuffleForm.patchValue({ totalmtr1: this.sum.toFixed(2) });
     }
     this.sum = 0;
     for (this.i = 0; this.i <= this.part2.length - 1; this.i++) {
 
       this.sum += this.part2[this.i].mtr;
-      this.shuffleForm.patchValue({ totalmtr2: this.sum });
+      this.shuffleForm.patchValue({ totalmtr2: this.sum.toFixed(2) });
     }
     if (this.part2.length == 0) {
-      this.shuffleForm.patchValue({ totalmtr2: this.sum });
+      this.shuffleForm.patchValue({ totalmtr2: this.sum.toFixed(2) });
     }
 
 
@@ -440,19 +441,19 @@ export class ShuffleComponent implements OnInit {
     for (this.i = 0; this.i <= this.batches.length - 1; this.i++) {
 
       this.sum += this.batches[this.i].wt;
-      this.shuffleForm.patchValue({ totalwt1: this.sum });
+      this.shuffleForm.patchValue({ totalwt1: this.sum.toFixed(2) });
     }
     if (this.batches.length == 0) {
-      this.shuffleForm.patchValue({ totalwt1: this.sum });
+      this.shuffleForm.patchValue({ totalwt1: this.sum.toFixed(2) });
     }
     this.sum = 0;
     for (this.i = 0; this.i <= this.part2.length - 1; this.i++) {
 
       this.sum += this.part2[this.i].wt;
-      this.shuffleForm.patchValue({ totalwt2: this.sum });
+      this.shuffleForm.patchValue({ totalwt2: this.sum.toFixed(2) });
     }
     if (this.part2.length == 0) {
-      this.shuffleForm.patchValue({ totalwt2: this.sum });
+      this.shuffleForm.patchValue({ totalwt2: this.sum.toFixed(2) });
     }
 
   }
@@ -473,7 +474,7 @@ export class ShuffleComponent implements OnInit {
 
 
     this.getBatches(this.cId1, this.batchId1);
-    
+
   }
   temp1() {
     this.bId2 = this.shuffleForm.controls['batchName2'].value;
@@ -486,8 +487,8 @@ export class ShuffleComponent implements OnInit {
     this.cId2 = this.bId2["controlId"];
     this.batchId2 = this.bId2["batchId"];
     this.getBatches1(this.cId2, this.batchId2);
-    
-    
+
+
   }
 
 
@@ -504,7 +505,7 @@ export class ShuffleComponent implements OnInit {
             this.shuffleForm.controls['totalrowsPart1'].setValue(this.batches.length);
             this.shuffleForm.controls['totalrowsPart2'].setValue(this.part2.length);
 
-    
+
           }
           else {
             this.toastr.error(data['msg'])
@@ -589,6 +590,10 @@ export class ShuffleComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.part2 = data["data"];
+              this.findmtrsum();
+              this.findwtsum();
+              this.shuffleForm.controls['totalrowsPart1'].setValue(this.batches.length);
+
               this.shuffleForm.controls['totalrowsPart2'].setValue(this.part2.length);
 
             }
