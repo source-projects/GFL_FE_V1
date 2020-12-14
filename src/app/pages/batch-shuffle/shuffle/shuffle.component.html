@@ -18,7 +18,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Party Name:</label>
-                <ng-select name="partyId" formControlName="partyName" (change)="dropSelect($event)" placeholder="Party Name
+                <ng-select name="partyId" formControlName="partyName" (change)="dropSelectParty($event)" placeholder="Party Name
                 ">
 
                   <ng-option *ngFor="let p of party" [value]="p.id"> {{p.partyName}}
@@ -32,10 +32,10 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Quality Name:</label>
-                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)"
+                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelectQuality($event)"
                   placeholder="Quality Name">
 
-                  <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
+                  <ng-option *ngFor="let q of quality" [value]="q.id?q.id:q.qualityEntryId">{{q.partyName}}-{{q.qualityId}}-{{q.qualityName}}
                   </ng-option>
                 </ng-select>
                 <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
@@ -93,13 +93,13 @@
                       <div class="col-md-12 col-12">
                         <div *ngFor="let item of batches" cdkDrag >
                           <div class="batch-2"  *ngIf="item.batchId==batchId2">
-                            Batch ID: {{item.id}}, Meter:
-                            {{item.mtr}},
+                             Meter:
+                            {{item.mtr}}    
                             Weight: {{item.wt}}
                           </div>
                           <div class="example-box" *ngIf="item.batchId!=batchId2">
-                            Batch ID: {{item.id}}, Meter:
-                            {{item.mtr}},
+                             Meter:
+                            {{item.mtr}}    
                             Weight: {{item.wt}}
                           </div>
                         </div>
@@ -117,8 +117,8 @@
 
                     <div  *ngFor="let item of part2" cdkDrag 
                     [ngClass]="item.batchId==batchId1 ? 'batch-2' : 'example-box' ">
-                        Batch ID: {{item.id}}, Meter:
-                        {{item.mtr}},
+                         Meter:
+                        {{item.mtr}}  
                         Weight: {{item.wt}}
                     </div>
                   </div>
@@ -143,6 +143,14 @@
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
                 </div>
+                <div class="total-shuffle" style="margin-left: 6%;">
+                  <label>Total Rows</label>
+                  <input type="text" formControlName="totalrowsPart1" [readonly]="true"
+                      style="background-color: lightgray;" class="mtr-wei">
+                      <input type="text" formControlName="totalrowsPart2" [readonly]="true" 
+                      style="background-color: lightgray; " class="mtr-wei">
+                </div>
+                
               </div>
             </div>
 
@@ -160,11 +168,14 @@
                   <div class="btn-split-merge">
                     <button class="btn btn-primary btn-sm btn-design" (click)="splitsubmit()"
                       [hidden]="btnFlag">Split</button>
-
                     <button class="btn btn-primary btn-sm btn-design" (click)="mergesubmit()"
                       [hidden]="!btnFlag">Merge</button>
                   </div>
+                  <input type="text" placeholder="New Batch Name" formControlName="newBatchName" style="background-color: lightgray;" [hidden]="btnFlag">
+
                 </div>
+
+                
               </div>
             </div>
           </div>
