@@ -90,9 +90,10 @@
                     [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
                     <div class="row">
                       <div class="col-md-12 col-12">
-                        <div class="example-box" *ngFor="let item of batches" cdkDrag>Batch ID: {{item.id}}, Meter:
-                          {{item.mtr}},
-                          Weight: {{item.wt}}</div>
+                        <div class="example-box" *ngFor="let item of batches" cdkDrag><span class="
+                          mt-w">Meter:
+                          {{item.mtr}}, </span>
+                          <span class="mt-w">Weight: {{item.wt}}</span></div>
                       </div>
                     </div>
                   </div>
@@ -105,9 +106,10 @@
                   <div cdkDropList class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList"
                     [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
 
-                    <div class="example-box" *ngFor="let item of part2" cdkDrag>Batch ID: {{item.id}}, Meter:
-                      {{item.mtr}},
-                      Weight: {{item.wt}}</div>
+                    <div class="example-box" *ngFor="let item of part2" cdkDrag><span class="
+                      mt-w">Meter:
+                      {{item.mtr}}, </span>
+                      <span class="mt-w">Weight: {{item.wt}}</span></div>
                   </div>
 
 
@@ -126,8 +128,10 @@
                 </div>
                 <div class="col-md-9 col-9">
                   <div class="batch-1-input">
+                    <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
+                      <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
@@ -139,8 +143,10 @@
               <div class="row">
                 <div class="col-md-9">
                   <div class="batch-2-input">
+                    <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
+                      <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>

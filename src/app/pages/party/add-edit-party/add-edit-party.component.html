@@ -98,7 +98,7 @@
             </div>
           </div>
 
-          
+
 
 
           <div class="form-group col-md-4">
@@ -128,7 +128,7 @@
               <span>Master Name is required</span>
             </div>
           </div>
-          
+
         </div>
 
         <div class="creditors-debitors">
@@ -150,13 +150,14 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12 mobile-btn-center">
-            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
-              style="margin-right:20px" (click)="addParty()">ADD</button>
+          <div class="col-md-12 mobile-btn-center text-btn-right">
+
             <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
               class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
             <button class="btn btn-primary btn-sm btn-design" type="button"
               (click)="goBackToPreviousPage()">CANCEL</button>
+            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
+              style="margin-right:20px" (click)="addParty()">SAVE</button>
           </div>
         </div>
       </form>
