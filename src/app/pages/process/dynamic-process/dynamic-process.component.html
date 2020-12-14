@@ -39,7 +39,7 @@
                                 (click)="onAddStep()" class="plus-add add-modal"></nb-icon>
                         </div>
                     </div>
-                    {{stepList}}
+                    <!-- {{stepList}} -->
                     <div class="col-md-12" *ngIf="stepList? stepList.length:stepList;">
                         <div cdkDropList (cdkDropListDropped)="drop($event)">
                             <nb-accordion multi *ngFor="let step of stepList" cdkDrag>
@@ -268,10 +268,13 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                            <button type="button" *ngIf="!currentProcessId" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                                 (click)="addProcess(myForm)">ADD</button>
+                            <button type="button" *ngIf="currentProcessId" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                (click)="updateProcess(myForm)">UPDATE</button>
+                            
                             <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                [routerLink]="['pages/add-dynamic-process']">CANCEL</button>
+                            routerLink='/pages/process'>CANCEL</button>
                         </div>
                     </div>
                 </div>
