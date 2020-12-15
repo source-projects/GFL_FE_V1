@@ -8,6 +8,7 @@ import { PartyService } from "app/@theme/services/party.service";
 import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
 import { state } from "@angular/animations";
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: "ngx-add-edit-party",
@@ -142,12 +143,11 @@ export class AddEditPartyComponent implements OnInit {
           this.master = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -181,7 +181,7 @@ export class AddEditPartyComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -208,6 +208,7 @@ export class AddEditPartyComponent implements OnInit {
             } else {
               this.toastr.error(errorData.Add_Error);
             }
+            // this.loading=true;
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -218,6 +219,7 @@ export class AddEditPartyComponent implements OnInit {
       }
     }
   }
+
 
   public updateParty() {
     this.loading = true;

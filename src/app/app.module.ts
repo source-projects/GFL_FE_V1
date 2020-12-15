@@ -48,6 +48,7 @@ import { ToastrModule } from 'ngx-toastr';
     ThemeModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
+      closeButton: true,
       preventDuplicates: true,
     }),
   ],

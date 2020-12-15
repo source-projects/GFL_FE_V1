@@ -29,7 +29,7 @@
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="!this.access? null:deleteColor(row.id)"></nb-icon>
+                        (click)="deleteColor(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>

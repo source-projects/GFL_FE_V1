@@ -87,12 +87,12 @@ export class AddEditShadeComponent implements OnInit {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(errorData.Internal_Error);
+          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -108,16 +108,16 @@ export class AddEditShadeComponent implements OnInit {
             this.getAllSupplier();
             this.loading = false;
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -131,12 +131,12 @@ export class AddEditShadeComponent implements OnInit {
           this.supplierListRate = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -150,12 +150,12 @@ export class AddEditShadeComponent implements OnInit {
           this.processList = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -169,12 +169,12 @@ export class AddEditShadeComponent implements OnInit {
           this.quality = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -190,12 +190,12 @@ export class AddEditShadeComponent implements OnInit {
             this.shades = data["data"];
             this.loading = false;
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -222,12 +222,12 @@ export class AddEditShadeComponent implements OnInit {
             this.setProcessName(this.shades.processId);
             this.loading = false;
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -277,13 +277,13 @@ export class AddEditShadeComponent implements OnInit {
             this.loading = false;
           }
           else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
             this.quality = null;
             this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -322,7 +322,7 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
     else {
-      this.toastr.error("This item name is already selected")
+      // this.toastr.error("This item name is already selected")
       //this.shades.shadeDataList[rowIndex].itemName = null;
       row.itemName = null;
       this.shades.shadeDataList[rowIndex] = row;
@@ -341,6 +341,7 @@ export class AddEditShadeComponent implements OnInit {
       // list.push(obj);
       // this.shades.shadeDataList = [...list];
     }
+    this.calculateAmount(rowIndex);
   }
 
   calculateAmount(rowIndex) {
@@ -476,11 +477,12 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
-            this.loading = false;
+            
           } else {
             this.toastr.error(errorData.Update_Error);
-            this.loading = false;
+           
           }
+          this.loading = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);

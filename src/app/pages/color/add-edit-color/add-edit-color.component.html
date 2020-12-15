@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name</label>
-                        <ng-select placeholder="Select supplier name" [(ngModel)]="color.supplierId"
+                        <ng-select placeholder="Select supplier name" [(ngModel)]="color.supplierId" class="required-error-dropdown"
                             #supplierName1="ngModel" name="supplierName" (click)="getAllSupplierRate($event)" required>
                             <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                 {{s.supplierName}}
@@ -129,7 +129,7 @@
                                     <input type="number" #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}'
                                         class="tableForm" id="quantityPerBox" [(ngModel)]="row.quantityPerBox"
                                         (change)="updateValueOfTotalQuantity(rowIndex)"
-                                        (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')"
+                                        (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')" (input)="calculateTotalQuantity(rowIndex,1)"
                                         [id]="'colorList'+rowIndex+'-1'" required min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (quantityPerBox1.invalid)"
                                         style="display: inline-block;">

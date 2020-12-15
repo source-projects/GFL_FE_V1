@@ -29,11 +29,11 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success'])
           this.processList = data["data"];
-          else
-          this.toastr.error(data['msg'])
+          // else
+          // this.toastr.error(data['msg'])
       },
       error=>{
-        this.toastr.error('Internal server error')
+        // this.toastr.error('Internal server error')
         //error... internal server.
       }
     )

@@ -221,7 +221,7 @@
               required
               [ngClass]="{'is-invalid':(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)}"
               placeholder="Select Master Name"
-              class="dropdown-name"
+              class="dropdown-name required-error-dropdown"
             >
               <ng-option *ngFor="let m of master" [value]="m.id"
                 >{{m.firstName}}</ng-option
@@ -258,15 +258,11 @@
           >
             <span class="text dr-txt">Debitors</span>
           </nb-checkbox>
+          <div class="inline-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
+            <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
+          </div>
         </div>
-        <div
-          class="inline-feedback"
-          *ngIf="formSubmitted==true && creditor==false && debtor==false"
-        >
-          <span style="color: red; font-size: smaller;"
-            >Select Creditor or Debitor</span
-          >
-        </div>
+        
 
         <div class="row">
           <div class="col-md-12 mobile-btn-center">

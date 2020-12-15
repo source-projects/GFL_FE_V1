@@ -131,16 +131,16 @@ export class ColorComponent implements OnInit {
             this.colorList[index].billDate = new Date(element.billDate).toDateString();
             this.colorList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
-            this.loading=false;
           });
         }
-        else {
-          this.toastr.error(data['msg']);
-          this.loading=false;
-        }
+        // else {
+        //   // this.toastr.error(data['msg']);
+          
+        // }
+        this.loading=false;
       },
       error => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
         this.loading=false;
       }
     );
@@ -187,25 +187,30 @@ export class ColorComponent implements OnInit {
   getDeleteAccess(){
     if(this.colorGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownDelete;
     }
      if(this.colorGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
      if(this.colorGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
     if(this.colorGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
      if(this.colorGuard.accessRights('edit group')){
       this.groupEdit=false;
-
+      this.hiddenEdit=this.groupEdit;
     }
      if(this.colorGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 
