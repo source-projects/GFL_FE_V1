@@ -252,7 +252,6 @@ export class AddEditProgramComponent implements OnInit {
           }
         )
       }
-
     } else {
       this.programValues.partyId = null;
       this.programValues.qualityId = null;

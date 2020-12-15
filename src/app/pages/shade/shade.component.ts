@@ -142,19 +142,18 @@ export class ShadeComponent implements OnInit {
     this.loading = true;
     this.shadeService.getShadeMastList(id, getBy).subscribe(
       data => {
-        if (data['sucess']) {
+        if (data['success']) {
           if (data['data'].length > 0) {
             this.shadeList = data['data'];
             this.shade = this.shadeList.map((element) => ({
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
+        this.loading = false;
           }
         }
-        this.loading = false;
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
