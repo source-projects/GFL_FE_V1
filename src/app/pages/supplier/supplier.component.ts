@@ -17,50 +17,50 @@ import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 })
 export class SupplierComponent implements OnInit {
   public loading = false;
-  tableStyle="bootstrap";
+  tableStyle = "bootstrap";
 
   public errorData: any = (errorData as any).default;
 
   //to get SupplierList
-  supplierList=[];
-  supplier=[];
-  headers=["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark" ];
+  supplierList = [];
+  supplier = [];
+  headers = ["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark"];
   radioSelect = 1;
   flag = false;
-  disabled=false;
+  disabled = false;
   radioArray = [
-    {id:1, value:"View Own"  , disabled:false},
-    {id:2, value:"View Group"  , disabled:false},
-    {id:3, value:"View All"  , disabled:false}
+    { id: 1, value: "View Own", disabled: false },
+    { id: 2, value: "View Group", disabled: false },
+    { id: 3, value: "View All", disabled: false }
   ];
   userHeadId;
   userId;
   permissions: Number;
- 
-  hidden :boolean=true;
-  hiddenEdit:boolean=true;
-  hiddenView:boolean=true;
 
-  ownDelete=true;
-  allDelete=true;
-  groupDelete=true;
+  hidden: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenView: boolean = true;
 
-  ownEdit=true;
-  allEdit=true;
-  groupEdit=true;
-  
+  ownDelete = true;
+  allDelete = true;
+  groupDelete = true;
+
+  ownEdit = true;
+  allEdit = true;
+  groupEdit = true;
+
   constructor(
-    private commonService:CommonService, 
-    private supplierService:SupplierService, 
+    private commonService: CommonService,
+    private supplierService: SupplierService,
     public supplierGuard: SupplierGuard,
     private jwtToken: JwtTokenService,
-    private router:Router, 
+    private router: Router,
     private toastr: ToastrService,
     private exportService: ExportService,
     private modalService: NgbModal,
 
-    ) { }
- 
+  ) { }
+
   ngOnInit(): void {
 
     this.userId = this.commonService.getUser();
@@ -69,107 +69,121 @@ export class SupplierComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
     this.getAddAcess();
-    this.getSupplierList(this.userId,"own");
+    this.getSupplierList(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-  getAddAcess(){
-    if(this.supplierGuard.accessRights('add')){
-      this.disabled=false;
+  getAddAcess() {
+    if (this.supplierGuard.accessRights('add')) {
+      this.disabled = false;
     }
-    else{
-      this.disabled=true;
+    else {
+      this.disabled = true;
     }
   }
-  onChange(event){
-    this.supplierList=[];
-    switch(event){
-      case 1: 
-              this.getSupplierList(this.userId,"own");
-              this.hidden=this.ownDelete; 
-              this.hiddenEdit=this.ownEdit;
-              break;
+  onChange(event) {
+    this.supplierList = [];
+    switch (event) {
+      case 1:
+        this.getSupplierList(this.userId, "own");
+        this.hidden = this.ownDelete;
+        this.hiddenEdit = this.ownEdit;
+        break;
 
-      case 2: 
-              this.getSupplierList(this.userHeadId,"group");
-              this.hidden=this.groupDelete;
-              this.hiddenEdit=this.groupEdit;
-              break;
+      case 2:
+        this.getSupplierList(this.userHeadId, "group");
+        this.hidden = this.groupDelete;
+        this.hiddenEdit = this.groupEdit;
+        break;
 
       case 3:
-              this.getSupplierList(0,"all");
-              this.hidden=this.allDelete;
-              this.hiddenEdit=this.allEdit;
-              break;
+        this.getSupplierList(0, "all");
+        this.hidden = this.allDelete;
+        this.hiddenEdit = this.allEdit;
+        break;
     }
   }
 
-  open(){
-    this.flag=true;
-   
+  open() {
+    this.flag = true;
+
     const modalRef = this.modalService.open(ExportPopupComponent);
-     modalRef.componentInstance.headers = this.headers;
-     modalRef.componentInstance.list = this.supplier;
+    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.list = this.supplier;
   }
-  public getSupplierList(id,getBy){
+  public getSupplierList(id, getBy) {
     this.loading = true;
-    this.supplierService.getAllSupplier(id,getBy).subscribe(
-      data=>{
-        this.supplierList=data['data']
-        this.supplier=this.supplierList.map((element)=>({supplierName:element.supplierName, discountPercentage: element.discountPercentage,
-          gstPercentage: element.gstPercentage, paymentTerms:element.paymentTerms, remark:element.remark }))
-          this.loading = false;
-        //this.router.navigate(['pages/supplier']);
+    this.supplierService.getAllSupplier(id, getBy).subscribe(
+      data => {
+        if (data['sucess']) {
+          if (data['data'].length > 0) {
+            this.supplierList = data['data']
+
+            this.supplier = this.supplierList.map((element) => ({
+              supplierName: element.supplierName, discountPercentage: element.discountPercentage,
+              gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
+            }))
+          }
+          
+          //this.router.navigate(['pages/supplier']);
+        }
+        this.loading = false;
       },
-      error=>{
+      error => {
         //toaster
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     )
   }
 
-  getViewAccess(){
-    if(!this.supplierGuard.accessRights('view')){
-      this.radioArray[0].disabled=true;
+  getViewAccess() {
+    if (!this.supplierGuard.accessRights('view')) {
+      this.radioArray[0].disabled = true;
     }
     else
-    this.radioArray[0].disabled=false;
-     if(!this.supplierGuard.accessRights('view group')){
-      this.radioArray[1].disabled=true;
+      this.radioArray[0].disabled = false;
+    if (!this.supplierGuard.accessRights('view group')) {
+      this.radioArray[1].disabled = true;
     }
     else
-    this.radioArray[1].disabled=false;
-     if(!this.supplierGuard.accessRights('view all')){
-      this.radioArray[2].disabled=true;
+      this.radioArray[1].disabled = false;
+    if (!this.supplierGuard.accessRights('view all')) {
+      this.radioArray[2].disabled = true;
     }
     else
-    this.radioArray[2].disabled=false;
+      this.radioArray[2].disabled = false;
 
   }
 
-  getDeleteAccess(){
-    if(this.supplierGuard.accessRights('delete')){
-      this.ownDelete=false;
+  getDeleteAccess() {
+    if (this.supplierGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden=this.ownDelete;
     }
-     if(this.supplierGuard.accessRights('delete group')){
-      this.groupDelete=false;
+    if (this.supplierGuard.accessRights('delete group')) {
+      this.groupDelete = false;
+      this.hidden=this.groupDelete;
     }
-     if(this.supplierGuard.accessRights('delete all')){
-      this.allDelete=false;
+    if (this.supplierGuard.accessRights('delete all')) {
+      this.allDelete = false;
+      this.hidden=this.allDelete;
     }
   }
 
-  getEditAccess(){
-    if(this.supplierGuard.accessRights('edit')){
-      this.ownEdit=false;
+  getEditAccess() {
+    if (this.supplierGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit=this.ownEdit;
     }
-     if(this.supplierGuard.accessRights('edit group')){
-      this.groupEdit=false;
+    if (this.supplierGuard.accessRights('edit group')) {
+      this.groupEdit = false;
+      this.hiddenEdit=this.groupEdit;
 
     }
-     if(this.supplierGuard.accessRights('edit all')){
-      this.allEdit=false;
+    if (this.supplierGuard.accessRights('edit all')) {
+      this.allEdit = false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 
