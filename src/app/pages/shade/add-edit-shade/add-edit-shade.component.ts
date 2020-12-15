@@ -341,6 +341,7 @@ export class AddEditShadeComponent implements OnInit {
       // list.push(obj);
       // this.shades.shadeDataList = [...list];
     }
+    this.calculateAmount(rowIndex);
   }
 
   calculateAmount(rowIndex) {

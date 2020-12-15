@@ -19,12 +19,13 @@
                         <div class="form-group">
                             <label>Party Name</label>
                             <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
-                                #partyName1="ngModel" required (change)="getQualityFromParty($event)">
+                                #partyName1="ngModel" required (change)="getQualityFromParty($event)"
+                                [ngClass]="{'is-invalid':(partyName1.invalid )&&(formSubmitted  || partyName1.touched) }">
                                 <ng-option *ngFor="let p of partyList" [value]="p.id" placeholder="Party Name">
                                     {{p.partyName}}
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="formSubmitted && (partyName1.invalid)">
+                            <div class="required-class" *ngIf="(partyName1.invalid )&&(formSubmitted  || partyName1.touched)">
                                 <span>Party Name is required</span>
                             </div>
                         </div>
@@ -35,10 +36,10 @@
                             <label class="required">Party Shade No</label>
                             <input type="text" class="form-control" [(ngModel)]="shades.partyShadeNo"
                                 #partyShadeNo1="ngModel" name="partyShadeNo" required
-                                [ngClass]="{'is-invalid':formSubmitted && !(partyShadeNo1.valid) }"
+                                [ngClass]="{'is-invalid':(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)}"
                                 placeholder="Party Shade No">
                             <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (partyShadeNo1.invalid || (partyShadeNo1.dirty || partyShadeNo1.untouched) )">
+                                *ngIf="(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)">
 
                                 <span>Party Shade No is required</span></div>
                         </div>
@@ -49,13 +50,13 @@
                             <label class="required">Process Name</label>
                             <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processId"
                                 (change)="setProcessName(shades.processId)" #processName1="ngModel" name="processName"
-                                required [ngClass]="{'is-invalid':formSubmitted && !(processName1.valid) }"
+                                required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted   || processName1.touched) }"
                                 placeholder="Process Name">
                                 <ng-option *ngFor="let p of processList" [value]="p.id">
                                     {{p.name}}
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="formSubmitted && (processName1.invalid )">
+                            <div class="required-class" *ngIf="(processName1.invalid)&&(formSubmitted   || processName1.touched)">
                                 <span>Process Name is required</span></div>
                         </div>
                     </div>
@@ -68,12 +69,12 @@
                             <label class="required">Quality Id</label>
                             <ng-select placeholder="Select Quality Id" [(ngModel)]="shades.qualityId"
                                 #qualityId1="ngModel" name="qualityId" (change)="qualityIdSelected($event)" required
-                                [ngClass]="{'is-invalid':formSubmitted && !(qualityId1.valid) }">
+                                [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted ||  qualityId1.touched)}">
                                 <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
                                     {{q.qualityId}} - {{q.partyName}}
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="formSubmitted && (qualityId1.invalid)">
+                            <div class="required-class" *ngIf="(qualityId1.invalid)&&(formSubmitted ||  qualityId1.touched)">
                                 <span>Quality id is required</span>
                             </div>
                         </div>

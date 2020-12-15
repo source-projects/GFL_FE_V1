@@ -1,13 +1,20 @@
-
 tr {
-    border-bottom: 1pt solid #ddd;
+  border-bottom: 1pt solid #ddd;
 }
-table{
-    width:100%;
+table {
+  width: 100%;
 }
-th, td {
-    padding: 15px;
+th,
+td {
+  padding: 15px;
 }
-button{
-    margin-right:20px;
+button {
+  margin-right: 20px;
+}
+.required-class {
+  display: contents !important;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
 }
