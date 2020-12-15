@@ -54,6 +54,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
+    title: 'Water-jet',
+    icon: 'hard-drive-outline',
+    link: '/pages/waterJet',
+    hidden:false
+  },
+  {
     title: 'Stock-batch',
     icon: 'layers-outline',
     link: '/pages/stock-batch',
