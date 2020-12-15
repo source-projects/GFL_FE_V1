@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2,ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { User, Permissions } from "app/@theme/model/user";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "app/@theme/services/user.service";
@@ -27,7 +27,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status;
-  //allUserPermissionFlag=0;
+  allRightsFlag;
   user: User = new User();
 
   permissions: Permissions = new Permissions();
@@ -53,7 +53,7 @@ export class AddEditUserComponent implements OnInit {
     "Process Planning",
     "Jet Planning",
   ];
-  
+
   userHradIdList;
 
   perName = [
@@ -101,33 +101,33 @@ export class AddEditUserComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDesignation();
     this.getAllUserHrads();
     this.getUserId();
-    if (this.currentUserId){
+    if (this.currentUserId) {
       this.getCurrentUser();
-    } 
+    }
     else
       this.user.isUserHead = false;
     this.createPermission();
   }
 
-  getAllUserHrads(){
+  getAllUserHrads() {
     this.loading = true;
     this.userService.getAllHead().subscribe(
-      data=>{
-        if(data["success"]){
+      data => {
+        if (data["success"]) {
           this.userHradIdList = data["data"]
           this.loading = false;
         }
         else
           this.toastr.error(data["msg"])
-          this.loading = false;
+        this.loading = false;
       },
-      error=>{
+      error => {
         this.toastr.error(errorData.Internal_Error)
         this.loading = false;
       }
@@ -140,28 +140,28 @@ export class AddEditUserComponent implements OnInit {
     this.currentUserId = this._route.snapshot.paramMap.get("id");
   }
 
-  getUserHrads(event){
+  getUserHrads(event) {
     this.loading = true;
-    if(this.user.isUserHead){
-      if(!this.userHradIdList){
+    if (this.user.isUserHead) {
+      if (!this.userHradIdList) {
         this.userService.getAllHead().subscribe(
-          data=>{
-            if(data["success"]){
+          data => {
+            if (data["success"]) {
               this.userHradIdList = data["data"]
               this.user.isUserHead = true;
               this.loading = false;
             }
             else
               this.toastr.error(data["msg"])
-              this.loading = false;
+            this.loading = false;
           },
-          error=>{
+          error => {
             this.toastr.error(errorData.Internal_Error)
             this.loading = false;
           }
         )
       }
-    }else{
+    } else {
       this.user.userHeadId = null;
     }
   }
@@ -194,6 +194,17 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = true;
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
+
+    for (let j = 0; j < 12; j++) {
+      this.checkIfAllSelected(j);
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   setPermissionFalse(i) {
@@ -207,28 +218,26 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = false;
     this.permissionArray[i].viewAll = false;
     this.permissionArray[i].viewGroup = false;
+    this.allRightsFlag = false;
   }
 
   //select all user permissions
-  selectAllPermissions(e){
-      
-    if(e.target.checked==true)
-    {
-      for(var i=0;i<this.permissionArray.length;i++)
-      {
+  selectAllPermissions(e) {
+
+    if (e.target.checked == true) {
+      for (var i = 0; i < this.permissionArray.length; i++) {
         this.setPermissionTrue(i);
         this.checkIfAllSelected(i);
       }
-      
+
     }
-    else{
-      for(var i=0;i<this.permissionArray.length;i++)
-      {
+    else {
+      for (var i = 0; i < this.permissionArray.length; i++) {
         this.setPermissionFalse(i);
         this.permissionArray[i].selectAll = false;
       }
     }
-    
+
   }
   checkUncheckAll(module, e) {
     switch (module) {
@@ -325,29 +334,53 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
     }
+
+    for (let j = 0; j < 12; j++) {
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
-  checkUncheckSelectAll(value,i){
-    if(value == false){
+  checkUncheckSelectAll(value, i) {
+    if (value == false) {
       this.permissionArray[i].selectAll = false;
+      this.allRightsFlag = false;
+
     }
 
     this.checkIfAllSelected(i);
+
+    for (let j = 0; j < 12; j++) {
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
-  checkIfAllSelected(i){
-    if(this.permissionArray[i].view)
-      if(this.permissionArray[i].add)
-        if(this.permissionArray[i].edit)
-          if(this.permissionArray[i].delete)
-            if(this.permissionArray[i].viewAll)
-              if(this.permissionArray[i].viewGroup)
-                if(this.permissionArray[i].editGroup)
-                  if(this.permissionArray[i].editAll)
-                    if(this.permissionArray[i].deleteGroup)
-                      if(this.permissionArray[i].deleteAll)
+  checkIfAllSelected(i) {
+    if (this.permissionArray[i].view)
+      if (this.permissionArray[i].add)
+        if (this.permissionArray[i].edit)
+          if (this.permissionArray[i].delete)
+            if (this.permissionArray[i].viewAll)
+              if (this.permissionArray[i].viewGroup)
+                if (this.permissionArray[i].editGroup)
+                  if (this.permissionArray[i].editAll)
+                    if (this.permissionArray[i].deleteGroup)
+                      if (this.permissionArray[i].deleteAll) {
                         this.permissionArray[i].selectAll = true;
-                        
+
+                      }
+
   }
 
   getCheckedItem() {
@@ -443,22 +476,31 @@ export class AddEditUserComponent implements OnInit {
       let j = 0;
       this.perName1.forEach((element) => {
         if (element != "module") {
-          if (array1[i1][j] == "1"){
+          if (array1[i1][j] == "1") {
             this.permissionArray[i1][element] = true;
             perString += "1";
-          } 
-          else{
+          }
+          else {
             perString += "0";
             this.permissionArray[i1][element] = false;
           }
           j++;
         }
       });
-      if(perString == "1111111111")
+      if (perString == "1111111111")
         this.permissionArray[i1].selectAll = true;
       else
         this.permissionArray[i1].selectAll = false;
       perString = "";
+    }
+
+    for (let i = 0; i < 12; i++) {
+      if (!this.permissionArray[i].selectAll) {
+        this.allRightsFlag = false;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
     }
   }
 
@@ -475,10 +517,10 @@ export class AddEditUserComponent implements OnInit {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   getCurrentUser() {
     this.loading = true;
@@ -488,12 +530,12 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.user = data["data"];
             this.user.designationId = data["data"].designationId.id
-            if(this.user.userHeadId != 0)
+            if (this.user.userHeadId != 0)
               this.user.isUserHead = true;
             else
               this.user.isUserHead = false;
             this.getCurrentCheckValue(this.user);
-            this.loading =false;
+            this.loading = false;
           } else {
             this.toastr.error(errorData.Internal_Error);
             this.loading = false;
@@ -514,7 +556,7 @@ export class AddEditUserComponent implements OnInit {
       this.user.updatedBy = this.userId.userId;
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
-      if(!this.user.isUserHead) 
+      if (!this.user.isUserHead)
         this.user.userHeadId = 0;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
@@ -533,10 +575,9 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 
@@ -561,10 +602,9 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 

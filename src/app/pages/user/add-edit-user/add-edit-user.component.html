@@ -179,7 +179,7 @@
                     <h2 class="nb-text" style="display: inline;">User Permission</h2>
                 </div>
                 <div class="col-md-1 col-2 user-per-check-display">
-                    <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check"></nb-checkbox>
+                    <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check" [(ngModel)]="allRightsFlag"></nb-checkbox>
                 </div>
             </div>
         </div>
