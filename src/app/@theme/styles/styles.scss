@@ -586,9 +586,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 // machine report redesign
 .card-machine{
-  background: #e4e8ee;
+  background: #e5e8ec;
   border-radius: 13px;
-  padding: 21px 15px;
+  padding: 15px;
   margin-bottom: 26px;
   width: 100%;
   border: 1px solid antiquewhite;
@@ -606,22 +606,28 @@ input[type=number]::-webkit-outer-spin-button {
   color: #fff;
 }
 .machine-main-card{
-  background: antiquewhite;
+  background: #e5e8ec;
 }
 .date-card-header h2{
   color: #fff;
-  padding: 16px;
+  padding: 0 16px;
   text-align: center;
-  font-size: 21px;
+  font-size: 19px;
   background: #aa3634;
 }
 .tble-txt{
   text-align: center;
   font-size: 20px !important;
+  color: #5e5b5e!important;
 }
 .tble-in{
+  border-bottom: 1px solid #000;
   width: 100px;
-    border: 0;
+  /* border: 0; */
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: transparent;
 }
 .day-machine, .night-machine{
   display: flex;
@@ -634,6 +640,33 @@ input[type=number]::-webkit-outer-spin-button {
 .enter-batch-id-2{
   margin-right: 0!important;
   width: 100%;
+}
+.machine-btn-text{
+  margin: 0;
+  padding: 0;
+  font-size: 21px !important;
+  color: #5e5b5e !important;
+}
+.card-machine:focus{
+  border: 0;
+  outline: none;
+}
+.card-machine:hover{
+  background-color: #144a9c;
+  transition: .4s;
+}
+.card-machine:hover .machine-btn-text{
+  color: #fff !important;
+}
+.card-machine:hover .machine-icon{
+  background-color: #5e5b5e !important;
+}
+.btn-machine-day-night{
+  width: 100%;
+  margin-right: 0 !important;
+}
+.date-time-btn{
+  padding-bottom: 16px;
 }
 // tootltip in stock batch
 .tooltip {
@@ -772,6 +805,9 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 50px;
   }
   
+  .tble-in{
+    width: 72px!important;
+  }
 }
 @media (min-width: 1024px){
   .datatable-header-inner, .datatable-row-center.ng-star-inserted{
@@ -807,6 +843,9 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .batch-total-row{
     width: 100px;
+  }
+  .tble-in{
+    width: 57px!important;
   }
 }
 @media (min-width: 320px) and (max-width: 375px){
