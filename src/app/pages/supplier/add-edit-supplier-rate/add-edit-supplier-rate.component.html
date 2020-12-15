@@ -12,10 +12,10 @@
                     <div *ngIf="mySupplierRateId == null; else updateName">
                         <label class="required">Supplier Name</label>
                         <ng-select  name="supplierId" id="supplierId" [(ngModel)]="formValues.supplierRates[0].supplierId"
-                        required (change)="getDetail(formValues.supplierRates[0].supplierId)" #tableitem3="ngModel" [ngClass]="{'is-invalid':(formSubmitted && tableitem3.invalid) || (tableitem3.invalid && tableitem3.touched)}">
+                        required (change)="getDetail(formValues.supplierRates[0].supplierId)" #tableitem3="ngModel" [ngClass]="{'is-invalid':(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)}">
                             <ng-option *ngFor="let s of supplier" [value]="s.id">{{s.supplierName}} - {{s.id}}</ng-option>
                         </ng-select>
-                        <div class="required-class" *ngIf="(formSubmitted && tableitem3.invalid) || (tableitem3.invalid && tableitem3.touched)" style="display: inline-block;">
+                        <div class="required-class" *ngIf="(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)" style="display: inline-block;">
                             <span>Supplier Name is required</span>
                         </div>
                     </div>

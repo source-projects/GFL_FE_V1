@@ -125,7 +125,6 @@ export class AddEditPartyComponent implements OnInit {
         Validators.pattern(
           /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/
         ),
-        Validators.required,
       ]),
       creditor: new FormControl(false, Validators.required),
       debtor: new FormControl(false, Validators.required),

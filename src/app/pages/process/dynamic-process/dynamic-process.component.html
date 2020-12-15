@@ -11,10 +11,10 @@
                             <label class="required">Process Name</label>
                             <input type="text" name="processName" class="form-control" #processName1="ngModel"
                                 [(ngModel)]='processValue.processName' required
-                                [ngClass]="{'is-invalid': (formSubmitted && processName1.invalid) || (processName1.invalid && processName1.touched)}"
+                                [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
                                 placeholder="Process Name">
                             <div class="invalid-feedback"
-                                *ngIf="(formSubmitted && processName1.invalid) || (processName1.invalid && processName1.touched)">
+                                *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
                             </div>
                         </div>
@@ -24,10 +24,10 @@
                         <div class="form-group">
                             <label class="required">Time(minutes)</label>
                             <input type="text" name="time" class="form-control" [(ngModel)]='processValue.time' required
-                                #time1="ngModel" [ngClass]="{'is-invalid': (formSubmitted && time1.invalid) || (time1.invalid && time1.touched)}"
+                                #time1="ngModel" [ngClass]="{'is-invalid':(time1.invalid)&&(formSubmitted  || time1.touched)}"
                                 (keypress)="numberOnly($event)" placeholder="Time(minutes)">
                             <div class="invalid-feedback"
-                                *ngIf="(formSubmitted && time1.invalid) || (time1.invalid && time1.touched)">
+                                *ngIf="(time1.invalid)&&(formSubmitted  || time1.touched)">
                                 <span>Time is required.</span>
                             </div>
                         </div>
