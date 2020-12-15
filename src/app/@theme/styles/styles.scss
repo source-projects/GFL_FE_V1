@@ -563,6 +563,20 @@ input[type=number]::-webkit-outer-spin-button {
 .text-btn-right{
   text-align: right;
 }
+.user-all-check label{
+  background-color: #fff;
+  color: #fff!important;
+  padding-right: 0 !important;
+}
+.user-all-check label .custom-checkbox.checked{
+  background-color: #5e5b5e !important;
+  border-color: #5e5b5e !important;
+}
+.user-per-check-display{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
@@ -592,9 +606,9 @@ input[type=number]::-webkit-outer-spin-button {
   .nb-radio{
     justify-content: space-between;
   }
-  .status-basic label{
-    padding-right: 14px!important;
-  }
+  // .status-basic label{
+  //   padding-right: 14px!important;
+  // }
   .columns{
     overflow: hidden;
   }
@@ -679,6 +693,9 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .batch-text{
     font-size: 15px!important;
+  }
+  .batch-total-row{
+    width: 100px;
   }
 }
 @media (min-width: 320px) and (max-width: 375px){
