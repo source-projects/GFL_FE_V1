@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2,ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { User, Permissions } from "app/@theme/model/user";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "app/@theme/services/user.service";
@@ -27,7 +27,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status;
-  //allUserPermissionFlag=0;
+  allRightsFlag;
   user: User = new User();
 
   permissions: Permissions = new Permissions();
@@ -107,7 +107,7 @@ export class AddEditUserComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDesignation();
@@ -200,6 +200,17 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = true;
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
+
+    for (let j = 0; j < 12; j++) {
+      this.checkIfAllSelected(j);
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   setPermissionFalse(i) {
@@ -213,6 +224,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = false;
     this.permissionArray[i].viewAll = false;
     this.permissionArray[i].viewGroup = false;
+    this.allRightsFlag = false;
   }
 
   //select all user permissions
@@ -328,14 +340,36 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
     }
+
+    for (let j = 0; j < 12; j++) {
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   checkUncheckSelectAll(value, i) {
     if (value == false) {
       this.permissionArray[i].selectAll = false;
+      this.allRightsFlag = false;
+
     }
 
     this.checkIfAllSelected(i);
+
+    for (let j = 0; j < 12; j++) {
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   checkIfAllSelected(i) {
@@ -463,6 +497,15 @@ export class AddEditUserComponent implements OnInit {
         this.permissionArray[i1].selectAll = false;
       perString = "";
     }
+
+    for (let i = 0; i < 12; i++) {
+      if (!this.permissionArray[i].selectAll) {
+        this.allRightsFlag = false;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   dec2bin(val: any) {
@@ -539,10 +582,9 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 
@@ -567,10 +609,9 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 
