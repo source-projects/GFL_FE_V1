@@ -144,13 +144,13 @@
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
                 </div>
-                <div class="total-shuffle" style="margin-left: 6%;">
+                <!-- <div class="total-shuffle" style="margin-left: 6%;">
                   <label>Total Rows</label>
                   <input type="text" formControlName="totalrowsPart1" [readonly]="true"
                     style="background-color: lightgray;" class="mtr-wei">
                   <input type="text" formControlName="totalrowsPart2" [readonly]="true"
                     style="background-color: lightgray; " class="mtr-wei">
-                </div>
+                </div> -->
 
               </div>
             </div>
@@ -172,8 +172,46 @@
                     <button class="btn btn-primary btn-sm btn-design" (click)="mergesubmit()"
                       [hidden]="!btnFlag">Merge</button>
                   </div>
-                  <input type="text" placeholder="Enter New Batch Id" formControlName="newBatchName"
-                    style="background-color: lightgray;" [hidden]="btnFlag">
+                  <!-- <input type="text" placeholder="Enter New Batch Id" formControlName="newBatchName"
+                    style="background-color: lightgray;" [hidden]="btnFlag"> -->
+
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-4 col-4">
+                  <div class="total-shuffle">
+                    <label>Total Rows</label>
+                  </div>
+                </div>
+                <div class="col-md-8 col-8">
+                  <div class="batch-1-input">
+                    <input type="text" formControlName="totalrowsPart1" [readonly]="true"
+                    style="background-color: lightgray;" class="mtr-wei">
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="batch-2-input">
+                    <input type="text" formControlName="totalrowsPart2" [readonly]="true"
+                    style="background-color: lightgray; " class="mtr-wei">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="btn-split-merge">
+                    <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName"
+                    style="background-color: lightgray;" [hidden]="btnFlag" class="btn btn-primary btn-sm btn-design batch-total-row">
+                  </div>
 
                 </div>
 

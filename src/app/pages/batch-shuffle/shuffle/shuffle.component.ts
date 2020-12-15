@@ -464,6 +464,13 @@ export class ShuffleComponent implements OnInit {
 
     if (this.shuffleForm.controls['batchName1'].value == null) {
       this.shuffleForm.controls['batchName2'].reset();
+      this.shuffleForm.controls['totalrowsPart1'].reset();
+      this.shuffleForm.controls['totalrowsPart2'].reset();
+      this.shuffleForm.controls['totalwt1'].reset();
+      this.shuffleForm.controls['totalwt2'].reset();
+      this.shuffleForm.controls['totalmtr1'].reset();
+      this.shuffleForm.controls['totalmtr2'].reset();
+
       this.part2 = [];
       this.qualityParty2 = [];
       this.batches = [];
@@ -482,13 +489,16 @@ export class ShuffleComponent implements OnInit {
     if (this.shuffleForm.controls['batchName2'].value == null) {
       this.part2 = [];
       //this.qualityParty2 = [];
+      this.shuffleForm.controls['totalrowsPart2'].reset();
+      this.shuffleForm.controls['totalwt2'].reset();
+      this.shuffleForm.controls['totalmtr2'].reset();
+
     }
 
     this.cId2 = this.bId2["controlId"];
     this.batchId2 = this.bId2["batchId"];
     this.getBatches1(this.cId2, this.batchId2);
-
-
+    
   }
 
 
@@ -544,6 +554,11 @@ export class ShuffleComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.batches = data["data"];
+              this.findmtrsum();
+            this.findwtsum();
+            this.shuffleForm.controls['totalrowsPart1'].setValue(this.batches.length);
+            this.shuffleForm.controls['totalrowsPart2'].setValue(this.part2.length);
+
             }
             else {
               this.toastr.error(data['msg'])
