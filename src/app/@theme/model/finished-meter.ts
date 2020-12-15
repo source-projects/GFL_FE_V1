@@ -22,4 +22,18 @@ export class BatchData{
     sequenceId:number;
     finishMtr:number;
     isBillGenrated:Boolean = false;
+
+    constructor(){
+        this.seqNo= 0;
+        this.id=0;
+        this.mtr=null;
+        this.wt=null;
+        this.batchId='';
+        this.controlId=0;
+        this.isProductionPlanned= false;
+        this.isExtra= false;
+        this.sequenceId=0;
+        this.finishMtr=0;
+        this.isBillGenrated= false;   
+    }
 }

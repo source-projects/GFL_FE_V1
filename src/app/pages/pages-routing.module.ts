@@ -108,6 +108,14 @@ const routes: Routes = [{
       data: { PermissionName: ['view']}
     },
     {
+      path: 'purchaseItem',
+      loadChildren: () => import('./purchase-item/purchase-item.module')
+        .then(m => m.PurchaseItemModule),
+      // canActivate: [PurchaseGuard],
+      // canLoad: [PurchaseGuard],
+      // data: { PermissionName: ['view']}
+    },
+    {
       path: 'finishedMeter',
       loadChildren: () => import('./finished-meter/finished-meter.module')
         .then(m => m.FinishedMeterModule),
