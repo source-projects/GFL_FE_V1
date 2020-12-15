@@ -425,6 +425,8 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   addShade(shadeForm) {
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
@@ -434,7 +436,6 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
-            this.disableButton=true;
 
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -472,6 +473,8 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   updateShade(shadeForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
@@ -481,7 +484,6 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
-            this.disableButton=true;
 
             
           } else {

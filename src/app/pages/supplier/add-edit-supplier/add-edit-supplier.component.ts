@@ -84,6 +84,8 @@ export class AddEditSupplierComponent implements OnInit {
   }
 
   public addSupplierInfo():any{
+    this.disableButton=true;
+
     this.formSubmitted=true;
     if(this.addSupplier.valid){
       this.addSupplier.value.createdBy = this.user.userId;
@@ -93,7 +95,6 @@ export class AddEditSupplierComponent implements OnInit {
           if(data["success"]){
             this.toastr.success(errorData.Add_Success);
             this.router.navigate(['pages/supplier']);
-            this.disableButton=true;
 
           }
           else{
@@ -112,6 +113,8 @@ export class AddEditSupplierComponent implements OnInit {
   }
 
   updateSupplier(){
+    this.disableButton=true;
+
     this.formSubmitted=true;
     if(this.addSupplier.valid){
       this.addSupplier.value.updatedBy = this.user.userId;
@@ -124,7 +127,6 @@ export class AddEditSupplierComponent implements OnInit {
           if(data["success"]){
             this.toastr.success(errorData.Update_Success);
             this.router.navigate(['pages/supplier']);
-            this.disableButton=true;
 
           }
           else{

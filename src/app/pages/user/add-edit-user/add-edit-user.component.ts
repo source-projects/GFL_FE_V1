@@ -556,6 +556,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   updateUser(userForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
@@ -569,7 +571,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-            this.disableButton=true;
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -592,6 +593,8 @@ export class AddEditUserComponent implements OnInit {
   addUser(myForm) {
     this.getCheckedItem();
     //this.user.userPermissionData=this.userPermissionData;
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       this.user.createdBy = this.userId.userId;
@@ -601,7 +604,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Add_Success);
-            this.disableButton=true;
           } else {
             this.toastr.error(errorData.Add_Error);
           }

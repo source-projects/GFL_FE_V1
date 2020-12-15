@@ -189,7 +189,7 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public addParty() {
-   
+    this.disableButton=true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
@@ -205,7 +205,7 @@ export class AddEditPartyComponent implements OnInit {
               this.currentParty = data["data"];
               this.route.navigate(["pages/party"]);
               this.toastr.success(errorData.Add_Success);
-              this.disableButton=true;
+           
             } else {
               this.toastr.error(errorData.Add_Error);
             }
@@ -224,6 +224,7 @@ export class AddEditPartyComponent implements OnInit {
 
 
   public updateParty() {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
@@ -239,7 +240,7 @@ export class AddEditPartyComponent implements OnInit {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
                this.route.navigate(["/pages/party"]);
-               this.disableButton=true;
+               
           
             } else {
               this.toastr.error(errorData.Update_Error);

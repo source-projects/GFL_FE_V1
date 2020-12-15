@@ -263,14 +263,15 @@ export class AddEditColorComponent implements OnInit {
   addColor(colorForm) {
     this.formSubmitted = true;
     if (colorForm.valid) {
+      this.disableButton=true;
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
         data => {
           if (data['success']) {
-            this.route.navigate(["/pages/color"]);
+           this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Add_Success);
-            this.disableButton=true;
+            // this.disableButton=true;
 
           }
           else {
@@ -307,6 +308,7 @@ export class AddEditColorComponent implements OnInit {
 
   updateColor(myForm) {
     this.loading=true;
+    this.disableButton=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
@@ -315,9 +317,6 @@ export class AddEditColorComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Update_Success);
-            
-            this.disableButton=true;
-
           }
           this.loading=false;
         },

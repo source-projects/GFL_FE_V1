@@ -478,6 +478,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public addProgram(myForm) {
+    this.disableButton=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
@@ -492,7 +493,7 @@ export class AddEditProgramComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Add_Success);
-            this.disableButton=true;
+           
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -510,6 +511,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public updateProgram(myForm) {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (myForm.valid) {
@@ -525,7 +527,7 @@ export class AddEditProgramComponent implements OnInit {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Update_Success);
             
-            this.disableButton=true;
+           
           } else {
             this.toastr.error(errorData.Update_Error);
             
