@@ -94,6 +94,12 @@ const routes: Routes = [{
       data: { PermissionName: ['view']}
     },
     {
+      path: 'waterJet',
+      loadChildren: () => import('./water-jet/water-jet.module')
+        .then(m => m.WaterJetModule),
+      
+    },
+    {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
