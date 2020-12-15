@@ -6,6 +6,7 @@ import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDatePars
 import { Color, Label } from 'ng2-charts';
 import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
+import { config } from 'rxjs';
 @Component({
   selector: 'ngx-report',
   templateUrl: './report.component.html',
@@ -333,14 +334,22 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  day(){
+  day(value:any){
     this.obj.shift = 1;
+    this.obj.id = value.id;
+    console.log("Object:",this.obj);
     this.collectData(this.obj)
   }
 
-  night(){
+  night(value:any){
     this.obj.shift = 2;
+    this.obj.id = value.id;
+    console.log("Object:",this.obj);
     this.collectData(this.obj)
+  }
+
+  selectedMachineForId(value:any){
+    this.obj.id = value.id;    
   }
 
 }

@@ -1,0 +1,128 @@
+<nb-card size="giant" class="nb-style">
+    <nb-card-body>
+        <div class="machine-cards" *ngIf="optionFlag">
+            <div class="row">
+                <div class="col-md-6" (click)="machineReport()">
+                    <button type="button" class="card-machine">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2>Machine Report</h2>
+                        </div>
+                    </button>
+                </div>
+                <div class="col-md-6" (click)="staffReport()">
+                    <button type="button" class="card-machine">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2>Staff Report</h2>
+                        </div>
+                    </button>
+                </div>
+                <div class="col-md-6" (click)="salesReport()">
+                    <button type="button" class="card-machine">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2>Sales Report</h2>
+                        </div>
+                    </button>
+                </div>
+                <div class="col-md-6" (click)="POApproval()">
+                    <button type="button" class="card-machine">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2>PO Approval Report</h2>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="machine-cards" *ngIf="machineReportFlag">
+            <div class="row" *ngFor="let cat of machineCategory">
+                <div class="col-md-4">
+                    <button type="button" class="card-machine">
+                        <h2>{{cat.name}}</h2>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="machine-cards" *ngIf="stanterMachineFlag || foldingMachineFlag || waterJetMachineFlag">
+            <div class="row" *ngFor="let machine of machines">
+                <div class="col-md-4">
+                    <div class="machine-main-card">
+                        <div class="date-card">
+                            <div class="date-card-header">
+                                <h2>{{machine.name}}</h2>
+                            </div>
+                        </div>
+                        <div class="date-card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="eff-text">
+                                        <h2 class="tble-txt">Eff:</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="eff-data">
+                                        <input type="text" class="tble-in">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="eff-text">
+                                        <h2 class="tble-txt">Speed:</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="eff-data">
+                                        <input type="text" class="tble-in">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-night-picker">
+                            <div class="form-group">
+                                <strong><label>Select Date & Time</label></strong>
+                                <input class="form-control" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime"
+                                    [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1></owl-date-time>
+                            </div>
+                        </div>
+                        <div class="date-time-btn">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="day-machine">
+                                        <button type="button" (click)="day($event)" class="btn btn-primary btn-sm btn-design">Day</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="night-machine">
+                                        <button type="button" (click)="night($event)" class="btn btn-primary btn-sm btn-design">Night</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="flag4">
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                [plugins]="lineChartPlugins">
+            </canvas>
+        </div>
+        <div *ngIf="flag5">
+            <h1 style="color: #aa3634;">No data found</h1>
+        </div>
+    </nb-card-body>
+</nb-card>
+
+
+
