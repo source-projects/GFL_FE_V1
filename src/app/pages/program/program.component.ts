@@ -122,12 +122,12 @@ export class ProgramComponent implements OnInit {
             this.loading=false;
         }
         else {
-          this.toastr.error(data['msg']);
+          // this.toastr.error(data['msg']);
           this.loading=false;
         }
       },
       error => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading=false;
       }
     )
@@ -159,7 +159,8 @@ export class ProgramComponent implements OnInit {
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.programGuard.accessRights('view group')){
+
+    if(!this.programGuard.accessRights('view group')){
       this.radioArray[1].disabled=true;
     }
     else
@@ -175,25 +176,31 @@ export class ProgramComponent implements OnInit {
   getDeleteAccess(){
     if(this.programGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownEdit;
     }
      if(this.programGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
      if(this.programGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
     if(this.programGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
      if(this.programGuard.accessRights('edit group')){
       this.groupEdit=false;
+      this.hiddenEdit=this.groupEdit;
 
     }
      if(this.programGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 

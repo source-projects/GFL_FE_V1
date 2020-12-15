@@ -74,7 +74,7 @@ export class AddEditSupplierComponent implements OnInit {
         },
         error=>{
           //toaster
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
         }
       )
     }

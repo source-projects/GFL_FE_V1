@@ -42,12 +42,12 @@ export class BatchComponent implements OnInit {
         if(data["success"]){
           this.batchList = data["data"];
         }
-        else{
-          this.toastr.error(errorData.Internal_Error)
-        }
+        // else{
+        //   this.toastr.error(errorData.Internal_Error)
+        // }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
       }
     );
   }

@@ -116,12 +116,10 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
           this.discount = this.formValues.discountPercentage;
           this.gst = this.formValues.gstPercentage;
-        } else {
-          this.toastr.error(data["msg"]);
-        }
+        } 
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -132,12 +130,13 @@ export class AddEditSupplierRateComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
-        } else {
-          this.toastr.error(data["msg"]);
-        }
+        } 
+        // else {
+        //   this.toastr.error(data["msg"]);
+        // }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
