@@ -122,7 +122,7 @@
             <label class="required">Master Name</label>
             <ng-select name="userHeadId" id="userHeadId" formControlName="userHeadId" required
               [ngClass]="{'is-invalid':formSubmitted && (partyForm.get('userHeadId').invalid )}"
-              placeholder="Select Master Name" class="dropdown-name">
+              placeholder="Select Master Name" class="dropdown-name required-error-dropdown">
               <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</ng-option>
             </ng-select>
             <div class="required-class" *ngIf="formSubmitted && partyForm.get('userHeadId').invalid">
@@ -145,10 +145,11 @@
 
             <span class="text dr-txt">Debitors</span>
           </nb-checkbox>
+          <div class="inline-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
+            <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
+          </div>
         </div>
-        <div class="inline-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
-          <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
-        </div>
+        
 
         <div class="row">
           <div class="col-md-12 mobile-btn-center text-btn-right">

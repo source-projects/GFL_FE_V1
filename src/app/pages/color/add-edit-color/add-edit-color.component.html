@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name</label>
-                        <ng-select placeholder="Select supplier name" [(ngModel)]="color.supplierId"
+                        <ng-select placeholder="Select supplier name" [(ngModel)]="color.supplierId" class="required-error-dropdown"
                             #supplierName1="ngModel" name="supplierName" (click)="getAllSupplierRate($event)" required>
                             <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                 {{s.supplierName}}
