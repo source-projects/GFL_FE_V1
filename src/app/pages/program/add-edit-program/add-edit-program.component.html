@@ -33,7 +33,7 @@
                             <label class="required">Quality Id</label>
                             <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required
                                 #qualityId1="ngModel" [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}"
-                                (change)=getQualityInfo($event,programValues.qualityId)>
+                                (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">{{q.qualityId}} -
                                     {{q.partyName}}</ng-option>
                             </ng-select>
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label class="required">Quality Name</label>
                             <input type="text" name="qualityName" #qualityName1="ngModel" class="form-control"
-                                [(ngModel)]='programValues.qualityName' readonly required>
+                                [(ngModel)]='programValues.qualityName' readonly required placeholder="Quality Name">
                         </div>
                     </div>
 
@@ -65,15 +65,15 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Program Given By</label>
-                            <select id="programGivenBy" class="form-control" #pgb1="ngModel" required
-                                [(ngModel)]='programValues.programGivenBy' name="programGivenBy"
-                                [ngClass]="{'is-invalid': formSubmitted && pgb1.invalid}"
-                                placeholder="Program Given By">
-                                <option value="master">Master</option>
-                            </select>
-                            <div class="required-class" *ngIf="formSubmitted && (pgb1.invalid)">
-                                <span>Program given by is required</span>
-                            </div>
+                            <ng-select id="programGivenBy" #pgb1="ngModel" required
+                            [(ngModel)]='programValues.programGivenBy' name="programGivenBy"
+                            [ngClass]="{'is-invalid': formSubmitted && pgb1.invalid}"
+                            placeholder="Program Given By">
+                            <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
+                        </ng-select>
+                        <div class="required-class" *ngIf="formSubmitted && (pgb1.invalid)">
+                            <span>Program given by is required</span>
+                        </div>
                         </div>
                     </div>
 

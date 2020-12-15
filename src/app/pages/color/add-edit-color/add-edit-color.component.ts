@@ -44,10 +44,8 @@ export class AddEditColorComponent implements OnInit {
     private commonService: CommonService,
     private supplierService: SupplierService,
     private colorService: ColorService,
-    private toastrService: NbToastrService,
     private route: Router,
     private toastr: ToastrService,
-    private datepipe: DatePipe,
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
@@ -124,6 +122,7 @@ export class AddEditColorComponent implements OnInit {
         this.loading=false;
       }
     )
+    this.loading=false;
   }
 
   getAllSupplierRate(event) {
@@ -189,18 +188,8 @@ export class AddEditColorComponent implements OnInit {
             return;
           }
         }
-        let obj = {
-          itemName: null,
-          quantityPerBox: null,
-          noOfBox: null,
-          quantity: null,
-          id: null,
-          quantityUnit: "kg",
-          itemId: null,
-          rate: null,
-          controlId: null,
-          amount: null,
-        };
+
+        let obj = new ColorDataList();
         let list = this.color.colorDataList;
         list.push(obj);
         this.color.colorDataList = [...list];
@@ -212,19 +201,16 @@ export class AddEditColorComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50)
+        }, 10)
       }
       else {
         let interval = setInterval(() => {
-
           let field = document.getElementById(this.index)
-
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
-        }, 50)
-        //alert("Go to any last row input to add new row");
+        }, 10)
       }
     }
   }
@@ -275,14 +261,8 @@ export class AddEditColorComponent implements OnInit {
     let idCount = this.color.colorDataList.length
     let item = this.color.colorDataList;
     if (idCount == 1) {
-      item[0].id = null;
-      item[0].itemId = null;
-      item[0].quantity = null;
-      item[0].quantityPerBox = null;
-      item[0].quantity = null;
-      item[0].rate = null;
-      item[0].noOfBox = null;
-      let list = item;
+      let ob = new ColorDataList();
+      let list = [{...ob}];
       this.color.colorDataList = [...list];
     }
     else {

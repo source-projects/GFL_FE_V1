@@ -10,6 +10,11 @@ export class ProgramService {
     getProgramList(id,getBy) {
         return this.httpClient.get(this.commonService.envUrl() + 'api/program/all/'+getBy+'/'+id);
     }
+
+    getAllMasters(){
+        return this.httpClient.get(this.commonService.envUrl()+'api/userHead');
+    }
+
     deleteProgramDetailsById(id) {
         return this.httpClient.delete(this.commonService.envUrl() + 'api/program/' + id);
     }

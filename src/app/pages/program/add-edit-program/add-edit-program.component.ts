@@ -30,6 +30,7 @@ export class AddEditProgramComponent implements OnInit {
   partyShade: any[];
   batchData: any[];
   stockData: any[];
+  masterList: any[];
   priorityData = [
     { name: "Very High" },
     { name: "High" },
@@ -62,12 +63,27 @@ export class AddEditProgramComponent implements OnInit {
     this.getPartyList();
     this.getQualityList();
     this.getPartyShadeList();
+    this.getMasterList();
+    this.programValues.priority = 'Medium'
   }
 
   getCurrentId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentProgramId = this._route.snapshot.paramMap.get("id");
+  }
+
+  getMasterList(){
+    this.programService.getAllMasters().subscribe(
+      data=>{
+        if(data['success']){
+          this.masterList = data['data']
+        }
+      },
+      error=>{
+        this.toastr.error(errorData.Internal_Error)
+      }
+    )
   }
 
   getPartyList() {
@@ -135,6 +151,7 @@ export class AddEditProgramComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.programValues = data["data"];
+            this.programValues.createdBy = data['data'].createdBy
             this.qualityService.getallQuality(0, "all").subscribe(
               (data) => {
                 this.qualityList = data["data"];
@@ -143,7 +160,6 @@ export class AddEditProgramComponent implements OnInit {
                     this.programValues.qualityId = element.qualityId;
                     this.programValues.qualityName = element.qualityName;
                     this.programValues.qualityType = element.qualityType;
-                    this.loading = false;
                   }
                   this.loading = false;
                 });
@@ -155,13 +171,11 @@ export class AddEditProgramComponent implements OnInit {
                     )
                     .subscribe(
                       (data) => {
-                        if (data["success"]) {
+                        if (data["success"])
                           this.batchData = data["data"];
-                          this.loading = false;
-                        } else {
+                        else 
                           this.toastr.error(data["msg"]);
-                          this.loading = false;
-                        }
+                        this.loading = false;
                       },
                       (error) => {
                         this.toastr.error(errorData.Serever_Error);
@@ -177,11 +191,12 @@ export class AddEditProgramComponent implements OnInit {
                       (data) => {
                         if (data["success"]) {
                           this.stockData = data["data"];
-                          this.loading = false;
+                          
                         } else {
                           this.toastr.error(data["msg"]);
-                          this.loading = false;
+                          
                         }
+                        this.loading = false;
                       },
                       (error) => {
                         this.toastr.error(errorData.Serever_Error);
@@ -224,13 +239,18 @@ export class AddEditProgramComponent implements OnInit {
               this.programValues.qualityType = this.qualityList[0].qualityType;
               this.programValues.qualityEntryId = this.qualityList[0].qualityEntryId;
               this.getStockBatchData()
-              this.loading = false;
             }
-            else
+            else{
+              this.programValues.qualityId = null;
+              this.programValues.qualityName = null;
+              this.programValues.qualityType = null;
+              this.qualityList = [];
               this.toastr.error(data['msg'])
-              this.loading = false;
+            }
+            this.loading = false;
           },
           error => {
+            this.qualityList = [];
             this.toastr.error(errorData.Serever_Error)
             this.loading = false;
           }
@@ -246,7 +266,6 @@ export class AddEditProgramComponent implements OnInit {
       this.getQualityList();
       this.loading = false;
     }
-
   }
 
   //get Stock Batch data
@@ -305,19 +324,11 @@ export class AddEditProgramComponent implements OnInit {
         }
       });
       this.getStockBatchData();
-      //getPartyByQuality...
-      // this.programService.getPartyByQuality(this.programValues.qualityEntryId).subscribe(
-      //   data => {
-      //     if (data['success']) {
-      //       this.party = data['data'];
-      //       console.log(this.party)
-      //     } else
-      //       this.toastr.error(data["msg"]);
-      //   },
-      //   error => {
-      //     this.toastr.error(errorData.Serever_Error);
-      //   }
-      // )
+      //set Party...
+      this.qualityList.forEach(e=>{
+        if(e.qualityId == this.programValues.qualityId)
+          this.programValues.partyId = e.partyId
+      })
     } else {
       this.programValues.partyId = null;
       this.programValues.qualityId = null;
@@ -357,7 +368,7 @@ export class AddEditProgramComponent implements OnInit {
 
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
-      let id = this.programValues.programRecords[rowIndex].branchId;
+      let id = this.programValues.programRecords[rowIndex].batchId;
       this.batchData.forEach((element) => {
         if (id == element.batchId) {
           this.programValues.programRecords[rowIndex].quantity = element.totalWt;
@@ -397,43 +408,27 @@ export class AddEditProgramComponent implements OnInit {
         } else if (colName == "colour_tone") {
           if (!item.colourTone) {
             this.toastr.error(
-              "Enter Colour Tone",
-              "Colour Tone Field required"
+              "Enter Colour Tone"
             );
             return;
           }
         } else if (colName == "quantity") {
           if (!item.quantity) {
-            this.toastr.error("Enter quantity", "quantity Field required");
+            this.toastr.error("Enter quantity");
             return;
           }
         } else if (colName == "batch") {
-          if (!item.branchId) {
-            this.toastr.error("Enter No. of Batch", "Batch Field required");
+          if (!item.batchId) {
+            this.toastr.error("Enter No. of Batch");
             return;
           }
         } else if (colName == "stockId") {
           if (!item.stockId) {
-            this.toastr.error("Enter Lot No", "Lot No Field required");
+            this.toastr.error("Enter Lot No");
             return;
           }
         }
-        let obj = {
-          id: null,
-          partyId: null,
-          priority: null,
-          programGivenBy: null,
-          branchId: null,
-          colourTone: null,
-          stockId: null,
-          partyShadeNo: null,
-          quantity: null,
-          remark: null,
-          shadeNo: null,
-          qualityId: null,
-          qualityName: null,
-          qualityType: null,
-        };
+        let obj = new ProgramRecords();
         let list = this.programValues.programRecords;
         list.push(obj);
         this.programValues.programRecords = [...list];
@@ -464,7 +459,7 @@ export class AddEditProgramComponent implements OnInit {
       item[0].shadeNo = null;
       item[0].colourTone = null;
       item[0].quantity = null;
-      item[0].branchId = null;
+      item[0].batchId = null;
       item[0].stockId = null;
       item[0].remark = null;
       let list = item;
@@ -484,7 +479,7 @@ export class AddEditProgramComponent implements OnInit {
       delete this.programValues.qualityId;
       delete this.programValues.qualityName;
       delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].branchId;
+      delete this.programValues.programRecords[0].batchId;
       delete this.programValues.programRecords[0].stockId;
       this.programService.saveProgram(this.programValues).subscribe(
         (data) => {
@@ -515,7 +510,7 @@ export class AddEditProgramComponent implements OnInit {
       delete this.programValues.qualityId;
       delete this.programValues.qualityName;
       delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].branchId;
+      delete this.programValues.programRecords[0].batchId;
       delete this.programValues.programRecords[0].stockId;
       this.programService.updateProgram(this.programValues).subscribe(
         (data) => {
