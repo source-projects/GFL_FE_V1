@@ -32,7 +32,13 @@ export class AddEditUserComponent implements OnInit {
 
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
-
+  companyList=[
+    {name:"Company 1"},
+    {name:"Company 2"},
+    {name:"Company 3"},
+    {name:"Company 4"},
+    {name:"Company 5"},
+    ]
   desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -159,6 +165,7 @@ export class AddEditUserComponent implements OnInit {
             this.loading = false;
           }
         )
+        this.loading = false;
       }
     } else {
       this.user.userHeadId = null;
