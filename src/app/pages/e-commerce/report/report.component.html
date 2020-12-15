@@ -44,22 +44,41 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="POApprovalFlag">
+            <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31" [footerHeight]="40">
+                <ngx-datatable-column name="Status" sortable="false">
+                    <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <div *ngIf="row.status === 1">APPROVED</div>
+                        <div *ngIf="row.status === 2">DECLINED</div>
+                        <div *ngIf="row.status === 0">
+                            <button class="btn btn-sm btn-primary" (click)="updateRequest(1, rowIndex)">
+                                APPROVE</button>
+                            <button class="btn btn-sm btn-primary" (click)="updateRequest(2, rowIndex)">
+                                DECLINE</button>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="User Id" prop="createdBy"></ngx-datatable-column>
+                <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
+                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
+            </ngx-datatable>
+        </div>
         <div class="machine-cards" *ngIf="machineReportFlag">
-            <div class="row" *ngFor="let cat of machineCategory">
-                <div class="col-md-4">
-                    <button type="button" class="card-machine">
+            <div class="row">
+                <div class="col-md-4" *ngFor="let cat of machineCategory">
+                    <button type="button" (click)="categorySelected(cat)" class="card-machine">
                         <h2>{{cat.name}}</h2>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="machine-cards" *ngIf="stanterMachineFlag || foldingMachineFlag || waterJetMachineFlag">
-            <div class="row" *ngFor="let machine of machines">
-                <div class="col-md-4">
+        <div class="machine-cards" *ngIf="MachineFlag">
+            <div class="row">
+                <div class="col-md-4" *ngFor="let machine of infor">
                     <div class="machine-main-card">
                         <div class="date-card">
                             <div class="date-card-header">
-                                <h2>{{machine.name}}</h2>
+                                <h2>{{machine.machineName}}</h2>
                             </div>
                         </div>
                         <div class="date-card-body">
@@ -98,12 +117,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-6">
                                     <div class="day-machine">
-                                        <button type="button" (click)="day($event)" class="btn btn-primary btn-sm btn-design">Day</button>
+                                        <button type="button" (click)="day(machine)" class="btn btn-primary btn-sm btn-design">Day</button>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6">
                                     <div class="night-machine">
-                                        <button type="button" (click)="night($event)" class="btn btn-primary btn-sm btn-design">Night</button>
+                                        <button type="button" (click)="night(machine)" class="btn btn-primary btn-sm btn-design">Night</button>
                                     </div>
                                 </div>
                             </div>
@@ -112,15 +131,20 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="flag4">
+        <div *ngIf="ChartFlag">
             <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
                 [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
                 [plugins]="lineChartPlugins">
             </canvas>
         </div>
-        <div *ngIf="flag5">
+        <div *ngIf="NoDataFlag">
             <h1 style="color: #aa3634;">No data found</h1>
         </div>
+
+        <div *ngIf="buttonFlag">
+            <button class="btn btn-primary" (click)="back()">BACK</button>
+        </div>
+
     </nb-card-body>
 </nb-card>
 
