@@ -1,18 +1,14 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData, BatchMrtWt, BatchCard } from "app/@theme/model/stock-batch";
-
-import * as errorData from "app/@theme/json/error.json";
-import { PartyService } from "app/@theme/services/party.service";
-import { ToastrService } from "ngx-toastr";
-import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { QualityService } from "app/@theme/services/quality.service";
-import {
-  NgbDateAdapter,
-  NgbDateNativeAdapter,
-} from "@ng-bootstrap/ng-bootstrap";
-import { CommonService } from "app/@theme/services/common.service";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { NgbDateAdapter, NgbDateNativeAdapter } from "@ng-bootstrap/ng-bootstrap";
+import * as errorData from "app/@theme/json/error.json";
+
+import { ToastrService } from "ngx-toastr";
+import { BatchData, StockBatch } from "../../../@theme/model/stock-batch";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import {StockBatchService} from "../../../@theme/services/stock-batch.service";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -21,31 +17,22 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditStockBatchComponent implements OnInit {
+
   public loading = false;
+  public formSubmitted = false;
+
   public errorData: any = (errorData as any).default;
-  qualityList: any;
 
-  formSubmitted = false;
+  public qualityList: any;
+  public partyList: any[];
 
-  party: any[];
-  user: any;
-  userHead;
-  index;
-  stockList;
-  wtPer100M;
-  deleteFlag = 0;
-  validationCardRowIndex = 0;
-  ValidationTableRowIndex = 0;
-  batch = {
-    batchId: 0,
-    mtr: 0,
-    wt: 0,
-  };
+  public user: any;
+  public userHead;
 
-  dummy= {
-    batchId: 0,
-    batchMW: null,
-  };
+  public index;
+  public wtPer100M;
+  public validationCardRowIndex = 0;
+  public ValidationTableRowIndex = 0;
 
   stockDataValues= [
     {
@@ -61,12 +48,9 @@ export class AddEditStockBatchComponent implements OnInit {
   ];
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
-  stockBatchData: BatchData = new BatchData();
-  blockNumber;
-  currentStockBatch;
-  isQualitySelected: Boolean = false;
+  currentStockBatchId;
   flag = 1;
-  addFlag = false;
+  addFlag = true;
   batchIdArray = [];
   rearrangeStartIndex: any;
 
@@ -82,14 +66,98 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.addFlag = window.location.href.endsWith("add");
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.getPartyList();
     this.getQualityList();
-    this.currentStockBatch = this._route.snapshot.paramMap.get("id");
-    if (this.currentStockBatch != null || this.currentStockBatch != undefined)
-      this.getUpdateData();
+    this.currentStockBatchId = this._route.snapshot.paramMap.get("id");
+    if (this.currentStockBatchId != null || this.currentStockBatchId != undefined){
+      this.getStockBatchById();
+      this.addFlag = false;
+    }
+  }
+
+  getPartyList() {
+    this.loading = true;
+    this.partyService.getAllPartyNameList().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.partyList = data["data"];
+        } else {
+          this.toastr.error(data["msg"]);
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
+
+  getQualityList() {
+    this.loading = true;
+    this.qualityService.getQualityNameData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          if (data["data"] && data["data"].length > 0) {
+            this.qualityList = data["data"];
+          } else {
+            this.toastr.error(errorData.Not_added);
+          }
+        } else {
+          this.toastr.error(errorData.Internal_Error);
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
+
+  getStockBatchById() {
+    this.loading = true;
+    this.stockBatchService.getStockBatchById(this.currentStockBatchId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.stockBatch.billDate = new Date(data["data"].billDate);
+          this.stockBatch.qualityId = data["data"].qualityId;
+          if (this.qualityList != undefined) {
+            this.qualityList.forEach((element) => {
+              if (element.id == this.stockBatch.qualityId) {
+                this.wtPer100M = element.wtPer100m;
+              }
+            });
+          }
+          this.stockBatch.unit = data["data"].unit;
+          this.stockBatch.stockInType = data["data"].stockInType;
+          this.stockBatch.billNo = data["data"].billNo;
+          this.stockBatch.chlDate = new Date(data["data"].chlDate);
+          this.stockBatch.chlNo = data["data"].chlNo;
+          this.stockBatch.partyId = data["data"].partyId;
+
+          this.stockBatch.createdBy = data["data"].createdBy;
+          this.stockBatch.createdDate = data["data"].createdDate;
+          this.stockBatch.userHeadId = data["data"].userHeadId;
+          this.stockBatch.remark = data["data"].remark;
+          this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
+          this.stockBatch.createdBy = data["data"].createdBy;
+          this.stockBatch.createdDate = data["data"].createdDate;
+          this.stockBatch.userHeadId = data["data"].userHeadId;
+          this.stockBatch.batchData = data["data"].batchData;
+          this.setStockDataValues();
+        } else {
+          this.toastr.error(data["msg"]);
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
   }
 
   getUnit(event) {
@@ -154,48 +222,6 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  getUpdateData() {
-    this.loading = true;
-    this.stockBatchService.getStockBatchById(this.currentStockBatch).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.stockBatch.billDate = new Date(data["data"].billDate);
-          this.stockBatch.qualityId = data["data"].qualityId;
-          if (this.qualityList != undefined) {
-            this.qualityList.forEach((element) => {
-              if (element.id == this.stockBatch.qualityId) {
-                this.wtPer100M = element.wtPer100m;
-              }
-            });
-          }
-          this.stockBatch.unit = data["data"].unit;
-          this.stockBatch.stockInType = data["data"].stockInType;
-          this.stockBatch.billNo = data["data"].billNo;
-          this.stockBatch.chlDate = new Date(data["data"].chlDate);
-          this.stockBatch.chlNo = data["data"].chlNo;
-          this.stockBatch.partyId = data["data"].partyId;
-
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-          this.stockBatch.remark = data["data"].remark;
-          this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-          this.stockBatch.batchData = data["data"].batchData;
-          this.setStockDataValues();
-        } else {
-          this.toastr.error(data["msg"]);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
-  }
 
   setStockDataValues() {
     var prev = this.stockBatch.batchData[0].batchId;
@@ -229,27 +255,6 @@ export class AddEditStockBatchComponent implements OnInit {
     this.flag = 0;
   }
 
-  getQualityList() {
-    this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
-      (data) => {
-        if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.qualityList = data["data"];
-          } else {
-            this.toastr.error(errorData.Not_added);
-          }
-        } else {
-          this.toastr.error(errorData.Internal_Error);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
-  }
   checkDuplicates() {
     for (let x = 0; x < this.validationCardRowIndex + 1; x++) {
       if (
@@ -263,23 +268,7 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     }
   }
-  getPartyList() {
-    this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.party = data["data"];
-        } else {
-          this.toastr.error(data["msg"]);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
-  }
+
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
       this.flag = 1;
@@ -426,7 +415,7 @@ export class AddEditStockBatchComponent implements OnInit {
         
       }
       this.stockBatch.batchData = this.stockBatchArray;
-      this.stockBatch.id = parseInt(this.currentStockBatch);
+      this.stockBatch.id = parseInt(this.currentStockBatchId);
       this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
         (data) => {
           if (data["success"]) {
