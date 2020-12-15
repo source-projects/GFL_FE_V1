@@ -189,7 +189,7 @@ export class ReportComponent implements OnInit {
         this.collectData(this.obj)
       }
       else {
-        this.toastr.error("Select time from 9:00 AM to 8:59 PM for day shift")
+        // this.toastr.error("Select time from 9:00 AM to 8:59 PM for day shift")
       }
     }
     else if (Number(this.obj.shift) == 2) {
@@ -221,11 +221,11 @@ export class ReportComponent implements OnInit {
 
       }
       else {
-        this.toastr.error("Select time from 9:00 PM to 8:59 AM for night shift");
+        // this.toastr.error("Select time from 9:00 PM to 8:59 AM for night shift");
       }
     }
     else {
-      this.toastr.error("Select date and time");
+      // this.toastr.error("Select date and time");
     }
   }
 
@@ -274,12 +274,12 @@ export class ReportComponent implements OnInit {
           this.flag4 = true;
         }
         else {
-          this.toastr.error(res['msg'])
+          // this.toastr.error(res['msg'])
         }
 
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
       }
     )
   }

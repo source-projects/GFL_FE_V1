@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData, BatchMrtWt, BatchCard } from "app/@theme/model/stock-batch";
+import { StockBatch, BatchData} from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
 import { PartyService } from "app/@theme/services/party.service";
@@ -141,8 +141,8 @@ export class AddEditStockBatchComponent implements OnInit {
               //this.loading = false;
             },
             (error) => {
-              this.toastr.error(errorData.Serever_Error);
-              //this.loading = false;
+              // this.toastr.error(errorData.Serever_Error);
+              this.loading = false;
             }
           );
           this.loading = false;
@@ -193,7 +193,7 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -247,7 +247,7 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -277,7 +277,7 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -397,7 +397,8 @@ export class AddEditStockBatchComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
           } else {
             this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data['msg']);
+
           }
         },
         (error) => {
