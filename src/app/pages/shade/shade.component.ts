@@ -142,7 +142,7 @@ export class ShadeComponent implements OnInit {
     this.loading = true;
     this.shadeService.getShadeMastList(id, getBy).subscribe(
       data => {
-        if (data['sucess']) {
+        if (data['success']) {
           if (data['data'].length > 0) {
             this.shadeList = data['data'];
             this.shade = this.shadeList.map((element) => ({
