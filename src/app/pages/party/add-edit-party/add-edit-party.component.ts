@@ -166,7 +166,7 @@ export class AddEditPartyComponent implements OnInit {
             } else {
               this.toastr.error(errorData.Add_Error);
             }
-
+            // this.loading=true;
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);

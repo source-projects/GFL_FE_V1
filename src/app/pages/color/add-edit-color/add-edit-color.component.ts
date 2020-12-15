@@ -39,6 +39,7 @@ export class AddEditColorComponent implements OnInit {
   calculationTotalQuantity: any;
   convertedDate: any;
   convertedDate2: any;
+
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -54,9 +55,11 @@ export class AddEditColorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
+
   }
 
   getData() {
