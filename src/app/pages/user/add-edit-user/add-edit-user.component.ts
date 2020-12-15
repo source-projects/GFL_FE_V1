@@ -19,6 +19,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
+  public disableButton = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -518,7 +519,7 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-
+            this.disableButton=true;
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -551,6 +552,7 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Add_Success);
+            this.disableButton=true;
           } else {
             this.toastr.error(errorData.Add_Error);
           }

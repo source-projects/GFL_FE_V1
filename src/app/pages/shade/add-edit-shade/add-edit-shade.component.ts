@@ -16,6 +16,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddEditShadeComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
+
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
@@ -431,6 +433,8 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
+            this.disableButton=true;
+
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -476,6 +480,8 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
+            this.disableButton=true;
+
             
           } else {
             this.toastr.error(errorData.Update_Error);

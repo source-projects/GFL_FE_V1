@@ -33,6 +33,9 @@ export class AddEditSupplierComponent implements OnInit {
 
   //to varify form
   formSubmitted:boolean=false;
+  public loading = false;
+  public disableButton = false;
+
 
   constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute,private toastr: ToastrService) { }
 
@@ -90,6 +93,8 @@ export class AddEditSupplierComponent implements OnInit {
           if(data["success"]){
             this.toastr.success(errorData.Add_Success);
             this.router.navigate(['pages/supplier']);
+            this.disableButton=true;
+
           }
           else{
             this.toastr.error(errorData.Add_Error);
@@ -119,14 +124,18 @@ export class AddEditSupplierComponent implements OnInit {
           if(data["success"]){
             this.toastr.success(errorData.Update_Success);
             this.router.navigate(['pages/supplier']);
+            this.disableButton=true;
+
           }
           else{
             this.toastr.error(errorData.Update_Error);
           }
+          this.loading = false;
         },
         error=>{
           //toaster
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       )
     }

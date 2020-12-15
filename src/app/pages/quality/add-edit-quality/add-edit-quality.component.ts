@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddEditQualityComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
   public errorData: any = (errorData as any).default;
 
   //form Validation
@@ -126,7 +127,8 @@ export class AddEditQualityComponent implements OnInit {
         (data) => {
           if (data['success']) {
             this.route.navigate(["/pages/quality"]);
-            this.toastr.success(errorData.Add_Success)
+            this.toastr.success(errorData.Add_Success);
+            this.disableButton=true;
           }
           else {
             this.toastr.error(errorData.Add_Error)
@@ -150,7 +152,7 @@ export class AddEditQualityComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Update_Success)
-           
+            this.disableButton=true;
           }
           else {
             this.toastr.error(errorData.Update_Error)

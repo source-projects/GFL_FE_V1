@@ -207,9 +207,9 @@
                             <button type="button" class="btn btn-primary btn-sm btn-design" *ngIf="addFlag"
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                                 <button *ngIf="currentStockBatch == null" type="button"
-                                class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)">SAVE</button>
+                                class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="currentStockBatch != null" type="button"
-                                class="btn btn-primary btn-sm btn-design" (click)="updateStockBatch(myForm)">UPDATE</button>
+                                class="btn btn-primary btn-sm btn-design" (click)="updateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
                     </div>
                 </div>

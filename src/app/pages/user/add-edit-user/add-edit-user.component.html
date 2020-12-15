@@ -255,11 +255,11 @@
 
 
                 <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
-                    style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+                    style="margin-right:20px" [disabled]="disableButton" (click)=updateUser(myForm) >Update</button>
                 <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                     routerLink="/pages/user">Cancel</button>
                 <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-                    style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
+                    style="margin-right:20px" (click)="addUser(myForm)" [disabled]="disableButton">SAVE</button>
 
             </div>
         </div>

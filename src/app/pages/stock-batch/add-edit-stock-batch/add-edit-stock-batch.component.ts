@@ -22,6 +22,7 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 })
 export class AddEditStockBatchComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
   public errorData: any = (errorData as any).default;
   qualityList: any;
 
@@ -391,6 +392,8 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Add_Success);
+            this.disableButton=true;
+
           } else {
             this.stockBatchArray = [];
             // this.toastr.error(data['msg']);
@@ -433,9 +436,11 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Update_Success);
+            this.disableButton=true;
+
           } else {
             this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
           }
           this.loading = false;
         },

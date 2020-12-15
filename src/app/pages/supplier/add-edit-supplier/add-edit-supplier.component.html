@@ -78,10 +78,10 @@
                     <div class="padding-bt-tp">
                         
                         <ng-template #update><input type="button" (click)="updateSupplier()"
-                                class="btn btn-primary btn-sm btn-design" value="UPDATE"></ng-template>
+                                class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="UPDATE"></ng-template>
                         <button class="btn btn-primary btn-sm btn-design" (click)="goBackToPreviousPage()">CANCEL</button>
                         <input *ngIf="selectedSupplierId == null; else update" type="submit"
-                            class="btn btn-primary btn-sm btn-design" value="SAVE">
+                            class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="SAVE">
                     </div>
                 </div>
             </div>
