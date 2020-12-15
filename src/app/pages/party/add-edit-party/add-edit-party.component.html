@@ -20,7 +20,7 @@
               class="form-control"
               formControlName="partyName"
               placeholder="Party Name"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('partyName').invalid ) || partyForm.get('partyName').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('partyName').invalid) || (partyForm.get('partyName').invalid  &&  partyForm.get('partyName').touched)}"
             />
 
             <div
@@ -48,7 +48,7 @@
               fieldsize="small"
               formControlName="mailId"
               placeholder="Email"
-              [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid  && formSubmitted) || partyForm.get('mailId').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('mailId').invalid) || (partyForm.get('mailId').invalid  &&  partyForm.get('mailId').touched)}"
             />
             <div
               class="invalid-feedback"
@@ -90,7 +90,7 @@
               fieldsize="small"
               formControlName="city"
               placeholder="City"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('city').invalid) || partyForm.get('city').touched }"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('city').invalid) || (partyForm.get('city').invalid && partyForm.get('city').touched )}"
             />
             <div
               class="invalid-feedback"
@@ -111,7 +111,7 @@
               name="state"
               id="state"
               formControlName="state"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('state').invalid ) || partyForm.get('state').touched }"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('state').invalid) || (partyForm.get('state').invalid  && partyForm.get('state').touched )}"
               placeholder="Select State"
               class="dropdown-name"
               required
@@ -120,7 +120,7 @@
             </ng-select>
             <div
               class="required-class"
-              *ngIf="formSubmitted && partyForm.get('state').invalid "
+              *ngIf="(formSubmitted && partyForm.get('state').invalid) || (partyForm.get('state').invalid && partyForm.get('state').touched) "
             >
               <span>State is required</span>
             </div>
@@ -137,7 +137,7 @@
               fieldsize="small"
               formControlName="pincode"
               placeholder="Pin Code"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('pincode').invalid ) || partyForm.get('pincode').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('pincode').invalid) || (partyForm.get('pincode').invalid  && partyForm.get('pincode').touched)}"
             />
             <div
               class="invalid-feedback"
@@ -167,7 +167,7 @@
               formControlName="contactNo"
               placeholder="Contact No"
               pattern="[6-9]{1}[0-9]{9}"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('contactNo').invalid) || partyForm.get('contactNo').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('contactNo').invalid) || (partyForm.get('contactNo').invalid && partyForm.get('contactNo').touched)}"
             />
             <div
               class="invalid-feedback"
@@ -183,12 +183,6 @@
             </div>
           </div>
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
           <div class="form-group col-md-4">
             <label class="required">Address 1</label>
             <textarea
@@ -198,12 +192,12 @@
               fullwidth
               formControlName="partyAddress1"
               placeholder="Address 1"
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('partyAddress1').invalid ) || partyForm.get('partyAddress1').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('partyAddress1').invalid) || (partyForm.get('partyAddress1').invalid && partyForm.get('partyAddress1').touched)}"
             >
             </textarea>
             <div
               class="invalid-feedback"
-              *ngIf="formSubmitted && (partyForm.get('partyAddress1').invalid || (partyForm.get('partyAddress1').dirty || partyForm.get('partyAddress1').untouched) )"
+              *ngIf="(formSubmitted && partyForm.get('partyAddress1').invalid) || (partyForm.get('partyAddress1').invalid && partyForm.get('partyAddress1').touched) "
             >
               <span>Address is required</span>
             </div>
@@ -225,7 +219,7 @@
               id="userHeadId"
               formControlName="userHeadId"
               required
-              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('userHeadId').invalid ) || partyForm.get('userHeadId').touched}"
+              [ngClass]="{'is-invalid':(formSubmitted && partyForm.get('userHeadId').invalid) || (partyForm.get('userHeadId').invalid && partyForm.get('userHeadId').touched)}"
               placeholder="Select Master Name"
               class="dropdown-name"
             >
@@ -235,15 +229,11 @@
             </ng-select>
             <div
               class="required-class"
-              *ngIf="formSubmitted && partyForm.get('userHeadId').invalid"
+              *ngIf="(formSubmitted && partyForm.get('userHeadId').invalid) || (partyForm.get('userHeadId').invalid && partyForm.get('userHeadId').touched)"
             >
               <span>Master Name is required</span>
             </div>
           </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
         </div>
 
         <div class="creditors-debitors">
@@ -279,7 +269,6 @@
         </div>
 
         <div class="row">
-<<<<<<< HEAD
           <div class="col-md-12 mobile-btn-center">
             <button
               *ngIf="this.currentPartyId == null"
@@ -306,16 +295,6 @@
             >
               CANCEL
             </button>
-=======
-          <div class="col-md-12 mobile-btn-center text-btn-right">
-
-            <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
-              class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
-            <button class="btn btn-primary btn-sm btn-design" type="button"
-              (click)="goBackToPreviousPage()">CANCEL</button>
-            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
-              style="margin-right:20px" (click)="addParty()">SAVE</button>
->>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
           </div>
         </div>
       </form>

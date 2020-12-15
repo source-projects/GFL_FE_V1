@@ -11,8 +11,8 @@
         <div class="form-group">
           <label>Step Name</label>
           <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel"
-            [ngClass]="{'is-invalid':modalSubmitted && name1.invalid}" required placeholder="Step Name">
-          <div class="invalid-feedback" style="color: red;" *ngIf="modalSubmitted && (name1.invalid )">
+            [ngClass]="{'is-invalid':(modalSubmitted && name1.invalid) || (name1.invalid && name1.touched)}" required placeholder="Step Name">
+          <div class="invalid-feedback" style="color: red;" *ngIf="(modalSubmitted && name1.invalid) || (name1.invalid && name1.touched)">
             Step Name is required.
           </div>
         </div>
@@ -22,10 +22,10 @@
         <div class="form-group">
           <label>Step Position</label>
           <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo"
-            #position1="ngModel" [ngClass]="{'is-invalid':modalSubmitted &&position1.invalid}" required>
+            #position1="ngModel" [ngClass]="{'is-invalid':(modalSubmitted && position1.invalid) ||(position1.invalid && position1.touched)}" required>
             <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
           </select>
-          <div class="invalid-feedback" *ngIf="modalSubmitted && position1.invalid">
+          <div class="invalid-feedback" *ngIf="(modalSubmitted && position1.invalid) ||(position1.invalid && position1.touched)">
             Step Position is required.
           </div>
         </div>

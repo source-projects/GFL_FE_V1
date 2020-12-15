@@ -16,9 +16,9 @@
                         <label class="required">Supplier Name</label>
                         <input type="text" class="form-control" name="supplierName" placeholder="Supplier Name"
                             formControlName="supplierName"
-                            [ngClass]="{'is-invalid': formSubmitted && addSupplier.controls.supplierName.invalid}">
+                            [ngClass]="{'is-invalid': (formSubmitted && addSupplier.controls.supplierName.invalid ) || (addSupplier.controls.supplierName.invalid && addSupplier.controls.supplierName.touched) }">
                         <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addSupplier.controls.supplierName.invalid || (addSupplier.get('supplierName').dirty || addSupplier.get('supplierName').touched) )">
+                            *ngIf="(formSubmitted && addSupplier.controls.supplierName.invalid ) || (addSupplier.controls.supplierName.invalid && addSupplier.controls.supplierName.touched)">
                             <span>Supplier Name is Required</span>
                         </div>
                     </div>
@@ -28,10 +28,10 @@
                         <label class="required">Discount %</label>
                         <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %"
                             formControlName="discountPercentage"
-                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.discountPercentage.invalid )}"
+                            [ngClass]="{'is-invalid':(formSubmitted && addSupplier.controls.discountPercentage.invalid) || (addSupplier.controls.discountPercentage.invalid && addSupplier.controls.discountPercentage.touched)}"
                             min="0">
                         <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addSupplier.controls.discountPercentage.invalid || (addSupplier.get('discountPercentage').dirty || addSupplier.get('discountPercentage').touched) )">
+                            *ngIf="(formSubmitted && addSupplier.controls.discountPercentage.invalid) || (addSupplier.controls.discountPercentage.invalid && addSupplier.controls.discountPercentage.touched)">
                             <span>Discount % is Required</span>
                         </div>
                     </div>
@@ -42,10 +42,10 @@
                         <label class="required">GST %</label>
                         <input type="number" class="form-control" id="gstPercentage" placeholder="GST %"
                             formControlName="gstPercentage"
-                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.gstPercentage.invalid )}"
+                            [ngClass]="{'is-invalid':(formSubmitted && addSupplier.controls.gstPercentage.invalid) || (addSupplier.controls.gstPercentage.invalid && addSupplier.controls.gstPercentage.touched)}"
                             min="0">
                         <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addSupplier.controls.gstPercentage.invalid || (addSupplier.get('gstPercentage').dirty || addSupplier.get('gstPercentage').touched) )">
+                            *ngIf="(formSubmitted && addSupplier.controls.gstPercentage.invalid) || (addSupplier.controls.gstPercentage.invalid && addSupplier.controls.gstPercentage.touched)">
                             <span>GST % is Required</span>
                         </div>
                     </div>
@@ -55,10 +55,10 @@
                         <label class="required">Payment Terms</label>
                         <input type="number" class="form-control" id="paymentTerms" placeholder="Payment Terms"
                             formControlName="paymentTerms" required
-                            [ngClass]="{'is-invalid':formSubmitted && (addSupplier.controls.paymentTerms.invalid )}"
+                            [ngClass]="{'is-invalid':(formSubmitted && addSupplier.controls.paymentTerms.invalid ) || (addSupplier.controls.paymentTerms.invalid  && addSupplier.controls.paymentTerms.touched )}"
                             min="0">
                         <div class="invalid-feedback"
-                            *ngIf="formSubmitted && (addSupplier.controls.paymentTerms.invalid || (addSupplier.get('paymentTerms').dirty || addSupplier.get('paymentTerms').touched) )">
+                            *ngIf="(formSubmitted && addSupplier.controls.paymentTerms.invalid ) || (addSupplier.controls.paymentTerms.invalid  && addSupplier.controls.paymentTerms.touched )">
                             <span>Payment Terms is Required</span>
                         </div>
                     </div>
