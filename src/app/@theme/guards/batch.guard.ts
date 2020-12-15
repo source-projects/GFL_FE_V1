@@ -23,7 +23,7 @@ export class BatchGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('batch');
     this.permis = this.commonService.decToBin(permission);
     let PermissionName = route.data["PermissionName"];
-    console.log(PermissionName);  
+    // console.log(PermissionName);  
    switch (PermissionName[0]) {
      case 'view':
        if (this.permis[0] == '1')

@@ -22,8 +22,7 @@ export class ProgramGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('program');
     this.permis = this.commonService.decToBin(permission);
-    let PermissionName = route.data["PermissionName"];
-    console.log(PermissionName);  
+    let PermissionName = route.data["PermissionName"]; 
    switch (PermissionName[0]) {
      case 'view':
        if (this.permis[0] == '1')

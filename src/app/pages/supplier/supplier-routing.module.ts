@@ -25,14 +25,12 @@ const routes: Routes = [
     component:AddEditSupplierRateComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['addSupplierRate']}
   },
   {
     path:'editSupplierRate/:id',
     component:AddEditSupplierRateComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['editSupplierRate']}
   },
   {
     path:'edit/:id',

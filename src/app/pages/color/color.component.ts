@@ -19,7 +19,7 @@ import { ColorGuard } from 'app/@theme/guards/color.guard';
   styleUrls: ['./color.component.scss']
 })
 export class ColorComponent implements OnInit {
-
+  public loading = false;
 
  public errorData: any = (errorData as any).default;
  
@@ -50,7 +50,7 @@ export class ColorComponent implements OnInit {
  ownEdit=true;
  allEdit=true;
  groupEdit=true;
- access:Boolean = false;
+ disabled=false;
   constructor(
     private colorService: ColorService,
   
@@ -73,11 +73,19 @@ export class ColorComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getColor(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.colorGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event) {
     this.colorList = [];
     switch (event) {
@@ -110,28 +118,30 @@ export class ColorComponent implements OnInit {
   }
 
   getColor(id, getBy) {
+    this.loading=true;
     this.colorService.getColor(id, getBy).subscribe(
       data => {
         if (data["success"]) {
           this.colorList = data['data']
-          console.log(this.colorList);
           this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
             billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
-            console.log(this.color);
           this.colorList = data['data'];
           let index = 0
           this.colorList.forEach(element => {
             this.colorList[index].billDate = new Date(element.billDate).toDateString();
             this.colorList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
+            this.loading=false;
           });
         }
         else {
           this.toastr.error(data['msg']);
+          this.loading=false;
         }
       },
       error => {
         this.toastr.error(errorData.Serever_Error)
+        this.loading=false;
       }
     );
   }

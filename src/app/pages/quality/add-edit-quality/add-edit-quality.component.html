@@ -90,14 +90,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 mobile-btn-center">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <input *ngIf="currentQualityId == null; else updateqty" type="submit"
-                            class="btn btn-primary btn-sm btn-design" value="ADD">&nbsp;&nbsp;&nbsp;
                         <ng-template #updateqty><input type="button" (click)="updateQuality()"
                                 class="btn btn-primary btn-sm btn-design" value="UPDATE">&nbsp;&nbsp;&nbsp;
                         </ng-template>
                         <button class="btn btn-primary btn-sm btn-design" routerLink="/pages/quality">CANCEL</button>
+                        <input *ngIf="currentQualityId == null; else updateqty" type="submit"
+                            class="btn btn-primary btn-sm btn-design" value="SAVE">
                     </div>
                 </div>
             </div>

@@ -103,7 +103,7 @@
             </div>
             <div class="row" *ngIf="dosing.doseType != undefined && dosing.doseType === 'chemical'">
                 <div class="col-md-12">
-                    <table style="border: 1px solid black;">
+                    <table class="table table-responsive table-bordered table-striped table-process-fnt">
                         <tr>
                             <th>Item name</th>
                             <th>Supplier name</th>
@@ -221,7 +221,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Control Type</label>
-                        <nb-radio-group (change)="onWaterTypeChange()" fieldSize="small" class=" inline-block"
+                        <nb-radio-group (valueChange)="onWaterTypeChange()" fieldSize="small" class=" inline-block"
                             style="display: inline-flex !important;" name="watertype" [(ngModel)]="waterControl.type">
                             <nb-radio value="water">Water</nb-radio>
                             <nb-radio value="drain">Drain</nb-radio>
@@ -256,15 +256,15 @@
                     </div>
                 </div>
 
-                <div *ngIf="waterControl.type !== 'water'" class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Drain Type</label>
-                            <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
-                                [(ngModel)]="waterControl.drainType">
-                                <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
-                            </nb-radio-group>
-                        </div>
+            </div>
+            <div *ngIf="waterControl.type === 'drain'" class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Drain Type</label>
+                        <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
+                            [(ngModel)]="waterControl.drainType">
+                            <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
+                        </nb-radio-group>
                     </div>
                 </div>
             </div>

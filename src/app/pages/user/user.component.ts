@@ -19,7 +19,7 @@ import { UserGuard } from 'app/@theme/guards/user.guard';
 export class UserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   
-
+  public loading = false;
   tableStyle = 'bootstrap';
   userList=[];
   user=[];
@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
   allEdit=true;
   groupEdit=true;
   
-
+  disabled=false;
   constructor(
     private route:Router,
     private modalService: NgbModal,
@@ -71,11 +71,19 @@ export class UserComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess()
   }
-
+  getAddAcess(){
+    if(this.userGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event){
     this.userList = [];
     switch(event){
@@ -108,19 +116,22 @@ export class UserComponent implements OnInit {
   }
 
   getAllUser(id,getBy){
+    this.loading = true;
     this.userService.getAllUser(id,getBy).subscribe(
       data =>{
         if(data["success"]){
           this.userList = data['data'];
           this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
-            console.log(this.user);
+            this.loading = false;
           }
         else
           this.toastr.error(data["msg"])
+          this.loading = false;
       },
       error=>{
         this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
     
