@@ -28,7 +28,7 @@
                     <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}"
                         [hidden]="hiddenEdit" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="!this.access? null:deleteProgram(row.id)"></nb-icon>
+                        (click)="deleteProgram(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Party name" prop="partyName"></ngx-datatable-column>

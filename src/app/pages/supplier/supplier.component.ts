@@ -115,7 +115,7 @@ export class SupplierComponent implements OnInit {
     this.loading = true;
     this.supplierService.getAllSupplier(id, getBy).subscribe(
       data => {
-        if (data['sucess']) {
+        if (data['success']) {
           if (data['data'].length > 0) {
             this.supplierList = data['data']
 

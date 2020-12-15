@@ -31,7 +31,7 @@
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/user/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="!this.access? null:deleteUser(row.id)"></nb-icon>
+                        (click)="deleteUser(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="User Name" prop="userName"></ngx-datatable-column>
