@@ -42,4 +42,12 @@ export class ProgramService {
     getPartyByQuality(id): any{
         return this.httpClient.get(this.commonService.envUrl() + 'api/party/ByQuality/' + id);
     }
+    
+    getAllStock(){
+        return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/all/all/0');
+    }
+
+    getAllBatch(){
+        return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/batch/all');
+    }
 }

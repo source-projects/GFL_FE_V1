@@ -171,21 +171,10 @@ export class AddEditStockBatchComponent implements OnInit {
               }
             });
           }
-          this.stockBatch.unit = data["data"].unit;
-          this.stockBatch.stockInType = data["data"].stockInType;
-          this.stockBatch.billNo = data["data"].billNo;
-          this.stockBatch.chlDate = new Date(data["data"].chlDate);
-          this.stockBatch.chlNo = data["data"].chlNo;
-          this.stockBatch.partyId = data["data"].partyId;
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-          this.stockBatch.remark = data["data"].remark;
-          this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-           this.stockBatch.batchData = _.sortBy(data["data"].batchData, [function(o) { return o.batchId; }]);
+          this.stockBatch = data['data']
+          this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
+          this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+          this.stockBatch.batchData = _.sortBy(data["data"].batchData, [function(o) { return o.batchId; }]);
           this.setStockDataValues();
         } else {
           this.toastr.error(data["msg"]);
@@ -193,7 +182,6 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );

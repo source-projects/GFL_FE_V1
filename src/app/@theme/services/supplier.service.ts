@@ -49,4 +49,8 @@ export class SupplierService {
   getSupplierItemWithRateById(id) {
     return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/GetItemWithRateBy/' + id);
   }
+
+  getItemWithSupplier(){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/getItemWithSupplierName/all');
+  }
 }

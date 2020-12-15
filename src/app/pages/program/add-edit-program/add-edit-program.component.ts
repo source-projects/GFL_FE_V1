@@ -1,4 +1,4 @@
-import { Component,Renderer2, OnInit } from "@angular/core";
+import { Component, Renderer2, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -58,13 +58,14 @@ export class AddEditProgramComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentId();
-    if (this.currentProgramId != null)
-      this.getUpdateData();
+    if (this.currentProgramId != null) this.getUpdateData();
     this.getPartyList();
     this.getQualityList();
     this.getPartyShadeList();
     this.getMasterList();
-    this.programValues.priority = 'Medium'
+    this.programValues.priority = "Medium";
+    this.getAllStockBatchData();
+    this.getAllBatchData();
   }
 
   getCurrentId() {
@@ -73,17 +74,35 @@ export class AddEditProgramComponent implements OnInit {
     this.currentProgramId = this._route.snapshot.paramMap.get("id");
   }
 
-  getMasterList(){
+  getAllStockBatchData() {
+    this.programService.getAllStock().subscribe(
+      (data) => {
+        if (data["success"]) this.stockData = data["data"];
+      },
+      (error) => {}
+    );
+  }
+
+  getAllBatchData() {
+    this.programService.getAllBatch().subscribe(
+      (data) => {
+        if (data["success"]) this.batchData = data["data"];
+      },
+      (error) => {}
+    );
+  }
+
+  getMasterList() {
     this.programService.getAllMasters().subscribe(
-      data=>{
-        if(data['success']){
-          this.masterList = data['data']
+      (data) => {
+        if (data["success"]) {
+          this.masterList = data["data"];
         }
       },
-      error=>{
-        this.toastr.error(errorData.Internal_Error)
+      (error) => {
+        this.toastr.error(errorData.Internal_Error);
       }
-    )
+    );
   }
 
   getPartyList() {
@@ -145,112 +164,130 @@ export class AddEditProgramComponent implements OnInit {
 
   public getUpdateData() {
     this.loading = true;
-    this.programService
-      .getProgramDetailsById(this.currentProgramId)
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.programValues = data["data"];
-            this.programValues.createdBy = data['data'].createdBy
-            this.qualityService.getallQuality(0, "all").subscribe(
-              (data) => {
-                this.qualityList = data["data"];
-                this.qualityList.forEach((element) => {
-                  if (this.programValues.qualityEntryId == element.id) {
-                    this.programValues.qualityId = element.qualityId;
-                    this.programValues.qualityName = element.qualityName;
-                    this.programValues.qualityType = element.qualityType;
-                  }
-                  this.loading = false;
-                });
-
-                if (this.batchData == null) {
-                  this.programService
-                    .getBatchDetailByQualityId(
-                      this.programValues.qualityEntryId
-                    )
-                    .subscribe(
-                      (data) => {
-                        if (data["success"])
-                          this.batchData = data["data"];
-                        this.loading = false;
-                      },
-                      (error) => {
-                        // this.toastr.error(errorData.Serever_Error);
-                        this.loading = false;
-                      }
-                    );
+    this.programService.getProgramDetailsById(this.currentProgramId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.programValues = data["data"];
+          this.programValues.createdBy = data["data"].createdBy;
+          this.qualityService.getallQuality(0, "all").subscribe(
+            (data) => {
+              this.qualityList = data["data"];
+              this.qualityList.forEach((element) => {
+                if (this.programValues.qualityEntryId == element.id) {
+                  this.programValues.qualityId = element.qualityId;
+                  this.programValues.qualityName = element.qualityName;
+                  this.programValues.qualityType = element.qualityType;
                 }
-
-                if (this.stockData == null) {
-                  this.programService
-                    .getStockQualityList(this.programValues.qualityEntryId)
-                    .subscribe(
-                      (data) => {
-                        if (data["success"]) {
-                          this.stockData = data["data"];
-                          
-                        } else {
-                          // this.toastr.error(data["msg"]);
-                          this.loading = false;
-                        }
-                        this.loading = false;
-                      },
-                      (error) => {
-                        // this.toastr.error(errorData.Serever_Error);
-                        this.loading = false;
-                      }
-                    );
-                }
-              },
-              (error) => {
-                // this.toastr.error(errorData.Serever_Error);
                 this.loading = false;
+              });
+
+              if (this.batchData == null) {
+                this.programService
+                  .getBatchDetailByQualityId(this.programValues.qualityEntryId)
+                  .subscribe(
+                    (data) => {
+                      if (data["success"]) this.batchData = data["data"];
+                      this.loading = false;
+                    },
+                    (error) => {
+                      // this.toastr.error(errorData.Serever_Error);
+                      this.loading = false;
+                    }
+                  );
               }
-            );
-          } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-          }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
+
+              if (this.stockData == null) {
+                this.programService
+                  .getStockQualityList(this.programValues.qualityEntryId)
+                  .subscribe(
+                    (data) => {
+                      if (data["success"]) {
+                        this.stockData = data["data"];
+                      } else {
+                        // this.toastr.error(data["msg"]);
+                        this.loading = false;
+                      }
+                      this.loading = false;
+                    },
+                    (error) => {
+                      // this.toastr.error(errorData.Serever_Error);
+                      this.loading = false;
+                    }
+                  );
+              }
+            },
+            (error) => {
+              // this.toastr.error(errorData.Serever_Error);
+              this.loading = false;
+            }
+          );
+        } else {
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
-      );
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
 
+  shadeNoSelected(index, column) {
+    //set partyShade and color tone
+    this.partyShade.forEach((e) => {
+      if (e.id == this.programValues.programRecords[index].shadeNo) {
+        this.programValues.programRecords[index].partyShadeNo = e.partyShadeNo;
+        this.programValues.programRecords[index].colourTone = e.colorTone;
+        this.programValues.qualityId = e.qualityId;
+        this.programValues.partyId = e.partyId;
+      }
+    });
+
+    this.qualityList.forEach((e) => {
+      if (e.qualityId == this.programValues.qualityId) {
+        this.programValues.qualityName = e.qualityName;
+        this.programValues.qualityType = e.qualityType;
+        if (e.id != undefined) this.programValues.qualityEntryId = e.id;
+        else this.programValues.qualityEntryId = e.qualityEntryId;
+      }
+    });
+
+    //getStock and batch from quality
+    this.getStockBatchData();
   }
 
   enableQuality(event) {
     this.loading = true;
     if (event != undefined) {
       if (this.programValues.partyId) {
-        this.programService.getQualityByParty(this.programValues.partyId).subscribe(
-          data => {
-            if (data['success']) {
-              this.qualityList = data['data'].qualityDataList;
-              this.qualityList.forEach(element => {
-                element.partyName = data['data'].partyName;
-              });
-              this.programValues.qualityId = this.qualityList[0].qualityId;
-              this.programValues.qualityName = this.qualityList[0].qualityName;
-              this.programValues.qualityType = this.qualityList[0].qualityType;
-              this.programValues.qualityEntryId = this.qualityList[0].qualityEntryId;
-              this.getStockBatchData()
-            }
-            else{
-              this.programValues.qualityId = null;
-              this.programValues.qualityName = null;
-              this.programValues.qualityType = null;
+        this.programService
+          .getQualityByParty(this.programValues.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.qualityList = data["data"].qualityDataList;
+                this.qualityList.forEach((element) => {
+                  element.partyName = data["data"].partyName;
+                });
+                this.programValues.qualityId = this.qualityList[0].qualityId;
+                this.programValues.qualityName = this.qualityList[0].qualityName;
+                this.programValues.qualityType = this.qualityList[0].qualityType;
+                this.programValues.qualityEntryId = this.qualityList[0].qualityEntryId;
+                this.getStockBatchData();
+              } else {
+                this.programValues.qualityId = null;
+                this.programValues.qualityName = null;
+                this.programValues.qualityType = null;
+                this.qualityList = [];
+              }
+              this.loading = false;
+            },
+            (error) => {
               this.qualityList = [];
+              this.loading = false;
             }
-            this.loading = false;
-          },
-          error => {
-            this.qualityList = [];
-            this.loading = false;
-          }
-        )
+          );
       }
     } else {
       this.programValues.partyId = null;
@@ -310,20 +347,19 @@ export class AddEditProgramComponent implements OnInit {
       let id = value;
       this.qualityList.forEach((e) => {
         if (e.qualityId == id) {
-          this.programValues.qualityName = e.qualityName
+          this.programValues.qualityName = e.qualityName;
           this.programValues.qualityType = e.qualityType;
-          if (e.id != undefined)
-            this.programValues.qualityEntryId = e.id;
-          else
-            this.programValues.qualityEntryId = e.qualityEntryId
+          if (e.id != undefined) this.programValues.qualityEntryId = e.id;
+          else this.programValues.qualityEntryId = e.qualityEntryId;
         }
       });
       this.getStockBatchData();
+
       //set Party...
-      this.qualityList.forEach(e=>{
-        if(e.qualityId == this.programValues.qualityId)
-          this.programValues.partyId = e.partyId
-      })
+      this.qualityList.forEach((e) => {
+        if (e.qualityId == this.programValues.qualityId)
+          this.programValues.partyId = e.partyId;
+      });
     } else {
       this.programValues.partyId = null;
       this.programValues.qualityId = null;
@@ -335,7 +371,6 @@ export class AddEditProgramComponent implements OnInit {
 
   clearData(event) {
     if (event == undefined) {
-
     }
   }
 
@@ -346,8 +381,23 @@ export class AddEditProgramComponent implements OnInit {
         this.programValues.programRecords[rowIndex].shadeNo = element.id;
         this.programValues.programRecords[rowIndex].colourTone =
           element.colorTone;
+        this.programValues.qualityId = element.qualityId;
+        this.programValues.partyId = element.partyId;
       }
     });
+
+    //set quality info
+    this.qualityList.forEach((e) => {
+      if (e.qualityId == this.programValues.qualityId) {
+        this.programValues.qualityName = e.qualityName;
+        this.programValues.qualityType = e.qualityType;
+        if (e.id != undefined) this.programValues.qualityEntryId = e.id;
+        else this.programValues.qualityEntryId = e.qualityEntryId;
+      }
+    });
+
+    //getStock and batch from quality
+    this.getStockBatchData();
   }
 
   public selectQualityId() {
@@ -364,18 +414,31 @@ export class AddEditProgramComponent implements OnInit {
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
       let id = this.programValues.programRecords[rowIndex].batchId;
-      this.batchData.forEach((element) => {
-        if (id == element.batchId) {
-          this.programValues.programRecords[rowIndex].quantity = element.totalWt;
-        }
-      });
+      if (this.batchData != undefined) {
+        this.batchData.forEach((element) => {
+          if (id == element.batchId) {
+            this.programValues.programRecords[rowIndex].quantity =
+            Number(element.totalWt.toFixed(2));
+          }
+        });
+      }
+
+      //setQuality party info
+      
+
     } else {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
-        if (id == element.stockId) {
-          this.programValues.programRecords[rowIndex].quantity = element.qty;
+        let stockId = element.id?element.id:element.stockId
+        if (id == stockId) {
+          let qty:number = 0;
+          element.batchData.forEach(e => {
+            qty += e.wt
+          });
+          this.programValues.programRecords[rowIndex].quantity = Number(qty.toFixed(2));
         }
       });
+      //setQuality party info
     }
   }
 
@@ -402,9 +465,7 @@ export class AddEditProgramComponent implements OnInit {
           }
         } else if (colName == "colour_tone") {
           if (!item.colourTone) {
-            this.toastr.error(
-              "Enter Colour Tone"
-            );
+            this.toastr.error("Enter Colour Tone");
             return;
           }
         } else if (colName == "quantity") {
@@ -489,11 +550,9 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    } 
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+    } else {
+      const errorField = this.renderer.selectRootElement("#target");
+      errorField.scrollIntoView();
     }
   }
 
@@ -523,12 +582,9 @@ export class AddEditProgramComponent implements OnInit {
           this.loading = false;
         }
       );
-    } 
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
+    } else {
+      const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-
     }
   }
 }

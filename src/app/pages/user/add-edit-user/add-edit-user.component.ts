@@ -4,6 +4,7 @@ import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "app/@theme/services/user.service";
 import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
+import {Md5} from 'ts-md5/dist/md5';
 import {
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
@@ -541,9 +542,10 @@ export class AddEditUserComponent implements OnInit {
 
   addUser(myForm) {
     this.getCheckedItem();
-    //this.user.userPermissionData=this.userPermissionData;
     this.formSubmitted = true;
     if (myForm.valid) {
+      let md5 = new Md5();
+      this.user.password = String(md5.appendStr(this.user.password).end())
       this.user.createdBy = this.userId.userId;
       if (!this.user.isUserHead) this.user.userHeadId = 0;
       this.userService.createUser(this.user).subscribe(
