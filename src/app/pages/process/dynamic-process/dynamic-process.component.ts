@@ -64,10 +64,11 @@ export class DynamicProcessComponent implements OnInit {
         if (data["success"]) {
           this.processValue = data["data"];
           this.setAllValuesForUpdate();
-        } else this.toastr.error(data["msg"]);
+        } 
+        // else this.toastr.error(data["msg"]);
       },
       (error) => {
-        this.toastr.error(errorData.Internal_Error);
+        // this.toastr.error(errorData.Internal_Error);
       }
     );
   }
@@ -342,7 +343,8 @@ export class DynamicProcessComponent implements OnInit {
             if (data["success"]) {
               this.route.navigate(["/pages/process"]);
               this.toastr.success(data["msg"]);
-            } else this.toastr.error(data["msg"]);
+            } 
+            // else this.toastr.error(data["msg"]);
           },
           (error) => {
             this.toastr.error(errorData.Internal_Error);
@@ -366,9 +368,10 @@ export class DynamicProcessComponent implements OnInit {
           if (data["success"]) {
             this.toastr.success(errorData.Update_Success);
             this.route.navigate(["pages/process"]);
-          } else {
-            this.toastr.error(data["msg"]);
           }
+          //  else {
+          //   this.toastr.error(data["msg"]);
+          // }
         },
         (error) => {
           this.toastr.error(errorData.Internal_Error);

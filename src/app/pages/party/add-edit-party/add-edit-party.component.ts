@@ -7,6 +7,8 @@ import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
+import { state } from "@angular/animations";
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: "ngx-add-edit-party",
@@ -34,7 +36,45 @@ export class AddEditPartyComponent implements OnInit {
   currentPartyId: any;
 
   master: [];
-
+  stateList=[
+    {id:'37',name:'Andhra Pradesh'},
+    {id:'35',name:'Andaman and Nicobar Islands'},
+    {id:'12',name:'Arunachal Pradesh'},
+    {id:'18',name:'Assam'},
+    {id:'10',name:'Bihar'},
+    {id:'04',name:'Chandigarh'},
+    {id:'22',name:'Chattisgarh'},
+    {id:'26',name:'Dadra & Nagar Haveli and Daman & Diu'},
+    {id:'07',name:'Delhi'},
+    {id:'30',name:'Goa'},
+    {id:'24',name:'Gujarat'},
+    {id:'06',name:'Haryana'},
+    {id:'02',name:'Himachal Pradesh'},
+    {id:'01',name:'Jammu and Kashmir'},
+    {id:'20 ',name:'Jharkhand'},
+    {id:'29',name:'Karnataka'},
+    {id:'32',name:'Kerala'},
+    {id:'38',name:'Ladakh'},
+    {id:'31',name:'Lakshadweep Islands'},
+    {id:'23',name:'Madhya Pradesh'},
+    {id:'27',name:'Maharashtra'},
+    {id:'14',name:'Manipur'},
+    {id:'17',name:'Meghalaya'},
+    {id:'15',name:'Mizoram'},
+    {id:'13',name:'Nagaland'},
+    {id:'21',name:'Odisha'},
+    {id:'97',name:'Other Territory'},
+    {id:'34',name:'Pondicherry'},
+    {id:'03',name:'Punjab'},
+    {id:'08',name:'Rajasthan'},
+    {id:'11',name:'Sikkim'},
+    {id:'33',name:'Tamil Nadu'},
+    {id:'36',name:'Telangana'},
+    {id:'16',name:'Tripura'},
+    {id:'09',name:'Uttar Pradesh'},
+    {id:'05',name:'Uttarakhand'},
+    {id:'19',name:'West Bengal'},
+  ];
   creditor: boolean = false;
   debtor: boolean = false;
   userHead;
@@ -53,6 +93,7 @@ export class AddEditPartyComponent implements OnInit {
     if (this.currentPartyId != null)
       this.getUpdateData();
 
+    
   }
 
   public getData() {
@@ -61,14 +102,12 @@ export class AddEditPartyComponent implements OnInit {
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
       partyName: new FormControl(null, [
-        Validators.pattern(/^[a-zA-Z ]*$/),
         Validators.required,
       ]),
       partyAddress1: new FormControl(null, Validators.required),
       partyAddress2: new FormControl(null),
       contactNo: new FormControl(null, [
         Validators.required,
-        Validators.pattern(/^((\\+91-?)|0)?[0-9]{10}$/),
       ]),
       city: new FormControl(null, [
         Validators.pattern(/^[a-zA-Z ]*$/),
@@ -82,12 +121,11 @@ export class AddEditPartyComponent implements OnInit {
         Validators.pattern(/^[0-9]{6}$/),
         Validators.required,
       ]),
-      gstin: new FormControl(null, Validators.required),
+      gstin: new FormControl(""),
       mailId: new FormControl(null, [
         Validators.pattern(
           /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/
         ),
-        Validators.required,
       ]),
       creditor: new FormControl(false, Validators.required),
       debtor: new FormControl(false, Validators.required),
@@ -105,12 +143,11 @@ export class AddEditPartyComponent implements OnInit {
           this.master = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -144,7 +181,7 @@ export class AddEditPartyComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -156,6 +193,11 @@ export class AddEditPartyComponent implements OnInit {
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         this.partyForm.value.createdBy = this.user.userId;
+        if(this.partyForm.get('gstin')==null){
+          this.partyForm.patchValue({
+            gstin:""
+          })
+        }
         this.partyService.saveParty(this.partyForm.value).subscribe(
           (data) => {
             if (data["success"]) {
@@ -166,6 +208,7 @@ export class AddEditPartyComponent implements OnInit {
             } else {
               this.toastr.error(errorData.Add_Error);
             }
+            // this.loading=true;
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -176,6 +219,7 @@ export class AddEditPartyComponent implements OnInit {
       }
     }
   }
+
 
   public updateParty() {
     this.loading = true;
@@ -224,5 +268,18 @@ export class AddEditPartyComponent implements OnInit {
     this.partyForm.patchValue({
       debtor: this.debtor,
     });
+  }
+
+  setState(){
+    let tempGstNo=this.partyForm.get('gstin').value;
+    let stateDigit=tempGstNo.slice(0,2);
+    this.stateList.forEach(element => {
+      if(element.id==stateDigit){
+        this.partyForm.patchValue({
+          state:element.name,
+        })
+      }
+    });
+    this.partyForm.get('state').disable();
   }
 }

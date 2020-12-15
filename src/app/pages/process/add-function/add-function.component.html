@@ -11,13 +11,13 @@
                 <div class="form-group">
                     <label>Function Name</label>
                     <select class="form-control" name="function" [(ngModel)]="funcObj.funcValue" #funcName="ngModel"
-                        [ngClass]="{'is-invalid':modalSubmitted && funcName.invalid}" required>
+                        [ngClass]="{'is-invalid':(funcName.invalid)&&(modalSubmitted || funcName.touched)}" required>
                         <option *ngFor="let function of functionDropdown" [value]="function.id"
                             placeholder="Function Name">
                             {{function.name}}
                         </option>
                     </select>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && funcName.invalid">
+                    <div class="invalid-feedback" *ngIf="(funcName.invalid)&&(modalSubmitted || funcName.touched)">
                         Function Name is required.
                     </div>
                 </div>
@@ -28,11 +28,11 @@
                     <label>Function Position</label>
                     <select [disabled]="editFunction" class="form-control " [(ngModel)]="funcObj.funcPosition"
                         name="stepNo" #position1="ngModel"
-                        [ngClass]="{'is-invalid':modalSubmitted && position1.invalid}" required
+                        [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required
                         placeholder="Function Position">
                         <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
                     </select>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && position1.invalid">
+                    <div class="invalid-feedback" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
                         Function Position is required.
                     </div>
                 </div>
@@ -157,9 +157,9 @@
                         <label>S V (Set Value)(C)</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.setValue"
                             name="setValue" #setValueC="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && setValueC.invalid}" required>
+                            [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required>
                     </div>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && setValueC.invalid">
+                    <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
                         Required
                     </div>
                 </div>
@@ -168,8 +168,8 @@
                         <label>Rate of Rise (C/minute)</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.rateOfRise"
                             name="rateOfRise" #rateOfRiseCM="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && rateOfRiseCM.invalid}" required>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && rateOfRiseCM.invalid">
+                            [ngClass]="{'is-invalid':(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)}" required>
+                        <div class="invalid-feedback" *ngIf="(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)">
                             Required
                         </div>
                     </div>
@@ -179,8 +179,8 @@
                         <label>Hold Time</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.holdTime"
                             name="holdTime" #holdTime1="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && holdTime1.invalid}" required>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && holdTime1.invalid">
+                            [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required>
+                        <div class="invalid-feedback" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
                             Required
                         </div>
                     </div>
@@ -206,8 +206,8 @@
                         <label>Pump Speed(%)</label>
                         <input type="number" class="form-control" name="pumpSpeed" [(ngModel)]="pumpControl.pumpSpeed"
                             #pumpSpeed1="ngModel" required
-                            [ngClass]="{'is-invalid':modalSubmitted && pumpSpeed1.invalid}">
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && pumpSpeed1.invalid">
+                            [ngClass]="{'is-invalid':(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)}">
+                        <div class="invalid-feedback" *ngIf="(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)">
                             Required
                         </div>
                     </div>
@@ -279,11 +279,11 @@
                         <label>Operator Message </label>
                         <select class="form-control" name="fill" [(ngModel)]="operatorMessage.operatorCode"
                             #fillOperatorCode="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && fillOperatorCode.invalid}" required>
+                            [ngClass]="{'is-invalid':(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)}" required>
                             <option *ngFor="let message of operatorMessageList" [value]="message.id">{{message.name}}
                             </option>
                         </select>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && fillOperatorCode.invalid">
+                        <div class="invalid-feedback" *ngIf="(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)">
                             Required
                         </div>
                     </div>
@@ -293,8 +293,8 @@
                         <label>Start at Temp</label>
                         <input type="number" name="startat" class="form-control input-group input-group-sm"
                             [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && startAtTemp.invalid}" />
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && startAtTemp.invalid">
+                            [ngClass]="{'is-invalid':(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)}" />
+                        <div class="invalid-feedback" *ngIf="(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)">
                             Required
                         </div>
                     </div>

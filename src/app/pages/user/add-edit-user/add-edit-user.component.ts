@@ -32,7 +32,13 @@ export class AddEditUserComponent implements OnInit {
 
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
-
+  companyList=[
+    {name:"Company 1"},
+    {name:"Company 2"},
+    {name:"Company 3"},
+    {name:"Company 4"},
+    {name:"Company 5"},
+    ]
   desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -124,11 +130,11 @@ export class AddEditUserComponent implements OnInit {
           this.loading = false;
         }
         else
-          this.toastr.error(data["msg"])
-        this.loading = false;
+          // this.toastr.error(data["msg"])
+          this.loading = false;
       },
       error => {
-        this.toastr.error(errorData.Internal_Error)
+        // this.toastr.error(errorData.Internal_Error)
         this.loading = false;
       }
     )
@@ -149,17 +155,17 @@ export class AddEditUserComponent implements OnInit {
             if (data["success"]) {
               this.userHradIdList = data["data"]
               this.user.isUserHead = true;
-              this.loading = false;
             }
-            else
-              this.toastr.error(data["msg"])
+            // else
+            //   this.toastr.error(data["msg"])
             this.loading = false;
           },
           error => {
-            this.toastr.error(errorData.Internal_Error)
+            // this.toastr.error(errorData.Internal_Error)
             this.loading = false;
           }
         )
+        this.loading = false;
       }
     } else {
       this.user.userHeadId = null;
@@ -376,10 +382,8 @@ export class AddEditUserComponent implements OnInit {
                 if (this.permissionArray[i].editGroup)
                   if (this.permissionArray[i].editAll)
                     if (this.permissionArray[i].deleteGroup)
-                      if (this.permissionArray[i].deleteAll) {
+                      if (this.permissionArray[i].deleteAll)
                         this.permissionArray[i].selectAll = true;
-
-                      }
 
   }
 
@@ -535,14 +539,15 @@ export class AddEditUserComponent implements OnInit {
             else
               this.user.isUserHead = false;
             this.getCurrentCheckValue(this.user);
-            this.loading = false;
-          } else {
-            this.toastr.error(errorData.Internal_Error);
-            this.loading = false;
+
+          } 
+          else {
+            // this.toastr.error(errorData.Internal_Error);
           }
+          this.loading = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -563,11 +568,13 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-            this.loading = false;
-          } else {
-            this.toastr.error(data["msg"]);
-            this.loading = false;
+
           }
+          // else {
+          //   this.toastr.error(data["msg"]);
+
+          // }
+          this.loading = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
@@ -616,12 +623,12 @@ export class AddEditUserComponent implements OnInit {
           this.desiList = data["data"];
           this.loading = false;
         } else {
-          this.toastr.error(errorData.Internal_Error);
+          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
