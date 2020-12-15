@@ -27,7 +27,7 @@
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="!this.access? null:deleteShade(row.id)"></nb-icon>
+                        (click)="deleteShade(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>

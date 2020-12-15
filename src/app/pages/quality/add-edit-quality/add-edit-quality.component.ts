@@ -90,7 +90,7 @@ export class AddEditQualityComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
           this.loading = false;
         }
       );
@@ -106,12 +106,12 @@ export class AddEditQualityComponent implements OnInit {
           this.loading = false;
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
           this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -150,12 +150,13 @@ export class AddEditQualityComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Update_Success)
-            this.loading = false;
+           
           }
           else {
             this.toastr.error(errorData.Update_Error)
-            this.loading = false;
+            
           }
+          this.loading = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error)

@@ -19,33 +19,33 @@ export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
   stockList;
-  stock=[];
-  headers=["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date" ];
+  stock = [];
+  headers = ["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date"];
   flag = false;
-  disabled=false;
+  disabled = false;
 
   tablestyle = "bootstrap";
   radioSelect = 1;
   radioArray = [
-    { id: 1, value: "View Own", disabled:false },
-    { id: 2, value: "View Group", disabled:false },
-    { id: 3, value: "View All" , disabled:false}
+    { id: 1, value: "View Own", disabled: false },
+    { id: 2, value: "View Group", disabled: false },
+    { id: 3, value: "View All", disabled: false }
   ];
   userHeadId;
   userId;
   permissions: Number;
-   
-  hidden :boolean=true;
-  hiddenEdit:boolean=true;
-  hiddenView:boolean=true;
- 
-  ownDelete=true;
-  allDelete=true;
-  groupDelete=true;
 
-  ownEdit=true;
-  allEdit=true;
-  groupEdit=true;
+  hidden: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenView: boolean = true;
+
+  ownDelete = true;
+  allDelete = true;
+  groupDelete = true;
+
+  ownEdit = true;
+  allEdit = true;
+  groupEdit = true;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -69,12 +69,12 @@ export class StockBatchComponent implements OnInit {
     this.getDeleteAccess();
     this.getEditAccess();
   }
-  getAddAcess(){
-    if(this.stockBatchGuard.accessRights('add')){
-      this.disabled=false;
+  getAddAcess() {
+    if (this.stockBatchGuard.accessRights('add')) {
+      this.disabled = false;
     }
-    else{
-      this.disabled=true;
+    else {
+      this.disabled = true;
     }
   }
   onChange(event) {
@@ -82,30 +82,30 @@ export class StockBatchComponent implements OnInit {
     switch (event) {
       case 1:
         this.getStockBatchList(this.userId, "own");
-        this.hidden=this.ownDelete; 
-        this.hiddenEdit=this.ownEdit;
+        this.hidden = this.ownDelete;
+        this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
         this.getStockBatchList(this.userHeadId, "group");
-        this.hidden=this.groupDelete;
-        this.hiddenEdit=this.groupEdit;
+        this.hidden = this.groupDelete;
+        this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
         this.getStockBatchList(0, "all");
-        this.hidden=this.allDelete;
-        this.hiddenEdit=this.allEdit;
+        this.hidden = this.allDelete;
+        this.hiddenEdit = this.allEdit;
         break;
     }
   }
 
-  open(){
-    this.flag=true;
-   
+  open() {
+    this.flag = true;
+
     const modalRef = this.modalService.open(ExportPopupComponent);
-     modalRef.componentInstance.headers = this.headers;
-     modalRef.componentInstance.list = this.stock;
+    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.list = this.stock;
   }
 
   getStockBatchList(id, getBy) {
@@ -122,15 +122,16 @@ export class StockBatchComponent implements OnInit {
           });
           this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
             billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))         
-        } else
-          this.toastr.error(data["msg"]);
+        } 
+          
           this.loading = false;
       },
       error => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     )
+    
   }
 
   deleteStockBatch(id) {
@@ -145,9 +146,6 @@ export class StockBatchComponent implements OnInit {
               this.toastr.success(errorData.Delete);
               this.onChange(this.radioSelect);
             }
-
-            else
-              this.toastr.error(data["msg"])
           },
           error => {
             this.toastr.error(errorData.Internal_Error)
@@ -157,22 +155,22 @@ export class StockBatchComponent implements OnInit {
     });
   }
 
-  getViewAccess(){
-    if(!this.stockBatchGuard.accessRights('view')){
-      this.radioArray[0].disabled=true;
+  getViewAccess() {
+    if (!this.stockBatchGuard.accessRights('view')) {
+      this.radioArray[0].disabled = true;
     }
     else
-    this.radioArray[0].disabled=false;
-     if(!this.stockBatchGuard.accessRights('view group')){
-      this.radioArray[1].disabled=true;
+      this.radioArray[0].disabled = false;
+    if (!this.stockBatchGuard.accessRights('view group')) {
+      this.radioArray[1].disabled = true;
     }
     else
-    this.radioArray[1].disabled=false;
-     if(!this.stockBatchGuard.accessRights('view all')){
-      this.radioArray[2].disabled=true;
+      this.radioArray[1].disabled = false;
+    if (!this.stockBatchGuard.accessRights('view all')) {
+      this.radioArray[2].disabled = true;
     }
     else
-    this.radioArray[2].disabled=false;
+      this.radioArray[2].disabled = false;
 
   }
 
