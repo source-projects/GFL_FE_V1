@@ -48,6 +48,7 @@ export class ReportComponent implements OnInit {
   flag2: boolean = false;
   flag3: boolean = false;
   flag4: boolean = false;
+  flag5:boolean = false;
 
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
@@ -189,7 +190,6 @@ export class ReportComponent implements OnInit {
         this.collectData(this.obj)
       }
       else {
-        // this.toastr.error("Select time from 9:00 AM to 8:59 PM for day shift")
       }
     }
     else if (Number(this.obj.shift) == 2) {
@@ -216,16 +216,8 @@ export class ReportComponent implements OnInit {
         t3 = t3.concat(":");
         t3 = t3.concat(t1);
         this.obj.toTime = t3;
-
         this.collectData(this.obj)
-
       }
-      else {
-        // this.toastr.error("Select time from 9:00 PM to 8:59 AM for night shift");
-      }
-    }
-    else {
-      // this.toastr.error("Select date and time");
     }
   }
 
@@ -248,38 +240,45 @@ export class ReportComponent implements OnInit {
   }
 
   collectData(datedata: any) {
-
+    this.flag4 = false;
+    this.flag5 = false;
     let count;
     this.reportservice.getobjdata(datedata).subscribe(
       (res) => {
         if (res["success"]) {
 
           this.jsonData = res['data'];
-          this.lineChartData = [
-            { data: this.jsonData.getAllMachineRecords.map(a => a.speed), label: 'Speed' },
-          ];
-          let lab: Label = [] = this.jsonData.getAllMachineRecords.map(e => e.createdDate);
-          if(lab.length > 10){
-            count = Math.round(lab.length / 10);
+          if (this.jsonData!=null) {
+            this.lineChartData = [
+              { data: this.jsonData.getAllMachineRecords.map(a => a.speed), label: 'Speed' },
+            ];
+            let lab: Label = [] = this.jsonData.getAllMachineRecords.map(e => e.createdDate);
+            if(lab.length > 10){
+              count = Math.round(lab.length / 10);
+            }
+            else{
+              count = 1;
+            }
+            this.lineChartLabels[0] = String(lab[0]).slice(11, 19);
+            let j = 1;
+            for (let i = count; i <= lab.length; i = count + i) {
+              this.lineChartLabels[j] = String(lab[i]).slice(11, 19);
+              j++;
+            }
+            this.flag4 = true;  
           }
-          else{
-            count = 1;
+          else
+          {
+            this.flag5 = true;
           }
-          this.lineChartLabels[0] = String(lab[0]).slice(11, 19);
-          let j = 1;
-          for (let i = count; i <= lab.length; i = count + i) {
-            this.lineChartLabels[j] = String(lab[i]).slice(11, 19);
-            j++;
-          }
-          this.flag4 = true;
         }
         else {
-          // this.toastr.error(res['msg'])
+          this.flag5 = true;
         }
 
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
+        this.flag5 = true;
       }
     )
   }

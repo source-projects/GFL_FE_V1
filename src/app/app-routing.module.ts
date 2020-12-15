@@ -1,4 +1,4 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@theme/guards/auth.guard';
 import { StopAuthGuard } from './@theme/guards/stop-auth.guard';
@@ -20,12 +20,14 @@ export const routes: Routes = [
   { path: '**', redirectTo: 'auth' },
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules,
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      useHash:false,
+  })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {
