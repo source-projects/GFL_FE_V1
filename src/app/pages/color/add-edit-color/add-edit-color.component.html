@@ -66,8 +66,8 @@
                     <div class="form-group col-md-4">
                         <label class="required">Challan Date</label>
                         <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel"
-                            [(ngModel)]="color.chlDate" ngbDatepicker #dp1="ngbDatepicker" required
-                            [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}" placeholder="Challan Date">
+                            [(ngModel)]="color.chlDate" ngbDatepicker #dp1="ngbDatepicker" required 
+                           [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}" placeholder="Challan Date">
 
                         <div class="invalid-feedback" *ngIf="formSubmitted && (billDate1.invalid)">
                             <span>Challan date is required</span>

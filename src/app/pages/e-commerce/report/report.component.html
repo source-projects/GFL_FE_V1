@@ -30,8 +30,8 @@
                         <div class="mr-0">
 
                             <nb-radio-group>
-                                <nb-radio [value]="1" (valueChange)="onChange($event)">Day</nb-radio>
-                                <nb-radio [value]="2" (valueChange)="onChange($event)">Night</nb-radio>
+                                <nb-radio [value]="1" (valueChange)="onChange($event)">Day (9AM to 8:59PM)</nb-radio>
+                                <nb-radio [value]="2" (valueChange)="onChange($event)">Night (9PM to 8:59AM)</nb-radio>
                             </nb-radio-group>
 
                         </div>
@@ -118,6 +118,9 @@
                 [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
                 [plugins]="lineChartPlugins">
             </canvas>
+        </div>
+        <div *ngIf="flag4">
+            <h1>No data found</h1>
         </div>
     </nb-card-body>
 </nb-card>

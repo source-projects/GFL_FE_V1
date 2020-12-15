@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbDateAdapter, NgbDateNativeAdapter } from "@ng-bootstrap/ng-bootstrap";
+
 import * as errorData from "app/@theme/json/error.json";
 
 import { ToastrService } from "ngx-toastr";
@@ -207,7 +208,7 @@ export class AddEditStockBatchComponent implements OnInit {
               this.loading = false;
             },
             (error) => {
-              this.toastr.error(errorData.Serever_Error);
+              // this.toastr.error(errorData.Serever_Error);
               this.loading = false;
             }
           );
@@ -221,7 +222,6 @@ export class AddEditStockBatchComponent implements OnInit {
       this.loading = false;
     }
   }
-
 
   setStockDataValues() {
     var prev = this.stockBatch.batchData[0].batchId;
@@ -268,7 +268,6 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     }
   }
-
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
       this.flag = 1;
@@ -382,7 +381,8 @@ export class AddEditStockBatchComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
           } else {
             this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data['msg']);
+
           }
         },
         (error) => {
