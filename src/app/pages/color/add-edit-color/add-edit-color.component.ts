@@ -16,7 +16,7 @@ import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class AddEditColorComponent implements OnInit {
-
+  public loading = false;
   userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
@@ -39,6 +39,7 @@ export class AddEditColorComponent implements OnInit {
   calculationTotalQuantity: any;
   convertedDate: any;
   convertedDate2: any;
+
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -54,9 +55,11 @@ export class AddEditColorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
+
   }
 
   getData() {
@@ -66,6 +69,7 @@ export class AddEditColorComponent implements OnInit {
   }
 
   getUpdateData() {
+    this.loading=true;
     if (this.currentColorId != null) {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
         data => {
@@ -77,11 +81,14 @@ export class AddEditColorComponent implements OnInit {
                 this.supplierListRate = data['data'];
               }
               else {
-                this.toastr.error(data['msg'])
+                // this.toastr.error(data['msg'])
+              
               }
+              this.loading=false;
             },
             error => {
-              this.toastr.error(errorData.Serever_Error)
+              // this.toastr.error(errorData.Serever_Error)
+              this.loading=false;
             })
           this.color.billDate = new Date(this.color.billDate);
           this.color.chlDate = new Date(this.color.chlDate);
@@ -91,45 +98,55 @@ export class AddEditColorComponent implements OnInit {
           this.color.colorDataList.forEach(element => {
             amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
+            this.loading=false;
           });
         },
         error => {
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
+          this.loading=false;
         }
       )
     }
   }
 
   getSupplierList() {
+    this.loading=true;
     this.supplierService.getSupplierName(0, "all").subscribe(
       data => {
         if (data['success']) {
           this.supplierList = data['data'];
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg']) 
         }
+        this.loading=false;
       },
       error => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
+        this.loading=false;
       }
     )
   }
 
   getAllSupplierRate(event) {
+    this.loading=true;
     if (event != undefined) {
       if (this.color.supplierId) {
         this.supplierService.getSupplierItemWithRateById(this.color.supplierId).subscribe(
           data => {
             if (data['success']) {
               this.supplierListRate = data['data'];
+             
             }
             else {
-              this.toastr.error(data['msg'])
+              // this.toastr.error(data['msg'])
+              
             }
+            this.loading=false;
           },
           error => {
-            this.toastr.error(errorData.Serever_Error)
+            // this.toastr.error(errorData.Serever_Error)
+            this.loading=false;
           }
         )
       }
@@ -137,6 +154,7 @@ export class AddEditColorComponent implements OnInit {
     else {
       this.getSupplierList();
     }
+    this.loading=false;
   }
 
 
@@ -278,6 +296,7 @@ export class AddEditColorComponent implements OnInit {
   }
 
   updateColor(myForm) {
+    this.loading=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
@@ -286,10 +305,12 @@ export class AddEditColorComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Update_Success);
+            this.loading=false;
           }
         },
         error => {
           this.toastr.error(errorData.Update_Error);
+          this.loading=false;
         }
       )
     }

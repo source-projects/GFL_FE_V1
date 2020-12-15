@@ -9,7 +9,6 @@ import {
   NbSelectModule,
   NbListModule,
 } from '@nebular/theme';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -36,13 +35,11 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     NbListModule,
     ChartsModule,
     NbProgressBarModule,
-    NgxEchartsModule,
     NgxChartsModule,
-    LeafletModule,
     NgSelectModule,
     SharedModule,
     OwlDateTimeModule,
-     OwlNativeDateTimeModule
+    OwlNativeDateTimeModule
   ],
   declarations: [
     ECommerceComponent,

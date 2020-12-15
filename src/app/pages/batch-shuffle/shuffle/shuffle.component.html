@@ -18,7 +18,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Party Name:</label>
-                <ng-select name="partyId" formControlName="partyName" (change)="dropSelect($event)" placeholder="Party Name
+                <ng-select name="partyId" formControlName="partyName" (change)="dropSelectParty($event)" placeholder="Party Name
                 ">
 
                   <ng-option *ngFor="let p of party" [value]="p.id"> {{p.partyName}}
@@ -32,9 +32,11 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="required">Quality Name:</label>
-                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelect($event)" placeholder="Quality Name">
+                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelectQuality($event)"
+                  placeholder="Quality Name">
 
-                  <ng-option *ngFor="let q of quality" [value]="q.id">{{q.qualityName}}
+                  <ng-option *ngFor="let q of quality" [value]="q.id?q.id:q.qualityEntryId">
+                    {{q.partyName}}-{{q.qualityId}}-{{q.qualityName}}
                   </ng-option>
                 </ng-select>
                 <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
@@ -90,32 +92,42 @@
                     [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
                     <div class="row">
                       <div class="col-md-12 col-12">
-                        <div class="example-box" *ngFor="let item of batches" cdkDrag>Batch ID: {{item.id}}, Meter:
-                          {{item.mtr}},
-                          Weight: {{item.wt}}</div>
+                        <div *ngFor="let item of batches" cdkDrag>
+                          <div class="batch-2" *ngIf="item.batchId==batchId2">
+                            Meter:
+                            {{item.mtr}}
+                            Weight: {{item.wt}}
+                          </div>
+                          <div class="example-box" *ngIf="item.batchId!=batchId2">
+                            Meter:
+                            {{item.mtr}}
+                            Weight: {{item.wt}}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-6 col-12">
-                <div class="example-container batch-2">
+                <div class="example-container ">
                   <h2 class="batch-text">Batch Part 2</h2>
 
-                  <div cdkDropList class="example-list" [cdkDropListData]="part2" #part2List="cdkDropList"
+                  <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2" #part2List="cdkDropList"
                     [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
 
-                    <div class="example-box" *ngFor="let item of part2" cdkDrag>Batch ID: {{item.id}}, Meter:
-                      {{item.mtr}},
-                      Weight: {{item.wt}}</div>
+                    <div *ngFor="let item of part2" cdkDrag
+                      [ngClass]="item.batchId==batchId1 ? 'batch-2' : 'example-box' ">
+                      Meter:
+                      {{item.mtr}}
+                      Weight: {{item.wt}}
+                    </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-md-6">
               <div class="row">
@@ -126,12 +138,22 @@
                 </div>
                 <div class="col-md-9 col-9">
                   <div class="batch-1-input">
+                    <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
+                      <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
                 </div>
+                <!-- <div class="total-shuffle" style="margin-left: 6%;">
+                  <label>Total Rows</label>
+                  <input type="text" formControlName="totalrowsPart1" [readonly]="true"
+                    style="background-color: lightgray;" class="mtr-wei">
+                  <input type="text" formControlName="totalrowsPart2" [readonly]="true"
+                    style="background-color: lightgray; " class="mtr-wei">
+                </div> -->
+
               </div>
             </div>
 
@@ -139,8 +161,10 @@
               <div class="row">
                 <div class="col-md-9">
                   <div class="batch-2-input">
+                    <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
+                      <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
@@ -149,11 +173,53 @@
                   <div class="btn-split-merge">
                     <button class="btn btn-primary btn-sm btn-design" (click)="splitsubmit()"
                       [hidden]="btnFlag">Split</button>
-
                     <button class="btn btn-primary btn-sm btn-design" (click)="mergesubmit()"
                       [hidden]="!btnFlag">Merge</button>
                   </div>
+                  <!-- <input type="text" placeholder="Enter New Batch Id" formControlName="newBatchName"
+                    style="background-color: lightgray;" [hidden]="btnFlag"> -->
+
                 </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-4 col-4">
+                  <div class="total-shuffle">
+                    <label>Total Rows</label>
+                  </div>
+                </div>
+                <div class="col-md-8 col-8">
+                  <div class="batch-1-input">
+                    <input type="text" formControlName="totalrowsPart1" [readonly]="true"
+                    style="background-color: lightgray;" class="mtr-wei">
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="batch-2-input">
+                    <input type="text" formControlName="totalrowsPart2" [readonly]="true"
+                    style="background-color: lightgray; " class="mtr-wei">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="btn-split-merge">
+                    <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName"
+                    style="background-color: lightgray;" [hidden]="btnFlag" class="btn btn-primary btn-sm btn-design batch-total-row">
+                  </div>
+
+                </div>
+
+
               </div>
             </div>
           </div>

@@ -20,6 +20,7 @@ import { ShadeGuard } from "app/@theme/guards/shade.guard";
   styleUrls: ["./shade.component.scss"],
 })
 export class ShadeComponent implements OnInit {
+  public loading = false;
   public errorData: any = (errorData as any).default;
 
 
@@ -74,7 +75,7 @@ export class ShadeComponent implements OnInit {
   ownEdit = true;
   allEdit = true;
   groupEdit = true;
-
+  disabled = false;
   constructor(
     private shadeService: ShadeService,
     private route: Router,
@@ -85,7 +86,7 @@ export class ShadeComponent implements OnInit {
     private commonService: CommonService,
     private exportService: ExportService
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -93,11 +94,19 @@ export class ShadeComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getViewAccess();
+    this.getAddAcess();
     this.getallShades(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess() {
+    if (this.shadeGuard.accessRights('add')) {
+      this.disabled = false;
+    }
+    else {
+      this.disabled = true;
+    }
+  }
   onChange(event) {
     this.shadeList = [];
     switch (event) {
@@ -130,23 +139,23 @@ export class ShadeComponent implements OnInit {
   }
 
   getallShades(id, getBy) {
+    this.loading = true;
     this.shadeService.getShadeMastList(id, getBy).subscribe(
-
-      (data) => {
-        this.shadeList = data["data"];
-        if(this.shadeList){
-          this.shade = this.shadeList.map((element) => ({
-            partyShadeNo: element.partyShadeNo,
-            processName: element.processName,
-            qualityId: element.qualityId,
-            qualityName: element.qualityName,
-            partyName: element.partyName,
-            colorTone: element.colorTone,
-          }));
+      data => {
+        if (data['success']) {
+          if (data['data'].length > 0) {
+            this.shadeList = data['data'];
+            this.shade = this.shadeList.map((element) => ({
+              partyShadeNo: element.partyShadeNo, processName: element.processName,
+              qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
+            }))
+          }
         }
+        this.loading = false;
       },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
+      error => {
+        // this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
   }
@@ -193,25 +202,31 @@ export class ShadeComponent implements OnInit {
   getDeleteAccess() {
     if (this.shadeGuard.accessRights('delete')) {
       this.ownDelete = false;
+      this.hidden = this.ownDelete;
     }
     if (this.shadeGuard.accessRights('delete group')) {
       this.groupDelete = false;
+      this.hidden = this.groupDelete;
     }
     if (this.shadeGuard.accessRights('delete all')) {
       this.allDelete = false;
+      this.hidden = this.allDelete;
     }
   }
 
   getEditAccess() {
     if (this.shadeGuard.accessRights('edit')) {
       this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
     }
     if (this.shadeGuard.accessRights('edit group')) {
       this.groupEdit = false;
+      this.hiddenEdit = this.groupEdit;
 
     }
     if (this.shadeGuard.accessRights('edit all')) {
       this.allEdit = false;
+      this.hiddenEdit = this.allEdit;
     }
   }
 }

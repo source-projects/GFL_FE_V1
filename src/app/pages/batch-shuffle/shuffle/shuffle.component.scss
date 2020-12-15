@@ -13,7 +13,19 @@
     border-top: 0;
     padding: 0 10px;
   }
-  
+
+  .batch-2{
+    margin: 12px;
+    text-align: center;
+    padding: 7px 15px;
+    border: 1px solid rgb(94, 91, 94);
+    background: #0066CC;
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    box-sizing: border-box;
+    cursor: move;
+    font-size: 14px;
+  }
   
   .cdk-drag-preview {
     box-sizing: border-box;

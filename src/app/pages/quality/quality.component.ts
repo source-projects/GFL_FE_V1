@@ -17,7 +17,7 @@ import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-
 })
 
 export class QualityComponent implements OnInit {
-
+  public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
   radioArray = [
@@ -47,7 +47,7 @@ export class QualityComponent implements OnInit {
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
- 
+  disabled=false;
   
   constructor(
     private commonService: CommonService,
@@ -66,11 +66,19 @@ export class QualityComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
+    this.getAddAcess();
     this.getQualityList(this.userId, "own");
     this.getDeleteAccess();
     this.getEditAccess();
   }
-
+  getAddAcess(){
+    if(this.qualityGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
 
   onChange(event){
     this.qualityList = [];
@@ -104,20 +112,23 @@ open(){
 }
 
   getQualityList(id,getBy) {
+    this.loading = true;
     this.qualityService.getallQuality(id,getBy).subscribe(
       data => {
         if (data['success']) {
           this.qualityList = data['data']
           this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
              qualityType: element.qualityType,partyName:element.partyName }))
-             console.log(this.quality);
+            this.loading = false;
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
+          this.loading = false;
         }
       },
       error => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     )
   }
@@ -144,25 +155,31 @@ open(){
   getDeleteAccess(){
     if(this.qualityGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownDelete;
     }
      if(this.qualityGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
      if(this.qualityGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
     if(this.qualityGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
      if(this.qualityGuard.accessRights('edit group')){
       this.groupEdit=false;
+      this.hiddenEdit=this.groupEdit;
 
     }
      if(this.qualityGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 

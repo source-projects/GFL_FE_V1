@@ -150,12 +150,12 @@ export class AddFunctionComponent implements OnInit {
         
         if (colName == "concentration") {
           if (!item.concentration) {
-            this.toastr.error("Enter concentration");
+            // this.toastr.error("Enter concentration");
             return;
           }
         } else if (colName == "lrOrFabricWt") {
           if (!item.lrOrFabricWt) {
-            this.toastr.error("Enter LR/FabricWt");
+            // this.toastr.error("Enter LR/FabricWt");
             return;
           }
         } 
@@ -211,11 +211,11 @@ export class AddFunctionComponent implements OnInit {
         if (data["success"]) {
             this.itemListArray = data["data"];
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -233,16 +233,18 @@ export class AddFunctionComponent implements OnInit {
   onDoseTypeChange() {
     if (this.dosing.doseType == "color") {
       this.dosing.doseWhileHeating = false;
+      this.dosing.dosingChemical = []
     }else{
       if(!this.itemListArray){
         this.processService.getAllItemWithSupplier().subscribe(
           data=>{
             if(data['success'])
               this.itemListArray = data['data']
-            else
-              this.toastr.error(data['msg'])
-          },error=>{
-            this.toastr.error(errorData.Internal_Error)
+            // else
+            //   // this.toastr.error(data['msg'])
+          },
+          error=>{
+            //  this.toastr.error(errorData.Internal_Error)
           }
         )
       }

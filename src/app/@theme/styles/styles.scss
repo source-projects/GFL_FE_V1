@@ -117,7 +117,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: 22px !important;
   width: 29px !important;
   bottom: 4px;
-  right: 0;
+  left: 0;
 }
 .batch-body{
   margin: 30px 0;
@@ -417,7 +417,8 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: center;
   padding: 7px 15px;
   border: 1px solid rgb(94, 91, 94);
-  background: rgb(94, 91, 94);
+  // background: rgb(94, 91, 94);
+  background: #404040;
   color: rgb(255, 255, 255);
   border-radius: 20px;
   box-sizing: border-box;
@@ -425,11 +426,13 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 14px;
 }
 .mtr-wei{
-  margin: 15px;
+  margin: 15px 0;
   padding: 4px;
   border: 0;
   text-align: center;
   width: 100px;
+  margin-right: 17px;
+  margin-left: 6px;
 }
 .total-shuffle, .batch-1-input, .batch-2-input, .btn-split-merge{
   display: inline-block;
@@ -508,6 +511,72 @@ input[type=number]::-webkit-outer-spin-button {
   background: #5e5b5e;
     color: #fff;
 }
+.text-batch-mtr{
+  color: #5e5b5e;
+  font-weight: 600;
+  font-size: 14px;
+}
+.datatable-body-cell{
+  height: unset!important;
+}
+.nb-supplier-icon{
+  padding: 0 10px!important;
+}
+// process page changes
+.accordian-process{
+  background-color: #aa36341c !important;
+}
+.add-process-icon{
+  color: #df3d34 !important;
+}
+.acc-process{
+  width: 100%;
+}
+.acc-item{
+  border: 0 !important;
+  padding-top: 0 !important;
+}
+.acc-text{
+  margin-bottom: 13px;
+  background: #5e5b5e;
+  color: #fff!important;
+  padding: 3px 15px;
+  display: inline-block;
+  border-radius: 50px;
+  font-size: 15px !important;
+}
+.title-acc-processs, .data-process{
+  display: inline-block;
+}
+.title-acc-processs{
+  margin-right: 8px !important;
+}
+.main-process-box{
+  margin-bottom: 15px!important;
+}
+.stock-table-body-height .datatable-body{
+  height: 140px !important;
+}
+.table-process-fnt th{
+  font-size: 13px;
+}
+.text-btn-right{
+  text-align: right;
+}
+.user-all-check label{
+  background-color: #fff;
+  color: #fff!important;
+  padding-right: 0 !important;
+}
+.user-all-check label .custom-checkbox.checked{
+  background-color: #5e5b5e !important;
+  border-color: #5e5b5e !important;
+}
+.user-per-check-display{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
@@ -537,9 +606,9 @@ input[type=number]::-webkit-outer-spin-button {
   .nb-radio{
     justify-content: space-between;
   }
-  .status-basic label{
-    padding-right: 14px!important;
-  }
+  // .status-basic label{
+  //   padding-right: 14px!important;
+  // }
   .columns{
     overflow: hidden;
   }
@@ -586,7 +655,12 @@ input[type=number]::-webkit-outer-spin-button {
   .nb-theme-default nb-sidebar.collapsed{
     width: 0!important;
   }
-
+  .btn-design{
+    padding: 6px 10px !important;
+  }
+  .mt-16{
+    margin-top: 16px;
+  }
 }
 @media (min-width: 1024px){
   .datatable-header-inner, .datatable-row-center.ng-star-inserted{
@@ -615,9 +689,21 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0!important;
   }
   .mtr-wei{
-    width: 70px!important;
+    width: 58px!important;
   }
   .batch-text{
     font-size: 15px!important;
+  }
+  .batch-total-row{
+    width: 100px;
+  }
+}
+@media (min-width: 320px) and (max-width: 375px){
+  .mtr-wei {
+    margin: 6px !important;
+    width: 49px !important;
+  }
+  .text-batch-mtr{
+    font-size: 12px;
   }
 }

@@ -23,13 +23,13 @@ import {
   NbToastrConfig,
   NbToastrModule,
   NbWindowModule,
-  
+
 } from '@nebular/theme';
 import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-   // FileSaverModule,
+    // FileSaverModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -48,10 +48,11 @@ import { ToastrModule } from 'ngx-toastr';
     ThemeModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
+      closeButton: true,
       preventDuplicates: true,
     }),
   ],
- 
+
   bootstrap: [AppComponent],
 })
 export class AppModule {

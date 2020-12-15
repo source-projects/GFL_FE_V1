@@ -1,3 +1,6 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div id="target">
+</div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div *ngIf="this.currentShadeId == null; else updateS">
@@ -59,14 +62,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Quality Name</label>
-                            <input type="text" name="qualityName" #qualityName1="ngModel"
-                                [(ngModel)]="shades.qualityName" readonly class="form-control"
-                                placeholder="Quality Name">
-                        </div>
-                    </div>
+                   
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Id</label>
@@ -82,7 +78,14 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Quality Name</label>
+                            <input type="text" name="qualityName" #qualityName1="ngModel"
+                                [(ngModel)]="shades.qualityName" readonly class="form-control"
+                                placeholder="Quality Name">
+                        </div>
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -209,13 +212,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 mobile-btn-center">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                                style="margin-right:20px" (click)="addShade(shadeForm)">ADD</button>
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
                             <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/shade'>CANCEL</button>
+                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
+                                style="margin-right:20px" (click)="addShade(shadeForm)">SAVE</button>
                         </div>
 
                     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component,Renderer2, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
@@ -15,6 +15,7 @@ import { CommonService } from "app/@theme/services/common.service";
 })
 export class AddEditProgramComponent implements OnInit {
   //programValues
+  public loading = false;
   programRecordArray: ProgramRecords[] = [];
   programValues: Program = new Program();
   programRecord: ProgramRecords = new ProgramRecords();
@@ -47,7 +48,8 @@ export class AddEditProgramComponent implements OnInit {
     private programService: ProgramService,
     private route: Router,
     private commonService: CommonService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private renderer: Renderer2
   ) {
     this.programRecordArray.push(this.programRecord);
     this.programValues.programRecords = this.programRecordArray;
@@ -69,52 +71,64 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   getPartyList() {
+    this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
+          this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   public getQualityList() {
+    this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
+          this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   public getPartyShadeList() {
+    this.loading = true;
     this.programService.getShadeDetail().subscribe(
       (data) => {
         if (data["success"]) {
           this.partyShade = data["data"];
+          this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
       }
     );
   }
 
   public getUpdateData() {
-
+    this.loading = true;
     this.programService
       .getProgramDetailsById(this.currentProgramId)
       .subscribe(
@@ -129,7 +143,9 @@ export class AddEditProgramComponent implements OnInit {
                     this.programValues.qualityId = element.qualityId;
                     this.programValues.qualityName = element.qualityName;
                     this.programValues.qualityType = element.qualityType;
+                    this.loading = false;
                   }
+                  this.loading = false;
                 });
 
                 if (this.batchData == null) {
@@ -141,12 +157,15 @@ export class AddEditProgramComponent implements OnInit {
                       (data) => {
                         if (data["success"]) {
                           this.batchData = data["data"];
+                          this.loading = false;
                         } else {
-                          this.toastr.error(data["msg"]);
+                          // this.toastr.error(data["msg"]);
+                          this.loading = false;
                         }
                       },
                       (error) => {
-                        this.toastr.error(errorData.Serever_Error);
+                        // this.toastr.error(errorData.Serever_Error);
+                        this.loading = false;
                       }
                     );
                 }
@@ -158,32 +177,39 @@ export class AddEditProgramComponent implements OnInit {
                       (data) => {
                         if (data["success"]) {
                           this.stockData = data["data"];
+                          this.loading = false;
                         } else {
-                          this.toastr.error(data["msg"]);
+                          // this.toastr.error(data["msg"]);
+                          this.loading = false;
                         }
                       },
                       (error) => {
-                        this.toastr.error(errorData.Serever_Error);
+                        // this.toastr.error(errorData.Serever_Error);
+                        this.loading = false;
                       }
                     );
                 }
               },
               (error) => {
-                this.toastr.error(errorData.Serever_Error);
+                // this.toastr.error(errorData.Serever_Error);
+                this.loading = false;
               }
             );
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
 
   }
 
   enableQuality(event) {
+    this.loading = true;
     if (event != undefined) {
       if (this.programValues.partyId) {
         this.programService.getQualityByParty(this.programValues.partyId).subscribe(
@@ -198,12 +224,15 @@ export class AddEditProgramComponent implements OnInit {
               this.programValues.qualityType = this.qualityList[0].qualityType;
               this.programValues.qualityEntryId = this.qualityList[0].qualityEntryId;
               this.getStockBatchData()
+              this.loading = false;
             }
             else
-              this.toastr.error(data['msg'])
+              // this.toastr.error(data['msg'])
+              this.loading = false;
           },
           error => {
-            this.toastr.error(errorData.Serever_Error)
+            // this.toastr.error(errorData.Serever_Error)
+            this.loading = false;
           }
         )
       }
@@ -215,6 +244,7 @@ export class AddEditProgramComponent implements OnInit {
       this.programValues.qualityType = null;
       this.getPartyList();
       this.getQualityList();
+      this.loading = false;
     }
 
   }
@@ -222,18 +252,22 @@ export class AddEditProgramComponent implements OnInit {
   //get Stock Batch data
   getStockBatchData() {
     //to batch data
+    this.loading = true;
     this.programService
       .getBatchDetailByQualityId(this.programValues.qualityEntryId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
+            this.loading = false;
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
     //to add stock data
@@ -243,12 +277,15 @@ export class AddEditProgramComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.stockData = data["data"];
+            this.loading = false;
           } else {
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
           }
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
   }
@@ -313,7 +350,7 @@ export class AddEditProgramComponent implements OnInit {
       (this.batchData == null || this.stockData == null)
     ) {
       if (this.qualityList[0].quantityId == null) {
-        this.toastr.warning(errorData.Add_quality_indicator);
+        // this.toastr.warning(errorData.Add_quality_indicator);
       }
     }
   }
@@ -462,12 +499,16 @@ export class AddEditProgramComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    } else {
-      return;
+    } 
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+          errorField.scrollIntoView();
     }
   }
 
   public updateProgram(myForm) {
+    this.loading = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.updatedBy = this.user.userId;
@@ -481,16 +522,23 @@ export class AddEditProgramComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Update_Success);
+            this.loading = false;
           } else {
             this.toastr.error(errorData.Update_Error);
+            this.loading = false;
           }
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
         }
       );
-    } else {
-      return;
+    } 
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
+
     }
   }
 }

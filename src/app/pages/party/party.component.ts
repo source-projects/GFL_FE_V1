@@ -20,11 +20,11 @@ import { toUnicode } from 'punycode';
   styleUrls: ["./party.component.scss"],
 })
 export class PartyComponent implements OnInit {
-
+  public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
   tablestyle = "bootstrap";
-
+  disabled=false;
   partyList = [];
   party=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
@@ -50,7 +50,6 @@ export class PartyComponent implements OnInit {
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
-
   constructor(
     private partyService: PartyService,
     private route: Router,
@@ -73,6 +72,7 @@ export class PartyComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess();
@@ -80,19 +80,24 @@ export class PartyComponent implements OnInit {
   }
 
   getAllParty(id,getBy) {
+    this.loading = true;
     this.partyService.getAllPartyList(id,getBy).subscribe(
       (data) => {
+       
         if (data["success"]) {
           this.partyList = data["data"];
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
+    
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
         }
+        this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
   }
@@ -121,28 +126,42 @@ export class PartyComponent implements OnInit {
   getDeleteAccess(){
     if(this.partyGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownDelete;
     }
      if( this.partyGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
      if(this.partyGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
     if(this.partyGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
      if(this.partyGuard.accessRights('edit group')){
       this.groupEdit=false;
+      this.hiddenEdit=this.groupEdit;
 
     }
      if(this.partyGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 
+  getAddAcess(){
+    if(this.partyGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event){
     this.partyList = [];
     switch(event){

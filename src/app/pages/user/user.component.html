@@ -1,8 +1,9 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                <button class="btn btn-primary btn-md btn-list" routerLink='/pages/user/add'>ADD</button>
+                <button class="btn btn-primary btn-md btn-list" routerLink='/pages/user/add'  [disabled]="disabled">ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">User</h2>
@@ -30,7 +31,7 @@
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/user/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="!this.access? null:deleteUser(row.id)"></nb-icon>
+                        (click)="deleteUser(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="User Name" prop="userName"></ngx-datatable-column>
