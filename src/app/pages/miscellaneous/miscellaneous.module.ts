@@ -5,6 +5,8 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { MiscellaneousRoutingModule } from './miscellaneous-routing.module';
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 @NgModule({
   imports: [
@@ -12,6 +14,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NbCardModule,
     NbButtonModule,
     MiscellaneousRoutingModule,
+    DragDropModule
   ],
   declarations: [
     MiscellaneousComponent,
