@@ -346,7 +346,7 @@ export class AddEditShadeComponent implements OnInit {
   calculateAmount(rowIndex) {
     let con = this.shades.shadeDataList[rowIndex].concentration;
     let newRate = this.shades.shadeDataList[rowIndex].rate;
-    let amount = Number(con) * Number(newRate);
+    let amount = Number((Number(con) * Number(newRate)).toFixed(2));
     this.shades.shadeDataList[rowIndex].amount = amount;
   }
 

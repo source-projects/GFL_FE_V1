@@ -62,14 +62,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Quality Name</label>
-                            <input type="text" name="qualityName" #qualityName1="ngModel"
-                                [(ngModel)]="shades.qualityName" readonly class="form-control"
-                                placeholder="Quality Name">
-                        </div>
-                    </div>
+                   
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Id</label>
@@ -85,7 +78,14 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Quality Name</label>
+                            <input type="text" name="qualityName" #qualityName1="ngModel"
+                                [(ngModel)]="shades.qualityName" readonly class="form-control"
+                                placeholder="Quality Name">
+                        </div>
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">

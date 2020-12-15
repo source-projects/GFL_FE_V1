@@ -694,6 +694,9 @@ input[type=number]::-webkit-outer-spin-button {
   .batch-text{
     font-size: 15px!important;
   }
+  .batch-total-row{
+    width: 100px;
+  }
 }
 @media (min-width: 320px) and (max-width: 375px){
   .mtr-wei {
