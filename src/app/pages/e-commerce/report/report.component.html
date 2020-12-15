@@ -63,6 +63,9 @@
                 <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
             </ngx-datatable>
         </div>
+        <div *ngIf="waterJetMachineFlag">
+            <ngx-add-edit-water-jet></ngx-add-edit-water-jet>
+        </div>
         <div class="machine-cards" *ngIf="machineReportFlag">
             <div class="row">
                 <div class="col-md-4" *ngFor="let cat of machineCategory">
@@ -108,7 +111,7 @@
                         <div class="day-night-picker">
                             <div class="form-group">
                                 <strong><label>Select Date & Time</label></strong>
-                                <input class="form-control" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime"
+                                <input class="form-control" name="'dt{{i}}'" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime"
                                     [owlDateTimeTrigger]="dt1" placeholder="Date Time">
                                 <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1></owl-date-time>
                             </div>

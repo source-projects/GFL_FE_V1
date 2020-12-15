@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NgbDate, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from 'app/@theme/json/error.json';
+import { PurchaseRequest } from 'app/@theme/model/purchaseRequest';
+import { PurchaseService } from 'app/@theme/services/purchase.service';
 import { ReportService } from 'app/@theme/services/report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
@@ -15,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ReportComponent implements OnInit {
   
+  purchaseRequestList: PurchaseRequest[] = [];
 
   infor: any = [
     {
@@ -77,11 +80,12 @@ export class ReportComponent implements OnInit {
   };
   lineChartPlugins = [];
   
-  constructor(private reportservice: ReportService, private toastr: ToastrService) {
+  constructor(private reportservice: ReportService, private toastr: ToastrService,private purchaseService:PurchaseService) {
   }
 
   ngOnInit(): void {
     this.getMachineCategory();
+    this.getPurchaseRequestList();
   }
 
   change() {
@@ -243,6 +247,7 @@ export class ReportComponent implements OnInit {
   POApproval() {
     this.optionFlag = false;
     this.POApprovalFlag = true;
+    this.buttonFlag = true;
   }
 
   categorySelected(value: any) {
@@ -259,11 +264,9 @@ export class ReportComponent implements OnInit {
       this.getAllMachineByCategoryId(value.id);
       this.MachineFlag = true;
     }
-    else if (value.name == 'waterJet') {
+    else if (value.name == 'string') {
       this.machineReportFlag = false;
       this.waterJetMachineFlag = true;
-      this.getAllMachineByCategoryId(value.id);
-      this.MachineFlag = true;
     }
   }
 
@@ -372,7 +375,7 @@ export class ReportComponent implements OnInit {
       this.machineReportFlag = false;
     }
     else if (this.machineReportFlag == true) {
-      this.buttonFlag = false;
+      this.buttonFlag = true;
       this.optionFlag = true;
       this.MachineFlag = false;
       this.ChartFlag = false;
@@ -395,5 +398,45 @@ export class ReportComponent implements OnInit {
       this.NoDataFlag = false;
       this.MachineFlag = true;
     }
+    else if (this.POApprovalFlag == true) {
+      this.buttonFlag = false;
+      this.optionFlag = true;
+      this.POApprovalFlag = false;
+    }
+    else if (this.waterJetMachineFlag == true) {
+      this.buttonFlag = true;
+      this.optionFlag = false;
+      this.waterJetMachineFlag = false;
+      this.machineReportFlag = true;
+    }
+  }
+
+  getPurchaseRequestList() {
+    this.purchaseService.getAllRequests().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.purchaseRequestList = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
+  updateRequest(status, index) {
+    this.purchaseRequestList[index].status = status;
+    this.purchaseService
+      .updateRequestStatus(this.purchaseRequestList[index])
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            if (status == 1) this.toastr.success("Request approved");
+            else if (status == 2) this.toastr.success("Request declined");
+            this.getPurchaseRequestList();
+            //window.location.reload();
+          }
+        },
+        (error) => {
+          this.toastr.error("Error serving request");
+        }
+      );
   }
 }
