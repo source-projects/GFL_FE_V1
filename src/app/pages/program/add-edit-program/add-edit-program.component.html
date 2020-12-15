@@ -1,3 +1,4 @@
+<div id="target"></div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div *ngIf="this.currentProgramId == null; else updateS">
@@ -222,15 +223,16 @@
 
 
                 <div class="row">
-                    <div class="col-md-12 mobile-btn-center">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button *ngIf="this.currentProgramId == null" type="button"
-                                class="btn btn-primary btn-sm btn-design"
-                                (click)="addProgram(myForm)">ADD</button>&nbsp;&nbsp;&nbsp;
+                            
                             <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design"
                                 routerLink="/pages/program">CANCEL</button>
+                                <button *ngIf="this.currentProgramId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design"
+                                (click)="addProgram(myForm)">SAVE</button>
                         </div>
 
                     </div>

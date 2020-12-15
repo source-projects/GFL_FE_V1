@@ -183,6 +183,12 @@
             </div>
           </div>
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
           <div class="form-group col-md-4">
             <label class="required">Address 1</label>
             <textarea
@@ -234,6 +240,10 @@
               <span>Master Name is required</span>
             </div>
           </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
         </div>
 
         <div class="creditors-debitors">
@@ -269,6 +279,7 @@
         </div>
 
         <div class="row">
+<<<<<<< HEAD
           <div class="col-md-12 mobile-btn-center">
             <button
               *ngIf="this.currentPartyId == null"
@@ -295,6 +306,16 @@
             >
               CANCEL
             </button>
+=======
+          <div class="col-md-12 mobile-btn-center text-btn-right">
+
+            <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
+              class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+            <button class="btn btn-primary btn-sm btn-design" type="button"
+              (click)="goBackToPreviousPage()">CANCEL</button>
+            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
+              style="margin-right:20px" (click)="addParty()">SAVE</button>
+>>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
           </div>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component,Renderer2, OnInit, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
@@ -52,7 +52,8 @@ export class AddEditShadeComponent implements OnInit {
     private shadeService: ShadeService,
     private route: Router,
     public vcRef: ViewContainerRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private renderer: Renderer2
   ) {
     this.shadeDataListArray.push(this.shadeDataList);
     this.shades.shadeDataList = this.shadeDataListArray;
@@ -439,6 +440,12 @@ export class AddEditShadeComponent implements OnInit {
         }
       );
     }
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
+
+    }
   }
 
   removeItem(id) {
@@ -480,6 +487,12 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       );
+    }
+    else 
+    {
+      const errorField = this.renderer.selectRootElement('#target');
+      errorField.scrollIntoView();
+
     }
   }
 }

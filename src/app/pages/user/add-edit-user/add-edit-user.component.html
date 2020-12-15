@@ -1,5 +1,6 @@
-<ngx-loading [show]="loading"></ngx-loading>
+<div id="target"></div>
 <nb-card class="nb-style">
+<<<<<<< HEAD
   <nb-card-header class="nb-header">
     <div *ngIf="this.currentUserId == null; else updateU">
       <h2 class="nb-text">Add User</h2>
@@ -24,6 +25,39 @@
                 [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}"
                 required
               />
+=======
+    <nb-card-header class="nb-header" >
+        <div *ngIf="this.currentUserId == null; else updateU">
+            <h2 class="nb-text">Add User</h2>
+        </div>
+        <ng-template #updateU>
+            <h2 class="nb-text">Update User</h2>
+        </ng-template>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #myForm="ngForm">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">First Name</label>
+                            <input type="text" name="firstName" #firstName1="ngModel" class="form-control"
+                                [(ngModel)]="user.firstName"
+                                [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}" required>
+
+                            <div class="invalid-feedback"
+                                *ngIf="formSubmitted && (firstName1.invalid || firstName1.dirty || firstName1.touched)">
+                                <span>First name is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Last Name</label>
+                            <input name="lastName" class="form-control" [(ngModel)]="user.lastName" required
+                                #lastName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(lastName1.valid)}">
+>>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
 
               <div
                 class="invalid-feedback"
@@ -256,6 +290,7 @@
 </nb-card>
 
 <nb-card class="nb-style">
+<<<<<<< HEAD
   <nb-card-header class="nb-header">
     <div>
       <h2 class="nb-text" style="display: inline;">User Permission</h2>
@@ -270,6 +305,96 @@
         <th>Select All</th>
         <th *ngFor="let per of perName;let i=index;">{{per}}</th>
       </tr>
+=======
+    <nb-card-header class="nb-header">
+        <div>
+            <div class="row">
+                <div class="col-md-11 col-10">
+                    <h2 class="nb-text" style="display: inline;">User Permission</h2>
+                </div>
+                <div class="col-md-1 col-2 user-per-check-display">
+                    <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check"></nb-checkbox>
+                </div>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+
+        <table class="user-per-table">
+            <tr class="table-checkbox">
+                <th>Forms</th>
+                <th>Select All</th>
+                <th *ngFor="let per of perName;let i=index;">{{per}}</th>
+            </tr>
+
+            <tr *ngFor="let perm of permissionArray;let i=index;" class="table-checkbox">
+                <td>{{perm.module}}</td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
+                        (change)="checkUncheckAll(perm.module,$event)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
+                        (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'"
+                        (change)="checkUncheckSelectAll(perm.add,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
+                        (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
+                        (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
+                </td>
+
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
+                        (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
+                        (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
+                        (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
+                        (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
+                        (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
+                </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
+                        (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
+                </td>
+
+
+
+            </tr>
+
+        </table>
+
+    </nb-card-body>
+    <div class="nb-pd">
+
+        <div class="row">
+            <div class="col-md-12 mobile-btn-center text-btn-right">
+
+
+                <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                    routerLink="/pages/user">Cancel</button>
+                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
+>>>>>>> c85f061109a381c7084ed8038b5434188cea34f9
 
       <tr
         *ngFor="let perm of permissionArray;let i=index;"
