@@ -36,7 +36,7 @@ export class ReportComponent implements OnInit {
     "fromDate": "",
     "fromTime": "",
     "id": null,
-    "shift": "",
+    "shift": null,
     "toDate": "",
     "toTime": ""
   }
@@ -50,6 +50,17 @@ export class ReportComponent implements OnInit {
   flag4: boolean = false;
   flag5:boolean = false;
 
+  
+  optionFlag:boolean = true;
+  machineReportFlag:boolean = false;
+  staffReportFlag:boolean = false;
+  salesReportFlag:boolean = false;
+  POApprovalFlag:boolean = false;
+  stanterMachineFlag:boolean = false;
+  waterJetMachineFlag:boolean = false;
+  foldingMachineFlag:boolean = false;
+  
+  
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
   lineChartLegend = true;
@@ -187,7 +198,7 @@ export class ReportComponent implements OnInit {
         t3 = t3.concat(t1);
         this.obj.toTime = t3;
 
-        this.collectData(this.obj)
+        
       }
       else {
       }
@@ -216,7 +227,7 @@ export class ReportComponent implements OnInit {
         t3 = t3.concat(":");
         t3 = t3.concat(t1);
         this.obj.toTime = t3;
-        this.collectData(this.obj)
+        
       }
     }
   }
@@ -282,4 +293,54 @@ export class ReportComponent implements OnInit {
       }
     )
   }
+
+  machineReport(){
+    this.optionFlag = false;
+    this.machineReportFlag = true;
+    this.getMachineCategory();
+  }
+
+  staffReport(){
+    this.optionFlag = false;
+    this.staffReportFlag = true;
+  }
+
+  salesReport(){
+    this.optionFlag = false;
+    this.salesReportFlag = true;
+  }
+
+  POApproval(){
+    this.optionFlag = false;
+    this.POApprovalFlag = true;
+  }
+
+  categorySelected(value:any){
+    if (value.name == 'stanter') {
+      this.machineReportFlag = false;
+      this.stanterMachineFlag = true;
+      this.getAllMachineByCategoryId(value.id);
+    }
+    else if (value.name == 'folding') {
+      this.machineReportFlag = false;
+      this.foldingMachineFlag = true;
+      this.getAllMachineByCategoryId(value.id);
+    }
+    else if (value.name == 'waterJet') {
+      this.machineReportFlag = false;
+      this.waterJetMachineFlag = true;
+      this.getAllMachineByCategoryId(value.id);
+    }
+  }
+
+  day(){
+    this.obj.shift = 1;
+    this.collectData(this.obj)
+  }
+
+  night(){
+    this.obj.shift = 2;
+    this.collectData(this.obj)
+  }
+
 }
