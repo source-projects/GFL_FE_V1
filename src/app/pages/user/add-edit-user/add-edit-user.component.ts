@@ -337,17 +337,47 @@ export class AddEditUserComponent implements OnInit {
 
   checkIfAllSelected(i){
     if(this.permissionArray[i].view)
+    {
+      this.permissionArray[i].edit=true;
+      this.permissionArray[i].delete=true;
+      
       if(this.permissionArray[i].add)
         if(this.permissionArray[i].edit)
           if(this.permissionArray[i].delete)
             if(this.permissionArray[i].viewAll)
+            {
+              this.permissionArray[i].editAll=true;
+              this.permissionArray[i].deleteAll=true;
               if(this.permissionArray[i].viewGroup)
+              {
+                this.permissionArray[i].editGroup=true;
+                this.permissionArray[i].deleteGroup=true;
                 if(this.permissionArray[i].editGroup)
                   if(this.permissionArray[i].editAll)
                     if(this.permissionArray[i].deleteGroup)
                       if(this.permissionArray[i].deleteAll)
                         this.permissionArray[i].selectAll = true;
-                        
+              }
+              else{
+                this.permissionArray[i].editGroup=false;
+                this.permissionArray[i].deleteGroup=false;
+              }     
+            }     
+            else{
+              this.permissionArray[i].editAll=false;
+              this.permissionArray[i].deleteAll=false;
+            }
+    }     
+    else{
+      this.permissionArray[i].edit=false;
+      this.permissionArray[i].delete=false;
+      this.permissionArray[i].editAll=false;
+      this.permissionArray[i].deleteAll=false;
+      this.permissionArray[i].editGroup=false;
+      this.permissionArray[i].deleteGroup=false;
+      this.permissionArray[i].viewGroup=false;
+      this.permissionArray[i].viewAll=false;
+    }      
   }
 
   getCheckedItem() {
