@@ -1,6 +1,6 @@
-<ngx-loading [show]="loading"></ngx-loading>
+<div id="target"></div>
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
+    <nb-card-header class="nb-header" >
         <div *ngIf="this.currentUserId == null; else updateU">
             <h2 class="nb-text">Add User</h2>
         </div>
@@ -174,8 +174,14 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div>
-            <h2 class="nb-text" style="display: inline;">User Permission</h2>&nbsp;&nbsp;
-            <nb-checkbox (change)="selectAllPermissions($event)" ></nb-checkbox>
+            <div class="row">
+                <div class="col-md-11 col-10">
+                    <h2 class="nb-text" style="display: inline;">User Permission</h2>
+                </div>
+                <div class="col-md-1 col-2 user-per-check-display">
+                    <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check"></nb-checkbox>
+                </div>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -245,14 +251,15 @@
     <div class="nb-pd">
 
         <div class="row">
-            <div class="col-md-12 mobile-btn-center">
+            <div class="col-md-12 mobile-btn-center text-btn-right">
 
-                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-                    style="margin-right:20px" (click)="addUser(myForm)">Save</button>
+
                 <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
                     style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
                 <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                     routerLink="/pages/user">Cancel</button>
+                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
 
             </div>
         </div>

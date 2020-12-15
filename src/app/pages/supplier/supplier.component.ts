@@ -124,9 +124,10 @@ export class SupplierComponent implements OnInit {
               gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
             }))
           }
-          this.loading = false;
+          
           //this.router.navigate(['pages/supplier']);
         }
+        this.loading = false;
       },
       error => {
         //toaster

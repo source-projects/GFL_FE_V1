@@ -23,12 +23,12 @@
         </nb-radio-group>
 
         <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
-            [footerHeight]="40">
+            [footerHeight]="31">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}"
                         [hidden]="hiddenEdit" [routerLink]="['edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
-                    <button nbTooltip="Update Supplier Rate" class="btn primary-status"
+                    <button nbTooltip="Update Supplier Rate" class="btn primary-status nb-supplier-icon"
                         [routerLink]="['editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success"
                         nbTooltipPlacement="bottom" nbButton>
                         <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="menu"
