@@ -1,5 +1,5 @@
 <ngx-loading [show]="loading"></ngx-loading>
-<div  id="target"></div>
+<div id="target"></div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div *ngIf="currentStockBatch == null; else updateS">
@@ -23,22 +23,22 @@
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Party Name</label>
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}"
+                                [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
                                 (change)="setQualityByParty($event)" required>
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="formSubmitted && (partyId1.invalid)">
+                            <div class="required-class" *ngIf="(partyId1.invalid)&&(formSubmitted || partyId1.touched)">
                                 <span>Party name is required</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && qualityId1.invalid}" (change)="getUnit($event)">
+                                [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}" (change)="getUnit($event)">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                     {{q.qualityId}}-{{q.qualityName}}</ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="formSubmitted && qualityId1.invalid ">
+                            <div class="required-class" *ngIf="(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)">
                                 <span>Quality is required.</span>
                             </div>
                         </div>
@@ -49,11 +49,11 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill No</label>
-                            <input type="number" name="billNo" class="form-control" #billNo1="ngModel"
+                            <input type="text" name="billNo" class="form-control" #billNo1="ngModel"
                                 [(ngModel)]='stockBatch.billNo' required
-                                [ngClass]="{'is-invalid': formSubmitted && billNo1.invalid}" min="0">
+                                [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}" min="0">
                             <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (billNo1.invalid || billNo1.dirty || billNo1.touched)">
+                                *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
                                 <span>Bill no. is required</span>
                             </div>
                         </div>
@@ -61,18 +61,18 @@
                             <label class="required">Bill Date:</label>
                             <input type="date" name="billDate" class="form-control" #billDate1="ngModel"
                                 [(ngModel)]='stockBatch.billDate' ngbDatepicker #dp="ngbDatepicker" required
-                                [ngClass]="{'is-invalid': formSubmitted && billDate1.invalid}">
-                            <div class="required-class" *ngIf="formSubmitted && (billDate1.invalid)">
+                                [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
+                            <div class="required-class" *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
                                 <span>Bill date is required</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
-                            <input type="number" name="chlNo" class="form-control" #chlNo1="ngModel"
+                            <input type="text" name="chlNo" class="form-control" #chlNo1="ngModel"
                                 [(ngModel)]='stockBatch.chlNo' required
-                                [ngClass]="{'is-invalid': formSubmitted && chlNo1.invalid}" min="0">
+                                [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}" min="0">
                             <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (chlNo1.invalid || chlNo1.dirty || chlNo1.touched)">
+                                *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
                                 <span>Challan no. is required</span>
                             </div>
                         </div>
@@ -85,8 +85,8 @@
                             <label class="required">Challan Date:</label>
                             <input type="date" name="chlDate" class="form-control" #chlDate1="ngModel"
                                 [(ngModel)]='stockBatch.chlDate' ngbDatepicker #dp="ngbDatepicker" required
-                                [ngClass]="{'is-invalid': formSubmitted && chlDate1.invalid}">
-                            <div class="required-class" *ngIf="formSubmitted && (chlDate1.invalid)">
+                                [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
+                            <div class="required-class" *ngIf="(formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)">
                                 <span>Challan date is required</span>
                             </div>
                         </div>
@@ -192,15 +192,20 @@
                             </nb-card>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="nb-icon-add">
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
-                                (click)="addNew($event,myForm);" icon="plus" class="add-icon display-inline">
-                            </nb-icon>
-                        </div>
-                    </div>
+
                     <div class="row">
-                        <div class="col-md-12 mobile-btn-center text-btn-right mt-16">
+                        <div class="col-md-3">
+                            <div class="nb-icon-add">
+                                <a class="link-fab linkedin" media="Linkedin">
+                                    <div class="tooltip">Add Batch</div>
+                                    <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNew($event,myForm);"
+                                        icon="plus" class="add-icon display-inline">
+                                    </nb-icon>
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
                             <button type="button" class="btn btn-primary btn-sm btn-design"
                                 routerLink="/pages/stock-batch">CANCEL</button>
@@ -211,6 +216,7 @@
                             <button *ngIf="currentStockBatch != null" type="button"
                                 class="btn btn-primary btn-sm btn-design" (click)="updateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
+
                     </div>
                 </div>
 

@@ -35,6 +35,9 @@ export class AddEditQualityComponent implements OnInit {
   //to store party info
   party: any[];
   userHead;
+
+  unit=[{name:'meter'},{name:'weight'}];
+  
   //to store selected QualityId
   currentQualityId: any;
   constructor(

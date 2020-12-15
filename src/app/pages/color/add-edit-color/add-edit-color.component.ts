@@ -94,8 +94,12 @@ export class AddEditColorComponent implements OnInit {
             })
           this.color.billDate = new Date(this.color.billDate);
           this.color.chlDate = new Date(this.color.chlDate);
-          this.calculateTotalQuantity(0);
-          this.calculateAmount(0);
+          for(let i=0;i<this.color.colorDataList.length;i++)
+          {
+            this.calculateTotalQuantity(i);
+            this.calculateAmount(i);
+          }
+          
           let amount: any
           this.color.colorDataList.forEach(element => {
             amount = Number(element.rate) * Number(element.quantity);
@@ -167,6 +171,7 @@ export class AddEditColorComponent implements OnInit {
         this.color.colorDataList[rowIndex].rate = element.rate;
       }
     });
+    this.calculateAmount(rowIndex);
 
   }
 
@@ -240,8 +245,8 @@ export class AddEditColorComponent implements OnInit {
     let qun;
     qun = this.color.colorDataList[rowIndex].quantity;
     rate = this.color.colorDataList[rowIndex].rate;
-    calcAmount = Number(rate * qun);
-    this.color.colorDataList[rowIndex].amount = parseInt(calcAmount);
+    calcAmount = Number((rate * qun).toFixed(2));
+    this.color.colorDataList[rowIndex].amount = calcAmount;
   }
 
   calculateTotalQuantity(rowIndex) {
@@ -250,8 +255,9 @@ export class AddEditColorComponent implements OnInit {
     let noOfBoxTempValue;
     quantityPerBoxTempValue = this.color.colorDataList[rowIndex].quantityPerBox;
     noOfBoxTempValue = this.color.colorDataList[rowIndex].noOfBox;
-    totalquantity = (quantityPerBoxTempValue * noOfBoxTempValue);
-    this.color.colorDataList[rowIndex].quantity = parseInt(totalquantity);
+    totalquantity = (quantityPerBoxTempValue * noOfBoxTempValue).toFixed(2);
+    this.color.colorDataList[rowIndex].quantity = totalquantity;
+    this.calculateAmount(rowIndex);
   }
 
   addColor(colorForm) {
