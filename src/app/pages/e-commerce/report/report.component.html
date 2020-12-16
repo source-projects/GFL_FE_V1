@@ -141,11 +141,11 @@
                         <div class="day-night-picker">
                             <div class="container">
                                 <div class="form-group">
-                                    <!-- <strong><label>Select Date & Time</label></strong> -->
-                                    <input class="form-control" name="'dt{{i}}'" [owlDateTime]="dt1"
-                                        [selectMode]="'range'" [(ngModel)]="datetime" [owlDateTimeTrigger]="dt1"
-                                        placeholder="Date Time">
-                                    <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1>
+                                    <strong><label>Select Date & Time</label></strong>
+                                    <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1"
+                                        [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                    <owl-date-time [showSecondsTimer]="true" [startAt]="startAt"
+                                        (afterPickerClosed)="change(dt1)" #dt1>
                                     </owl-date-time>
                                 </div>
                             </div>
