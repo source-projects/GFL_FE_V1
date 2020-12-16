@@ -44,7 +44,7 @@
                         <input name="billDate" class="form-control" #billDate1="ngModel" [max]="maxDate"
                             [(ngModel)]="color.billDate" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required 
                             [ngClass]="{'is-invalid':(billDate1.invalid) && (formSubmitted || billDate1.touched)}"
-                            placeholder="Bill Date">
+                            placeholder="MM-DD-YYYY">
                             <owl-date-time [pickerType]="'calendar'"  #dt2></owl-date-time>
                         <div class="invalid-feedback"
                             *ngIf="(billDate1.invalid) && (formSubmitted || billDate1.touched)">
@@ -67,7 +67,7 @@
                         <input name="chlDate" class="form-control" #chlDate1="ngModel" [max]="maxDate"
                             [(ngModel)]="color.chlDate" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" required
                             [ngClass]="{'is-invalid': (chlDate1.invalid) && (formSubmitted || chlDate1.touched)}"
-                            placeholder="Challan Date">
+                            placeholder="MM-DD-YYYY">
                         <owl-date-time [pickerType]="'calendar'"  #dt1></owl-date-time>
                         <div class="invalid-feedback" *ngIf="(chlDate1.invalid) && (formSubmitted || chlDate1.touched)">
                             <span>Challan date is required</span>
