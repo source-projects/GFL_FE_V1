@@ -19,7 +19,7 @@ import { UserGuard } from 'app/@theme/guards/user.guard';
 export class UserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   
-
+  public loading = false;
   tableStyle = 'bootstrap';
   userList=[];
   user=[];
@@ -38,22 +38,9 @@ export class UserComponent implements OnInit {
   permissions: Number;
 
   hidden :boolean=true;
-  delete: Boolean = false;
-  delete_group: Boolean = false;
-  delete_all: Boolean =false;
-
   hiddenEdit:boolean=true;
-  edit: Boolean = false;
-  edit_group: Boolean = false;
-  edit_all: Boolean =false;
-
   hiddenView:boolean=true;
-  view: Boolean = false;
-  view_group: Boolean = false;
-  view_all: Boolean =false;
-
-  hiddenCol:boolean=true;
-
+  
   ownDelete=true;
   allDelete=true;
   groupDelete=true;
@@ -62,7 +49,7 @@ export class UserComponent implements OnInit {
   allEdit=true;
   groupEdit=true;
   
-
+  disabled=false;
   constructor(
     private route:Router,
     private modalService: NgbModal,
@@ -78,32 +65,25 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
 
-     
-    this.edit = this.userGuard.accessRights('edit'); 
-    this.edit_group = this.userGuard.accessRights('edit group');
-    this.edit_all = this.userGuard.accessRights('edit all');
-
-
-    this.delete = this.userGuard.accessRights('delete'); 
-    this.delete_group = this.userGuard.accessRights('delete group');
-    this.delete_all = this.userGuard.accessRights('delete all');
-
-
-    this.view = this.userGuard.accessRights('view'); 
-    this.view_group = this.userGuard.accessRights('view group');
-    this.view_all = this.userGuard.accessRights('view all');
-
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
 
     this.getViewAccess();
+    this.getAddAcess();
     this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
     this.getEditAccess()
   }
-
+  getAddAcess(){
+    if(this.userGuard.accessRights('add')){
+      this.disabled=false;
+    }
+    else{
+      this.disabled=true;
+    }
+  }
   onChange(event){
     this.userList = [];
     switch(event){
@@ -136,19 +116,20 @@ export class UserComponent implements OnInit {
   }
 
   getAllUser(id,getBy){
+    this.loading = true;
     this.userService.getAllUser(id,getBy).subscribe(
       data =>{
         if(data["success"]){
           this.userList = data['data'];
           this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
-            console.log(this.user);
+           
           }
-        else
-          this.toastr.error(data["msg"])
+          this.loading = false;
       },
       error=>{
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
     
@@ -174,17 +155,17 @@ export class UserComponent implements OnInit {
 
 
   getViewAccess(){
-    if(!this.view){
+    if(!this.userGuard.accessRights('view')){
       this.radioArray[0].disabled=true;
     }
     else
     this.radioArray[0].disabled=false;
-     if(!this.view_group){
+     if(!this.userGuard.accessRights('view group')){
       this.radioArray[1].disabled=true;
     }
     else
     this.radioArray[1].disabled=false;
-     if(!this.view_all){
+     if(!this.userGuard.accessRights('view all')){
       this.radioArray[2].disabled=true;
     }
     else
@@ -193,27 +174,33 @@ export class UserComponent implements OnInit {
   }
 
   getDeleteAccess(){
-    if(this.delete){
+    if(this.userGuard.accessRights('delete')){
       this.ownDelete=false;
+      this.hidden=this.ownDelete;
     }
-     if(this.delete_group){
+     if(this.userGuard.accessRights('delete group')){
       this.groupDelete=false;
+      this.hidden=this.groupDelete;
     }
-     if(this.delete_all){
+     if(this.userGuard.accessRights('delete all')){
       this.allDelete=false;
+      this.hidden=this.allDelete;
     }
   }
 
   getEditAccess(){
-    if(this.edit){
+    if(this.userGuard.accessRights('edit')){
       this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
     }
-     if(this.edit_group){
+     if(this.userGuard.accessRights('edit group')){
       this.groupEdit=false;
+      this.hiddenEdit=this.groupEdit;
 
     }
-     if(this.edit_all){
+     if( this.userGuard.accessRights('edit all')){
       this.allEdit=false;
+      this.hiddenEdit=this.allEdit;
     }
   }
 

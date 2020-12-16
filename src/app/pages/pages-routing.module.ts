@@ -2,7 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { PartyGuard } from 'app/@theme/guards/party.guard';
@@ -12,6 +11,7 @@ import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
+
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import { ShuffleComponent } from './batch-shuffle/shuffle/shuffle.component';
 
@@ -94,12 +94,26 @@ const routes: Routes = [{
       data: { PermissionName: ['view']}
     },
     {
+      path: 'waterJet',
+      loadChildren: () => import('./water-jet/water-jet.module')
+        .then(m => m.WaterJetModule),
+      
+    },
+    {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
       canActivate: [SupplierGuard],
       canLoad: [SupplierGuard],
       data: { PermissionName: ['view']}
+    },
+    {
+      path: 'purchaseItem',
+      loadChildren: () => import('./purchase-item/purchase-item.module')
+        .then(m => m.PurchaseItemModule),
+      // canActivate: [PurchaseGuard],
+      // canLoad: [PurchaseGuard],
+      // data: { PermissionName: ['view']}
     },
     {
       path: 'finishedMeter',

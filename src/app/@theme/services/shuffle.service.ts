@@ -12,4 +12,8 @@ export class ShuffleService {
   updateBatchMerge(newBatchData){
     return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/MergeBatch',newBatchData);
   }
+
+  updateBatchSplit(newBatchData){
+    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/SplitBatch',newBatchData);
+  }
 }

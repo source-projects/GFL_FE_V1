@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ["./add-edit-quality.component.scss"],
 })
 export class AddEditQualityComponent implements OnInit {
-
+  public loading = false;
   public errorData: any = (errorData as any).default;
 
   //form Validation
@@ -34,6 +34,9 @@ export class AddEditQualityComponent implements OnInit {
   //to store party info
   party: any[];
   userHead;
+
+  unit=[{name:'meter'},{name:'weight'}];
+  
   //to store selected QualityId
   currentQualityId: any;
   constructor(
@@ -70,6 +73,7 @@ export class AddEditQualityComponent implements OnInit {
   }
 
   public getUpdateData() {
+    this.loading = true;
     this.currentQualityId = this._route.snapshot.paramMap.get("id");
     if (this.currentQualityId != null) {
       this.qualityService.getQualityById(this.currentQualityId).subscribe(
@@ -86,26 +90,32 @@ export class AddEditQualityComponent implements OnInit {
             createdBy: this.qualityList.createdBy,
             id: this.qualityList.id
           });
+          this.loading = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error)
+          // this.toastr.error(errorData.Serever_Error)
+          this.loading = false;
         }
       );
     }
   }
 
   getPartyList() {
+    this.loading = true;
     this.partyService.getAllPartyList(0,"all").subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
+          this.loading = false;
         }
         else {
-          this.toastr.error(data['msg'])
+          // this.toastr.error(data['msg'])
+          this.loading = false;
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error)
+        // this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
       }
     );
   }
@@ -134,6 +144,7 @@ export class AddEditQualityComponent implements OnInit {
   }
 
   updateQuality() {
+    this.loading = true;
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
       this.addEditQualityForm.value.updatedBy = this.user.userId;
@@ -142,13 +153,17 @@ export class AddEditQualityComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Update_Success)
+           
           }
           else {
             this.toastr.error(errorData.Update_Error)
+            
           }
+          this.loading = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error)
+          this.loading = false;
         }
       );
     }

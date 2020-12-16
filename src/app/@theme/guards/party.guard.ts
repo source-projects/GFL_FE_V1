@@ -27,8 +27,7 @@ export class PartyGuard implements CanActivate {
      this.jwtToken.setToken(this.storeTokenService.get('token'));
      var permission = this.jwtToken.getDecodeToken('party');
      this.permis = this.commonService.decToBin(permission);
-     let PermissionName = route.data["PermissionName"];
-     console.log(PermissionName);  
+     let PermissionName = route.data["PermissionName"]; 
     switch (PermissionName[0]) {
       case 'view':
         if (this.permis[0] == '1')
@@ -103,6 +102,7 @@ export class PartyGuard implements CanActivate {
     if (permis[0] == '1')
       return true;
     else
+    
     this.toastr.error(errorData.NoPermission);
       return false;
   }
@@ -110,13 +110,12 @@ export class PartyGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('party');
     this.permis = this.commonService.decToBin(permission);
-    
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')
           return true;
         else
+
           return false;
 
       case 'add':

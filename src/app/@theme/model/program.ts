@@ -22,5 +22,15 @@ export class ProgramRecords {
     quantity: number;
     remark: string;
     shadeNo: number;
-}
 
+    constructor(){
+        this.batchId = null;
+        this.colourTone = '';
+        this.id = null;
+        this.stockId = null;
+        this.partyShadeNo = null;
+        this.quantity = null;
+        this.remark = '';
+        this.shadeNo = null;
+    }
+}

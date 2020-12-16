@@ -1,259 +1,256 @@
+<div id="target"></div>
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
-        <div *ngIf="this.currentUserId == null; else updateU">
-            <h2 class="nb-text">ADD USER</h2>
-        </div>
-        <ng-template #updateU>
-            <h2 class="nb-text">UPDATE USER</h2>
-        </ng-template>
-    </nb-card-header>
-    <nb-card-body>
-        <div>
-            <form #myForm="ngForm">
-                <div class="row">
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">First Name</label>
-                            <input type="text" name="firstName" #firstName1="ngModel" class="form-control"
-                                [(ngModel)]="user.firstName"
-                                [ngClass]="{'is-invalid': formSubmitted && !(firstName1.valid)}" required>
-
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (firstName1.invalid || firstName1.dirty || firstName1.touched)">
-                                <span>First name is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Last Name</label>
-                            <input name="lastName" class="form-control" [(ngModel)]="user.lastName" required
-                                #lastName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(lastName1.valid)}">
-
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (lastName1.invalid || lastName1.dirty || lastName1.touched)">
-                                <span>Last name is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">User Name</label>
-                            <input name="userName" class="form-control" [(ngModel)]="user.userName" required
-                                #userName1="ngModel" [ngClass]="{'is-invalid': formSubmitted && !(userName1.valid)}">
-
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (userName1.invalid || userName1.dirty || userName1.touched)">
-                                <span>User name is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Email</label>
-                            <input name="email" class="form-control" [(ngModel)]="user.email" required #email1="ngModel"
-                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                                [ngClass]="{'is-invalid': formSubmitted && !(email1.valid)}">
-
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (email1.invalid || (email1.dirty || email1.touched))">
-                                <span>Email is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Mobile No.</label>
-                            <input name="contact" class="form-control" (keypress)="checkIsDigit($event)"
-                                [(ngModel)]="user.contact" required #contact1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && !(contact1.valid)}" maxlength="10">
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (contact1.invalid || contact1.dirty || contact1.touched)">
-                                <span> Mobile No is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4" *ngIf="!this.currentUserId">
-                        <div class="form-group">
-                            <label class="required">Password</label>
-                            <input type="password" name="password" class="form-control" [(ngModel)]="user.password"
-                                required #password1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && !(password1.valid)}">
-
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (password1.invalid || password1.dirty || password1.touched)">
-                                <span>Password is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Company</label>
-                            <select name="company" class="form-control" #company1="ngModel" [(ngModel)]="user.company"
-                                required [ngClass]="{'is-invalid': formSubmitted && !(company1.valid)}">
-                                <option>company 1</option>
-                                <option>company 2</option>
-                                <option>company 3</option>
-                                <option>company 4</option>
-                                <option>company 5</option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (company1.invalid || company1.dirty || company1.touched)">
-                                <span>Company is required.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Department</label>
-
-                            <input type="text" name="department" class="form-control" [(ngModel)]="user.department"
-                                required #department1="ngModel"
-                                [ngClass]="{'is-invalid': formSubmitted && !(department1.valid)}">
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (department1.invalid || department1.dirty || department1.touched)">
-                                <span>Department is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Designation</label>
-                            <select name="designation" class="form-control" #designation1="ngModel"
-                                [(ngModel)]="user.designationId" required
-                                [ngClass]="{'is-invalid': formSubmitted && !(designation1.valid)}">
-                                <option *ngFor="let dsgn of desiList" [ngValue]="dsgn.id">{{dsgn.designation}}</option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (designation1.invalid || designation1.dirty || designation1.touched)">
-                                <span>Designation is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]=user.isUserHead (change)="getUserHrads($event)"
-                                class="form-control nb-check-user" style="border: none;">Assign Under Group Head
-                            </nb-checkbox>
-                        </div>
-                    </div>
-                    <div class="col-md-4" *ngIf="user.isUserHead">
-                        <div class="form-group">
-                            <label class="required">User Head List</label>
-                            <select name="userHeadId" class="form-control" #userHeadList="ngModel"
-                                [(ngModel)]="user.userHeadId" required
-                                [ngClass]="{'is-invalid': formSubmitted && !(userHeadList.valid)}">
-                                <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}
-                                </option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="formSubmitted && (userHeadList.invalid || userHeadList.dirty || userHeadList.touched)">
-                                <span>UserHead is required.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </nb-card-body>
-</nb-card>
-
-<nb-card class="nb-style">
-    <nb-card-header class="nb-header">
-        <div>
-            <h2 class="nb-text">USER PERMISSIONS</h2>
-        </div>
-    </nb-card-header>
-    <nb-card-body>
-        <div class="container">
-            <table>
-                <tr>
-                    <th>Forms</th>
-                    <th>Select All</th>
-                    <th *ngFor="let per of perName;let i=index;">{{per}}</th>
-                </tr>
-
-                <tr *ngFor="let perm of permissionArray;let i=index;">
-                    <td>{{perm.module}}</td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
-                            (change)="checkUncheckAll(perm.module,$event)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
-                            (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'"
-                            (change)="checkUncheckSelectAll(perm.add,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
-                            (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
-                            (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
-                    </td>
-
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
-                            (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
-                            (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
-                            (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
-                            (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
-                            (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
-                    </td>
-                    <td>
-                        <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
-                            (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
-                    </td>
-
-
-
-                </tr>
-
-            </table>
-        </div>
-    </nb-card-body>
-    <div class="nb-pd">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mobile-btn-center">
-
-                    <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-                        style="margin-right:20px" (click)="addUser(myForm)">Save</button>
-                    <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
-                        style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
-                    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                        routerLink="/pages/user">Cancel</button>
-
-                </div>
-            </div>
-        </div>
+  <nb-card-header class="nb-header">
+    <div *ngIf="this.currentUserId == null; else updateU">
+      <h2 class="nb-text">Add User</h2>
     </div>
+    <ng-template #updateU>
+      <h2 class="nb-text">Update User</h2>
+    </ng-template>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <form #myForm="ngForm">
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">First Name</label>
+              <input type="text" name="firstName" #firstName1="ngModel" class="form-control"
+                [(ngModel)]="user.firstName"
+                [ngClass]="{'is-invalid': (firstName1.invalid)&&(formSubmitted  || firstName1.touched)}" required>
+
+              <div class="invalid-feedback" *ngIf="(firstName1.invalid)&&(formSubmitted  || firstName1.touched)">
+                <span>First name is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">Last Name</label>
+              <input name="lastName" class="form-control" [(ngModel)]="user.lastName" required #lastName1="ngModel"
+                [ngClass]="{'is-invalid': (lastName1.invalid)&&(formSubmitted || lastName1.touched)}" />
+
+              <div class="invalid-feedback" *ngIf="(lastName1.invalid)&&(formSubmitted || lastName1.touched)">
+                <span>Last name is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">User Name</label>
+              <input name="userName" class="form-control" [(ngModel)]="user.userName" required #userName1="ngModel"
+                [ngClass]="{'is-invalid': (userName1.invalid)&&(formSubmitted || userName1.touched)}" />
+
+              <div class="invalid-feedback"
+                *ngIf="(userName1.invalid)&&(formSubmitted || userName1.touched)">
+                <span>User name is required.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label >Email</label>
+              <input name="email" class="form-control" [(ngModel)]="user.email" #email1="ngModel"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                [ngClass]="{'is-invalid': (email1.invalid)&&(formSubmitted || email1.touched)}" />
+
+              <div class="invalid-feedback"
+                *ngIf="(email1.invalid)&&(formSubmitted || email1.touched)">
+                <span>Email is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">Mobile No.</label>
+              <input name="contact" class="form-control" (keypress)="checkIsDigit($event)" [(ngModel)]="user.contact"
+                pattern="[6-9]{1}[0-9]{9}" #contact1="ngModel"
+                [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}" onFocusout="" required />
+              <div class="invalid-feedback"
+                *ngIf="(contact1.invalid)&&(formSubmitted || contact1.touched)">
+                <span>Mobile No of 10 digit is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="!this.currentUserId">
+            <div class="form-group">
+              <label class="required">Password</label>
+              <input type="password" name="password" class="form-control" [(ngModel)]="user.password" required
+                #password1="ngModel" [ngClass]="{'is-invalid': (password1.invalid)&&(formSubmitted || password1.touched)}" />
+
+              <div class="invalid-feedback"
+                *ngIf="(password1.invalid)&&(formSubmitted || password1.touched)">
+                <span>Password is required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">Company</label>
+              <ng-select name="company" #company1="ngModel" [(ngModel)]="user.company" [items]="companyList"
+                bindLabel="name" bindValue="name" placeholder="Select Company" required
+                [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}">
+              </ng-select>
+              <div class="required-class"
+                *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
+                <span>Company is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">Department</label>
+
+              <input type="text" name="department" class="form-control" [(ngModel)]="user.department" required
+                #department1="ngModel" [ngClass]="{'is-invalid':(department1.invalid)&&(formSubmitted || department1.touched)}" />
+              <div class="invalid-feedback"
+                *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
+                <span>Department is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="required">Designation</label>
+              <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId"
+                [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation"
+                required>
+                <ng-option *ngFor="let dsgn of desiList" [ngValue]="dsgn.id">{{dsgn.designation}}</ng-option>
+              </ng-select>
+              <div class="required-class"
+                *ngIf="(designation1.invalid)&&(formSubmitted || department1.touched)">
+                <span>Designation is required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label></label>
+              <nb-checkbox name="assign" [(ngModel)]="user.isUserHead" (change)="getUserHrads($event)"
+                class="form-control nb-check-user" style="border: none;">Assign Under Group Head
+              </nb-checkbox>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="user.isUserHead">
+            <div class="form-group">
+              <label class="required">User Head List</label>
+              <select name="userHeadId" class="form-control" #userHeadList="ngModel" [(ngModel)]="user.userHeadId"
+                required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
+                <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}
+                </option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">
+                <span>UserHead is required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
 </nb-card>
+
+<nb-card class="nb-style">
+  <nb-card-header class="nb-header">
+    <div>
+      <div class="row">
+        <div class="col-md-11 col-10">
+          <h2 class="nb-text" style="display: inline;">User Permission</h2>
+        </div>
+        <div class="col-md-1 col-2 user-per-check-display">
+            <nb-checkbox (change)="selectAllPermissions($event)" class="user-all-check" [(ngModel)]="allRightsFlag"></nb-checkbox>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <table class="user-per-table">
+      <tr class="table-checkbox">
+        <th>Forms</th>
+        <th>Select All</th>
+        <th *ngFor="let per of perName;let i=index;">{{per}}</th>
+      </tr>
+
+      <tr *ngFor="let perm of permissionArray;let i=index;" class="table-checkbox">
+        <td>{{perm.module}}</td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.selectAll" [name]="perm.module+'selectAll'"
+            (change)="checkUncheckAll(perm.module,$event)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
+            (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" (change)="checkUncheckSelectAll(perm.add,i)">
+          </nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
+            (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
+            (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
+        </td>
+
+        <td>
+          <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
+            (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
+            (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
+            (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
+            (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
+            (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
+        </td>
+        <td>
+          <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
+            (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
+        </td>
+      </tr>
+    </table>
+
+  </nb-card-body>
+  <div class="nb-pd">
+
+    <div class="row">
+      <div class="col-md-12 mobile-btn-center text-btn-right">
+
+
+        <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+          style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+          routerLink="/pages/user">Cancel</button>
+        <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+          style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
+
+        </div>
+      </div>
