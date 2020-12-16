@@ -1,6 +1,8 @@
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Component, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as errorData from "app/@theme/json/error.json";
 import {
   ChemicalReq,
   Dosing,
@@ -11,15 +13,13 @@ import {
   Step,
   StepsRecordData,
   TempratureControl,
-  WaterControl,
+  WaterControl
 } from "app/@theme/model/process";
+import { CommonService } from "app/@theme/services/common.service";
 import { ProcessService } from "app/@theme/services/process.service";
 import { ToastrService } from "ngx-toastr";
-import { AddStepComponent } from "../add-step/add-step.component";
-import * as errorData from "app/@theme/json/error.json";
 import { AddFunctionComponent } from "../add-function/add-function.component";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { CommonService } from "app/@theme/services/common.service";
+import { AddStepComponent } from "../add-step/add-step.component";
 
 @Component({
   selector: "ngx-dynamic-process",

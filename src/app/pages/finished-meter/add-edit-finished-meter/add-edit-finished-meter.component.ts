@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FinishedMeter } from "app/@theme/model/finished-meter";
+import * as errorData from "app/@theme/json/error.json";
+import { BatchData, FinishedMeter } from "app/@theme/model/finished-meter";
 import { CommonService } from "app/@theme/services/common.service";
+import { FinishedMeterService } from "app/@theme/services/finished-meter.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { FinishedMeterService } from "app/@theme/services/finished-meter.service";
 import { ToastrService } from "ngx-toastr";
-import * as errorData from "app/@theme/json/error.json";
-import { BatchData } from "app/@theme/model/finished-meter";
 
 @Component({
   selector: "ngx-add-edit-finished-meter",

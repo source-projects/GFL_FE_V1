@@ -1,7 +1,6 @@
-import { Directive, ElementRef, HostListener, Input, SimpleChanges } from '@angular/core';
-import {ExportService} from '../services/export.service';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExportService } from '../services/export.service';
 
 @Directive({
   selector: '[ngxExport]'

@@ -101,7 +101,7 @@
               <label class="required">Company</label>
               <ng-select name="company" #company1="ngModel" [(ngModel)]="user.company" [items]="companyList"
                 bindLabel="name" bindValue="name" placeholder="Select Company" required
-                [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}">
+                [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}" class="required-error-dropdown">
               </ng-select>
               <div class="required-class"
                 *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
@@ -127,7 +127,7 @@
               <label class="required">Designation</label>
               <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId"
                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation"
-                required>
+                required class="required-error-dropdown">
                 <ng-option *ngFor="let dsgn of desiList" [ngValue]="dsgn.id">{{dsgn.designation}}</ng-option>
               </ng-select>
               <div class="required-class"
@@ -245,12 +245,12 @@
       <div class="col-md-12 mobile-btn-center text-btn-right">
 
 
-        <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
-          style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
-        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-          routerLink="/pages/user">Cancel</button>
-        <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-          style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
+                <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" [disabled]="disableButton" (click)=updateUser(myForm) >Update</button>
+                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                    routerLink="/pages/user">Cancel</button>
+                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)="addUser(myForm)" [disabled]="disableButton">SAVE</button>
 
         </div>
       </div>
