@@ -66,6 +66,7 @@ export class AddEditQualityComponent implements OnInit {
       wtPer100m: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
+      partyCode: new FormControl(null),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null),
@@ -119,6 +120,21 @@ export class AddEditQualityComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  setPartyCode(){
+    if(this.addEditQualityForm.get('partyId').value!=null){
+      this.party.forEach(element => {
+        if(this.addEditQualityForm.get('partyId').value==element.id){
+          console.log(element.id)
+          console.log("party code",element.partyCode)
+          this.addEditQualityForm.patchValue({
+            partyCode:element.partyCode,
+          })
+        }
+        console.log(this.addEditQualityForm.get('partyCode').value)
+      });
+    }
   }
 
   addQuality() {

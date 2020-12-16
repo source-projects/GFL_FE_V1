@@ -103,8 +103,8 @@ export class DynamicProcessComponent implements OnInit {
           let operatorOb = new OperatorMessage();
 
           if (e.isDosingControl) {
-            dosingOb.doseAtTemp = e.doesAtTemp;
-            dosingOb.doseType = e.doesType;
+            dosingOb.doseAtTemp = e.doseAtTemp;
+            dosingOb.doseType = e.doseType;
             dosingOb.doseWhileHeating = e.doseWhileHeating;
             dosingOb.dosingPercentage = e.dosingPercentage;
             dosingOb.fillType = e.fillType;
@@ -300,9 +300,9 @@ export class DynamicProcessComponent implements OnInit {
             stepObj.waterType = func.waterControlFunc.waterType;
           } else if (func.funcValue == "dosing") {
             stepObj.isDosingControl = true;
-            stepObj.doesAtTemp = func.dosingFunc.doseAtTemp;
-            stepObj.doesType = func.dosingFunc.doseType;
-            if (stepObj.doesType == "color") {
+            stepObj.doseAtTemp = func.dosingFunc.doseAtTemp;
+            stepObj.doseType = func.dosingFunc.doseType;
+            if (stepObj.doseType == "color") {
               stepObj.doseWhileHeating = false;
               func.dosingFunc.dosingChemical = [];
             } else {
