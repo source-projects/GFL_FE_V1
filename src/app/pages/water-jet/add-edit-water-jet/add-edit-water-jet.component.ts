@@ -35,7 +35,8 @@ export class AddEditWaterJetComponent implements OnInit {
           if(data['success']){
             this.toastr.success(errorData.Add_Success);
             this.formSubmitted=false;
-            location.reload();
+            myForm.reset();
+            this.waterjet = new WaterJet();
           }
         },
         error=>{
