@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonService } from 'app/@theme/services/common.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
-import { ExportService } from 'app/@theme/services/export.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-supplier',
@@ -71,7 +71,9 @@ export class SupplierComponent implements OnInit {
     this.getAddAcess();
     this.getSupplierList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.supplierGuard.accessRights('add')) {
@@ -170,6 +172,15 @@ export class SupplierComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1() {
+    if (this.supplierGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess() {
     if (this.supplierGuard.accessRights('edit')) {
@@ -184,6 +195,15 @@ export class SupplierComponent implements OnInit {
     if (this.supplierGuard.accessRights('edit all')) {
       this.allEdit = false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1() {
+    if (this.supplierGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

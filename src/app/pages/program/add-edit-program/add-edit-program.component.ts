@@ -1,12 +1,12 @@
-import { Component, Renderer2, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { Program, ProgramRecords } from "app/@theme/model/program";
-import { ToastrService } from "ngx-toastr";
 import * as errorData from "app/@theme/json/error.json";
-import { ProgramService } from "app/@theme/services/program.service";
+import { Program, ProgramRecords } from "app/@theme/model/program";
 import { CommonService } from "app/@theme/services/common.service";
+import { PartyService } from "app/@theme/services/party.service";
+import { ProgramService } from "app/@theme/services/program.service";
+import { QualityService } from "app/@theme/services/quality.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-edit-program",
@@ -16,6 +16,7 @@ import { CommonService } from "app/@theme/services/common.service";
 export class AddEditProgramComponent implements OnInit {
   //programValues
   public loading = false;
+  public disableButton = false;
   programRecordArray: ProgramRecords[] = [];
   programValues: Program = new Program();
   programRecord: ProgramRecords = new ProgramRecords();
@@ -553,6 +554,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public addProgram(myForm) {
+    this.disableButton=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
@@ -567,6 +569,7 @@ export class AddEditProgramComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Add_Success);
+           
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -582,6 +585,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public updateProgram(myForm) {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (myForm.valid) {
@@ -596,11 +600,13 @@ export class AddEditProgramComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Update_Success);
-            this.loading = false;
+            
+           
           } else {
             this.toastr.error(errorData.Update_Error);
-            this.loading = false;
+            
           }
+          this.loading = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);

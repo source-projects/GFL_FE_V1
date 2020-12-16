@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from 'ngx-toastr';
-import { ExportService } from 'app/@theme/services/export.service';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-stock-batch',
@@ -67,7 +67,9 @@ export class StockBatchComponent implements OnInit {
     this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.stockBatchGuard.accessRights('add')) {
@@ -188,6 +190,15 @@ export class StockBatchComponent implements OnInit {
       this.hidden=this.allDelete; 
     }
   }
+  getDeleteAccess1(){
+    if(this.stockBatchGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete; 
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.stockBatchGuard.accessRights('edit')){
@@ -201,6 +212,16 @@ export class StockBatchComponent implements OnInit {
      if(this.stockBatchGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+
+  getEditAccess1(){
+    if(this.stockBatchGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

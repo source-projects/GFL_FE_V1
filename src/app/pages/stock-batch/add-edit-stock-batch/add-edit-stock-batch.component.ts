@@ -58,6 +58,7 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     },
   ];
+
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   stockBatchData: BatchData = new BatchData();
@@ -68,7 +69,9 @@ export class AddEditStockBatchComponent implements OnInit {
   addFlag = false;
   batchIdArray = [];
   rearrangeStartIndex: any;
+  dateForPicker=new Date();
 
+  maxDate:any;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -81,6 +84,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.addFlag = window.location.href.endsWith("add");
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();

@@ -55,7 +55,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Water-jet',
-    icon: 'hard-drive-outline',
+    icon: 'droplet-outline',
     link: '/pages/waterJet',
     hidden:false
   },
