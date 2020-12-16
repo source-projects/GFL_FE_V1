@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NB_WINDOW } from '@nebular/theme';
-
+import { Router } from '@angular/router';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { CommonService } from 'app/@theme/services/common.service';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { Subject, Subscription } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
-import { StoreTokenService } from 'app/@theme/services/store-token.service';
-import { Router } from '@angular/router';
-import { CommonService } from 'app/@theme/services/common.service';
+
 
 @Component({
   selector: 'ngx-header',

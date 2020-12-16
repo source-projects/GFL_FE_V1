@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as errorData from "app/@theme/json/error.json";
 import { WaterJet } from 'app/@theme/model/water-jet';
 import { CommonService } from 'app/@theme/services/common.service';
 import { WaterJetService } from 'app/@theme/services/water-jet.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from "app/@theme/json/error.json";
-import { WaterJetModule } from '../water-jet.module';
 
 @Component({
   selector: 'ngx-add-edit-water-jet',
