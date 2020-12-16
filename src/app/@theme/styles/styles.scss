@@ -585,6 +585,10 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: center;
 }
+.report-display{
+  display: flex;
+  align-items: center;
+}
 // machine report redesign
 .card-machine{
   background: #e5e8ec;
@@ -652,8 +656,11 @@ input[type=number]::-webkit-outer-spin-button {
   border: 0;
   outline: none;
 }
+.machine-cards {
+  margin-bottom: 20px;
+}
 .card-machine:hover{
-  background-color: #144a9c;
+  background-color: #350d7b;
   transition: .4s;
 }
 .card-machine:hover .machine-btn-text{
@@ -888,5 +895,8 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 6px 5px !important;
     font-size: 12px !important;
     margin-right: 5px !important
+  }
+  .report-display{
+    display: block !important;
   }
 }
