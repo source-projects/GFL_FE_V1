@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { NgxLoadingModule } from 'ngx-loading';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -77,7 +77,8 @@ const NB_MODULES = [
 
 @NgModule({
   declarations: [ExportDirective],
-  imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES],
+  imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
+    OwlNativeDateTimeModule,],
   exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule],
   providers:[ ExportService ]
 })

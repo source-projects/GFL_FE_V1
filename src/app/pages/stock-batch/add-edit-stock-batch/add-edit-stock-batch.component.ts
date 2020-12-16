@@ -69,7 +69,7 @@ export class AddEditStockBatchComponent implements OnInit {
   addFlag = false;
   batchIdArray = [];
   rearrangeStartIndex: any;
-
+  maxDate:any;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -82,6 +82,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.maxDate={year:new Date().getFullYear(),month:new Date().getMonth()+1, day:new Date().getDate()}
     this.addFlag = window.location.href.endsWith("add");
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();

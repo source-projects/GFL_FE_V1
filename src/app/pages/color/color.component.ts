@@ -18,6 +18,7 @@ import { ColorGuard } from 'app/@theme/guards/color.guard';
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.scss']
 })
+
 export class ColorComponent implements OnInit {
   public loading = false;
 
