@@ -149,12 +149,11 @@ export class ShadeComponent implements OnInit {
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
+        this.loading = false;
           }
         }
-        this.loading = false;
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
