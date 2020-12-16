@@ -20,6 +20,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
+  public disableButton = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -556,6 +557,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   updateUser(userForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
@@ -569,7 +572,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -591,6 +593,9 @@ export class AddEditUserComponent implements OnInit {
 
   addUser(myForm) {
     this.getCheckedItem();
+    //this.user.userPermissionData=this.userPermissionData;
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       let md5 = new Md5();

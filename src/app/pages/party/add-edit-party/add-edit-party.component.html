@@ -265,32 +265,14 @@
         
 
         <div class="row">
-          <div class="col-md-12 mobile-btn-center">
-            <button
-              *ngIf="this.currentPartyId == null"
-              type="button"
-              class="btn btn-primary btn-sm btn-design"
-              style="margin-right: 20px;"
-              (click)="addParty()"
-            >
-              ADD
-            </button>
-            <button
-              *ngIf="this.currentPartyId != null"
-              type="button"
-              (click)="updateParty()"
-              class="btn btn-primary btn-sm btn-design"
-              style="margin-right: 20px;"
-            >
-              UPDATE
-            </button>
-            <button
-              class="btn btn-primary btn-sm btn-design"
-              type="button"
-              (click)="goBackToPreviousPage()"
-            >
-              CANCEL
-            </button>
+          <div class="col-md-12 mobile-btn-center text-btn-right">
+
+            <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
+              class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton" >UPDATE</button>
+            <button class="btn btn-primary btn-sm btn-design" type="button"
+              (click)="goBackToPreviousPage()">CANCEL</button>
+            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
+              style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
           </div>
         </div>
       </form>

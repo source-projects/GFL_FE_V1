@@ -22,6 +22,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddEditStockBatchComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
   public errorData: any = (errorData as any).default;
   qualityList: any;
   formSubmitted = false;
@@ -363,6 +364,8 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   addStockBatch(myForm) {
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       this.stockBatch.createdBy = this.user.userId;
@@ -383,6 +386,7 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Add_Success);
+
           } else {
             this.stockBatchArray = [];
             // this.toastr.error(data['msg']);
@@ -403,6 +407,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   updateStockBatch(stockBatch) {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (stockBatch.valid) {
@@ -425,9 +430,10 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/stock-batch"]);
             this.toastr.success(errorData.Update_Success);
+
           } else {
             this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
+            // this.toastr.error(data["msg"]);
           }
           this.loading = false;
         },

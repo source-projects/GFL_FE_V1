@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddEditColorComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
   userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
@@ -37,7 +38,7 @@ export class AddEditColorComponent implements OnInit {
   calculationTotalQuantity: any;
   convertedDate: any;
   convertedDate2: any;
-
+ 
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -48,16 +49,17 @@ export class AddEditColorComponent implements OnInit {
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
+  
   }
 
   ngOnInit(): void {
-  
+    // this.maxDate={year:new Date().getFullYear(),month:new Date().getMonth()+1, day:new Date().getDate()}
+    //  console.log(this.maxDate);
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
 
   }
-
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -245,13 +247,16 @@ export class AddEditColorComponent implements OnInit {
   addColor(colorForm) {
     this.formSubmitted = true;
     if (colorForm.valid) {
+      this.disableButton=true;
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
         data => {
           if (data['success']) {
-            this.route.navigate(["/pages/color"]);
-            this.toastr.success(errorData.Add_Success)
+           this.route.navigate(["/pages/color"]);
+            this.toastr.success(errorData.Add_Success);
+            // this.disableButton=true;
+
           }
           else {
             this.toastr.error(errorData.Add_Error)
@@ -281,6 +286,7 @@ export class AddEditColorComponent implements OnInit {
 
   updateColor(myForm) {
     this.loading=true;
+    this.disableButton=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
@@ -289,8 +295,8 @@ export class AddEditColorComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Update_Success);
-            this.loading=false;
           }
+          this.loading=false;
         },
         error => {
           this.toastr.error(errorData.Update_Error);
