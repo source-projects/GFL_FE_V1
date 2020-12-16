@@ -175,7 +175,7 @@
                                         [id]="'colorList'+rowIndex+'-5'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
-                            
+
 
                         </ngx-datatable>
                     </div>
@@ -184,12 +184,13 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            
+
                             <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
-                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
                             <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/color'>CANCEL</button>
-                            <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                                style="margin-right:20px" (click)="addColor(colorForm)">SAVE</button>
+                            <button *ngIf="this.currentColorId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                (click)="addColor(colorForm)" [disabled]="disableButton">SAVE</button>
                         </div>
                     </div>
                 </div>
