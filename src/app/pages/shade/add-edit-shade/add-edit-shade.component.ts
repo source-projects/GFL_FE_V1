@@ -67,7 +67,6 @@ export class AddEditShadeComponent implements OnInit {
     this.getQualityList();
     this.getProcessList();
     this.getSupplierList();
-    //this.getCurrentShade();
     this.getUpdateData();
   }
 
@@ -182,28 +181,6 @@ export class AddEditShadeComponent implements OnInit {
     );
   }
 
-  getCurrentShade() {
-    this.loading = true;
-    this.currentShadeId = this._route.snapshot.paramMap.get("id");
-    if (this.currentShadeId != null) {
-      this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.shades = data["data"];
-            this.loading = false;
-          } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-          }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
-          this.loading = false;
-        }
-      );
-    }
-  }
-
   getUpdateData() {
     this.loading = true;
     if (this.currentShadeId != null) {
@@ -214,11 +191,13 @@ export class AddEditShadeComponent implements OnInit {
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
+            this.getQualityList();
             this.quality.forEach((e) => {
-              if (e.id == data["data"].qualityEntryId)
+              if (e.id == data["data"].qualityEntryId) {
                 this.shades.qualityId = e.qualityId;
-              this.shades.qualityName = e.qualityName;
-              this.shades.qualityType = e.qualityType;
+                this.shades.qualityName = e.qualityName;
+                this.shades.qualityType = e.qualityType;
+              }
               this.loading = false;
             });
             this.setProcessName(this.shades.processId);
@@ -277,8 +256,7 @@ export class AddEditShadeComponent implements OnInit {
               this.loading = false;
             });
             this.loading = false;
-          }
-          else {
+          } else {
             // this.toastr.error(data["msg"]);
             this.quality = null;
             this.loading = false;
@@ -298,12 +276,9 @@ export class AddEditShadeComponent implements OnInit {
     let count = 0;
     this.shades.shadeDataList.forEach((e) => {
       if (count != rowIndex) {
-        if (e.itemName == id)
-          flag = true;
+        if (e.itemName == id) flag = true;
         count++;
-      }
-      else
-        count++;
+      } else count++;
     });
     if (!flag) {
       let newSupplierId;
@@ -322,10 +297,9 @@ export class AddEditShadeComponent implements OnInit {
           break;
         }
       }
-    }
-    else {
-      this.toastr.error("This item name is already selected")
-      this.shades.shadeDataList[rowIndex].itemName = '';
+    } else {
+      this.toastr.error("This item name is already selected");
+      this.shades.shadeDataList[rowIndex].itemName = "";
       this.shades.shadeDataList[rowIndex].concentration = null;
       this.shades.shadeDataList[rowIndex].supplierId = 0;
       this.shades.shadeDataList[rowIndex].rate = null;
@@ -352,7 +326,7 @@ export class AddEditShadeComponent implements OnInit {
     let con = this.shades.shadeDataList[rowIndex].concentration;
     let newRate = this.shades.shadeDataList[rowIndex].rate;
     let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-    this.shades.shadeDataList[rowIndex].amount = amount;
+    if (amount) this.shades.shadeDataList[rowIndex].amount = amount;
   }
 
   setProcessName(id) {
@@ -427,8 +401,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   addShade(shadeForm) {
-    this.disableButton=true;
-
+    this.disableButton = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
@@ -438,7 +411,6 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
-
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -447,12 +419,10 @@ export class AddEditShadeComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    }
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
+    } else {
+      this.disableButton = false;
+      const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-
     }
   }
 
@@ -475,7 +445,7 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   updateShade(shadeForm) {
-    this.disableButton=true;
+    this.disableButton = true;
 
     this.loading = true;
     this.formSubmitted = true;
@@ -486,11 +456,8 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
-
-            
           } else {
             this.toastr.error(errorData.Update_Error);
-           
           }
           this.loading = false;
         },
@@ -499,12 +466,9 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       );
-    }
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
+    } else {
+      const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-
     }
   }
 }
