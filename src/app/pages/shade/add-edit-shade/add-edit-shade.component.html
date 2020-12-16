@@ -234,14 +234,8 @@
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
                             <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/shade'>CANCEL</button>
-<<<<<<< HEAD
-                            <button *ngIf="this.currentShadeId == null" type="button"
-                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                (click)="addShade(shadeForm)">SAVE</button>
-=======
                             <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
                                 style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
->>>>>>> 71462a45f27a5d6a83e520a20433421d7102e387
                         </div>
 
                     </div>
