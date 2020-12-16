@@ -1,12 +1,12 @@
-import { Component,Renderer2, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
 import { ShadeService } from "app/@theme/services/shade.service";
-import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import * as errorData from "app/@theme/json/error.json";
+import { SupplierService } from "app/@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -324,10 +324,12 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
     else {
-      // this.toastr.error("This item name is already selected")
-      //this.shades.shadeDataList[rowIndex].itemName = null;
-      row.itemName = null;
-      this.shades.shadeDataList[rowIndex] = row;
+      this.toastr.error("This item name is already selected")
+      this.shades.shadeDataList[rowIndex].itemName = '';
+      this.shades.shadeDataList[rowIndex].concentration = null;
+      this.shades.shadeDataList[rowIndex].supplierId = 0;
+      this.shades.shadeDataList[rowIndex].rate = null;
+      this.shades.shadeDataList[rowIndex].amount = null;
       // .splice(rowIndex,1);
 
       // let obj = {

@@ -9,37 +9,37 @@
                             <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
                         <div class="machine-text">
-                            <h2>Machine Report</h2>
+                            <h2 class="machine-btn-text">Machine Report</h2>
                         </div>
                     </button>
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="card-machine">
                         <div class="machine-icon">
-                            <nb-icon icon="settings-2-outline"></nb-icon>
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
                         <div class="machine-text">
-                            <h2>Staff Report</h2>
+                            <h2 class="machine-btn-text">Staff Report</h2>
                         </div>
                     </button>
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="card-machine">
                         <div class="machine-icon">
-                            <nb-icon icon="settings-2-outline"></nb-icon>
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
                         <div class="machine-text">
-                            <h2>Sales Report</h2>
+                            <h2 class="machine-btn-text">Sales Report</h2>
                         </div>
                     </button>
                 </div>
                 <div class="col-md-6" (click)="POApproval()">
                     <button type="button" class="card-machine">
                         <div class="machine-icon">
-                            <nb-icon icon="settings-2-outline"></nb-icon>
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
                         <div class="machine-text">
-                            <h2>PO Approval Report</h2>
+                            <h2 class="machine-btn-text">PO Approval Report</h2>
                         </div>
                     </button>
                 </div>
@@ -99,8 +99,8 @@
             <div class="row">
                 <div class="col-md-4" *ngFor="let cat of machineCategory">
                     <button type="button" (click)="categorySelected(cat)" class="card-machine">
-                        <h2 *ngIf="cat.name=='string'">Water Jet </h2>
-                        <h2 *ngIf="cat.name!='string'"> {{cat.name}}</h2>
+                        <h2 *ngIf="cat.name=='string'" class="machine-btn-text">Water Jet </h2>
+                        <h2 *ngIf="cat.name!='string'" class="machine-btn-text"> {{cat.name}}</h2>
                     </button>
                 </div>
             </div>
@@ -116,22 +116,22 @@
                         </div>
                         <div class="date-card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-6">
                                     <div class="eff-text">
                                         <h2 class="tble-txt">Eff:</h2>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-6">
                                     <div class="eff-data">
                                         <input type="text" class="tble-in">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-6">
                                     <div class="eff-text">
                                         <h2 class="tble-txt">Speed:</h2>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-6">
                                     <div class="eff-data">
                                         <input type="text" class="tble-in">
                                     </div>
@@ -141,9 +141,9 @@
                         <div class="day-night-picker">
                             <div class="form-group">
                                 <strong><label>Select Date & Time</label></strong>
-                                <input class="form-control" name="'dt{{i}}'" [owlDateTime]="dt1" [selectMode]="'range'"
-                                    [(ngModel)]="datetime" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
-                                <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1>
+                                <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1" [selectMode]="'range'"
+                                   [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                <owl-date-time [showSecondsTimer]="true" [startAt]="startAt" (afterPickerClosed)="change(dt1)" #dt1>
                                 </owl-date-time>
                             </div>
                         </div>

@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from 'app/@theme/json/error.json';
+import { ChartDataSets, ChartType } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+import { ToastrService } from 'ngx-toastr';
 import { PurchaseRequest } from '../../../@theme/model/purchaseRequest';
 import { WaterJet } from '../../../@theme/model/water-jet';
 import { PurchaseService } from '../../../@theme/services/purchase.service';
 import { ReportService } from '../../../@theme/services/report.service';
-import { ChartDataSets, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-import { ToastrService } from 'ngx-toastr';
-import {WaterJetService} from '../../../@theme/services/water-jet.service';
+import { WaterJetService } from '../../../@theme/services/water-jet.service';
 
 @Component({
   selector: 'ngx-report',
@@ -16,7 +16,6 @@ import {WaterJetService} from '../../../@theme/services/water-jet.service';
   styleUrls: ['./report.component.scss'],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
-// changeDetection: ChangeDetectionStrategy.OnPush
 
 export class ReportComponent implements OnInit {
   
@@ -33,8 +32,10 @@ export class ReportComponent implements OnInit {
     }
   ];
   public errorData: any = (errorData as any).default;
-  
+  dateForPicker = new Date();
+  public max;
   public datetime: any;
+  public startAt;
   public fromtime: any;
   public totime: any;
 
@@ -74,8 +75,8 @@ export class ReportComponent implements OnInit {
   lineChartType: ChartType = 'line';
   lineChartColors: Color[] = [
     {
-      borderColor: 'black',
-      backgroundColor: 'cyan',
+      borderColor: '#85c846',
+      backgroundColor: '#e9eeff',
     },
   ];
   lineChartOptions = {
@@ -89,13 +90,15 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.startAt = new Date(this.dateForPicker.getFullYear(),this.dateForPicker.getMonth(),this.dateForPicker.getDate(),9,0,0)
+    this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.getMachineCategory();
     this.getPurchaseRequestList();
     this.getWaterJetList();
   }
 
-  change() {
-    let dt = String(this.datetime[0]).slice(4, 15);
+  change(value:any) {
+    let dt = String(value._selecteds[0]).slice(4, 15);
     let dt1 = dt.slice(0, 3);
     let dt2 = dt.slice(4, 6)
     let dt3 = dt.slice(7, 11)
@@ -128,7 +131,7 @@ export class ReportComponent implements OnInit {
     this.obj.fromDate = dt4;
 
 
-    let dtt = String(this.datetime[1]).slice(4, 15);
+    let dtt = String(value._selecteds[1]).slice(4, 15);
     let dtt1 = dtt.slice(0, 3);
     let dtt2 = dtt.slice(4, 6)
     let dtt3 = dtt.slice(7, 11)
@@ -160,9 +163,9 @@ export class ReportComponent implements OnInit {
     let dtt4 = dtt3 + "-" + dtt1 + "-" + dtt2;
     this.obj.toDate = dtt4;
 
-    let ft = String(this.datetime[0]).slice(16, 23);
+    let ft = String(value._selecteds[0]).slice(16, 23);
     let hour = ft.slice(0, 2);
-    let t = String(this.datetime[1]).slice(16, 23);
+    let t = String(value._selecteds[1]).slice(16, 23);
     let h = t.slice(0, 2);
 
     if ((Number(hour) >= 9 && Number(hour) < 21) && (Number(h) >= 9 && Number(h) < 21)) {
@@ -185,9 +188,9 @@ export class ReportComponent implements OnInit {
       this.obj.toTime = t3;
     }
 
-    let ft11 = String(this.datetime[0]).slice(16, 23);
+    let ft11 = String(value._selecteds[0]).slice(16, 23);
     let hour11 = ft11.slice(0, 2);
-    let t11 = String(this.datetime[1]).slice(16, 23);
+    let t11 = String(value._selecteds[1]).slice(16, 23);
     let h11 = t.slice(0, 2);
     if ((Number(hour11) >= 21 || Number(hour11) < 9) && (Number(h11) >= 21 || Number(h11) < 9)) {
       let ft111 = ft11.slice(6,);
@@ -232,8 +235,6 @@ export class ReportComponent implements OnInit {
     );
   }
 
-  collectData(datedata: any) {
-  }
 
   machineReport() {
     this.optionFlag = false;
@@ -265,6 +266,9 @@ export class ReportComponent implements OnInit {
   day(value: any) {
     this.obj.shift = 1;
     this.obj.id = value.id;
+
+    this.NoDataFlag = false;
+    this.ChartFlag = false;
 
     let count;
     this.data = this.reportservice.getobjdata(this.obj).subscribe(
@@ -306,14 +310,14 @@ export class ReportComponent implements OnInit {
         this.NoDataFlag = true;
       }
     )
-
-    // this.collectData(this.obj)
   }
 
   night(value: any) {
     this.obj.shift = 2;
     this.obj.id = value.id;
 
+    this.NoDataFlag = false;
+    this.ChartFlag = false;
     let count;
     this.data = this.reportservice.getobjdata(this.obj).subscribe(
       (res) => {
@@ -367,7 +371,7 @@ export class ReportComponent implements OnInit {
       this.machineReportFlag = false;
     }
     else if (this.machineReportFlag == true) {
-      this.buttonFlag = true;
+      this.buttonFlag = false;
       this.optionFlag = true;
       this.MachineFlag = false;
       this.ChartFlag = false;

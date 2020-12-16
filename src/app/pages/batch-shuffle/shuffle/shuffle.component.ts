@@ -1,17 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NbButtonModule, NbCardModule, NbWindowService } from '@nebular/theme';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { CdkDropList } from '@angular/cdk/drag-drop';
-import { FormControl, FormGroup, Validators, FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { PartyService } from "app/@theme/services/party.service";
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { QualityService } from 'app/@theme/services/quality.service';
-import { BatchByQualityPartyService } from 'app/@theme/services/batch-by-quality-party.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ShuffleService } from "app/@theme/services/shuffle.service";
+import * as errorData from 'app/@theme/json/error.json';
+import { BatchByQualityPartyService } from 'app/@theme/services/batch-by-quality-party.service';
 import { BatchListService } from "app/@theme/services/batch-list.service";
+import { PartyService } from "app/@theme/services/party.service";
 import { ProgramService } from "app/@theme/services/program.service";
+import { QualityService } from 'app/@theme/services/quality.service';
+import { ShuffleService } from "app/@theme/services/shuffle.service";
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'ngx-shuffle',
   templateUrl: './shuffle.component.html',
