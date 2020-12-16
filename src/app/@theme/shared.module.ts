@@ -81,6 +81,6 @@ const NB_MODULES = [
     OwlNativeDateTimeModule],
   exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule,OwlDateTimeModule,
     OwlNativeDateTimeModule,],
-  providers:[ ExportService ]
+  providers:[ ExportService ,DatePipe]
 })
 export class SharedModule { }

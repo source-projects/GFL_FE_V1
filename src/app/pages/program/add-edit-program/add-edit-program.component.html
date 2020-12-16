@@ -34,8 +34,16 @@
                             <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required
                                 #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
                                 (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID" class="required-error-dropdown">
-                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">{{q.qualityId}} -
-                                    {{q.partyName}}</ng-option>
+                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
+                                        </div>
+                                    </div>
+                                    </ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
                                 <span>Quality id is required</span>
@@ -68,7 +76,7 @@
                             <ng-select id="programGivenBy" #pgb1="ngModel" required
                             [(ngModel)]='programValues.programGivenBy' name="programGivenBy"
                             [ngClass]="{'is-invalid': (pgb1.invalid)&&(formSubmitted || pgb1.touched)}"
-                            placeholder="Program Given By">
+                            placeholder="Program Given By" class="required-error-dropdown">
                             <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
                         </ng-select>
                         <div class="required-class" *ngIf="formSubmitted && (pgb1.invalid)">
