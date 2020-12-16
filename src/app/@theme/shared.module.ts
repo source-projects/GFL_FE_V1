@@ -79,6 +79,6 @@ const NB_MODULES = [
   declarations: [ExportDirective],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES],
   exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule],
-  providers:[ ExportService ]
+  providers:[ ExportService ,DatePipe]
 })
 export class SharedModule { }
