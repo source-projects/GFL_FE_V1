@@ -19,6 +19,7 @@ import { flatMap } from 'rxjs/operators';
 export class AddEditPartyComponent implements OnInit {
 
   public loading = false;
+  public disableButton = false;
   public errorData: any = (errorData as any).default;
   
   partyForm: FormGroup;
@@ -188,7 +189,7 @@ export class AddEditPartyComponent implements OnInit {
   }
 
   public addParty() {
-   
+    this.disableButton=true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
@@ -204,15 +205,16 @@ export class AddEditPartyComponent implements OnInit {
               this.currentParty = data["data"];
               this.route.navigate(["pages/party"]);
               this.toastr.success(errorData.Add_Success);
-              
+           
             } else {
               this.toastr.error(errorData.Add_Error);
             }
-            // this.loading=true;
+           
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
           }
+          
         );
       } else {
         return;
@@ -222,6 +224,7 @@ export class AddEditPartyComponent implements OnInit {
 
 
   public updateParty() {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
@@ -236,12 +239,14 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
-              this.route.navigate(["/pages/party"]);
-              this.loading = false;
+               this.route.navigate(["/pages/party"]);
+               
+          
             } else {
               this.toastr.error(errorData.Update_Error);
-              this.loading = false;
+             
             }
+            this.loading = false;
           },
           (error) => {
             this.toastr.error(errorData.Update_Error);

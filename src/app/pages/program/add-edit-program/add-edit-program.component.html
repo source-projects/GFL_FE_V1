@@ -236,12 +236,12 @@
                         <div class="padding-bt-tp">
                             
                             <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
-                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px">UPDATE</button>
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design"
                                 routerLink="/pages/program">CANCEL</button>
                                 <button *ngIf="this.currentProgramId == null" type="button"
                                 class="btn btn-primary btn-sm btn-design"
-                                (click)="addProgram(myForm)">SAVE</button>
+                                (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>
