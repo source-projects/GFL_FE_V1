@@ -71,7 +71,9 @@ export class SupplierComponent implements OnInit {
     this.getAddAcess();
     this.getSupplierList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.supplierGuard.accessRights('add')) {
@@ -170,6 +172,15 @@ export class SupplierComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1() {
+    if (this.supplierGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess() {
     if (this.supplierGuard.accessRights('edit')) {
@@ -184,6 +195,15 @@ export class SupplierComponent implements OnInit {
     if (this.supplierGuard.accessRights('edit all')) {
       this.allEdit = false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1() {
+    if (this.supplierGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

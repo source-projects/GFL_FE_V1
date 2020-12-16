@@ -68,7 +68,9 @@ export class QualityComponent implements OnInit {
     this.getAddAcess();
     this.getQualityList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.qualityGuard.accessRights('add')){
@@ -165,6 +167,15 @@ open(){
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.qualityGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.qualityGuard.accessRights('edit')){
@@ -179,6 +190,15 @@ open(){
      if(this.qualityGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.qualityGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 
