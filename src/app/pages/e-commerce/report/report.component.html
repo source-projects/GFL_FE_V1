@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <nb-card size="giant" class="nb-style">
     <nb-card-body>
         <div class="machine-cards" *ngIf="optionFlag">
@@ -12,7 +13,7 @@
                         </div>
                     </button>
                 </div>
-                <div class="col-md-6" (click)="staffReport()">
+                <div class="col-md-6">
                     <button type="button" class="card-machine">
                         <div class="machine-icon">
                             <nb-icon icon="settings-2-outline"></nb-icon>
@@ -22,7 +23,7 @@
                         </div>
                     </button>
                 </div>
-                <div class="col-md-6" (click)="salesReport()">
+                <div class="col-md-6">
                     <button type="button" class="card-machine">
                         <div class="machine-icon">
                             <nb-icon icon="settings-2-outline"></nb-icon>
@@ -45,39 +46,68 @@
             </div>
         </div>
         <div *ngIf="POApprovalFlag">
-            <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31" [footerHeight]="40">
-                <ngx-datatable-column name="Status" sortable="false">
-                    <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                        <div *ngIf="row.status === 1">APPROVED</div>
-                        <div *ngIf="row.status === 2">DECLINED</div>
-                        <div *ngIf="row.status === 0">
-                            <button class="btn btn-sm btn-primary" (click)="updateRequest(1, rowIndex)">
-                                APPROVE</button>
-                            <button class="btn btn-sm btn-primary" (click)="updateRequest(2, rowIndex)">
-                                DECLINE</button>
+            <nb-card>
+                <nb-card-header>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>PO Approval List</h2>
                         </div>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="User Id" prop="createdBy"></ngx-datatable-column>
-                <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
-                <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
-            </ngx-datatable>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31"
+                        [footerHeight]="40">
+                        <ngx-datatable-column name="Created By" prop="userName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Status" sortable="false">
+                            <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
+                                ngx-datatable-cell-template>
+                                <div *ngIf="row.status === 1">APPROVED</div>
+                                <div *ngIf="row.status === 2">DECLINED</div>
+                                <div *ngIf="row.status === 0">
+                                    <button class="btn btn-sm btn-primary" (click)="updateRequest(1, rowIndex)">
+                                        APPROVE</button>
+                                    <button class="btn btn-sm btn-primary" (click)="updateRequest(2, rowIndex)">
+                                        DECLINE</button>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </nb-card-body>
+            </nb-card>
         </div>
         <div *ngIf="waterJetMachineFlag">
-            <ngx-add-edit-water-jet></ngx-add-edit-water-jet>
+            <nb-card>
+                <nb-card-header>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Water Jet Report</h2>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <ngx-datatable [rows]="waterJetList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+                        [footerHeight]="31">
+                        <ngx-datatable-column name="Efficiency" prop="efficieny"></ngx-datatable-column>
+                        <ngx-datatable-column name="Meter" prop="mtr"></ngx-datatable-column>
+                    </ngx-datatable>
+                </nb-card-body>
+            </nb-card>
         </div>
         <div class="machine-cards" *ngIf="machineReportFlag">
             <div class="row">
                 <div class="col-md-4" *ngFor="let cat of machineCategory">
                     <button type="button" (click)="categorySelected(cat)" class="card-machine">
-                        <h2>{{cat.name}}</h2>
+                        <h2 *ngIf="cat.name=='string'">Water Jet </h2>
+                        <h2 *ngIf="cat.name!='string'"> {{cat.name}}</h2>
                     </button>
                 </div>
             </div>
         </div>
         <div class="machine-cards" *ngIf="MachineFlag">
             <div class="row">
-                <div class="col-md-4" *ngFor="let machine of infor">
+                <div class="col-md-4" *ngFor="let machine of machines">
                     <div class="machine-main-card">
                         <div class="date-card">
                             <div class="date-card-header">
@@ -111,21 +141,24 @@
                         <div class="day-night-picker">
                             <div class="form-group">
                                 <strong><label>Select Date & Time</label></strong>
-                                <input class="form-control" name="'dt{{i}}'" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime"
-                                    [owlDateTimeTrigger]="dt1" placeholder="Date Time">
-                                <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1></owl-date-time>
+                                <input class="form-control" name="'dt{{i}}'" [owlDateTime]="dt1" [selectMode]="'range'"
+                                    [(ngModel)]="datetime" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1>
+                                </owl-date-time>
                             </div>
                         </div>
-                        <div class="date-time-btn">
+                        <div class="date-time-btn p-2">
                             <div class="row">
                                 <div class="col-md-6 col-6">
                                     <div class="day-machine">
-                                        <button type="button" (click)="day(machine)" class="btn btn-primary btn-sm btn-design">Day</button>
+                                        <button type="button" (click)="day(machine)"
+                                            class="btn btn-primary btn-sm btn-design">Day</button>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6">
                                     <div class="night-machine">
-                                        <button type="button" (click)="night(machine)" class="btn btn-primary btn-sm btn-design">Night</button>
+                                        <button type="button" (click)="night(machine)"
+                                            class="btn btn-primary btn-sm btn-design">Night</button>
                                     </div>
                                 </div>
                             </div>
@@ -145,11 +178,8 @@
         </div>
 
         <div *ngIf="buttonFlag">
-            <button class="btn btn-primary" (click)="back()">BACK</button>
+            <button class="btn btn-primary mt-2" (click)="back()">BACK</button>
         </div>
 
     </nb-card-body>
 </nb-card>
-
-
-

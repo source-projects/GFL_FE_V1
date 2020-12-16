@@ -1,24 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from 'app/@theme/json/error.json';
-import { PurchaseRequest } from 'app/@theme/model/purchaseRequest';
-import { PurchaseService } from 'app/@theme/services/purchase.service';
-import { ReportService } from 'app/@theme/services/report.service';
+import { PurchaseRequest } from '../../../@theme/model/purchaseRequest';
+import { WaterJet } from '../../../@theme/model/water-jet';
+import { PurchaseService } from '../../../@theme/services/purchase.service';
+import { ReportService } from '../../../@theme/services/report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { ToastrService } from 'ngx-toastr';
+import {WaterJetService} from '../../../@theme/services/water-jet.service';
 
 @Component({
   selector: 'ngx-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
+// changeDetection: ChangeDetectionStrategy.OnPush
+
 export class ReportComponent implements OnInit {
   
   purchaseRequestList: PurchaseRequest[] = [];
-
+  waterJetList: WaterJet[] = [];
   infor: any = [
     {
       id: 1323,
@@ -79,13 +82,16 @@ export class ReportComponent implements OnInit {
     responsive: true,
   };
   lineChartPlugins = [];
+  loading: boolean = false;
   
-  constructor(private reportservice: ReportService, private toastr: ToastrService,private purchaseService:PurchaseService) {
+  constructor(private reportservice: ReportService, private toastr: ToastrService,private purchaseService:PurchaseService,
+    private waterjetService: WaterJetService) {
   }
 
   ngOnInit(): void {
     this.getMachineCategory();
     this.getPurchaseRequestList();
+    this.getWaterJetList();
   }
 
   change() {
@@ -216,10 +222,12 @@ export class ReportComponent implements OnInit {
   }
 
   getAllMachineByCategoryId(id: any) {
+    this.loading = true;
     this.data = this.reportservice.getMachineDataByCategoryId(id).subscribe(
       (res) => {
-        this.machines = res;
-        this.machines = this.machines.data;
+        this.machines = res['data'];
+        this.MachineFlag = true;
+        this.loading = false;
       }
     );
   }
@@ -231,17 +239,6 @@ export class ReportComponent implements OnInit {
     this.optionFlag = false;
     this.machineReportFlag = true;
     this.buttonFlag = true;
-    this.getMachineCategory();
-  }
-
-  staffReport() {
-    this.optionFlag = false;
-    this.staffReportFlag = true;
-  }
-
-  salesReport() {
-    this.optionFlag = false;
-    this.salesReportFlag = true;
   }
 
   POApproval() {
@@ -252,20 +249,15 @@ export class ReportComponent implements OnInit {
 
   categorySelected(value: any) {
     console.log("Selected Category :", value)
+    this.machineReportFlag = false;
+
     if (value.name == 'Stenter Machine') {
-      this.machineReportFlag = false;
-      this.stanterMachineFlag = true;
       this.getAllMachineByCategoryId(value.id);
-      this.MachineFlag = true;
     }
-    else if (value.name == 'Folding Machine') {
-      this.machineReportFlag = false;
-      this.foldingMachineFlag = true;
-      this.getAllMachineByCategoryId(value.id);
-      this.MachineFlag = true;
-    }
+    // else if (value.name == 'Folding Machine') {
+    //   this.getAllMachineByCategoryId(value.id);
+    // }
     else if (value.name == 'string') {
-      this.machineReportFlag = false;
       this.waterJetMachineFlag = true;
     }
   }
@@ -419,6 +411,21 @@ export class ReportComponent implements OnInit {
         }
       },
       (error) => {}
+    );
+  }
+  getWaterJetList(){
+    this.loading = true;
+    this.waterjetService.getWaterJetList().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.waterJetList = data["data"];
+          this.loading = false;
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
     );
   }
   updateRequest(status, index) {

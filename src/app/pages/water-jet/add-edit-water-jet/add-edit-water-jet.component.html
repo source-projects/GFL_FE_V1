@@ -9,7 +9,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Efficiency</label>
-                            <input type="number" name="efficiency" class="form-control" [(ngModel)]="waterjet.efficiency" #eff="ngModel" [ngClass]="{'is-invalid':(eff.invalid)&&(formSubmitted || eff.touched)}" required>
+                            <input type="number" name="efficiency" class="form-control" [(ngModel)]="waterjet.efficieny" #eff="ngModel" [ngClass]="{'is-invalid':(eff.invalid)&&(formSubmitted || eff.touched)}" required>
                             <div class="invalid-feedback" *ngIf="(eff.invalid)&&(formSubmitted || eff.touched)">
                                 <span>Efficiency is required</span>
                             </div>
@@ -19,8 +19,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Meter</label>
-                            <input type="number" name="meter" [(ngModel)]="waterjet.meter" class="form-control" #mtr="ngModel" [ngClass]="{'is-invalid':(mtr.invalid)&&(formSubmitted || mtr.touched)}" required>
-                            <div class="invalid-feedback" *ngIf="(mtr.invalid)&&(formSubmitted || mtr.touched)">
+                            <input type="number" name="meter" [(ngModel)]="waterjet.mtr" class="form-control" #mtr1="ngModel" [ngClass]="{'is-invalid':(mtr1.invalid)&&(formSubmitted || mtr1.touched)}" required>
+                            <div class="invalid-feedback" *ngIf="(mtr1.invalid)&&(formSubmitted || mtr1.touched)">
                                 <span>Meter is required</span>
                             </div>
                         </div>
