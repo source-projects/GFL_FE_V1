@@ -2,13 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

@@ -1,12 +1,11 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
-import {ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-add-edit-supplier',

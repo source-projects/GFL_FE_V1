@@ -18,7 +18,7 @@
                             <label class="required">Party Name</label>
                             <ng-select name="partyId" [(ngModel)]='programValues.partyId' required #partyId1="ngModel"
                                 [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                (change)="enableQuality($event)" placeholder="Party Name">
+                                (change)="enableQuality($event)" placeholder="Party Name" class="required-error-dropdown">
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
@@ -33,7 +33,7 @@
                             <label class="required">Quality Id</label>
                             <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required
                                 #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
-                                (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID">
+                                (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID" class="required-error-dropdown">
                                 <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">{{q.qualityId}} -
                                     {{q.partyName}}</ng-option>
                             </ng-select>
@@ -83,7 +83,7 @@
                             <label class="required">Priority</label>
                             <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required
                                 [ngClass]="{'is-invalid': (priority1.invalid)&&(formSubmitted || priority1.touched)}" #priority1="ngModel"
-                                [items]="priorityData" bindLabel="name" bindValue="id" placeholder="Priority">
+                                [items]="priorityData" bindLabel="name" bindValue="id" placeholder="Priority" class="required-error-dropdown">
                             </ng-select>
                             <div class="required-class" *ngIf="(priority1.invalid)&&(formSubmitted || priority1.touched)">
                                 <span>Priority is required</span>

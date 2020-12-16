@@ -1,12 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
 import { Angular2Txt } from 'angular2-txt/Angular2-txt';
-import  jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { FileSaverService } from 'ngx-filesaver';
+import * as FileSaver from 'file-saver';
 import { FileSaverOptions } from 'file-saver';
-import {HttpClient} from '@angular/common/http';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 @Injectable({
   providedIn: 'root',

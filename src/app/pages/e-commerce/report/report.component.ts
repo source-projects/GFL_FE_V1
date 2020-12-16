@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from 'app/@theme/json/error.json';
+import { ChartDataSets, ChartType } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+import { ToastrService } from 'ngx-toastr';
 import { PurchaseRequest } from '../../../@theme/model/purchaseRequest';
 import { WaterJet } from '../../../@theme/model/water-jet';
 import { PurchaseService } from '../../../@theme/services/purchase.service';
 import { ReportService } from '../../../@theme/services/report.service';
-import { ChartDataSets, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-import { ToastrService } from 'ngx-toastr';
-import {WaterJetService} from '../../../@theme/services/water-jet.service';
+import { WaterJetService } from '../../../@theme/services/water-jet.service';
 
 @Component({
   selector: 'ngx-report',

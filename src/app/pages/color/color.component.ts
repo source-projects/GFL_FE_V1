@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorService } from 'app/@theme/services/color.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { ColorGuard } from 'app/@theme/guards/color.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { ColorService } from 'app/@theme/services/color.service';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
-import { DatePipe } from '@angular/common';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { ColorGuard } from 'app/@theme/guards/color.guard';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 

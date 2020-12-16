@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
 import * as errorData from 'app/@theme/json/error.json';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-add-step',
