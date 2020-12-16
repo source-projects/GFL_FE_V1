@@ -74,7 +74,9 @@ export class UserComponent implements OnInit {
     this.getAddAcess();
     this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess()
+    this.getEditAccess1()
   }
   getAddAcess(){
     if(this.userGuard.accessRights('add')){
@@ -187,6 +189,15 @@ export class UserComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.userGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.userGuard.accessRights('edit')){
@@ -201,6 +212,16 @@ export class UserComponent implements OnInit {
      if( this.userGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+
+  getEditAccess1(){
+    if(this.userGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

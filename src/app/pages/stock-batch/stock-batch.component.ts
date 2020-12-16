@@ -67,7 +67,9 @@ export class StockBatchComponent implements OnInit {
     this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.stockBatchGuard.accessRights('add')) {
@@ -188,6 +190,15 @@ export class StockBatchComponent implements OnInit {
       this.hidden=this.allDelete; 
     }
   }
+  getDeleteAccess1(){
+    if(this.stockBatchGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete; 
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.stockBatchGuard.accessRights('edit')){
@@ -201,6 +212,16 @@ export class StockBatchComponent implements OnInit {
      if(this.stockBatchGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+
+  getEditAccess1(){
+    if(this.stockBatchGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

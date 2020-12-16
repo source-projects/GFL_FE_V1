@@ -76,7 +76,9 @@ export class ColorComponent implements OnInit {
     this.getAddAcess();
     this.getColor(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.colorGuard.accessRights('add')){
@@ -198,6 +200,15 @@ export class ColorComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.colorGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.colorGuard.accessRights('edit')){
@@ -211,6 +222,15 @@ export class ColorComponent implements OnInit {
      if(this.colorGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.colorGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

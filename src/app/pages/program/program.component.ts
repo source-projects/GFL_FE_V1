@@ -70,7 +70,9 @@ export class ProgramComponent implements OnInit {
     this.getAddAcess();
     this.getProgramList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.programGuard.accessRights('add')){
@@ -188,6 +190,16 @@ export class ProgramComponent implements OnInit {
     }
   }
 
+  getDeleteAccess1(){
+    if(this.programGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownEdit;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
+
   getEditAccess(){
     if(this.programGuard.accessRights('edit')){
       this.ownEdit=false;
@@ -201,6 +213,15 @@ export class ProgramComponent implements OnInit {
      if(this.programGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.programGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

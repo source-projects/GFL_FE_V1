@@ -97,7 +97,9 @@ export class ShadeComponent implements OnInit {
     this.getAddAcess();
     this.getallShades(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.shadeGuard.accessRights('add')) {
@@ -212,6 +214,16 @@ export class ShadeComponent implements OnInit {
       this.hidden = this.allDelete;
     }
   }
+  getDeleteAccess1() {
+    if (this.shadeGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden = this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
+  
 
   getEditAccess() {
     if (this.shadeGuard.accessRights('edit')) {
@@ -226,6 +238,16 @@ export class ShadeComponent implements OnInit {
     if (this.shadeGuard.accessRights('edit all')) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
+    }
+  }
+
+  getEditAccess1() {
+    if (this.shadeGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 }
