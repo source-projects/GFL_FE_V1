@@ -12,11 +12,11 @@
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/grid";
 
-
-@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 // loading progress bar theme
 @import "./pace.theme";

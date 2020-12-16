@@ -69,6 +69,8 @@ export class AddEditStockBatchComponent implements OnInit {
   addFlag = false;
   batchIdArray = [];
   rearrangeStartIndex: any;
+  dateForPicker=new Date();
+
   maxDate:any;
   constructor(
     private partyService: PartyService,
@@ -82,7 +84,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.maxDate={year:new Date().getFullYear(),month:new Date().getMonth()+1, day:new Date().getDate()}
+    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.addFlag = window.location.href.endsWith("add");
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();

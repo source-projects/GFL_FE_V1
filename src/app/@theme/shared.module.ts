@@ -78,8 +78,9 @@ const NB_MODULES = [
 @NgModule({
   declarations: [ExportDirective],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
+    OwlNativeDateTimeModule],
+  exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule,OwlDateTimeModule,
     OwlNativeDateTimeModule,],
-  exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule],
   providers:[ ExportService ]
 })
 export class SharedModule { }
