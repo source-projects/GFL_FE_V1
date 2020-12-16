@@ -416,7 +416,6 @@ export class AddEditStockBatchComponent implements OnInit {
 
   updateStockBatch(stockBatch) {
     this.disableButton=true;
-
     this.loading = true;
     this.formSubmitted = true;
     if (stockBatch.valid) {
