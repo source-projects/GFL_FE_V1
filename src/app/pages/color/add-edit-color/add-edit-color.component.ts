@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import * as errorData from 'app/@theme/json/error.json';
+import { Color, ColorDataList } from "app/@theme/model/color";
+import { ColorService } from "app/@theme/services/color.service";
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ColorService } from "app/@theme/services/color.service";
-import { Color, ColorDataList } from "app/@theme/model/color";
-import * as errorData from 'app/@theme/json/error.json';
-import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
-import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',

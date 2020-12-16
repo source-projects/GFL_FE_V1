@@ -1,14 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { Validators } from "@angular/forms";
 import { Location } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
-import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
-import { state } from "@angular/animations";
-import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: "ngx-add-edit-party",

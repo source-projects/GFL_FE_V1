@@ -1,12 +1,12 @@
-import { Component, Renderer2, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { Program, ProgramRecords } from "app/@theme/model/program";
-import { ToastrService } from "ngx-toastr";
 import * as errorData from "app/@theme/json/error.json";
-import { ProgramService } from "app/@theme/services/program.service";
+import { Program, ProgramRecords } from "app/@theme/model/program";
 import { CommonService } from "app/@theme/services/common.service";
+import { PartyService } from "app/@theme/services/party.service";
+import { ProgramService } from "app/@theme/services/program.service";
+import { QualityService } from "app/@theme/services/quality.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-edit-program",
