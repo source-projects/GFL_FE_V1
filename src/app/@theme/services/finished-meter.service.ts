@@ -27,7 +27,7 @@ export class FinishedMeterService {
   }
 
   getBatchDataBybatchNo(batchId, ctrlId){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+ctrlId+'/'+batchId);
+    return this.httpClient.get(this.commonService.envUrl()+'api/batch/'+ctrlId+'/'+batchId);
   }
 
   addFinishedMeter(data){
@@ -36,10 +36,6 @@ export class FinishedMeterService {
 
   getBatchesByPartyQuality(qId,pId){
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+qId+'/'+pId);
-  }
-
-  deleteBatchDataById(id){
-    return this.httpClient.delete(this.commonService.envUrl()+'api/batchDelete/'+id);
   }
   
 }
