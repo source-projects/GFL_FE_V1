@@ -94,12 +94,26 @@ const routes: Routes = [{
       data: { PermissionName: ['view']}
     },
     {
+      path: 'waterJet',
+      loadChildren: () => import('./water-jet/water-jet.module')
+        .then(m => m.WaterJetModule),
+      
+    },
+    {
       path: 'supplier',
       loadChildren: () => import('./supplier/supplier.module')
         .then(m => m.SupplierModule),
       canActivate: [SupplierGuard],
       canLoad: [SupplierGuard],
       data: { PermissionName: ['view']}
+    },
+    {
+      path: 'purchaseItem',
+      loadChildren: () => import('./purchase-item/purchase-item.module')
+        .then(m => m.PurchaseItemModule),
+      // canActivate: [PurchaseGuard],
+      // canLoad: [PurchaseGuard],
+      // data: { PermissionName: ['view']}
     },
     {
       path: 'finishedMeter',

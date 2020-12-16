@@ -1,0 +1,53 @@
+<div class="container">
+    <nb-card class="nb-style">
+        <nb-card-header class="nb-header">
+            <h2 class="nb-text">Water jet</h2>
+        </nb-card-header>
+        <nb-card-body>
+            <form #myForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Efficiency</label>
+                            <input type="number" name="efficiency" class="form-control" [(ngModel)]="waterjet.efficieny" #eff="ngModel" [ngClass]="{'is-invalid':(eff.invalid)&&(formSubmitted || eff.touched)}" required>
+                            <div class="invalid-feedback" *ngIf="(eff.invalid)&&(formSubmitted || eff.touched)">
+                                <span>Efficiency is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Meter</label>
+                            <input type="number" name="meter" [(ngModel)]="waterjet.mtr" class="form-control" #mtr1="ngModel" [ngClass]="{'is-invalid':(mtr1.invalid)&&(formSubmitted || mtr1.touched)}" required>
+                            <div class="invalid-feedback" *ngIf="(mtr1.invalid)&&(formSubmitted || mtr1.touched)">
+                                <span>Meter is required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <div class="padding-bt-tp">
+                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                routerLink='/pages'>CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                (click)="addWaterJet(myForm)">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>
+
+
+<!-- ngx dataTable data show -->
+<!-- <div>
+     <ngx-datatable [rows]="userList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+     [footerHeight]="31">
+        <ngx-datatable-column name="Efficiency" prop="efficiency"></ngx-datatable-column>
+        <ngx-datatable-column name="Meter" prop="meter"></ngx-datatable-column>
+    </ngx-datatable>
+</div> -->
