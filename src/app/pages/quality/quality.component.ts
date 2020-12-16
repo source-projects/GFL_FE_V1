@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { QualityService } from '../../@theme/services/quality.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { StoreTokenService } from 'app/@theme/services/store-token.service';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { QualityGuard } from 'app/@theme/guards/quality.guard';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { QualityGuard } from 'app/@theme/guards/quality.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { ToastrService } from 'ngx-toastr';
+import { QualityService } from '../../@theme/services/quality.service';
 
 @Component({
   selector: 'ngx-quality',

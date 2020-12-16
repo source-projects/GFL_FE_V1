@@ -45,9 +45,9 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Party Name</label>
-                    <ng-select name="partyId" id="partyId" formControlName="partyId" 
+                    <ng-select name="partyId" id="partyId" formControlName="partyId" required
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)}"
-                        placeholder="Party Name">
+                        placeholder="Party Name" class="required-error-dropdown">
                         <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                     </ng-select>
                     <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
@@ -78,9 +78,9 @@
            
                 <div class="form-group col-md-4">
                     <label class="required">Unit</label>
-                    <ng-select id="unit" formControlName="unit" 
+                    <ng-select id="unit" formControlName="unit" required
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)}" [items]="unit" bindValue="name" bindLabel="name"
-                        placeholder="Unit">
+                        placeholder="Unit" class="required-error-dropdown">
                     </ng-select>
                     <div class="required-class" *ngIf="(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)">
                         <span>Unit is required.</span>
@@ -91,11 +91,11 @@
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
                         <ng-template #updateqty><input type="button" (click)="updateQuality()"
-                                class="btn btn-primary btn-sm btn-design" value="UPDATE">&nbsp;&nbsp;&nbsp;
+                                class="btn btn-primary btn-sm btn-design"  [disabled]="disableButton" value="UPDATE">&nbsp;&nbsp;&nbsp;
                         </ng-template>
                         <button class="btn btn-primary btn-sm btn-design" routerLink="/pages/quality">CANCEL</button>
                         <input *ngIf="currentQualityId == null; else updateqty" type="submit"
-                            class="btn btn-primary btn-sm btn-design" value="SAVE">
+                            class="btn btn-primary btn-sm btn-design"  [disabled]="disableButton" value="SAVE">
                     </div>
                 </div>
             </div>

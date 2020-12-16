@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { LayoutService } from 'app/@core/utils';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'ngx-one-column-layout',

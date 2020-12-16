@@ -1,16 +1,16 @@
 import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
-import { User, Permissions } from "app/@theme/model/user";
-import { CommonService } from "app/@theme/services/common.service";
-import { UserService } from "app/@theme/services/user.service";
-import * as errorData from "app/@theme/json/error.json";
-import { ToastrService } from "ngx-toastr";
-import {Md5} from 'ts-md5/dist/md5';
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
-  NbToastrConfig,
+  NbToastrConfig
 } from "@nebular/theme";
-import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { Permissions, User } from "app/@theme/model/user";
+import { CommonService } from "app/@theme/services/common.service";
+import { UserService } from "app/@theme/services/user.service";
+import { ToastrService } from "ngx-toastr";
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -20,6 +20,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
+  public disableButton = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -556,6 +557,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   updateUser(userForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
@@ -569,7 +572,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -591,6 +593,9 @@ export class AddEditUserComponent implements OnInit {
 
   addUser(myForm) {
     this.getCheckedItem();
+    //this.user.userPermissionData=this.userPermissionData;
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       let md5 = new Md5();

@@ -221,6 +221,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-left: none;
   border-right: none;
   width: 100%;
+  text-align: center;
 }
 .menu-title{
   color: #5e5b5e;
@@ -586,9 +587,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 // machine report redesign
 .card-machine{
-  background: #e4e8ee;
+  background: #e5e8ec;
   border-radius: 13px;
-  padding: 21px 15px;
+  padding: 15px;
   margin-bottom: 26px;
   width: 100%;
   border: 1px solid antiquewhite;
@@ -606,22 +607,28 @@ input[type=number]::-webkit-outer-spin-button {
   color: #fff;
 }
 .machine-main-card{
-  background: antiquewhite;
+  background: #e5e8ec;
 }
 .date-card-header h2{
   color: #fff;
-  padding: 16px;
+  padding: 0 16px;
   text-align: center;
-  font-size: 21px;
+  font-size: 19px;
   background: #aa3634;
 }
 .tble-txt{
   text-align: center;
   font-size: 20px !important;
+  color: #5e5b5e!important;
 }
 .tble-in{
+  border-bottom: 1px solid #000;
   width: 100px;
-    border: 0;
+  /* border: 0; */
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background: transparent;
 }
 .day-machine, .night-machine{
   display: flex;
@@ -635,16 +642,43 @@ input[type=number]::-webkit-outer-spin-button {
   margin-right: 0!important;
   width: 100%;
 }
+.machine-btn-text{
+  margin: 0;
+  padding: 0;
+  font-size: 21px !important;
+  color: #5e5b5e !important;
+}
+.card-machine:focus{
+  border: 0;
+  outline: none;
+}
+.card-machine:hover{
+  background-color: #144a9c;
+  transition: .4s;
+}
+.card-machine:hover .machine-btn-text{
+  color: #fff !important;
+}
+.card-machine:hover .machine-icon{
+  background-color: #5e5b5e !important;
+}
+.btn-machine-day-night{
+  width: 100%;
+  margin-right: 0 !important;
+}
+.date-time-btn{
+  padding-bottom: 16px;
+}
 // tootltip in stock batch
 .tooltip {
   color: #fff;
-  padding: 0.3rem 1rem;
+  padding: 3px 0.5rem;
   position: absolute;
   letter-spacing: 0.5px;
   bottom: 9px;
   opacity: 0;
   pointer-events: none;
-  left: -17px;
+  left: -9px;
   border-radius: 50px;
 }
 
@@ -686,6 +720,33 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .required-error-dropdown.is-invalid .ng-select-container{
   border: none !important;
+}
+// shuffle batch design
+.total-rows{
+  background-color: transparent;
+  width: 14px;
+  padding: 0;
+  margin-right: 3px;
+  font-size: 14px;
+  color: #404040;
+  border: 0;
+  text-align: center;
+  margin-left: 6px;
+  margin: 15px 0;
+}
+.t-12{
+  font-size: 12px;
+  color: #404040;
+}
+.jus-con-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.txt-ov-elips{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -772,6 +833,9 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 50px;
   }
   
+  .tble-in{
+    width: 72px!important;
+  }
 }
 @media (min-width: 1024px){
   .datatable-header-inner, .datatable-row-center.ng-star-inserted{
@@ -808,6 +872,9 @@ input[type=number]::-webkit-outer-spin-button {
   .batch-total-row{
     width: 100px;
   }
+  .tble-in{
+    width: 57px!important;
+  }
 }
 @media (min-width: 320px) and (max-width: 375px){
   .mtr-wei {
@@ -816,5 +883,10 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .text-batch-mtr{
     font-size: 12px;
+  }
+  .mob-stock{
+    padding: 6px 5px !important;
+    font-size: 12px !important;
+    margin-right: 5px !important
   }
 }

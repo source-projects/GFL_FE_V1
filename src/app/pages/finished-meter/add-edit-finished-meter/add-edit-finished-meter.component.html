@@ -13,7 +13,7 @@
               <label class="required">Master</label>
               <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel"
                 [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="masterSelected($event)"
-                placeholder="Select Master">
+                placeholder="Select Master" class="required-error-dropdown">
                 <ng-option *ngFor="let master of masterList" [value]="master.id">{{master.userName}}</ng-option>
               </ng-select>
             </div>

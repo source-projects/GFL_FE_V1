@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {NgbModal}  from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { UserService } from "app/@theme/services/user.service";
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { UserGuard } from 'app/@theme/guards/user.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { UserService } from "app/@theme/services/user.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-user',
