@@ -221,6 +221,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-left: none;
   border-right: none;
   width: 100%;
+  text-align: center;
 }
 .menu-title{
   color: #5e5b5e;
@@ -719,6 +720,28 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .required-error-dropdown.is-invalid .ng-select-container{
   border: none !important;
+}
+// shuffle batch design
+.total-rows{
+  background-color: transparent;
+  width: 14px;
+  padding: 0;
+  margin-right: 3px;
+  font-size: 14px;
+  color: #404040;
+  border: 0;
+  text-align: center;
+  margin-left: 6px;
+  margin: 15px 0;
+}
+.t-12{
+  font-size: 12px;
+  color: #404040;
+}
+.jus-con-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{

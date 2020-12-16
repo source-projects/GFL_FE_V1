@@ -20,7 +20,7 @@
                             <label>Party Name</label>
                             <ng-select name="partyName" partyName1="ngModel" [(ngModel)]="shades.partyId"
                                 #partyName1="ngModel" required (change)="getQualityFromParty($event)"
-                                [ngClass]="{'is-invalid':(partyName1.invalid )&&(formSubmitted  || partyName1.touched) }">
+                                [ngClass]="{'is-invalid':(partyName1.invalid )&&(formSubmitted  || partyName1.touched) }" class="required-error-dropdown">
                                 <ng-option *ngFor="let p of partyList" [value]="p.id" placeholder="Party Name">
                                     {{p.partyName}}
                                 </ng-option>
@@ -51,7 +51,7 @@
                             <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processId"
                                 (change)="setProcessName(shades.processId)" #processName1="ngModel" name="processName"
                                 required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted   || processName1.touched) }"
-                                placeholder="Process Name">
+                                placeholder="Process Name" class="required-error-dropdown">
                                 <ng-option *ngFor="let p of processList" [value]="p.id">
                                     {{p.name}}
                                 </ng-option>
@@ -69,7 +69,7 @@
                             <label class="required">Quality Id</label>
                             <ng-select placeholder="Select Quality Id" [(ngModel)]="shades.qualityId"
                                 #qualityId1="ngModel" name="qualityId" (change)="qualityIdSelected($event)" required
-                                [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted ||  qualityId1.touched)}">
+                                [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted ||  qualityId1.touched)}" class="required-error-dropdown">
                                 <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
                                     {{q.qualityId}} - {{q.partyName}}
                                 </ng-option>
@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <label>Category</label>
                             <ng-select name="category" category1="ngModel" [(ngModel)]="shades.category"
-                                placeholder="Category">
+                                placeholder="Category" class="required-error-dropdown" required>
                                 <ng-option *ngFor="let c of categoryList" [value]="c.name">
                                     {{c.name}}
                                 </ng-option>

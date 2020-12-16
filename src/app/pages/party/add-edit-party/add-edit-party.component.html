@@ -14,282 +14,148 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label class="required">Party Name</label>
-            <input
-              type="text"
-              id="partyName"
-              class="form-control"
-              formControlName="partyName"
-              placeholder="Party Name"
-              [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched)}"
-            />
+            <input type="text" id="partyName" class="form-control" formControlName="partyName" placeholder="Party Name"
+              [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched)}" />
 
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('partyName').errors?.required "
-            >
+            <div class="invalid-feedback" *ngIf="partyForm.get('partyName').errors?.required ">
               <span>Party Name is required</span>
             </div>
-            <div
-              class="invalid-feedback"
-              *ngIf=" partyForm.get('partyName').errors?.pattern"
-            >
+            <div class="invalid-feedback" *ngIf=" partyForm.get('partyName').errors?.pattern">
               <span>Please enter valid Party Name </span>
             </div>
           </div>
 
           <div class="form-group col-md-4">
-            <label >Email</label>
-            <input
-              type="text"
-              id="mailId"
-              class="form-control"
-              nbinput
-              fullwidth
-              fieldsize="small"
-              formControlName="mailId"
-              placeholder="Email"
-              [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid)&&(formSubmitted || partyForm.get('mailId').touched)}"
-            />
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('mailId').errors?.required"
-            >
+            <label>Email</label>
+            <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small"
+              formControlName="mailId" placeholder="Email"
+              [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid)&&(formSubmitted || partyForm.get('mailId').touched)}" />
+            <div class="invalid-feedback" *ngIf="partyForm.get('mailId').errors?.required">
               <span>Email is required</span>
             </div>
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('mailId').errors?.pattern "
-            >
+            <div class="invalid-feedback" *ngIf="partyForm.get('mailId').errors?.pattern ">
               <span>Please enter valid Email.</span>
             </div>
           </div>
 
           <div class="form-group col-md-4">
             <label>GSTIN</label>
-            <input
-              type="text"
-              id="gst"
-              class="form-control"
-              nbinput
-              fullwidth
-              fieldsize="small"
-              formControlName="gstin"
-              placeholder="GSTIN"
-              pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"
-              (input)="setState()"
-            />
+            <input type="text" id="gst" class="form-control" nbinput fullwidth fieldsize="small" formControlName="gstin"
+              placeholder="GSTIN" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"
+              (input)="setState()" />
           </div>
           <div class="form-group col-md-4">
             <label class="required">City</label>
-            <input
-              type="text"
-              id="city"
-              class="form-control"
-              nbinput
-              fullwidth
-              fieldsize="small"
-              formControlName="city"
+            <input type="text" id="city" class="form-control" nbinput fullwidth fieldsize="small" formControlName="city"
               placeholder="City"
-              [ngClass]="{'is-invalid':(partyForm.get('city').invalid)&&(formSubmitted || partyForm.get('city').touched )}"
-            />
-            <div
-              class="invalid-feedback"
-              *ngIf="(partyForm.get('city').errors?.required) "
-            >
+              [ngClass]="{'is-invalid':(partyForm.get('city').invalid)&&(formSubmitted || partyForm.get('city').touched )}" />
+            <div class="invalid-feedback" *ngIf="(partyForm.get('city').errors?.required) ">
               <span>City is required</span>
             </div>
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('city').errors?.pattern"
-            >
+            <div class="invalid-feedback" *ngIf="partyForm.get('city').errors?.pattern">
               <span>Please enter valid City</span>
             </div>
           </div>
           <div class="form-group col-md-4">
             <label class="required">State</label>
-            <ng-select
-              name="state"
-              id="state"
-              formControlName="state"
+            <ng-select name="state" id="state" formControlName="state"
               [ngClass]="{'is-invalid':(partyForm.get('state').invalid)&&(formSubmitted || partyForm.get('state').touched )}"
-              placeholder="Select State"
-              class="dropdown-name"
-              required
-              [items]="stateList" bindLabel="name" bindValue="name"
-            >
+              placeholder="Select State" class="dropdown-name" required [items]="stateList" bindLabel="name"
+              bindValue="name">
             </ng-select>
-            <div
-              class="required-class"
-              *ngIf="(partyForm.get('state').invalid)&&(formSubmitted || partyForm.get('state').touched ) "
-            >
+            <div class="required-class"
+              *ngIf="(partyForm.get('state').invalid)&&(formSubmitted || partyForm.get('state').touched ) ">
               <span>State is required</span>
             </div>
           </div>
           <div class="form-group col-md-4">
             <label class="required">Pin Code</label>
-            <input
-              type="text"
-              ng-pattern-restrict="/^[A-Za-z]*$/"
-              id="pincode"
-              class="form-control"
-              nbinput
-              fullwidth
-              fieldsize="small"
-              formControlName="pincode"
-              placeholder="Pin Code"
-              [ngClass]="{'is-invalid':(partyForm.get('pincode').invalid)&&(formSubmitted || partyForm.get('pincode').touched)}"
-            />
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('pincode').errors?.required "
-            >
+            <input type="text" ng-pattern-restrict="/^[A-Za-z]*$/" id="pincode" class="form-control" nbinput fullwidth
+              fieldsize="small" formControlName="pincode" placeholder="Pin Code"
+              [ngClass]="{'is-invalid':(partyForm.get('pincode').invalid)&&(formSubmitted || partyForm.get('pincode').touched)}" />
+            <div class="invalid-feedback" *ngIf="partyForm.get('pincode').errors?.required ">
               <span>Pin number is required</span>
             </div>
 
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('pincode').errors?.pattern"
-            >
+            <div class="invalid-feedback" *ngIf="partyForm.get('pincode').errors?.pattern">
               <span>Please enter 6 digit pin</span>
             </div>
           </div>
 
           <div class="form-group col-md-4">
             <label class="required">Contact No</label>
-            <input
-              type="text"
-              ng-pattern-restrict="[A-Za-z]"
-              id="contactNo"
-              class="form-control"
-              nbinput
-              fullwidth
-              fieldsize="small"
-              formControlName="contactNo"
-              placeholder="Contact No"
-              pattern="[6-9]{1}[0-9]{9}"
-              [ngClass]="{'is-invalid':(partyForm.get('contactNo').invalid)&&(formSubmitted || partyForm.get('contactNo').touched)}"
-            />
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('contactNo').errors?.required"
-            >
+            <input type="text" ng-pattern-restrict="[A-Za-z]" id="contactNo" class="form-control" nbinput fullwidth
+              fieldsize="small" formControlName="contactNo" placeholder="Contact No" pattern="[6-9]{1}[0-9]{9}"
+              [ngClass]="{'is-invalid':(partyForm.get('contactNo').invalid)&&(formSubmitted || partyForm.get('contactNo').touched)}" />
+            <div class="invalid-feedback" *ngIf="partyForm.get('contactNo').errors?.required">
               <span>Contact is required</span>
             </div>
-            <div
-              class="invalid-feedback"
-              *ngIf="partyForm.get('contactNo').errors?.pattern"
-            >
+            <div class="invalid-feedback" *ngIf="partyForm.get('contactNo').errors?.pattern">
               <span>Please enter valid 10 digit contact</span>
             </div>
           </div>
 
           <div class="form-group col-md-4">
             <label class="required">Address 1</label>
-            <textarea
-              class="form-control address-area"
-              id=" partyAddress1"
-              nbinput
-              fullwidth
-              formControlName="partyAddress1"
-              placeholder="Address 1"
-              [ngClass]="{'is-invalid':(partyForm.get('partyAddress1').invalid)&&(formSubmitted ||partyForm.get('partyAddress1').touched)}"
-            >
+            <textarea class="form-control address-area" id=" partyAddress1" nbinput fullwidth
+              formControlName="partyAddress1" placeholder="Address 1"
+              [ngClass]="{'is-invalid':(partyForm.get('partyAddress1').invalid)&&(formSubmitted ||partyForm.get('partyAddress1').touched)}">
             </textarea>
-            <div
-              class="invalid-feedback"
-              *ngIf="(partyForm.get('partyAddress1').invalid)&&(formSubmitted ||partyForm.get('partyAddress1').touched)"
-            >
+            <div class="invalid-feedback"
+              *ngIf="(partyForm.get('partyAddress1').invalid)&&(formSubmitted ||partyForm.get('partyAddress1').touched)">
               <span>Address is required</span>
             </div>
           </div>
           <div class="form-group col-md-4">
             <label>Address 2</label>
-            <textarea
-              class="form-control address-area"
-              nbinput
-              fullwidth
-              formControlName="partyAddress2"
-              placeholder="Address 2"
-            ></textarea>
+            <textarea class="form-control address-area" nbinput fullwidth formControlName="partyAddress2"
+              placeholder="Address 2"></textarea>
           </div>
           <div class="form-group col-md-4">
             <label class="required">Master Name</label>
-            <ng-select
-              name="userHeadId"
-              id="userHeadId"
-              formControlName="userHeadId"
-              required
+            <ng-select name="userHeadId" id="userHeadId" formControlName="userHeadId" required
               [ngClass]="{'is-invalid':(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)}"
-              placeholder="Select Master Name"
-              class="dropdown-name required-error-dropdown"
-            >
-              <ng-option *ngFor="let m of master" [value]="m.id"
-                >{{m.firstName}}</ng-option
-              >
+              placeholder="Select Master Name" class="dropdown-name required-error-dropdown">
+              <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</ng-option>
             </ng-select>
-            <div
-              class="required-class"
-              *ngIf="(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)"
-            >
+            <div class="required-class"
+              *ngIf="(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)">
               <span>Master Name is required</span>
             </div>
           </div>
         </div>
 
         <div class="creditors-debitors">
-          <nb-checkbox
-            class="status-basic nb-transition"
-            id="creditor"
-            formControlName="creditor"
+          <nb-checkbox class="status-basic nb-transition" id="creditor" formControlName="creditor"
             (checkedChange)="setCheckedStatusCreditor($event)"
-            [ngClass]="{'is-invalid':formSubmitted && creditor==false && debtor==false}"
-          >
+            [ngClass]="{'is-invalid':formSubmitted && creditor==false && debtor==false}">
             <span class="text cr-txt">Creditors</span>
           </nb-checkbox>
 
-          <nb-checkbox
-            class="status-basic nb-transition"
-            style="margin-left: 50px;"
-            (checkedChange)="setCheckedStatusDebtor($event)"
-            type="checkbox"
-            id="debtor"
-            formControlName="debtor"
-            [ngClass]="{'is-invalid':formSubmitted==true && creditor==false && debtor==false}"
-          >
+          <nb-checkbox class="status-basic nb-transition" style="margin-left: 50px;"
+            (checkedChange)="setCheckedStatusDebtor($event)" type="checkbox" id="debtor" formControlName="debtor"
+            [ngClass]="{'is-invalid':formSubmitted==true && creditor==false && debtor==false}">
             <span class="text dr-txt">Debitors</span>
           </nb-checkbox>
           <div class="inline-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
             <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
           </div>
         </div>
-        
+
 
         <div class="row">
-          <div class="col-md-12 mobile-btn-center">
-            <button
-              *ngIf="this.currentPartyId == null"
-              type="button"
-              class="btn btn-primary btn-sm btn-design"
-              style="margin-right: 20px;"
-              (click)="addParty()"
-            >
-              ADD
-            </button>
-            <button
-              *ngIf="this.currentPartyId != null"
-              type="button"
-              (click)="updateParty()"
-              class="btn btn-primary btn-sm btn-design"
-              style="margin-right: 20px;"
-            >
+          <div class="col-md-12 mobile-btn-center text-btn-right">
+            
+            <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
+              class="btn btn-primary btn-sm btn-design" style="margin-right: 20px;">
               UPDATE
             </button>
-            <button
-              class="btn btn-primary btn-sm btn-design"
-              type="button"
-              (click)="goBackToPreviousPage()"
-            >
+            <button class="btn btn-primary btn-sm btn-design" type="button" (click)="goBackToPreviousPage()">
               CANCEL
+            </button>
+            <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design"
+              style="margin-right: 20px;" (click)="addParty()">
+              save
             </button>
           </div>
         </div>

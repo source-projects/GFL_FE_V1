@@ -45,9 +45,9 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Party Name</label>
-                    <ng-select name="partyId" id="partyId" formControlName="partyId" 
+                    <ng-select name="partyId" id="partyId" formControlName="partyId" required
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)}"
-                        placeholder="Party Name">
+                        placeholder="Party Name" class="required-error-dropdown">
                         <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                     </ng-select>
                     <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
@@ -78,9 +78,9 @@
            
                 <div class="form-group col-md-4">
                     <label class="required">Unit</label>
-                    <ng-select id="unit" formControlName="unit" 
+                    <ng-select id="unit" formControlName="unit" required
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)}" [items]="unit" bindValue="name" bindLabel="name"
-                        placeholder="Unit">
+                        placeholder="Unit" class="required-error-dropdown">
                     </ng-select>
                     <div class="required-class" *ngIf="(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)">
                         <span>Unit is required.</span>
