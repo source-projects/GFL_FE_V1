@@ -28,6 +28,7 @@ import {UserModule} from './user/user.module';
     
     
   ],
+  providers: []
 })
 export class PagesModule {
 }
