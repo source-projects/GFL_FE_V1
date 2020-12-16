@@ -1,18 +1,16 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { PartyService } from "app/@theme/services/party.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { CommonService } from 'app/@theme/services/common.service';
 //import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { PartyGuard } from 'app/@theme/guards/party.guard';
-import { toUnicode } from 'punycode';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { PartyService } from "app/@theme/services/party.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "ngx-party",
@@ -75,7 +73,9 @@ export class PartyComponent implements OnInit {
     this.getAddAcess();
     this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
     
   }
 
@@ -128,6 +128,7 @@ export class PartyComponent implements OnInit {
       this.ownDelete=false;
       this.hidden=this.ownDelete;
     }
+    
      if( this.partyGuard.accessRights('delete group')){
       this.groupDelete=false;
       this.hidden=this.groupDelete;
@@ -135,6 +136,15 @@ export class PartyComponent implements OnInit {
      if(this.partyGuard.accessRights('delete all')){
       this.allDelete=false;
       this.hidden=this.allDelete;
+    }
+  }
+
+  getDeleteAccess1(){
+    if(this.partyGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }else{
+      this.hidden=true;
     }
   }
 
@@ -153,7 +163,15 @@ export class PartyComponent implements OnInit {
       this.hiddenEdit=this.allEdit;
     }
   }
-
+  getEditAccess1(){
+    if(this.partyGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
+    }
+  }
   getAddAcess(){
     if(this.partyGuard.accessRights('add')){
       this.disabled=false;

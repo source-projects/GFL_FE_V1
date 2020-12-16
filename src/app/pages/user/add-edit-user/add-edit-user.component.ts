@@ -1,16 +1,16 @@
 import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
-import { User, Permissions } from "app/@theme/model/user";
-import { CommonService } from "app/@theme/services/common.service";
-import { UserService } from "app/@theme/services/user.service";
-import * as errorData from "app/@theme/json/error.json";
-import { ToastrService } from "ngx-toastr";
-import {Md5} from 'ts-md5/dist/md5';
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
-  NbToastrConfig,
+  NbToastrConfig
 } from "@nebular/theme";
-import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { Permissions, User } from "app/@theme/model/user";
+import { CommonService } from "app/@theme/services/common.service";
+import { UserService } from "app/@theme/services/user.service";
+import { ToastrService } from "ngx-toastr";
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -20,6 +20,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
+  public disableButton = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -99,6 +100,10 @@ export class AddEditUserComponent implements OnInit {
   userId: any;
   userHead;
   currentUserId: any;
+
+  disableViewDependentPermission: boolean = false;
+  disableViewGroupDependentPermission: boolean = false;
+  disableViewAllDependentPermission: boolean = false;
 
   constructor(
     private route: Router,
@@ -188,6 +193,7 @@ export class AddEditUserComponent implements OnInit {
       this.permissionArray[i].viewAll = false;
       this.permissionArray[i].viewGroup = false;
     }
+    
   }
 
   setPermissionTrue(i) {
@@ -353,24 +359,76 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  checkUncheckSelectAll(value, i) {
+  // checkUncheckSelectAll(value, i) {
+  //   if (value == false) {
+  //     this.permissionArray[i].selectAll = false;
+  //     this.allRightsFlag = false;
+
+  //   }
+
+  //   this.checkIfAllSelected(i);
+
+  //   for (let j = 0; j < 12; j++) {
+  //     if (!this.permissionArray[j].selectAll) {
+  //       this.allRightsFlag = false;
+  //       break;
+  //     }
+  //     else {
+  //       this.allRightsFlag = true;
+  //     }
+  //   }
+  // }
+
+  checkUncheckSelectAll(value, i,accessName) {
+    
+    switch(accessName){
+      case 'view':{
+        if(value){
+          this.disableViewDependentPermission = false;
+        } else {
+          this.disableViewDependentPermission = true;
+          this.permissionArray[i].edit = !this.disableViewDependentPermission;
+          this.permissionArray[i].add = !this.disableViewDependentPermission;
+          this.permissionArray[i].delete = !this.disableViewDependentPermission;
+        }
+        break;
+      }
+      case 'viewGroup':{
+        if(value){
+          this.disableViewGroupDependentPermission = false;
+        } else {
+          this.disableViewGroupDependentPermission = true;
+          this.permissionArray[i].editGroup = !this.disableViewGroupDependentPermission;
+          this.permissionArray[i].deleteGroup = !this.disableViewGroupDependentPermission;
+        }
+        break;
+      }
+      case 'viewAll':{
+        if(value){
+          this.disableViewAllDependentPermission = false;
+        } else {
+          this.disableViewAllDependentPermission = true;
+          this.permissionArray[i].editAll = !this.disableViewAllDependentPermission;
+          this.permissionArray[i].deleteAll = !this.disableViewAllDependentPermission;
+        }
+        break;
+      }
+    }
     if (value == false) {
       this.permissionArray[i].selectAll = false;
-      this.allRightsFlag = false;
-
     }
 
     this.checkIfAllSelected(i);
 
     for (let j = 0; j < 12; j++) {
-      if (!this.permissionArray[j].selectAll) {
-        this.allRightsFlag = false;
-        break;
-      }
-      else {
-        this.allRightsFlag = true;
-      }
-    }
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   checkIfAllSelected(i) {
@@ -507,6 +565,17 @@ export class AddEditUserComponent implements OnInit {
         this.allRightsFlag = true;
       }
     }
+
+
+    for (let j = 0; j < 12; j++) {
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   dec2bin(val: any) {
@@ -556,6 +625,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   updateUser(userForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
@@ -569,7 +640,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -591,6 +661,9 @@ export class AddEditUserComponent implements OnInit {
 
   addUser(myForm) {
     this.getCheckedItem();
+    //this.user.userPermissionData=this.userPermissionData;
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       let md5 = new Md5();

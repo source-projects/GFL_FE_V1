@@ -1,6 +1,8 @@
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Component, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as errorData from "app/@theme/json/error.json";
 import {
   ChemicalReq,
   Dosing,
@@ -11,15 +13,13 @@ import {
   Step,
   StepsRecordData,
   TempratureControl,
-  WaterControl,
+  WaterControl
 } from "app/@theme/model/process";
+import { CommonService } from "app/@theme/services/common.service";
 import { ProcessService } from "app/@theme/services/process.service";
 import { ToastrService } from "ngx-toastr";
-import { AddStepComponent } from "../add-step/add-step.component";
-import * as errorData from "app/@theme/json/error.json";
 import { AddFunctionComponent } from "../add-function/add-function.component";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { CommonService } from "app/@theme/services/common.service";
+import { AddStepComponent } from "../add-step/add-step.component";
 
 @Component({
   selector: "ngx-dynamic-process",
@@ -103,8 +103,8 @@ export class DynamicProcessComponent implements OnInit {
           let operatorOb = new OperatorMessage();
 
           if (e.isDosingControl) {
-            dosingOb.doseAtTemp = e.doesAtTemp;
-            dosingOb.doseType = e.doesType;
+            dosingOb.doseAtTemp = e.doseAtTemp;
+            dosingOb.doseType = e.doseType;
             dosingOb.doseWhileHeating = e.doseWhileHeating;
             dosingOb.dosingPercentage = e.dosingPercentage;
             dosingOb.fillType = e.fillType;
@@ -300,9 +300,9 @@ export class DynamicProcessComponent implements OnInit {
             stepObj.waterType = func.waterControlFunc.waterType;
           } else if (func.funcValue == "dosing") {
             stepObj.isDosingControl = true;
-            stepObj.doesAtTemp = func.dosingFunc.doseAtTemp;
-            stepObj.doesType = func.dosingFunc.doseType;
-            if (stepObj.doesType == "color") {
+            stepObj.doseAtTemp = func.dosingFunc.doseAtTemp;
+            stepObj.doseType = func.dosingFunc.doseType;
+            if (stepObj.doseType == "color") {
               stepObj.doseWhileHeating = false;
               func.dosingFunc.dosingChemical = [];
             } else {
