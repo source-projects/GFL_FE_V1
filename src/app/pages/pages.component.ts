@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { PartyGuard } from 'app/@theme/guards/party.guard';
-import { MENU_ITEMS } from './pages-menu';
-import { QualityGuard } from 'app/@theme/guards/quality.guard';
-import { UserGuard } from 'app/@theme/guards/user.guard';
-import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
+import { PartyGuard } from 'app/@theme/guards/party.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
+import { QualityGuard } from 'app/@theme/guards/quality.guard';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
+import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
+import { UserGuard } from 'app/@theme/guards/user.guard';
+import { MENU_ITEMS } from './pages-menu';
 @Component({
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],

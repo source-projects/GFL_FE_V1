@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonService } from 'app/@theme/services/common.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
-import { ExportService } from 'app/@theme/services/export.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-supplier',

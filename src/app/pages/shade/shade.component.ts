@@ -1,17 +1,17 @@
 
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ShadeService } from "app/@theme/services/shade.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
+import { ShadeGuard } from "app/@theme/guards/shade.guard";
 import * as errorData from "app/@theme/json/error.json";
-
-import { ToastrService } from "ngx-toastr";
 import { CommonService } from "app/@theme/services/common.service";
 import { ExportService } from "app/@theme/services/export.service";
-import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
 import { JwtTokenService } from "app/@theme/services/jwt-token.service";
-import { ShadeGuard } from "app/@theme/guards/shade.guard";
+import { ShadeService } from "app/@theme/services/shade.service";
+import { ToastrService } from "ngx-toastr";
+
 
 
 @Component({
@@ -149,12 +149,11 @@ export class ShadeComponent implements OnInit {
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
+        this.loading = false;
           }
         }
-        this.loading = false;
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

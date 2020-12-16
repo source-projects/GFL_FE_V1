@@ -1,0 +1,61 @@
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div>
+            <h2 class="nb-text">Request Item</h2>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #myForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Supplier</label>
+                            <ng-select name="supplierId" [(ngModel)]='purchaseRequest.supplierId' required
+                                #supplierId1="ngModel" [ngClass]="{'is-invalid': supplierId1 && supplierId1.invalid}"
+                                (change)="supplierSelected($event)" placeholder="Select Supplier">
+                                <ng-option *ngFor="let supplier of supplierList" [value]="supplier.supplierId">
+                                    {{supplier.supplierName}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (supplierId1.invalid)"
+                                style="display: inline-block;">
+                                <span>Supplier is required</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Item</label>
+                            <ng-select name="itemId" [(ngModel)]='purchaseRequest.itemId' required #itemId1="ngModel"
+                                [ngClass]="{'is-invalid': itemId1 && itemId1.invalid}" (change)="itemSelected($event)"
+                                placeholder="Select Item">
+                                <ng-option *ngFor="let supplier of supplierList" [value]="supplier.itemId">
+                                    {{supplier.itemName}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngIf="formSubmitted && (itemId1.invalid)"
+                                style="display: inline-block;">
+                                <span>Item is required</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <div class="padding-bt-tp">
+                            <button type="button" class="btn btn-primary btn-sm btn-design"
+                                routerLink="/pages/program">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design"
+                                (click)="makeRequest(myForm)">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </nb-card-body>
+</nb-card>

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from '../services/common.service';
-import { JwtTokenService } from '../services/jwt-token.service';
-import { StoreTokenService } from '../services/store-token.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { CommonService } from '../services/common.service';
+import { JwtTokenService } from '../services/jwt-token.service';
+import { StoreTokenService } from '../services/store-token.service';
 
 
 @Injectable({

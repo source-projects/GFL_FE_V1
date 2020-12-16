@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProcessService } from 'app/@theme/services/process.service';
-import { QualityService } from 'app/@theme/services/quality.service';
 
 @Component({
   selector: 'ngx-add-edit-process',

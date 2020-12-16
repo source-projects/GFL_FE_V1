@@ -1,12 +1,12 @@
-import { Component,Renderer2, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
 import { ShadeService } from "app/@theme/services/shade.service";
-import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import * as errorData from "app/@theme/json/error.json";
+import { SupplierService } from "app/@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -16,6 +16,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddEditShadeComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
+
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
@@ -423,6 +425,8 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   addShade(shadeForm) {
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
@@ -432,6 +436,7 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
+
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -468,6 +473,8 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   updateShade(shadeForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
@@ -477,6 +484,7 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
+
             
           } else {
             this.toastr.error(errorData.Update_Error);

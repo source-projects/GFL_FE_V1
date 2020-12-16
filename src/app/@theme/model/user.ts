@@ -1,12 +1,12 @@
 export class User{
- firstName:String;
- lastName:String;
- userName:String;
- email:String;
- contact:String;
- password:String;
- company:String;
- department:String;
+ firstName:string;
+ lastName:string;
+ userName:string;
+ email:string;
+ contact:string;
+ password:string;
+ company:string;
+ department:string;
  designationId:number;
  createdBy:Number;
  updatedBy:Number;
@@ -17,7 +17,7 @@ export class User{
 }
 
 export class Permissions{
-    module:String = null;
+    module:string = null;
    view:boolean = false;
    add:boolean = false;
    edit:boolean = false;
@@ -29,5 +29,4 @@ export class Permissions{
    deleteGroup:boolean = false;
    deleteAll:boolean = false;
    selectAll:boolean = false;
-
 }

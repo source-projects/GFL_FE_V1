@@ -275,7 +275,7 @@
                                                                     <!-- chemical -->
                                                                     <div
                                                                         *ngIf="func.dosingFunc.doseType != undefined && func.dosingFunc.doseType === 'chemical'">
-                                                                        <div class="row">
+                                                                        <div class="row" *ngFor="let ch of func.dosingFunc.dosingChemical">
                                                                             <div class="col-md-4">
                                                                                 <label class="main-process-box"><b
                                                                                         class="title-acc-processs">Item

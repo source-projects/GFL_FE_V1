@@ -147,7 +147,7 @@
                                             <div>
                                                 <ngx-datatable #table
                                                     class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height"
-                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="0"
+                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="50"
                                                     [scrollbarV]="true">
 
                                                     <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
@@ -225,11 +225,10 @@
                                 routerLink="/pages/stock-batch">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design mob-stock" *ngIf="addFlag"
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
-                            <button *ngIf="currentStockBatch == null" type="button mob-stock"
-                                class="btn btn-primary btn-sm btn-design" (click)="addStockBatch(myForm)">SAVE</button>
+                                <button *ngIf="currentStockBatch == null" type="button"
+                                class="btn btn-primary btn-sm btn-design mob-stock" (click)="addStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="currentStockBatch != null" type="button"
-                                class="btn btn-primary btn-sm btn-design"
-                                (click)="updateStockBatch(myForm)">UPDATE</button>
+                                class="btn btn-primary btn-sm btn-design" (click)="updateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>
