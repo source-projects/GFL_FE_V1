@@ -28,61 +28,71 @@ export class ProgramGuard implements CanActivate {
        if (this.permis[0] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'add':
        if (this.permis[1] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'edit':
        if (this.permis[2] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'delete':
        if (this.permis[3] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'view group':
        if (this.permis[4] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'view all':
        if (this.permis[5] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'edit group':
        if (this.permis[6] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'edit all':
        if (this.permis[7] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'delete group':
        if (this.permis[8] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
      case 'delete all':
        if (this.permis[9] == '1')
          return true;
        else
-         return false;
+       {this._router.navigate(['/pages']);
+       return false;}
 
    }
   }
