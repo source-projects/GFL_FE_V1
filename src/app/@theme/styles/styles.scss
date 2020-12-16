@@ -676,6 +676,16 @@ input[type=number]::-webkit-outer-spin-button {
 .date-time-btn{
   padding-bottom: 16px;
 }
+.chart-day-night{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+.chartjs-render-monitor{
+  height: auto !important;
+  width: 752px !important;
+}
 // tootltip in stock batch
 .tooltip {
   color: #fff;
