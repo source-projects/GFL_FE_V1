@@ -101,6 +101,10 @@ export class AddEditUserComponent implements OnInit {
   userHead;
   currentUserId: any;
 
+  disableViewDependentPermission: boolean = false;
+  disableViewGroupDependentPermission: boolean = false;
+  disableViewAllDependentPermission: boolean = false;
+
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -189,6 +193,7 @@ export class AddEditUserComponent implements OnInit {
       this.permissionArray[i].viewAll = false;
       this.permissionArray[i].viewGroup = false;
     }
+    
   }
 
   setPermissionTrue(i) {
@@ -354,24 +359,76 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  checkUncheckSelectAll(value, i) {
+  // checkUncheckSelectAll(value, i) {
+  //   if (value == false) {
+  //     this.permissionArray[i].selectAll = false;
+  //     this.allRightsFlag = false;
+
+  //   }
+
+  //   this.checkIfAllSelected(i);
+
+  //   for (let j = 0; j < 12; j++) {
+  //     if (!this.permissionArray[j].selectAll) {
+  //       this.allRightsFlag = false;
+  //       break;
+  //     }
+  //     else {
+  //       this.allRightsFlag = true;
+  //     }
+  //   }
+  // }
+
+  checkUncheckSelectAll(value, i,accessName) {
+    
+    switch(accessName){
+      case 'view':{
+        if(value){
+          this.disableViewDependentPermission = false;
+        } else {
+          this.disableViewDependentPermission = true;
+          this.permissionArray[i].edit = !this.disableViewDependentPermission;
+          this.permissionArray[i].add = !this.disableViewDependentPermission;
+          this.permissionArray[i].delete = !this.disableViewDependentPermission;
+        }
+        break;
+      }
+      case 'viewGroup':{
+        if(value){
+          this.disableViewGroupDependentPermission = false;
+        } else {
+          this.disableViewGroupDependentPermission = true;
+          this.permissionArray[i].editGroup = !this.disableViewGroupDependentPermission;
+          this.permissionArray[i].deleteGroup = !this.disableViewGroupDependentPermission;
+        }
+        break;
+      }
+      case 'viewAll':{
+        if(value){
+          this.disableViewAllDependentPermission = false;
+        } else {
+          this.disableViewAllDependentPermission = true;
+          this.permissionArray[i].editAll = !this.disableViewAllDependentPermission;
+          this.permissionArray[i].deleteAll = !this.disableViewAllDependentPermission;
+        }
+        break;
+      }
+    }
     if (value == false) {
       this.permissionArray[i].selectAll = false;
-      this.allRightsFlag = false;
-
     }
 
     this.checkIfAllSelected(i);
 
     for (let j = 0; j < 12; j++) {
-      if (!this.permissionArray[j].selectAll) {
-        this.allRightsFlag = false;
-        break;
-      }
-      else {
-        this.allRightsFlag = true;
-      }
-    }
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   checkIfAllSelected(i) {
@@ -508,6 +565,17 @@ export class AddEditUserComponent implements OnInit {
         this.allRightsFlag = true;
       }
     }
+
+
+    for (let j = 0; j < 12; j++) {
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   dec2bin(val: any) {
