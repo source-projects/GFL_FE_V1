@@ -15,8 +15,6 @@ export class StockBatch {
     userHeadId: Number;
     batchData: BatchData[];
     isProductionPlanned: boolean;
-    totalMtr: number;
-    totalwt: number;
 }
 export class BatchData {
     mtr: number;
