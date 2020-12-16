@@ -324,10 +324,12 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
     else {
-      // this.toastr.error("This item name is already selected")
-      //this.shades.shadeDataList[rowIndex].itemName = null;
-      row.itemName = null;
-      this.shades.shadeDataList[rowIndex] = row;
+      this.toastr.error("This item name is already selected")
+      this.shades.shadeDataList[rowIndex].itemName = '';
+      this.shades.shadeDataList[rowIndex].concentration = null;
+      this.shades.shadeDataList[rowIndex].supplierId = 0;
+      this.shades.shadeDataList[rowIndex].rate = null;
+      this.shades.shadeDataList[rowIndex].amount = null;
       // .splice(rowIndex,1);
 
       // let obj = {
