@@ -139,7 +139,7 @@
                         <div class="form-group">
                             <label>Category</label>
                             <ng-select name="category" category1="ngModel" [(ngModel)]="shades.category"
-                                placeholder="Category" class="required-error-dropdown" required>
+                                placeholder="Category" class="required-error-dropdown">
                                 <ng-option *ngFor="let c of categoryList" [value]="c.name">
                                     {{c.name}}
                                 </ng-option>
@@ -235,8 +235,9 @@
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                                 class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
                             <button class="btn btn-primary btn-sm btn-design" routerLink='/pages/shade'>CANCEL</button>
-                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                                style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="this.currentShadeId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>
