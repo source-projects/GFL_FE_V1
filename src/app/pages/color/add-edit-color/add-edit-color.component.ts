@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AddEditColorComponent implements OnInit {
   public loading = false;
   public disableButton = false;
+  dateForPicker=new Date();
   userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
@@ -38,7 +39,9 @@ export class AddEditColorComponent implements OnInit {
   calculationTotalQuantity: any;
   convertedDate: any;
   convertedDate2: any;
- 
+
+  maxDate:any;
+  // const isDisabled = (date: NgbDate, current: {month: number}) => day.date === 13;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -51,10 +54,9 @@ export class AddEditColorComponent implements OnInit {
     this.color.colorDataList = this.colorDataListArray;
   
   }
-
+  
   ngOnInit(): void {
-    // this.maxDate={year:new Date().getFullYear(),month:new Date().getMonth()+1, day:new Date().getDate()}
-    //  console.log(this.maxDate);
+    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.getData();
     this.getUpdateData();
     this.getSupplierList();

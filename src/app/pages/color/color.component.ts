@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.scss']
 })
+
 export class ColorComponent implements OnInit {
   public loading = false;
 
