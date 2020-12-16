@@ -266,6 +266,9 @@ export class ReportComponent implements OnInit {
     this.obj.shift = 1;
     this.obj.id = value.id;
 
+    this.NoDataFlag = false;
+    this.ChartFlag = false;
+
     let count;
     this.data = this.reportservice.getobjdata(this.obj).subscribe(
       (res) => {
@@ -314,6 +317,8 @@ export class ReportComponent implements OnInit {
     this.obj.shift = 2;
     this.obj.id = value.id;
 
+    this.NoDataFlag = false;
+    this.ChartFlag = false;
     let count;
     this.data = this.reportservice.getobjdata(this.obj).subscribe(
       (res) => {
@@ -367,7 +372,7 @@ export class ReportComponent implements OnInit {
       this.machineReportFlag = false;
     }
     else if (this.machineReportFlag == true) {
-      this.buttonFlag = true;
+      this.buttonFlag = false;
       this.optionFlag = true;
       this.MachineFlag = false;
       this.ChartFlag = false;
