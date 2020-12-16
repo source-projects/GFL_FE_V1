@@ -419,8 +419,13 @@ export class AddEditProgramComponent implements OnInit {
           if (id == element.batchId) {
             this.programValues.programRecords[rowIndex].quantity =
             Number(element.totalWt.toFixed(2));
+            this.programValues.partyId=element.partyId;
+            this.programValues.qualityId=element.qualityId;
+            this.programValues.qualityName=element.qualityName;
+            this.programValues.qualityEntryId=element.qualityEntryId;
           }
         });
+        this.setQualityTypeForStockBatch();
       }
 
       //setQuality party info
@@ -436,11 +441,31 @@ export class AddEditProgramComponent implements OnInit {
             qty += e.wt
           });
           this.programValues.programRecords[rowIndex].quantity = Number(qty.toFixed(2));
+          console.log(id)
+          this.batchData.forEach(element => {
+            if(id==element.controlId){
+              this.programValues.partyId=element.partyId;
+              this.programValues.qualityId=element.qualityId;
+              this.programValues.qualityName=element.qualityName;
+              this.programValues.qualityEntryId=element.qualityEntryId;
+            }
+          });
+          this.setQualityTypeForStockBatch();  
         }
       });
       //setQuality party info
     }
   }
+
+  setQualityTypeForStockBatch(){
+    this.qualityList.forEach(element => {
+      if(element.qualityId==this.programValues.qualityId){
+        this.programValues.qualityType=element.qualityType;
+      }
+    });
+  }
+  
+  
 
   //On enter pressed -> check empty field, add new row
   onKeyUp(e, rowIndex, colIndex, colName) {
