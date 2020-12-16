@@ -29,17 +29,17 @@ export class AddEditWaterJetComponent implements OnInit {
 
   addWaterJet(myForm){
     this.formSubmitted=true;
-    console.log(myForm);
     if(myForm.valid){
       this.waterjetService.addWaterJet(this.waterjet).subscribe(
         data=>{
           if(data['success']){
             this.toastr.success(errorData.Add_Success);
+            this.formSubmitted=false;
             location.reload();
           }
         },
         error=>{
-          this.toastr.error(errorData.Add_Success);
+          // this.toastr.error(errorData.Add_Success);
         }
       )
     }

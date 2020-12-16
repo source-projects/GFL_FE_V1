@@ -12,5 +12,8 @@ export class WaterJetService {
   addWaterJet(myForm){
     return this.httpClient.post(this.commonService.envUrl()+'api/waterJet',myForm);
   }
+  getWaterJetList(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/waterJet/all');
+  }
 
 }
