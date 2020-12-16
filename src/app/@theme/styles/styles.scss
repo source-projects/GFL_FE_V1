@@ -672,13 +672,13 @@ input[type=number]::-webkit-outer-spin-button {
 // tootltip in stock batch
 .tooltip {
   color: #fff;
-  padding: 0.3rem 1rem;
+  padding: 3px 0.5rem;
   position: absolute;
   letter-spacing: 0.5px;
   bottom: 9px;
   opacity: 0;
   pointer-events: none;
-  left: -17px;
+  left: -9px;
   border-radius: 50px;
 }
 
@@ -883,5 +883,10 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .text-batch-mtr{
     font-size: 12px;
+  }
+  .mob-stock{
+    padding: 6px 5px !important;
+    font-size: 12px !important;
+    margin-right: 5px !important
   }
 }
