@@ -38,4 +38,7 @@ export class PartyService {
   getAllPartyNameList() {
     return this.httpClient.get(this.commonService.envUrl() + 'api/party/allPartyWithName');
   }
+  getPartyCode(id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/party/partyCodeExist/'+id);
+  }
 }
