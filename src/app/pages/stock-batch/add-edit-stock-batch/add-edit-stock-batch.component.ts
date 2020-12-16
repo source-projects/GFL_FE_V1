@@ -58,6 +58,9 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     },
   ];
+
+  public totalMtr:number = 0;
+  public totalWt:number = 0;
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   stockBatchData: BatchData = new BatchData();
