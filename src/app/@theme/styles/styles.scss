@@ -484,9 +484,9 @@ input[type=number]::-webkit-outer-spin-button {
   color: white!important
 }
 // machine report design
-.owl-dt-popup{
-  top: 237.172px!important;
-}
+// .owl-dt-popup{
+//   top: 237.172px!important;
+// }
 // side navbar width
 .nb-theme-default nb-sidebar.expanded, .nb-theme-default nb-sidebar{
   width: 14rem!important;
@@ -760,10 +760,14 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: center;
 }
-.txt-ov-elips{
+.txt-ov-elips, .datatable-body-cell-label{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.toal-finish-mtr{
+  color: #5e5b5e;
+  font-size: 13px;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -836,9 +840,9 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: right;
   }
   // machine report date popup
-  .owl-dt-popup{
-    top: 179.172px !important;
-  }
+  // .owl-dt-popup{
+  //   top: 179.172px !important;
+  // }
   // mobile width changes
   .nb-theme-default nb-sidebar.collapsed{
     width: 0!important;
