@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NbMenuModule } from '@nebular/theme';
-
+import { DatePipe } from '@angular/common';
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
@@ -28,6 +28,7 @@ import {UserModule} from './user/user.module';
     
     
   ],
+  providers: [DatePipe]
 })
 export class PagesModule {
 }
