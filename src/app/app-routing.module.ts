@@ -1,18 +1,18 @@
-import { ExtraOptions, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './@theme/guards/auth.guard';
-import { StopAuthGuard } from './@theme/guards/stop-auth.guard';
-import { PagesComponent } from './pages/pages.component';
-import { ECommerceComponent } from './pages/e-commerce/e-commerce.component';
-import { PartyGuard } from './@theme/guards/party.guard';
-import { QualityGuard } from './@theme/guards/quality.guard';
-import { UserGuard } from './@theme/guards/user.guard';
 import { ColorGuard } from './@theme/guards/color.guard';
+import { PartyGuard } from './@theme/guards/party.guard';
 import { ProgramGuard } from './@theme/guards/program.guard';
+import { QualityGuard } from './@theme/guards/quality.guard';
 import { ShadeGuard } from './@theme/guards/shade.guard';
-import { SupplierGuard } from './@theme/guards/supplier.guard';
 import { StockBatchGuard } from './@theme/guards/stock-batch.guard';
+import { StopAuthGuard } from './@theme/guards/stop-auth.guard';
+import { SupplierGuard } from './@theme/guards/supplier.guard';
+import { UserGuard } from './@theme/guards/user.guard';
+import { ECommerceComponent } from './pages/e-commerce/e-commerce.component';
 import { NotFoundComponent } from './pages/miscellaneous/not-found/not-found.component';
+import { PagesComponent } from './pages/pages.component';
 
 export const routes: Routes = [
   
