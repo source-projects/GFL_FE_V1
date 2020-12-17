@@ -184,9 +184,21 @@ export class ShuffleComponent implements OnInit {
 
         (data) => {
           if (data["success"]) {
-
+            this.shuffleForm.controls['qualityName'].reset();
             this.quality = data.data.qualityDataList;
-
+            this.shuffleForm.controls['batchName1'].reset();
+            this.shuffleForm.controls['batchName2'].reset();
+      
+            this.shuffleForm.controls['totalrowsPart1'].reset();
+            this.shuffleForm.controls['totalrowsPart2'].reset();
+            this.shuffleForm.controls['totalwt1'].reset();
+            this.shuffleForm.controls['totalwt2'].reset();
+            this.shuffleForm.controls['totalmtr1'].reset();
+            this.shuffleForm.controls['totalmtr2'].reset();
+            this.part2 = [];
+            this.qualityParty2 = [];
+            this.qualityParty2[0] = [];
+            this.batches=[];
           }
           else {
             this.toastr.error(data['msg'])
@@ -285,7 +297,7 @@ export class ShuffleComponent implements OnInit {
 
       this.shuffleForm.controls['batchName1'].reset();
       this.shuffleForm.controls['batchName2'].reset();
-      this.shuffleForm.controls['qualityName'].reset();
+      
       this.batches = [];
       this.part1 = [];
       this.part2 = [];
@@ -348,6 +360,11 @@ export class ShuffleComponent implements OnInit {
         this.btnFlag = 0;
         this.part2 = [];
         this.qualityParty2 = [];
+        this.qualityParty2[0] = [];
+        this.shuffleForm.controls['totalrowsPart2'].reset();
+        this.shuffleForm.controls['totalwt2'].reset();
+        this.shuffleForm.controls['totalmtr2'].reset();
+        this.getBatches(this.cId1, this.batchId1);
         break;
 
       case 2:
@@ -359,6 +376,15 @@ export class ShuffleComponent implements OnInit {
 
         else {
           this.flag = 0;
+          this.shuffleForm.controls['batchName2'].reset();
+          this.part2 = [];
+          
+          this.qualityParty2[0] = [];
+          this.shuffleForm.controls['totalrowsPart2'].reset();
+          this.shuffleForm.controls['totalwt2'].reset();
+          this.shuffleForm.controls['totalmtr2'].reset();
+          this.getVal();
+          this.getBatches(this.cId1, this.batchId1);
         }
         break;
     }
@@ -399,11 +425,11 @@ export class ShuffleComponent implements OnInit {
   getVal() {
 
     if (this.shuffleForm.controls['qualityName'].value == null) {
-      // this.toastr.error("Please select a Quality");
+       this.toastr.error("Please select a Quality");
     }
 
     else if (this.shuffleForm.controls['partyName'].value == null) {
-      // this.toastr.error("Please select a Party");
+       this.toastr.error("Please select a Party");
     }
     else {
 
@@ -480,6 +506,16 @@ export class ShuffleComponent implements OnInit {
 
     this.getBatches(this.cId1, this.batchId1);
 
+    if(this.shuffleForm.controls['batchName2'].valid)
+    this.getBatches1(this.cId2, this.batchId2);
+
+    else
+    {
+      this.part2 = [];
+      this.qualityParty2 = [];
+      this.qualityParty2[0] = [];
+    }
+
   }
   temp1() {
     this.bId2 = this.shuffleForm.controls['batchName2'].value;
@@ -495,6 +531,7 @@ export class ShuffleComponent implements OnInit {
 
     this.cId2 = this.bId2["controlId"];
     this.batchId2 = this.bId2["batchId"];
+    this.getBatches(this.cId1, this.batchId1);
     this.getBatches1(this.cId2, this.batchId2);
     
   }

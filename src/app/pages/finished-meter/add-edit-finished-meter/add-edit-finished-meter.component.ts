@@ -146,12 +146,13 @@ export class AddEditFinishedMeterComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.finishedMeterForm.batchData = data["data"];
-            this.totalFinishMeter = this.finishedMeterForm.batchData
-              .map((a) => a.finishMtr)
-              .reduce(function (a, b) {
-                return a + b;
-              });
-            this.setSequenceNo(true);
+
+            this.finishedMeterForm.batchData.forEach(e=>{
+              this.totalFinishMeter += e.finishMtr
+              if(e.mtr)
+                e.sequenceId = e.id
+            })
+            this.setSequenceNo(false);
             this.setArrayOfSequence();
             this.setfinishedSequenceAccordingToIdReverse();
 
