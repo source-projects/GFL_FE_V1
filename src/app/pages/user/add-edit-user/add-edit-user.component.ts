@@ -650,10 +650,14 @@ export class AddEditUserComponent implements OnInit {
         (error) => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
+          this.disableButton = false;
+
         }
       );
     }
     else {
+      this.disableButton = false;
+
       const errorField = this.renderer.selectRootElement('#target');
       errorField.scrollIntoView();
     }
@@ -680,11 +684,13 @@ export class AddEditUserComponent implements OnInit {
           }
         },
         (error) => {
+          this.disableButton = false;
           this.toastr.error(errorData.Serever_Error);
         }
       );
     }
     else {
+      this.disableButton = false;
       const errorField = this.renderer.selectRootElement('#target');
       errorField.scrollIntoView();
     }

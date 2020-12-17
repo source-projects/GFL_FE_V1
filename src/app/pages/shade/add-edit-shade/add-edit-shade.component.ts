@@ -202,17 +202,25 @@ export class AddEditShadeComponent implements OnInit {
             });
             this.setProcessName(this.shades.processId);
             this.loading = false;
+            this.disableButton=false;
+
           } else {
             // this.toastr.error(data["msg"]);
             this.loading = false;
+            this.disableButton=false;
+
           }
         },
         (error) => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
+          this.disableButton=false;
+
         }
       );
     }
+    this.disableButton=false;
+
   }
 
   qualityIdSelected(event) {
@@ -417,6 +425,7 @@ export class AddEditShadeComponent implements OnInit {
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.disableButton=false;
         }
       );
     } else {
@@ -464,9 +473,12 @@ export class AddEditShadeComponent implements OnInit {
         (error) => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
+          this.disableButton=false;
         }
       );
     } else {
+      this.disableButton=false;
+
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }

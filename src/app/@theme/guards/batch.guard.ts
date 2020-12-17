@@ -24,7 +24,7 @@ export class BatchGuard implements CanActivate {
     this.permis = this.commonService.decToBin(permission);
     let PermissionName = route.data["PermissionName"];
     // console.log(PermissionName);  
-   switch (PermissionName[0]) {
+   switch (PermissionName[0]){
      case 'view':
        if (this.permis[0] == '1')
          return true;
@@ -105,7 +105,7 @@ export class BatchGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('stockBatch');
     let permis: String = this.commonService.decToBin(permission);
-    if (permis[0] == '1')
+    if (permis[0] == '1' || permis[4] == '1' || permis[5] == '1')
       return true;
     else
     this.toastr.error(errorData.NoPermission);

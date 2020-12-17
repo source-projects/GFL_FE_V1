@@ -113,7 +113,7 @@ export class QualityGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('quality');
     this.permis = this.commonService.decToBin(permission);
-    if (this.permis[0] == '1')
+    if (this.permis[0] == '1'|| this.permis[4] == '1' || this.permis[5] == '1')
       return true;
     else
       this.toastr.error(errorData.NoPermission);

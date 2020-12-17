@@ -11,7 +11,7 @@ const routes: Routes = [
     component:SupplierComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'add',

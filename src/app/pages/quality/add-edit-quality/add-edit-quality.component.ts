@@ -152,14 +152,23 @@ export class AddEditQualityComponent implements OnInit {
           }
           else {
             this.toastr.error(errorData.Add_Error)
+            
           }
+          this.disableButton=false;
+
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error)
+          this.disableButton=false;
+
         }
       );
     }
-    else return;
+    else 
+    {
+      this.disableButton=false;
+      return;
+    }
   }
 
   updateQuality() {
@@ -184,8 +193,11 @@ export class AddEditQualityComponent implements OnInit {
         (error) => {
           this.toastr.error(errorData.Serever_Error)
           this.loading = false;
+          this.disableButton=false;
         }
       );
     }
+    this.disableButton=false;
+
   }
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
     component: QualityComponent,
     canActivate: [QualityGuard],
     canLoad: [QualityGuard],
-    data: { PermissionName: ['view'] }
+    data: { PermissionName: ['view','view group','view all'] }
   },
   {
     path: 'add',

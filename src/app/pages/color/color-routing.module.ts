@@ -10,7 +10,7 @@ const routes: Routes = [
     component:ColorComponent,
     canActivate:[ColorGuard],
     canLoad:[ColorGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'add',

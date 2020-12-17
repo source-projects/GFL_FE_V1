@@ -34,7 +34,6 @@
                                 [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
                                 [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
-
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
@@ -42,11 +41,7 @@
                     <ngx-datatable-column name="Contact No" props="contactNo"></ngx-datatable-column>
                     <ngx-datatable-column name="City" props="city"></ngx-datatable-column>
                     <ngx-datatable-column name="State" props="state"></ngx-datatable-column>
-
-
-
                 </ngx-datatable>
-
             </nb-card-body>
         </nb-card>
     </div>

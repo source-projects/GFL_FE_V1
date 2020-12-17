@@ -16,6 +16,7 @@ export class AddEditWaterJetComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   waterjet: WaterJet = new WaterJet();
   formSubmitted: boolean = false;
+  public disableButton = false;
 
   constructor( private commonService: CommonService,
     private waterjetService: WaterJetService,
@@ -39,11 +40,15 @@ export class AddEditWaterJetComponent implements OnInit {
           }
         },
         error=>{
+          this.disableButton = false;
+
           // this.toastr.error(errorData.Add_Success);
         }
       )
     }
     else{
+      this.disableButton = false;
+
       return;
     }
   }

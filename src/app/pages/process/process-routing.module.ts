@@ -12,7 +12,7 @@ const routes: Routes = [
     component: ProcessComponent,
     canActivate: [ProcessGuard],
     canLoad: [ProcessGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path: 'edit/:id',

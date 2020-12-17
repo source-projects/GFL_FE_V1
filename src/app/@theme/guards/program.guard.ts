@@ -104,7 +104,7 @@ export class ProgramGuard implements CanActivate {
     this.jwtToken.setToken(this.storeTokenService.get('token'));
     var permission = this.jwtToken.getDecodeToken('program');
     let permis: String = this.commonService.decToBin(permission);
-    if (permis[0] == '1')
+    if (permis[0] == '1'|| permis[4] == '1' || permis[5] == '1')
       return true;
     else
     this.toastr.error(errorData.NoPermission);

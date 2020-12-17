@@ -10,7 +10,7 @@ const routes: Routes = [
     component: StockBatchComponent,
     canActivate: [StockBatchGuard],
     canLoad: [StockBatchGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path: 'add',
