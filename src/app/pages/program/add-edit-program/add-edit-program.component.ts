@@ -621,6 +621,7 @@ export class AddEditProgramComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.disableButton=false;
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
@@ -628,7 +629,6 @@ export class AddEditProgramComponent implements OnInit {
     } else {
       this.disableButton=false;
       this.loading = false;
-
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
       
