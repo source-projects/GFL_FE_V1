@@ -310,15 +310,20 @@ this.disableButton=true;
   }
 
   setState() {
-    let tempGstNo = this.partyForm.get("gstin").value;
-    let stateDigit = tempGstNo.slice(0, 2);
-    this.stateList.forEach((element) => {
-      if (element.id == stateDigit) {
-        this.partyForm.patchValue({
-          state: element.name,
-        });
-      }
-    });
-    this.partyForm.get("state").disable();
+    if(this.partyForm.get('gstin').value!=""){
+      let tempGstNo = this.partyForm.get("gstin").value;
+      let stateDigit = tempGstNo.slice(0, 2);
+      this.stateList.forEach((element) => {
+        if (element.id == stateDigit) {
+          this.partyForm.patchValue({
+            state: element.name,
+          });
+        }
+      });
+      this.partyForm.get("state").disable();
+    }
+    else{
+      this.partyForm.get('state').enable();
+    }
   }
 }
