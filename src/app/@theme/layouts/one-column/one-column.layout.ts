@@ -26,12 +26,32 @@ import { LayoutService } from 'app/@core/utils';
   `,
 })
 export class OneColumnLayoutComponent {
+  expandPanel: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
   constructor(menu: NbMenuService, private layoutService: LayoutService, private sidebarService: NbSidebarService) {
-  menu.onItemClick().subscribe(() => {
-    this.sidebarService.toggle(true, 'menu-sidebar');
-    this.layoutService.changeLayoutSize();
-
-    return false; 
- });
-}}
+    this.formatDevice();
+    if (this.isMobile == true) {
+      menu.onItemClick().subscribe(() => {
+        this.sidebarService.toggle(true, 'menu-sidebar');
+        this.layoutService.changeLayoutSize();
+        return false;
+      });
+    }
+  }
+  formatDevice() {
+    this.expandPanel = this.isTablet = this.isMobile = false;
+    if (window.innerWidth >= 1024) {
+      this.expandPanel = true;
+    } else if (window.innerWidth >= 767) {
+      this.isTablet = true;
+    } else {
+      this.isMobile = true;
+    }
+    if (window.innerWidth > window.innerHeight && window.innerWidth >= 640 && (this.isMobile || this.isTablet)) {
+      this.isMobile = this.isTablet = false;
+      this.expandPanel = true;
+    }
+  }
+}
 

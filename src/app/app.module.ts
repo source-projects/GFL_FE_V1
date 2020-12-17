@@ -26,20 +26,23 @@ import {
   NbToastrConfig,
   NbToastrModule,
   NbWindowModule,
-  
+
 } from '@nebular/theme';
 import { ToastrModule } from 'ngx-toastr';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [AppComponent,
     PrintLayoutComponent,
     InvoiceComponent
   ],
   imports: [
-   // FileSaverModule,
+    // FileSaverModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+      OwlDateTimeModule, 
+      OwlNativeDateTimeModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -54,10 +57,11 @@ import { ToastrModule } from 'ngx-toastr';
     ThemeModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
+      closeButton: true,
       preventDuplicates: true,
     }),
   ],
- 
+
   bootstrap: [AppComponent],
 })
 export class AppModule {

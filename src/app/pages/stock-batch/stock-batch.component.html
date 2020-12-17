@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="row">
     <div class="col-lg-12">
         <nb-card class="nb-style">
@@ -5,10 +6,10 @@
                 <div class="row">
                    
                     <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                        <button class="btn btn-primary btn-md btn-list" routerLink="add">ADD</button>   
+                        <button class="btn btn-primary btn-md btn-list" routerLink="add" [disabled]="disabled">ADD</button>   
                     </div>     
                     <div class="col-md-9 col-7">
-                        <h2 class="nb-text">STOCK-BATCH</h2>
+                        <h2 class="nb-text">Stock-Batch</h2>
                     </div>
                     <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
                         <button style="float:right; "  class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
@@ -31,7 +32,7 @@
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
                             [hidden]="hiddenEdit"   [routerLink]="['edit',row.id]"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden"
-                            (click)="!this.access? null:deleteStockBatch(row.id)"></nb-icon>
+                            (click)="deleteStockBatch(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProcessGuard } from 'app/@theme/guards/process.guard';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-process',
@@ -13,28 +14,76 @@ export class ProcessComponent implements OnInit {
   tablestyle : "bootstrap";
 
   permissions: Number;
-  access:Boolean = false;
+
+  hiddenDelete:boolean=true;
+  hiddenEdit:boolean=true;
+  addButtonDisabled:boolean=false;
+
   constructor(private processService: ProcessService,
-    
+    private toastr: ToastrService,
     public processGuard: ProcessGuard,
     private jwtToken: JwtTokenService,) { }
 
   ngOnInit(): void {
-    this.access = this.processGuard.accessRights('add');
-    this.access = this.processGuard.accessRights('edit');
-    this.access = this.processGuard.accessRights('delete');
     this.getProcessList();
+    this.getAccessPermissions();
   }
 
   getProcessList(){
-    /*this.processService.getAllProcessList().subscribe(
+    this.processService.getAllProcessList('all',0).subscribe(
       data=>{
-        this.processList = data["data"];
+        if(data['success'])
+          this.processList = data["data"];
+          // else
+          // this.toastr.error(data['msg'])
       },
       error=>{
+        // this.toastr.error('Internal server error')
         //error... internal server.
       }
-    )*/
+    )
+  }
+  getAccessPermissions(){
+    if(this.processGuard.accessRights('edit')){
+      
+      this.hiddenEdit=false;
+    }
+    else{
+      this.hiddenEdit=true;
+    }
+
+    if(this.processGuard.accessRights('delete')){
+      
+      this.hiddenDelete=false;
+    }
+    else{
+      this.hiddenDelete=true;
+    }
+
+    if(this.processGuard.accessRights('add')){
+      
+      this.addButtonDisabled=false;
+    }
+    else{
+      this.addButtonDisabled=true;
+    }
+    
+  }
+  deleteProcess(id){
+    this.processService.deleteProcess(id).subscribe(
+      data=>{
+        if(data['success']){
+          this.toastr.success(data['msg'])
+          this.processList = null;
+          this.getProcessList();
+        }
+          else
+          this.toastr.success(data['msg'])
+      },
+      error=>{
+        this.toastr.success('Internal server error')
+      }
+    )
   }
 
 }

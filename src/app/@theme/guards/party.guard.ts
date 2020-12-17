@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate,Router, RouterStateSnapshot, UrlTree  } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from '../services/common.service';
-import { JwtTokenService } from '../services/jwt-token.service';
-import { StoreTokenService } from '../services/store-token.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { CommonService } from '../services/common.service';
+import { JwtTokenService } from '../services/jwt-token.service';
+import { StoreTokenService } from '../services/store-token.service';
 
 
 @Injectable({
@@ -27,68 +27,77 @@ export class PartyGuard implements CanActivate {
      this.jwtToken.setToken(this.storeTokenService.get('token'));
      var permission = this.jwtToken.getDecodeToken('party');
      this.permis = this.commonService.decToBin(permission);
-     let PermissionName = route.data["PermissionName"];
-     console.log(PermissionName);  
+     let PermissionName = route.data["PermissionName"]; 
     switch (PermissionName[0]) {
       case 'view':
         if (this.permis[0] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'add':
         if (this.permis[1] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'edit':
         if (this.permis[2] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'delete':
         if (this.permis[3] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'view group':
         if (this.permis[4] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'view all':
         if (this.permis[5] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'edit group':
         if (this.permis[6] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'edit all':
         if (this.permis[7] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'delete group':
         if (this.permis[8] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
       case 'delete all':
         if (this.permis[9] == '1')
           return true;
         else
-          return false;
+        {this._router.navigate(['/pages']);
+        return false;}
 
     }
   }

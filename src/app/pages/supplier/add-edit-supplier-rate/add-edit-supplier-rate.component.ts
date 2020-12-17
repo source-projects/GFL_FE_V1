@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NbToastrService } from "@nebular/theme";
+import * as errorData from "app/@theme/json/error.json";
 import { CommonService } from "app/@theme/services/common.service";
 import { SupplierService } from "app/@theme/services/supplier.service";
-import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -116,12 +115,10 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
           this.discount = this.formValues.discountPercentage;
           this.gst = this.formValues.gstPercentage;
-        } else {
-          this.toastr.error(data["msg"]);
-        }
+        } 
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -132,12 +129,13 @@ export class AddEditSupplierRateComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
-        } else {
-          this.toastr.error(data["msg"]);
-        }
+        } 
+        // else {
+        //   this.toastr.error(data["msg"]);
+        // }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
+        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }

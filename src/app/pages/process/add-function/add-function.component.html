@@ -11,13 +11,13 @@
                 <div class="form-group">
                     <label>Function Name</label>
                     <select class="form-control" name="function" [(ngModel)]="funcObj.funcValue" #funcName="ngModel"
-                        [ngClass]="{'is-invalid':modalSubmitted && funcName.invalid}" required>
+                        [ngClass]="{'is-invalid':(funcName.invalid)&&(modalSubmitted || funcName.touched)}" required>
                         <option *ngFor="let function of functionDropdown" [value]="function.id"
                             placeholder="Function Name">
                             {{function.name}}
                         </option>
                     </select>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && funcName.invalid">
+                    <div class="invalid-feedback" *ngIf="(funcName.invalid)&&(modalSubmitted || funcName.touched)">
                         Function Name is required.
                     </div>
                 </div>
@@ -28,11 +28,11 @@
                     <label>Function Position</label>
                     <select [disabled]="editFunction" class="form-control " [(ngModel)]="funcObj.funcPosition"
                         name="stepNo" #position1="ngModel"
-                        [ngClass]="{'is-invalid':modalSubmitted && position1.invalid}" required
+                        [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required
                         placeholder="Function Position">
                         <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
                     </select>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && position1.invalid">
+                    <div class="invalid-feedback" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
                         Function Position is required.
                     </div>
                 </div>
@@ -78,7 +78,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose">
-                            dose at Temp(C) <input type="number" class="form-control" fieldSize="small" class="col-md-1"
+                            dose at Temp(C) 
+                            <input type="number" class="col-md-5 input-add-num" fieldSize="small"
                                 name="tempDosing" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
                     </div>
                 </div>
@@ -94,7 +95,7 @@
                     <label>Dose Type</label>
                     <nb-radio-group fieldSize="large" class="form-control inline-flex"
                         style="display: inline-flex !important; width: 100% !important; margin-left: 15px ;"
-                        name="dosetype" [(ngModel)]="dosing.doseType" (change)="onDoseTypeChange()">
+                        name="dosetype" [(ngModel)]="dosing.doseType" (valueChange)="onDoseTypeChange()">
                         <nb-radio value="chemical">Chemical</nb-radio>
                         <nb-radio value="color">Color</nb-radio>
                     </nb-radio-group>
@@ -102,73 +103,63 @@
             </div>
             <div class="row" *ngIf="dosing.doseType != undefined && dosing.doseType === 'chemical'">
                 <div class="col-md-12">
+                    <table class="table table-responsive table-bordered table-striped table-process-fnt">
+                        <tr>
+                            <th>Item name</th>
+                            <th>Supplier name</th>
+                            <th>Concentration</th>
+                            <th>LR/F.WT</th>
+                            <th>Action</th>
+                        </tr>
 
-                    <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="dosing.chemicalSubRecord" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'">
-                        <ngx-datatable-column name="Item Name" prop="dosing.chemicalSubRecord.itemName" [sortable]="false" [width]="300">
-                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}'
-                                class="tableForm" id="itemName" [(ngModel)]="row.itemName" required
-                                (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
-                                >
-                                <option *ngFor="let s of supplierList" [value]="s.itemName" >{{s.itemName}} - {{s.supplierName}}</option>
+                        <tr *ngFor='let dc of dosing.dosingChemical;let i=index;'>
+                            <td>
+                                <select name="itemId{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
+                                    #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)">
+                                    <option *ngFor="let item of itemListArray" [value]="item.itemId"
+                                        placeholder="Select Item">
+                                        {{item.itemName}} - {{item.supplierName}}
+                                    </option>
                                 </select>
-                                <div class="invalid-feedback" *ngIf="modalSubmitted && (itemName1.invalid)" style="display: inline-block;">
-                                    <span>Required</span>
-                                </div>
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                        <ngx-datatable-column name="Supplier Name" prop="dosing.chemicalSubRecord.supplierName" [sortable]="false"
-                            [width]="300">
-                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            </td>
+                            <td>
                                 <input class="tableForm" type="text" #supplierName1="ngModel"
-                                    name='supplierName{{rowIndex}}' [(ngModel)]="row.supplierName"
-                                    (keyup)="onKeyUp($event,rowIndex,1,'supplierName')"
-                                    [id]="'supplierList'+rowIndex+'-1'" readonly >
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                        <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300"
-                            prop="dosing.chemicalSubRecord.concentration">
-                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm"
-                                    id="concentration" [(ngModel)]="row.concentration"
-                                    (keyup)="onKeyUp($event,rowIndex,2,'concentration')" [id]="'supplierList'+rowIndex+'-2'" min="0" >
-                                <div class="invalid-feedback" *ngIf="modalSubmitted && (concentration1.invalid)" style="display: inline-block;">
-                                    <span>Required</span>
-                                </div>
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                        <ngx-datatable-column name="LR/F.WT" prop="dosing.chemicalSubRecord.lrOrFabricWt" [sortable]="false" [width]="300">
-                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm" type="text" #rate1="ngModel" name='lrOrFabricWt{{rowIndex}}'
-                                    [(ngModel)]="row.lrOrFabricWt" (keyup)="onKeyUp($event,rowIndex,3,'lrOrFabricWt')"
-                                    [id]="'supplierList'+rowIndex+'-3'">
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                        <ngx-datatable-column name="Action"  [sortable]="false" [width]="300">
-                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
-                            </ng-template>
-                        </ngx-datatable-column>
-                    </ngx-datatable> -->
+                                    name='supplierName{{i}}' [(ngModel)]="dc.supplierName"
+                                    (keyup)="onKeyUp($event,i,1,'supplierName')"
+                                    [id]="'supplierList'+i+'-1'" readonly>
+                            </td>
+                            <td>
+                                <input type="number" #concentration1="ngModel" name='concentration{{i}}'
+                                    class="tableForm" [(ngModel)]="dc.concentration"
+                                    (keyup)="onKeyUp($event,i,2,'concentration')"
+                                    [id]="'supplierList'+i+'-2'" min="0">
+                            </td>
+                            <td>
+                                <input class="tableForm" type="text" #rate1="ngModel" name='lrOrFabricWt{{i}}'
+                                    [(ngModel)]="dc.lrOrFabricWt" (keyup)="onKeyUp($event,i,3,'lrOrFabricWt')"
+                                    [id]="'itemList'+i+'-3'">
+                            </td>
+                            <td>
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                    (click)="removeItem(i)"></nb-icon>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
 
         <!-- Temprature Control -->
-        <div *ngIf="funcObj.funcValue==='temperature'">
+        <div *ngIf="funcObj.funcValue==='temprature'">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>S V (Set Value)(C)</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.setValue"
                             name="setValue" #setValueC="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && setValueC.invalid}" required>
+                            [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required>
                     </div>
-                    <div class="invalid-feedback" *ngIf="modalSubmitted && setValueC.invalid">
+                    <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
                         Required
                     </div>
                 </div>
@@ -177,8 +168,8 @@
                         <label>Rate of Rise (C/minute)</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.rateOfRise"
                             name="rateOfRise" #rateOfRiseCM="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && rateOfRiseCM.invalid}" required>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && rateOfRiseCM.invalid">
+                            [ngClass]="{'is-invalid':(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)}" required>
+                        <div class="invalid-feedback" *ngIf="(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)">
                             Required
                         </div>
                     </div>
@@ -188,8 +179,8 @@
                         <label>Hold Time</label>
                         <input type="number" class="form-control" [(ngModel)]="tempratureControl.holdTime"
                             name="holdTime" #holdTime1="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && holdTime1.invalid}" required>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && holdTime1.invalid">
+                            [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required>
+                        <div class="invalid-feedback" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
                             Required
                         </div>
                     </div>
@@ -215,8 +206,8 @@
                         <label>Pump Speed(%)</label>
                         <input type="number" class="form-control" name="pumpSpeed" [(ngModel)]="pumpControl.pumpSpeed"
                             #pumpSpeed1="ngModel" required
-                            [ngClass]="{'is-invalid':modalSubmitted && pumpSpeed1.invalid}">
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && pumpSpeed1.invalid">
+                            [ngClass]="{'is-invalid':(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)}">
+                        <div class="invalid-feedback" *ngIf="(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)">
                             Required
                         </div>
                     </div>
@@ -230,7 +221,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Control Type</label>
-                        <nb-radio-group (change)="onWaterTypeChange()" fieldSize="small" class=" inline-block"
+                        <nb-radio-group (valueChange)="onWaterTypeChange()" fieldSize="small" class=" inline-block"
                             style="display: inline-flex !important;" name="watertype" [(ngModel)]="waterControl.type">
                             <nb-radio value="water">Water</nb-radio>
                             <nb-radio value="drain">Drain</nb-radio>
@@ -265,15 +256,15 @@
                     </div>
                 </div>
 
-                <div *ngIf="waterControl.type !== 'water'" class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Drain Type</label>
-                            <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
-                                [(ngModel)]="waterControl.drainType">
-                                <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
-                            </nb-radio-group>
-                        </div>
+            </div>
+            <div *ngIf="waterControl.type === 'drain'" class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Drain Type</label>
+                        <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
+                            [(ngModel)]="waterControl.drainType">
+                            <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
+                        </nb-radio-group>
                     </div>
                 </div>
             </div>
@@ -288,11 +279,11 @@
                         <label>Operator Message </label>
                         <select class="form-control" name="fill" [(ngModel)]="operatorMessage.operatorCode"
                             #fillOperatorCode="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && fillOperatorCode.invalid}" required>
+                            [ngClass]="{'is-invalid':(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)}" required>
                             <option *ngFor="let message of operatorMessageList" [value]="message.id">{{message.name}}
                             </option>
                         </select>
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && fillOperatorCode.invalid">
+                        <div class="invalid-feedback" *ngIf="(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)">
                             Required
                         </div>
                     </div>
@@ -302,8 +293,8 @@
                         <label>Start at Temp</label>
                         <input type="number" name="startat" class="form-control input-group input-group-sm"
                             [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel"
-                            [ngClass]="{'is-invalid':modalSubmitted && startAtTemp.invalid}" />
-                        <div class="invalid-feedback" *ngIf="modalSubmitted && startAtTemp.invalid">
+                            [ngClass]="{'is-invalid':(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)}" />
+                        <div class="invalid-feedback" *ngIf="(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)">
                             Required
                         </div>
                     </div>

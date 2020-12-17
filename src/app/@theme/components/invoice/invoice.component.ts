@@ -11,7 +11,8 @@ export class InvoiceComponent implements OnInit {
 
   invoiceIds: string[];
   invoiceDetails: Promise<any>[];
-  rowd = [{}, {}, {}, {}, {}, {}];
+  rowd = [{}, {}, {}];
+  lotRowd = [{}, {}, {}, {}];
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   constructor(route: ActivatedRoute,
     private printService: PrintInvoiceService) {

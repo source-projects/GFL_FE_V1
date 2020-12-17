@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
+import { NgxLoadingModule } from 'ngx-loading';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -17,8 +19,13 @@ import {
   NbRadioModule,
   NbDatepickerModule,
   NbTooltipModule,
-  NbAccordionModule
+  NbAccordionModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule
 } from "@nebular/theme";
+
 import { NbSecurityModule } from "@nebular/security";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule, FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -59,6 +66,11 @@ const NB_MODULES = [
   ColorPickerModule,
   NgSelectModule,
   NgbDatepickerModule,
+  NgxLoadingModule,
+  NbListModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbTabsetModule,
   //NgbModal
   NbAccordionModule,
   
@@ -66,8 +78,10 @@ const NB_MODULES = [
 
 @NgModule({
   declarations: [ExportDirective],
-  imports: [CommonModule, ...NB_MODULES],
-  exports: [...NB_MODULES,ExportDirective],
-  providers:[ ExportService,PrintInvoiceService]
+  imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
+    OwlNativeDateTimeModule],
+  exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule,OwlDateTimeModule,
+    OwlNativeDateTimeModule,],
+  providers:[ ExportService ,DatePipe, PrintInvoiceService]
 })
 export class SharedModule { }

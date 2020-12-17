@@ -1,57 +1,93 @@
-<!-- <table>
-  <thead><tr><td>
-    <div class="header-space"></div>
-  </td></tr></thead>
-  <tbody><tr><td>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </td></tr></tbody>
-  <tfoot><tr><td>
-    <div class="footer-space"></div>
-  </td></tr></tfoot>
-</table> -->
-<!-- <hr> -->
+
 <section class="printpage" id="printpdf" >
     <div class="border">
       <div>
         <div class="border text-center">
           <div class="col-sm-12">
             <div class="content-header">
-              SUBJECT TO SURAT JURISDICTION</div>
+              TAX INVOICE CUM DELIVERY CHALLAN</div>
           </div>
         </div>
         <!-- <hr> -->
-        <div class="border">
-          <div class="col-sm-12">
+        <div class="border row">
+          <div class="col-sm-9">
             <div class="card">
               <div class="card-body">
                 <div class="card-block">
                   <div class="row">
-                    <p class="col-sm-12 text-center"><b>GLORY FAB LLP</b></p>
+                    <p class="col-sm-12 text-center" style="font-size: 30px;"><b> MUKESH PROCESSORS PVT. LTD.</b></p>
                   </div>
                   <div class="row">
-                    <p class="text-center col-sm-12"><b>201,ROAD NO 2,GIDC,SACHIN-394230 SURAT</b></p>
+                    <p class="text-center col-sm-12"><b>A-31, Eco Textile Park, (Kala Ghoda), Palsana, Surat E-Mail : varun@gloryfab.com</b></p>
                   </div>
                   <div class="row">
-                    <p class="text-center col-sm-12"><b>Mo.9375252244 , 8128023332 E-Mail : gloryfab2016@gmail.com</b></p>
-                  </div>
-                  <div class="row">
-                    <p class="text-center col-sm-12"><b>GSTIN :- 24AAPFG4395K1ZU Place Of Supply : Surat</b></p>
+                    <p class="text-center col-sm-12"><b>GSTIN :- 24AAFCM5028A1Z1 Place Of Supply : Surat</b></p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- <hr> -->
-        <div class="border">
-          <p class="col-sm-12 text-center"><b>TAX INVOICE</b></p>
+          <div class="col-sm-3">
+            <div class="invoice-logo" style="background-image: url('../../../../assets/glory_invoice.PNG');">
+              <!-- <img src="../../../../assets/glory_invoice.PNG" alt="No Img"> -->
+            </div>
+          </div>
         </div>
         <!-- <hr> -->
         <div class="content">
           <router-outlet></router-outlet>
         </div>
+      </div>
+    </div>
+    <div class="row col-sm-12">
+      <div class="col-sm-7">
+        <div class="row border">
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              BANK NAME
+            </div>
+            <div class="col-sm-8">
+              :- TAMILNAD MERCHANTILE BANK LTD.
+            </div>
+          </div>
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              A/c No.
+            </div>
+            <div class="col-sm-8">
+              :- 192700150950474
+            </div>
+          </div>
+          <div class="col-sm-12 row">
+            <div class="col-sm-4">
+              Branch IFS Code
+            </div>
+            <div class="col-sm-8">
+              :- TMBL0000192 RING ROAD , SURAT
+            </div>
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-sm-12">
+            <b>TERMS CONDITION :</b>
+          </div>
+          <div class="col-sm-12">
+            1 . Goods once sold will not be taken back .
+          </div>
+          <div class="col-sm-12">
+            2 . Our responsibility ceases once the goods is delivered to the carrier.
+          </div>
+          <div class="col-sm-12">
+            3. GST Payable on Reverse Charge : No
+          </div>
+          <div class="col-sm-12 row"></div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-3">
+        <div style="padding:5% 0% 15% 0%;"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
+        <div style="padding:15% 0% 5% 0%">Authorised Signatory</div>
       </div>
     </div>
   </section>

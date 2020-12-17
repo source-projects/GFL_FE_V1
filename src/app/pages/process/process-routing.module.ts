@@ -15,15 +15,8 @@ const routes: Routes = [
     data: { PermissionName: ['view']}
   },
   {
-    path: "add",
-    component: AddEditProcessComponent,
-    canActivate: [ProcessGuard],
-    canLoad: [ProcessGuard],
-    data: { PermissionName: ['add']}
-  },
-  {
     path: 'edit/:id',
-    component: AddEditProcessComponent,
+    component: DynamicProcessComponent,
     canActivate: [ProcessGuard],
     canLoad: [ProcessGuard],
     data: { PermissionName: ['edit']}
@@ -31,9 +24,9 @@ const routes: Routes = [
   {
     path: 'add-dynamic-process',
     component: DynamicProcessComponent,
-    // canActivate: [ProcessGuard],
-    // canLoad: [ProcessGuard],
-    // data: { PermissionName: ['add-dynamic-process']}
+    canActivate: [ProcessGuard],
+    canLoad: [ProcessGuard],
+    data: { PermissionName: ['add']}
   }
 ];
 

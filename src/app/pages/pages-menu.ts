@@ -3,7 +3,7 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
-    icon: 'shopping-cart-outline',
+    icon: 'home-outline',
     link: '/pages/dashboard',
     home: false,
   },
@@ -14,20 +14,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // },
   {
     title: 'Party',
-    icon: 'home-outline',
+    icon: 'person-outline',
     link: '/pages/party',
     hidden:false
     
   },
   {
     title: 'Quality',
-    icon: 'home-outline',
+    icon: 'award-outline',
     link: '/pages/quality',
     hidden:false
   },
   {
     title: 'User',
-    icon: 'home-outline',
+    icon: 'people-outline',
     link: '/pages/user',
     hidden:false
   },
@@ -43,49 +43,55 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // },
   {
     title: 'Color',
-    icon: 'home-outline',
+    icon: 'color-palette-outline',
     link: '/pages/color',
     hidden:false
   },
   {
     title: 'Program',
-    icon: 'home-outline',
+    icon: 'hard-drive-outline',
     link: '/pages/program',
     hidden:false
   },
   {
+    title: 'Water-jet',
+    icon: 'droplet-outline',
+    link: '/pages/waterJet',
+    hidden:false
+  },
+  {
     title: 'Stock-batch',
-    icon: 'home-outline',
+    icon: 'layers-outline',
     link: '/pages/stock-batch',
     hidden:false
   },
   {
     title: 'Batch-shuffle',
-    icon: 'home-outline',
+    icon: 'flip-2-outline',
     link: '/pages/batch-shuffle',
     hidden:false
   },
   {
     title: 'Shade',
-    icon: 'home-outline',
+    icon: 'brush-outline',
     link: '/pages/shade',
     hidden:false
   },
   {
     title: 'Supplier',
-    icon: 'home-outline',
+    icon: 'car-outline',
     link: '/pages/supplier',
     hidden:false
   },
   {
     title: 'Process',
-    icon: 'home-outline',
+    icon: 'settings-2-outline',
     link: '/pages/process',
     hidden:false
   },
   {
     title: 'Finished Meter',
-    icon: 'home-outline',
+    icon: 'bar-chart-outline',
     link: '/pages/finishedMeter',
     hidden:false
   },

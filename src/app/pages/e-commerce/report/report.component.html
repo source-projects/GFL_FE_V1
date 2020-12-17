@@ -1,119 +1,188 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <nb-card size="giant" class="nb-style">
-
-    <nb-card-header class="nb-header">
-
-        <h2 class="nb-text">Machine Reports</h2>
-
-    </nb-card-header>
     <nb-card-body>
-        <div class="container">
+        <div class="machine-cards" *ngIf="optionFlag">
             <div class="row">
+                <div class="col-md-6" (click)="machineReport()">
+                    <button type="button" class="card-machine report-display">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2 class="machine-btn-text">Machine Report</h2>
+                        </div>
+                    </button>
+                </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label><strong>Select Category</strong></label>
-                        <ng-select [items]="machineCategory" bindLabel="name" bindValue="id" (change)="category($event)"
-                            [(ngModel)]="selectedMachineCategory">
-                        </ng-select>
-                    </div>
-                </div>
-                <div *ngIf="flag" class="col-md-6">
-                    <div class="form-group">
-                        <label><strong>Select Machine</strong></label>
-                        <ng-select [items]="machines" bindLabel="machineName" bindValue="id" (change)="machine($event)"
-                            [(ngModel)]="selectedMachine">
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row">
-                <div class="form-group col-md-9" *ngIf="flag1">
-                    <strong><label for="date">Select Date:</label></strong>
-                    <form class="form-inline">
-                        <div class="form-group hidden">
-                            <div class="input-group">
-                                <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
-                                    [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"
-                                    [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1">
-                                <ng-template #t let-date let-focused="focused">
-                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-                                        [class.faded]="isHovered(date) || isInside(date)"
-                                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
-                                        {{ date.day }}
-                                    </span>
-                                </ng-template>
-                            </div>
+                    <button type="button" class="card-machine report-display">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
-                                    [value]="formatter.format(fromDate)"
-                                    (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()"
-                                        type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
+                        <div class="machine-text">
+                            <h2 class="machine-btn-text">Staff Report</h2>
                         </div>
-                        <div class="form-group ml-2">
-                            <div class="input-group">
-                                <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
-                                    [value]="formatter.format(toDate)"
-                                    (input)="toDate = validateInput(toDate, dpToDate.value)">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()"
-                                        type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="card-machine report-display">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
                         </div>
-                    </form>
+                        <div class="machine-text">
+                            <h2 class="machine-btn-text">Sales Report</h2>
+                        </div>
+                    </button>
                 </div>
-            </div> -->
-            <div class="row" *ngIf="flag1">
-                <div class="col-md-4">
-                    <div class="form-group" style="margin-right: 10px;">
-                        <strong><label class="required">Select Shift</label></strong>
-                        <nb-radio-group style="display: flex;">
-                            <nb-radio [value]="1" (valueChange)="onChange($event)">Day</nb-radio>
-                            <nb-radio [value]="2" (valueChange)="onChange($event)">Night</nb-radio>
-                        </nb-radio-group>
-                    </div>
+                <div class="col-md-6" (click)="POApproval()">
+                    <button type="button" class="card-machine report-display">
+                        <div class="machine-icon">
+                            <nb-icon icon="settings-2-outline" class="machine-nb-icon"></nb-icon>
+                        </div>
+                        <div class="machine-text">
+                            <h2 class="machine-btn-text">PO Approval Report</h2>
+                        </div>
+                    </button>
                 </div>
-                <div class="col-md-6" *ngIf="flag3">
-                    <div class="form-group">
-                        <strong><label>Select Date & Time</label></strong>
-                        <input class="form-control" [owlDateTime]="dt1" [selectMode]="'range'" [(ngModel)]="datetime" [owlDateTimeTrigger]="dt1" placeholder="Date Time" >
-                        <owl-date-time [showSecondsTimer]="true" (afterPickerClosed)="change()" #dt1></owl-date-time>
-                    </div>
-  
-                </div>
-                <!-- <div class="col-md-4" *ngIf="flag3">
-                    <div class="example-wrapper form-group">
-                        <strong><label class="example-input-wrapper">
-                                From Time:</label></strong>
-                        <input placeholder="From Time:" [(ngModel)]="fromtime" [owlDateTimeTrigger]="dt1"
-                            [owlDateTime]="dt1" (dateTimeInput)="getfromtime($event)">
-                        <owl-date-time [pickerType]="'timer'" #dt1></owl-date-time>
-                    </div>
-                </div>
-                <div class="col-md-4" *ngIf="flag3">
-                    <div class="example-wrapper form-group">
-                        <strong><label class="example-input-wrapper">
-                                To Time:</label></strong>
-                        <input placeholder="To Time:" [(ngModel)]="totime" [owlDateTimeTrigger]="dt2"
-                            [owlDateTime]="dt2" (dateTimeInput)="gettotime($event)">
-                        <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
-
-                    </div>
-                </div> -->
             </div>
         </div>
-
- 
-        <div *ngIf="flag4">
+        <div *ngIf="POApprovalFlag">
+            <nb-card class="nb-style">
+                <nb-card-header class="nb-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="nb-text">PO Approval List</h2>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31"
+                        [footerHeight]="40">
+                        <ngx-datatable-column name="Created By" prop="userName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
+                        <ngx-datatable-column name="Status" sortable="false">
+                            <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
+                                ngx-datatable-cell-template>
+                                <div *ngIf="row.status === 1">APPROVED</div>
+                                <div *ngIf="row.status === 2">DECLINED</div>
+                                <div *ngIf="row.status === 0">
+                                    <button class="btn btn-sm btn-primary" (click)="updateRequest(1, rowIndex)">
+                                        APPROVE</button>
+                                    <button class="btn btn-sm btn-primary" (click)="updateRequest(2, rowIndex)">
+                                        DECLINE</button>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div *ngIf="waterJetMachineFlag">
+            <nb-card class="nb-style">
+                <nb-card-header class="nb-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="nb-text">Water Jet Report</h2>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <ngx-datatable [rows]="waterJetList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+                        [footerHeight]="31">
+                        <ngx-datatable-column name="Efficiency" prop="efficieny"></ngx-datatable-column>
+                        <ngx-datatable-column name="Meter" prop="mtr"></ngx-datatable-column>
+                    </ngx-datatable>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="machine-cards" *ngIf="machineReportFlag">
+            <div class="row">
+                <div class="col-md-4" *ngFor="let cat of machineCategory">
+                    <button type="button" (click)="categorySelected(cat)" class="card-machine">
+                        <h2 *ngIf="cat.name=='string'" class="machine-btn-text">Water Jet </h2>
+                        <h2 *ngIf="cat.name!='string'" class="machine-btn-text"> {{cat.name}}</h2>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="machine-cards" *ngIf="MachineFlag">
+            <div class="row">
+                <div class="col-md-4" *ngFor="let machine of machines">
+                    <div class="machine-main-card">
+                        <div class="date-card">
+                            <div class="date-card-header">
+                                <h2>{{machine.machineName}}</h2>
+                            </div>
+                        </div>
+                        <div class="date-card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="eff-text">
+                                        <h2 class="tble-txt">Eff:</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="eff-data">
+                                        <input type="text" class="tble-in">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="eff-text">
+                                        <h2 class="tble-txt">Speed:</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="eff-data">
+                                        <input type="text" class="tble-in">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-night-picker">
+                            <div class="container">
+                                <div class="form-group">
+                                    <strong><label>Select Date & Time</label></strong>
+                                    <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1"
+                                        [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                    <owl-date-time [showSecondsTimer]="true" [startAt]="startAt"
+                                        (afterPickerClosed)="change(dt1)" #dt1>
+                                    </owl-date-time>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date-time-btn container">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="day-machine">
+                                        <button type="button" (click)="day(machine)"
+                                            class="btn btn-primary btn-sm btn-design">Day</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="night-machine">
+                                        <button type="button" (click)="night(machine)"
+                                            class="btn btn-primary btn-sm btn-design">Night</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="ChartFlag" class="chart-day-night">
             <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
                 [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
                 [plugins]="lineChartPlugins">
             </canvas>
         </div>
+        <div *ngIf="NoDataFlag">
+            <h1 style="color: #aa3634;">No data found</h1>
+        </div>
+
+        <div *ngIf="buttonFlag" class="mobile-btn-center">
+            <button class="btn btn-primary btn-sm btn-design" (click)="back()">BACK</button>
+        </div>
+
     </nb-card-body>
 </nb-card>

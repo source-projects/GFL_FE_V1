@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FinishedMeter } from "app/@theme/model/finished-meter";
+import * as errorData from "app/@theme/json/error.json";
+import { BatchData, FinishedMeter } from "app/@theme/model/finished-meter";
 import { CommonService } from "app/@theme/services/common.service";
+import { FinishedMeterService } from "app/@theme/services/finished-meter.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { FinishedMeterService } from "app/@theme/services/finished-meter.service";
 import { ToastrService } from "ngx-toastr";
-import * as errorData from "app/@theme/json/error.json";
 
 @Component({
   selector: "ngx-add-edit-finished-meter",
@@ -23,8 +23,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
   batchList;
   qualityList;
   index: string;
-  indexOfBatchData:number = 1;
-  sequenceArray :Array<number> = [];
+  indexOfBatchData: number = 1;
+  sequenceArray: Array<number> = [];
+  public totalFinishMeter: number = 0;
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
@@ -41,6 +42,12 @@ export class AddEditFinishedMeterComponent implements OnInit {
     this.getAllParty();
     this.getAllQuality();
     this.getAllMasters();
+  }
+
+  //resetForm..
+  resetAll(myForm) {
+    this.batchList = null;
+    myForm.reset();
   }
 
   //get userId and userHeadId of logged in user and get current finishedMeter id from url
@@ -125,9 +132,11 @@ export class AddEditFinishedMeterComponent implements OnInit {
     this.batchList.forEach((b) => {
       if (this.finishedMeterForm.batchId == b.batchId) {
         controlId = b.controlId;
-        //set party and quality according to batch
-        this.finishedMeterForm.partyId = b.partyId;
-        this.finishedMeterForm.qualityId = b.qualityEntryId;
+        if (this.finishedMeterForm.masterId) {
+          //set party and quality according to batch
+          this.finishedMeterForm.partyId = b.partyId;
+          this.finishedMeterForm.qualityId = b.qualityEntryId;
+        }
       }
     });
 
@@ -137,27 +146,26 @@ export class AddEditFinishedMeterComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.finishedMeterForm.batchData = data["data"];
-            this.setSequenceNo();
+
+            this.finishedMeterForm.batchData.forEach(e=>{
+              this.totalFinishMeter += e.finishMtr
+              if(e.mtr)
+                e.sequenceId = e.id
+            })
+            this.setSequenceNo(false);
             this.setArrayOfSequence();
             this.setfinishedSequenceAccordingToIdReverse();
-            this.finishedMeterForm.batchData.push({
-              seqNo: this.indexOfBatchData,
-              id: 0,
-              mtr: null,
-              wt: null,
-              batchId: data["data"][0].batchId,
-              controlId: data["data"][0].controlId,
-              isProductionPlanned: false,
-              isExtra: false,
-              sequenceId: 0,
-              finishMtr: 0,
-              isBillGenrated: false,
-            });
-            
-          } else this.toastr.error(data["msg"]);
+
+            let obj = new BatchData();
+            obj.batchId = data["data"][0].batchId;
+            obj.controlId = data["data"][0].controlId;
+            obj.seqNo = this.indexOfBatchData;
+            this.finishedMeterForm.batchData.push({ ...obj });
+            this.setSequenceNo(false);
+          } //else this.toastr.error(data["msg"]);
         },
         (error) => {
-          this.toastr.error(errorData.Internal_Error);
+          // this.toastr.error(errorData.Internal_Error);
         }
       );
   }
@@ -165,15 +173,24 @@ export class AddEditFinishedMeterComponent implements OnInit {
   //Quality change event
   qualitySelected(event) {
     if (event != undefined) {
+      this.finishedMeterForm.batchId = null;
       this.batchList = null;
       let pid;
       let qid;
+
+      //set party from quality...
+      if (!this.finishedMeterForm.partyId) {
+        let obj = this.qualityList.find(
+          (ob) => ob.id === this.finishedMeterForm.qualityId
+        );
+        this.finishedMeterForm.partyId = obj.partyId;
+      }
+
       this.qualityList.forEach((e) => {
-        if (
-          e.id ? e.id : e.qualityEntryId == this.finishedMeterForm.qualityId
-        ) {
+        let id = e.id ? e.id : e.qualityEntryId;
+        if (id == this.finishedMeterForm.qualityId) {
           pid = e.partyId;
-          qid = e.id ? e.id : e.qualityEntryId;
+          qid = id;
         }
       });
 
@@ -181,13 +198,14 @@ export class AddEditFinishedMeterComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.batchList = data["data"];
-          } else this.toastr.error(data["msg"]);
+          } //else this.toastr.error(data["msg"]);
         },
         (error) => {
-          this.toastr.error(errorData.Internal_Error);
+          //this.toastr.error(errorData.Internal_Error);
         }
       );
     } else {
+      this.finishedMeterForm.batchId = null;
       this.batchList = null;
       this.getAllQuality();
     }
@@ -198,32 +216,11 @@ export class AddEditFinishedMeterComponent implements OnInit {
     this.batchList = null;
     this.finishedMeterForm.batchId = null;
     if (event != undefined) {
-      // this.finishedMeterService
-      //   .getPartyQualityByMaster(this.finishedMeterForm.masterId)
-      //   .subscribe(
-      //     (data) => {
-      //       if (data["success"]) {
-      //         //Parties....
-      //         let i = 0;
-      //         data["data"].forEach((e) => {
-      //           this.partyList[i].id = e.partyId;
-      //           this.partyList[i].partyName = e.partyName;
-      //           i++;
-      //         });
-      //         if(this.partyList.length > i){
-      //           this.partyList.splice(i,this.partyList.length)
-      //         }
-
-      //         //Qualities....
-      //         data["data"].forEach((e) => {
-      //           this.qualityList += e.qualityDataList;
-      //         });
-      //       } else this.toastr.error(data["msg"]);
-      //     },
-      //     (error) => {
-      //       this.toastr.error(errorData.Internal_Error);
-      //     }
-      //   );
+      this.qualityList.forEach((e) => {
+        let id = e.id ? e.id : e.qualityEntryId;
+        if (id == this.finishedMeterForm.qualityId)
+          this.finishedMeterForm.partyId = e.partyId;
+      });
 
       //get batch by masterId
       this.finishedMeterService
@@ -243,6 +240,13 @@ export class AddEditFinishedMeterComponent implements OnInit {
 
   //On enter pressed -> check empty field, add new row
   onKeyUp(e, rowIndex, colIndex, colName) {
+    //catculate total finish meter
+    this.totalFinishMeter = this.finishedMeterForm.batchData
+      .map((a) => a.finishMtr)
+      .reduce(function (a, b) {
+        return a + b;
+      });
+
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13 && (colIndex == 3 || colIndex == 4)) {
       this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
@@ -253,62 +257,35 @@ export class AddEditFinishedMeterComponent implements OnInit {
             this.toastr.error("Enter finish meter and sequence to add new row");
             return;
           }
-          let obj = {
-            seqNo: this.indexOfBatchData+1,
-            id: 0,
-            mtr: null,
-            wt: null,
-            batchId: this.finishedMeterForm.batchData[0].batchId,
-            controlId: this.finishedMeterForm.batchData[0].controlId,
-            isProductionPlanned: false,
-            isExtra: false,
-            sequenceId: 0,
-            finishMtr: 0,
-            isBillGenrated: false,
-          };
-          let list = this.finishedMeterForm.batchData;
-          list.push(obj);
-          this.finishedMeterForm.batchData = [...list];
-          let interval = setInterval(() => {
-            let field = document.getElementById(this.index);
-            if (field != null) {
-              field.focus();
-              clearInterval(interval);
-            }
-          }, 10);
-          this.setSequenceNo();
         } else if (colName == "sequence") {
           if (!item.finishMtr) {
             this.toastr.error("Enter finish meter and sequence to add new row");
             return;
           }
-          let obj = {
-            seqNo: this.indexOfBatchData + 1,
-            id: 0,
-            mtr: null,
-            wt: null,
-            batchId: this.finishedMeterForm.batchData[0].batchId,
-            controlId: this.finishedMeterForm.batchData[0].controlId,
-            isProductionPlanned: false,
-            isExtra: false,
-            sequenceId: 0,
-            finishMtr: 0,
-            isBillGenrated: false,
-          };
-          let list = this.finishedMeterForm.batchData;
-          list.push(obj);
-          this.finishedMeterForm.batchData = [...list];
-          let interval = setInterval(() => {
-            let field = document.getElementById(this.index);
-            if (field != null) {
-              field.focus();
-              clearInterval(interval);
-            }
-          }, 10);
-          this.setSequenceNo();
         }
+        let obj = new BatchData();
+        obj.seqNo = this.indexOfBatchData + 1;
+        obj.batchId = this.finishedMeterForm.batchData[0].batchId;
+        obj.controlId = this.finishedMeterForm.batchData[0].controlId;
+        let list = this.finishedMeterForm.batchData;
+        list.push(obj);
+        this.finishedMeterForm.batchData = [...list];
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 10);
+        this.setSequenceNo(false);
       } else {
-        this.toastr.error("Go to any last row input to add new row");
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 10);
       }
     }
   }
@@ -317,84 +294,45 @@ export class AddEditFinishedMeterComponent implements OnInit {
   removeMeter(event, rowIndex) {
     let idCount = this.finishedMeterForm.batchData.length;
     let item = this.finishedMeterForm.batchData;
-    if (item[rowIndex].id != 0 || item[rowIndex].id != 0) {
-      //call delete batchData by id
-      this.finishedMeterService
-        .deleteBatchDataById(item[rowIndex].id)
-        .subscribe(
-          (data) => {
-            if (data["success"]) {
-              let removed = item.splice(rowIndex, 1);
-              let list = item;
-              this.finishedMeterForm.batchData = [...list];
-              this.setSequenceNo();
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {
-            this.toastr.error(error["error"].error);
-          }
-        );
+    if (idCount == 1) {
+      let obj = new BatchData();
+      obj.batchId = this.finishedMeterForm.batchData[0].batchId;
+      obj.controlId = this.finishedMeterForm.batchData[0].controlId;
+      let list = [{ ...obj }];
+      this.finishedMeterForm.batchData = [...list];
+    } else if (idCount - 1 == rowIndex) {
+      this.toastr.error("You can't remove last row");
     } else {
-      if (idCount == 1) {
-        item[0].seqNo = 0;
-        item[0].id = 0;
-        item[0].mtr = null;
-        item[0].wt = null;
-        item[0].batchId = this.finishedMeterForm.batchData[0].batchId;
-        item[0].controlId = this.finishedMeterForm.batchData[0].controlId;
-        item[0].isProductionPlanned = false;
-        item[0].isExtra = false;
-        item[0].sequenceId = 0;
-        item[0].finishMtr = 0;
-        item[0].isBillGenrated = false;
-        let list = item;
-        this.finishedMeterForm.batchData = [...list];
-      } else if (idCount - 1 == rowIndex) {
-        this.toastr.error("You can't remove last row");
-      } else {
-        let removed = item.splice(rowIndex, 1);
-        let list = item;
-        this.finishedMeterForm.batchData = [...list];
-        this.sequenceArray.splice(rowIndex,1)
-      }
+      let removed = item.splice(rowIndex, 1);
+      let list = item;
+      this.finishedMeterForm.batchData = [...list];
+      this.sequenceArray.splice(rowIndex, 1);
     }
-    this.setSequenceNo();
+    this.setSequenceNo(false);
   }
 
   //Add finished Meter data
   addFinishedMeter(myForm) {
-    //console.log(myForm.value);
-    let flag1 = false;
-    let flag2 = false;
-    let totalMtr = 0;
-    let totalFMtr = 0;
+    let isFinishMtrflag = false;
+    let isSeqIdForExtraflag2 = false;
     this.finishedMeterForm.batchData.forEach((b) => {
       if (b.finishMtr == null) {
-        flag1 = true;
+        isFinishMtrflag = true;
       }
       if (
         b.id == 0 &&
         b.finishMtr > 0 &&
         (b.sequenceId == 0 || b.sequenceId == null)
       )
-        flag2 = true;
-      else {
-        totalMtr += b.mtr;
-        totalFMtr += b.finishMtr;
-      }
+        isSeqIdForExtraflag2 = true;
     });
-    if (flag1 == false) {
-      if (totalMtr < totalFMtr)
-        this.toastr.error("Finished meter is more than actual meter");
-      else if (flag2) {
+    if (isFinishMtrflag == false) {
+      if (isSeqIdForExtraflag2) {
         this.toastr.error("Please enter sequence id for extra meter");
       } else {
         let f = false;
         this.finishedMeterForm.batchData.forEach((e) => {
-          if ( ((e.finishMtr != 0 || e.finishMtr == null) && !e.sequenceId) || (!e.finishMtr && (e.sequenceId != 0 || e.sequenceId == null) ))
-            f = true;
+          if (!e.mtr) if (!e.finishMtr && e.sequenceId) f = true;
         });
         if (f) {
           this.toastr.error("Please fill sequence id and finish meter both.");
@@ -411,28 +349,38 @@ export class AddEditFinishedMeterComponent implements OnInit {
             count++;
           });
 
-
+          let allSequenceValid = true;
           this.setfinishedSequenceAccordingToId();
-          
-          this.finishedMeterService
-            .addFinishedMeter(this.finishedMeterForm.batchData)
-            .subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.toastr.success(data["msg"]);
-                  myForm.reset();
-                  this.batchList = null;
-                  this.finishedMeterForm.batchData = null;
-                } else{
-                  this.toastr.error(data["msg"]);
-                  this.setSequenceNo();
-                } 
-              },
-              (error) => {
-                this.toastr.error(errorData.Internal_Error);
-                this.setSequenceNo();
-              }
+          this.finishedMeterForm.batchData.forEach((e) => {
+            let isIdValid = this.finishedMeterForm.batchData.some(
+              (ob) => ob.id === e.sequenceId
             );
+            if (!isIdValid) allSequenceValid = false;
+          });
+          if (allSequenceValid) {
+            this.finishedMeterService
+              .addFinishedMeter(this.finishedMeterForm.batchData)
+              .subscribe(
+                (data) => {
+                  if (data["success"]) {
+                    this.toastr.success(data["msg"]);
+                    myForm.reset();
+                    this.batchList = null;
+                    this.finishedMeterForm.batchData = null;
+                  } else {
+                    this.toastr.error(data["msg"]);
+                    this.setSequenceNo(false);
+                  }
+                },
+                (error) => {
+                  this.toastr.error(errorData.Internal_Error);
+                  this.setSequenceNo(false);
+                }
+              );
+          } else {
+            this.toastr.error("Invalid sequence-id entered");
+            this.setfinishedSequenceAccordingToIdReverse();
+          }
         }
       }
     } else {
@@ -440,31 +388,32 @@ export class AddEditFinishedMeterComponent implements OnInit {
     }
   }
 
-  setArrayOfSequence(){
-    for(let i = 0; i< this.indexOfBatchData-1; i++){
-      this.sequenceArray[i] = this.finishedMeterForm.batchData[i].id
+  setArrayOfSequence() {
+    for (let i = 0; i < this.indexOfBatchData - 1; i++) {
+      this.sequenceArray[i] = this.finishedMeterForm.batchData[i].id;
     }
   }
 
   //for add
-  setfinishedSequenceAccordingToId(){
-    this.finishedMeterForm.batchData.forEach(e => {
-      e.sequenceId = this.sequenceArray[e.sequenceId-1]
+  setfinishedSequenceAccordingToId() {
+    this.finishedMeterForm.batchData.forEach((e) => {
+      e.sequenceId = this.sequenceArray[e.sequenceId - 1];
     });
   }
 
   //for update
-  setfinishedSequenceAccordingToIdReverse(){
-    this.finishedMeterForm.batchData.forEach(e => {
-      e.sequenceId = this.sequenceArray.indexOf(e.sequenceId)+1
+  setfinishedSequenceAccordingToIdReverse() {
+    this.finishedMeterForm.batchData.forEach((e) => {
+      e.sequenceId = this.sequenceArray.indexOf(e.sequenceId) + 1;
     });
   }
 
-  setSequenceNo(){
-    this.indexOfBatchData = 1
-    this.finishedMeterForm.batchData.forEach(e=>{
-      e.seqNo = this.indexOfBatchData
+  setSequenceNo(isFirstTime) {
+    this.indexOfBatchData = 1;
+    this.finishedMeterForm.batchData.forEach((e) => {
+      e.seqNo = this.indexOfBatchData;
       this.indexOfBatchData++;
-    })
+      if (isFirstTime) e.sequenceId = e.id;
+    });
   }
 }

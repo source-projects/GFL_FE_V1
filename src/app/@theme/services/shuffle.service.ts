@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -11,5 +11,9 @@ export class ShuffleService {
 
   updateBatchMerge(newBatchData){
     return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/MergeBatch',newBatchData);
+  }
+
+  updateBatchSplit(newBatchData){
+    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/SplitBatch',newBatchData);
   }
 }
