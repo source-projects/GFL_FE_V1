@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './@theme/guards/auth.guard';
 import { PrintLayoutComponent } from './@theme/components/print-Layout/print-layout.component';
-import { InvoiceComponent } from './@theme/components/invoice/invoice.component';
 import { ColorGuard } from './@theme/guards/color.guard';
 import { PartyGuard } from './@theme/guards/party.guard';
 import { ProgramGuard } from './@theme/guards/program.guard';
@@ -154,22 +153,6 @@ export const routes: Routes = [
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' },
-  {
-    path: 'print',
-    // outlet: 'print',
-    component: PrintLayoutComponent,
-    
-    children: [
-      { path: 'invoice/:invoiceIds', component: InvoiceComponent }
-    ]
-  },
-  {
-    path: 'export',
-    component: PrintLayoutComponent,
-    children: [
-      { path: 'invoice', component: InvoiceComponent }
-    ]
-  },
   
 ];
 @NgModule({

@@ -17,8 +17,8 @@ export class PrintInvoiceService {
     this.isPrinting = true;
     let url: any;
     if (isPdf) {
-      url = this.router.createUrlTree(['./export/invoice']);
-      window.open(url.toString(), '_blank');
+      this.router.navigate(['/export/invoice']);
+      //window.open(url.toString(), '_blank');
     } else {
       this.isExport = false;
       this.isPrint = true;

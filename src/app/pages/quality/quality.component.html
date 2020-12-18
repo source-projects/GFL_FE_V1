@@ -5,14 +5,15 @@
             <div class="col-md-1 col-3 mobile-btn desktop-btn">
                 <button class="btn btn-primary btn-md btn-list" routerLink="add" [disabled]="disabled" >ADD</button>
             </div>
-            <div class="col-md-9 col-7">
+            <div class="col-md-5 col-7">
                 <h2 class="nb-text">Quality</h2>
             </div>
-            <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
-                <button style="float:right; " class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
-                <button style="float: right;" class="btn btn-primary btn-md btn-list" status="info" (click)="onPrintInvoice(false) " >Print
+            <div class="col-md-6 col-2 mobile-btn desktop-btn dek-jus">
+                <button style="float:right; margin-right: 20px;" class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
+                <button style="float: right;" class="btn btn-primary btn-md btn-list" status="info" (click)="onPrintInvoice(true) " >Print
                     Invoice</button>
             </div>
+            
         </div>  
     </nb-card-header>
     <nb-card-body>

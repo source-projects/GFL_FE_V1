@@ -12,7 +12,6 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PrintLayoutComponent } from "./@theme/components/print-Layout/print-layout.component";
-import { InvoiceComponent } from "./@theme/components/invoice/invoice.component";
 
 //import { FileSaverModule } from 'ngx-filesaver';
 
@@ -32,8 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [AppComponent,
-    PrintLayoutComponent,
-    InvoiceComponent
+    PrintLayoutComponent
   ],
   imports: [
     // FileSaverModule,
