@@ -19,7 +19,7 @@ const routes: Routes = [
     component: DynamicProcessComponent,
     canActivate: [ProcessGuard],
     canLoad: [ProcessGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   },
   {
     path: 'add-dynamic-process',

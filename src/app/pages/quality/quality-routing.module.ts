@@ -24,7 +24,7 @@ const routes: Routes = [
     component: AddEditQualityComponent,
     canActivate: [QualityGuard],
     canLoad: [QualityGuard],
-    data: { PermissionName: ['edit'] }
+    data: { PermissionName: ['edit','edit group','edit all'] }
   }
 ];
 

@@ -24,7 +24,7 @@ const routes: Routes = [
     component:AddEditShadeComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

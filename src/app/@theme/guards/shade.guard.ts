@@ -23,6 +23,8 @@ export class ShadeGuard implements CanActivate {
    var permission = this.jwtToken.getDecodeToken('shade');
    this.permis = this.commonService.decToBin(permission);
    let PermissionName = route.data["PermissionName"];  
+   if(PermissionName.length==1){
+
   switch (PermissionName[0]) {
     case 'view':
       if (this.permis[0] == '1')
@@ -95,6 +97,16 @@ export class ShadeGuard implements CanActivate {
       return false;}
 
   }
+}
+else if(PermissionName.length==3){
+
+      if (this.permis[0] == '1' || this.permis[4] == '1' || this.permis[5] == '1' )
+        return true;
+      else
+      {this._router.navigate(['/pages']);
+      return false;}
+
+}
   }
   
   canLoad(

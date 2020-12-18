@@ -24,7 +24,7 @@ const routes: Routes = [
     component: AddEditProgramComponent,
     canActivate: [ProgramGuard],
     canLoad: [ProgramGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

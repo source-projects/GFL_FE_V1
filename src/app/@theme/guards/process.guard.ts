@@ -23,7 +23,9 @@ export class ProcessGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('process');
     this.permis = this.commonService.decToBin(permission);
     let PermissionName = route.data["PermissionName"];
-   switch (PermissionName[0]) {
+    if(PermissionName.length==1){
+
+    switch (PermissionName[0]) {
      case 'view':
        if (this.permis[0] == '1')
          return true;
@@ -59,6 +61,16 @@ export class ProcessGuard implements CanActivate {
        return false;
     }    
     }
+  }
+  else if(PermissionName.length==3){
+
+        if (this.permis[0] == '1' || this.permis[4] == '1' || this.permis[5] == '1' )
+          return true;
+        else
+        {this._router.navigate(['/pages']);
+        return false;}
+
+  }
   }
 
   canLoad(

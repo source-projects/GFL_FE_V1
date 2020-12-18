@@ -3,7 +3,11 @@ import { ProcessGuard } from 'app/@theme/guards/process.guard';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'app/@theme/services/common.service';
 @Component({
   selector: 'ngx-process',
   templateUrl: './process.component.html',
@@ -22,6 +26,8 @@ export class ProcessComponent implements OnInit {
   constructor(private processService: ProcessService,
     private toastr: ToastrService,
     public processGuard: ProcessGuard,
+    private modalService: NgbModal,
+    private commonService: CommonService,
     private jwtToken: JwtTokenService,) { }
 
   ngOnInit(): void {
@@ -70,18 +76,25 @@ export class ProcessComponent implements OnInit {
     
   }
   deleteProcess(id){
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm"
+    });
     this.processService.deleteProcess(id).subscribe(
-      data=>{
+      (data)=>{
         if(data['success']){
           this.toastr.success(data['msg'])
           this.processList = null;
           this.getProcessList();
+          this.toastr.success(errorData.Delete)
+
         }
           else
           this.toastr.success(data['msg'])
       },
       error=>{
         this.toastr.success('Internal server error')
+        this.toastr.error(errorData.Serever_Error)
+
       }
     )
   }

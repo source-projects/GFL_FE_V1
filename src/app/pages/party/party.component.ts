@@ -28,7 +28,7 @@ export class PartyComponent implements OnInit {
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
   fileType:string="abc";
   flag=false;
-  radioSelect = 1;
+  radioSelect = 0;
   radioArray = [
     {id:1, value:"View Own" , disabled:false},
     {id:2, value:"View Group", disabled:false},
@@ -68,19 +68,37 @@ export class PartyComponent implements OnInit {
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
-
     this.getViewAccess();
     this.getAddAcess();
-    this.getAllParty(this.userId,"own");
+    // this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    
+    if(this.partyGuard.accessRights('view')){
+      this.getAllParty(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.partyGuard.accessRights('view group')){
+      this.getAllParty(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.partyGuard.accessRights('view all')){
+      this.getAllParty(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
 
   getAllParty(id,getBy) {
     this.loading = true;
+   
     this.partyService.getAllPartyList(id,getBy).subscribe(
       (data) => {
        
@@ -88,7 +106,6 @@ export class PartyComponent implements OnInit {
           this.partyList = data["data"];
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
-    
         }
         else {
           // this.toastr.error(data['msg'])

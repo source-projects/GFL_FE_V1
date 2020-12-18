@@ -28,7 +28,7 @@ export class ProgramComponent implements OnInit {
 
   userId;
   userHeadId;
-  radioSelect = 1;
+  radioSelect = 0;
   radioArray = [
     { id: 1, value: "View Own" , disabled:false },
     { id: 2, value: "View Group" , disabled:false},
@@ -68,11 +68,30 @@ export class ProgramComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
     this.getAddAcess();
-    this.getProgramList(this.userId, "own");
+    // this.getProgramList(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.programGuard.accessRights('view')){
+      this.getProgramList(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.programGuard.accessRights('view group')){
+      this.getProgramList(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.programGuard.accessRights('view all')){
+      this.getProgramList(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess(){
     if(this.programGuard.accessRights('add')){

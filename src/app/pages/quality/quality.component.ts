@@ -30,7 +30,7 @@ export class QualityComponent implements OnInit {
   flag = false;
 
   
-  radioSelect = 1;
+  radioSelect = 0;
   userId;
   userHeadId;
   tableStyle = 'bootstrap';
@@ -66,11 +66,30 @@ export class QualityComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
     this.getAddAcess();
-    this.getQualityList(this.userId, "own");
+    // this.getQualityList(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.qualityGuard.accessRights('view')){
+      this.getQualityList(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.qualityGuard.accessRights('view group')){
+      this.getQualityList(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.qualityGuard.accessRights('view all')){
+      this.getQualityList(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess(){
     if(this.qualityGuard.accessRights('add')){

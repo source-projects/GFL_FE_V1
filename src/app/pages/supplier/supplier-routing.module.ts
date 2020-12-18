@@ -37,7 +37,7 @@ const routes: Routes = [
     component:AddEditSupplierComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

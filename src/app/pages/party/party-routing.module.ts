@@ -24,7 +24,7 @@ const routes: Routes = [
     component:AddEditPartyComponent,
     canActivate: [PartyGuard],
     canLoad: [PartyGuard],
-    data: { PermissionName: ['edit']} 
+    data: { PermissionName: ['edit','edit group','edit all']} 
   }
   
 ];

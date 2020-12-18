@@ -24,7 +24,7 @@ const routes: Routes = [
     component:AddEditColorComponent,
     canActivate:[ColorGuard],
     canLoad:[ColorGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   },
 
 ];

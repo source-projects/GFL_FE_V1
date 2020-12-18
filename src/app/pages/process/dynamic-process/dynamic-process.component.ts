@@ -351,6 +351,7 @@ export class DynamicProcessComponent implements OnInit {
           }
         );
       } else {
+        this.toastr.error("Enter the steps")
         return;
       }
     }
