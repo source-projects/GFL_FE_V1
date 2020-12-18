@@ -27,6 +27,8 @@ export class ColorComponent implements OnInit {
  colorList=[];
  color=[];
  headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
+ module="color";
+
  radioSelect=1;
  flag = false;
 
@@ -117,6 +119,8 @@ export class ColorComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.color;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getColor(id, getBy) {

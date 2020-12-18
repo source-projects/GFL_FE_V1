@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { ProcessGuard } from 'app/@theme/guards/process.guard';
+import { ExportService } from 'app/@theme/services/export.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,8 +15,15 @@ import { ToastrService } from 'ngx-toastr';
 export class ProcessComponent implements OnInit {
   processList;
   tablestyle : "bootstrap";
+  process=[];
+  headers=["Name" ];
+  module="process";
+
+  flag = false;
 
   permissions: Number;
+  access:Boolean = false;
+ 
 
   hiddenDelete:boolean=true;
   hiddenEdit:boolean=true;
@@ -22,7 +32,9 @@ export class ProcessComponent implements OnInit {
   constructor(private processService: ProcessService,
     private toastr: ToastrService,
     public processGuard: ProcessGuard,
-    private jwtToken: JwtTokenService,) { }
+    private jwtToken: JwtTokenService,
+    private modalService: NgbModal,
+    private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.getProcessList();
@@ -34,6 +46,10 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success'])
           this.processList = data["data"];
+          console.log(this.processList);
+           this.process = this.processList.map((element) => ({
+            name: element.name
+           }))
           // else
           // this.toastr.error(data['msg'])
       },
@@ -84,6 +100,16 @@ export class ProcessComponent implements OnInit {
         this.toastr.success('Internal server error')
       }
     )
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.process;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
 }

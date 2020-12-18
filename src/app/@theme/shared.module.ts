@@ -33,10 +33,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ToastrModule } from 'ngx-toastr/toastr/toastr.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import{ ExportService} from './services/export.service';
-import { ExportDirective } from './directives/export.directive';
+import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -76,11 +76,15 @@ const NB_MODULES = [
 ];
 
 @NgModule({
-  declarations: [ExportDirective],
+  declarations: [    ExportPopupComponent
+  ],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
-    OwlNativeDateTimeModule],
-  exports: [...NB_MODULES,ExportDirective ,NgxLoadingModule,OwlDateTimeModule,
+    OwlNativeDateTimeModule, NgbModule
+  ],
+
+  exports: [...NB_MODULES ,NgxLoadingModule,OwlDateTimeModule,
     OwlNativeDateTimeModule,],
-  providers:[ ExportService ,DatePipe]
+  providers:[ ExportService ,DatePipe],
+  entryComponents: [ ExportPopupComponent ]
 })
 export class SharedModule { }
