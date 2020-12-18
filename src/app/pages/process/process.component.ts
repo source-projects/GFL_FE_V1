@@ -23,6 +23,10 @@ export class ProcessComponent implements OnInit {
   access:Boolean = false;
  
 
+  hiddenDelete:boolean=true;
+  hiddenEdit:boolean=true;
+  addButtonDisabled:boolean=false;
+
   constructor(private processService: ProcessService,
     private toastr: ToastrService,
     public processGuard: ProcessGuard,
@@ -32,6 +36,7 @@ export class ProcessComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProcessList();
+    this.getAccessPermissions();
   }
 
   getProcessList(){
@@ -48,7 +53,32 @@ export class ProcessComponent implements OnInit {
       }
     )
   }
+  getAccessPermissions(){
+    if(this.processGuard.accessRights('edit')){
+      
+      this.hiddenEdit=false;
+    }
+    else{
+      this.hiddenEdit=true;
+    }
 
+    if(this.processGuard.accessRights('delete')){
+      
+      this.hiddenDelete=false;
+    }
+    else{
+      this.hiddenDelete=true;
+    }
+
+    if(this.processGuard.accessRights('add')){
+      
+      this.addButtonDisabled=false;
+    }
+    else{
+      this.addButtonDisabled=true;
+    }
+    
+  }
   deleteProcess(id){
     this.processService.deleteProcess(id).subscribe(
       data=>{

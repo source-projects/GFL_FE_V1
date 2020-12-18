@@ -1,12 +1,12 @@
-import { Component,Renderer2, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
 import { ShadeService } from "app/@theme/services/shade.service";
-import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import * as errorData from "app/@theme/json/error.json";
+import { SupplierService } from "app/@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -16,6 +16,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddEditShadeComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
+
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
@@ -65,7 +67,6 @@ export class AddEditShadeComponent implements OnInit {
     this.getQualityList();
     this.getProcessList();
     this.getSupplierList();
-    //this.getCurrentShade();
     this.getUpdateData();
   }
 
@@ -180,28 +181,6 @@ export class AddEditShadeComponent implements OnInit {
     );
   }
 
-  getCurrentShade() {
-    this.loading = true;
-    this.currentShadeId = this._route.snapshot.paramMap.get("id");
-    if (this.currentShadeId != null) {
-      this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.shades = data["data"];
-            this.loading = false;
-          } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-          }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
-          this.loading = false;
-        }
-      );
-    }
-  }
-
   getUpdateData() {
     this.loading = true;
     if (this.currentShadeId != null) {
@@ -212,11 +191,13 @@ export class AddEditShadeComponent implements OnInit {
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
+            this.getQualityList();
             this.quality.forEach((e) => {
-              if (e.id == data["data"].qualityEntryId)
+              if (e.id == data["data"].qualityEntryId) {
                 this.shades.qualityId = e.qualityId;
-              this.shades.qualityName = e.qualityName;
-              this.shades.qualityType = e.qualityType;
+                this.shades.qualityName = e.qualityName;
+                this.shades.qualityType = e.qualityType;
+              }
               this.loading = false;
             });
             this.setProcessName(this.shades.processId);
@@ -275,8 +256,7 @@ export class AddEditShadeComponent implements OnInit {
               this.loading = false;
             });
             this.loading = false;
-          }
-          else {
+          } else {
             // this.toastr.error(data["msg"]);
             this.quality = null;
             this.loading = false;
@@ -296,12 +276,9 @@ export class AddEditShadeComponent implements OnInit {
     let count = 0;
     this.shades.shadeDataList.forEach((e) => {
       if (count != rowIndex) {
-        if (e.itemName == id)
-          flag = true;
+        if (e.itemName == id) flag = true;
         count++;
-      }
-      else
-        count++;
+      } else count++;
     });
     if (!flag) {
       let newSupplierId;
@@ -320,12 +297,13 @@ export class AddEditShadeComponent implements OnInit {
           break;
         }
       }
-    }
-    else {
-      // this.toastr.error("This item name is already selected")
-      //this.shades.shadeDataList[rowIndex].itemName = null;
-      row.itemName = null;
-      this.shades.shadeDataList[rowIndex] = row;
+    } else {
+      this.toastr.error("This item name is already selected");
+      this.shades.shadeDataList[rowIndex].itemName = "";
+      this.shades.shadeDataList[rowIndex].concentration = null;
+      this.shades.shadeDataList[rowIndex].supplierId = 0;
+      this.shades.shadeDataList[rowIndex].rate = null;
+      this.shades.shadeDataList[rowIndex].amount = null;
       // .splice(rowIndex,1);
 
       // let obj = {
@@ -348,7 +326,7 @@ export class AddEditShadeComponent implements OnInit {
     let con = this.shades.shadeDataList[rowIndex].concentration;
     let newRate = this.shades.shadeDataList[rowIndex].rate;
     let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-    this.shades.shadeDataList[rowIndex].amount = amount;
+    if (amount) this.shades.shadeDataList[rowIndex].amount = amount;
   }
 
   setProcessName(id) {
@@ -423,6 +401,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   addShade(shadeForm) {
+    this.disableButton = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
@@ -440,12 +419,10 @@ export class AddEditShadeComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    }
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
+    } else {
+      this.disableButton = false;
+      const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-
     }
   }
 
@@ -468,6 +445,8 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   updateShade(shadeForm) {
+    this.disableButton = true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
@@ -477,10 +456,8 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
-            
           } else {
             this.toastr.error(errorData.Update_Error);
-           
           }
           this.loading = false;
         },
@@ -489,12 +466,9 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       );
-    }
-    else 
-    {
-      const errorField = this.renderer.selectRootElement('#target');
+    } else {
+      const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-
     }
   }
 }

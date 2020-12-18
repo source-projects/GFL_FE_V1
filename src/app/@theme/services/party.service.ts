@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +35,8 @@ export class PartyService {
   }
   getAllPartyNameList() {
     return this.httpClient.get(this.commonService.envUrl() + 'api/party/allPartyWithName');
+  }
+  getPartyCode(id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/party/partyCodeExist/'+id);
   }
 }

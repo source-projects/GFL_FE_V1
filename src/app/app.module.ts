@@ -26,6 +26,7 @@ import {
 
 } from '@nebular/theme';
 import { ToastrModule } from 'ngx-toastr';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -34,6 +35,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+      OwlDateTimeModule, 
+      OwlNativeDateTimeModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),

@@ -64,7 +64,7 @@
 
               <div class="invalid-feedback"
                 *ngIf="(email1.invalid)&&(formSubmitted || email1.touched)">
-                <span>Email is required.</span>
+                <span>Enter valid emial id.</span>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@
               <label class="required">Company</label>
               <ng-select name="company" #company1="ngModel" [(ngModel)]="user.company" [items]="companyList"
                 bindLabel="name" bindValue="name" placeholder="Select Company" required
-                [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}">
+                [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}" class="required-error-dropdown">
               </ng-select>
               <div class="required-class"
                 *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
@@ -127,8 +127,8 @@
               <label class="required">Designation</label>
               <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId"
                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation"
-                required>
-                <ng-option *ngFor="let dsgn of desiList" [ngValue]="dsgn.id">{{dsgn.designation}}</ng-option>
+                required class="required-error-dropdown">
+                <ng-option *ngFor="let dsgn of desiList" [value]="dsgn.id">{{dsgn.designation}}</ng-option>
               </ng-select>
               <div class="required-class"
                 *ngIf="(designation1.invalid)&&(formSubmitted || department1.touched)">
@@ -196,44 +196,44 @@
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.view" [name]="perm.module+'view'"
-            (change)="checkUncheckSelectAll(perm.view,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.view,i,'view')"></nb-checkbox>
         </td>
         <td>
-          <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" (change)="checkUncheckSelectAll(perm.add,i)">
+          <nb-checkbox [(ngModel)]="perm.add" [name]="perm.module+'add'" (change)="checkUncheckSelectAll(perm.add,i,'add')">
           </nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.edit" [name]="perm.module+'edit'"
-            (change)="checkUncheckSelectAll(perm.edit,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.edit,i,'edit')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.delete" [name]="perm.module+'delete'"
-            (change)="checkUncheckSelectAll(perm.delete,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.delete,i,'delete')"></nb-checkbox>
         </td>
 
         <td>
           <nb-checkbox [(ngModel)]="perm.viewGroup" [name]="perm.module+'viewGroup'"
-            (change)="checkUncheckSelectAll(perm.viewGroup,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.viewGroup,i,'viewGroup')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
-            (change)="checkUncheckSelectAll(perm.viewAll,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.viewAll,i,'viewAll')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
-            (change)="checkUncheckSelectAll(perm.editGroup,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.editGroup,i,'editGroup')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
-            (change)="checkUncheckSelectAll(perm.editAll,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.editAll,i,'editAll')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
-            (change)="checkUncheckSelectAll(perm.deleteGroup,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.deleteGroup,i,'deleteGroup')"></nb-checkbox>
         </td>
         <td>
           <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
-            (change)="checkUncheckSelectAll(perm.deleteAll,i)"></nb-checkbox>
+            (change)="checkUncheckSelectAll(perm.deleteAll,i,'deleteAll')"></nb-checkbox>
         </td>
       </tr>
     </table>
@@ -245,12 +245,12 @@
       <div class="col-md-12 mobile-btn-center text-btn-right">
 
 
-        <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
-          style="margin-right:20px" (click)=updateUser(myForm)>Update</button>
-        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-          routerLink="/pages/user">Cancel</button>
-        <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
-          style="margin-right:20px" (click)="addUser(myForm)">SAVE</button>
+                <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" [disabled]="disableButton" (click)=updateUser(myForm) >Update</button>
+                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                    routerLink="/pages/user">Cancel</button>
+                <button *ngIf="this.currentUserId == null" type="submit" class="btn btn-primary btn-sm btn-design"
+                    style="margin-right:20px" (click)="addUser(myForm)" [disabled]="disableButton">SAVE</button>
 
         </div>
       </div>
