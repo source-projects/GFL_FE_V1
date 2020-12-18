@@ -26,7 +26,7 @@ export class PartyComponent implements OnInit {
   partyList = [];
   party=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
-  fileType:string="abc";
+  module="party";
   flag=false;
   radioSelect = 1;
   radioArray = [
@@ -209,6 +209,7 @@ open(){
   const modalRef = this.modalService.open(ExportPopupComponent);
    modalRef.componentInstance.headers = this.headers;
    modalRef.componentInstance.list = this.party;
+   modalRef.componentInstance.moduleName = this.module;
 }
 
   deleteParty(id) {

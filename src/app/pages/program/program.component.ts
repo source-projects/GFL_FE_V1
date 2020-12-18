@@ -23,6 +23,8 @@ export class ProgramComponent implements OnInit {
   programList: any[];
   program=[];
   headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
+  module="program";
+
   tableStyle = "bootstrap";
   flag = false;
 
@@ -111,6 +113,8 @@ export class ProgramComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.program;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   public getProgramList(id, getBy) {

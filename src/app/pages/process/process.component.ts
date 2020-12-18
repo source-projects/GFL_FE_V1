@@ -16,7 +16,9 @@ export class ProcessComponent implements OnInit {
   processList;
   tablestyle : "bootstrap";
   process=[];
-  headers=["Stock In", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date", "Batch", "Record Count" ];
+  headers=["Name" ];
+  module="process";
+
   flag = false;
 
   permissions: Number;
@@ -44,6 +46,10 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success'])
           this.processList = data["data"];
+          console.log(this.processList);
+           this.process = this.processList.map((element) => ({
+            name: element.name
+           }))
           // else
           // this.toastr.error(data['msg'])
       },
@@ -102,6 +108,8 @@ export class ProcessComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.process;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
 }
