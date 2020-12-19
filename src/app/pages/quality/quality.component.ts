@@ -27,6 +27,8 @@ export class QualityComponent implements OnInit {
   qualityList=[];
   quality=[];
   headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
+  module="quality";
+
   flag = false;
 
   
@@ -129,6 +131,8 @@ open(){
   const modalRef = this.modalService.open(ExportPopupComponent);
    modalRef.componentInstance.headers = this.headers;
    modalRef.componentInstance.list = this.quality;
+   modalRef.componentInstance.moduleName = this.module;
+
 }
 
   getQualityList(id,getBy) {

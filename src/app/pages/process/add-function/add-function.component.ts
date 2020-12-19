@@ -108,6 +108,17 @@ export class AddFunctionComponent implements OnInit {
           this.funcObj.funcPosition = ele.funcPosition;
           this.funcObj.funcValue = ele.funcValue;
           this.dosing = ele.dosingFunc;
+          this.dosing.dosingChemical.forEach(element => { 
+    
+            this.itemListArray.forEach((e) => {
+              if (e.itemId == element.itemId){
+                element.supplierName = e.supplierName;
+              }
+              console.log(element);
+            });
+            
+          
+      }); 
           this.waterControl = ele.waterControlFunc;
           this.tempratureControl = ele.tempratureControlFunc;
           this.pumpControl = ele.pumpControlFunc;
@@ -233,9 +244,8 @@ export class AddFunctionComponent implements OnInit {
   onDoseTypeChange() {
     if (this.dosing.doseType == "color") {
       this.dosing.doseWhileHeating = false;
-      this.dosing.dosingChemical = []
     }else{
-      if(!this.itemListArray){
+      if(!this.itemListArray.length){
         this.processService.getAllItemWithSupplier().subscribe(
           data=>{
             if(data['success'])
@@ -244,7 +254,7 @@ export class AddFunctionComponent implements OnInit {
             //   // this.toastr.error(data['msg'])
           },
           error=>{
-            //  this.toastr.error(errorData.Internal_Error)
+              // this.toastr.error(errorData.Internal_Error)
           }
         )
       }

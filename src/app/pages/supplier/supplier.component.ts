@@ -25,6 +25,8 @@ export class SupplierComponent implements OnInit {
   supplierList = [];
   supplier = [];
   headers = ["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark"];
+  module="supplier";
+
   radioSelect = 0;
   flag = false;
   disabled = false;
@@ -131,6 +133,8 @@ export class SupplierComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.supplier;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
   public getSupplierList(id, getBy) {
     this.loading = true;

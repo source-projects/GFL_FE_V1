@@ -27,14 +27,9 @@ export class ShadeComponent implements OnInit {
   tableStyle = "bootstrap";
   shadeList = [];
   shade = [];
-  headers = [
-    "Party Shade No",
-    "Process Name",
-    "Quality Id",
-    "Quality Name",
-    "Party Name",
-    "Color Tone",
-  ];
+  headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
+  module="shade";
+
 
   radioSelect = 0;
   flag = false;
@@ -157,6 +152,8 @@ export class ShadeComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.shade;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getallShades(id, getBy) {

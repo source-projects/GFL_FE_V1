@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { ProcessGuard } from 'app/@theme/guards/process.guard';
+import { ExportService } from 'app/@theme/services/export.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProcessService } from 'app/@theme/services/process.service';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from 'app/@theme/json/error.json';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'app/@theme/services/common.service';
 @Component({
   selector: 'ngx-process',
@@ -16,8 +18,15 @@ import { CommonService } from 'app/@theme/services/common.service';
 export class ProcessComponent implements OnInit {
   processList;
   tablestyle : "bootstrap";
+  process=[];
+  headers=["Name" ];
+  module="process";
+
+  flag = false;
 
   permissions: Number;
+  access:Boolean = false;
+ 
 
   hiddenDelete:boolean=true;
   hiddenEdit:boolean=true;
@@ -28,7 +37,8 @@ export class ProcessComponent implements OnInit {
     public processGuard: ProcessGuard,
     private modalService: NgbModal,
     private commonService: CommonService,
-    private jwtToken: JwtTokenService,) { }
+    private jwtToken: JwtTokenService,
+    private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.getProcessList();
@@ -40,6 +50,10 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success'])
           this.processList = data["data"];
+          console.log(this.processList);
+           this.process = this.processList.map((element) => ({
+            name: element.name
+           }))
           // else
           // this.toastr.error(data['msg'])
       },
@@ -79,6 +93,8 @@ export class ProcessComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm"
     });
+    modalRef.result.then((result) => {
+      if (result) {
     this.processService.deleteProcess(id).subscribe(
       (data)=>{
         if(data['success']){
@@ -96,7 +112,18 @@ export class ProcessComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error)
 
       }
-    )
+    );}
+  });
+  }
+
+  open(){
+    this.flag=true;
+   
+    const modalRef = this.modalService.open(ExportPopupComponent);
+     modalRef.componentInstance.headers = this.headers;
+     modalRef.componentInstance.list = this.process;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
 }

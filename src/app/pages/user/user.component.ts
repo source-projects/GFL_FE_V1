@@ -24,6 +24,8 @@ export class UserComponent implements OnInit {
   userList=[];
   user=[];
   headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
+  module="user";
+
   flag = false;
 
   userId;
@@ -134,6 +136,8 @@ export class UserComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.user;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getAllUser(id,getBy){

@@ -21,6 +21,8 @@ export class StockBatchComponent implements OnInit {
   stockList;
   stock = [];
   headers = ["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date"];
+  module="stock-batch";
+
   flag = false;
   disabled = false;
 
@@ -127,6 +129,8 @@ export class StockBatchComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.stock;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getStockBatchList(id, getBy) {

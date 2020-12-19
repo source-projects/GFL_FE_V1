@@ -111,6 +111,7 @@ export class DynamicProcessComponent implements OnInit {
             dosingOb.haveDose = e.haveDose;
             dosingOb.dosingChemical = e.dosingChemical;
             this.chemicalOb = [...dosingOb.dosingChemical];
+            
           } else if (e.isOperatorMessage) {
             operatorOb.operatorCode = e.operatorCode;
             operatorOb.operatorMessage = e.operatorMessage;
@@ -230,6 +231,7 @@ export class DynamicProcessComponent implements OnInit {
         functionList[func.funcPosition - 1] = result;
       }
     });
+    
   }
 
   onStepClick(step) {
