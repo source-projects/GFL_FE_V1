@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -48,5 +48,9 @@ export class SupplierService {
 
   getSupplierItemWithRateById(id) {
     return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/GetItemWithRateBy/' + id);
+  }
+
+  getItemWithSupplier(){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/getItemWithSupplierName/all');
   }
 }

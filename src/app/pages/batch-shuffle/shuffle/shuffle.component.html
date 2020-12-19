@@ -36,7 +36,18 @@
                   placeholder="Quality Name">
 
                   <ng-option *ngFor="let q of quality" [value]="q.id?q.id:q.qualityEntryId">
-                    {{q.partyName}}-{{q.qualityId}}-{{q.qualityName}}
+
+                    <div class="row">
+                      <div class="col-md-4 col-4">
+                        <div class="text-left txt-ov-elips">{{q.partyName}}</div>
+                      </div>
+                      <div class="col-md-4 col-4">
+                        <div class="text-center txt-ov-elips">{{q.qualityId}}</div>
+                      </div>
+                      <div class="col-md-4 col-4">
+                        <div class="text-right txt-ov-elips">{{q.qualityName}}</div>
+                      </div>
+                    </div>
                   </ng-option>
                 </ng-select>
                 <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
@@ -107,10 +118,19 @@
                       </div>
                     </div>
                   </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input type="text" formControlName="totalrowsPart1" [readonly]="true" class="total-rows">
+                        <span class="t-12">Total</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
               </div>
               <div class="col-md-6 col-12">
-                <div class="example-container ">
+                <div class="example-container">
                   <h2 class="batch-text">Batch Part 2</h2>
 
                   <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2" #part2List="cdkDropList"
@@ -121,6 +141,19 @@
                       Meter:
                       {{item.mtr}}
                       Weight: {{item.wt}}
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-7 col-7">
+                        <input type="text" formControlName="totalrowsPart2" [readonly]="true" class="total-rows">
+                        <span class="t-12">Total</span>
+                      </div>
+                      <div class="col-md-5 col-5 jus-con-center">
+                        <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName"
+                          style="background-color: lightgray;" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -141,7 +174,7 @@
                     <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
-                      <span class="text-batch-mtr">Wt.</span>
+                    <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
@@ -164,7 +197,7 @@
                     <span class="text-batch-mtr">Mtr.</span>
                     <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
-                      <span class="text-batch-mtr">Wt.</span>
+                    <span class="text-batch-mtr">Wt.</span>
                     <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true"
                       style="background-color: lightgray;" class="mtr-wei">
                   </div>
@@ -178,44 +211,6 @@
                   </div>
                   <!-- <input type="text" placeholder="Enter New Batch Id" formControlName="newBatchName"
                     style="background-color: lightgray;" [hidden]="btnFlag"> -->
-
-                </div>
-
-
-              </div>
-            </div>
-
-
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-4 col-4">
-                  <div class="total-shuffle">
-                    <label>Total Rows</label>
-                  </div>
-                </div>
-                <div class="col-md-8 col-8">
-                  <div class="batch-1-input">
-                    <input type="text" formControlName="totalrowsPart1" [readonly]="true"
-                    style="background-color: lightgray;" class="mtr-wei">
-                  </div>
-                </div>
-              
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-7">
-                  <div class="batch-2-input">
-                    <input type="text" formControlName="totalrowsPart2" [readonly]="true"
-                    style="background-color: lightgray; " class="mtr-wei">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="btn-split-merge">
-                    <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName"
-                    style="background-color: lightgray;" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
-                  </div>
 
                 </div>
 

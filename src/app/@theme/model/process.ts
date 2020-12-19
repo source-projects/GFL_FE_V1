@@ -37,8 +37,8 @@ export class StepsRecordData {
     stepName: any;
     stepPosotion: number;
     waterType: any;
-    doesAtTemp: any;
-    doesType: any;
+    doseAtTemp: any;
+    doseType: any;
     dosingChemical: ChemicalReq[];
 }
 // export class DosingChemical {

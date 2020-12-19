@@ -1,17 +1,17 @@
 
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ShadeService } from "app/@theme/services/shade.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
+import { ShadeGuard } from "app/@theme/guards/shade.guard";
 import * as errorData from "app/@theme/json/error.json";
-
-import { ToastrService } from "ngx-toastr";
 import { CommonService } from "app/@theme/services/common.service";
 import { ExportService } from "app/@theme/services/export.service";
-import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
 import { JwtTokenService } from "app/@theme/services/jwt-token.service";
-import { ShadeGuard } from "app/@theme/guards/shade.guard";
+import { ShadeService } from "app/@theme/services/shade.service";
+import { ToastrService } from "ngx-toastr";
+
 
 
 @Component({
@@ -27,14 +27,9 @@ export class ShadeComponent implements OnInit {
   tableStyle = "bootstrap";
   shadeList = [];
   shade = [];
-  headers = [
-    "Party Shade No",
-    "Process Name",
-    "Quality Id",
-    "Quality Name",
-    "Party Name",
-    "Color Tone",
-  ];
+  headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
+  module="shade";
+
 
   radioSelect = 1;
   flag = false;
@@ -97,7 +92,9 @@ export class ShadeComponent implements OnInit {
     this.getAddAcess();
     this.getallShades(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess() {
     if (this.shadeGuard.accessRights('add')) {
@@ -136,6 +133,8 @@ export class ShadeComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.shade;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getallShades(id, getBy) {
@@ -149,12 +148,11 @@ export class ShadeComponent implements OnInit {
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
+        this.loading = false;
           }
         }
-        this.loading = false;
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -213,6 +211,16 @@ export class ShadeComponent implements OnInit {
       this.hidden = this.allDelete;
     }
   }
+  getDeleteAccess1() {
+    if (this.shadeGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden = this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
+  
 
   getEditAccess() {
     if (this.shadeGuard.accessRights('edit')) {
@@ -227,6 +235,16 @@ export class ShadeComponent implements OnInit {
     if (this.shadeGuard.accessRights('edit all')) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
+    }
+  }
+
+  getEditAccess1() {
+    if (this.shadeGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 }

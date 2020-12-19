@@ -1,19 +1,16 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
+
+  Component
 } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { LoginModal } from "../../@theme/model/login-class";
+import { Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
 import { AuthService } from "app/@theme/services/auth.service";
 import { JwtTokenService } from "app/@theme/services/jwt-token.service";
 import { StoreTokenService } from "app/@theme/services/store-token.service";
-import * as errorData from "app/@theme/json/error.json";
-
+import { ToastrService } from "ngx-toastr";
+import { Md5 } from 'ts-md5/dist/md5';
+import { LoginModal } from "../../@theme/model/login-class";
 @Component({
   selector: "nb-login",
   templateUrl: "./login.component.html",
@@ -42,6 +39,8 @@ export class LoginComponent {
   onSubmit(myForm) {
     this.formSubmitted = true;
     if (myForm.valid) {
+      let md5 = new Md5();
+      this.loginReq.password = md5.appendStr(this.loginReq.password).end()
       this.authService.checkUserLogin(this.loginReq).subscribe(
         (data) => {
           if (data["success"]) {
@@ -53,10 +52,12 @@ export class LoginComponent {
             this.toast.success(errorData.Login_Success);
             this.route.navigate(["/pages"]);
           } else {
+            this.loginReq.password = '';
             this.toast.error(errorData.login_Error);
           }
         },
         (error) => {
+          this.loginReq.password = '';
           this.toast.error(errorData.Serever_Error);
         }
       );

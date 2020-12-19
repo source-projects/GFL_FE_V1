@@ -2,13 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import * as errorData from 'app/@theme/json/error.json';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddEditQualityComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
   public errorData: any = (errorData as any).default;
 
   //form Validation
@@ -65,6 +66,7 @@ export class AddEditQualityComponent implements OnInit {
       wtPer100m: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       remark: new FormControl(null),
+      partyCode: new FormControl(null),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null),
@@ -120,7 +122,24 @@ export class AddEditQualityComponent implements OnInit {
     );
   }
 
+  setPartyCode(){
+    if(this.addEditQualityForm.get('partyId').value!=null){
+      this.party.forEach(element => {
+        if(this.addEditQualityForm.get('partyId').value==element.id){
+          console.log(element.id)
+          console.log("party code",element.partyCode)
+          this.addEditQualityForm.patchValue({
+            partyCode:element.partyCode,
+          })
+        }
+        console.log(this.addEditQualityForm.get('partyCode').value)
+      });
+    }
+  }
+
   addQuality() {
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
       this.addEditQualityForm.value.createdBy = this.user.userId;
@@ -129,7 +148,7 @@ export class AddEditQualityComponent implements OnInit {
         (data) => {
           if (data['success']) {
             this.route.navigate(["/pages/quality"]);
-            this.toastr.success(errorData.Add_Success)
+            this.toastr.success(errorData.Add_Success);
           }
           else {
             this.toastr.error(errorData.Add_Error)
@@ -144,6 +163,8 @@ export class AddEditQualityComponent implements OnInit {
   }
 
   updateQuality() {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
@@ -153,7 +174,6 @@ export class AddEditQualityComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Update_Success)
-           
           }
           else {
             this.toastr.error(errorData.Update_Error)

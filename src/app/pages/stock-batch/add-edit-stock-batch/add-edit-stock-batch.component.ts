@@ -7,12 +7,12 @@ import { ToastrService } from "ngx-toastr";
 import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
+import * as _ from 'lodash';
 import {
   NgbDateAdapter,
   NgbDateNativeAdapter,
 } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "app/@theme/services/common.service";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -24,7 +24,6 @@ export class AddEditStockBatchComponent implements OnInit {
   public loading = false;
   public errorData: any = (errorData as any).default;
   qualityList: any;
-
   formSubmitted = false;
 
   party: any[];
@@ -59,6 +58,7 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     },
   ];
+
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   stockBatchData: BatchData = new BatchData();
@@ -69,7 +69,9 @@ export class AddEditStockBatchComponent implements OnInit {
   addFlag = false;
   batchIdArray = [];
   rearrangeStartIndex: any;
+  dateForPicker=new Date();
 
+  maxDate:any;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -82,6 +84,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.addFlag = window.location.href.endsWith("add");
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -135,14 +138,18 @@ export class AddEditStockBatchComponent implements OnInit {
             (data) => {
               if (data["success"])
                 this.qualityList = data["data"].qualityDataList;
-              //this.stockBatch.partyId = data['data'].partyId
-              this.loading = false;
+                if(this.qualityList == null)
+                  this.stockBatch.qualityId = null;
+                else
+                  this.stockBatch.qualityId = this.qualityList[0].qualityEntryId
+              //this.loading = false;
             },
             (error) => {
               // this.toastr.error(errorData.Serever_Error);
               this.loading = false;
             }
           );
+          this.loading = false;
       }
     } else {
       this.stockBatch.partyId = null;
@@ -150,8 +157,8 @@ export class AddEditStockBatchComponent implements OnInit {
       this.stockBatch.unit = null;
       this.getPartyList();
       this.getQualityList();
-      this.loading = false;
     }
+    this.loading = false;
   }
 
   getUpdateData() {
@@ -168,22 +175,10 @@ export class AddEditStockBatchComponent implements OnInit {
               }
             });
           }
-          this.stockBatch.unit = data["data"].unit;
-          this.stockBatch.stockInType = data["data"].stockInType;
-          this.stockBatch.billNo = data["data"].billNo;
-          this.stockBatch.chlDate = new Date(data["data"].chlDate);
-          this.stockBatch.chlNo = data["data"].chlNo;
-          this.stockBatch.partyId = data["data"].partyId;
-
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-          this.stockBatch.remark = data["data"].remark;
-          this.stockBatch.isProductionPlanned = data["data"].isProductionPlanned;
-          this.stockBatch.createdBy = data["data"].createdBy;
-          this.stockBatch.createdDate = data["data"].createdDate;
-          this.stockBatch.userHeadId = data["data"].userHeadId;
-          this.stockBatch.batchData = data["data"].batchData;
+          this.stockBatch = data['data']
+          this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
+          this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+          this.stockBatch.batchData = _.sortBy(data["data"].batchData, [function(o) { return o.batchId; }]);
           this.setStockDataValues();
         } else {
           this.toastr.error(data["msg"]);
@@ -191,7 +186,6 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -328,6 +322,8 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 10);
       }
+    }else{
+      //count total mtr wt...
     }
   }
 

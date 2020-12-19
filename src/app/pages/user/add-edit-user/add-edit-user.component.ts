@@ -1,15 +1,16 @@
-import { Component, OnInit, Renderer2,ViewContainerRef } from "@angular/core";
-import { User, Permissions } from "app/@theme/model/user";
-import { CommonService } from "app/@theme/services/common.service";
-import { UserService } from "app/@theme/services/user.service";
-import * as errorData from "app/@theme/json/error.json";
-import { ToastrService } from "ngx-toastr";
+import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
-  NbToastrConfig,
+  NbToastrConfig
 } from "@nebular/theme";
-import { ActivatedRoute, Router } from "@angular/router";
+import * as errorData from "app/@theme/json/error.json";
+import { Permissions, User } from "app/@theme/model/user";
+import { CommonService } from "app/@theme/services/common.service";
+import { UserService } from "app/@theme/services/user.service";
+import { ToastrService } from "ngx-toastr";
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -19,6 +20,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
+  public disableButton = false;
   //toaster config
   config: NbToastrConfig;
   destroyByClick = true;
@@ -27,7 +29,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   status;
-  //allUserPermissionFlag=0;
+  allRightsFlag;
   user: User = new User();
 
   permissions: Permissions = new Permissions();
@@ -99,6 +101,10 @@ export class AddEditUserComponent implements OnInit {
   userHead;
   currentUserId: any;
 
+  disableViewDependentPermission: boolean = false;
+  disableViewGroupDependentPermission: boolean = false;
+  disableViewAllDependentPermission: boolean = false;
+
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -107,7 +113,7 @@ export class AddEditUserComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDesignation();
@@ -187,6 +193,7 @@ export class AddEditUserComponent implements OnInit {
       this.permissionArray[i].viewAll = false;
       this.permissionArray[i].viewGroup = false;
     }
+    
   }
 
   setPermissionTrue(i) {
@@ -200,6 +207,17 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = true;
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
+
+    for (let j = 0; j < 12; j++) {
+      this.checkIfAllSelected(j);
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
   setPermissionFalse(i) {
@@ -213,6 +231,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].deleteGroup = false;
     this.permissionArray[i].viewAll = false;
     this.permissionArray[i].viewGroup = false;
+    this.allRightsFlag = false;
   }
 
   //select all user permissions
@@ -328,14 +347,88 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
     }
+
+    for (let j = 0; j < 12; j++) {
+      if (!this.permissionArray[j].selectAll) {
+        this.allRightsFlag = false;
+        break;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
   }
 
-  checkUncheckSelectAll(value, i) {
+  // checkUncheckSelectAll(value, i) {
+  //   if (value == false) {
+  //     this.permissionArray[i].selectAll = false;
+  //     this.allRightsFlag = false;
+
+  //   }
+
+  //   this.checkIfAllSelected(i);
+
+  //   for (let j = 0; j < 12; j++) {
+  //     if (!this.permissionArray[j].selectAll) {
+  //       this.allRightsFlag = false;
+  //       break;
+  //     }
+  //     else {
+  //       this.allRightsFlag = true;
+  //     }
+  //   }
+  // }
+
+  checkUncheckSelectAll(value, i,accessName) {
+    
+    switch(accessName){
+      case 'view':{
+        if(value){
+          this.disableViewDependentPermission = false;
+        } else {
+          this.disableViewDependentPermission = true;
+          this.permissionArray[i].edit = !this.disableViewDependentPermission;
+          this.permissionArray[i].add = !this.disableViewDependentPermission;
+          this.permissionArray[i].delete = !this.disableViewDependentPermission;
+        }
+        break;
+      }
+      case 'viewGroup':{
+        if(value){
+          this.disableViewGroupDependentPermission = false;
+        } else {
+          this.disableViewGroupDependentPermission = true;
+          this.permissionArray[i].editGroup = !this.disableViewGroupDependentPermission;
+          this.permissionArray[i].deleteGroup = !this.disableViewGroupDependentPermission;
+        }
+        break;
+      }
+      case 'viewAll':{
+        if(value){
+          this.disableViewAllDependentPermission = false;
+        } else {
+          this.disableViewAllDependentPermission = true;
+          this.permissionArray[i].editAll = !this.disableViewAllDependentPermission;
+          this.permissionArray[i].deleteAll = !this.disableViewAllDependentPermission;
+        }
+        break;
+      }
+    }
     if (value == false) {
       this.permissionArray[i].selectAll = false;
     }
 
     this.checkIfAllSelected(i);
+
+    for (let j = 0; j < 12; j++) {
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   checkIfAllSelected(i) {
@@ -463,6 +556,26 @@ export class AddEditUserComponent implements OnInit {
         this.permissionArray[i1].selectAll = false;
       perString = "";
     }
+
+    for (let i = 0; i < 12; i++) {
+      if (!this.permissionArray[i].selectAll) {
+        this.allRightsFlag = false;
+      }
+      else {
+        this.allRightsFlag = true;
+      }
+    }
+
+
+    for (let j = 0; j < 12; j++) {
+          if (!this.permissionArray[j].selectAll) {
+            this.allRightsFlag = false;
+            break;
+          }
+          else {
+            this.allRightsFlag = true;
+          }
+        }
   }
 
   dec2bin(val: any) {
@@ -512,6 +625,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   updateUser(userForm) {
+    this.disableButton=true;
+
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
@@ -525,7 +640,6 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
-
           }
           // else {
           //   this.toastr.error(data["msg"]);
@@ -539,18 +653,21 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 
   addUser(myForm) {
     this.getCheckedItem();
     //this.user.userPermissionData=this.userPermissionData;
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
+      let md5 = new Md5();
+      this.user.password = String(md5.appendStr(this.user.password).end())
       this.user.createdBy = this.userId.userId;
       if (!this.user.isUserHead) this.user.userHeadId = 0;
       this.userService.createUser(this.user).subscribe(
@@ -567,10 +684,9 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
-    else
-    {
+    else {
       const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
+      errorField.scrollIntoView();
     }
   }
 

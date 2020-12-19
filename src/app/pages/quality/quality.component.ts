@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { QualityService } from '../../@theme/services/quality.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { StoreTokenService } from 'app/@theme/services/store-token.service';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { QualityGuard } from 'app/@theme/guards/quality.guard';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { QualityGuard } from 'app/@theme/guards/quality.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { ToastrService } from 'ngx-toastr';
+import { QualityService } from '../../@theme/services/quality.service';
 
 @Component({
   selector: 'ngx-quality',
@@ -28,6 +27,8 @@ export class QualityComponent implements OnInit {
   qualityList=[];
   quality=[];
   headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
+  module="quality";
+
   flag = false;
 
   
@@ -69,7 +70,9 @@ export class QualityComponent implements OnInit {
     this.getAddAcess();
     this.getQualityList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.qualityGuard.accessRights('add')){
@@ -109,6 +112,8 @@ open(){
   const modalRef = this.modalService.open(ExportPopupComponent);
    modalRef.componentInstance.headers = this.headers;
    modalRef.componentInstance.list = this.quality;
+   modalRef.componentInstance.moduleName = this.module;
+
 }
 
   getQualityList(id,getBy) {
@@ -166,6 +171,15 @@ open(){
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.qualityGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.qualityGuard.accessRights('edit')){
@@ -180,6 +194,15 @@ open(){
      if(this.qualityGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.qualityGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

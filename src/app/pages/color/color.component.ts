@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorService } from 'app/@theme/services/color.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { ColorGuard } from 'app/@theme/guards/color.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { ColorService } from 'app/@theme/services/color.service';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ExportService } from 'app/@theme/services/export.service';
-import { DatePipe } from '@angular/common';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { ColorGuard } from 'app/@theme/guards/color.guard';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 
@@ -18,6 +17,7 @@ import { ColorGuard } from 'app/@theme/guards/color.guard';
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.scss']
 })
+
 export class ColorComponent implements OnInit {
   public loading = false;
 
@@ -27,6 +27,8 @@ export class ColorComponent implements OnInit {
  colorList=[];
  color=[];
  headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
+ module="color";
+
  radioSelect=1;
  flag = false;
 
@@ -76,7 +78,9 @@ export class ColorComponent implements OnInit {
     this.getAddAcess();
     this.getColor(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.colorGuard.accessRights('add')){
@@ -115,6 +119,8 @@ export class ColorComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.color;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getColor(id, getBy) {
@@ -198,6 +204,15 @@ export class ColorComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.colorGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.colorGuard.accessRights('edit')){
@@ -211,6 +226,15 @@ export class ColorComponent implements OnInit {
      if(this.colorGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.colorGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
 import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
-import { ExportService } from 'app/@theme/services/export.service';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 
 
 @Component({
@@ -23,6 +23,8 @@ export class ProgramComponent implements OnInit {
   programList: any[];
   program=[];
   headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
+  module="program";
+
   tableStyle = "bootstrap";
   flag = false;
 
@@ -70,7 +72,9 @@ export class ProgramComponent implements OnInit {
     this.getAddAcess();
     this.getProgramList(this.userId, "own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess();
+    this.getEditAccess1();
   }
   getAddAcess(){
     if(this.programGuard.accessRights('add')){
@@ -109,6 +113,8 @@ export class ProgramComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.program;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   public getProgramList(id, getBy) {
@@ -188,6 +194,16 @@ export class ProgramComponent implements OnInit {
     }
   }
 
+  getDeleteAccess1(){
+    if(this.programGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownEdit;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
+
   getEditAccess(){
     if(this.programGuard.accessRights('edit')){
       this.ownEdit=false;
@@ -201,6 +217,15 @@ export class ProgramComponent implements OnInit {
      if(this.programGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+  getEditAccess1(){
+    if(this.programGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

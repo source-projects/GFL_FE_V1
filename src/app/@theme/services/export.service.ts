@@ -1,12 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
 import { Angular2Txt } from 'angular2-txt/Angular2-txt';
-import  jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { FileSaverService } from 'ngx-filesaver';
+import * as FileSaver from 'file-saver';
 import { FileSaverOptions } from 'file-saver';
-import {HttpClient} from '@angular/common/http';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ import {HttpClient} from '@angular/common/http';
 export class ExportService {
   [x: string]: any;
 
-  constructor( private_http: HttpClient ) { }
+  constructor( private httpClient: HttpClient, private commonService: CommonService ) { }
 
   fileType:string;
   fileExtension:string;
@@ -24,7 +24,7 @@ export class ExportService {
     autoBom: false,
   };
 
-  public exportExcel(jsonData: any[], fileName: string, Headers: string[]): void {
+  public exportExcel(jsonData: any[], fileName: string, Headers: string[],): void {
 
     this.fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     this.fileExtension = '.xlsx';
@@ -78,6 +78,10 @@ export class ExportService {
   private saveFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: this.fileType });
     FileSaver.saveAs(data, fileName + this.fileExtension);
+  }
+
+  public sendMail(documentModal){
+    return this.httpClient.post(this.commonService.envUrl()+'api/Document', documentModal);
   }
 }
 

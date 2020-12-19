@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {NgbModal}  from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { UserService } from "app/@theme/services/user.service";
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { UserGuard } from 'app/@theme/guards/user.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { UserService } from "app/@theme/services/user.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-user',
@@ -24,6 +24,8 @@ export class UserComponent implements OnInit {
   userList=[];
   user=[];
   headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
+  module="user";
+
   flag = false;
 
   userId;
@@ -74,7 +76,9 @@ export class UserComponent implements OnInit {
     this.getAddAcess();
     this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
+    this.getDeleteAccess1();
     this.getEditAccess()
+    this.getEditAccess1()
   }
   getAddAcess(){
     if(this.userGuard.accessRights('add')){
@@ -113,6 +117,8 @@ export class UserComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.user;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getAllUser(id,getBy){
@@ -187,6 +193,15 @@ export class UserComponent implements OnInit {
       this.hidden=this.allDelete;
     }
   }
+  getDeleteAccess1(){
+    if(this.userGuard.accessRights('delete')){
+      this.ownDelete=false;
+      this.hidden=this.ownDelete;
+    }
+    else{
+      this.hidden=true;
+    }
+  }
 
   getEditAccess(){
     if(this.userGuard.accessRights('edit')){
@@ -201,6 +216,16 @@ export class UserComponent implements OnInit {
      if( this.userGuard.accessRights('edit all')){
       this.allEdit=false;
       this.hiddenEdit=this.allEdit;
+    }
+  }
+
+  getEditAccess1(){
+    if(this.userGuard.accessRights('edit')){
+      this.ownEdit=false;
+      this.hiddenEdit=this.ownEdit;
+    }
+    else{
+      this.hiddenEdit=true;
     }
   }
 

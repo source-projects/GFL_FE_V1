@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import * as errorData from 'app/@theme/json/error.json';
 import {
   ChemicalReq,
   Dosing,
@@ -7,12 +8,11 @@ import {
   OperatorMessage,
   PumpControl,
   TempratureControl,
-  WaterControl,
+  WaterControl
 } from "app/@theme/model/process";
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import * as errorData from 'app/@theme/json/error.json';
-import { ToastrService } from 'ngx-toastr';
 import { ProcessService } from 'app/@theme/services/process.service';
+import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({

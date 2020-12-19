@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import * as errorData from 'app/@theme/json/error.json';
+import { Color, ColorDataList } from "app/@theme/model/color";
+import { ColorService } from "app/@theme/services/color.service";
 import { CommonService } from 'app/@theme/services/common.service';
 import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ColorService } from "app/@theme/services/color.service";
-import { Color, ColorDataList } from "app/@theme/model/color";
-import * as errorData from 'app/@theme/json/error.json';
-import { NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
-import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'ngx-add-edit-color',
   templateUrl: './add-edit-color.component.html',
@@ -17,6 +15,8 @@ import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap
 })
 export class AddEditColorComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
+  dateForPicker=new Date();
   userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
@@ -40,28 +40,28 @@ export class AddEditColorComponent implements OnInit {
   convertedDate: any;
   convertedDate2: any;
 
+  maxDate:any;
+  // const isDisabled = (date: NgbDate, current: {month: number}) => day.date === 13;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private supplierService: SupplierService,
     private colorService: ColorService,
-    private toastrService: NbToastrService,
     private route: Router,
     private toastr: ToastrService,
-    private datepipe: DatePipe,
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
-  }
-
-  ngOnInit(): void {
   
+  }
+  
+  ngOnInit(): void {
+    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
 
   }
-
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -130,6 +130,7 @@ export class AddEditColorComponent implements OnInit {
         this.loading=false;
       }
     )
+    this.loading=false;
   }
 
   getAllSupplierRate(event) {
@@ -197,18 +198,8 @@ export class AddEditColorComponent implements OnInit {
             return;
           }
         }
-        let obj = {
-          itemName: null,
-          quantityPerBox: null,
-          noOfBox: null,
-          quantity: null,
-          id: null,
-          quantityUnit: "kg",
-          itemId: null,
-          rate: null,
-          controlId: null,
-          amount: null,
-        };
+
+        let obj = new ColorDataList();
         let list = this.color.colorDataList;
         list.push(obj);
         this.color.colorDataList = [...list];
@@ -220,19 +211,16 @@ export class AddEditColorComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50)
+        }, 10)
       }
       else {
         let interval = setInterval(() => {
-
           let field = document.getElementById(this.index)
-
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
-        }, 50)
-        //alert("Go to any last row input to add new row");
+        }, 10)
       }
     }
   }
@@ -261,13 +249,16 @@ export class AddEditColorComponent implements OnInit {
   addColor(colorForm) {
     this.formSubmitted = true;
     if (colorForm.valid) {
+      this.disableButton=true;
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
         data => {
           if (data['success']) {
-            this.route.navigate(["/pages/color"]);
-            this.toastr.success(errorData.Add_Success)
+           this.route.navigate(["/pages/color"]);
+            this.toastr.success(errorData.Add_Success);
+            // this.disableButton=true;
+
           }
           else {
             this.toastr.error(errorData.Add_Error)
@@ -284,14 +275,8 @@ export class AddEditColorComponent implements OnInit {
     let idCount = this.color.colorDataList.length
     let item = this.color.colorDataList;
     if (idCount == 1) {
-      item[0].id = null;
-      item[0].itemId = null;
-      item[0].quantity = null;
-      item[0].quantityPerBox = null;
-      item[0].quantity = null;
-      item[0].rate = null;
-      item[0].noOfBox = null;
-      let list = item;
+      let ob = new ColorDataList();
+      let list = [{...ob}];
       this.color.colorDataList = [...list];
     }
     else {
@@ -303,6 +288,7 @@ export class AddEditColorComponent implements OnInit {
 
   updateColor(myForm) {
     this.loading=true;
+    this.disableButton=true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
@@ -311,8 +297,8 @@ export class AddEditColorComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Update_Success);
-            this.loading=false;
           }
+          this.loading=false;
         },
         error => {
           this.toastr.error(errorData.Update_Error);

@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportService } from 'app/@theme/services/export.service';
-
 @Component({
   selector: 'ngx-export-popup',
   templateUrl: './export-popup.component.html',
@@ -13,10 +12,15 @@ export class ExportPopupComponent implements OnInit {
 
 @Input('headers') headers: any[];
 
+@Input('moduleName') moduleName: any;
+
   fileName = "export";
   startRow: number;
   endRow: number;
-  type1 = "";
+  exportType = "";
+  toEmail = "";
+  subjectEmail = "";
+  email=false;
   list1 = [];
 
   constructor(
@@ -25,51 +29,52 @@ export class ExportPopupComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    console.log(this.list);
-    console.log(this.headers);
   }
     
   get activeModal() {
     return this._NgbActiveModal;
   }
 
-  change(event) {
-    console.log(event.target.value);
-    this.startRow = event.target.value;
-  }
-  change1(event) {
-    console.log(event.target.value);
-    this.endRow = event.target.value;
-  }
-
-  onOptionsSelected(type){
-    this.type1=type.target.value;
-    console.log(type.target.value);
-  }
-
   emailClick() {
-    window.open(
-      'https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=Link address:&bcc=someone.else@example.com&attachment="C:/Users/Arjav/Downloads/export(2).pdf"&tf=1');
+    this.email=true;
   }
 
-
-  onClick(){
-    //this.activeModal.close(type)
-    for(let i=this.startRow;i<=this.endRow;i++){
-     // for(let j=0;j<=(this.endRow-this.startRow);j++)
-          this.list1.push(this.list[i-1]);
+  emailSendClick(){
+    let modalData={
+      exportType:"",
+      fromRow:null,
+      moduleName:"",
+      sendText:"",
+      subjectEmail:"",
+      toEmail:"",
+      toRow:null
     }
-    console.log(this.list1);
+      modalData.exportType = this.exportType;
+      modalData.fromRow = this.startRow,
+      modalData.moduleName = this.moduleName,
+      //modalData.sendText = 
+      modalData.subjectEmail = this.subjectEmail;
+      modalData.toEmail = this.toEmail;
+      modalData.toRow = this.endRow;
+      console.log(modalData);
+      this.exportService.sendMail(modalData);
 
-   // console.log(this.noOfRows);
-    if(this.type1=='excel')
+    }
+  
+  onDownloadClick(){
+   
+    for( let i = this.startRow ; i <= this.endRow; i++){
+      this.list1.push(this.list[i-1]);
+    }
+    if(this.exportType=='excel')
+    {
       this.exportService.exportExcel(this.list1, this.fileName, this.headers);
-    else if(this.type1=='text')
+    }
+    else if(this.exportType=='text')
     {
       this.exportService.exportText(this.list1, this.fileName, this.headers);
     }
-    else if(this.type1=='pdf'){
-      console.log()
+    else if(this.exportType=='pdf'){
       this.exportService.exportPdf(this.list1, this.fileName, this.headers);
     }
     else{

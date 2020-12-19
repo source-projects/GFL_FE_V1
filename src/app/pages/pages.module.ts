@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { NbMenuModule } from '@nebular/theme';
-
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
@@ -10,6 +9,7 @@ import { PartyModule } from './party/party.module';
 import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
 import {UserModule} from './user/user.module';
+
 
 @NgModule({
   imports: [
@@ -21,13 +21,14 @@ import {UserModule} from './user/user.module';
     QualityModule,
     SupplierModule,
     MiscellaneousModule,
-    UserModule
+    UserModule,
   ],
   declarations: [
     PagesComponent,
     
-    
   ],
+ 
+  providers: [],
 })
 export class PagesModule {
 }
