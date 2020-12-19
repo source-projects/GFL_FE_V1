@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'ngx-not-found',
+  selector: 'ngx-not-found', 
   styleUrls: ['./not-found.component.scss'],
   templateUrl: './not-found.component.html',
 })
