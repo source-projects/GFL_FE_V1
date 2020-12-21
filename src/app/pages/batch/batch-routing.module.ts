@@ -10,7 +10,7 @@ const routes: Routes = [
     component:BatchComponent,
     canActivate:[BatchGuard],
     canLoad: [BatchGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'add',

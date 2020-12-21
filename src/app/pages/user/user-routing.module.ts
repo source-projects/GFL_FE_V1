@@ -10,7 +10,7 @@ const routes: Routes = [
     component:UserComponent,
     canActivate: [UserGuard],
     canLoad: [UserGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
     
   },
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
     component:AddEditUserComponent,
     canActivate: [UserGuard],
     canLoad: [UserGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

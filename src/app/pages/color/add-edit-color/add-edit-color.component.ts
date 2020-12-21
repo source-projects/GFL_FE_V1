@@ -247,9 +247,9 @@ export class AddEditColorComponent implements OnInit {
   }
 
   addColor(colorForm) {
+    this.disableButton=true;
     this.formSubmitted = true;
     if (colorForm.valid) {
-      this.disableButton=true;
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
@@ -269,6 +269,8 @@ export class AddEditColorComponent implements OnInit {
         }
       )
     }
+    this.disableButton=false;
+
   }
 
   removeItem(id) {
@@ -305,6 +307,9 @@ export class AddEditColorComponent implements OnInit {
           this.loading=false;
         }
       )
+    }
+    else{
+    this.disableButton=false;
     }
   }
 }

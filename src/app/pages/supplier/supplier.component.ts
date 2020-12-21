@@ -27,7 +27,7 @@ export class SupplierComponent implements OnInit {
   headers = ["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark"];
   module="supplier";
 
-  radioSelect = 1;
+  radioSelect = 0;
   flag = false;
   disabled = false;
   radioArray = [
@@ -71,11 +71,30 @@ export class SupplierComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
     this.getAddAcess();
-    this.getSupplierList(this.userId, "own");
+    // this.getSupplierList(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.supplierGuard.accessRights('view')){
+      this.getSupplierList(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.supplierGuard.accessRights('view group')){
+      this.getSupplierList(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.supplierGuard.accessRights('view all')){
+      this.getSupplierList(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess() {
     if (this.supplierGuard.accessRights('add')) {

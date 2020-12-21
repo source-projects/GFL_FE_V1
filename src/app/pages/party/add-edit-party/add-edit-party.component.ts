@@ -213,19 +213,26 @@ this.disableButton=true;
                 this.currentParty = data["data"];
                 this.route.navigate(["pages/party"]);
                 this.toastr.success(errorData.Add_Success);
+
               } else {
                 this.toastr.error(errorData.Add_Error);
               }
+              this.disableButton=false;
+
             },
             (error) => {
               this.toastr.error(errorData.Serever_Error);
+              this.disableButton=false;
             }
           );
         }
-      } else {
+      }
+       else {
+        this.disableButton=false;
         return;
       }
     } else {
+      this.disableButton=false;
       return;
     }
   }
@@ -241,22 +248,20 @@ this.disableButton=true;
             if(this.debtor==true){
               this.partyAdressSetFlag=true;
             }
+
         this.partyForm.value.updatedBy = this.user.userId;
         let body = {
           ...this.partyForm.value,
           id: this.currentPartyId,
         };
-
         this.partyService.updateParty(body).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
                this.route.navigate(["/pages/party"]);
-               
           
             } else {
               this.toastr.error(errorData.Update_Error);
-             
             }
             this.loading = false;
           },
@@ -267,7 +272,12 @@ this.disableButton=true;
         );
         }
       }
+      this.disableButton=false;
+
     }
+    this.disableButton=false;
+    this.loading = false;
+
   }
 
   public goBackToPreviousPage(): any {
