@@ -129,7 +129,6 @@ export class DynamicProcessComponent implements OnInit {
             dosingOb.haveDose = e.haveDose;
             dosingOb.dosingChemical = e.dosingChemical;
             this.chemicalOb = [...dosingOb.dosingChemical];
-            console.log(this.chemicalOb)
 
           this.chemicalOb.forEach(element => { 
             this.itemListArray.forEach((e) => {
@@ -276,7 +275,6 @@ export class DynamicProcessComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         let func = new FunctionObj();
-        console.log(result);
         func = result;
         this.functionListReq.push(func);
         if (
