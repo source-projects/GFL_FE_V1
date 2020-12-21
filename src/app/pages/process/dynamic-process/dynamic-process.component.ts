@@ -43,6 +43,7 @@ export class DynamicProcessComponent implements OnInit {
   selectedStep: any;
   currentProcessId: number;
   public errorData: any = (errorData as any).default;
+  itemListArray: any;
   constructor(
     private commonService: CommonService,
     private processService: ProcessService,
@@ -55,7 +56,24 @@ export class DynamicProcessComponent implements OnInit {
   ngOnInit(): void {
     this.currentProcessId = parseInt(this.router.snapshot.paramMap.get("id"));
     this.processValue.steps = [];
+    this.getItemData();
     if (this.currentProcessId) this.getUpdateDataOfProcess();
+    
+
+  }
+  getItemData() {
+    this.processService.getAllItemWithSupplier().subscribe(
+      (data) => {
+        if (data["success"]) {
+            this.itemListArray = data["data"];
+        } else {
+          // this.toastr.error(data["msg"]);
+        }
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+      }
+    );
   }
 
   getUpdateDataOfProcess() {
@@ -111,7 +129,15 @@ export class DynamicProcessComponent implements OnInit {
             dosingOb.haveDose = e.haveDose;
             dosingOb.dosingChemical = e.dosingChemical;
             this.chemicalOb = [...dosingOb.dosingChemical];
-            
+            console.log(this.chemicalOb)
+
+          this.chemicalOb.forEach(element => { 
+            this.itemListArray.forEach((e) => {
+               if (e.itemId == element.itemId){
+                 element.supplierName = e.supplierName;
+               }
+             });
+           });
           } else if (e.isOperatorMessage) {
             operatorOb.operatorCode = e.operatorCode;
             operatorOb.operatorMessage = e.operatorMessage;
@@ -275,7 +301,6 @@ export class DynamicProcessComponent implements OnInit {
           let stepObj = new StepsRecordData();
           stepObj.stepPosotion = i;
           stepObj.stepName = step.stepName;
-
           stepObj.functionName = func.funcName;
           stepObj.functionPosotion = j;
           stepObj.functionValue = func.funcValue;

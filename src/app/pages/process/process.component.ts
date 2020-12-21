@@ -50,7 +50,6 @@ export class ProcessComponent implements OnInit {
       data=>{
         if(data['success'])
           this.processList = data["data"];
-          console.log(this.processList);
            this.process = this.processList.map((element) => ({
             name: element.name
            }))
