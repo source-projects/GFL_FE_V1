@@ -6,8 +6,8 @@ import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { ProgramService } from "app/@theme/services/program.service";
 import { QualityService } from "app/@theme/services/quality.service";
+import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ToastrService } from "ngx-toastr";
-
 @Component({
   selector: "ngx-add-edit-program",
   templateUrl: "./add-edit-program.component.html",
@@ -26,6 +26,7 @@ export class AddEditProgramComponent implements OnInit {
   //form Validation
   formSubmitted: boolean = false;
   //for fatching dropdown list data
+  pName:any;
   party: any[];
   qualityList: any[];
   partyShade: any[];
@@ -42,7 +43,10 @@ export class AddEditProgramComponent implements OnInit {
   index: any;
   currentProgramId: any;
   user: any;
+  list=[];
   userHead;
+  allBatchData: any[];
+  partyQuality:any[];
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -51,6 +55,7 @@ export class AddEditProgramComponent implements OnInit {
     private route: Router,
     private commonService: CommonService,
     private toastr: ToastrService,
+    private stockBatchService: StockBatchService,
     private renderer: Renderer2
   ) {
     this.programRecordArray.push(this.programRecord);
@@ -63,6 +68,7 @@ export class AddEditProgramComponent implements OnInit {
     this.getPartyList();
     this.getQualityList();
     this.getPartyShadeList();
+    this.getAllBatchData()
     this.getMasterList();
     this.programValues.priority = "Medium";
     this.getAllStockBatchData();
@@ -84,14 +90,14 @@ export class AddEditProgramComponent implements OnInit {
     );
   }
 
-  getAllBatchData() {
-    this.programService.getAllBatch().subscribe(
-      (data) => {
-        if (data["success"]) this.batchData = data["data"];
-      },
-      (error) => {}
-    );
-  }
+  // getAllBatchData() {
+  //   this.programService.getAllBatch().subscribe(
+  //     (data) => {
+  //       if (data["success"]) this.batchData = data["data"];
+  //     },
+  //     (error) => {}
+  //   );
+  // }
 
   getMasterList() {
     this.programService.getAllMasters().subscribe(
@@ -131,6 +137,7 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
+          console.log(this.qualityList);
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -163,6 +170,20 @@ export class AddEditProgramComponent implements OnInit {
     );
   }
 
+  public getAllBatchData(){
+    this.stockBatchService.getAllBatch().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.allBatchData = data["data"];
+          console.log(this.allBatchData);
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+      }
+    );
+    }
+
   public getUpdateData() {
     this.loading = true;
     this.programService.getProgramDetailsById(this.currentProgramId).subscribe(
@@ -180,6 +201,8 @@ export class AddEditProgramComponent implements OnInit {
                   this.programValues.qualityType = element.qualityType;
                 }
                 this.loading = false;
+                this.disableButton=false;
+
               });
 
               if (this.batchData == null) {
@@ -193,6 +216,8 @@ export class AddEditProgramComponent implements OnInit {
                     (error) => {
                       // this.toastr.error(errorData.Serever_Error);
                       this.loading = false;
+                      this.disableButton=false;
+
                     }
                   );
               }
@@ -213,6 +238,8 @@ export class AddEditProgramComponent implements OnInit {
                     (error) => {
                       // this.toastr.error(errorData.Serever_Error);
                       this.loading = false;
+                      this.disableButton=false;
+
                     }
                   );
               }
@@ -224,10 +251,14 @@ export class AddEditProgramComponent implements OnInit {
           );
         } else {
           // this.toastr.error(data["msg"]);
+          this.disableButton=false;
+
           this.loading = false;
         }
       },
       (error) => {
+        this.disableButton=false;
+
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -311,6 +342,7 @@ export class AddEditProgramComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
+            console.log(this.batchData);
             this.loading = false;
           } else {
             // this.toastr.error(data["msg"]);
@@ -346,10 +378,18 @@ export class AddEditProgramComponent implements OnInit {
   public getQualityInfo(e, value) {
     if (e != undefined) {
       let id = value;
+      console.log(this.qualityList)
       this.qualityList.forEach((e) => {
         if (e.qualityId == id) {
           this.programValues.qualityName = e.qualityName;
           this.programValues.qualityType = e.qualityType;
+          //this.pName=e.partyName;
+          this.programValues.partyId = e.partyId;
+         // this.programValues.partyId = 
+          if (e.id != undefined)
+            this.programValues.qualityEntryId = e.id;
+          else
+            this.programValues.qualityEntryId = e.qualityEntryId
           if (e.id != undefined) this.programValues.qualityEntryId = e.id;
           else this.programValues.qualityEntryId = e.qualityEntryId;
         }
@@ -402,6 +442,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public selectQualityId() {
+   
     if (
       this.programValues.qualityId == null &&
       (this.batchData == null || this.stockData == null)
@@ -415,6 +456,25 @@ export class AddEditProgramComponent implements OnInit {
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
       let id = this.programValues.programRecords[rowIndex].batchId;
+      console.log(id);
+     console.log(this.allBatchData)
+      this.allBatchData.forEach((element) => {
+        if (id == element.batchId) {
+          let q_id=element.qualityId;
+          this.programValues.programRecords[rowIndex].quantity = element.totalWt;
+          this.qualityList.filter((x) =>
+          { 
+            if(x.qualityId===q_id){
+              this.list.push(x);
+          }
+          });
+          console.log(this.list);
+        }
+      }); 
+  // if(this.programValues.qualityId == null || this.programValues.partyId == null){
+  //     this.qualityList=this.list;
+  //   }
+  //   console.log(this.list);
       if (this.batchData != undefined) {
         this.batchData.forEach((element) => {
           if (id == element.batchId) {
@@ -456,6 +516,10 @@ export class AddEditProgramComponent implements OnInit {
       });
       //setQuality party info
     }
+    // if(this.programValues.qualityId == null || this.programValues.partyId == null){
+    //   this.qualityList=this.list;
+    // }
+    // console.log(this.list);
   }
 
   setQualityTypeForStockBatch(){
@@ -501,6 +565,7 @@ export class AddEditProgramComponent implements OnInit {
           }
         } else if (colName == "batch") {
           if (!item.batchId) {
+            //this.toastr.error("Enter No. of Batch", "Batch Field required");
             this.toastr.error("Enter No. of Batch");
             return;
           }
@@ -510,6 +575,22 @@ export class AddEditProgramComponent implements OnInit {
             return;
           }
         }
+        // let obj = {
+        //   id: null,
+        //   partyId: null,
+        //   priority: null,
+        //   programGivenBy: null,
+        //   batchId: null,
+        //   colourTone: null,
+        //   stockId: null,
+        //   partyShadeNo: null,
+        //   quantity: null,
+        //   remark: null,
+        //   shadeNo: null,
+        //   qualityId: null,
+        //   qualityName: null,
+        //   qualityType: null,
+        // };
         let obj = new ProgramRecords();
         let list = this.programValues.programRecords;
         list.push(obj);
@@ -573,12 +654,14 @@ export class AddEditProgramComponent implements OnInit {
           } else {
             this.toastr.error(errorData.Add_Error);
           }
+
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
         }
       );
     } else {
+      this.disableButton=false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }
@@ -609,13 +692,17 @@ export class AddEditProgramComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.disableButton=false;
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
     } else {
+      this.disableButton=false;
+      this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
+      
     }
   }
 }

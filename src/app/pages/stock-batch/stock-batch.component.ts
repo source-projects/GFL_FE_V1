@@ -21,11 +21,13 @@ export class StockBatchComponent implements OnInit {
   stockList;
   stock = [];
   headers = ["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date"];
+  module="stock-batch";
+
   flag = false;
   disabled = false;
 
   tablestyle = "bootstrap";
-  radioSelect = 1;
+  radioSelect = 0;
   radioArray = [
     { id: 1, value: "View Own", disabled: false },
     { id: 2, value: "View Group", disabled: false },
@@ -64,12 +66,31 @@ export class StockBatchComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getAddAcess();
-    this.getStockBatchList(this.userId, "own");
+    // this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.stockBatchGuard.accessRights('view')){
+      this.getStockBatchList(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.stockBatchGuard.accessRights('view group')){
+      this.getStockBatchList(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.stockBatchGuard.accessRights('view all')){
+      this.getStockBatchList(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess() {
     if (this.stockBatchGuard.accessRights('add')) {
@@ -108,6 +129,8 @@ export class StockBatchComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.stock;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getStockBatchList(id, getBy) {

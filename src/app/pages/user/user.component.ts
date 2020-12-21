@@ -24,11 +24,13 @@ export class UserComponent implements OnInit {
   userList=[];
   user=[];
   headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
+  module="user";
+
   flag = false;
 
   userId;
   userHeadId;
-  radioSelect = 1;
+  radioSelect = 0;
   radioArray = [
     {id:1, value:"View Own" , disabled:false},
     {id:2, value:"View Group" , disabled:false},
@@ -72,11 +74,30 @@ export class UserComponent implements OnInit {
 
     this.getViewAccess();
     this.getAddAcess();
-    this.getAllUser(this.userId,"own");
+    // this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
-    this.getEditAccess()
-    this.getEditAccess1()
+    this.getEditAccess();
+    this.getEditAccess1();
+    if(this.userGuard.accessRights('view')){
+      this.getAllUser(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.userGuard.accessRights('view group')){
+      this.getAllUser(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.userGuard.accessRights('view all')){
+      this.getAllUser(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess(){
     if(this.userGuard.accessRights('add')){
@@ -115,6 +136,8 @@ export class UserComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.user;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getAllUser(id,getBy){

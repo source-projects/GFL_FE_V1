@@ -5,15 +5,13 @@ import { AddEditPartyComponent } from './add-edit-party/add-edit-party.component
 import { PartyGuard } from 'app/@theme/guards/party.guard';
 
 const routes: Routes = [
-  {
+  { 
     path:'',
     component:PartyComponent,
     canActivate:[PartyGuard],
     canLoad:[PartyGuard],
-    data: { PermissionName: ['view']}
-    
+    data: { PermissionName: ['view','view group','view all']}
   },
-
   {
     path:'add',
     component:AddEditPartyComponent,
@@ -26,7 +24,7 @@ const routes: Routes = [
     component:AddEditPartyComponent,
     canActivate: [PartyGuard],
     canLoad: [PartyGuard],
-    data: { PermissionName: ['edit']} 
+    data: { PermissionName: ['edit','edit group','edit all']} 
   }
   
 ];

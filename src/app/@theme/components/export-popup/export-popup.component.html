@@ -1,5 +1,5 @@
 <div class="modal-header nb-header">
-    <h4 class="modal-title nb-text">Export options</h4>
+    <h4 class="modal-title nb-text">Export</h4>
     <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true" class="close-icon">&times;</span>
     </button>
@@ -7,16 +7,16 @@
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-6">
-            <input id="start" type="text" class="form-control" placeholder="Enter starting row to export"
-                (keyup)="change($event)">
+            <input id="start" type="number" class="form-control" placeholder="Enter starting row to export"
+                [(ngModel)]='startRow'>
         </div>
         <div class="form-group col-md-6">
-            <input id="end" type="text" class="form-control" placeholder="Enter last row to export"
-                (keyup)="change1($event)">
+            <input id="end" type="number" class="form-control" placeholder="Enter last row to export"
+            [(ngModel)]='endRow' >
         </div>
         <div class="form-group col-md-6">
-            <select class="form-control" (change)='onOptionsSelected($event)'>
-                <option selected>Export as</option>
+            <select class="form-control"  [(ngModel)]='exportType' placeholder="Enter last row to export" >
+                <option  value="" disabled selected hidden >Export as</option>
                 <option value="text">Text</option>
                 <option value="pdf">PDF</option>
                 <option value="excel">Excel</option>
@@ -26,8 +26,25 @@
     </div>
 
 </div>
+<div *ngIf="email===true">
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Email</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" placeholder="To:"  [(ngModel)]='toEmail'>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" placeholder="Subject:"  [(ngModel)]='subjectEmail'>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onClick()">Ok</button>
-    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="emailClick()">E-Mail</button>
+    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onDownloadClick()">Download</button>
+    <button *ngIf="email==true" type="button" class="btn btn-primary btn-sm btn-design" (click)="emailSendClick()">Send e-mail</button>
+    <button *ngIf="email!=true" type="button" class="btn btn-primary btn-sm btn-design" (click)="emailClick()">E-Mail</button>
+
     <button type="button" class="btn btn-primary btn-sm btn-design" (click)="activeModal.close('Close click')">Close</button>
 </div>

@@ -42,6 +42,7 @@ export class AddFunctionComponent implements OnInit {
   chemicalSubRecord: ChemicalReq;
   rowChemicalData: any;
   itemListArray: any = [];
+  
   //id of foem-control to set focus
   index:string;
   functionDropdown = [
@@ -107,7 +108,7 @@ export class AddFunctionComponent implements OnInit {
           this.funcObj.funcName = ele.funcName;
           this.funcObj.funcPosition = ele.funcPosition;
           this.funcObj.funcValue = ele.funcValue;
-          this.dosing = ele.dosingFunc;
+          this.dosing = ele.dosingFunc; 
           this.waterControl = ele.waterControlFunc;
           this.tempratureControl = ele.tempratureControlFunc;
           this.pumpControl = ele.pumpControlFunc;
@@ -119,6 +120,7 @@ export class AddFunctionComponent implements OnInit {
       }
     }
     this.getItemData();
+    if(this.dosing.dosingChemical.length==0){
     this.dosing.dosingChemical.push({
       id: null,
       dynamicProcessRecordId: null,
@@ -129,6 +131,7 @@ export class AddFunctionComponent implements OnInit {
       concentration: null,
       lrOrFabricWt: null,
     });
+  }
   }
 
   itemSelected(event, rowIndex  ) {
@@ -233,18 +236,18 @@ export class AddFunctionComponent implements OnInit {
   onDoseTypeChange() {
     if (this.dosing.doseType == "color") {
       this.dosing.doseWhileHeating = false;
-      this.dosing.dosingChemical = []
     }else{
-      if(!this.itemListArray){
+      if(!this.itemListArray.length){
         this.processService.getAllItemWithSupplier().subscribe(
           data=>{
             if(data['success'])
               this.itemListArray = data['data']
+              // console.log(this.itemListArray)
             // else
             //   // this.toastr.error(data['msg'])
           },
           error=>{
-            //  this.toastr.error(errorData.Internal_Error)
+              // this.toastr.error(errorData.Internal_Error)
           }
         )
       }

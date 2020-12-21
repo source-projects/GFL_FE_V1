@@ -27,16 +27,11 @@ export class ShadeComponent implements OnInit {
   tableStyle = "bootstrap";
   shadeList = [];
   shade = [];
-  headers = [
-    "Party Shade No",
-    "Process Name",
-    "Quality Id",
-    "Quality Name",
-    "Party Name",
-    "Color Tone",
-  ];
+  headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
+  module="shade";
 
-  radioSelect = 1;
+
+  radioSelect = 0;
   flag = false;
 
   radioArray = [
@@ -95,11 +90,30 @@ export class ShadeComponent implements OnInit {
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getViewAccess();
     this.getAddAcess();
-    this.getallShades(this.userId, "own");
+    // this.getallShades(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.shadeGuard.accessRights('view')){
+      this.getallShades(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.shadeGuard.accessRights('view group')){
+      this.getallShades(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.shadeGuard.accessRights('view all')){
+      this.getallShades(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess() {
     if (this.shadeGuard.accessRights('add')) {
@@ -138,6 +152,8 @@ export class ShadeComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.shade;
+    modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getallShades(id, getBy) {
@@ -151,9 +167,10 @@ export class ShadeComponent implements OnInit {
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
-        this.loading = false;
+       
           }
         }
+        this.loading = false;
       },
       error => {
         this.loading = false;

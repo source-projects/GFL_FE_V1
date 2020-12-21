@@ -23,12 +23,14 @@ export class ProgramComponent implements OnInit {
   programList: any[];
   program=[];
   headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
+  module="program";
+
   tableStyle = "bootstrap";
   flag = false;
 
   userId;
   userHeadId;
-  radioSelect = 1;
+  radioSelect = 0;
   radioArray = [
     { id: 1, value: "View Own" , disabled:false },
     { id: 2, value: "View Group" , disabled:false},
@@ -68,11 +70,30 @@ export class ProgramComponent implements OnInit {
     this.userHeadId = this.userHeadId['userHeadId'];
     this.getViewAccess();
     this.getAddAcess();
-    this.getProgramList(this.userId, "own");
+    // this.getProgramList(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.programGuard.accessRights('view')){
+      this.getProgramList(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.programGuard.accessRights('view group')){
+      this.getProgramList(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.programGuard.accessRights('view all')){
+      this.getProgramList(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess(){
     if(this.programGuard.accessRights('add')){
@@ -111,6 +132,8 @@ export class ProgramComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.program;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   public getProgramList(id, getBy) {

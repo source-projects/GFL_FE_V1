@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule} from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ThemeModule } from 'app/@theme/theme.module';
-//import { ExportDirective } from '../../@theme/directives/export.directive';
 //import {ExportService} from '../../@theme/services/export.service';
 @NgModule({
   declarations: [PartyComponent, AddEditPartyComponent ],

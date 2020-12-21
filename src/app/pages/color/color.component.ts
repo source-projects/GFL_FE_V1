@@ -27,7 +27,9 @@ export class ColorComponent implements OnInit {
  colorList=[];
  color=[];
  headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
- radioSelect=1;
+ module="color";
+
+ radioSelect=0;
  flag = false;
 
  radioArray = [
@@ -74,11 +76,30 @@ export class ColorComponent implements OnInit {
 
     this.getViewAccess();
     this.getAddAcess();
-    this.getColor(this.userId, "own");
+    // this.getColor(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
+    if(this.colorGuard.accessRights('view')){
+      this.getColor(this.userId,"own");
+      this.hidden=this.ownDelete; 
+      this.hiddenEdit=this.ownEdit;
+      this.radioSelect=1;
+    }
+     else if(this.colorGuard.accessRights('view group')){
+      this.getColor(this.userHeadId,"group");
+      this.hidden=this.groupDelete;
+      this.hiddenEdit=this.groupEdit;
+      this.radioSelect=2;
+    }
+    else if(this.colorGuard.accessRights('view all')){
+      this.getColor(0,"all");
+      this.hidden=this.allDelete;
+      this.hiddenEdit=this.allEdit;
+      this.radioSelect=3;
+
+    }
   }
   getAddAcess(){
     if(this.colorGuard.accessRights('add')){
@@ -117,6 +138,8 @@ export class ColorComponent implements OnInit {
     const modalRef = this.modalService.open(ExportPopupComponent);
      modalRef.componentInstance.headers = this.headers;
      modalRef.componentInstance.list = this.color;
+     modalRef.componentInstance.moduleName = this.module;
+
   }
 
   getColor(id, getBy) {
