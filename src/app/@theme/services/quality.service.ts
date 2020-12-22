@@ -32,5 +32,8 @@ export class QualityService {
   }
   getQualityByParty(id): any{
     return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/' + id);
-}
+  }
+  getQulityIdExist(id):any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/is_quality_exist/' + id);
+  }
 }

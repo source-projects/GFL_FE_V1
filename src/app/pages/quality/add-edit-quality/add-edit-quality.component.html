@@ -52,15 +52,21 @@
             type="text"
             class="form-control"
             id="qualityId"
+            (change)="checkQulityId()"
+            required
             formControlName="qualityId"
             placeholder="Enter Quality ID"
             [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)}"
           />
+          
           <div
             class="invalid-feedback"
             *ngIf="(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)"
           >
             <span>Quality ID is required</span>
+          </div>
+          <div class="text-danger" *ngIf="qulityIdExist" >
+            <span>Qulity Id is already Exist </span>
           </div>
         </div>
         <div class="form-group col-md-4">
@@ -149,6 +155,24 @@
             <span>Unit is required.</span>
           </div>
         </div>
+        <div class="form-group col-md-4">
+          <label class="required">Rate</label>
+          <input
+            type="text"
+            class="form-control"
+            id="rate"
+            formControlName="rate"
+            placeholder="Enter Rate"
+            [ngClass]="{'is-invalid':(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched) }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched)"
+          >
+            <span>Rate is required</span>
+          </div>
+        </div>
+
       </div>
       <div class="row">
         <div class="col-md-12 mobile-btn-center text-btn-right">
