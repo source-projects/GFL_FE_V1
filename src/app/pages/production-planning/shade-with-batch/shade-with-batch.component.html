@@ -1,0 +1,13 @@
+<div class="modal-header nb-header">
+    <h4 class="modal-title nb-text">Shade with batch</h4>
+    <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true" class="close-icon">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" >
+        <div class="example-box" *ngFor="let s of allShade" cdkDrag>{{s.batchId}} - {{ s.shadeId}}</div>
+        
+ 
+      </div>
+</div>

@@ -96,6 +96,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
+    title: 'Production Planning',
+    icon: 'bar-chart-outline',
+    link: '/pages/production-planning',
+    hidden:false
+  },
+  {
+    title: 'Jet Planning',
+    icon: 'bar-chart-outline',
+    link: '/pages/jet-planning',
+    hidden:false
+  },
+  {
     title: 'FEATURES',
     group: true,
   },

@@ -135,6 +135,18 @@ export const routes: Routes = [
         data: { PermissionName: ['view']}
       },
       {
+        path: 'production-planning',
+        loadChildren: () => import('./pages/production-planning/production-planning.module')
+          .then(m => m.ProductionPlanningModule),
+       
+      },
+      {
+        path: 'jet-planning',
+        loadChildren: () => import('./pages/jet-planning/jet-planning.module')
+          .then(m => m.JetPlanningModule),
+       
+      },
+      {
         path: 'miscellaneous',
         loadChildren: () => import('./pages/miscellaneous/miscellaneous.module')
           .then(m => m.MiscellaneousModule),

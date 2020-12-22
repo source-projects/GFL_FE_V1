@@ -1,0 +1,46 @@
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+      <div>
+        <div class="row">
+          <div class="col-md-11 col-10">
+            <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
+          </div>
+          
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+  
+    <table class="user-per-table">
+    <tr>
+      <th>Jet</th>
+      <th>Capacity</th>
+      <th>Sequence</th>
+    </tr>
+    <tr>
+      <!--td *ngFor="let j of jetData">{{j.jetName}}</td>
+      <td *ngFor="let j of jetData">{{j.capacity}}</td-->
+        <td>1</td>
+        <td>1</td>
+
+      <td>
+        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="timePeriods" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>{{timePeriod}}</div>
+          
+   
+        </div>
+      </td>
+      <td>
+        <div class="nb-icon-add">
+            <a class="link-fab linkedin" media="Linkedin">
+                <div class="tooltip">Add Batch</div>
+                <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNew($event)"
+                    icon="plus" class="add-icon display-inline">
+                </nb-icon>
+            </a>
+
+        </div>
+      </td>
+    </tr>
+    </table>
+</nb-card-body>
