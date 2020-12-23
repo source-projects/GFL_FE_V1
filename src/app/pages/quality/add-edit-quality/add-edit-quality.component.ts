@@ -133,18 +133,14 @@ export class AddEditQualityComponent implements OnInit {
       }
     );
   }
-
   setPartyCode(){
     if(this.addEditQualityForm.get('partyId').value!=null){
       this.party.forEach(element => {
         if(this.addEditQualityForm.get('partyId').value==element.id){
-          // console.log(element.id)
-          // console.log("party code",element.partyCode)
           this.addEditQualityForm.patchValue({
             partyCode:element.partyCode,
           })
         }
-        // console.log(this.addEditQualityForm.get('partyCode').value)
       });
     }
   }
