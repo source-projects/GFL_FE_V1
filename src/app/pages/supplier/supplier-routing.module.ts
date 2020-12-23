@@ -11,7 +11,7 @@ const routes: Routes = [
     component:SupplierComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'add',
@@ -37,7 +37,7 @@ const routes: Routes = [
     component:AddEditSupplierComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ProgramComponent,
     canActivate: [ProgramGuard],
     canLoad: [ProgramGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path: 'add',
@@ -24,7 +24,7 @@ const routes: Routes = [
     component: AddEditProgramComponent,
     canActivate: [ProgramGuard],
     canLoad: [ProgramGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

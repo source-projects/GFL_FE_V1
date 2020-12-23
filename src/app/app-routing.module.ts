@@ -39,7 +39,7 @@ export const routes: Routes = [
           .then(m => m.PartyModule),
         canActivate: [PartyGuard],
         canLoad: [PartyGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'quality',
@@ -47,7 +47,7 @@ export const routes: Routes = [
           .then(m => m.QualityModule),
         canActivate: [QualityGuard],
         canLoad: [QualityGuard],
-        data: { PermissionName: ['view'] }
+        data: { PermissionName: ['view','view group','view all'] }
       },
       {
         path: 'user',
@@ -55,7 +55,7 @@ export const routes: Routes = [
           .then(m => m.UserModule),
         canActivate: [UserGuard],
         canLoad: [UserGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'color',
@@ -63,7 +63,7 @@ export const routes: Routes = [
           .then(m => m.ColorModule),
         canActivate: [ColorGuard],
         canLoad: [ColorGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'program',
@@ -71,7 +71,7 @@ export const routes: Routes = [
           .then(m => m.ProgramModule),
         canActivate: [ProgramGuard],
         canLoad: [ProgramGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'process',
@@ -79,7 +79,7 @@ export const routes: Routes = [
           .then(m => m.ProcessModule),
         canActivate: [ProgramGuard],
         canLoad: [ProgramGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'shade',
@@ -87,7 +87,7 @@ export const routes: Routes = [
           .then(m => m.ShadeModule),
         canActivate: [ShadeGuard],
         canLoad: [ShadeGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'waterJet',
@@ -101,7 +101,7 @@ export const routes: Routes = [
           .then(m => m.SupplierModule),
         canActivate: [SupplierGuard],
         canLoad: [SupplierGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'purchaseItem',
@@ -124,7 +124,7 @@ export const routes: Routes = [
           .then(m => m.BatchShuffleModule),
         canActivate: [SupplierGuard],
         canLoad: [SupplierGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'stock-batch',
@@ -132,7 +132,7 @@ export const routes: Routes = [
           .then(m => m.StockBatchModule),
         canActivate: [StockBatchGuard],
         canLoad: [StockBatchGuard],
-        data: { PermissionName: ['view']}
+        data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'production-planning',

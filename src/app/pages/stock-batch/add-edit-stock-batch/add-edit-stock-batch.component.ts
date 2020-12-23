@@ -22,6 +22,8 @@ import { CommonService } from "app/@theme/services/common.service";
 })
 export class AddEditStockBatchComponent implements OnInit {
   public loading = false;
+  public disableButton = false;
+
   public errorData: any = (errorData as any).default;
   qualityList: any;
   formSubmitted = false;
@@ -367,6 +369,8 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   addStockBatch(myForm) {
+    this.disableButton=true;
+
     this.formSubmitted = true;
     if (myForm.valid) {
       this.stockBatch.createdBy = this.user.userId;
@@ -394,19 +398,23 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         },
         (error) => {
+          this.disableButton=false;
+
           this.stockBatchArray = [];
           this.toastr.error(errorData.Serever_Error);
         }
       );
     }
     else
-    {
+    {      this.disableButton=false;
+
       const errorField = this.renderer.selectRootElement('#target');
           errorField.scrollIntoView();
     }
   }
 
   updateStockBatch(stockBatch) {
+    this.disableButton=true;
     this.loading = true;
     this.formSubmitted = true;
     if (stockBatch.valid) {
@@ -439,6 +447,8 @@ export class AddEditStockBatchComponent implements OnInit {
           this.stockBatchArray = [];
           this.toastr.error(errorData.Update_Error);
           this.loading = false;
+          this.disableButton=false;
+
         }
       );
       this.loading = false; 
@@ -446,6 +456,7 @@ export class AddEditStockBatchComponent implements OnInit {
     
     else
     {
+      this.disableButton=false;
       const errorField = this.renderer.selectRootElement('#target');
       errorField.scrollIntoView();
     }

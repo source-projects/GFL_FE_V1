@@ -738,6 +738,7 @@ export class ShuffleComponent implements OnInit {
                 this.toastr.success(errorData.Update_Success)
               }
               else {
+                this.toastr.error(data['msg'])
                 this.toastr.error(errorData.Update_Error)
               }
             },

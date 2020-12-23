@@ -61,6 +61,7 @@ export class FunctionObj {
     funcValue: any = '';
     funcPosition: any;
     dosingFunc: Dosing;
+  
     tempratureControlFunc: TempratureControl;
     pumpControlFunc: PumpControl;
     waterControlFunc: WaterControl;

@@ -102,11 +102,15 @@ export class AddEditSupplierComponent implements OnInit {
         },
         error=>{
           //toaster
+          this.disableButton = false;
+
           this.toastr.error(errorData.Serever_Error)
         }
       )
     }
     else{
+      this.disableButton = false;
+
       return;  
     }
   }
@@ -135,11 +139,14 @@ export class AddEditSupplierComponent implements OnInit {
         },
         error=>{
           //toaster
+          this.disableButton = false;
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       )
     }
+    this.disableButton = false;
+
   }
 
   public goBackToPreviousPage():any{

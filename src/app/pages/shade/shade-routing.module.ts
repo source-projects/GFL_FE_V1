@@ -10,7 +10,7 @@ const routes: Routes = [
     component:ShadeComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'add',
@@ -24,7 +24,7 @@ const routes: Routes = [
     component:AddEditShadeComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],
-    data: { PermissionName: ['edit']}
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 
