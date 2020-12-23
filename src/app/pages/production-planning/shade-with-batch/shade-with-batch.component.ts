@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {ProductionPlanningService} from 'app/@theme/services/production-planning.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
   selector: 'ngx-shade-with-batch',
@@ -10,8 +11,14 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class ShadeWithBatchComponent implements OnInit {
 allShade:any[];
+shade:any[];
 loading = false;
-  constructor(    private productionPlanningService: ProductionPlanningService,
+
+//batch:any;
+color:any;
+  constructor(    
+    private productionPlanningService: ProductionPlanningService,
+    private shadeService: ShadeService,
     private _NgbActiveModal: NgbActiveModal, 
     ) { }
 
@@ -32,6 +39,12 @@ loading = false;
             if (data["success"]) {
               this.allShade = data["data"];
               console.log(this.allShade);
+              // this.allShade.forEach((e)=>
+              // {
+              //   this.getShade(e.partyId,e.qualityEntryId);
+              // }
+              // );
+              // console.log(this.allShade);
             }
             else {
               // this.toastr.error(data["msg"]);
@@ -43,5 +56,15 @@ loading = false;
             this.loading = false;
           }
     );}
+
+    onClick(event){
+      console.log(event.target.innerText);
+      this.allShade.forEach((e)=>{
+        if(e.batchId==event.target.innerText){
+          this.activeModal.close(e);
+        }
+      });
+     
+    }
 
 }

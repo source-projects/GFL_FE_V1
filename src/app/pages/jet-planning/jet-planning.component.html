@@ -17,24 +17,24 @@
       <th>Capacity</th>
       <th>Sequence</th>
     </tr>
-    <tr>
-      <!--td *ngFor="let j of jetData">{{j.jetName}}</td>
-      <td *ngFor="let j of jetData">{{j.capacity}}</td-->
-        <td>1</td>
-        <td>1</td>
-
+    <tr *ngFor="let j of jet;let i=index">
+      <td >{{j.name}}</td>
+      <td >{{j.capacity}}</td>
       <td>
-        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="timePeriods" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let timePeriod of timePeriods" cdkDrag>{{timePeriod}}</div>
-          
-   
+        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="production" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let p of jetPlanning.productionArray"  cdkDrag>
+            
+              {{p.batchId}}
+            
+            
+          </div>
         </div>
       </td>
       <td>
         <div class="nb-icon-add">
             <a class="link-fab linkedin" media="Linkedin">
                 <div class="tooltip">Add Batch</div>
-                <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNew($event)"
+                <nb-icon [options]="{animation:{type:'zoom'}}"  (click)="addNew($event,i)"
                     icon="plus" class="add-icon display-inline">
                 </nb-icon>
             </a>
@@ -44,3 +44,4 @@
     </tr>
     </table>
 </nb-card-body>
+</nb-card>
