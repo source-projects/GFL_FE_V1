@@ -1,7 +1,7 @@
 import { NbMenuService } from '@nebular/theme';
 import { Component, ViewChild } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-
+import { CdkDragEnter, CdkDragExit,CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'ngx-not-found', 
   styleUrls: ['./not-found.component.scss'],
@@ -13,21 +13,39 @@ export class NotFoundComponent {
     
   ];
 
-  done = [
+  done = ["","","","","","","","","","","","","",""
    
   ];
   
-
-  drop(event: CdkDragDrop<string[]>) {
+  indexOccupiedArray=[0,0,0,0,0,0];
+  drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+     // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
+      if(!this.indexOccupiedArray[event.currentIndex])
+      {transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+                        this.indexOccupiedArray[event.currentIndex]=1;
+                        //this.todo.pop();
+                      }
+    else{
+
+     }
+                      
     }
+    // const rect=event.item.element.nativeElement.getBoundingClientRect()
+    //   event.item.data.top=(rect.top+event.distance.y-this.todoList dropZone.nativeElement.getBoundingClientRect().top)+'px'
+    //   event.item.data.left=(rect.left+event.distance.x-this.dropZone.nativeElement.getBoundingClientRect().left)+'px'
+    //   this.addField({...event.item.data}, event.currentIndex);
   }
+  entered(event: CdkDragEnter<string[]>) {
+    console.log('Entered', event.item.data);
+   }
+   exited(event: CdkDragExit<string[]>) {
+     console.log('Exited', event.item.data);
+   }
   constructor(private menuService: NbMenuService) {
   }
   
