@@ -89,6 +89,8 @@ export const routes: Routes = [
         canLoad: [ShadeGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
+      { path: 'generate_invoice', loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
+      .then(m => m.GenerateInvoiceModule) },
       {
         path: 'waterJet',
         loadChildren: () => import('./pages/water-jet/water-jet.module')
@@ -160,9 +162,12 @@ export const routes: Routes = [
         path: '**',
         component: NotFoundComponent,
       },
+  
+
     ],
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
+    
   { path: '**', redirectTo: 'auth' },
 ];
 

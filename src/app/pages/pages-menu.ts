@@ -106,6 +106,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'bar-chart-outline',
     link: '/pages/jet-planning',
     hidden:false
+  }
+  ,{
+    title: 'Generate Invoice',
+    icon: 'bar-chart-outline',
+    link: '/pages/generate_invoice',
+    hidden:false
   },
   {
     title: 'FEATURES',
