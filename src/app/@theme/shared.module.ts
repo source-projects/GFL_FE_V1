@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { NgxLoadingModule } from 'ngx-loading';
+import { NgxCheckboxModule } from 'ngx-checkbox';
+
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {
   NbLayoutModule,
@@ -79,11 +81,11 @@ const NB_MODULES = [
   declarations: [    ExportPopupComponent
   ],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
-    OwlNativeDateTimeModule, NgbModule
+    OwlNativeDateTimeModule, NgbModule,NgxCheckboxModule
   ],
 
   exports: [...NB_MODULES ,NgxLoadingModule,OwlDateTimeModule,
-    OwlNativeDateTimeModule,],
+    OwlNativeDateTimeModule,NgxCheckboxModule],
   providers:[ ExportService ,DatePipe],
   entryComponents: [ ExportPopupComponent ]
 })

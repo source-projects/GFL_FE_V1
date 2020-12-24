@@ -3,15 +3,39 @@
         <nb-card class="nb-style">
             <nb-card-header class="nb-header">
                 <div class="row">
-                    <div class="col-md-1 col-3 mobile-btn desktop-btn">
+                    <div class="col-md-2 col-3 mobile-btn desktop-btn">
                         <button routerLink='add' style="float:right"
                             class="btn btn-primary btn-md btn-list"  >Generate Invoice</button>
                     </div>
                     <div class="col-md-9 col-7">
-                        <h2 class="nb-text">Party</h2>
+                        <h2 class="nb-text">Generate Invoice</h2>
+                    </div>
+                    <div class="col-md-1 col-2 mobile-btn desktop-btn dek-jus">
+                        <button style="float:right;" class="btn btn-primary btn-md btn-list"
+                       >PRINT</button>
                     </div>
                 </div>
             </nb-card-header>
+            <nb-card-body>
+                <ngx-datatable [rows]="Invoice"  class="material" [headerHeight]="31"
+                    [footerHeight]="31">
+                    <ngx-datatable-column name="Select" sortable="false" >
+                       <ng-template  ngx-datatable-cell-template>
+                        <input type="checkbox" ng-checked="all">
+                       </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Action" sortable="false">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                               [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" ></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Created Date" prop="createdDate"></ngx-datatable-column>
+                    <ngx-datatable-column name="Id" prop="id"></ngx-datatable-column>
+                    <ngx-datatable-column name="SendToParty" prop="isSendToParty"></ngx-datatable-column>
+                </ngx-datatable>
+            </nb-card-body>
         </nb-card>
     </div>
 </div> 
