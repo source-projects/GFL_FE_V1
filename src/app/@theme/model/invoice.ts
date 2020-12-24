@@ -7,6 +7,16 @@ export class Invoice {
     dispatchData:DispatchData[];
     isSendToParty:boolean;
     stockId:Number;
+    controlId:Number;
+    finishMtr:Number;
+    isBillGenrated:boolean;
+    isExtra:boolean;
+    isFinishMtrSave:boolean;
+    isProductionPlanned:boolean;
+    mtr:Number;
+    sequencedId:Number;
+    wt:Number;
+    
 }
 
 export class DispatchData {

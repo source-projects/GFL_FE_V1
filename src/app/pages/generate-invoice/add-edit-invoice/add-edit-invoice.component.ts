@@ -4,6 +4,7 @@ import { PartyService } from 'app/@theme/services/party.service';
 import { Invoice } from "app/@theme/model/invoice";
 import { id } from '@swimlane/ngx-datatable';
 import { event } from 'jquery';
+import { EBADF } from 'constants';
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -13,11 +14,13 @@ import { event } from 'jquery';
 export class AddEditInvoiceComponent implements OnInit {
   party: any[];
   batch: any[];
+  mtr:any[];
   invoiceValues: Invoice = new Invoice();
   formSubmitted = false;
   public loading = false;
   qualityList: any[];
-
+cid:any;
+bid:any; 
 
   constructor(
     private generateInvoiceService:GenerateInvoiceService,
@@ -57,7 +60,6 @@ export class AddEditInvoiceComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.batch = data["data"];
-          console.log(this.batch)
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -73,7 +75,35 @@ export class AddEditInvoiceComponent implements OnInit {
   }
   else{
     this.loading = false;
+  }
+  }
 
+  getMtrList(event) {
+    this.loading = true;
+    if(event !=undefined){
+    if(this.invoiceValues.batchId ){
+      this.batch.forEach(e=>{
+        if(e.batchId==this.invoiceValues.batchId){
+          this.invoiceValues.controlId=e.controlId;
+        }
+      })
+    this.generateInvoiceService.getFinishedMtrList(this.invoiceValues.batchId,this.invoiceValues.controlId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.mtr = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;[]
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+    }
+  }
+  else{
+    this.loading = false;
   }
   }
 }

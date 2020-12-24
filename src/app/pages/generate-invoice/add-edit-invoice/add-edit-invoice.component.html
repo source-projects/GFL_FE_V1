@@ -29,8 +29,8 @@
                                  <label class="required">Batch Id</label>
                                  <ng-select name="batchId" [(ngModel)]='invoiceValues.batchId' required #batchId1="ngModel"
                                      [ngClass]="{'is-invalid': (batchId1.invalid)&&(formSubmitted || batchId1.touched)}"
-                                     placeholder="Batch Id" class="required-error-dropdown">
-                                     <ng-option *ngFor="let q of batch" [value]="q.id">{{q.batchId}}</ng-option>
+                                     (change)="getMtrList($event)" placeholder="Batch Id" class="required-error-dropdown">
+                                     <ng-option *ngFor="let q of batch" [value]="q.batchId">{{q.batchId}}</ng-option>
                                  </ng-select>
                                  <div class="required-class" *ngIf="(formSubmitted && batchId1.invalid) || (batchId1.invalid && batchId1.touched)">
                                      <span>Batch Id is required</span>
@@ -38,6 +38,21 @@
                              </div>
                          </div>
                          </div>
+                         <div class="row">
+                            <label>Finish Meter</label>&nbsp;&nbsp;&nbsp;
+                                  <nb-checkbox status="basic" name="finishMtr" [(ngModel)]='invoiceValues.batchId && invoiceValues.controlId' #finishMtr1="ngModel" 
+                                  [ngClass]="{'is-invalid': (finishMtr1.invalid)&&(formSubmitted || finishMtr1.touched)}"  *ngFor="let m of mtr">
+                                  <label>BatchId :{{m.batchId}} FinishMtr: {{m.finishMtr}}</label>
+                                  </nb-checkbox>
+                         </div>
+                        <div class="row">
+                             <div class="col-md-12 mobile-btn-center text-btn-right">
+                                <div class="padding-bt-tp">
+                                     <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                     >Generate Invoice</button>
+                                </div>
+                             </div>
+                        </div>
                     </form>
     </nb-card-body>
-</nb-card>
+</nb-card> 
