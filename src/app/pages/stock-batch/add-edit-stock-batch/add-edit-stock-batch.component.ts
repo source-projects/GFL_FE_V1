@@ -143,8 +143,13 @@ export class AddEditStockBatchComponent implements OnInit {
                 if(this.qualityList == null)
                   this.stockBatch.qualityId = null;
                 else
-                  this.stockBatch.qualityId = this.qualityList[0].qualityEntryId
+                {
+                  this.stockBatch.qualityId = this.qualityList[0].qualityEntryId;
+
+
+                
               //this.loading = false;
+                }
             },
             (error) => {
               // this.toastr.error(errorData.Serever_Error);

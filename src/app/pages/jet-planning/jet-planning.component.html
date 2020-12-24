@@ -21,19 +21,17 @@
       <td >{{j.name}}</td>
       <td >{{j.capacity}}</td>
       <td>
-        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="production" class="example-list" (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let p of jetPlanning.productionArray"  cdkDrag>
-            
-              {{p.batchId}}
-            
-            
+        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="j.jetDataList" class="example-list" (cdkDropListDropped)="drop($event,i)">
+          <div class="example-box" *ngFor="let index of j.jetDataList" cdkDrag>
+            {{index.batchId}}
           </div>
         </div>
+        
       </td>
       <td>
         <div class="nb-icon-add">
             <a class="link-fab linkedin" media="Linkedin">
-                <div class="tooltip">Add Batch</div>
+                <div class="tooltip">Add Production</div>
                 <nb-icon [options]="{animation:{type:'zoom'}}"  (click)="addNew($event,i)"
                     icon="plus" class="add-icon display-inline">
                 </nb-icon>
@@ -43,5 +41,6 @@
       </td>
     </tr>
     </table>
+   
 </nb-card-body>
 </nb-card>

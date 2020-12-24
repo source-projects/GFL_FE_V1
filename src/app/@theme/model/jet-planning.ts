@@ -3,11 +3,11 @@ export class JetPlanning{
         id:Number;
         name:String;
         capacity:Number;
-        productionData:ProductionData[];
+        jetDataList:JetDataList[];
    
 
 }
-export class ProductionData{
+export class JetDataList{
     id:Number;
     batchId:String;
     colorTone:String;

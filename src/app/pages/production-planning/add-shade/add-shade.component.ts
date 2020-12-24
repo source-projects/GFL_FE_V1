@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {ShadeService} from 'app/@theme/services/shade.service';
 import {ProductionPlanningService} from 'app/@theme/services/production-planning.service';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from "app/@theme/json/error.json";
 
 @Component({
   selector: 'ngx-add-shade',
@@ -19,6 +21,7 @@ export class AddShadeComponent implements OnInit {
   public loading = false;
   shadeId:Number;
   formSubmitted: boolean = false;
+  public errorData: any = (errorData as any).default;
 
    productionData={
     batchId:null,
@@ -32,6 +35,8 @@ export class AddShadeComponent implements OnInit {
     private shadeService: ShadeService ,
     private productionPlanningService: ProductionPlanningService,
     private modalService: NgbModal,
+    private toastr: ToastrService,
+
 
     ) { }
 
@@ -49,7 +54,6 @@ export class AddShadeComponent implements OnInit {
   }
 
   public getShadeList(){
-    console.log("hg");
     this.loading = true;
 
     this.shadeService
@@ -85,6 +89,7 @@ export class AddShadeComponent implements OnInit {
         if (data["success"]) {
           this.action.emit(true);
           this.activeModal.close(true);
+          this.toastr.success(errorData.Add_Success);
 
          // this.modalService.close(true);
           //this.route.navigate(["/pages/program"]);

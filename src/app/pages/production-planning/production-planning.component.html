@@ -60,18 +60,20 @@
                            
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="required">Batch</label>
-                            <div>
-                                <button [(ngModel)]='productionPlanning.batchId'  #batchId1="ngModel" name="batchId"
-                                (click)="onBatchSelect($event)"
-                                *ngFor="let b of allBatchList" [value]="b.batchId"> {{b.batchId}} </button>
-                            </div>
-                           
-                        </div>
+                    
+                </div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label >Select Batch</label>
+                        
+                            <button nbButton  size="small" style="margin-left: 10px;" 
+                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)"> {{b.batchId}} </button>
+                        
+                       
                     </div>
                 </div>
+            </div>
             </form>
         </div>
     </nb-card-body>

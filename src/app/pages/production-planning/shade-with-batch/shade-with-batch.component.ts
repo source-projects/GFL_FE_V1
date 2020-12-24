@@ -3,6 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {ProductionPlanningService} from 'app/@theme/services/production-planning.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { ShadeService } from 'app/@theme/services/shade.service';
+import * as errorData from "app/@theme/json/error.json";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-shade-with-batch',
@@ -13,6 +15,7 @@ export class ShadeWithBatchComponent implements OnInit {
 allShade:any[];
 shade:any[];
 loading = false;
+public errorData: any = (errorData as any).default;
 
 //batch:any;
 color:any;
@@ -20,6 +23,8 @@ color:any;
     private productionPlanningService: ProductionPlanningService,
     private shadeService: ShadeService,
     private _NgbActiveModal: NgbActiveModal, 
+    private toastr: ToastrService,
+
     ) { }
 
   ngOnInit(): void {
@@ -38,13 +43,8 @@ color:any;
       (data) => {
             if (data["success"]) {
               this.allShade = data["data"];
-              console.log(this.allShade);
-              // this.allShade.forEach((e)=>
-              // {
-              //   this.getShade(e.partyId,e.qualityEntryId);
-              // }
-              // );
-              // console.log(this.allShade);
+
+              
             }
             else {
               // this.toastr.error(data["msg"]);
@@ -58,7 +58,6 @@ color:any;
     );}
 
     onClick(event){
-      console.log(event.target.innerText);
       this.allShade.forEach((e)=>{
         if(e.batchId==event.target.innerText){
           this.activeModal.close(e);

@@ -11,6 +11,7 @@ import { ProgramService } from "app/@theme/services/program.service";
 import { ToastrService } from "ngx-toastr";
 import { AddShadeComponent } from './add-shade/add-shade.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ShadeService } from 'app/@theme/services/shade.service';
 
 
 @Component({
@@ -30,9 +31,8 @@ p_id:any;
   partyList: any[];
   qualityList: any[];
   allBatchList: any[];
-
   productionPlanning: ProductionPlanning = new ProductionPlanning();
-  
+  batchList=[];
   programValues: any;
   qualityList1: any;
 
@@ -47,6 +47,7 @@ p_id:any;
     private stockBatchService: StockBatchService,
     private programService: ProgramService,
     private modalService: NgbModal,
+    private shadeService: ShadeService
 
 
   ) { }
@@ -89,7 +90,6 @@ p_id:any;
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
-          console.log(this.qualityList);
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -172,9 +172,18 @@ p_id:any;
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
-          console.log(this.allBatchList);
+          
+          this.allBatchList.forEach(element => {
+            if(element.productionPlanned == false){
+              this.batchList.push(element);
+            }
+          });
+          this.allBatchList=this.batchList;
+          
+         // console.log(this.batchList);
           this.loading = false;
-        } else {
+        }
+         else {
           // this.toastr.error(data["msg"]);
           this.loading = false;
         }
@@ -192,21 +201,34 @@ p_id:any;
 
   }
 
-public onBatchSelect(event){
-  let batch_id = event.target.value;
-  let b_controlId;
-  this.allBatchList.forEach((e)=>{
-    if(e.batchId==batch_id){
-      b_controlId=e.controlId;
-    }
-  });
+  public onBatchSelect(batch_id) {
+    let b_controlId;
+    let party, quality;
+    this.allBatchList.forEach((e) => {
+      if (e.batchId == batch_id) {
+        b_controlId = e.controlId;
+        party = e.partyId;
+        quality = e.qualityEntryId;
+      }
+    });
+   
   const modalRef = this.modalService.open(AddShadeComponent);
-     modalRef.componentInstance.party = this.p_id;
-     modalRef.componentInstance.quality = this.productionPlanning.qualityEntryId;
-     modalRef.componentInstance.batch = batch_id;
-     modalRef.componentInstance.batchControl = b_controlId;
-
-
+  
+  if ((this.productionPlanning.partyId && this.productionPlanning.qualityId) == undefined) {
+    modalRef.componentInstance.party = party;
+    modalRef.componentInstance.quality = quality;
+  }
+  else {
+    modalRef.componentInstance.party = this.p_id;
+    modalRef.componentInstance.quality = this.productionPlanning.qualityEntryId;
+  }
+  modalRef.componentInstance.batch = batch_id;
+  modalRef.componentInstance.batchControl = b_controlId;
+  modalRef.result.then(
+    (result)=>{
+      this.getAllBatchData();
+    } 
+  )
 }
 
 
