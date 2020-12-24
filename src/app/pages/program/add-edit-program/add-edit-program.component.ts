@@ -378,7 +378,6 @@ export class AddEditProgramComponent implements OnInit {
   public getQualityInfo(e, value) {
     if (e != undefined) {
       let id = value;
-      console.log(this.qualityList)
       this.qualityList.forEach((e) => {
         if (e.qualityId == id) {
           this.programValues.qualityName = e.qualityName;
