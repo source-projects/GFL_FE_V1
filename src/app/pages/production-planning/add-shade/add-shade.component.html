@@ -1,0 +1,23 @@
+<div class="modal-header nb-header">
+    <h4 class="modal-title nb-text">Choose Shade</h4>
+    <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true" class="close-icon">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <label class="required">Shade</label>
+    <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
+        [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
+         placeholder="Shade Id" class="required-error-dropdown"
+         >
+        <ng-option *ngFor="let s of shadeList" [value]="s.id">{{s.id}}</ng-option>
+    </ng-select>
+    <div class="required-class" *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
+        <span>Shade Id is required</span>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onOkClick()">Ok</button>
+
+    <button type="button" class="btn btn-primary btn-sm btn-design" disabled >Add to jet</button>
+</div>

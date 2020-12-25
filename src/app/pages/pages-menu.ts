@@ -96,8 +96,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
+    title: 'Production Planning',
+    icon: 'options-2-outline',
+    link: '/pages/production-planning',
+    hidden:false
+  },
+  {
+    title: 'Jet Planning',
+    icon: 'options-outline',
+    link: '/pages/jet-planning',
+    hidden:false
+  }
+  ,{
     title: 'Generate Invoice',
-    icon: 'bar-chart-outline',
+    icon: 'file-text-outline',
     link: '/pages/generate_invoice',
     hidden:false
   },
