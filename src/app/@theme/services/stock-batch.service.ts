@@ -33,6 +33,11 @@ export class StockBatchService {
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/all');
   }
 
+  getBatchById(p_id,q_id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+q_id+'/'+p_id);
+
+  }
+
   
 
 }
