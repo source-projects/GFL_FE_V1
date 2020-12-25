@@ -773,6 +773,35 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   border: 0 !important;
 }
+// dashboard sheet
+.sheet-dashboard{
+  border: 0;
+}
+.table-display-inline{
+  display: inline-table !important;
+  border: 2px solid #5e5b5e !important;
+  border-collapse: inherit;
+}
+.table-display-inline tr th, .table-display-inline tr td strong{
+  color: #5e5b5e !important;
+}
+.table-display-inline tr td{
+  COLOR: #000000;
+    FONT-SIZE: 13PX;
+    font-weight: 600;
+    text-align: center;
+}
+.sheet-btn{
+  margin-right: 0!important;
+}
+.p-badge-design{
+  background-color: #5e5b5e!important;
+  border-color: #5e5b5e!important;
+  color: #ffffff!important;
+  border-radius: 68px!important;
+  padding: 5px 18px!important;
+  margin-top: 15px;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
