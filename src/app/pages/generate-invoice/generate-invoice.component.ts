@@ -37,7 +37,7 @@ export class GenerateInvoiceComponent implements OnInit {
        
         if (data["success"]) {
           this.InvoiceList = data["data"];
-          this.Invoice=this.InvoiceList.map((element)=>({createdDate:element.createdDate, id: element.id, isSendToParty: element.isSendToParty}))
+          // this.Invoice=this.InvoiceList.map((element)=>({createdDate:element.createdDate, id: element.id, isSendToParty: element.isSendToParty}))
         }
         else {
           // this.toastr.error(data['msg'])

@@ -6,7 +6,7 @@
         
     </nb-card-header>
     <nb-card-body>
-                <form #myForm="ngForm">
+                <form #invoiceForm="ngForm">
                     <div class="row">
                        <div class="col-md-4">
                         <div class="form-group">
@@ -23,7 +23,7 @@
                     </div>
                     </div>
                         <!-- Batch Id -->
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4">
                              <div class="form-group">
                                  <label class="required">Batch Id</label>
@@ -37,19 +37,25 @@
                                  </div>
                              </div>
                          </div>
-                         </div>
-                         <div class="row">
-                            <label>Finish Meter</label>&nbsp;&nbsp;&nbsp;
-                                  <nb-checkbox status="basic" name="finishMtr" [(ngModel)]='invoiceValues.batchId && invoiceValues.controlId' #finishMtr1="ngModel" 
-                                  [ngClass]="{'is-invalid': (finishMtr1.invalid)&&(formSubmitted || finishMtr1.touched)}"  *ngFor="let m of mtr">
-                                  <label>BatchId :{{m.batchId}} FinishMtr: {{m.finishMtr}}</label>
-                                  </nb-checkbox>
-                         </div>
+                         </div> -->
+                                  <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
+                                  [footerHeight]="31" [selectionType]="'checkbox'" >
+                                  <ngx-datatable-column name="Select" sortable="false" 
+                                  [width]="30" [headerCheckboxable]="true" [checkboxable]="true">
+                                    </ngx-datatable-column>
+                                  <ngx-datatable-column name="Batch Id" prop="batchId"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
+                                  <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
+                                  <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
+
+                                </ngx-datatable>
                         <div class="row">
                              <div class="col-md-12 mobile-btn-center text-btn-right">
                                 <div class="padding-bt-tp">
                                      <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                     >Generate Invoice</button>
+                                     (click)="addInvoice(invoiceForm)">Generate Invoice</button>
                                 </div>
                              </div>
                         </div>
