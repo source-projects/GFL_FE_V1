@@ -89,6 +89,8 @@ export const routes: Routes = [
         canLoad: [ShadeGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
+      { path: 'generate_invoice', loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
+      .then(m => m.GenerateInvoiceModule) },
       {
         path: 'waterJet',
         loadChildren: () => import('./pages/water-jet/water-jet.module')
@@ -135,6 +137,18 @@ export const routes: Routes = [
         data: { PermissionName: ['view','view group','view all']}
       },
       {
+        path: 'production-planning',
+        loadChildren: () => import('./pages/production-planning/production-planning.module')
+          .then(m => m.ProductionPlanningModule),
+       
+      },
+      {
+        path: 'jet-planning',
+        loadChildren: () => import('./pages/jet-planning/jet-planning.module')
+          .then(m => m.JetPlanningModule),
+       
+      },
+      {
         path: 'miscellaneous',
         loadChildren: () => import('./pages/miscellaneous/miscellaneous.module')
           .then(m => m.MiscellaneousModule),
@@ -148,9 +162,12 @@ export const routes: Routes = [
         path: '**',
         component: NotFoundComponent,
       },
+  
+
     ],
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
+    
   { path: '**', redirectTo: 'auth' },
 ];
 

@@ -39,4 +39,8 @@ export class ShadeService {
   getPartyFromQuality(id) {
     return this.httpClient.get(this.commonService.envUrl() + 'api/party/ByQuality/' + id);
   }
+  getShadesByQualityAndPartyId(p_id,q_id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/'+ q_id+'/'+p_id);
+
+  }
 }

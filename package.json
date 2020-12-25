@@ -80,6 +80,7 @@
     "ng2-charts": "^2.4.2",
     "ng2-ckeditor": "^1.2.9",
     "ng2-completer": "^9.0.1",
+    "ng2-select": "^2.0.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-color-picker": "^10.1.0",
     "ngx-echarts": "^5.2.1",

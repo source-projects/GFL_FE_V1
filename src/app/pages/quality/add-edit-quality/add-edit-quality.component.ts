@@ -9,7 +9,7 @@ import * as errorData from 'app/@theme/json/error.json';
 import { CommonService } from "app/@theme/services/common.service";
 import { PartyService } from "app/@theme/services/party.service";
 import { QualityService } from "app/@theme/services/quality.service";
-import { ToastrService } from 'ngx-toastr';
+import { ToastRef, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "ngx-add-edit-quality",
@@ -35,7 +35,7 @@ export class AddEditQualityComponent implements OnInit {
   //to store party info
   party: any[];
   userHead;
-
+  qulityIdExist:boolean=false;
   unit=[{name:'meter'},{name:'weight'}];
   
   //to store selected QualityId
@@ -55,6 +55,16 @@ export class AddEditQualityComponent implements OnInit {
     this.getPartyList();
   }
 
+  checkQulityId() {
+    this.qualityService.getQulityIdExist(this.addEditQualityForm.get("qualityId").value).subscribe(
+      data=>{
+        this.qulityIdExist=data['data'];
+      },
+      error=>{
+      }
+    )
+  }
+
   public getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -65,6 +75,7 @@ export class AddEditQualityComponent implements OnInit {
       unit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
+      rate: new FormControl(null, Validators.required),
       remark: new FormControl(null),
       partyCode: new FormControl(null),
       createdBy: new FormControl(null),
@@ -84,6 +95,7 @@ export class AddEditQualityComponent implements OnInit {
           this.addEditQualityForm.patchValue({
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
+            rate:this.qualityList.rate,
             qualityType: this.qualityList.qualityType,
             unit: this.qualityList.unit,
             wtPer100m: this.qualityList.wtPer100m,
@@ -121,18 +133,14 @@ export class AddEditQualityComponent implements OnInit {
       }
     );
   }
-
   setPartyCode(){
     if(this.addEditQualityForm.get('partyId').value!=null){
       this.party.forEach(element => {
         if(this.addEditQualityForm.get('partyId').value==element.id){
-          console.log(element.id)
-          console.log("party code",element.partyCode)
           this.addEditQualityForm.patchValue({
             partyCode:element.partyCode,
           })
         }
-        console.log(this.addEditQualityForm.get('partyCode').value)
       });
     }
   }
