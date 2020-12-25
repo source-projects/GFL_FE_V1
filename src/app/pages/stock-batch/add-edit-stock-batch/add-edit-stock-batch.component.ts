@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData} from "app/@theme/model/stock-batch";
+import { StockBatch, BatchData } from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
 import { PartyService } from "app/@theme/services/party.service";
@@ -7,10 +7,10 @@ import { ToastrService } from "ngx-toastr";
 import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "app/@theme/services/quality.service";
-import * as _ from 'lodash';
+import * as _ from "lodash";
 import {
   NgbDateAdapter,
-  NgbDateNativeAdapter,
+  NgbDateNativeAdapter
 } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "app/@theme/services/common.service";
 
@@ -18,62 +18,48 @@ import { CommonService } from "app/@theme/services/common.service";
   selector: "ngx-add-edit-stock-batch",
   templateUrl: "./add-edit-stock-batch.component.html",
   styleUrls: ["./add-edit-stock-batch.component.scss"],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class AddEditStockBatchComponent implements OnInit {
   public loading = false;
   public disableButton = false;
+  public formSubmitted = false;
+  public addFlag = true;
 
   public errorData: any = (errorData as any).default;
-  qualityList: any;
-  formSubmitted = false;
+  qualityList: any = [];
+  partyList: any = [];
 
-  party: any[];
   user: any;
   userHead;
   index;
-  stockList;
   wtPer100M;
+  maxDate: any;
+  currentStockBatchId;
+  rearrangeStartIndex: any;
+  dateForPicker = new Date();
+
   deleteFlag = 0;
   validationCardRowIndex = 0;
-  ValidationTableRowIndex = 0;
-  batch = {
-    batchId: 0,
-    mtr: 0,
-    wt: 0,
-  };
+  flag = 1;
 
-  dummy= {
-    batchId: 0,
-    batchMW: null,
-  };
-
-  stockDataValues= [
+  stockDataValues = [
     {
       batchId: null,
       batchMW: [
         {
           mtr: null,
 
-          wt: null,
-        },
-      ],
-    },
+          wt: null
+        }
+      ]
+    }
   ];
 
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
-  stockBatchData: BatchData = new BatchData();
-  blockNumber;
-  currentStockBatch;
-  isQualitySelected: Boolean = false;
-  flag = 1;
-  addFlag = false;
   batchIdArray = [];
-  rearrangeStartIndex: any;
-  dateForPicker=new Date();
 
-  maxDate:any;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -83,20 +69,100 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
-    this.addFlag = window.location.href.endsWith("add");
+    this.currentStockBatchId = this._route.snapshot.paramMap.get("id");
+    if (this.currentStockBatchId) {
+      this.addFlag = false;
+      this.getStockBatchById();
+    }
+    this.maxDate = new Date(
+      this.dateForPicker.getFullYear(),
+      this.dateForPicker.getMonth(),
+      this.dateForPicker.getDate(),
+      23,
+      59
+    );
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.getPartyList();
     this.getQualityList();
-    this.currentStockBatch = this._route.snapshot.paramMap.get("id");
-    if (this.currentStockBatch != null || this.currentStockBatch != undefined)
-      this.getUpdateData();
   }
 
+  getPartyList() {
+    this.loading = true;
+    this.partyService.getAllPartyNameList().subscribe(
+      data => {
+        if (data["success"]) {
+          this.partyList = data["data"];
+        } else {
+          this.toastr.error(data["msg"]);
+        }
+        this.loading = false;
+      },
+      error => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
+  getQualityList() {
+    this.loading = true;
+    this.qualityService.getQualityNameData().subscribe(
+      data => {
+        if (data["success"]) {
+          if (data["data"] && data["data"].length > 0) {
+            this.qualityList = data["data"];
+          } else {
+            this.toastr.error(errorData.Not_added);
+          }
+        } else {
+          this.toastr.error(errorData.Internal_Error);
+        }
+        this.loading = false;
+      },
+      error => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
+  setQualityByParty(event) {
+    this.loading = true;
+    if (event != undefined) {
+      if (this.stockBatch.partyId) {
+        this.qualityList = [];
+        this.qualityService
+          .getQualityByParty(this.stockBatch.partyId)
+          .subscribe(
+            data => {
+              if (data["success"])
+                this.qualityList = data["data"].qualityDataList;
+              if (this.qualityList && !this.qualityList.length)
+                this.stockBatch.qualityId = null;
+              // else
+              // {
+              //   this.stockBatch.qualityId = this.qualityList[0].qualityEntryId;
+              // }
+            },
+            error => {
+              this.loading = false;
+            }
+          );
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
+    } else {
+      this.stockBatch.partyId = null;
+      this.stockBatch.qualityId = null;
+      this.stockBatch.unit = null;
+      this.getPartyList();
+      this.getQualityList();
+      this.loading = false;
+    }
+  }
   getUnit(event) {
     if (event != undefined) {
       if (this.stockBatch.qualityId == null) {
@@ -104,18 +170,18 @@ export class AddEditStockBatchComponent implements OnInit {
         this.toastr.error("Please select quality first");
       } else {
         this.flag = 0;
-        this.qualityList.forEach((element) => {
+        this.qualityList.forEach(element => {
           element.id ? (this.stockBatch.partyId = element.partyId) : null;
-          let id = element.id? element.id: element.qualityEntryId
-          if (id == this.stockBatch.qualityId ){
+          let id = element.id ? element.id : element.qualityEntryId;
+          if (id == this.stockBatch.qualityId) {
             this.stockBatch.unit = element.unit;
             this.wtPer100M = element.wtPer100m;
-          } 
+          }
         });
 
         //re-calculate mtr/wt when quality changed
-        this.stockDataValues.forEach((e) => {
-          e.batchMW.forEach((e1) => {
+        this.stockDataValues.forEach(e => {
+          e.batchMW.forEach(e1 => {
             if (this.stockBatch.unit == "mtr") {
               e1.wt = (e1.mtr / 100) * this.wtPer100M;
             } else e1.mtr = (e1.wt * 100) / this.wtPer100M;
@@ -128,82 +194,47 @@ export class AddEditStockBatchComponent implements OnInit {
       this.getQualityList();
     }
   }
-
-  setQualityByParty(event) {
+  getStockBatchById() {
     this.loading = true;
-    if (event != undefined) {
-      if (this.stockBatch.partyId) {
-        this.qualityList = null;
-        this.qualityService
-          .getQualityByParty(this.stockBatch.partyId)
-          .subscribe(
-            (data) => {
-              if (data["success"])
-                this.qualityList = data["data"].qualityDataList;
-                if(this.qualityList == null)
-                  this.stockBatch.qualityId = null;
-                else
-                {
-                  this.stockBatch.qualityId = this.qualityList[0].qualityEntryId;
-
-
-                
-              //this.loading = false;
+    this.stockBatchService
+      .getStockBatchById(this.currentStockBatchId)
+      .subscribe(
+        data => {
+          if (data["success"]) {
+            this.stockBatch.billDate = new Date(data["data"].billDate);
+            this.stockBatch.qualityId = data["data"].qualityId;
+            if (this.qualityList != undefined) {
+              this.qualityList.forEach(element => {
+                if (element.id == this.stockBatch.qualityId) {
+                  this.wtPer100M = element.wtPer100m;
                 }
-            },
-            (error) => {
-              // this.toastr.error(errorData.Serever_Error);
-              this.loading = false;
+              });
             }
-          );
-          this.loading = false;
-      }
-    } else {
-      this.stockBatch.partyId = null;
-      this.stockBatch.qualityId = null;
-      this.stockBatch.unit = null;
-      this.getPartyList();
-      this.getQualityList();
-    }
-    this.loading = false;
-  }
-
-  getUpdateData() {
-    this.loading = true;
-    this.stockBatchService.getStockBatchById(this.currentStockBatch).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.stockBatch.billDate = new Date(data["data"].billDate);
-          this.stockBatch.qualityId = data["data"].qualityId;
-          if (this.qualityList != undefined) {
-            this.qualityList.forEach((element) => {
-              if (element.id == this.stockBatch.qualityId) {
-                this.wtPer100M = element.wtPer100m;
+            this.stockBatch = data["data"];
+            this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
+            this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+            this.stockBatch.batchData = _.sortBy(data["data"].batchData, [
+              function(o) {
+                return o.batchId;
               }
-            });
+            ]);
+            this.setStockDataValues();
+          } else {
+            this.toastr.error(data["msg"]);
           }
-          this.stockBatch = data['data']
-          this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
-          this.stockBatch.billDate = new Date(this.stockBatch.billDate);
-          this.stockBatch.batchData = _.sortBy(data["data"].batchData, [function(o) { return o.batchId; }]);
-          this.setStockDataValues();
-        } else {
-          this.toastr.error(data["msg"]);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
         }
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      );
   }
-
   setStockDataValues() {
     var prev = this.stockBatch.batchData[0].batchId;
     let k = 0;
     let i = 0;
     this.stockDataValues[0].batchId = prev;
-    this.stockBatch.batchData.forEach((element) => {
+    this.stockBatch.batchData.forEach(element => {
       if (prev == element.batchId) {
         if (!this.stockDataValues[k])
           this.stockDataValues.push({ batchId: 0, batchMW: [] });
@@ -225,61 +256,7 @@ export class AddEditStockBatchComponent implements OnInit {
         i++;
       }
     });
-    this.validationCardRowIndex = this.stockDataValues.length -1
-    this.ValidationTableRowIndex = this.stockDataValues[this.validationCardRowIndex].batchMW.length -1
     this.flag = 0;
-  }
-
-  getQualityList() {
-    this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
-      (data) => {
-        if (data["success"]) {
-          if (data["data"] && data["data"].length > 0) {
-            this.qualityList = data["data"];
-          } else {
-            this.toastr.error(errorData.Not_added);
-          }
-        } else {
-          this.toastr.error(errorData.Internal_Error);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
-  }
-  checkDuplicates() {
-    for (let x = 0; x < this.validationCardRowIndex + 1; x++) {
-      if (
-        this.stockDataValues[this.validationCardRowIndex].batchId ==
-          this.stockDataValues[x].batchId &&
-        x != this.validationCardRowIndex
-      ) {
-        this.toastr.error("Cannot add duplicate batch No.");
-        this.stockDataValues[this.validationCardRowIndex].batchId = null;
-        break;
-      }
-    }
-  }
-  getPartyList() {
-    this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.party = data["data"];
-        } else {
-          this.toastr.error(data["msg"]);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
   }
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
@@ -289,7 +266,6 @@ export class AddEditStockBatchComponent implements OnInit {
       this.flag = 0;
     }
   }
-
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
@@ -308,11 +284,10 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }
         //let obj:BatchMrtWt  = new BatchMrtWt();
-        let obj = {mtr:null,wt:null}
-        let list = this.stockDataValues[idx].batchMW
-        list.push({...obj});
-        this.stockDataValues[idx].batchMW = [...list]
-        this.ValidationTableRowIndex++;
+        let obj = { mtr: null, wt: null };
+        let list = this.stockDataValues[idx].batchMW;
+        list.push({ ...obj });
+        this.stockDataValues[idx].batchMW = [...list];
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -329,32 +304,8 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }, 10);
       }
-    }else{
-      //count total mtr wt...
-    }
-  }
-
-  removeCard($event, index) {
-    let idCount = this.stockDataValues.length;
-    let item = this.stockDataValues;
-    if (idCount == 1) {
-      // let obj:BatchCard = new BatchCard();
-      // let mtrWt = new BatchMrtWt();
-      // obj.batchMW.push(mtrWt);
-      let obj = {
-        batchId: null,
-        batchMW: [
-          {
-            mtr: null,
-            wt: null,
-          },
-        ],
-      };
-      this.stockDataValues = [{...obj}];
     } else {
-      item.splice(index, 1);
-      this.stockDataValues = [...item];
-      this.validationCardRowIndex--;
+      //count total mtr wt...
     }
   }
 
@@ -367,151 +318,71 @@ export class AddEditStockBatchComponent implements OnInit {
       let list = item;
       this.stockDataValues[row].batchMW = [...list];
     } else {
-      let removed = item.splice(id, 1);
-      let list = item;
-      this.stockDataValues[row].batchMW = [...list];
+      item.splice(id, 1);
+      this.stockDataValues[row].batchMW = [...item];
     }
   }
-
-  addStockBatch(myForm) {
-    this.disableButton=true;
-
-    this.formSubmitted = true;
-    if (myForm.valid) {
-      this.stockBatch.createdBy = this.user.userId;
-      this.stockBatch.userHeadId = this.userHead.userHeadId;
-      let k = 0;
-      for (let i = 0; i < this.stockDataValues.length; i++) {
-        for (let j = 0; j < this.stockDataValues[i].batchMW.length; j++) {
-          this.stockBatchArray.push({ batchId: 0, mtr: 0, wt: 0 });
-          this.stockBatchArray[k].batchId = this.stockDataValues[i].batchId;
-          this.stockBatchArray[k].mtr = this.stockDataValues[i].batchMW[j].mtr;
-          this.stockBatchArray[k].wt = this.stockDataValues[i].batchMW[j].wt;
-          k++;
-        }
-      }
-      this.stockBatch.batchData = this.stockBatchArray;
-      this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/stock-batch"]);
-            this.toastr.success(errorData.Add_Success);
-          } else {
-            this.stockBatchArray = [];
-            // this.toastr.error(data['msg']);
-
-          }
-        },
-        (error) => {
-          this.disableButton=false;
-
-          this.stockBatchArray = [];
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-    else
-    {      this.disableButton=false;
-
-      const errorField = this.renderer.selectRootElement('#target');
-          errorField.scrollIntoView();
-    }
-  }
-
-  updateStockBatch(stockBatch) {
-    this.disableButton=true;
-    this.loading = true;
-    this.formSubmitted = true;
-    if (stockBatch.valid) {
-      this.stockBatch.updatedBy = this.user.userId;
-      let k = 0;
-      for (let i = 0; i < this.stockDataValues.length; i++) {
-        for (let j = 0; j < this.stockDataValues[i].batchMW.length; j++) {
-          this.stockBatchArray.push({ batchId: 0, mtr: 0, wt: 0 });
-          this.stockBatchArray[k].batchId = this.stockDataValues[i].batchId;
-          this.stockBatchArray[k].mtr = this.stockDataValues[i].batchMW[j].mtr;
-          this.stockBatchArray[k].wt = this.stockDataValues[i].batchMW[j].wt;
-          k++;
-        }
-        
-      }
-      this.stockBatch.batchData = this.stockBatchArray;
-      this.stockBatch.id = parseInt(this.currentStockBatch);
-      this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/stock-batch"]);
-            this.toastr.success(errorData.Update_Success);
-          } else {
-            this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
-          }
-          this.loading = false;
-        },
-        (error) => {
-          this.stockBatchArray = [];
-          this.toastr.error(errorData.Update_Error);
-          this.loading = false;
-          this.disableButton=false;
-
-        }
-      );
-      this.loading = false; 
-    }
-    
-    else
-    {
-      this.disableButton=false;
-      const errorField = this.renderer.selectRootElement('#target');
-      errorField.scrollIntoView();
-    }
-  }
-
-  addNew(e, myForm) {
-    //event.preventDefault();
-
-    //let item = ;
-    // let ob:BatchCard = new BatchCard();
-    // let mtrWt = new BatchMrtWt();
-    // ob.batchMW.push(mtrWt);
+  addNewBatch(e) {
     var ob = {
       batchId: null,
       batchMW: [
         {
           mtr: null,
-          wt: null,
-        },
-      ],
+          wt: null
+        }
+      ]
     };
-    let length = this.stockDataValues[this.validationCardRowIndex].batchMW.length - 1;
-    if (
-      this.flag == 1 ||
-      this.stockDataValues[this.validationCardRowIndex].batchId == null ||
-      this.stockDataValues[this.validationCardRowIndex].batchMW[length].mtr == null
-    ) {
-      this.toastr.error("Please fill all the required fields");
-    } else {
-      let autoId = this.stockDataValues[this.validationCardRowIndex].batchId;
-      ob.batchId = ++autoId;
-      this.stockDataValues.push({ ...ob });
-      const className = "collapsible-panel--expanded";
-      if (e.target.classList.contains(className)) {
-        e.target.classList.remove(className);
+    if(this.stockDataValues.length){
+      let index = this.stockDataValues.findIndex(v=> v.batchId == null);
+      if(index > -1 || this.flag){
+        this.toastr.error("Please fill all the required fields");
       } else {
-        e.target.classList.add(className);
+        let itemList = [...this.stockDataValues];
+        itemList = _.sortBy(itemList,'batchId','asc');
+        ob.batchId = itemList[itemList.length-1].batchId + 1;
+        this.stockDataValues.push({ ...ob });
+        const className = "collapsible-panel--expanded";
+        if (e.target.classList.contains(className)) {
+          e.target.classList.remove(className);
+        } else {
+          e.target.classList.add(className);
+        }
       }
-      this.validationCardRowIndex++;
-      this.ValidationTableRowIndex = 0;
+    }
+  }
+  removeBatch(index) {
+    if (this.stockDataValues.length == 1) {
+      this.stockDataValues[0].batchId = null;
+      this.setStockDataValues[0].batchMW = [
+        {
+          mtr: null,
+          wt: null
+        }
+      ];
+    } else {
+      this.stockDataValues.splice(index, 1);
+    }
+  }
+  checkDuplicates(index) {
+    if(this.stockDataValues && this.stockDataValues.length){
+      let i = this.stockDataValues.findIndex(v=> v.batchId == this.stockDataValues[index].batchId);
+      if(i > -1 && i != index){
+        this.toastr.error("Cannot add duplicate batch No.");
+        this.stockDataValues[index].batchId = null;
+      }
     }
   }
   rearrangeBatchNo() {
-    for (let x = 0; x < this.validationCardRowIndex + 1; x++) {
-      this.batchIdArray[x] = this.stockDataValues[x].batchId;
-    }
-    this.rearrangeStartIndex = Math.min.apply(null, this.batchIdArray);
-    this.stockDataValues[0].batchId = this.rearrangeStartIndex;
-    for (let x = 1; x < this.validationCardRowIndex + 1; x++) {
-      this.stockDataValues[x].batchId = ++this.rearrangeStartIndex;
+    if (this.stockDataValues) {
+      this.stockDataValues = _.sortBy(this.stockDataValues, "batchId", "asc");
+      let initialStockBatchNo = 0;
+      this.stockDataValues.forEach((ele, index) => {
+        if (!index) {
+          initialStockBatchNo = ele.batchId;
+        } else {
+          ele.batchId = ++initialStockBatchNo;
+        }
+      });
     }
   }
   calculateWt(meter, i, j, col) {
@@ -523,5 +394,93 @@ export class AddEditStockBatchComponent implements OnInit {
     let m;
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
+  }
+  addStockBatch(myForm) {
+    this.disableButton = true;
+    this.formSubmitted = true;
+    if (myForm.valid) {
+      this.stockBatchArray = [];
+      this.stockBatch.createdBy = this.user.userId;
+      this.stockBatch.userHeadId = this.userHead.userHeadId;
+      this.stockDataValues.forEach(ele => {
+        if (ele.batchMW && ele.batchMW.length) {
+          ele.batchMW.forEach(subele => {
+            if (!!subele.mtr && !!subele.wt) {
+              let obj = { batchId: 0, mtr: 0, wt: 0 };
+              obj.batchId = ele.batchId;
+              obj.mtr = subele.mtr;
+              obj.wt = subele.wt;
+              this.stockBatchArray.push(obj);
+            }
+          });
+        }
+      });
+      this.stockBatch.batchData = this.stockBatchArray;
+      this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
+        data => {
+          if (data["success"]) {
+            this.route.navigate(["/pages/stock-batch"]);
+            this.toastr.success(errorData.Add_Success);
+          } else {
+            this.stockBatchArray = [];
+          }
+        },
+        error => {
+          this.disableButton = false;
+          this.stockBatchArray = [];
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    } else {
+      this.disableButton = false;
+      const errorField = this.renderer.selectRootElement("#target");
+      errorField.scrollIntoView();
+    }
+  }
+  updateStockBatch(stockBatch) {
+    this.disableButton = true;
+    this.loading = true;
+    this.formSubmitted = true;
+    if (stockBatch.valid) {
+      this.stockBatch.updatedBy = this.user.userId;
+      this.stockDataValues.forEach(ele => {
+        if (ele.batchMW && ele.batchMW.length) {
+          ele.batchMW.forEach(subele => {
+            if (!!subele.mtr && !!subele.wt) {
+              let obj = { batchId: 0, mtr: 0, wt: 0 };
+              obj.batchId = ele.batchId;
+              obj.mtr = subele.mtr;
+              obj.wt = subele.wt;
+              this.stockBatchArray.push(obj);
+            }
+          });
+        }
+      });
+      this.stockBatch.batchData = this.stockBatchArray;
+      this.stockBatch.id = parseInt(this.currentStockBatchId);
+      this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+        data => {
+          if (data["success"]) {
+            this.route.navigate(["/pages/stock-batch"]);
+            this.toastr.success(errorData.Update_Success);
+          } else {
+            this.stockBatchArray = [];
+            this.toastr.error(data["msg"]);
+          }
+          this.loading = false;
+        },
+        error => {
+          this.stockBatchArray = [];
+          this.toastr.error(errorData.Update_Error);
+          this.loading = false;
+          this.disableButton = false;
+        }
+      );
+      this.loading = false;
+    } else {
+      this.disableButton = false;
+      const errorField = this.renderer.selectRootElement("#target");
+      errorField.scrollIntoView();
+    }
   }
 }
