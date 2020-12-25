@@ -45,21 +45,40 @@ export class NightThermopackValues{
     time_08:Number;
 }
 
-// export class NightThermopackValues{
+export class Boiler{
 
-//         timeof:String;
-//         streamPressusre:Number;
-//         drumWaterLevel:Number;
-//         feedPump:Number;
-//         flueGasTemp:Number;
-//         bedTemp:Number;
-//         draftPressure:Number;
-//         IDFan:Number;
-//         FDFanDA1:Number;
-//         FDFanDA2:Number;
-//         FDFanDA3:Number;
-//         ScrewFeeder:Number;
-//         WaterMeter:Number;
-//         Load:Number;
-//         JetRunning:Number;
-//     }
+        streamPressusre:Number;
+        drumWaterLevel:Number;
+        feedPump:Number;
+        flueGasTemp:Number;
+        bedTemp:Number;
+        draftPressure:Number;
+        IDFan:Number;
+        FDFanDA1:Number;
+        FDFanDA2:Number;
+        FDFanDA3:Number;
+        ScrewFeeder:Number;
+        WaterMeter:Number;
+        Load:Number;
+        JetRunning:Number;
+        controlId: Number;
+        timeOf:String;
+        userHeadId:Number;
+        dateToEnter:String;
+    }
+
+    export class Thermopack{
+
+        forwardTemp:Number;
+        returnTemp: Number;
+        stackTemp:Number;
+        furnaceTemp:Number;
+        pumpData:Number;
+        idFan:Number;
+        fdFan:Number;
+        screwFeeder:Number;
+        controlId:Number;
+        timeOf:String;
+        userHeadId: Number;
+        dateToEnter:String;
+    }

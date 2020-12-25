@@ -15,13 +15,24 @@ export class LogSheetService{
         return response;
       }
     
-      getBoilerMachines(){
-        let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11624");
-        return response;
-      }
+    getBoilerMachines(){
+      let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11624");
+      return response;
+    }
 
-      getThermopackMachines(){
-        let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11625");
-        return response;
-      }
+    getThermopackMachines(){
+      let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11625");
+      return response;
+    }
+
+    saveBoilerData(data){
+      let response = this._http.post(this.commonService.envUrl() +  "api/boilerRecord",data);
+      return response;
+    }
+
+    saveThermoData(data){
+      let response = this._http.post(this.commonService.envUrl() +  "api/thermoPackRecord",data);
+      return response;
+    }
+    
 }
