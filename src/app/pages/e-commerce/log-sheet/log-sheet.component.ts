@@ -25,6 +25,28 @@ selectedShift:any;
 selectedMaster:any;
 dateSelected:any;
 
+obj = {
+  "bedTemp": null,
+  "controlId": null,
+  "createdDate": null,
+  "daOne": null,
+  "daThree": null,
+  "daTwo": null,
+  "draftPressure": null,
+  "drumWaterLevel": null,
+  "feedPump": null,
+  "flueGasTemp": null,
+  "id": 11626,
+  "idFan": null,
+  "jetRunning": null,
+  "loadData": null,
+  "screwFeeder": null,
+  "streamPressusre": null,
+  "timeOf": "",
+  "userHeadId": null,
+  "waterMeter": null
+}
+
 
 dayArray = ["10:00","12:00","14:00","16:00","18:00","20:00"];
 nightArray = ["22:00","00:00","02:00","04:00","06:00","08:00"];
@@ -128,6 +150,7 @@ arr=[];
   masterchange(value:any){
 
     console.log("master",value)
+    this.obj.userHeadId = value;
   }
 
   getMaster(){
@@ -160,6 +183,8 @@ arr=[];
 
   boilerchange(value:any){
 
+    console.log("boilerid",value)
+    this.obj.id = value;
   }
 
   thermopackchange(value:any){
