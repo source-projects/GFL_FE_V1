@@ -65,10 +65,9 @@
                 <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label >Select Batch</label>
                         
                             <button nbButton  size="small" style="margin-left: 10px;" 
-                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)"> {{b.batchId}} </button>
+                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)" class="p-badge-design"> {{b.batchId}} </button>
                         
                        
                     </div>

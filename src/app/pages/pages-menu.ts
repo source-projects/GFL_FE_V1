@@ -97,19 +97,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Production Planning',
-    icon: 'bar-chart-outline',
+    icon: 'options-2-outline',
     link: '/pages/production-planning',
     hidden:false
   },
   {
     title: 'Jet Planning',
-    icon: 'bar-chart-outline',
+    icon: 'options-outline',
     link: '/pages/jet-planning',
     hidden:false
   }
   ,{
     title: 'Generate Invoice',
-    icon: 'bar-chart-outline',
+    icon: 'file-text-outline',
     link: '/pages/generate_invoice',
     hidden:false
   },
