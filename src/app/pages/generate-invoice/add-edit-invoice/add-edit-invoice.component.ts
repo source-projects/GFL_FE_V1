@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import * as errorData from 'app/@theme/json/error.json';
+import { Invoice, invoiceobj } from "app/@theme/model/invoice";
 import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
 import { PartyService } from 'app/@theme/services/party.service';
-import { Invoice } from "app/@theme/model/invoice";
-import { ActivatedRoute, Router } from "@angular/router";
+import { keys } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
 
-import { id } from '@swimlane/ngx-datatable';
-import { event } from 'jquery';
-import { EBADF } from 'constants';
 @Component({
   selector: 'ngx-add-edit-invoice',
   templateUrl: './add-edit-invoice.component.html',
   styleUrls: ['./add-edit-invoice.component.scss']
 })
 export class AddEditInvoiceComponent implements OnInit {
+
+  finalcheckedrows = [];
   party: any[];
   batch: any[];
   mtrList:any[];
@@ -120,10 +120,10 @@ bid:any;
     this.disableButton=true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
-      this.generateInvoiceService.addInvoice(this.invoiceValues).subscribe(
+      this.generateInvoiceService.addInvoicedata(this.finalcheckedrows).subscribe(
         data => {
           if (data['success']) {
-           this.route.navigate(["/pages/generate-invoice"]);
+           this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
           }
           else {
@@ -138,5 +138,17 @@ bid:any;
     this.disableButton=false;
   }
 
+  onSelect(value:any){
+
+
+    let arr:any = value.selected
+    let obj:invoiceobj = new invoiceobj();
+    arr.map(ele=>{
+      obj.batchId = ele.batchId;
+      obj.stockId =ele.controlId;
+  
+    })
+    this.finalcheckedrows.push(obj);
+  }
     
 }

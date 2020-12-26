@@ -39,9 +39,9 @@
                          </div>
                          </div> -->
                                   <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
-                                  [footerHeight]="31" [selectionType]="'checkbox'" >
+                                  [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
                                   <ngx-datatable-column name="Select" sortable="false" 
-                                  [width]="30" [headerCheckboxable]="true" [checkboxable]="true">
+                                  [width]="30" [headerCheckboxable]="true" [checkboxable]="true" >
                                     </ngx-datatable-column>
                                   <ngx-datatable-column name="Batch Id" prop="batchId"></ngx-datatable-column>
                                   <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>

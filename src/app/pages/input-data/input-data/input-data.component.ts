@@ -4,6 +4,7 @@ import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightT
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-input-data',
@@ -11,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./input-data.component.scss']
 })
 export class InputDataComponent implements OnInit {
+  public errorData: any = (errorData as any).default;
 
   shiftid:any;
   boiler: any;
@@ -200,10 +202,12 @@ export class InputDataComponent implements OnInit {
 
     this.logsheet.saveBoilerData(this.finalBoilerobj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -272,10 +276,12 @@ export class InputDataComponent implements OnInit {
 
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -302,8 +308,6 @@ export class InputDataComponent implements OnInit {
     boilerdata.dateToEnter = this.datePipeString;
     boilerdata.timeOf = time;
     this.finalBoilerobj.push(boilerdata)
-    console.log("Boiler Obj:", boilerdata)
-    console.log("Final Object:", this.finalBoilerobj)
   }
 
   thermoobjadd(array, time) {
@@ -322,13 +326,10 @@ export class InputDataComponent implements OnInit {
     thermodata.controlId = this.thermoId;
     thermodata.timeOf = time;
     this.finalThermoobj.push(thermodata)
-    console.log("Thermo Obj:", thermodata)
-    console.log("Final Object:", this.finalThermoobj)
   }
 
   shiftBoilerchange(value: any) {
 
-    console.log("value", value)
     if (value == 1) {
       this.BoilernightFlag = false;
       this.BoilerdayFlag = true;
@@ -340,7 +341,6 @@ export class InputDataComponent implements OnInit {
   }
   shiftThermopackchange(value: any) {
 
-    console.log("value", value)
     if (value == 1) {
       this.ThermopacknightFlag = false;
       this.ThermopackdayFlag = true;
@@ -359,9 +359,11 @@ export class InputDataComponent implements OnInit {
   getBoiler() {
     this.data = this.logsheet.getBoilerMachines().subscribe(
       (res) => {
-        console.log(res)
         this.boiler = res;
         this.boiler = this.boiler.data;
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -371,26 +373,22 @@ export class InputDataComponent implements OnInit {
       (res) => {
         this.thermopack = res;
         this.thermopack = this.thermopack.data;
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
 
   boilerchange(value: any) {
 
-    console.log("boilerid", value)
     this.boilerId = value;
   }
 
   thermopackchange(value: any) {
 
-    console.log("ther", value)
     this.thermoId = value;
 
   }
-
-  tabchange(value:any){
-
-  }
-
 
 }

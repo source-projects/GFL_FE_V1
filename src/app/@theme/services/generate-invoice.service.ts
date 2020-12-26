@@ -18,7 +18,7 @@ export class GenerateInvoiceService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getBatchByParty/'+id);
   }
 
-  addInvoice(invoiceData): any {
+  addInvoicedata(invoiceData): any {
     return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch',invoiceData);
   }
   
