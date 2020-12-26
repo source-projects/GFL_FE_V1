@@ -1,0 +1,269 @@
+<nb-card>
+    <nb-card-body>
+
+        <nb-tabset fullWidth (changeTab)="tabchange($event)">
+            <nb-tab tabTitle="Boiler">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shift">Select Shift:</label>
+                            <select class="form-control" (change)="shiftBoilerchange($event.target.value)"
+                                class="browser-default custom-select form-control">
+                                <option *ngFor="let sh of shift" [value]="sh.id">
+                                    {{sh.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shift">Select Date:</label>
+                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt1"
+                                [owlDateTime]="dt1" placeholder="Select Date" ([ngModel])="dateSelected">
+                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1>
+                            </owl-date-time>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="BoilerdayFlag">
+
+                    <form #logForm="ngForm">
+                        <table border="3px" style="width: 100%;text-align: center;"
+                            class="table-responsive table-input-width table-display-inline">
+                            <tr>
+                                <td colspan="14">
+                                    <strong style="font-size: 20px;">Boiler</strong>
+                                </td>
+                                <td colspan="4">
+                                    <select class="browser-default custom-select sheet-dashboard"
+                                        (change)="boilerchange($event.target.value)">
+                                        <option *ngFor="let boi of boiler" [value]="boi.id">
+                                            {{boi.machineName}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="6">Attribute</th>
+                                <th colspan="2" *ngFor="let day of dayArray">{{day}}</th>
+                            </tr>
+
+                            <tr *ngFor="let val of valueArray;let i = index">
+                                <td colspan="6">
+                                    {{val.Attribute}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_10" [name]="val.Attribute+'10'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_12" [name]="val.Attribute+'12'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_14" [name]="val.Attribute+'14'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_16" [name]="val.Attribute+'16'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_18" [name]="val.Attribute+'18'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_20" [name]="val.Attribute+'20'">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="padding-bt-tp mobile-btn-center text-btn-right">
+                            <input type="button" (click)="submitBoilerday(logForm)"
+                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div *ngIf="BoilernightFlag">
+
+                    <form #logForm="ngForm">
+                        <table border="3px" style="width: 100%;text-align: center;"
+                            class="table-responsive table-input-width">
+                            <tr style="height: 60px;">
+                                <td colspan="14">
+                                    <strong style="font-size: 20px;">Boiler</strong>
+                                </td>
+                                <td colspan="4">
+                                    <select class="browser-default custom-select sheet-dashboard"
+                                        (change)="boilerchange($event.target.value)">
+                                        <option *ngFor="let boi of boiler" [value]="boi.id">
+                                            {{boi.machineName}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="6">Attribute</th>
+                                <th colspan="2" *ngFor="let night of nightArray">{{night}}</th>
+                            </tr>
+
+                            <tr *ngFor="let val of nightvalueArray;let i = index">
+                                <td colspan="6">
+                                    {{val.Attribute}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_22" [name]="val.Attribute+'22'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_00" [name]="val.Attribute+'00'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_02" [name]="val.Attribute+'02'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_04" [name]="val.Attribute+'04'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_06" [name]="val.Attribute+'06'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_08" [name]="val.Attribute+'08'">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="padding-bt-tp mobile-btn-center text-btn-right">
+                            <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitBoilernight(logForm)" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Thermopack">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shift">Select Shift:</label>
+                            <select class="form-control" (change)="shiftThermopackchange($event.target.value)"
+                                class="browser-default custom-select form-control">
+                                <option *ngFor="let sh of shift" [value]="sh.id">
+                                    {{sh.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shift">Select Date:</label>
+                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt2"
+                                [owlDateTime]="dt2" placeholder="Select Date" ([ngModel])="dateSelected">
+                            <owl-date-time (afterPickerClosed)="change(dt2)" [pickerType]="'calendar'" #dt2>
+                            </owl-date-time>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="ThermopackdayFlag">
+
+                    <form #logForm="ngForm">
+                        <table border="3px" style="width: 100%;text-align: center;"
+                            class="table-responsive table-input-width table-display-inline">
+                            <tr>
+                                <td colspan="14">
+                                    <strong style="font-size: 20px;">Thermopack</strong>
+                                </td>
+                                <td colspan="4">
+                                    <select class="browser-default custom-select sheet-dashboard"
+                                        (change)="thermopackchange($event.target.value)">
+                                        <option *ngFor="let ther of thermopack" [value]="ther.id">
+                                            {{ther.machineName}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="6">Attribute</th>
+                                <th colspan="2" *ngFor="let day of dayArray">{{day}}</th>
+                            </tr>
+
+                            <tr *ngFor="let val of valueArray1;let i = index">
+                                <td colspan="6">
+                                    {{val.Attribute}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_10" [name]="val.Attribute+'10'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_12" [name]="val.Attribute+'12'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_14" [name]="val.Attribute+'14'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_16" [name]="val.Attribute+'16'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_18" [name]="val.Attribute+'18'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_20" [name]="val.Attribute+'20'">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="padding-bt-tp mobile-btn-center text-btn-right">
+                            <input type="button" (click)="submitThermopackday(logForm)"
+                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div *ngIf="ThermopacknightFlag">
+
+                    <form #logForm="ngForm">
+                        <table border="3px" style="width: 100%;text-align: center;"
+                            class="table-responsive table-input-width">
+                            <tr style="height: 60px;">
+                                <td colspan="14">
+                                    <strong style="font-size: 20px;">Thermopack</strong>
+                                </td>
+                                <td colspan="4">
+                                    <select class="browser-default custom-select sheet-dashboard"
+                                        (change)="thermopackchange($event.target.value)">
+                                        <option *ngFor="let ther of thermopack" [value]="ther.id">
+                                            {{ther.machineName}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="6">Attribute</th>
+                                <th colspan="2" *ngFor="let night of nightArray">{{night}}</th>
+                            </tr>
+
+                            <tr *ngFor="let val of nightvalueArray1;let i = index">
+                                <td colspan="6">
+                                    {{val.Attribute}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_22" [name]="val.Attribute+'22'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_00" [name]="val.Attribute+'00'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_02" [name]="val.Attribute+'02'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_04" [name]="val.Attribute+'04'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_06" [name]="val.Attribute+'06'">
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" [(ngModel)]="val.time_08" [name]="val.Attribute+'08'">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="padding-bt-tp mobile-btn-center text-btn-right">
+                            <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitThermopacknight(logForm)" value="Submit">
+                        </div>
+
+                    </form>
+                </div>
+            </nb-tab>
+        </nb-tabset>
+
+    </nb-card-body>
+</nb-card>
