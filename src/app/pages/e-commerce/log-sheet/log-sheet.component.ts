@@ -277,7 +277,6 @@ export class LogSheetComponent implements OnInit {
     boilerdata.ScrewFeeder = array[10];
     boilerdata.WaterMeter = array[11];
     boilerdata.Load = array[12];
-    boilerdata.JetRunning = array[13];
     boilerdata.userHeadId = this.masterId;
     boilerdata.controlId = this.boilerId;
     boilerdata.dateToEnter = this.datePipeString;
