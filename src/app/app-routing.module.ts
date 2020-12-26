@@ -11,6 +11,7 @@ import { StopAuthGuard } from './@theme/guards/stop-auth.guard';
 import { SupplierGuard } from './@theme/guards/supplier.guard';
 import { UserGuard } from './@theme/guards/user.guard';
 import { ECommerceComponent } from './pages/e-commerce/e-commerce.component';
+import { InputDataComponent } from './pages/input-data/input-data/input-data.component';
 import { NotFoundComponent } from './pages/miscellaneous/not-found/not-found.component';
 import { PagesComponent } from './pages/pages.component';
 
@@ -146,6 +147,11 @@ export const routes: Routes = [
         path: 'jet-planning',
         loadChildren: () => import('./pages/jet-planning/jet-planning.module')
           .then(m => m.JetPlanningModule),
+       
+      },
+      {
+        path: 'input-data',
+        component: InputDataComponent
        
       },
       {
