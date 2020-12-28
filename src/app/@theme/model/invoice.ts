@@ -30,3 +30,9 @@ export class DispatchData {
       this.id=0;
     }
 }
+
+export class invoiceobj{
+ 
+  batchId:Number;
+  stockId:Number;
+}

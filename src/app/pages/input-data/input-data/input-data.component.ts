@@ -4,6 +4,7 @@ import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightT
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
 
 @Component({
   selector: 'ngx-input-data',
@@ -11,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./input-data.component.scss']
 })
 export class InputDataComponent implements OnInit {
+  public errorData: any = (errorData as any).default;
 
   shiftid:any;
   boiler: any;
@@ -18,7 +20,9 @@ export class InputDataComponent implements OnInit {
   boilerId: any = 11626;
   thermoId: any = 11628;
   masterId:any;
+  
 
+  jetRunning:Number;
   Boilertime_00Array = [];
   Boilertime_02Array = [];
   Boilertime_04Array = [];
@@ -66,7 +70,7 @@ export class InputDataComponent implements OnInit {
 
   boilerAttribute = ["Steam Pressure", "Drum Water Level", "Feed Pump (No.1/2)", "Flue Gas Temp (TE5-1)", "Bed Temperature (TE5-3)",
     "Draft Pressure (DT5-4)", "I.D.Fan (%)", "F.D.Fan DA-1", "F.D.Fan DA-2", "F.D.Fan DA-3",
-    "Screw Feeder", "Water Meter", "Load (Final O/P)", "Jet Running"];
+    "Screw Feeder", "Water Meter", "Load (Final O/P)"];
 
   thermopackAttribute = ["Forward Temperature", "Return Temperature", "Stack Temperature", "Furnace",
     "Pump (1/2)", "I.D.Fan (Hz)", "F.D.Fan (Hz)", "Screw Feeder (1/2)"];
@@ -141,6 +145,9 @@ export class InputDataComponent implements OnInit {
     if(this.datePipeString == null){
       this.toast.error("Select Date")
     }
+    else if(this.jetRunning == null){
+      this.toast.error("Jet Running empty")
+    }
     else
     {
       this.valueArray.forEach(ele => {
@@ -152,6 +159,7 @@ export class InputDataComponent implements OnInit {
         this.Boilertime_20Array.push(ele.time_20);
   
       })
+
   
       this.boilerobjadd(this.Boilertime_10Array, "10:00:00");
       this.boilerobjadd(this.Boilertime_12Array, "12:00:00");
@@ -161,6 +169,14 @@ export class InputDataComponent implements OnInit {
       this.boilerobjadd(this.Boilertime_20Array, "20:00:00");
   
       this.saveBoilerData();
+
+      // this.Boilertime_10Array = null;
+      // this.Boilertime_12Array = null;
+      // this.Boilertime_14Array = null;
+      // this.Boilertime_16Array = null;
+      // this.Boilertime_18Array = null;
+      // this.Boilertime_20Array = null;
+
     }
 
   }
@@ -192,18 +208,32 @@ export class InputDataComponent implements OnInit {
       this.thermoobjadd(this.Thermo_20Array, "20:00:00");
   
       this.saveThermoData();
+
+      // this.Thermo_10Array = null;
+      // this.Thermo_12Array = null;
+      // this.Thermo_14Array = null;
+      // this.Thermo_16Array = null;
+      // this.Thermo_18Array = null;
+      // this.Thermo_20Array = null;
+
     }
 
   }
 
   saveBoilerData() {
 
-    this.logsheet.saveBoilerData(this.finalBoilerobj).subscribe(
+    let obj = {
+      boilerMachineRecord:this.finalBoilerobj,
+      jetRunning:this.jetRunning
+    }
+    this.logsheet.saveBoilerData(obj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -212,6 +242,9 @@ export class InputDataComponent implements OnInit {
 
     if(this.datePipeString == null){
       this.toast.error("Select Date")
+    }
+    else if(this.jetRunning == null){
+      this.toast.error("Jet Running empty")
     }
     else
     {
@@ -224,6 +257,7 @@ export class InputDataComponent implements OnInit {
         this.Boilertime_08Array.push(ele.time_08);
       })
   
+
       this.boilerobjadd(this.Boilertime_22Array, "22:00:00");
       this.boilerobjadd(this.Boilertime_00Array, "00:00:00");
       this.boilerobjadd(this.Boilertime_02Array, "02:00:00");
@@ -232,6 +266,14 @@ export class InputDataComponent implements OnInit {
       this.boilerobjadd(this.Boilertime_08Array, "08:00:00");
   
       this.saveBoilerData();
+
+      // this.Boilertime_22Array = null;
+      // this.Boilertime_00Array = null;
+      // this.Boilertime_02Array = null;
+      // this.Boilertime_04Array = null;
+      // this.Boilertime_06Array = null;
+      // this.Boilertime_08Array = null;
+
     }
 
   }
@@ -264,6 +306,14 @@ export class InputDataComponent implements OnInit {
       this.thermoobjadd(this.Thermo_08Array, "08:00:00");
   
       this.saveThermoData();
+
+      // this.Thermo_22Array = null;
+      // this.Thermo_00Array = null;
+      // this.Thermo_02Array = null;
+      // this.Thermo_04Array = null;
+      // this.Thermo_06Array = null;
+      // this.Thermo_08Array = null;
+
     }
 
   }
@@ -272,10 +322,12 @@ export class InputDataComponent implements OnInit {
 
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -296,14 +348,11 @@ export class InputDataComponent implements OnInit {
     boilerdata.ScrewFeeder = array[10];
     boilerdata.WaterMeter = array[11];
     boilerdata.Load = array[12];
-    boilerdata.JetRunning = array[13];
     boilerdata.userHeadId = this.masterId;
     boilerdata.controlId = this.boilerId;
     boilerdata.dateToEnter = this.datePipeString;
     boilerdata.timeOf = time;
     this.finalBoilerobj.push(boilerdata)
-    console.log("Boiler Obj:", boilerdata)
-    console.log("Final Object:", this.finalBoilerobj)
   }
 
   thermoobjadd(array, time) {
@@ -322,13 +371,10 @@ export class InputDataComponent implements OnInit {
     thermodata.controlId = this.thermoId;
     thermodata.timeOf = time;
     this.finalThermoobj.push(thermodata)
-    console.log("Thermo Obj:", thermodata)
-    console.log("Final Object:", this.finalThermoobj)
   }
 
   shiftBoilerchange(value: any) {
 
-    console.log("value", value)
     if (value == 1) {
       this.BoilernightFlag = false;
       this.BoilerdayFlag = true;
@@ -340,7 +386,6 @@ export class InputDataComponent implements OnInit {
   }
   shiftThermopackchange(value: any) {
 
-    console.log("value", value)
     if (value == 1) {
       this.ThermopacknightFlag = false;
       this.ThermopackdayFlag = true;
@@ -359,9 +404,11 @@ export class InputDataComponent implements OnInit {
   getBoiler() {
     this.data = this.logsheet.getBoilerMachines().subscribe(
       (res) => {
-        console.log(res)
         this.boiler = res;
         this.boiler = this.boiler.data;
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
@@ -371,26 +418,22 @@ export class InputDataComponent implements OnInit {
       (res) => {
         this.thermopack = res;
         this.thermopack = this.thermopack.data;
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
       }
     )
   }
 
   boilerchange(value: any) {
 
-    console.log("boilerid", value)
     this.boilerId = value;
   }
 
   thermopackchange(value: any) {
 
-    console.log("ther", value)
     this.thermoId = value;
 
   }
-
-  tabchange(value:any){
-
-  }
-
 
 }

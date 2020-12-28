@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { Invoice } from "app/@theme/model/invoice";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ToastrService } from 'ngx-toastr';
+import { Router } from "@angular/router";
 import * as errorData from 'app/@theme/json/error.json';
+import { Invoice, invoiceobj } from "app/@theme/model/invoice";
+import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { PartyService } from 'app/@theme/services/party.service';
+import { keys } from 'lodash';
+import { ToastrService } from 'ngx-toastr';
 
-import { id } from '@swimlane/ngx-datatable';
-import { event } from 'jquery';
-import { EBADF } from 'constants';
 @Component({
   selector: 'ngx-add-edit-invoice',
   templateUrl: './add-edit-invoice.component.html',
   styleUrls: ['./add-edit-invoice.component.scss']
 })
 export class AddEditInvoiceComponent implements OnInit {
+
+  obj = {
+  "batchAndStockIdList": [],
+  "createdBy": null,
+  }
+  finalcheckedrows = [];
   party: any[];
   batch: any[];
   mtrList:any[];
@@ -27,15 +32,18 @@ export class AddEditInvoiceComponent implements OnInit {
   qualityList: any[];
 cid:any;
 bid:any; 
+userId:any;
 
   constructor(
     private generateInvoiceService:GenerateInvoiceService,
     private partyService: PartyService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private jwt: JwtTokenService
     ) { }
 
   ngOnInit(): void {
+    this.userId =  this.jwt.getDecodeToken("userId");
     this.getPartyList();
     // this.getBatchList();
   }
@@ -117,13 +125,18 @@ bid:any;
   // }
   // }
   addInvoice(invoiceForm) {
+
+    let obj = {
+      batchAndStockIdList:this.finalcheckedrows,
+      createdBy:this.userId
+    }
     this.disableButton=true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
-      this.generateInvoiceService.addInvoice(this.invoiceValues).subscribe(
+      this.generateInvoiceService.addInvoicedata(obj).subscribe(
         data => {
           if (data['success']) {
-           this.route.navigate(["/pages/generate-invoice"]);
+           this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
           }
           else {
@@ -138,5 +151,17 @@ bid:any;
     this.disableButton=false;
   }
 
+  onSelect(value:any){
+
+
+    let arr:any = value.selected
+    let obj:invoiceobj = new invoiceobj();
+    arr.map(ele=>{
+      obj.batchId = ele.batchId;
+      obj.stockId =ele.controlId;
+  
+    })
+    this.finalcheckedrows.push(obj);
+  }
     
 }

@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-body>
 
-        <nb-tabset fullWidth (changeTab)="tabchange($event)">
+        <nb-tabset fullWidth>
             <nb-tab tabTitle="Boiler">
                 <div class="row">
                     <div class="col-md-6">
@@ -71,6 +71,14 @@
                                 </td>
                             </tr>
                         </table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-3" for="jetrunning">Jet Running</label>
+                                    <input class="form-control col-md-3" type="Number" name="JetRunning" [(ngModel)]="jetRunning">
+                                </div>
+                            </div>
+                        </div>
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
                             <input type="button" (click)="submitBoilerday(logForm)"
                                 class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
@@ -84,8 +92,8 @@
 
                     <form #logForm="ngForm">
                         <table border="3px" style="width: 100%;text-align: center;"
-                            class="table-responsive table-input-width">
-                            <tr style="height: 60px;">
+                        class="table-responsive table-input-width table-display-inline">
+                            <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Boiler</strong>
                                 </td>
@@ -126,6 +134,15 @@
                                 </td>
                             </tr>
                         </table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-3" for="jetrunning">Jet Running</label>
+                                    <input class="form-control col-md-3" type="Number" name="JetRunning" [(ngModel)]="jetRunning">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
                             <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitBoilernight(logForm)" value="Submit">
                         </div>
@@ -214,8 +231,8 @@
 
                     <form #logForm="ngForm">
                         <table border="3px" style="width: 100%;text-align: center;"
-                            class="table-responsive table-input-width">
-                            <tr style="height: 60px;">
+                        class="table-responsive table-input-width table-display-inline">
+                            <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Thermopack</strong>
                                 </td>
