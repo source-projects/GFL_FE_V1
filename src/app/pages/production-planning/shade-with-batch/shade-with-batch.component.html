@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list"  (click)="onClick($event)" id="" >
+    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list main-table-drag"  (click)="onClick($event)" id="" >
         <div class="example-box" *ngFor="let s of allShade" cdkDrag> {{s.batchId}}
            
             <div><input class="form-control" [style.background]="s.colorTone" disabled ></div>
