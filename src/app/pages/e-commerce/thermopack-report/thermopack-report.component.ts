@@ -19,22 +19,23 @@ export class ThermopackReportComponent implements OnInit {
     "fromTime": null,
     "attribute": "forwardTemp",
     "toDate": "",
-    "toTime": null
+    "toTime": null,
+    "controlId":11628
   }
 
   parameters = [
-    {id:1,name:"forwardTemp"},
-    {id:2,name:"returnTemp"},
-    {id:3,name:"stackTemp"},
-    {id:4,name:"furnaceTemp"},
-    {id:5,name:"pumpData"},
-    {id:6,name:"idFan"},
-    {id:7,name:"fdFan"},
-    {id:8,name:"screwFeeder"}
+    { id: 1, name: "forwardTemp" },
+    { id: 2, name: "returnTemp" },
+    { id: 3, name: "stackTemp" },
+    { id: 4, name: "furnaceTemp" },
+    { id: 5, name: "pumpData" },
+    { id: 6, name: "idFan" },
+    { id: 7, name: "fdFan" },
+    { id: 8, name: "screwFeeder" }
   ];
 
 
-lineChartData: ChartDataSets[];
+  lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
   lineChartLegend = true;
   lineChartType: ChartType = 'line';
@@ -54,7 +55,7 @@ lineChartData: ChartDataSets[];
   jsonData: any;
 
 
-  constructor( private datePipe: DatePipe,private thermorep:ThermopackReportService) { }
+  constructor(private datePipe: DatePipe, private thermorep: ThermopackReportService) { }
 
   ngOnInit(): void {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
@@ -70,11 +71,11 @@ lineChartData: ChartDataSets[];
   //   )
   // }
 
-  parameter(value:any){
+  parameter(value: any) {
     this.obj.attribute = value;
   }
 
-  change(value:any){
+  change(value: any) {
 
     this.datePipeString = this.datePipe.transform(value._selecteds[0], 'yyyy-MM-dd');
     this.obj.fromDate = this.datePipeString.toString();
@@ -86,7 +87,7 @@ lineChartData: ChartDataSets[];
     this.obj.toTime = this.datePipeString;
   }
 
-  submit(){
+  submit() {
 
     console.log(this.obj)
     this.NoDataFlag = false;
@@ -102,21 +103,35 @@ lineChartData: ChartDataSets[];
             this.lineChartData = [
               { data: this.jsonData.data.map(a => a.value), label: 'Value' },
             ];
-            let lab: Label = [] = this.jsonData.getAllMachineRecords.map(e => e.time);
+            console.log("DATA FOR CHART:", this.lineChartData);
+            let lab: Label = [] = this.jsonData.data.map(e => e.time);
+            let labdate = [] = this.jsonData.data.map(e => e.date);
+            console.log("Lab:", lab)
+            for (let k = 0; k < labdate.length; k++) {
+              labdate[k] = this.datePipe.transform(labdate[k], 'yyyy-MM-dd');
+            }
+            console.log("LabDate:", labdate)
+
+            for (let a = 0; a < lab.length; a++) {
+              labdate[a] = labdate[a] + " " + lab[a] + ":00:00";
+            }
             if (lab.length > 10) {
               count = Math.round(lab.length / 10);
             }
             else {
               count = 1;
             }
-            this.lineChartLabels[0] = String(lab[0]);
+            this.lineChartLabels[0] = String(labdate[0]);
             let j = 1;
-            for (let i = count; i <= lab.length; i = count + i) {
-              this.lineChartLabels[j] = String(lab[i]);
+            console.log("length:", lab.length)
+            for (let i = count; i < labdate.length; i = count + i) {
+              this.lineChartLabels[j] = String(labdate[i]);
               j++;
             }
+            console.log("LABEL FOR CHART:", this.lineChartLabels)
             this.ThermopackChartFlag = true;
           }
+
           else {
             this.NoDataFlag = true;
           }

@@ -191,6 +191,12 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   justify-content: flex-start;
 }
+
+.dashboard-dis{
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
 .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
   padding: 0.9rem!important;
 }
