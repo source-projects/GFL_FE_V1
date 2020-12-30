@@ -805,6 +805,7 @@ input[type=number]::-webkit-outer-spin-button {
 // jet table
 .table-jet, .main-table-drag{
   width: 100% !important;
+  overflow-x: scroll !important;
 }
 .table-jet{
   display: table !important;
@@ -826,10 +827,48 @@ input[type=number]::-webkit-outer-spin-button {
 .trans-box-drop{
   background: #580058 !important;
   color: #fff!important;
+  max-width: 31vh;
+  padding: 8px 25px !important;
+  flex-grow : unset !important
 }
 .jet-icon{
   position: unset !important;
   margin-left: 0!important;
+  width: 27px!important;
+  height: 27px !important;
+}
+.jet-popup-box:last-child{
+  border: 0!important;
+}
+.production-list-popup{
+  padding: 0!important;
+  border: 0!important;
+  display: inline-block !important;
+  justify-content: center !important;
+  align-items: center;
+  max-width: 22vh;
+}
+.prouction-jet-number{
+  position: absolute;
+  color: #fff;
+}
+.table-jet tr td:nth-child(3){
+  display: grid;
+}
+.input-jet{
+  border-radius: 50px !important;
+}
+.shade-with-batch-design{
+  border: 0 !important;
+  background: transparent !important;
+  width: 100% !important;
+  overflow-x: hidden !important ;
+  display: inline-block !important;
+}
+.jet-popup-display{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -921,6 +960,9 @@ input[type=number]::-webkit-outer-spin-button {
   }
   .trans-box-drop{
     padding: 2px 9px !important;
+  }
+  .table-jet, .main-table-drag{
+    width: fit-content!important;
   }
 }
 @media (min-width: 1024px){
