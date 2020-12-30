@@ -1,9 +1,11 @@
 <nb-card>
     <nb-card-header class="nb-header">
-        <div>
+        <div *ngIf="currentInvoiceId == null; else updateS">
             <h2 class="nb-text">Add Invoice</h2>
         </div>
-
+        <ng-template #updateS>
+            <h2 class="nb-text">Update Invoice</h2>
+        </ng-template>
     </nb-card-header>
     <nb-card-body>
                 <form #invoiceForm="ngForm">
@@ -40,10 +42,7 @@
                          </div> -->
                                   <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
                                   [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
-                                  <ngx-datatable-column name="Select" sortable="false" 
-                                  [width]="30" [headerCheckboxable]="true" [checkboxable]="true" >
-                                    </ngx-datatable-column>
-                                  <ngx-datatable-column name="Batch Id" prop="batchId"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
                                   <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
                                   <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                                   <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
