@@ -24,6 +24,8 @@ import { ECommerceComponent } from './e-commerce.component';
 import { LogSheetComponent } from './log-sheet/log-sheet.component';
 import { ReportComponent } from './report/report.component';
 import { FormsModule } from '@angular/forms';
+import { BoilerReportComponent } from './boiler-report/boiler-report.component';
+import { ThermopackReportComponent } from './thermopack-report/thermopack-report.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { FormsModule } from '@angular/forms';
     ECommerceComponent,
     ReportComponent,
     LogSheetComponent,
+    BoilerReportComponent,
+    ThermopackReportComponent,
   ],
   providers: [
   ],
