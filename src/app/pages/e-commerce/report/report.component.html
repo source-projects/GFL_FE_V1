@@ -105,6 +105,16 @@
                 </div>
             </div>
         </div>
+        <div class="machine-cards" *ngIf="boilerFlag">
+            <div class="row">
+                <ngx-boiler-report  style="width: 100%;"></ngx-boiler-report>
+            </div>
+        </div>
+        <div class="machine-cards" *ngIf="thermoFlag">
+            <div class="row">
+                <ngx-thermopack-report  style="width: 100%;"></ngx-thermopack-report>
+            </div>
+        </div>
         <div class="machine-cards" *ngIf="MachineFlag">
             <div class="row">
                 <div class="col-md-4" *ngFor="let machine of machines">

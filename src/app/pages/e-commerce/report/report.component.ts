@@ -65,6 +65,8 @@ export class ReportComponent implements OnInit {
   waterJetMachineFlag: boolean = false;
   foldingMachineFlag: boolean = false;
   MachineFlag: boolean = false;
+  boilerFlag:boolean = false;
+  thermoFlag:boolean = false;
   ChartFlag: boolean = false;
   NoDataFlag: boolean = false;
   buttonFlag: boolean = false;
@@ -150,11 +152,17 @@ export class ReportComponent implements OnInit {
     if (value.name == 'Stenter Machine') {
       this.getAllMachineByCategoryId(value.id);
     }
-    // else if (value.name == 'Folding Machine') {
-    //   this.getAllMachineByCategoryId(value.id);
-    // }
+    else if (value.name == 'Folding Machine') {
+      this.getAllMachineByCategoryId(value.id);
+    }
     else if (value.name == 'string') {
       this.waterJetMachineFlag = true;
+    }
+    else if (value.name == 'Boiler'){
+      this.boilerFlag = true;
+    }
+    else if (value.name == 'Thermopack'){
+      this.thermoFlag = true;
     }
   }
 
@@ -255,32 +263,20 @@ export class ReportComponent implements OnInit {
   back() {
     if (this.optionFlag == true) {
       this.buttonFlag = false;
-      this.optionFlag = true;
-      this.MachineFlag = false;
-      this.ChartFlag = false;
-      this.NoDataFlag = false;
       this.machineReportFlag = false;
     }
     else if (this.machineReportFlag == true) {
       this.buttonFlag = false;
       this.optionFlag = true;
-      this.MachineFlag = false;
-      this.ChartFlag = false;
-      this.NoDataFlag = false;
       this.machineReportFlag = false;
     }
     else if (this.MachineFlag == true) {
       this.buttonFlag = true;
-      this.optionFlag = false;
       this.machineReportFlag = true;
-      this.ChartFlag = false;
-      this.NoDataFlag = false;
       this.MachineFlag = false;
     }
     else if (this.ChartFlag == true || this.NoDataFlag == true) {
       this.buttonFlag = true;
-      this.optionFlag = false;
-      this.machineReportFlag = false;
       this.ChartFlag = false;
       this.NoDataFlag = false;
       this.MachineFlag = true;
@@ -292,9 +288,18 @@ export class ReportComponent implements OnInit {
     }
     else if (this.waterJetMachineFlag == true) {
       this.buttonFlag = true;
-      this.optionFlag = false;
       this.waterJetMachineFlag = false;
       this.machineReportFlag = true;
+    }
+    else if (this.boilerFlag == true){
+      this.buttonFlag = true;
+      this.machineReportFlag = true;
+      this.boilerFlag = false;
+    }
+    else if (this.thermoFlag == true){
+      this.buttonFlag = true;
+      this.machineReportFlag = true;
+      this.thermoFlag = false;
     }
   }
 

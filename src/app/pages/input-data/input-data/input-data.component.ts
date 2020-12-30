@@ -5,6 +5,7 @@ import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from 'app/@theme/json/error.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-input-data',
@@ -85,7 +86,7 @@ export class InputDataComponent implements OnInit {
 
   datePipeString: String;
 
-  constructor(private jwt:JwtTokenService,private logsheet:LogSheetService, private datePipe: DatePipe,private toast:ToastrService) { }
+  constructor(private jwt:JwtTokenService,private logsheet:LogSheetService, private datePipe: DatePipe,private toast:ToastrService,private router:Router) { }
 
   ngOnInit(): void {
 
@@ -161,12 +162,12 @@ export class InputDataComponent implements OnInit {
       })
 
   
-      this.boilerobjadd(this.Boilertime_10Array, "10:00:00");
-      this.boilerobjadd(this.Boilertime_12Array, "12:00:00");
-      this.boilerobjadd(this.Boilertime_14Array, "14:00:00");
-      this.boilerobjadd(this.Boilertime_16Array, "16:00:00");
-      this.boilerobjadd(this.Boilertime_18Array, "18:00:00");
-      this.boilerobjadd(this.Boilertime_20Array, "20:00:00");
+      this.boilerobjadd(this.Boilertime_10Array, "10");
+      this.boilerobjadd(this.Boilertime_12Array, "12");
+      this.boilerobjadd(this.Boilertime_14Array, "14");
+      this.boilerobjadd(this.Boilertime_16Array, "16");
+      this.boilerobjadd(this.Boilertime_18Array, "18");
+      this.boilerobjadd(this.Boilertime_20Array, "20");
   
       this.saveBoilerData();
 
@@ -200,12 +201,12 @@ export class InputDataComponent implements OnInit {
         this.Thermo_20Array.push(ele.time_20);
       })
   
-      this.thermoobjadd(this.Thermo_10Array, "10:00:00");
-      this.thermoobjadd(this.Thermo_12Array, "12:00:00");
-      this.thermoobjadd(this.Thermo_14Array, "14:00:00");
-      this.thermoobjadd(this.Thermo_16Array, "16:00:00");
-      this.thermoobjadd(this.Thermo_18Array, "18:00:00");
-      this.thermoobjadd(this.Thermo_20Array, "20:00:00");
+      this.thermoobjadd(this.Thermo_10Array, 10);
+      this.thermoobjadd(this.Thermo_12Array, 12);
+      this.thermoobjadd(this.Thermo_14Array, 14);
+      this.thermoobjadd(this.Thermo_16Array, 16);
+      this.thermoobjadd(this.Thermo_18Array, 18);
+      this.thermoobjadd(this.Thermo_20Array, 20);
   
       this.saveThermoData();
 
@@ -226,10 +227,12 @@ export class InputDataComponent implements OnInit {
       boilerMachineRecord:this.finalBoilerobj,
       jetRunning:this.jetRunning
     }
+    console.log(obj)
     this.logsheet.saveBoilerData(obj).subscribe(
       (data) => {
         if(data["success"]){
-          this.toast.success("Added")
+          this.toast.success("Added");
+
         }
       },
       (error) =>{
@@ -258,12 +261,12 @@ export class InputDataComponent implements OnInit {
       })
   
 
-      this.boilerobjadd(this.Boilertime_22Array, "22:00:00");
-      this.boilerobjadd(this.Boilertime_00Array, "00:00:00");
-      this.boilerobjadd(this.Boilertime_02Array, "02:00:00");
-      this.boilerobjadd(this.Boilertime_04Array, "04:00:00");
-      this.boilerobjadd(this.Boilertime_06Array, "06:00:00");
-      this.boilerobjadd(this.Boilertime_08Array, "08:00:00");
+      this.boilerobjadd(this.Boilertime_22Array, "22");
+      this.boilerobjadd(this.Boilertime_00Array, "00");
+      this.boilerobjadd(this.Boilertime_02Array, "02");
+      this.boilerobjadd(this.Boilertime_04Array, "04");
+      this.boilerobjadd(this.Boilertime_06Array, "06");
+      this.boilerobjadd(this.Boilertime_08Array, "08");
   
       this.saveBoilerData();
 
@@ -298,12 +301,12 @@ export class InputDataComponent implements OnInit {
   
       })
   
-      this.thermoobjadd(this.Thermo_22Array, "22:00:00");
-      this.thermoobjadd(this.Thermo_00Array, "00:00:00");
-      this.thermoobjadd(this.Thermo_02Array, "02:00:00");
-      this.thermoobjadd(this.Thermo_04Array, "04:00:00");
-      this.thermoobjadd(this.Thermo_06Array, "06:00:00");
-      this.thermoobjadd(this.Thermo_08Array, "08:00:00");
+      this.thermoobjadd(this.Thermo_22Array, 22);
+      this.thermoobjadd(this.Thermo_00Array, 0);
+      this.thermoobjadd(this.Thermo_02Array, 2);
+      this.thermoobjadd(this.Thermo_04Array, 4);
+      this.thermoobjadd(this.Thermo_06Array, 6);
+      this.thermoobjadd(this.Thermo_08Array, 8);
   
       this.saveThermoData();
 
@@ -319,7 +322,7 @@ export class InputDataComponent implements OnInit {
   }
 
   saveThermoData() {
-
+    console.log(this.finalThermoobj)
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
         if(data["success"]){
