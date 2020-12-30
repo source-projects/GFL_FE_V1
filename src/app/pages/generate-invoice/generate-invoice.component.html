@@ -21,6 +21,14 @@
                     [footerHeight]="31" [selectionType]="'checkbox'">
                     <ngx-datatable-column name="Select" sortable="false" [width]="30" [headerCheckboxable]="true" [checkboxable]="true">
                     </ngx-datatable-column>
+                    <ngx-datatable-column name="Action"  sortable="false">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                [routerLink]="['/pages/user/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                            <!-- <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
+                                (click)="deleteUser(row.id)"></nb-icon> -->
+                        </ng-template>
+                    </ngx-datatable-column>
                     <ngx-datatable-column name="Created Date" prop="date"></ngx-datatable-column>
                     <ngx-datatable-column name="Invoice No" prop="invoiceNo"></ngx-datatable-column>
                     <ngx-datatable-column name="SendToParty" prop="isSendToParty"></ngx-datatable-column>
