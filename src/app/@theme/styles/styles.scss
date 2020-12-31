@@ -779,6 +779,9 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   border: 0 !important;
 }
+.btn-primary:focus, .btn-primary.focus{
+  box-shadow: none !important;
+}
 // dashboard sheet
 .sheet-dashboard{
   border: 0;
