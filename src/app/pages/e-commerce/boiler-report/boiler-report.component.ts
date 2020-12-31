@@ -82,9 +82,9 @@ lineChartData: ChartDataSets[];
   change(value:any){
 
     this.datePipeString = this.datePipe.transform(value._selecteds[0], 'yyyy-MM-dd');
-    this.obj.fromDate = this.datePipeString.toString();
+    this.obj.fromDate = this.datePipeString;
     this.datePipeString = this.datePipe.transform(value._selecteds[1], 'yyyy-MM-dd');
-    this.obj.toDate = this.datePipeString.toString();
+    this.obj.toDate = this.datePipeString;
     this.datePipeString = this.datePipe.transform(value._selecteds[0], 'HH');
     this.obj.fromTime = Number(this.datePipeString);
     this.datePipeString = this.datePipe.transform(value._selecteds[1], 'HH');

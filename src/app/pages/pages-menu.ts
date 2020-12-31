@@ -115,7 +115,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Input Data',
-    icon: 'home-outline',
+    icon: 'edit-2-outline',
     link: '/pages/input-data',
     hidden: false,
   },

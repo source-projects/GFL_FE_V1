@@ -690,7 +690,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .chartjs-render-monitor{
   height: auto !important;
-  width: 752px !important;
+  width: 500px !important;
 }
 // tootltip in stock batch
 .tooltip {
@@ -779,6 +779,9 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   border: 0 !important;
 }
+.btn-primary:focus, .btn-primary.focus{
+  box-shadow: none !important;
+}
 // dashboard sheet
 .sheet-dashboard{
   border: 0;
@@ -807,6 +810,86 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 68px!important;
   padding: 5px 18px!important;
   margin-top: 15px;
+}
+// jet table
+.table-jet, .main-table-drag{
+  width: 100% !important;
+  overflow-x: scroll !important;
+}
+.table-jet{
+  display: table !important;
+}
+.table-jet tr th, .table-jet tr td{
+  text-align: center !important;
+}
+.table-jet tr th{
+  background-color: #5e5b5e !important;
+  color: #fff !important;
+}
+.jet-tooltip{
+  left: 86px !important;
+}
+.main-table-drag{
+  border: 0!important;
+  background: transparent !important;
+}
+.trans-box-drop{
+  background: #580058 !important;
+  color: #fff!important;
+  max-width: 31vh;
+  padding: 8px 25px !important;
+  flex-grow : unset !important
+}
+.jet-icon{
+  position: unset !important;
+  margin-left: 0!important;
+  width: 27px!important;
+  height: 27px !important;
+}
+.jet-popup-box:last-child{
+  border: 0!important;
+}
+.production-list-popup{
+  padding: 0!important;
+  border: 0!important;
+  display: inline-block !important;
+  justify-content: center !important;
+  align-items: center;
+  max-width: 22vh;
+}
+.prouction-jet-number{
+  position: absolute;
+  color: #fff;
+}
+.table-jet tr td:nth-child(3){
+  display: grid;
+}
+.input-jet{
+  border-radius: 50px !important;
+}
+.shade-with-batch-design{
+  border: 0 !important;
+  background: transparent !important;
+  width: 100% !important;
+  overflow-x: hidden !important ;
+  display: inline-block !important;
+}
+.jet-popup-display{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.boiler-thermopack-tabheader .tabset li .tab-link{
+  color: #5e5b5e !important;
+}
+.boiler-thermopack-tabheader .tabset li.active .tab-link .tab-text{
+  color: #aa3634 !important;
+}
+.boiler-thermopack-tabheader .tabset li.active .tab-link::before, .boiler-thermopack-tabheader .tabset li:hover .tab-link::before{
+  background-color: #aa3634 !important;
+}
+.canvas-map-boiler{
+  margin: 30px !important;
 }
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
@@ -895,6 +978,12 @@ input[type=number]::-webkit-outer-spin-button {
   
   .tble-in{
     width: 72px!important;
+  }
+  .trans-box-drop{
+    padding: 2px 9px !important;
+  }
+  .table-jet, .main-table-drag{
+    width: fit-content!important;
   }
 }
 @media (min-width: 1024px){

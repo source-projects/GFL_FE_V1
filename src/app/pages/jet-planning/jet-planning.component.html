@@ -1,46 +1,48 @@
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
-      <div>
-        <div class="row">
-          <div class="col-md-11 col-10">
-            <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
-          </div>
-          
+  <nb-card-header class="nb-header">
+    <div>
+      <div class="row">
+        <div class="col-md-11 col-10">
+          <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
         </div>
+
       </div>
-    </nb-card-header>
-    <nb-card-body>
-  
-    <table class="user-per-table">
-    <tr>
-      <th>Jet</th>
-      <th>Capacity</th>
-      <th>Sequence</th>
-    </tr>
-    <tr *ngFor="let j of jet;let i=index">
-      <td >{{j.name}}</td>
-      <td >{{j.capacity}}</td>
-      <td>
-        <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="j.jetDataList" class="example-list" (cdkDropListDropped)="drop($event,i)">
-          <div class="example-box" *ngFor="let index of j.jetDataList" cdkDrag>
-            {{index.batchId}}
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <table class="user-per-table table-responsive table-jet">
+      <tr width="100%">
+        <th width="5%">Jet</th>
+        <th width="8%">Capacity</th>
+        <th width="82%">Sequence</th>
+        <th width="5%">Add Production</th>
+      </tr>
+      <tr *ngFor="let j of jet;let i=index">
+        <td>{{j.name}}</td>
+        <td>{{j.capacity}}</td>
+        <td>
+          <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="j.jetDataList" class="example-list main-table-drag"
+            (cdkDropListDropped)="drop($event,i)">
+            <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" cdkDrag>
+              {{index.batchId}}
+            </div>
           </div>
-        </div>
-        
-      </td>
-      <td>
-        <div class="nb-icon-add">
-            <a class="link-fab linkedin" media="Linkedin">
-                <div class="tooltip">Add Production</div>
-                <nb-icon [options]="{animation:{type:'zoom'}}"  (click)="addNew($event,i)"
-                    icon="plus" class="add-icon display-inline">
-                </nb-icon>
+
+        </td>
+        <td>
+          <div class="nb-icon-add">
+            <a class="" media="Linkedin">
+              <!-- <div class="tooltip jet-tooltip">Add Production</div> -->
+              <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNew($event,i)" icon="plus"
+                class="add-icon display-inline jet-icon">
+              </nb-icon>
             </a>
 
-        </div>
-      </td>
-    </tr>
+          </div>
+        </td>
+      </tr>
     </table>
-   
-</nb-card-body>
+
+  </nb-card-body>
 </nb-card>
