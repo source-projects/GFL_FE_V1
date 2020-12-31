@@ -175,11 +175,7 @@ p_id:any;
           this.allBatchList = data["data"];
           
           this.allBatchList.forEach(element => {
-            if(element.productionPlanned == true){
-              // this.batchList.push(element);
-            }
-            else
-            {
+            if(element.productionPlanned == false){
               this.batchList.push(element);
             }
           });
