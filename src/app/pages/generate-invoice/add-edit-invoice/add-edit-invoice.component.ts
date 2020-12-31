@@ -18,6 +18,7 @@ export class AddEditInvoiceComponent implements OnInit {
   obj = {
   "batchAndStockIdList": [],
   "createdBy": null,
+  "invoiceNo":null
   }
   finalcheckedrows = [];
   party: any[];
@@ -30,20 +31,18 @@ export class AddEditInvoiceComponent implements OnInit {
   formSubmitted = false;
   public loading = false;
   qualityList: any[];
-cid:any;
-bid:any; 
-userId:any;
-myInvoiceId;
-currentInvoiceId: any;
-Invoice: any[];
-
+  cid:any;
+  bid:any; 
+  userId:any;
+  myInvoiceId;
+  currentInvoiceId: any;
+  Invoice: any[];
 
   constructor(
     private generateInvoiceService:GenerateInvoiceService,
     private partyService: PartyService,
     private route: Router,
     private _route: ActivatedRoute,
-
     private toastr: ToastrService,
     private jwt: JwtTokenService
     ) { }
@@ -64,19 +63,9 @@ Invoice: any[];
     if (this.currentInvoiceId != null) {
       this.generateInvoiceService.getDataByInvoiceNumber(this.currentInvoiceId).subscribe(
         (data) => {
-          this.invoiceValues = data["data"];
-          if (!data["success"]) {
-            this.invoiceValues = data["data"];
-            console.log(this.invoiceValues);
-            // this.getPartyList();
-            // this.Invoice.forEach((e) => {
-            //   if (e.id == data["data"].qualityEntryId) {
-            //     this.party.qualityId = e.qualityId;
-            //     this.party.qualityName = e.qualityName;
-            //     this.party.qualityType = e.qualityType;
-            //   }
-            //   this.loading = false;
-            // });
+          if (data["success"]) {
+            this.invoiceValues.partyId=data["data"].partyId;
+            this.batch = data["data"].batchWithControlIdList;
             this.loading = false;
             this.disableButton=false;
 
@@ -84,7 +73,6 @@ Invoice: any[];
             // this.toastr.error(data["msg"]);
             this.loading = false;
             this.disableButton=false;
-
           }
         },
         (error) => {
@@ -117,7 +105,6 @@ Invoice: any[];
       }
     );
   }
-
 
   getBatchList(event) {
     this.loading = true;
@@ -164,7 +151,7 @@ Invoice: any[];
   //       } else {
   //         this.loading = false;[]
   //       }
-  //     },
+  //     }, 
   //     (error) => {
   //       this.loading = false;
   //     }
@@ -206,7 +193,8 @@ Invoice: any[];
 
     let obj = {
       batchAndStockIdList:this.finalcheckedrows,
-      createdBy:this.userId
+      createdBy:this.userId,
+      invoiceNo:this.currentInvoiceId
     }
     this.disableButton=true;
     this.formSubmitted = true;
@@ -236,7 +224,7 @@ Invoice: any[];
     arr.map(ele=>{
       obj.batchId = ele.batchId;
       obj.stockId =ele.controlId;
-  
+      
     })
     this.finalcheckedrows.push(obj);
   }

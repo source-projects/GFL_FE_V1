@@ -16,7 +16,7 @@ export class Invoice {
     mtr:Number;
     sequencedId:Number;
     wt:Number;
-    
+    invoiceNo:string;
 }
 
 export class DispatchData {
