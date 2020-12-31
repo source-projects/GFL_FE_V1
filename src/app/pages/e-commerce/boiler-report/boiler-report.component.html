@@ -26,7 +26,7 @@
         </div>
 
         <div class="row">
-            <div *ngIf="BoilerChartFlag" class="chart-day-night">
+            <div *ngIf="BoilerChartFlag" class="chart-day-night canvas-map-boiler">
                 <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
                     [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
                     [plugins]="lineChartPlugins">
