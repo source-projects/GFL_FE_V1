@@ -93,14 +93,14 @@ lineChartData: ChartDataSets[];
 
   submit(){
 
-    console.log(this.obj)
     this.NoDataFlag = false;
     this.BoilerChartFlag = false;
+    this.lineChartLabels = [];
+    this.lineChartData = [];
 
     let count;
     this.data = this.boilerrep.getobjdata(this.obj).subscribe(
       (res) => {
-        console.log("Response:",res)
         if (res["success"]) {
 
           this.jsonData = res;
@@ -108,24 +108,29 @@ lineChartData: ChartDataSets[];
             this.lineChartData = [
               { data: this.jsonData.data.map(a => a.value), label: 'Value' },
             ];
-            console.log("DATA FOR CHART:",this.lineChartData);
             let lab: Label = [] = this.jsonData.data.map(e => e.time);
-            console.log("Lab:",lab)
+            let labdate = [] = this.jsonData.data.map(e => e.date);
+            for(let k=0;k<labdate.length;k++){
+              labdate[k] = this.datePipe.transform(labdate[k],'yyyy-MM-dd');
+            }
+
+            for(let a=0;a<lab.length;a++){
+              labdate[a] = labdate[a] + " " + lab[a] + ":00:00";
+            }
             if (lab.length > 10) {
               count = Math.round(lab.length / 10);
             }
             else {
               count = 1;
             }
-            this.lineChartLabels[0] = String(lab[0]);
+            this.lineChartLabels[0] = String(labdate[0]);
             let j = 1;
-            for (let i = count; i < lab.length; i = count + i) {
-              this.lineChartLabels[j] = String(lab[i]);
+            for (let i = count; i < labdate.length; i = count + i) {
+              this.lineChartLabels[j] = String(labdate[i]);
               j++;
             }
-            console.log("LABEL FOR CHART:",this.lineChartLabels)
             this.BoilerChartFlag = true;
-          }
+                      }
           else {
             this.NoDataFlag = true;
           }
