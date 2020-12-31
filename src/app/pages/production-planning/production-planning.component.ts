@@ -166,6 +166,7 @@ p_id:any;
       });}
     }
     if (event != undefined) {
+      this.batchList = [];  
     this.stockBatchService
     .getBatchById(this.p_id,this.productionPlanning.qualityEntryId)
     .subscribe(
@@ -174,7 +175,11 @@ p_id:any;
           this.allBatchList = data["data"];
           
           this.allBatchList.forEach(element => {
-            if(element.productionPlanned == false){
+            if(element.productionPlanned == true){
+              // this.batchList.push(element);
+            }
+            else
+            {
               this.batchList.push(element);
             }
           });
