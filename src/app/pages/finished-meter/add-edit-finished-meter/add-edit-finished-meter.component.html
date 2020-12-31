@@ -45,7 +45,7 @@
               <label>Batch</label>
               <ng-select name="batchId" [(ngModel)]='finishedMeterForm.batchId' #batchId1="ngModel"
                 placeholder="Select Batch" (change)="batchSelected($event)">
-                <ng-option *ngFor="let b of batchList" [disabled]="b.isBillGenrated" [value]="b.batchId">{{b.batchId}}
+                <ng-option *ngFor="let b of batchList" [disabled]="!b.isProductionPlanned" [value]="b.batchId">{{b.batchId}}
                 </ng-option>
               </ng-select>
             </div>
