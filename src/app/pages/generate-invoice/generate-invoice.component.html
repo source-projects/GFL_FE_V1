@@ -16,7 +16,15 @@
     <nb-card-body>
         <ngx-datatable [rows]="InvoiceList" class="material"    [headerHeight]="31" [footerHeight]="31"
             [selectionType]="'checkbox'">
-            <ngx-datatable-column name="Created Date" prop="date" [headerCheckboxable]="true" [checkboxable]="true">
+            <ngx-datatable-column name="Action"  sortable="false"  [headerCheckboxable]="true" [checkboxable]="true">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                        [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
+                    <!-- <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
+                        (click)="deleteUser(row.id)"></nb-icon> -->
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Created Date" prop="date">
             </ngx-datatable-column>
             <ngx-datatable-column name="Invoice No" prop="invoiceNo"></ngx-datatable-column>
             <ngx-datatable-column name="SendToParty" prop="isSendToParty"></ngx-datatable-column>

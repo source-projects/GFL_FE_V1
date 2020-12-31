@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from 'app/@theme/json/error.json';
 import { Invoice, invoiceobj } from "app/@theme/model/invoice";
 import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
@@ -18,6 +18,7 @@ export class AddEditInvoiceComponent implements OnInit {
   obj = {
   "batchAndStockIdList": [],
   "createdBy": null,
+  "invoiceNo":null
   }
   finalcheckedrows = [];
   party: any[];
@@ -30,14 +31,18 @@ export class AddEditInvoiceComponent implements OnInit {
   formSubmitted = false;
   public loading = false;
   qualityList: any[];
-cid:any;
-bid:any; 
-userId:any;
+  cid:any;
+  bid:any; 
+  userId:any;
+  myInvoiceId;
+  currentInvoiceId: any;
+  Invoice: any[];
 
   constructor(
     private generateInvoiceService:GenerateInvoiceService,
     private partyService: PartyService,
     private route: Router,
+    private _route: ActivatedRoute,
     private toastr: ToastrService,
     private jwt: JwtTokenService
     ) { }
@@ -45,9 +50,43 @@ userId:any;
   ngOnInit(): void {
     this.userId =  this.jwt.getDecodeToken("userId");
     this.getPartyList();
-    // this.getBatchList();
+    this.getUserId();
+    if(this.currentInvoiceId)
+        this.getUpdateData();
   }
-  
+  public getUserId() {
+    this.currentInvoiceId = this._route.snapshot.paramMap.get("id");
+  }
+ 
+  getUpdateData() {
+    this.loading = true;
+    if (this.currentInvoiceId != null) {
+      this.generateInvoiceService.getDataByInvoiceNumber(this.currentInvoiceId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.invoiceValues.partyId=data["data"].partyId;
+            this.batch = data["data"].batchWithControlIdList;
+            this.loading = false;
+            this.disableButton=false;
+
+          } else {
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
+            this.disableButton=false;
+          }
+        },
+        (error) => {
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
+          this.disableButton=false;
+
+        }
+      );
+    }
+    this.disableButton=false;
+
+  }
+
   getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
@@ -66,7 +105,6 @@ userId:any;
       }
     );
   }
-
 
   getBatchList(event) {
     this.loading = true;
@@ -113,7 +151,7 @@ userId:any;
   //       } else {
   //         this.loading = false;[]
   //       }
-  //     },
+  //     }, 
   //     (error) => {
   //       this.loading = false;
   //     }
@@ -151,6 +189,33 @@ userId:any;
     this.disableButton=false;
   }
 
+  updateInvoice(invoiceForm) {
+
+    let obj = {
+      batchAndStockIdList:this.finalcheckedrows,
+      createdBy:this.userId,
+      invoiceNo:this.currentInvoiceId
+    }
+    this.disableButton=true;
+    this.formSubmitted = true;
+    if (invoiceForm.valid) {
+      this.generateInvoiceService.updateInvoice(obj).subscribe(
+        data => {
+          if (data['success']) {
+           this.route.navigate(["/pages/generate_invoice"]);
+            this.toastr.success(errorData.Add_Success);
+          }
+          else {
+            this.toastr.error(errorData.Add_Error)
+          }
+        },
+        error => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      )
+    }
+    this.disableButton=false;
+  }
   onSelect(value:any){
 
 
@@ -159,7 +224,7 @@ userId:any;
     arr.map(ele=>{
       obj.batchId = ele.batchId;
       obj.stockId =ele.controlId;
-  
+      
     })
     this.finalcheckedrows.push(obj);
   }
