@@ -39,7 +39,7 @@ export class JetPlanningComponent implements OnInit {
     controlId: Number,
     productionId: Number,
     sequence: Number,
-    batchId: Number
+    // batchId: Number
   }
   loading = false;
   count = 0;
@@ -90,7 +90,7 @@ export class JetPlanningComponent implements OnInit {
           }
         )
 
-        this.jetData1.batchId = result.batchId;
+        // this.jetData1.batchId = result.batchId;
         if(this.jet[index].jetDataList==null){
           this.jet[index].jetDataList = this.jetData1;
         }
