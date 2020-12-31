@@ -870,6 +870,15 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: center;
 }
+.boiler-thermopack-tabheader .tabset li .tab-link{
+  color: #5e5b5e !important;
+}
+.boiler-thermopack-tabheader .tabset li.active .tab-link .tab-text{
+  color: #aa3634 !important;
+}
+.boiler-thermopack-tabheader .tabset li.active .tab-link::before, .boiler-thermopack-tabheader .tabset li:hover .tab-link::before{
+  background-color: #aa3634 !important;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
