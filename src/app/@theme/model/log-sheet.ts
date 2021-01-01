@@ -60,7 +60,6 @@ export class Boiler{
         ScrewFeeder:Number;
         WaterMeter:Number;
         Load:Number;
-        JetRunning:Number;
         controlId: Number;
         timeOf:String;
         userHeadId:Number;

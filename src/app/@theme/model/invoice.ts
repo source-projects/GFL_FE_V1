@@ -16,7 +16,7 @@ export class Invoice {
     mtr:Number;
     sequencedId:Number;
     wt:Number;
-    
+    invoiceNo:string;
 }
 
 export class DispatchData {
@@ -29,4 +29,10 @@ export class DispatchData {
       this.controlId=0;
       this.id=0;
     }
+}
+
+export class invoiceobj{
+ 
+  batchId:Number;
+  stockId:Number;
 }

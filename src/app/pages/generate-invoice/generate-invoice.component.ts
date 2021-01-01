@@ -17,6 +17,10 @@ export class GenerateInvoiceComponent implements OnInit {
   Invoice=[];
   // invoiceValues: Invoice = new Invoice();
 
+  hidden :boolean=true;
+  hiddenEdit:boolean=true;
+  hiddenView:boolean=true;
+  
   constructor(    
     private commonService: CommonService,
     private generateInvoiceService: GenerateInvoiceService,

@@ -166,6 +166,7 @@ p_id:any;
       });}
     }
     if (event != undefined) {
+      this.batchList = [];  
     this.stockBatchService
     .getBatchById(this.p_id,this.productionPlanning.qualityEntryId)
     .subscribe(

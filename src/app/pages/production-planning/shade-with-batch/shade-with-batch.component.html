@@ -5,10 +5,11 @@
     </button>
 </div>
 <div class="modal-body">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list"  (click)="onClick($event)" id="" >
-        <div class="example-box" *ngFor="let s of allShade" cdkDrag> {{s.batchId}}
+    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list shade-with-batch-design"  (click)="onClick($event)" id="" >
+        <div class="example-box jet-popup-box production-list-popup" *ngFor="let s of allShade" cdkDrag> 
            
-            <div><input class="form-control" [style.background]="s.colorTone" disabled ></div>
+        
+            <div class="jet-popup-display"><span class="prouction-jet-number">{{s.batchId}}</span><input class="form-control input-jet" [style.background]="s.colorTone" disabled ></div>
         </div>
     </div>
 </div>

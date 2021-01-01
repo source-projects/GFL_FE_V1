@@ -60,6 +60,7 @@ export class AddEditUserComponent implements OnInit {
     "Process",
     "Process Planning",
     "Jet Planning",
+    "Input Data",
   ];
 
   userHradIdList;
