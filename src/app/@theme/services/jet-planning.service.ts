@@ -18,4 +18,8 @@ export class JetPlanningService {
   saveJetData(jetData){
     return this.httpClient.post(this.commonService.envUrl() + 'api/addJetData',jetData);
   }
+
+  updateJetData(obj){
+    return this.httpClient.put(this.commonService.envUrl() + 'api/updateJetData',obj);
+  }
 }
