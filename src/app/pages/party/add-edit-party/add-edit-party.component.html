@@ -34,10 +34,11 @@
               formControlName="partyCode"
               placeholder="Party Code"
               (change)="checkPartyCode()"
+              (keypress)="resetFlag($event)"
               required
               [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched)}"
             />
-            <div class="text-danger" *ngIf="!partyCodeExist">
+            <div class="text-danger" *ngIf="!partyCodeExist" >
               <span>Party Code is already Exist </span>
             </div>
             <div

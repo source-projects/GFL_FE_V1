@@ -474,6 +474,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.toastr.error(errorData.Update_Error);
           this.loading = false;
           this.disableButton = false;
+          this.loading = false;
         }
       );
       this.loading = false;
@@ -481,6 +482,8 @@ export class AddEditStockBatchComponent implements OnInit {
       this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
+      this.loading = false;
+
     }
   }
 }
