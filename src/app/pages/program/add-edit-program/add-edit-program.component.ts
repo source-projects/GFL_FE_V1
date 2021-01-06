@@ -36,7 +36,7 @@ export class AddEditProgramComponent implements OnInit {
   priorityData = [
     { name: "Very High" },
     { name: "High" },
-    { name: "Medium" },
+    { name: "Medium" ,SELECTED: true},
     { name: "Low" },
   ];
 
