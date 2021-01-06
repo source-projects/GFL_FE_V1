@@ -13,13 +13,13 @@ export class JetPlanningService {
   ) { }
 
   getAllJetData(){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/getAllJetDetail');
+    return this.httpClient.get(this.commonService.envUrl() + 'api/jet/getAllJetDetail');
   }
   saveJetData(jetData){
-    return this.httpClient.post(this.commonService.envUrl() + 'api/addJetData',jetData);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/jet/addJetData',jetData);
   }
 
   updateJetData(obj){
-    return this.httpClient.put(this.commonService.envUrl() + 'api/updateJetData',obj);
+    return this.httpClient.put(this.commonService.envUrl() + 'api/jet/updateJetData',obj);
   }
 }

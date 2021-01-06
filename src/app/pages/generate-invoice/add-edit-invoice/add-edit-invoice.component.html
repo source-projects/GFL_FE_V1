@@ -44,7 +44,7 @@
                          </div>
                          </div> -->
                                   <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
-                                  [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
+                                  [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)">
                                   <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
                                   <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
                                   <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
