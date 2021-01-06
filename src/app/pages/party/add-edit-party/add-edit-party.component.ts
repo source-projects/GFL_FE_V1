@@ -202,6 +202,8 @@ this.disableButton=true;
             this.partyAdressSetFlag=true;
           }
           this.partyForm.value.createdBy = this.user.userId;
+          this.partyForm.value.userHeadId = this.userHead.userHeadId;
+
           if (this.partyForm.get("gstin") == null) {
             this.partyForm.patchValue({
               gstin: "",

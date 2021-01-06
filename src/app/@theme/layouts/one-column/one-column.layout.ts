@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { LayoutService } from 'app/@core/utils';
+import { CommonService } from 'app/@theme/services/common.service';
+import { event } from 'jquery';
 
 @Component({
   selector: 'ngx-one-column-layout',
@@ -29,7 +31,8 @@ export class OneColumnLayoutComponent {
   expandPanel: boolean;
   isTablet: boolean;
   isMobile: boolean;
-  constructor(menu: NbMenuService, private layoutService: LayoutService, private sidebarService: NbSidebarService) {
+
+  constructor( private menu: NbMenuService, private layoutService: LayoutService,private commonService:CommonService, private sidebarService: NbSidebarService) {
     this.formatDevice();
     if (this.isMobile == true) {
       menu.onItemClick().subscribe(() => {
@@ -39,6 +42,15 @@ export class OneColumnLayoutComponent {
       });
     }
   }
+  // changeHeader(){
+  //   this.menu.onItemClick().subscribe(() => {
+  //     let nameHeader=event.target as HTMLElement;
+  //     this.commonService.updateBrodCast(nameHeader);
+  //     this.sidebarService.toggle(true, 'menu-sidebar');
+  //     this.layoutService.changeLayoutSize();
+  //     return false;
+  //   });
+  // }
   formatDevice() {
     this.expandPanel = this.isTablet = this.isMobile = false;
     if (window.innerWidth >= 1024) {

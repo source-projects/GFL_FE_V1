@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { CommonService } from 'app/@theme/services/common.service';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { title } from 'process';
 import { Subject, Subscription } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { UserData } from '../../../@core/data/users';
@@ -19,7 +20,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
-
   themes = [
     {
       value: 'default',
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUser;
   userName;
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-
+  // broadCast:string;
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
@@ -55,9 +55,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointService: NbMediaBreakpointsService,
     private commonService: CommonService
     ) {
+      
   }
 
   ngOnInit() {
+    // this.commonService.broadCast.subscribe(broadCast => this.broadCast =broadCast);
     this.currentTheme = this.themeService.currentTheme;
     this.userName = this.commonService.getUserName();
     this.menuService.onItemClick()
