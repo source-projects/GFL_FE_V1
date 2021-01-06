@@ -63,19 +63,21 @@ export class AddEditInvoiceComponent implements OnInit {
           if (data["success"]) {
             this.invoiceValues.partyId=data["data"].partyId;
             this.batch = data["data"].batchWithControlIdList;
+            this.selected = this.batch;
             this.loading = false;
             this.disableButton=false;
           } else {
             // this.toastr.error(data["msg"]);
             this.loading = false;
             this.disableButton=false;
+            this.batch = [];
           }
         },
         (error) => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
           this.disableButton=false;
-
+          this.batch = [];
         }
       );
     }
@@ -114,11 +116,13 @@ export class AddEditInvoiceComponent implements OnInit {
         } else {
           // this.toastr.error(data["msg"]);
           this.loading = false;
+          this.batch = []
         }
       },
       (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
+        this.batch = [];
       }
     );
     }
@@ -158,12 +162,21 @@ export class AddEditInvoiceComponent implements OnInit {
   //   this.loading = false;
   // }
   // }
+  final = [];
+  selected = [];
   addInvoice(invoiceForm) {
-
+     
+      this.finalcheckedrows.map(ele=>{
+        let obj:invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
+        obj.stockId =ele.controlId;
+        this.final.push(obj);
+      })  
     let obj = {
-      batchAndStockIdList:this.finalcheckedrows,
+      batchAndStockIdList:this.final,
       createdBy:this.userId
     }
+    console.log("Final Object:",obj)
     this.disableButton=true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
@@ -172,9 +185,11 @@ export class AddEditInvoiceComponent implements OnInit {
           if (data['success']) {
            this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
+            this.final = [];
           }
           else {
             this.toastr.error(errorData.Add_Error)
+            this.final = [];
           }
         },
         error => {
@@ -187,8 +202,14 @@ export class AddEditInvoiceComponent implements OnInit {
 
   updateInvoice(invoiceForm) {
 
+    this.finalcheckedrows.map(ele=>{
+      let obj:invoiceobj = new invoiceobj();
+      obj.batchId = ele.batchId;
+      obj.stockId =ele.controlId;
+      this.final.push(obj);
+    })
     let obj = {
-      batchAndStockIdList:this.finalcheckedrows,
+      batchAndStockIdList:this.final,
       createdBy:this.userId,
       invoiceNo:this.currentInvoiceId
     }
@@ -214,15 +235,17 @@ export class AddEditInvoiceComponent implements OnInit {
   }
   onSelect(value:any){
 
+      this.finalcheckedrows = [];
+      let arr:any = value.selected
+      let obj:invoiceobj = new invoiceobj();
+      // arr.map(ele=>{
+      //   obj.batchId = ele.batchId;
+      //   obj.stockId =ele.controlId;
+        
+      // })
 
-    let arr:any = value.selected
-    let obj:invoiceobj = new invoiceobj();
-    arr.map(ele=>{
-      obj.batchId = ele.batchId;
-      obj.stockId =ele.controlId;
-      
-    })
-    this.finalcheckedrows.push(obj);
-  }
-    
+      // console.log("obj:",obj)
+      this.finalcheckedrows= arr;
+   
+  }   
 }
