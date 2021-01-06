@@ -38,6 +38,10 @@ export class StockBatchService {
 
   }
 
+  getStockAllDataByPartyQuality(p_id,q_id){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/stockBatchDataList/ByQualityAndParty/'+q_id+'/'+p_id);
+  }
+
   
 
 }

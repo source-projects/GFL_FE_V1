@@ -130,7 +130,7 @@
                                 prop="partyShadeNo">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel"
-                                        name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo"
+                                        name='tablePartyShadeNo{{rowIndex}}' class="tableForm"
                                         [(ngModel)]="row.partyShadeNo" required
                                         (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')"
                                         [id]="'program'+rowIndex+'-0'"
@@ -190,7 +190,7 @@
                             <ngx-datatable-column name="Batch" prop="batchId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
+                                        (change)="setQuantity(rowIndex,4,'batch')"
                                         [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
                                         name='tableBatch{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
@@ -209,7 +209,7 @@
                             <ngx-datatable-column name="Stock" prop="stockId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
+                                    (change)="setQuantity(rowIndex,5,'stock')"
                                         [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
                                         name='tableLotNo{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}">
