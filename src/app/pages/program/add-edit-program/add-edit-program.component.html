@@ -92,15 +92,32 @@
                             <label class="required">Priority</label>
                             <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required  #priority1="ngModel"
                                 [ngClass]="{'is-invalid': (priority1.invalid)&&(formSubmitted || priority1.touched)}"
-                                 placeholder="Priority" bindLabel="name" bindValue="id" [items]="priorityData" class="required-error-dropdown">
-                            </ng-select>
+                                 placeholder="Priority">
+                                 <ng-option *ngFor="let m of priorityData" [value]="m.name">{{m.name}}</ng-option>
+
+                                </ng-select>
                            
                             <div class="required-class" *ngIf="(priority1.invalid)&&(formSubmitted || priority1.touched)">
                                 <span>Priority is required</span>
                             </div>
                         </div>
                     </div>
-                   
+
+
+                    <!-- <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Priority</label>
+                            <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required  #priority1="ngModel"
+                                [ngClass]="{'is-invalid': (priority1.invalid)&&(formSubmitted || priority1.touched)}"
+                                 placeholder="Priority" bindLabel="name" bindValue="id" [items]="priorityData" class="required-error-dropdown">
+                                </ng-select>
+                           
+                            <div class="required-class" *ngIf="(priority1.invalid)&&(formSubmitted || priority1.touched)">
+                                <span>Priority is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    -->
                 </div>
 
 
