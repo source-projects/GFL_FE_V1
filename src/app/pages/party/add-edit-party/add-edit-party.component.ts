@@ -188,7 +188,10 @@ export class AddEditPartyComponent implements OnInit {
       }
     );
   }
+  resetFlag($event){
+    this.partyCodeExist = true;
 
+  }
   public addParty() {
 this.disableButton=true;
     this.formSubmitted = true;
