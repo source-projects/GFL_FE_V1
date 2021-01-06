@@ -13,6 +13,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./input-data.component.scss']
 })
 export class InputDataComponent implements OnInit {
+  currentDate = new Date();
+  checkCurrent:any;
+  shiftselected:any = "day";
+  fetchedData = [];
+  public max;
   public errorData: any = (errorData as any).default;
 
   shiftid:any;
@@ -91,6 +96,7 @@ export class InputDataComponent implements OnInit {
   ngOnInit(): void {
 
     this.masterId =  this.jwt.getDecodeToken("userHeadId");
+    this.max = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
     this.getBoiler();
     this.getThermopack();
     for (let i = 0; i < this.boilerAttribute.length; i++) {
@@ -149,7 +155,7 @@ export class InputDataComponent implements OnInit {
     else if(this.jetRunning == null){
       this.toast.error("Jet Running empty")
     }
-    else
+    else 
     {
       this.valueArray.forEach(ele => {
         this.Boilertime_10Array.push(ele.time_10);
@@ -170,13 +176,6 @@ export class InputDataComponent implements OnInit {
       this.boilerobjadd(this.Boilertime_20Array, "20");
   
       this.saveBoilerData();
-
-      // this.Boilertime_10Array = null;
-      // this.Boilertime_12Array = null;
-      // this.Boilertime_14Array = null;
-      // this.Boilertime_16Array = null;
-      // this.Boilertime_18Array = null;
-      // this.Boilertime_20Array = null;
 
     }
 
@@ -209,14 +208,6 @@ export class InputDataComponent implements OnInit {
       this.thermoobjadd(this.Thermo_20Array, 20);
   
       this.saveThermoData();
-
-      // this.Thermo_10Array = null;
-      // this.Thermo_12Array = null;
-      // this.Thermo_14Array = null;
-      // this.Thermo_16Array = null;
-      // this.Thermo_18Array = null;
-      // this.Thermo_20Array = null;
-
     }
 
   }
@@ -270,13 +261,6 @@ export class InputDataComponent implements OnInit {
   
       this.saveBoilerData();
 
-      // this.Boilertime_22Array = null;
-      // this.Boilertime_00Array = null;
-      // this.Boilertime_02Array = null;
-      // this.Boilertime_04Array = null;
-      // this.Boilertime_06Array = null;
-      // this.Boilertime_08Array = null;
-
     }
 
   }
@@ -309,13 +293,6 @@ export class InputDataComponent implements OnInit {
       this.thermoobjadd(this.Thermo_08Array, 8);
   
       this.saveThermoData();
-
-      // this.Thermo_22Array = null;
-      // this.Thermo_00Array = null;
-      // this.Thermo_02Array = null;
-      // this.Thermo_04Array = null;
-      // this.Thermo_06Array = null;
-      // this.Thermo_08Array = null;
 
     }
 
@@ -379,10 +356,12 @@ export class InputDataComponent implements OnInit {
   shiftBoilerchange(value: any) {
 
     if (value == 1) {
+      this.shiftselected = 'day';
       this.BoilernightFlag = false;
       this.BoilerdayFlag = true;
     }
     else if (value == 2) {
+      this.shiftselected = 'night'
       this.BoilerdayFlag = false;
       this.BoilernightFlag = true;
     }
@@ -390,10 +369,12 @@ export class InputDataComponent implements OnInit {
   shiftThermopackchange(value: any) {
 
     if (value == 1) {
+      this.shiftselected = 'day';
       this.ThermopacknightFlag = false;
       this.ThermopackdayFlag = true;
     }
     else if (value == 2) {
+      this.shiftselected = 'night'
       this.ThermopackdayFlag = false;
       this.ThermopacknightFlag = true;
     }
@@ -401,7 +382,124 @@ export class InputDataComponent implements OnInit {
   change(value: any) {
 
     this.datePipeString = this.datePipe.transform(value._selected, 'yyyy-MM-dd');
+    this.checkCurrent = this.datePipe.transform(this.currentDate,'yyyy-MM-dd')
+    if (this.datePipeString < this.checkCurrent){
+      let obj = {
+        boilerId:this.boilerId,
+        date:this.datePipeString,
+        shift:this.shiftselected
+      }
 
+      this.logsheet.fetchBoilerData(obj).subscribe(
+        (data) => {
+          console.log(data);
+          if(data["success"]){
+            this.fetchedData = data["data"]
+            this.fetchBoiler(this.fetchedData);
+          }
+        },
+        (error) =>{
+          this.toast.error(errorData.Serever_Error)
+        }
+      )
+    }
+
+  }
+
+  fetchBoiler(fetchedData){
+    console.log("Fetched Data:",fetchedData)
+    this.valueArray.push(new DayBoilerValues());
+    // let t1=[];
+    // let day= new Boiler();
+    
+    // fetchedData.forEach(element => {
+    //   day.streamPressusre=element.streamPressusre;
+    //   // t1.push(element.streamPressusre);
+    //   // for(let i=0;i<this.boilerAttribute.length;i++){
+    //   //   //this.valueArray[i].time_10 = element.this.boilerAttribute[i];
+
+    //   // }
+      
+    // });
+    // console.log(t1);
+    //this.valueArray = [];
+
+    // for(let i=0;i<fetchedData.length;i++)
+    // {
+    //   switch(fetchedData[i].timeOf){
+    //     case 10:
+    //       let boi10 = new Boiler();
+    //       boi10.streamPressusre = fetchedData[i].streamPressusre;
+    //       boi10.drumWaterLevel = fetchedData[i].drumWaterLevel;
+    //       boi10.feedPump = fetchedData[i].feedPump;
+    //       boi10.flueGasTemp = fetchedData[i].flueGasTemp;
+    //       boi10.bedTemp = fetchedData[i].bedTemp;
+    //       boi10.draftPressure = fetchedData[i].draftPressure;
+    //       boi10.IDFan = fetchedData[i].idFan;
+    //       boi10.FDFanDA1 = fetchedData[i].daOne;
+    //       boi10.FDFanDA2 = fetchedData[i].daTwo;
+    //       boi10.FDFanDA3 = fetchedData[i].daThree;
+    //       boi10.ScrewFeeder = fetchedData[i].screwFeeder;
+    //       boi10.WaterMeter = fetchedData[i].WaterMeter;
+    //       boi10.Load = fetchedData[i].loadData;
+    //       this.Boilertime_10Array = (boi10)
+    //       console.log("boi10:",boi10)
+    //       console.log("10Array:",this.Boilertime_10Array)
+    //       break;
+        
+    //       case 12:
+    //         let boi12 = new Boiler();
+    //         boi12.streamPressusre = fetchedData[i].streamPressusre;
+    //         boi12.drumWaterLevel = fetchedData[i].drumWaterLevel;
+    //         boi12.feedPump = fetchedData[i].feedPump;
+    //         boi12.flueGasTemp = fetchedData[i].flueGasTemp;
+    //         boi12.bedTemp = fetchedData[i].bedTemp;
+    //         boi12.draftPressure = fetchedData[i].draftPressure;
+    //         boi12.IDFan = fetchedData[i].idFan;
+    //         boi12.FDFanDA1 = fetchedData[i].daOne;
+    //         boi12.FDFanDA2 = fetchedData[i].daTwo;
+    //         boi12.FDFanDA3 = fetchedData[i].daThree;
+    //         boi12.ScrewFeeder = fetchedData[i].screwFeeder;
+    //         boi12.WaterMeter = fetchedData[i].WaterMeter;
+    //         boi12.Load = fetchedData[i].loadData;
+    //         this.Boilertime_12Array.push(boi12)
+    //         console.log("boi12:",boi12)
+    //         console.log("12Array:",this.Boilertime_12Array)
+    //         break;
+
+    //         case 14:
+    //         let boi14 = new Boiler();
+    //         boi14.streamPressusre = fetchedData[i].streamPressusre;
+    //         boi14.drumWaterLevel = fetchedData[i].drumWaterLevel;
+    //         boi14.feedPump = fetchedData[i].feedPump;
+    //         boi14.flueGasTemp = fetchedData[i].flueGasTemp;
+    //         boi14.bedTemp = fetchedData[i].bedTemp;
+    //         boi14.draftPressure = fetchedData[i].draftPressure;
+    //         boi14.IDFan = fetchedData[i].idFan;
+    //         boi14.FDFanDA1 = fetchedData[i].daOne;
+    //         boi14.FDFanDA2 = fetchedData[i].daTwo;
+    //         boi14.FDFanDA3 = fetchedData[i].daThree;
+    //         boi14.ScrewFeeder = fetchedData[i].screwFeeder;
+    //         boi14.WaterMeter = fetchedData[i].WaterMeter;
+    //         boi14.Load = fetchedData[i].loadData;
+    //         this.Boilertime_14Array=Object.values(boi14)
+    //         console.log("boi14:",boi14)
+    //         console.log("14Array:",this.Boilertime_14Array)
+    //         break;
+    //   }
+      
+    // }
+    // for (let i = 0; i < this.boilerAttribute.length; i++) {
+    //   this.valueArray.push(new DayBoilerValues());
+    //   this.valueArray[i].Attribute = this.boilerAttribute[i];
+    //   this.valueArray[i].time_10 = this.Boilertime_10Array[i];
+    //   this.valueArray[i].time_12 = this.Boilertime_12Array;
+    //   this.valueArray[i].time_14 = this.Boilertime_14Array[i];
+    //   this.valueArray[i].time_16 = this.Boilertime_16Array;
+    //   this.valueArray[i].time_18 = this.Boilertime_18Array;
+    //   this.valueArray[i].time_20 = this.Boilertime_20Array;
+    // }
+    // console.log("Value:",this.valueArray)
   }
 
   getBoiler() {
