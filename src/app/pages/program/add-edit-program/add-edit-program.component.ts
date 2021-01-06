@@ -39,6 +39,7 @@ export class AddEditProgramComponent implements OnInit {
     { name: "Medium" },
     { name: "Low" },
   ];
+
   //for knowing the row index
   index: any;
   currentProgramId: any;
