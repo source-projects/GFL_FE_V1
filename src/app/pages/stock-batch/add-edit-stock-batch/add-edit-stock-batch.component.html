@@ -242,9 +242,9 @@
                             <button type="button" class="btn btn-primary btn-sm btn-design mob-stock" *ngIf="addFlag"
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock"
-                                (click)="addStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design"
-                                (click)="updateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>

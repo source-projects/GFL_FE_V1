@@ -332,14 +332,14 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       ]
     };
-    if(this.stockDataValues.length){
-      let index = this.stockDataValues.findIndex(v=> v.batchId == null);
-      if(index > -1 || this.flag){
+    if (this.stockDataValues.length) {
+      let index = this.stockDataValues.findIndex(v => v.batchId == null);
+      if (index > -1 || this.flag) {
         this.toastr.error("Please fill all the required fields");
       } else {
         let itemList = [...this.stockDataValues];
-        itemList = _.sortBy(itemList,'batchId','asc');
-        ob.batchId = itemList[itemList.length-1].batchId + 1;
+        itemList = _.sortBy(itemList, "batchId", "asc");
+        ob.batchId = itemList[itemList.length - 1].batchId + 1;
         this.stockDataValues.push({ ...ob });
         const className = "collapsible-panel--expanded";
         if (e.target.classList.contains(className)) {
@@ -364,9 +364,11 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
   checkDuplicates(index) {
-    if(this.stockDataValues && this.stockDataValues.length){
-      let i = this.stockDataValues.findIndex(v=> v.batchId == this.stockDataValues[index].batchId);
-      if(i > -1 && i != index){
+    if (this.stockDataValues && this.stockDataValues.length) {
+      let i = this.stockDataValues.findIndex(
+        v => v.batchId == this.stockDataValues[index].batchId
+      );
+      if (i > -1 && i != index) {
         this.toastr.error("Cannot add duplicate batch No.");
         this.stockDataValues[index].batchId = null;
       }
@@ -395,10 +397,41 @@ export class AddEditStockBatchComponent implements OnInit {
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
   }
-  addStockBatch(myForm) {
+  
+  checkValidation() {
+    if (this.stockDataValues && this.stockDataValues.length) {
+      this.stockDataValues.forEach(ele => {
+        let isNullOrUndefineFlag = ele.batchId ? false : true;
+        if (isNullOrUndefineFlag) {
+          return false;
+        }
+        if (ele.batchMW && ele.batchMW.length && ele.batchMW.length == 1) {
+          let index = ele.batchMW.findIndex(
+            v =>
+              (v.wt == null || v.wt == undefined || v.wt == "") &&
+              (v.mtr == null || v.mtr == undefined || v.mtr == "")
+          );
+          if (index > -1) {
+            this.toastr.warning("Batch should have mtr/wt.");
+            return false;
+          }
+        }
+        if (ele.batchMW && ele.batchMW.length) {
+          let index = ele.batchMW.findIndex(v => v.wt == 0 || v.mtr == 0);
+          if (index > -1) {
+            this.toastr.warning("Batch mtr/wt. cannot be 0.");
+            return false;
+          }
+        }
+      });
+      return true;
+    }
+  }
+  addUpdateStockBatch(myForm) {
     this.disableButton = true;
     this.formSubmitted = true;
-    if (myForm.valid) {
+    if (myForm.valid || this.checkValidation()) {
+      this.loading = true;
       this.stockBatchArray = [];
       this.stockBatch.createdBy = this.user.userId;
       this.stockBatch.userHeadId = this.userHead.userHeadId;
@@ -416,67 +449,45 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       });
       this.stockBatch.batchData = this.stockBatchArray;
-      this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
-        data => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/stock-batch"]);
-            this.toastr.success(errorData.Add_Success);
-          } else {
-            this.stockBatchArray = [];
-          }
-        },
-        error => {
-          this.disableButton = false;
-          this.stockBatchArray = [];
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    } else {
-      this.disableButton = false;
-      const errorField = this.renderer.selectRootElement("#target");
-      errorField.scrollIntoView();
-    }
-  }
-  updateStockBatch(stockBatch) {
-    this.disableButton = true;
-    this.loading = true;
-    this.formSubmitted = true;
-    if (stockBatch.valid) {
-      this.stockBatch.updatedBy = this.user.userId;
-      this.stockDataValues.forEach(ele => {
-        if (ele.batchMW && ele.batchMW.length) {
-          ele.batchMW.forEach(subele => {
-            if (!!subele.mtr && !!subele.wt) {
-              let obj = { batchId: 0, mtr: 0, wt: 0 };
-              obj.batchId = ele.batchId;
-              obj.mtr = subele.mtr;
-              obj.wt = subele.wt;
-              this.stockBatchArray.push(obj);
+      if (this.addFlag) {
+        this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
+          data => {
+            if (data["success"]) {
+              this.loading = false;
+              this.route.navigate(["/pages/stock-batch"]);
+              this.toastr.success(errorData.Add_Success);
+            } else {
+              this.loading = false;
+              this.stockBatchArray = [];
             }
-          });
-        }
-      });
-      this.stockBatch.batchData = this.stockBatchArray;
-      this.stockBatch.id = parseInt(this.currentStockBatchId);
-      this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
-        data => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/stock-batch"]);
-            this.toastr.success(errorData.Update_Success);
-          } else {
+          },
+          error => {
+            this.loading = false;
+            this.disableButton = false;
             this.stockBatchArray = [];
-            this.toastr.error(data["msg"]);
+            this.toastr.error(errorData.Serever_Error);
           }
-          this.loading = false;
-        },
-        error => {
-          this.stockBatchArray = [];
-          this.toastr.error(errorData.Update_Error);
-          this.loading = false;
-          this.disableButton = false;
-        }
-      );
-      this.loading = false;
+        );
+      } else {
+        this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+          data => {
+            if (data["success"]) {
+              this.route.navigate(["/pages/stock-batch"]);
+              this.toastr.success(errorData.Update_Success);
+            } else {
+              this.stockBatchArray = [];
+              this.toastr.error(data["msg"]);
+            }
+            this.loading = false;
+          },
+          error => {
+            this.stockBatchArray = [];
+            this.toastr.error(errorData.Update_Error);
+            this.loading = false;
+            this.disableButton = false;
+          }
+        );
+      }
     } else {
       this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
