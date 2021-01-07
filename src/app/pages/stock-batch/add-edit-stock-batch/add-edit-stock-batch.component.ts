@@ -71,7 +71,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getQualityList();
@@ -220,10 +220,10 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch = data["data"];
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
-            if(!this.stockBatch.batchData.length){
-                this.zeroValueBatch = true;
+            if (!this.stockBatch.batchData.length) {
+              this.zeroValueBatch = true;
             }
-            else{
+            else {
               this.stockBatch.batchData = _.sortBy(data["data"].batchData, [
                 function (o) {
                   return o.batchId;
@@ -231,7 +231,7 @@ export class AddEditStockBatchComponent implements OnInit {
               ]);
               this.setStockDataValues();
             }
-            
+
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -429,9 +429,16 @@ export class AddEditStockBatchComponent implements OnInit {
   checkValidation(myForm) {
     let returnValue = true;
     if (this.stockDataValues && this.stockDataValues.length) {
-      if(this.stockDataValues.length == 1){
-        if(!this.stockDataValues[0].batchId && !this.stockDataValues[0].batchMW[0].mtr && !this.stockDataValues[0].batchMW[0].wt){
-          return true;
+      if (this.stockDataValues.length == 1) {
+        if (!this.stockDataValues[0].batchId && !this.stockDataValues[0].batchMW[0].mtr && !this.stockDataValues[0].batchMW[0].wt) {
+          returnValue = false;
+          if (this.stockBatch.billDate)
+            if (this.stockBatch.billNo)
+              if (this.stockBatch.chlDate)
+                if (this.stockBatch.chlNo)
+                  if (this.stockBatch.stockInType)
+                    if (this.stockBatch.partyId)
+                      if (this.stockBatch.qualityId) { returnValue = true; return returnValue }
         }
       }
       this.stockDataValues.every((ele) => {

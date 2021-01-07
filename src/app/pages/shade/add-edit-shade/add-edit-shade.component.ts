@@ -281,7 +281,7 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
 
-  itemSelected(rowIndex, row) {
+  itemSelected(rowIndex, row,elementId) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
     let flag = false;
     let count = 0;
@@ -310,7 +310,10 @@ export class AddEditShadeComponent implements OnInit {
       }
     } else {
       this.toastr.error("This item name is already selected");
-      this.shades.shadeDataList[rowIndex].itemName = "";
+
+
+      // this.shades.shadeDataList[rowIndex].itemName = "";
+      this.shades.shadeDataList[rowIndex].itemName=undefined;
       this.shades.shadeDataList[rowIndex].concentration = null;
       this.shades.shadeDataList[rowIndex].supplierId = 0;
       this.shades.shadeDataList[rowIndex].rate = null;
