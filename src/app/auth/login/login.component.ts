@@ -49,6 +49,7 @@ export class LoginComponent {
               "refreshToken",
               data["data"].refreshToken
             );
+            this.loginReq.password = '';
             this.toast.success(errorData.Login_Success);
             this.route.navigate(["/pages"]);
           } else {

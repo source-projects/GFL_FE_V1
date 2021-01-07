@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
 import { NbMenuService, NbSidebarService } from "@nebular/theme";
 import { LayoutService } from "app/@core/utils";
 import { Subject } from "rxjs";
@@ -34,7 +35,8 @@ export class OneColumnLayoutComponent implements OnDestroy{
   constructor(
     private menu: NbMenuService,
     private layoutService: LayoutService,
-    private sidebarService: NbSidebarService
+    private sidebarService: NbSidebarService,
+    private router: Router
   ) {
     this.formatDevice();
     if (this.isMobile == true) {
@@ -50,7 +52,8 @@ export class OneColumnLayoutComponent implements OnDestroy{
   }
 
   ngOnDestroy() {
-    this.unSubscribe$.unsubscribe();
+    if(this.unSubscribe$)
+      this.unSubscribe$.unsubscribe();
    }
 
   formatDevice() {
