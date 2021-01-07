@@ -44,16 +44,16 @@
                          </div>
                          </div> -->
                                   <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
-                                  [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
+                                  [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)">
                                   <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
                                   <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
                                   <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                                   <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
                                   <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
                                   <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
-\
+
                                 </ngx-datatable>
-                        <div class="row">0
+                        <div class="row">
                              <div class="col-md-12 mobile-btn-center text-btn-right">
                                 <div class="padding-bt-tp">
                                      <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"

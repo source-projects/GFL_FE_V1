@@ -147,6 +147,11 @@ export class JetPlanningComponent implements OnInit {
                 this.getJetData();
                 this.getshade();
               }
+              else{
+                this.toastr.error("Weight is more than jet capacity");
+                this.getJetData();
+                this.getshade();
+              }
   
             }
           )

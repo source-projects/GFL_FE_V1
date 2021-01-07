@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from 'app/@theme/model/log-sheet';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-input-data',
+  // selector: 'valu-pass',
+
   templateUrl: './input-data.component.html',
   styleUrls: ['./input-data.component.scss']
 })
@@ -19,7 +21,6 @@ export class InputDataComponent implements OnInit {
   fetchedData = [];
   public max;
   public errorData: any = (errorData as any).default;
-
   shiftid:any;
   boiler: any;
   thermopack: any;
