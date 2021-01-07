@@ -8,27 +8,28 @@
         </ng-template>
     </nb-card-header>
     <nb-card-body>
-                <form #invoiceForm="ngForm">
-                    <div class="row" class="row" >
-                       <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Party Name</label>
-                            <ng-select name="partyId"  [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown"
-                                [readonly]="currentInvoiceId != null">
-                                <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
-                            </ng-select>
+        <form #invoiceForm="ngForm">
+            <div class="row" class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="required">Party Name</label>
+                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel"
+                            [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                            (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown"
+                            [readonly]="currentInvoiceId != null">
+                            <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
+                        </ng-select>
 
-                            <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
-                                <span>Party name is required</span>
-                            </div>
+                        <div class="required-class"
+                            *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                            <span>Party name is required</span>
                         </div>
                     </div>
-                    </div>
- 
-                        <!-- Batch Id -->
-                        <!-- <div class="row">
+                </div>
+            </div>
+
+            <!-- Batch Id -->
+            <!-- <div class="row">
                             <div class="col-md-4">
                              <div class="form-group">
                                  <label class="required">Batch Id</label>
@@ -43,24 +44,27 @@
                              </div>
                          </div>
                          </div> -->
-                                  <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
-                                  [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)">
-                                  <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
-                                  <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
-                                  <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
-                                  <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
-                                  <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
-                                  <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
+            <ngx-datatable [rows]="finalbatch" class="material" [headerHeight]="31" [footerHeight]="31"
+                [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
+                <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
+                <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
+                <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
+                <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
+                <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
 
-                                </ngx-datatable>
-                        <div class="row">
-                             <div class="col-md-12 mobile-btn-center text-btn-right">
-                                <div class="padding-bt-tp">
-                                     <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                     (click)="currentInvoiceId == null ? addInvoice(invoiceForm) : updateInvoice(invoiceForm)">Generate Invoice</button>
-                                </div>
-                             </div>
-                         </div>
+            </ngx-datatable>
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                            (click)="currentInvoiceId == null ? addInvoice(invoiceForm) : updateInvoice(invoiceForm)"
+                            [disabled]="flag">Generate
+                            Invoice</button>
+                    </div>
+                </div>
+            </div>
         </form>
     </nb-card-body>
 </nb-card>
