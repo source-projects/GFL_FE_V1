@@ -27,7 +27,7 @@ export class InputDataComponent implements OnInit {
   boilerId: any = 11626;
   thermoId: any = 11628;
   masterId:any;
-  
+  updateId:any;
 
   jetRunning:Number;
   Boilertime_00Array = [];
@@ -92,6 +92,8 @@ export class InputDataComponent implements OnInit {
 
   datePipeString: String;
 
+  dayBoilerValues = new DayBoilerValues();
+
   constructor(private jwt:JwtTokenService,private logsheet:LogSheetService, private datePipe: DatePipe,private toast:ToastrService,private router:Router) { }
 
   ngOnInit(): void {
@@ -100,51 +102,8 @@ export class InputDataComponent implements OnInit {
     this.max = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
     this.getBoiler();
     this.getThermopack();
-    for (let i = 0; i < this.boilerAttribute.length; i++) {
-      this.valueArray.push(new DayBoilerValues());
-      this.valueArray[i].Attribute = this.boilerAttribute[i];
-      this.valueArray[i].time_10 = null;
-      this.valueArray[i].time_12 = null;
-      this.valueArray[i].time_14 = null;
-      this.valueArray[i].time_16 = null;
-      this.valueArray[i].time_18 = null;
-      this.valueArray[i].time_20 = null;
-    }
-
-    for (let i = 0; i < this.thermopackAttribute.length; i++) {
-      this.valueArray1.push(new DayThermopackValues())
-      this.valueArray1[i].Attribute = this.thermopackAttribute[i];
-      this.valueArray1[i].time_10 = null;
-      this.valueArray1[i].time_12 = null;
-      this.valueArray1[i].time_12 = null;
-      this.valueArray1[i].time_14 = null;
-      this.valueArray1[i].time_16 = null;
-      this.valueArray1[i].time_18 = null;
-      this.valueArray1[i].time_20 = null;
-    }
-
-    for (let i = 0; i < this.boilerAttribute.length; i++) {
-      this.nightvalueArray.push(new NightBoilerValues());
-      this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
-      this.nightvalueArray[i].time_22 = null;
-      this.nightvalueArray[i].time_00 = null;
-      this.nightvalueArray[i].time_02 = null;
-      this.nightvalueArray[i].time_04 = null;
-      this.nightvalueArray[i].time_06 = null;
-      this.nightvalueArray[i].time_08 = null;
-    }
-
-    for (let i = 0; i < this.thermopackAttribute.length; i++) {
-      this.nightvalueArray1.push(new NightThermopackValues())
-      this.nightvalueArray1[i].Attribute = this.thermopackAttribute[i];
-      this.nightvalueArray1[i].time_22 = null;
-      this.nightvalueArray1[i].time_00 = null;
-      this.nightvalueArray1[i].time_02 = null;
-      this.nightvalueArray1[i].time_04 = null;
-      this.nightvalueArray1[i].time_06 = null;
-      this.nightvalueArray1[i].time_08 = null;
-    }
   }
+   
 
   submitBoilerday(value: any) {
 
@@ -223,9 +182,10 @@ export class InputDataComponent implements OnInit {
         if(data["success"]){
           this.toast.success("Added");
           if(value=='day'){
+           // this.getBoiler();
           for (let i = 0; i < this.boilerAttribute.length; i++) {
-            this.valueArray.push(new DayBoilerValues());
-            this.valueArray[i].Attribute = this.boilerAttribute[i];
+            //this.valueArray.push(new DayBoilerValues());
+            //this.valueArray[i].Attribute = this.boilerAttribute[i];
             this.valueArray[i].time_10 = null;
             this.valueArray[i].time_12 = null;
             this.valueArray[i].time_14 = null;
@@ -233,11 +193,11 @@ export class InputDataComponent implements OnInit {
             this.valueArray[i].time_18 = null;
             this.valueArray[i].time_20 = null;
           }
-        }else{
+       }else{
 
           for (let i = 0; i < this.boilerAttribute.length; i++) {
-            this.nightvalueArray.push(new NightBoilerValues());
-            this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
+           // this.nightvalueArray.push(new NightBoilerValues());
+           // this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
             this.nightvalueArray[i].time_22 = null;
             this.nightvalueArray[i].time_00 = null;
             this.nightvalueArray[i].time_02 = null;
@@ -245,7 +205,7 @@ export class InputDataComponent implements OnInit {
             this.nightvalueArray[i].time_06 = null;
             this.nightvalueArray[i].time_08 = null;
           }
-        }
+       }
         }
       },
       (error) =>{
@@ -403,9 +363,10 @@ export class InputDataComponent implements OnInit {
   }
   changeBoiler(value: any) {
 
+    this.updateId=1;
     this.datePipeString = this.datePipe.transform(value._selected, 'yyyy-MM-dd');
     this.checkCurrent = this.datePipe.transform(this.currentDate,'yyyy-MM-dd')
-    if (this.datePipeString < this.checkCurrent){
+    //if (this.datePipeString < this.checkCurrent){
       let obj = {
         boilerId:this.boilerId,
         date:this.datePipeString,
@@ -432,7 +393,7 @@ export class InputDataComponent implements OnInit {
           this.toast.error(errorData.Serever_Error)
         }
       )
-    }
+   // }
 
   }
 
@@ -442,9 +403,10 @@ export class InputDataComponent implements OnInit {
     this.checkCurrent = this.datePipe.transform(this.currentDate,'yyyy-MM-dd')
     if (this.datePipeString < this.checkCurrent){
       let obj = {
-        thermoId:this.thermoId,
         date:this.datePipeString,
-        shift:this.shiftselected
+        shift:this.shiftselected,
+        thermopackId:this.thermoId,
+
       }
      
 
@@ -592,8 +554,8 @@ export class InputDataComponent implements OnInit {
     });
   
     for (let i = 0; i < this.boilerAttribute.length; i++) {
-      this.valueArray.push(new DayBoilerValues());
-      this.valueArray[i].Attribute = this.boilerAttribute[i];
+      //this.valueArray.push(this.dayBoilerValues);
+     // this.valueArray[i].Attribute = this.boilerAttribute[i];
       this.valueArray[i].time_10 = this.Boilertime_10Array[i];
       this.valueArray[i].time_12 = this.Boilertime_12Array[i];
       this.valueArray[i].time_14 = this.Boilertime_14Array[i];
@@ -723,8 +685,8 @@ export class InputDataComponent implements OnInit {
     });
   
     for (let i = 0; i < this.boilerAttribute.length; i++) {
-      this.valueArray.push(new NightBoilerValues());
-      this.valueArray[i].Attribute = this.boilerAttribute[i];
+      // this.valueArray.push(new NightBoilerValues());
+      // this.valueArray[i].Attribute = this.boilerAttribute[i];
       this.valueArray[i].time_10 = this.Boilertime_10Array[i];
       this.valueArray[i].time_12 = this.Boilertime_12Array[i];
       this.valueArray[i].time_14 = this.Boilertime_14Array[i];
@@ -975,6 +937,29 @@ export class InputDataComponent implements OnInit {
         this.toast.error(errorData.Serever_Error)
       }
     )
+
+    for (let i = 0; i < this.boilerAttribute.length; i++) {
+      this.valueArray.push(new DayBoilerValues());
+      this.valueArray[i].Attribute = this.boilerAttribute[i];
+      this.valueArray[i].time_10 = null;
+      this.valueArray[i].time_12 = null;
+      this.valueArray[i].time_14 = null;
+      this.valueArray[i].time_16 = null;
+      this.valueArray[i].time_18 = null;
+      this.valueArray[i].time_20 = null;
+    }
+
+    for (let i = 0; i < this.boilerAttribute.length; i++) {
+      this.nightvalueArray.push(new NightBoilerValues());
+      this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
+      this.nightvalueArray[i].time_22 = null;
+      this.nightvalueArray[i].time_00 = null;
+      this.nightvalueArray[i].time_02 = null;
+      this.nightvalueArray[i].time_04 = null;
+      this.nightvalueArray[i].time_06 = null;
+      this.nightvalueArray[i].time_08 = null;
+    }
+
   }
 
   getThermopack() {
@@ -987,6 +972,32 @@ export class InputDataComponent implements OnInit {
         this.toast.error(errorData.Serever_Error)
       }
     )
+
+    for (let i = 0; i < this.thermopackAttribute.length; i++) {
+      this.valueArray1.push(new DayThermopackValues())
+      this.valueArray1[i].Attribute = this.thermopackAttribute[i];
+      this.valueArray1[i].time_10 = null;
+      this.valueArray1[i].time_12 = null;
+      this.valueArray1[i].time_12 = null;
+      this.valueArray1[i].time_14 = null;
+      this.valueArray1[i].time_16 = null;
+      this.valueArray1[i].time_18 = null;
+      this.valueArray1[i].time_20 = null;
+    }
+
+   
+
+    for (let i = 0; i < this.thermopackAttribute.length; i++) {
+      this.nightvalueArray1.push(new NightThermopackValues())
+      this.nightvalueArray1[i].Attribute = this.thermopackAttribute[i];
+      this.nightvalueArray1[i].time_22 = null;
+      this.nightvalueArray1[i].time_00 = null;
+      this.nightvalueArray1[i].time_02 = null;
+      this.nightvalueArray1[i].time_04 = null;
+      this.nightvalueArray1[i].time_06 = null;
+      this.nightvalueArray1[i].time_08 = null;
+    }
+  
   }
 
   boilerchange(value: any) {
@@ -999,5 +1010,117 @@ export class InputDataComponent implements OnInit {
     this.thermoId = value;
 
   }
+
+  updateBoilerday(value: any) {
+
+    
+    if(this.datePipeString == null){
+      this.toast.error("Select Date")
+    }
+    else if(this.jetRunning == null){
+      this.toast.error("Jet Running empty")
+    }
+    else 
+    {
+      this.valueArray.forEach(ele => {
+        this.Boilertime_10Array.push(ele.time_10);
+        this.Boilertime_12Array.push(ele.time_12);
+        this.Boilertime_14Array.push(ele.time_14);
+        this.Boilertime_16Array.push(ele.time_16);
+        this.Boilertime_18Array.push(ele.time_18);
+        this.Boilertime_20Array.push(ele.time_20);
+  
+      })
+
+  
+      this.boilerobjadd(this.Boilertime_10Array, "10");
+      this.boilerobjadd(this.Boilertime_12Array, "12");
+      this.boilerobjadd(this.Boilertime_14Array, "14");
+      this.boilerobjadd(this.Boilertime_16Array, "16");
+      this.boilerobjadd(this.Boilertime_18Array, "18");
+      this.boilerobjadd(this.Boilertime_20Array, "20");
+  
+      this.updateBoilerData(this.shiftselected);
+
+    }
+
+  }
+
+  updateBoilernight(value: any) {
+
+    if(this.datePipeString == null){
+      this.toast.error("Select Date")
+    }
+    else if(this.jetRunning == null){
+      this.toast.error("Jet Running empty")
+    }
+    else
+    {
+      this.nightvalueArray.forEach(ele => {
+        this.Boilertime_22Array.push(ele.time_22);
+        this.Boilertime_00Array.push(ele.time_00);
+        this.Boilertime_02Array.push(ele.time_02);
+        this.Boilertime_04Array.push(ele.time_04);
+        this.Boilertime_06Array.push(ele.time_06);
+        this.Boilertime_08Array.push(ele.time_08);
+      })
+  
+
+      this.boilerobjadd(this.Boilertime_22Array, "22");
+      this.boilerobjadd(this.Boilertime_00Array, "00");
+      this.boilerobjadd(this.Boilertime_02Array, "02");
+      this.boilerobjadd(this.Boilertime_04Array, "04");
+      this.boilerobjadd(this.Boilertime_06Array, "06");
+      this.boilerobjadd(this.Boilertime_08Array, "08");
+  
+      this.updateBoilerData(this.shiftselected);
+
+    }
+
+  }
+
+ updateBoilerData(value:any) {
+
+    let obj = {
+      
+      jetRunning:this.jetRunning,
+      recordList:this.finalBoilerobj,
+    }
+    this.logsheet.saveBoilerData(obj).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toast.success("Added");
+          if(value=='day'){
+          for (let i = 0; i < this.boilerAttribute.length; i++) {
+            this.valueArray.push(new DayBoilerValues());
+            this.valueArray[i].Attribute = this.boilerAttribute[i];
+            this.valueArray[i].time_10 = null;
+            this.valueArray[i].time_12 = null;
+            this.valueArray[i].time_14 = null;
+            this.valueArray[i].time_16 = null;
+            this.valueArray[i].time_18 = null;
+            this.valueArray[i].time_20 = null;
+          }
+        }else{
+
+          for (let i = 0; i < this.boilerAttribute.length; i++) {
+            this.nightvalueArray.push(new NightBoilerValues());
+            this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
+            this.nightvalueArray[i].time_22 = null;
+            this.nightvalueArray[i].time_00 = null;
+            this.nightvalueArray[i].time_02 = null;
+            this.nightvalueArray[i].time_04 = null;
+            this.nightvalueArray[i].time_06 = null;
+            this.nightvalueArray[i].time_08 = null;
+          }
+        }
+        }
+      },
+      (error) =>{
+        this.toast.error(errorData.Serever_Error)
+      }
+    )
+  }
+  
 
 }

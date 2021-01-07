@@ -80,8 +80,10 @@
                             </div>
                         </div>
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitBoilerday(logForm)"
+                            <input type="button" *ngIf="this.updateId != null" (click)="submitBoilerday(logForm)"
                                 class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                            <input type="button" *ngIf="this.updateId == null" (click)="updateBoilerday(logForm)"
+                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">    
                         </div>
 
                     </form>
@@ -144,7 +146,11 @@
                         </div>
 
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitBoilernight(logForm)" value="Submit">
+                            <input type="button" *ngIf="this.updateId!=null" class="btn btn-primary btn-sm btn-design sheet-btn" 
+                                (click)="submitBoilernight(logForm)" value="Submit">
+                            <input type="button" *ngIf="this.updateId==null" class="btn btn-primary btn-sm btn-design sheet-btn" 
+                                (click)="updateBoilernight(logForm)" value="Submit">
+
                         </div>
                     </form>
                 </div>
@@ -221,6 +227,8 @@
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
                             <input type="button" (click)="submitThermopackday(logForm)"
                                 class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                            <!--input type="button" *ngIf="this.updateId==null" (click)="updateThermopackday(logForm)"
+                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit"-->    
                         </div>
 
                     </form>
@@ -274,7 +282,10 @@
                             </tr>
                         </table>
                         <div class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitThermopacknight(logForm)" value="Submit">
+                            <input type="button"  class="btn btn-primary btn-sm btn-design sheet-btn" 
+                                (click)="submitThermopacknight(logForm)" value="Submit">
+                            <!--input type="button" *ngIf="this.updateId==null"class="btn btn-primary btn-sm btn-design sheet-btn" 
+                                (click)="updateThermopacknight(logForm)" value="Submit"-->    
                         </div>
 
                     </form>
