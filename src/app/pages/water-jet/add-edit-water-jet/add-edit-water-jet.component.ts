@@ -17,7 +17,8 @@ export class AddEditWaterJetComponent implements OnInit {
   waterjet: WaterJet = new WaterJet();
   formSubmitted: boolean = false;
   public disableButton = false;
-
+  // name:any=14.2;
+  // maxlength=3;
   constructor( private commonService: CommonService,
     private waterjetService: WaterJetService,
     private toastr: ToastrService,
@@ -27,6 +28,11 @@ export class AddEditWaterJetComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // getVal(item){
+  //   console.log(item.target.value);
+  //   let v=parseFloat(item.target.value);
+  //   console.log("float",v);
+  // }
   addWaterJet(myForm){
     this.formSubmitted=true;
     if(myForm.valid){

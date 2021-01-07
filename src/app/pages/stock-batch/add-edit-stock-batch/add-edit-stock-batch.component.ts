@@ -25,6 +25,7 @@ export class AddEditStockBatchComponent implements OnInit {
   public disableButton = false;
   public formSubmitted = false;
   public addFlag = true;
+  production_flag:any=[];
 
   public errorData: any = (errorData as any).default;
   qualityList: any = [];
@@ -235,6 +236,7 @@ export class AddEditStockBatchComponent implements OnInit {
     let i = 0;
     this.stockDataValues[0].batchId = prev;
     this.stockBatch.batchData.forEach(element => {
+
       if (prev == element.batchId) {
         if (!this.stockDataValues[k])
           this.stockDataValues.push({ batchId: 0, batchMW: [] });
@@ -243,6 +245,7 @@ export class AddEditStockBatchComponent implements OnInit {
         this.stockDataValues[k].batchMW[i].mtr = element.mtr;
         this.stockDataValues[k].batchMW[i].wt = element.wt;
         i++;
+      
       } else {
         i = 0;
         ++k;
@@ -255,8 +258,18 @@ export class AddEditStockBatchComponent implements OnInit {
         this.stockDataValues[k].batchMW[i].wt = element.wt;
         i++;
       }
+      if(element.isProductionPlanned){
+       this.production_flag[this.stockBatch.batchData.indexOf(element)]=1;
+      }
+      else{
+        this.production_flag[this.stockBatch.batchData.indexOf(element)]=0;
+
+      }
+      //}else{f=false;}
+     // if(element.isProductionPlanned==true)
     });
-    this.flag = 0;
+ 
+  //this.flag = 0;
   }
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
@@ -474,6 +487,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.toastr.error(errorData.Update_Error);
           this.loading = false;
           this.disableButton = false;
+          this.loading = false;
         }
       );
       this.loading = false;
@@ -481,6 +495,8 @@ export class AddEditStockBatchComponent implements OnInit {
       this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
+      this.loading = false;
+
     }
   }
 }

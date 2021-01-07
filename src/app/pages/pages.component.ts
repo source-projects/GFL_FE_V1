@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
 import { PartyGuard } from 'app/@theme/guards/party.guard';
 import { ProgramGuard } from 'app/@theme/guards/program.guard';
@@ -7,22 +7,26 @@ import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { UserGuard } from 'app/@theme/guards/user.guard';
+import { AnyAaaaRecord } from 'dns';
+import { BehaviorSubject } from 'rxjs';
 import { MENU_ITEMS } from './pages-menu';
 @Component({
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],
   template: `
     <ngx-one-column-layout>
-      <nb-menu [items]="menu"></nb-menu>
+      <nb-menu [items]="menu" ></nb-menu>
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,
 })
 export class PagesComponent implements OnInit{
+
   menu = MENU_ITEMS;
   view:Boolean=true;
   view_all:Boolean=true;
   view_group:Boolean=true;
+
   constructor(
     public partyGuard: PartyGuard , 
     public qualityGuard: QualityGuard,
@@ -33,10 +37,9 @@ export class PagesComponent implements OnInit{
     public stockBatchGuard: StockBatchGuard,
     public programGuard: ProgramGuard,
     
-    ){}
+    ){
+    }
   ngOnInit(): void {
-
-
     this.menu.forEach(e=>{
       switch (e.title) {
         case 'Party':
