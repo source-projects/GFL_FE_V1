@@ -4,6 +4,8 @@
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
     <a class="logo" href="#" (click)="navigateHome()"><span>GFL</span></a>
+    <!-- <h6>{{broadCast}}</h6> -->
+
   </div>
   <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
@@ -20,7 +22,7 @@
     <nb-action class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" nbContextMenuTag="my-context-menu" [name]="userName.name" [picture]="user?.picture">
-      {{userName}}</nb-user>
+     </nb-user>
     </nb-action>
   </nb-actions>
 </div>

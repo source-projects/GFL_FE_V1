@@ -31,10 +31,7 @@ export class AddEditInvoiceComponent implements OnInit {
   formSubmitted = false;
   public loading = false;
   qualityList: any[];
-  cid:any;
-  bid:any; 
   userId:any;
-  myInvoiceId;
   currentInvoiceId: any;
   Invoice: any[];
 
@@ -69,7 +66,6 @@ export class AddEditInvoiceComponent implements OnInit {
             this.selected = this.batch;
             this.loading = false;
             this.disableButton=false;
-
           } else {
             // this.toastr.error(data["msg"]);
             this.loading = false;

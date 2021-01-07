@@ -244,6 +244,9 @@ export class AddEditShadeComponent implements OnInit {
 
   getQualityFromParty(event) {
     this.loading = true;
+    this.shades.qualityId = null;
+    this.shades.qualityName = null;
+    this.shades.qualityType = null;
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -422,6 +425,7 @@ export class AddEditShadeComponent implements OnInit {
           } else {
             this.toastr.error(errorData.Add_Error);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);

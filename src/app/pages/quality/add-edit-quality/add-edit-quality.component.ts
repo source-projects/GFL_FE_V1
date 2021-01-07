@@ -54,7 +54,10 @@ export class AddEditQualityComponent implements OnInit {
     this.getUpdateData();
     this.getPartyList();
   }
+  resetFlag($event){
+    this.qulityIdExist=false;
 
+  }
   checkQulityId() {
     this.qualityService.getQulityIdExist(this.addEditQualityForm.get("qualityId").value).subscribe(
       data=>{

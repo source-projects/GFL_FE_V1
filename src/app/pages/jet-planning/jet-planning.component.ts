@@ -138,12 +138,17 @@ export class JetPlanningComponent implements OnInit {
           this.jetData1.controlId = this.jet[index].id;
           this.jetData1.productionId = result.id;
           this.jetData1.sequence = index + 1;
-          let jetData2 = [this.jetData1];
+          let jetData2 = this.jetData1;
           
           this.jetService.saveJetData(jetData2).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
+                this.getJetData();
+                this.getshade();
+              }
+              else{
+                this.toastr.error("Weight is more than jet capacity");
                 this.getJetData();
                 this.getshade();
               }
