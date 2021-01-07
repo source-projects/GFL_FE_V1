@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData } from "app/@theme/model/stock-batch";
+import { StockBatch, BatchData, BatchCard } from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
 import { PartyService } from "app/@theme/services/party.service";
@@ -25,6 +25,7 @@ export class AddEditStockBatchComponent implements OnInit {
   public disableButton = false;
   public formSubmitted = false;
   public addFlag = true;
+  public zeroValueBatch = false;
   production_flag: any = [];
 
   public errorData: any = (errorData as any).default;
@@ -219,12 +220,18 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch = data["data"];
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
-            this.stockBatch.batchData = _.sortBy(data["data"].batchData, [
-              function (o) {
-                return o.batchId;
-              },
-            ]);
-            this.setStockDataValues();
+            if(!this.stockBatch.batchData.length){
+                this.zeroValueBatch = true;
+            }
+            else{
+              this.stockBatch.batchData = _.sortBy(data["data"].batchData, [
+                function (o) {
+                  return o.batchId;
+                },
+              ]);
+              this.setStockDataValues();
+            }
+            
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -422,6 +429,11 @@ export class AddEditStockBatchComponent implements OnInit {
   checkValidation(myForm) {
     let returnValue = true;
     if (this.stockDataValues && this.stockDataValues.length) {
+      if(this.stockDataValues.length == 1){
+        if(!this.stockDataValues[0].batchId && !this.stockDataValues[0].batchMW[0].mtr && !this.stockDataValues[0].batchMW[0].wt){
+          return true;
+        }
+      }
       this.stockDataValues.every((ele) => {
         let isNullOrUndefineFlag = ele.batchId ? false : true;
         if (isNullOrUndefineFlag) {
@@ -504,6 +516,7 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         );
       } else {
+        this.stockBatch.updatedBy = this.user.userId;
         this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
           (data) => {
             if (data["success"]) {

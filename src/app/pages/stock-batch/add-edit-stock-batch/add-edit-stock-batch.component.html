@@ -128,7 +128,7 @@
                         <h2 class="batch-heading display-inline">BATCH</h2>
 
                     </header>
-                    <div *ngIf="stockDataValues[0].batchId != null || addFlag" class="row">
+                    <div *ngIf="stockDataValues[0].batchId != null || addFlag || zeroValueBatch" class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
                             class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
