@@ -2,6 +2,8 @@ import { Component, OnDestroy } from "@angular/core";
 import { NbMenuService, NbSidebarService } from "@nebular/theme";
 import { LayoutService } from "app/@core/utils";
 import { Subject } from "rxjs";
+import { CommonService } from 'app/@theme/services/common.service';
+import { event } from 'jquery';
 
 @Component({
   selector: "ngx-one-column-layout",
@@ -30,12 +32,8 @@ export class OneColumnLayoutComponent implements OnDestroy{
   expandPanel: boolean;
   isTablet: boolean;
   isMobile: boolean;
-  unSubscribe$:any;
-  constructor(
-    private menu: NbMenuService,
-    private layoutService: LayoutService,
-    private sidebarService: NbSidebarService
-  ) {
+unSubscribe$:any;
+  constructor( private menu: NbMenuService, private layoutService: LayoutService,private commonService:CommonService, private sidebarService: NbSidebarService) {
     this.formatDevice();
     if (this.isMobile == true) {
       this.unSubscribe$ = this.menu.onItemClick().subscribe(() => {
@@ -48,7 +46,15 @@ export class OneColumnLayoutComponent implements OnDestroy{
       });
     }
   }
-
+  // changeHeader(){
+  //   this.menu.onItemClick().subscribe(() => {
+  //     let nameHeader=event.target as HTMLElement;
+  //     this.commonService.updateBrodCast(nameHeader);
+  //     this.sidebarService.toggle(true, 'menu-sidebar');
+  //     this.layoutService.changeLayoutSize();
+  //     return false;
+  //   });
+  // }
   ngOnDestroy() {
     this.unSubscribe$.unsubscribe();
    }

@@ -53,6 +53,7 @@
             class="form-control"
             id="qualityId"
             (change)="checkQulityId()"
+            (keypress)="resetFlag($event)"
             required
             formControlName="qualityId"
             placeholder="Enter Quality ID"
