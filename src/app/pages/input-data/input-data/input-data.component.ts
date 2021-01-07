@@ -104,7 +104,6 @@ export class InputDataComponent implements OnInit {
       this.valueArray[i].Attribute = this.boilerAttribute[i];
       this.valueArray[i].time_10 = null;
       this.valueArray[i].time_12 = null;
-      this.valueArray[i].time_12 = null;
       this.valueArray[i].time_14 = null;
       this.valueArray[i].time_16 = null;
       this.valueArray[i].time_18 = null;
@@ -175,7 +174,7 @@ export class InputDataComponent implements OnInit {
       this.boilerobjadd(this.Boilertime_18Array, "18");
       this.boilerobjadd(this.Boilertime_20Array, "20");
   
-      this.saveBoilerData();
+      this.saveBoilerData(this.shiftselected);
 
     }
 
@@ -212,18 +211,40 @@ export class InputDataComponent implements OnInit {
 
   }
 
-  saveBoilerData() {
+  saveBoilerData(value:any) {
 
     let obj = {
       boilerMachineRecord:this.finalBoilerobj,
       jetRunning:this.jetRunning
     }
-    console.log(obj)
     this.logsheet.saveBoilerData(obj).subscribe(
       (data) => {
         if(data["success"]){
           this.toast.success("Added");
+          if(value=='day'){
+          for (let i = 0; i < this.boilerAttribute.length; i++) {
+            this.valueArray.push(new DayBoilerValues());
+            this.valueArray[i].Attribute = this.boilerAttribute[i];
+            this.valueArray[i].time_10 = null;
+            this.valueArray[i].time_12 = null;
+            this.valueArray[i].time_14 = null;
+            this.valueArray[i].time_16 = null;
+            this.valueArray[i].time_18 = null;
+            this.valueArray[i].time_20 = null;
+          }
+        }else{
 
+          for (let i = 0; i < this.boilerAttribute.length; i++) {
+            this.nightvalueArray.push(new NightBoilerValues());
+            this.nightvalueArray[i].Attribute = this.boilerAttribute[i];
+            this.nightvalueArray[i].time_22 = null;
+            this.nightvalueArray[i].time_00 = null;
+            this.nightvalueArray[i].time_02 = null;
+            this.nightvalueArray[i].time_04 = null;
+            this.nightvalueArray[i].time_06 = null;
+            this.nightvalueArray[i].time_08 = null;
+          }
+        }
         }
       },
       (error) =>{
@@ -259,7 +280,7 @@ export class InputDataComponent implements OnInit {
       this.boilerobjadd(this.Boilertime_06Array, "06");
       this.boilerobjadd(this.Boilertime_08Array, "08");
   
-      this.saveBoilerData();
+      this.saveBoilerData(this.shiftselected);
 
     }
 
@@ -299,7 +320,6 @@ export class InputDataComponent implements OnInit {
   }
 
   saveThermoData() {
-    console.log(this.finalThermoobj)
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
         if(data["success"]){
@@ -354,14 +374,15 @@ export class InputDataComponent implements OnInit {
   }
 
   shiftBoilerchange(value: any) {
+    this.dateSelected = null;
 
     if (value == 1) {
-      this.shiftselected = 'day';
+      this.shiftselected = "day";
       this.BoilernightFlag = false;
       this.BoilerdayFlag = true;
     }
     else if (value == 2) {
-      this.shiftselected = 'night'
+      this.shiftselected = "night";
       this.BoilerdayFlag = false;
       this.BoilernightFlag = true;
     }
@@ -369,17 +390,17 @@ export class InputDataComponent implements OnInit {
   shiftThermopackchange(value: any) {
 
     if (value == 1) {
-      this.shiftselected = 'day';
+      this.shiftselected = "day";
       this.ThermopacknightFlag = false;
       this.ThermopackdayFlag = true;
     }
     else if (value == 2) {
-      this.shiftselected = 'night'
+      this.shiftselected = "night";
       this.ThermopackdayFlag = false;
       this.ThermopacknightFlag = true;
     }
   }
-  change(value: any) {
+  changeBoiler(value: any) {
 
     this.datePipeString = this.datePipe.transform(value._selected, 'yyyy-MM-dd');
     this.checkCurrent = this.datePipe.transform(this.currentDate,'yyyy-MM-dd')
@@ -389,13 +410,21 @@ export class InputDataComponent implements OnInit {
         date:this.datePipeString,
         shift:this.shiftselected
       }
+     
 
       this.logsheet.fetchBoilerData(obj).subscribe(
         (data) => {
-          console.log(data);
           if(data["success"]){
             this.fetchedData = data["data"]
-            this.fetchBoiler(this.fetchedData);
+            if(obj.shift=="night"){
+              this.fetchBoilerNight(this.fetchedData);
+
+            }
+            else{
+              this.fetchBoilerDay(this.fetchedData);
+
+            }
+
           }
         },
         (error) =>{
@@ -406,102 +435,535 @@ export class InputDataComponent implements OnInit {
 
   }
 
-  fetchBoiler(fetchedData){
-    console.log("Fetched Data:",fetchedData)
-    this.valueArray.push(new DayBoilerValues());
-    // let t1=[];
-    // let day= new Boiler();
-    
-    // fetchedData.forEach(element => {
-    //   day.streamPressusre=element.streamPressusre;
-    //   // t1.push(element.streamPressusre);
-    //   // for(let i=0;i<this.boilerAttribute.length;i++){
-    //   //   //this.valueArray[i].time_10 = element.this.boilerAttribute[i];
+  changeThermo(value: any) {
 
-    //   // }
-      
-    // });
-    // console.log(t1);
-    //this.valueArray = [];
+    this.datePipeString = this.datePipe.transform(value._selected, 'yyyy-MM-dd');
+    this.checkCurrent = this.datePipe.transform(this.currentDate,'yyyy-MM-dd')
+    if (this.datePipeString < this.checkCurrent){
+      let obj = {
+        thermoId:this.thermoId,
+        date:this.datePipeString,
+        shift:this.shiftselected
+      }
+     
 
-    // for(let i=0;i<fetchedData.length;i++)
-    // {
-    //   switch(fetchedData[i].timeOf){
-    //     case 10:
-    //       let boi10 = new Boiler();
-    //       boi10.streamPressusre = fetchedData[i].streamPressusre;
-    //       boi10.drumWaterLevel = fetchedData[i].drumWaterLevel;
-    //       boi10.feedPump = fetchedData[i].feedPump;
-    //       boi10.flueGasTemp = fetchedData[i].flueGasTemp;
-    //       boi10.bedTemp = fetchedData[i].bedTemp;
-    //       boi10.draftPressure = fetchedData[i].draftPressure;
-    //       boi10.IDFan = fetchedData[i].idFan;
-    //       boi10.FDFanDA1 = fetchedData[i].daOne;
-    //       boi10.FDFanDA2 = fetchedData[i].daTwo;
-    //       boi10.FDFanDA3 = fetchedData[i].daThree;
-    //       boi10.ScrewFeeder = fetchedData[i].screwFeeder;
-    //       boi10.WaterMeter = fetchedData[i].WaterMeter;
-    //       boi10.Load = fetchedData[i].loadData;
-    //       this.Boilertime_10Array = (boi10)
-    //       console.log("boi10:",boi10)
-    //       console.log("10Array:",this.Boilertime_10Array)
-    //       break;
-        
-    //       case 12:
-    //         let boi12 = new Boiler();
-    //         boi12.streamPressusre = fetchedData[i].streamPressusre;
-    //         boi12.drumWaterLevel = fetchedData[i].drumWaterLevel;
-    //         boi12.feedPump = fetchedData[i].feedPump;
-    //         boi12.flueGasTemp = fetchedData[i].flueGasTemp;
-    //         boi12.bedTemp = fetchedData[i].bedTemp;
-    //         boi12.draftPressure = fetchedData[i].draftPressure;
-    //         boi12.IDFan = fetchedData[i].idFan;
-    //         boi12.FDFanDA1 = fetchedData[i].daOne;
-    //         boi12.FDFanDA2 = fetchedData[i].daTwo;
-    //         boi12.FDFanDA3 = fetchedData[i].daThree;
-    //         boi12.ScrewFeeder = fetchedData[i].screwFeeder;
-    //         boi12.WaterMeter = fetchedData[i].WaterMeter;
-    //         boi12.Load = fetchedData[i].loadData;
-    //         this.Boilertime_12Array.push(boi12)
-    //         console.log("boi12:",boi12)
-    //         console.log("12Array:",this.Boilertime_12Array)
-    //         break;
+      this.logsheet.fetchThermoData(obj).subscribe(
+        (data) => {
+          console.log(data);
+          if(data["success"]){
+            this.fetchedData = data["data"]
+            if(obj.shift=="night"){
+              this.fetchThermoNight(this.fetchedData);
 
-    //         case 14:
-    //         let boi14 = new Boiler();
-    //         boi14.streamPressusre = fetchedData[i].streamPressusre;
-    //         boi14.drumWaterLevel = fetchedData[i].drumWaterLevel;
-    //         boi14.feedPump = fetchedData[i].feedPump;
-    //         boi14.flueGasTemp = fetchedData[i].flueGasTemp;
-    //         boi14.bedTemp = fetchedData[i].bedTemp;
-    //         boi14.draftPressure = fetchedData[i].draftPressure;
-    //         boi14.IDFan = fetchedData[i].idFan;
-    //         boi14.FDFanDA1 = fetchedData[i].daOne;
-    //         boi14.FDFanDA2 = fetchedData[i].daTwo;
-    //         boi14.FDFanDA3 = fetchedData[i].daThree;
-    //         boi14.ScrewFeeder = fetchedData[i].screwFeeder;
-    //         boi14.WaterMeter = fetchedData[i].WaterMeter;
-    //         boi14.Load = fetchedData[i].loadData;
-    //         this.Boilertime_14Array=Object.values(boi14)
-    //         console.log("boi14:",boi14)
-    //         console.log("14Array:",this.Boilertime_14Array)
-    //         break;
-    //   }
-      
-    // }
-    // for (let i = 0; i < this.boilerAttribute.length; i++) {
-    //   this.valueArray.push(new DayBoilerValues());
-    //   this.valueArray[i].Attribute = this.boilerAttribute[i];
-    //   this.valueArray[i].time_10 = this.Boilertime_10Array[i];
-    //   this.valueArray[i].time_12 = this.Boilertime_12Array;
-    //   this.valueArray[i].time_14 = this.Boilertime_14Array[i];
-    //   this.valueArray[i].time_16 = this.Boilertime_16Array;
-    //   this.valueArray[i].time_18 = this.Boilertime_18Array;
-    //   this.valueArray[i].time_20 = this.Boilertime_20Array;
-    // }
-    // console.log("Value:",this.valueArray)
+            }
+            else{
+              this.fetchThermoDay(this.fetchedData);
+
+            }
+
+          }
+        },
+        (error) =>{
+          this.toast.error(errorData.Serever_Error)
+        }
+      )
+    }
+
   }
 
+  fetchBoilerDay(fetchedData){
+    this.jetRunning=fetchedData[0].jetRunning;
+    this.valueArray1 = [];
+
+    fetchedData.forEach(element => {
+
+      let blr = new Boiler();
+
+      switch(element.timeOf){
+        case 10:
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Boilertime_10Array=Object.values(blr);
+        break;
+      
+      case 12:
+          
+        blr.streamPressusre =element.streamPressusre;
+        blr.drumWaterLevel = element.drumWaterLevel;
+        blr.feedPump = element.feedPump;
+        blr.flueGasTemp = element.flueGasTemp;
+        blr.bedTemp = element.bedTemp;
+        blr.draftPressure = element.draftPressure;
+        blr.IDFan = element.idFan;
+        blr.FDFanDA1 =element.daOne;
+        blr.FDFanDA2 = element.daTwo;
+        blr.FDFanDA3 = element.daThree;
+        blr.ScrewFeeder = element.screwFeeder;
+        blr.WaterMeter = element.WaterMeter;
+        blr.Load = element.loadData;
+        this.Boilertime_12Array=Object.values(blr);     
+      break;
+
+      case 14:
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Boilertime_14Array=Object.values(blr);     
+        break;
+
+        case 16:
+          
+            blr.streamPressusre =element.streamPressusre;
+            blr.drumWaterLevel = element.drumWaterLevel;
+            blr.feedPump = element.feedPump;
+            blr.flueGasTemp = element.flueGasTemp;
+            blr.bedTemp = element.bedTemp;
+            blr.draftPressure = element.draftPressure;
+            blr.IDFan = element.idFan;
+            blr.FDFanDA1 =element.daOne;
+            blr.FDFanDA2 = element.daTwo;
+            blr.FDFanDA3 = element.daThree;
+            blr.ScrewFeeder = element.screwFeeder;
+            blr.WaterMeter = element.WaterMeter;
+            blr.Load = element.loadData;
+            this.Boilertime_16Array=Object.values(blr);     
+          break;
+
+          case 18:
+          
+              blr.streamPressusre =element.streamPressusre;
+              blr.drumWaterLevel = element.drumWaterLevel;
+              blr.feedPump = element.feedPump;
+              blr.flueGasTemp = element.flueGasTemp;
+              blr.bedTemp = element.bedTemp;
+              blr.draftPressure = element.draftPressure;
+              blr.IDFan = element.idFan;
+              blr.FDFanDA1 =element.daOne;
+              blr.FDFanDA2 = element.daTwo;
+              blr.FDFanDA3 = element.daThree;
+              blr.ScrewFeeder = element.screwFeeder;
+              blr.WaterMeter = element.WaterMeter;
+              blr.Load = element.loadData;
+              this.Boilertime_18Array=Object.values(blr);     
+            break;
+
+            case 20:
+          
+                blr.streamPressusre =element.streamPressusre;
+                blr.drumWaterLevel = element.drumWaterLevel;
+                blr.feedPump = element.feedPump;
+                blr.flueGasTemp = element.flueGasTemp;
+                blr.bedTemp = element.bedTemp;
+                blr.draftPressure = element.draftPressure;
+                blr.IDFan = element.idFan;
+                blr.FDFanDA1 =element.daOne;
+                blr.FDFanDA2 = element.daTwo;
+                blr.FDFanDA3 = element.daThree;
+                blr.ScrewFeeder = element.screwFeeder;
+                blr.WaterMeter = element.WaterMeter;
+                blr.Load = element.loadData;
+                this.Boilertime_20Array=Object.values(blr);     
+              break;
+    }
+    });
+  
+    for (let i = 0; i < this.boilerAttribute.length; i++) {
+      this.valueArray.push(new DayBoilerValues());
+      this.valueArray[i].Attribute = this.boilerAttribute[i];
+      this.valueArray[i].time_10 = this.Boilertime_10Array[i];
+      this.valueArray[i].time_12 = this.Boilertime_12Array[i];
+      this.valueArray[i].time_14 = this.Boilertime_14Array[i];
+      this.valueArray[i].time_16 = this.Boilertime_16Array[i];
+      this.valueArray[i].time_18 = this.Boilertime_18Array[i];
+      this.valueArray[i].time_20 = this.Boilertime_20Array[i];
+    }
+  }
+  
+  fetchBoilerNight(fetchedData){
+    this.jetRunning=fetchedData[0].jetRunning;
+    this.nightvalueArray = [];
+
+    fetchedData.forEach(element => {
+
+      let blr = new Boiler();
+
+      switch(element.timeOf){
+        case 22:
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Boilertime_22Array=Object.values(blr);
+        break;
+      
+      case '00':
+          
+        blr.streamPressusre =element.streamPressusre;
+        blr.drumWaterLevel = element.drumWaterLevel;
+        blr.feedPump = element.feedPump;
+        blr.flueGasTemp = element.flueGasTemp;
+        blr.bedTemp = element.bedTemp;
+        blr.draftPressure = element.draftPressure;
+        blr.IDFan = element.idFan;
+        blr.FDFanDA1 =element.daOne;
+        blr.FDFanDA2 = element.daTwo;
+        blr.FDFanDA3 = element.daThree;
+        blr.ScrewFeeder = element.screwFeeder;
+        blr.WaterMeter = element.WaterMeter;
+        blr.Load = element.loadData;
+        this.Boilertime_00Array=Object.values(blr);     
+      break;
+
+      case '02':
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Boilertime_02Array=Object.values(blr);     
+        break;
+
+        case '04':
+          
+            blr.streamPressusre =element.streamPressusre;
+            blr.drumWaterLevel = element.drumWaterLevel;
+            blr.feedPump = element.feedPump;
+            blr.flueGasTemp = element.flueGasTemp;
+            blr.bedTemp = element.bedTemp;
+            blr.draftPressure = element.draftPressure;
+            blr.IDFan = element.idFan;
+            blr.FDFanDA1 =element.daOne;
+            blr.FDFanDA2 = element.daTwo;
+            blr.FDFanDA3 = element.daThree;
+            blr.ScrewFeeder = element.screwFeeder;
+            blr.WaterMeter = element.WaterMeter;
+            blr.Load = element.loadData;
+            this.Boilertime_04Array=Object.values(blr);     
+          break;
+
+          case '06':
+          
+              blr.streamPressusre =element.streamPressusre;
+              blr.drumWaterLevel = element.drumWaterLevel;
+              blr.feedPump = element.feedPump;
+              blr.flueGasTemp = element.flueGasTemp;
+              blr.bedTemp = element.bedTemp;
+              blr.draftPressure = element.draftPressure;
+              blr.IDFan = element.idFan;
+              blr.FDFanDA1 =element.daOne;
+              blr.FDFanDA2 = element.daTwo;
+              blr.FDFanDA3 = element.daThree;
+              blr.ScrewFeeder = element.screwFeeder;
+              blr.WaterMeter = element.WaterMeter;
+              blr.Load = element.loadData;
+              this.Boilertime_06Array=Object.values(blr);     
+            break;
+
+            case '08':
+          
+                blr.streamPressusre =element.streamPressusre;
+                blr.drumWaterLevel = element.drumWaterLevel;
+                blr.feedPump = element.feedPump;
+                blr.flueGasTemp = element.flueGasTemp;
+                blr.bedTemp = element.bedTemp;
+                blr.draftPressure = element.draftPressure;
+                blr.IDFan = element.idFan;
+                blr.FDFanDA1 =element.daOne;
+                blr.FDFanDA2 = element.daTwo;
+                blr.FDFanDA3 = element.daThree;
+                blr.ScrewFeeder = element.screwFeeder;
+                blr.WaterMeter = element.WaterMeter;
+                blr.Load = element.loadData;
+                this.Boilertime_08Array=Object.values(blr);     
+              break;
+    }
+    });
+  
+    for (let i = 0; i < this.boilerAttribute.length; i++) {
+      this.valueArray.push(new NightBoilerValues());
+      this.valueArray[i].Attribute = this.boilerAttribute[i];
+      this.valueArray[i].time_10 = this.Boilertime_10Array[i];
+      this.valueArray[i].time_12 = this.Boilertime_12Array[i];
+      this.valueArray[i].time_14 = this.Boilertime_14Array[i];
+      this.valueArray[i].time_16 = this.Boilertime_16Array[i];
+      this.valueArray[i].time_18 = this.Boilertime_18Array[i];
+      this.valueArray[i].time_20 = this.Boilertime_20Array[i];
+    }
+  }
+
+  fetchThermoNight(fetchedData){
+    this.jetRunning=fetchedData[0].jetRunning;
+    this.nightvalueArray1 = [];
+
+    fetchedData.forEach(element => {
+
+      let blr = new Boiler();
+
+      switch(element.timeOf){
+        case 22:
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Thermo_22Array=Object.values(blr);
+        break;
+      
+      case '00':
+          
+        blr.streamPressusre =element.streamPressusre;
+        blr.drumWaterLevel = element.drumWaterLevel;
+        blr.feedPump = element.feedPump;
+        blr.flueGasTemp = element.flueGasTemp;
+        blr.bedTemp = element.bedTemp;
+        blr.draftPressure = element.draftPressure;
+        blr.IDFan = element.idFan;
+        blr.FDFanDA1 =element.daOne;
+        blr.FDFanDA2 = element.daTwo;
+        blr.FDFanDA3 = element.daThree;
+        blr.ScrewFeeder = element.screwFeeder;
+        blr.WaterMeter = element.WaterMeter;
+        blr.Load = element.loadData;
+        this.Thermo_00Array=Object.values(blr);     
+      break;
+
+      case '02':
+          
+          blr.streamPressusre =element.streamPressusre;
+          blr.drumWaterLevel = element.drumWaterLevel;
+          blr.feedPump = element.feedPump;
+          blr.flueGasTemp = element.flueGasTemp;
+          blr.bedTemp = element.bedTemp;
+          blr.draftPressure = element.draftPressure;
+          blr.IDFan = element.idFan;
+          blr.FDFanDA1 =element.daOne;
+          blr.FDFanDA2 = element.daTwo;
+          blr.FDFanDA3 = element.daThree;
+          blr.ScrewFeeder = element.screwFeeder;
+          blr.WaterMeter = element.WaterMeter;
+          blr.Load = element.loadData;
+          this.Thermo_02Array=Object.values(blr);     
+        break;
+
+        case '04':
+          
+            blr.streamPressusre =element.streamPressusre;
+            blr.drumWaterLevel = element.drumWaterLevel;
+            blr.feedPump = element.feedPump;
+            blr.flueGasTemp = element.flueGasTemp;
+            blr.bedTemp = element.bedTemp;
+            blr.draftPressure = element.draftPressure;
+            blr.IDFan = element.idFan;
+            blr.FDFanDA1 =element.daOne;
+            blr.FDFanDA2 = element.daTwo;
+            blr.FDFanDA3 = element.daThree;
+            blr.ScrewFeeder = element.screwFeeder;
+            blr.WaterMeter = element.WaterMeter;
+            blr.Load = element.loadData;
+            this.Thermo_04Array=Object.values(blr);     
+          break;
+
+          case '06':
+          
+              blr.streamPressusre =element.streamPressusre;
+              blr.drumWaterLevel = element.drumWaterLevel;
+              blr.feedPump = element.feedPump;
+              blr.flueGasTemp = element.flueGasTemp;
+              blr.bedTemp = element.bedTemp;
+              blr.draftPressure = element.draftPressure;
+              blr.IDFan = element.idFan;
+              blr.FDFanDA1 =element.daOne;
+              blr.FDFanDA2 = element.daTwo;
+              blr.FDFanDA3 = element.daThree;
+              blr.ScrewFeeder = element.screwFeeder;
+              blr.WaterMeter = element.WaterMeter;
+              blr.Load = element.loadData;
+              this.Thermo_06Array=Object.values(blr);     
+            break;
+
+            case '08':
+          
+                blr.streamPressusre =element.streamPressusre;
+                blr.drumWaterLevel = element.drumWaterLevel;
+                blr.feedPump = element.feedPump;
+                blr.flueGasTemp = element.flueGasTemp;
+                blr.bedTemp = element.bedTemp;
+                blr.draftPressure = element.draftPressure;
+                blr.IDFan = element.idFan;
+                blr.FDFanDA1 =element.daOne;
+                blr.FDFanDA2 = element.daTwo;
+                blr.FDFanDA3 = element.daThree;
+                blr.ScrewFeeder = element.screwFeeder;
+                blr.WaterMeter = element.WaterMeter;
+                blr.Load = element.loadData;
+                this.Thermo_08Array=Object.values(blr);     
+              break;
+    }
+    });
+  
+    for (let i = 0; i < this.thermopackAttribute.length; i++) {
+      this.valueArray.push(new NightThermopackValues());
+      this.nightvalueArray1[i].Attribute = this.thermopackAttribute[i];
+      this.nightvalueArray1[i].time_10 = this.Thermo_10Array[i];
+      this.nightvalueArray1[i].time_12 = this.Thermo_12Array[i];
+      this.nightvalueArray1[i].time_14 = this.Thermo_14Array[i];
+      this.nightvalueArray1[i].time_16 = this.Thermo_16Array[i];
+      this.nightvalueArray1[i].time_18 = this.Thermo_18Array[i];
+      this.nightvalueArray1[i].time_20 = this.Thermo_20Array[i];
+    }
+  }
+  fetchThermoDay(fetchedData){
+    this.jetRunning=fetchedData[0].jetRunning;
+    this.valueArray = [];
+
+    fetchedData.forEach(element => {
+
+      let blr = new Thermopack();
+
+      switch(element.timeOf){
+        case 10:
+         
+          blr.forwardTemp =element.forwardTemp;
+          blr.returnTemp = element.returnTemp;
+          blr.stackTemp = element.stackTemp;
+          blr.furnaceTemp = element.furnaceTemp;
+          blr.pumpData = element.pumpData;
+          blr.idFan = element.idFan;
+          blr.fdFan = element.fdFan;
+          blr.screwFeeder =element.screwFeeder;
+         
+          this.Thermo_10Array=Object.values(blr);
+        break;
+      
+      case 12:
+          
+        blr.forwardTemp =element.forwardTemp;
+          blr.returnTemp = element.returnTemp;
+          blr.stackTemp = element.stackTemp;
+          blr.furnaceTemp = element.furnaceTemp;
+          blr.pumpData = element.pumpData;
+          blr.idFan = element.idFan;
+          blr.fdFan = element.fdFan;
+          blr.screwFeeder =element.screwFeeder;
+        this.Thermo_12Array=Object.values(blr);     
+      break;
+
+      case 14:
+          
+        blr.forwardTemp =element.forwardTemp;
+        blr.returnTemp = element.returnTemp;
+        blr.stackTemp = element.stackTemp;
+        blr.furnaceTemp = element.furnaceTemp;
+        blr.pumpData = element.pumpData;
+        blr.idFan = element.idFan;
+        blr.fdFan = element.fdFan;
+        blr.screwFeeder =element.screwFeeder;
+          this.Thermo_14Array=Object.values(blr);     
+        break;
+
+        case 16:
+          
+          blr.forwardTemp =element.forwardTemp;
+          blr.returnTemp = element.returnTemp;
+          blr.stackTemp = element.stackTemp;
+          blr.furnaceTemp = element.furnaceTemp;
+          blr.pumpData = element.pumpData;
+          blr.idFan = element.idFan;
+          blr.fdFan = element.fdFan;
+          blr.screwFeeder =element.screwFeeder;
+            this.Thermo_16Array=Object.values(blr);     
+          break;
+
+          case 18:
+          
+            blr.forwardTemp =element.forwardTemp;
+            blr.returnTemp = element.returnTemp;
+            blr.stackTemp = element.stackTemp;
+            blr.furnaceTemp = element.furnaceTemp;
+            blr.pumpData = element.pumpData;
+            blr.idFan = element.idFan;
+            blr.fdFan = element.fdFan;
+            blr.screwFeeder =element.screwFeeder;
+              this.Thermo_18Array=Object.values(blr);     
+            break;
+
+            case 20:
+          
+              blr.forwardTemp =element.forwardTemp;
+              blr.returnTemp = element.returnTemp;
+              blr.stackTemp = element.stackTemp;
+              blr.furnaceTemp = element.furnaceTemp;
+              blr.pumpData = element.pumpData;
+              blr.idFan = element.idFan;
+              blr.fdFan = element.fdFan;
+              blr.screwFeeder =element.screwFeeder;
+                this.Thermo_20Array=Object.values(blr);     
+              break;
+    }
+    });
+  
+    for (let i = 0; i < this.thermopackAttribute.length; i++) {
+      this.valueArray1.push(new DayThermopackValues());
+      this.valueArray1[i].Attribute = this.thermopackAttribute[i];
+      this.valueArray1[i].time_10 = this.Thermo_10Array[i];
+      this.valueArray1[i].time_12 = this.Thermo_12Array[i];
+      this.valueArray1[i].time_14 = this.Thermo_14Array[i];
+      this.valueArray1[i].time_16 = this.Thermo_16Array[i];
+      this.valueArray1[i].time_18 = this.Thermo_18Array[i];
+      this.valueArray1[i].time_20 = this.Thermo_20Array[i];
+    }
+  }
   getBoiler() {
     this.data = this.logsheet.getBoilerMachines().subscribe(
       (res) => {
