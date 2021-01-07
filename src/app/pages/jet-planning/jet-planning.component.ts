@@ -76,7 +76,7 @@ export class JetPlanningComponent implements OnInit {
       this.jetService.updateJetData(obj).subscribe(
         (data) => {
           if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
+            // this.toastr.success(errorData.Add_Success);
           }
 
         }
