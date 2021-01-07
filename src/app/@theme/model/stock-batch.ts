@@ -17,6 +17,7 @@ export class StockBatch {
     isProductionPlanned: boolean;
 }
 export class BatchData {
+    [x: string]: any;
     mtr: number;
     wt: number;
     batchId: number;
