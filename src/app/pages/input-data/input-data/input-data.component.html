@@ -18,8 +18,8 @@
                         <div class="form-group">
                             <label for="shift">Select Date:</label>
                             <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt1"
-                                [owlDateTime]="dt1" placeholder="Select Date" ([ngModel])="dateSelected">
-                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1>
+                                [owlDateTime]="dt1" [max]="max" placeholder="Select Date" ([ngModel])="dateSelected">
+                            <owl-date-time (afterPickerClosed)="changeBoiler(dt1)" [pickerType]="'calendar'" #dt1>
                             </owl-date-time>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                             <label for="shift">Select Date:</label>
                             <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt2"
                                 [owlDateTime]="dt2" placeholder="Select Date" ([ngModel])="dateSelected">
-                            <owl-date-time (afterPickerClosed)="change(dt2)" [pickerType]="'calendar'" #dt2>
+                            <owl-date-time (afterPickerClosed)="changeThermo(dt2)" [pickerType]="'calendar'" #dt2>
                             </owl-date-time>
                         </div>
                     </div>

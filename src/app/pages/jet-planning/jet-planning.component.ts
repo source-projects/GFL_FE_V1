@@ -56,9 +56,6 @@ export class JetPlanningComponent implements OnInit {
   drop(event: CdkDragDrop<any[]>,i) {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.jet[i].jetDataList, event.previousIndex, event.currentIndex);
-      console.log("cont:",event.container.data[event.currentIndex].productionId)
-      console.log("previous:",event.previousIndex);
-      console.log("Current:",event.currentIndex)
       let fromobj = {
         "jetId": this.jet[i].id,
         "productionId": event.container.data[event.currentIndex].productionId,
@@ -76,7 +73,7 @@ export class JetPlanningComponent implements OnInit {
       this.jetService.updateJetData(obj).subscribe(
         (data) => {
           if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
+            // this.toastr.success(errorData.Add_Success);
           }
 
         }
@@ -98,7 +95,6 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
             if (data["success"]) {
               this.allShade = data["data"];
-              console.log("AllShade:",this.allShade)
             }
             else {
               // this.toastr.error(data["msg"]);
@@ -138,7 +134,7 @@ export class JetPlanningComponent implements OnInit {
           this.jetData1.controlId = this.jet[index].id;
           this.jetData1.productionId = result.id;
           this.jetData1.sequence = index + 1;
-          let jetData2 = [this.jetData1];
+          let jetData2 = this.jetData1;
           
           this.jetService.saveJetData(jetData2).subscribe(
             (data) => {
@@ -175,7 +171,6 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
-          console.log("JetData:",this.jet)
 
           // Object.keys(this.jet).forEach((key) => {
           //   this.jetPlanning[key] = this.jet[key];
