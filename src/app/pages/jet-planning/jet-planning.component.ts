@@ -56,9 +56,6 @@ export class JetPlanningComponent implements OnInit {
   drop(event: CdkDragDrop<any[]>,i) {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.jet[i].jetDataList, event.previousIndex, event.currentIndex);
-      console.log("cont:",event.container.data[event.currentIndex].productionId)
-      console.log("previous:",event.previousIndex);
-      console.log("Current:",event.currentIndex)
       let fromobj = {
         "jetId": this.jet[i].id,
         "productionId": event.container.data[event.currentIndex].productionId,
@@ -98,7 +95,6 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
             if (data["success"]) {
               this.allShade = data["data"];
-              console.log("AllShade:",this.allShade)
             }
             else {
               // this.toastr.error(data["msg"]);
@@ -170,7 +166,6 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
-          console.log("JetData:",this.jet)
 
           // Object.keys(this.jet).forEach((key) => {
           //   this.jetPlanning[key] = this.jet[key];
