@@ -375,15 +375,18 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   removeBatch(index) {
+    
     if (this.stockDataValues.length == 1) {
       this.stockDataValues[0].batchId = null;
-      this.setStockDataValues[0].batchMW = [
-        {
-          mtr: null,
-          wt: null,
-        },
-      ];
-    } else {
+      this.stockDataValues[0].batchMW = [];
+      let obj={
+        mtr: null,
+        wt: null,
+      }
+      this.stockDataValues[0].batchMW.push({...obj});
+        
+     
+     }else {
       this.stockDataValues.splice(index, 1);
     }
   }
