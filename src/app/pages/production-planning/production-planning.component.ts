@@ -27,7 +27,7 @@ export class ProductionPlanningComponent implements OnInit {
   public loading = false;
   formSubmitted: boolean = false;
   batch:any;
-p_id:any;
+  p_id:any;
   partyList: any[];
   qualityList: any[];
   allBatchList: any[];
@@ -108,8 +108,8 @@ p_id:any;
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
-        }
-      },
+     
+        }      },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
       }
@@ -185,10 +185,11 @@ p_id:any;
           this.loading = false;
         }
          else {
-          // this.toastr.error(data["msg"]);
+          this.toastr.error(data["msg"]);
           this.loading = false;
         }
-      },
+      }
+     ,
       (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
@@ -211,6 +212,7 @@ p_id:any;
         party = e.partyId;
         quality = e.qualityEntryId;
       }
+
     });
    
   const modalRef = this.modalService.open(AddShadeComponent);
@@ -228,16 +230,12 @@ p_id:any;
   modalRef.result.then(
     (result)=>{
       this.getAllBatchData();
+      this.productionPlanning.partyId = null;
+      this.productionPlanning.qualityId = null;
+      
     } 
   )
 }
-
-
-     
-
-
-
-
 }
 
 
