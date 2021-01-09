@@ -892,6 +892,9 @@ input[type=number]::-webkit-outer-spin-button {
 .canvas-map-boiler{
   margin: 30px !important;
 }
+.required-class span{
+  color: red;
+}
 @media (max-width: 767px){
   .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column{
     padding: 15px 0!important;
