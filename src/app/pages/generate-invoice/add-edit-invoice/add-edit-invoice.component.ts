@@ -83,7 +83,6 @@ export class AddEditInvoiceComponent implements OnInit {
                 } else {
                   // this.toastr.error(data["msg"]);
                   this.loading = false;
-                  this.merge = []
                 }
               },
               (error) => {
@@ -214,11 +213,11 @@ export class AddEditInvoiceComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
-            this.final = [];
+            this.merge = [];
           }
           else {
             this.toastr.error(errorData.Add_Error)
-            this.final = [];
+            this.merge = [];
           }
         },
         error => {
@@ -241,12 +240,16 @@ export class AddEditInvoiceComponent implements OnInit {
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
-      invoiceNo: this.currentInvoiceId
+      invoiceNo: this.currentInvoiceId,
+      updatedBy:this.userId
     }
+    let arr = [];
+    arr.push(obj)
+    console.log(arr)
     this.disableButton = true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
-      this.generateInvoiceService.updateInvoice(obj).subscribe(
+      this.generateInvoiceService.updateInvoice(arr).subscribe(
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
