@@ -72,7 +72,7 @@
                 <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
                 <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()"
                   placeholder="Batch Name">
-                  <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
+                  <ng-option *ngFor="let b of qualityParty" [value]="b" [disabled]="b.productionPlanned">{{b.batchId}}
                   </ng-option>
                 </ng-select>
               </div>
