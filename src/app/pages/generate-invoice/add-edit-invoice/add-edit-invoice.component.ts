@@ -243,13 +243,11 @@ export class AddEditInvoiceComponent implements OnInit {
       invoiceNo: this.currentInvoiceId,
       updatedBy:this.userId
     }
-    let arr = [];
-    arr.push(obj)
-    console.log(arr)
+
     this.disableButton = true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
-      this.generateInvoiceService.updateInvoice(arr).subscribe(
+      this.generateInvoiceService.updateInvoice(obj).subscribe(
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
