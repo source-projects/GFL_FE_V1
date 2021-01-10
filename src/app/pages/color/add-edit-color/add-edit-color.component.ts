@@ -173,6 +173,7 @@ export class AddEditColorComponent implements OnInit {
     this.calculateAmount(rowIndex);
 
   }
+ 
 
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = (e.keyCode ? e.keyCode : e.which);
