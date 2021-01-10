@@ -35,7 +35,7 @@ export class FinishedMeterService {
   }
 
   getBatchesByPartyQuality(qId,pId){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+qId+'/'+pId);
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/'+qId+'/'+pId);
   }
   
 }
