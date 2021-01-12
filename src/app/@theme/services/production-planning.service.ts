@@ -16,5 +16,5 @@ export class ProductionPlanningService {
   getAllProductionPlan(): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/productionPlan/all');
   }
-  
+ 
 }

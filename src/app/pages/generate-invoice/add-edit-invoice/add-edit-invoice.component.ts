@@ -39,6 +39,7 @@ export class AddEditInvoiceComponent implements OnInit {
   myInvoiceId;
   currentInvoiceId: any;
   Invoice: any[];
+  merge = [];
 
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
@@ -70,6 +71,26 @@ export class AddEditInvoiceComponent implements OnInit {
             this.flag = data["data"].isSendToParty;
             this.batch = data["data"].batchWithControlIdList;
             this.finalbatch = [...this.batch];
+            this.merge = [...this.finalbatch];
+            this.generateInvoiceService.getBatchByParty(this.invoiceValues.partyId).subscribe(
+              (data) => {
+                if (data["success"]) {
+                  data["data"].forEach(element => {
+                    this.finalbatch.push(element)
+                  });
+                  this.merge = this.finalbatch;
+                  this.loading = false;
+                } else {
+                  // this.toastr.error(data["msg"]);
+                  this.loading = false;
+                }
+              },
+              (error) => {
+                // this.toastr.error(errorData.Serever_Error);
+                this.loading = false;
+                this.merge = [];
+              }
+            );
             this.loading = false;
             this.disableButton = false;
             this.selected = data["data"].batchWithControlIdList;
@@ -77,14 +98,14 @@ export class AddEditInvoiceComponent implements OnInit {
             // this.toastr.error(data["msg"]);
             this.loading = false;
             this.disableButton = false;
-            this.batch = [];
+            this.merge = [];
           }
         },
         (error) => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
           this.disableButton = false;
-          this.batch = [];
+          this.merge = [];
         }
       );
     }
@@ -119,17 +140,18 @@ export class AddEditInvoiceComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.finalbatch = data["data"];
+              this.merge = this.finalbatch;
               this.loading = false;
             } else {
               // this.toastr.error(data["msg"]);
               this.loading = false;
-              this.finalbatch = []
+              this.merge = []
             }
           },
           (error) => {
             // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
-            this.finalbatch = [];
+            this.merge = [];
           }
         );
       }
@@ -191,11 +213,11 @@ export class AddEditInvoiceComponent implements OnInit {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
-            this.final = [];
+            this.merge = [];
           }
           else {
             this.toastr.error(errorData.Add_Error)
-            this.final = [];
+            this.merge = [];
           }
         },
         error => {
@@ -207,7 +229,7 @@ export class AddEditInvoiceComponent implements OnInit {
   }
 
   updateInvoice(invoiceForm) {
-
+    this.final = [];
     this.finalcheckedrows = this.selected
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
@@ -218,8 +240,10 @@ export class AddEditInvoiceComponent implements OnInit {
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
-      invoiceNo: this.currentInvoiceId
+      invoiceNo: this.currentInvoiceId,
+      updatedBy:this.userId
     }
+
     this.disableButton = true;
     this.formSubmitted = true;
     if (invoiceForm.valid) {
@@ -227,10 +251,10 @@ export class AddEditInvoiceComponent implements OnInit {
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(errorData.Update_Success);
           }
           else {
-            this.toastr.error(errorData.Add_Error)
+            this.toastr.error(errorData.Update_Error)
           }
         },
         error => {

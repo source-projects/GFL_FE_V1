@@ -27,9 +27,11 @@ export class ProductionPlanningComponent implements OnInit {
   public loading = false;
   formSubmitted: boolean = false;
   batch:any;
-p_id:any;
+  p_id:any;
   partyList: any[];
   qualityList: any[];
+  batchListByParty: any[];
+  batchListParty:any[];
   allBatchList: any[];
   productionPlanning: ProductionPlanning = new ProductionPlanning();
   batchList=[];
@@ -88,16 +90,26 @@ p_id:any;
     this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
       (data) => {
+        console.log(data)
         if (data["success"]) {
-          this.qualityList = data["data"];
+          this.qualityList = data["data"]
+          this.batchListByParty = data["data"];
+          this.allBatchList.forEach(element => {
+            if(element.productionPlanned == false){
+              this.batchListParty.push(element);
+            }
+          });
+          this.batchListByParty=this.batchListParty;
+
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
+          this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
         // this.toastr.error(errorData.Serever_Error);
+        
         this.loading = false;
       }
     );
@@ -108,8 +120,8 @@ p_id:any;
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
-        }
-      },
+     
+        }      },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
       }
@@ -130,6 +142,7 @@ p_id:any;
                 } else {
                   this.productionPlanning.qualityId = null;
                   this.qualityList = [];
+
                 }
                 this.loading = false;
               },
@@ -139,7 +152,40 @@ p_id:any;
               }
             );
         }
-      } else {
+      } 
+      if (event != undefined) {
+        if (this.productionPlanning.partyId) {
+          this.programService
+            .getBatchByParty(this.productionPlanning.partyId)
+            .subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.allBatchList = data["data"];
+                  this.allBatchList.forEach(element => {
+                    if(element.productionPlanned == false){
+                      this.batchList.push(element);
+                    }
+                  });
+                  this.allBatchList=this.batchList;
+                  
+                 // console.log(this.batchList);
+                  this.loading = false;
+                } else {
+                  this.toastr.error(data["msg"]);
+                  this.allBatchList=[];
+                  this.loading = false;
+                }
+                this.loading = false;
+              },
+              (error) => {
+                this.loading = false;
+              }
+            );
+        }
+      } 
+     
+      else {
+        this.allBatchList=[];
         this.productionPlanning.partyId = null;
         this.productionPlanning.qualityId = null;
        
@@ -161,9 +207,37 @@ p_id:any;
           if(e.qualityId==this.productionPlanning.qualityId){
           this.p_id=e.partyId;
           this.productionPlanning.partyId=e.partyName;
-          this.productionPlanning.qualityEntryId=e.qualityEntryId;
+          this.productionPlanning.qualityEntryId=e.id || e.qualityEntryId;
         }
       });}
+    }
+    if (event != undefined) {
+      if (this.productionPlanning.qualityEntryId) {
+        this.programService
+            .getBatchByQuality(this.productionPlanning.qualityEntryId)
+            .subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.allBatchList = data["data"];
+                  this.allBatchList.forEach(element => {
+                    if(element.productionPlanned == false){
+                      this.batchList.push(element);
+                    }
+                  });
+                  this.allBatchList=this.batchList;
+                  
+                 // console.log(this.batchList);
+                  this.loading = false;
+                } else {
+                  this.toastr.error(data["msg"]);
+                  this.loading = false;
+                }
+                this.loading = false;
+              },
+              (error) => {
+                this.loading = false;
+              }
+            );}
     }
     if (event != undefined) {
       this.batchList = [];  
@@ -185,10 +259,11 @@ p_id:any;
           this.loading = false;
         }
          else {
-          // this.toastr.error(data["msg"]);
+          this.toastr.error(data["msg"]);
           this.loading = false;
         }
-      },
+      }
+     ,
       (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
@@ -197,6 +272,7 @@ p_id:any;
 
     }
     else{
+
       this.getAllBatchData();
     }
 
@@ -211,6 +287,8 @@ p_id:any;
         party = e.partyId;
         quality = e.qualityEntryId;
       }
+      
+
     });
    
   const modalRef = this.modalService.open(AddShadeComponent);
@@ -228,16 +306,12 @@ p_id:any;
   modalRef.result.then(
     (result)=>{
       this.getAllBatchData();
+      this.productionPlanning.partyId = null;
+      this.productionPlanning.qualityId = null;
+      
     } 
   )
 }
-
-
-     
-
-
-
-
 }
 
 
