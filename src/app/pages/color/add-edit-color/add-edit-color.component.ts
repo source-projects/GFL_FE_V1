@@ -309,6 +309,7 @@ export class AddEditColorComponent implements OnInit {
       )
     }
     else{
+      this.loading = false;
     this.disableButton=false;
     }
   }

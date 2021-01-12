@@ -182,13 +182,13 @@
               formControlName="partyAddress1"
               placeholder="Address 1"
               (change)="checkAddress()"
-              [ngClass]="{'is-invalid':(formSubmitted && partyAdressSetFlag) }"
+              [ngClass]="{'is-invalid':(formSubmitted && partyAdressSetFlag1) }"
             >
             </textarea>
             
             <div
               class="required-class"
-              *ngIf="(formSubmitted && partyAdressSetFlag) "
+              *ngIf="(formSubmitted && partyAdressSetFlag1) "
             >
            
               <span>Address is required</span>

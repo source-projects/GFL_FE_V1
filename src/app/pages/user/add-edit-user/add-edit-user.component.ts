@@ -28,6 +28,7 @@ export class AddEditUserComponent implements OnInit {
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
+  isMasterFlag = false;
   status;
   allRightsFlag;
   user: User = new User();
@@ -151,6 +152,23 @@ export class AddEditUserComponent implements OnInit {
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentUserId = this._route.snapshot.paramMap.get("id");
+  }
+
+  designationSelected(event){
+    if(event == undefined){
+      this.isMasterFlag=false;
+      this.user.isUserHead = false;
+    }else{
+      const found = this.desiList.find(element => element.designation == "Master");
+      if(event == found.id){
+        //hide userHeadId fields.
+        this.isMasterFlag = true;
+        this.user.isUserHead = false;
+        this.user.userHeadId = 0;
+      }else{
+        this.isMasterFlag = false;
+      }
+    }
   }
 
   getUserHrads(event) {
@@ -342,6 +360,14 @@ export class AddEditUserComponent implements OnInit {
       case "Jet Planning": {
         let index = this.permissionArray.findIndex(
           (v) => v.module == "Jet Planning"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+      case "Input Data": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Input Data"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -605,10 +631,14 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.user = data["data"];
             this.user.designationId = data["data"].designationId.id
-            if (this.user.userHeadId != 0)
+            if (this.user.userHeadId != 0){
               this.user.isUserHead = true;
-            else
+              this.isMasterFlag = false;
+            }
+            else{
               this.user.isUserHead = false;
+              this.isMasterFlag = true;
+            }
             this.getCurrentCheckValue(this.user);
 
           } 

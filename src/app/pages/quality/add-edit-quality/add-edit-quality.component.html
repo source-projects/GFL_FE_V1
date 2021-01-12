@@ -109,7 +109,7 @@
 
         <div class="form-group col-md-4">
           <label class="required">Wt / 100 mtrs</label>
-          <input
+          <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption"
             type="number"
             id="wtPer100m"
             formControlName="wtPer100m"
@@ -158,7 +158,7 @@
         </div>
         <div class="form-group col-md-4">
           <label class="required">Rate</label>
-          <input
+          <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption"
             type="text"
             class="form-control"
             id="rate"

@@ -76,6 +76,7 @@ export class AddEditPartyComponent implements OnInit {
   creditor: boolean = false;
   debtor: boolean = false;
   partyAdressSetFlag: boolean = false;
+  partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
   userHead;
   constructor(
@@ -205,7 +206,6 @@ this.disableButton=true;
             this.partyAdressSetFlag=true;
           }
           this.partyForm.value.createdBy = this.user.userId;
-          this.partyForm.value.userHeadId = this.userHead.userHeadId;
 
           if (this.partyForm.get("gstin") == null) {
             this.partyForm.patchValue({
@@ -269,10 +269,12 @@ this.disableButton=true;
               this.toastr.error(errorData.Update_Error);
             }
             this.loading = false;
+            this.disableButton=false;
           },
           (error) => {
             this.toastr.error(errorData.Update_Error);
             this.loading = false;
+            this.disableButton=false;
           }
         );
         }
@@ -319,7 +321,7 @@ this.disableButton=true;
 
   checkAddress(){
     if(this.partyForm.get('partyAddress1').value!=""){
-      this.partyAdressSetFlag=false
+      this.partyAdressSetFlag1=false
     }
   }
 
