@@ -172,7 +172,6 @@ export class ProductionPlanningComponent implements OnInit {
                 });
                 this.allBatchList = this.batchList;
 
-                // console.log(this.batchList);
                 this.loading = false;
               } else {
                 this.toastr.error(data["msg"]);
@@ -230,7 +229,6 @@ export class ProductionPlanningComponent implements OnInit {
                 });
                 this.allBatchList = this.batchList;
 
-                // console.log(this.batchList);
                 this.loading = false;
               } else {
                 this.toastr.error(data["msg"]);
@@ -281,6 +279,23 @@ export class ProductionPlanningComponent implements OnInit {
       // }
     }
   }
+
+  filter(event:any){
+    
+    let filterNumber = event.target.value;
+    if(filterNumber == ""){
+      this.getAllBatchData();
+    }
+    else
+    {
+      let data = this.allBatchList.filter(ele=>{
+        return ele.batchId == filterNumber;
+      });
+      this.allBatchList = data; 
+    }
+   
+  }
+
 
   public onBatchSelect(batch_id) {
     let b_controlId;
