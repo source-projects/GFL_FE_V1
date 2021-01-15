@@ -34,6 +34,16 @@
                                 #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
                                  placeholder="Quality ID" class="required-error-dropdown"
                                  (change)=qualitySelected($event)>
+                                 <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
+                                        </div>
+                                    </div>
+                                 </ng-option>
                                 <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -56,7 +66,7 @@
                         <div class="form-group">
                             <label >Batch Filter</label>
                             <input type="text"  #batchFilter1="ngModel" class="form-control" name="batch"
-                            [(ngModel)]='batch'  required placeholder="Enter Batch">
+                            [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
                            
                         </div>
                     </div>
@@ -67,7 +77,8 @@
                     <div class="form-group">
                         
                             <button nbButton  size="small" style="margin-left: 10px;" 
-                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)" class="p-badge-design"> {{b.batchId}} </button>
+                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                             {{b.batchId}} </button>
                        
                     </div>
                 </div>
