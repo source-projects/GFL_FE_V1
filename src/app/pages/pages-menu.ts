@@ -121,6 +121,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: 'Payment',
+    icon: 'shuffle-2-outline',
+    //expanded: true,
+    children: [
+    {
+      title: 'Bill Payment',
+      link: '/pages/bill-payment',
+    },
+    {
+      title: 'Advance Payment',
+      link: '/pages/advance-payment',
+    },
+   
+  ],
+  },
+  {
     title: 'FEATURES',
     group: true,
   },
