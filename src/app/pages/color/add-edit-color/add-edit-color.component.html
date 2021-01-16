@@ -30,12 +30,12 @@
                     <div class="form-group col-md-4">
                         <label class="required">Bill No</label>
                         <input type="text" class="form-control" [(ngModel)]="color.billNo" #billNo1="ngModel"
-                            name="billNo" required
+                            name="billNo" required pattern="[A-Za-z0-9]*"
                             [ngClass]="{'is-invalid':(billNo1.invalid) &&(formSubmitted || billNo1.touched) }" min="0"
                             placeholder="Bill No">
                         <div class="invalid-feedback"
                             *ngIf="(formSubmitted && billNo1.invalid) || (!(billNo1.valid) && billNo1.touched) ">
-                            <span>Bill no is required</span>
+                            <span>Bill no is required and should not contain special characters</span>
                         </div>
                     </div>
 
@@ -57,9 +57,9 @@
                         <label class="required">Challan No</label>
                         <input type="text" class="form-control" [(ngModel)]="color.chlNo" #chlNo1="ngModel" name="chlNo"
                             required [ngClass]="{'is-invalid':(chlNo1.invalid) && (formSubmitted || chlNo1.touched) }"
-                            min="0" placeholder="Challan No">
+                            min="0" placeholder="Challan No" pattern="[A-Za-z0-9]*">
                         <div class="invalid-feedback" *ngIf="(chlNo1.invalid) && (formSubmitted || chlNo1.touched)">
-                            <span>Challan no is required</span>
+                            <span>Challan no is required and should not contain special characters</span>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -79,7 +79,8 @@
                         <input class="form-control" [(ngModel)]="color.billAmount" #billAmount1="ngModel"
                             name="billAmount" required type="number" min="0"
                             [ngClass]="{'is-invalid':(billAmount1.invalid) && (formSubmitted || billAmount1.touched) }"
-                            placeholder="Bill Amount">
+                            placeholder="Bill Amount"
+                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption">
                         <div class="invalid-feedback"
                             *ngIf="(billAmount1.invalid) && (formSubmitted || billAmount1.touched)">
                             <span>Bill Amount is required</span>
@@ -127,7 +128,6 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input type="number" #quantityPerBox1="ngModel" name='quantiyPerBox{{rowIndex}}'
                                         class="tableForm" id="quantityPerBox" [(ngModel)]="row.quantityPerBox"
-                                        (change)="updateValueOfTotalQuantity(rowIndex)"
                                         (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')"
                                         (input)="calculateTotalQuantity(rowIndex,1)" [id]="'colorList'+rowIndex+'-1'"
                                         required min="0">
