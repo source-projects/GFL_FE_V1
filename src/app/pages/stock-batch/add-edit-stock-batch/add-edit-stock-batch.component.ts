@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData, BatchCard } from "app/@theme/model/stock-batch";
+import { StockBatch, BatchData, BatchCard, BatchMrtWt } from "app/@theme/model/stock-batch";
 
 import * as errorData from "app/@theme/json/error.json";
 import { PartyService } from "app/@theme/services/party.service";
@@ -345,15 +345,8 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   addNewBatch(e) {
-    var ob = {
-      batchId: null,
-      batchMW: [
-        {
-          mtr: null,
-          wt: null,
-        },
-      ],
-    };
+    var ob = new BatchCard();
+    ob.batchMW.push(new BatchMrtWt());
     if (this.stockDataValues.length) {
       let index = this.stockDataValues.findIndex((v) => v.batchId == null);
       if (index > -1 || this.flag) {
@@ -375,17 +368,9 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   removeBatch(index) {
-    
     if (this.stockDataValues.length == 1) {
-      this.stockDataValues[0].batchId = null;
-      this.stockDataValues[0].batchMW = [];
-      let obj={
-        mtr: null,
-        wt: null,
-      }
-      this.stockDataValues[0].batchMW.push({...obj});
-        
-     
+      this.stockDataValues[0] = new BatchCard();
+      this.stockDataValues[0].batchMW.push(new BatchMrtWt());
      }else {
       this.stockDataValues.splice(index, 1);
     }
