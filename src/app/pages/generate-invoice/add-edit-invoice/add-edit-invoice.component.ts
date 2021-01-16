@@ -7,6 +7,7 @@ import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { PartyService } from 'app/@theme/services/party.service';
 import { keys } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -19,7 +20,8 @@ export class AddEditInvoiceComponent implements OnInit {
   obj = {
     "batchAndStockIdList": [],
     "createdBy": null,
-    "invoiceNo": null
+    "invoiceNo": null,
+    "userHeadId": null
   }
   finalcheckedrows = [];
   party: any[];
@@ -39,6 +41,7 @@ export class AddEditInvoiceComponent implements OnInit {
   myInvoiceId;
   currentInvoiceId: any;
   Invoice: any[];
+  userHeadId;
   merge = [];
 
   constructor(
@@ -47,11 +50,13 @@ export class AddEditInvoiceComponent implements OnInit {
     private route: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService,
-    private jwt: JwtTokenService
+    private jwt: JwtTokenService,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
+    this.userHeadId = this.commonService.getUserHeadId().userHeadId;
     this.getPartyList();
     this.getUserId();
     if (this.currentInvoiceId)
@@ -203,7 +208,8 @@ export class AddEditInvoiceComponent implements OnInit {
     })
     let obj = {
       batchAndStockIdList: this.final,
-      createdBy: this.userId
+      createdBy: this.userId,
+      userHeadId: this.userHeadId
     }
     this.disableButton = true;
     this.formSubmitted = true;
