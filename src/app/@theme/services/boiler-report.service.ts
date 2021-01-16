@@ -22,7 +22,7 @@ export class BoilerReportService{
   }
 
   getobjdata(data:any){
-      let response = this.httpClient.post(this.commonService.envUrl() + "api/boiler/filter/",data);
+      let response = this.httpClient.post(this.commonService.envUrl() + "api/boilerRecord/filter/",data);
       return response;
   }
 }

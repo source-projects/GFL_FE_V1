@@ -77,8 +77,17 @@
                                 #qualityId1="ngModel" name="qualityId" (change)="qualityIdSelected($event)" required
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted ||  qualityId1.touched)}"
                                 class="required-error-dropdown">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
+                                        </div>
+                                    </div>
+                                 </ng-option>
                                 <ng-option *ngFor="let q of quality;let rowIndex = row;" [value]="q.qualityId">
-                                    
                                     <div class="row">
                                         <div class="col-md-6 col-6">
                                             <div class="text-left txt-ov-elips">{{q.qualityId}}</div>

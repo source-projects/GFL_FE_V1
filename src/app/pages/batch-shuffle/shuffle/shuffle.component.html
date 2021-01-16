@@ -12,7 +12,7 @@
 
       <nb-card-body>
 
-        <form [formGroup]="shuffleForm">
+        <form [formGroup]="shuffleForm" #myForm>
           <div class="row">
 
             <div class="col-md-4">
@@ -34,6 +34,19 @@
                 <label class="required">Quality Name:</label>
                 <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelectQuality($event)"
                   placeholder="Quality Name">
+                  <ng-option disabled="true">
+                    <div class="row">
+                        <div class="col-md-4 col-4">
+                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: 15px;">Party Name</div>
+                        </div>
+                        <div class="col-md-4 col-4">
+                            <div class="text-center txt-ov-elips" style="font-weight:bold;font-size: 15px;">Quality Id</div>
+                        </div>
+                        <div class="col-md-4 col-4">
+                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: 15px;">Quality Name</div>
+                        </div>
+                    </div>
+                 </ng-option>
 
                   <ng-option *ngFor="let q of quality" [value]="q.id?q.id:q.qualityEntryId">
 
@@ -72,7 +85,7 @@
                 <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
                 <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()"
                   placeholder="Batch Name">
-                  <ng-option *ngFor="let b of qualityParty" [value]="b">{{b.batchId}}
+                  <ng-option *ngFor="let b of qualityParty" [value]="b" [disabled]="b.productionPlanned">{{b.batchId}}
                   </ng-option>
                 </ng-select>
               </div>

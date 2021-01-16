@@ -23,16 +23,18 @@ export class ProductionPlanningComponent implements OnInit {
 
   public errorData: any = (errorData as any).default;
   user: any;
-  userHead:any;
+  userHead: any;
   public loading = false;
   formSubmitted: boolean = false;
-  batch:any;
-p_id:any;
+  batch: any;
+  p_id: any;
   partyList: any[];
   qualityList: any[];
+  batchListByParty: any[];
+  batchListParty: any[];
   allBatchList: any[];
   productionPlanning: ProductionPlanning = new ProductionPlanning();
-  batchList=[];
+  batchList = [];
   programValues: any;
   qualityList1: any;
 
@@ -89,65 +91,112 @@ p_id:any;
     this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
-          this.qualityList = data["data"];
+          this.qualityList = data["data"]
+          this.batchListByParty = data["data"];
+          if (this.allBatchList != null || this.allBatchList != undefined) {
+            this.allBatchList.forEach(element => {
+              if (element.productionPlanned == false) {
+                this.batchListParty.push(element);
+              }
+            });
+          }
+          this.batchListByParty = this.batchListParty;
+
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
+          this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
         // this.toastr.error(errorData.Serever_Error);
+
         this.loading = false;
       }
     );
   }
 
-  public getAllBatchData(){
+  public getAllBatchData() {
     this.stockBatchService.getAllBatch().subscribe(
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
+
         }
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
       }
     );
-    }
+  }
 
-    public partySelected(event){
-      this.loading = true;
-      if (event != undefined) {
-        if (this.productionPlanning.partyId) {
-          this.programService
-            .getQualityByParty(this.productionPlanning.partyId)
-            .subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.qualityList = data["data"].qualityDataList;
-                 
-                } else {
-                  this.productionPlanning.qualityId = null;
-                  this.qualityList = [];
-                }
-                this.loading = false;
-              },
-              (error) => {
+  public partySelected(event) {
+    this.loading = true;
+    this.productionPlanning.qualityId = null;
+    if (event != undefined) {
+      if (this.productionPlanning.partyId) {
+        this.programService
+          .getQualityByParty(this.productionPlanning.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.qualityList = data["data"].qualityDataList;
+
+              } else {
+                this.productionPlanning.qualityId = null;
                 this.qualityList = [];
+
+              }
+              this.loading = false;
+            },
+            (error) => {
+              this.qualityList = [];
+              this.loading = false;
+            }
+          );
+      }
+    }
+    if (event != undefined) {
+      this.batchList = [];
+      if (this.productionPlanning.partyId) {
+        this.programService
+          .getBatchByParty(this.productionPlanning.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.allBatchList = data["data"];
+                this.allBatchList.forEach(element => {
+                  if (element.productionPlanned == false) {
+                    this.batchList.push(element);
+                  }
+                });
+                this.allBatchList = this.batchList;
+
+                this.loading = false;
+              } else {
+                this.toastr.error(data["msg"]);
+                this.allBatchList = [];
                 this.loading = false;
               }
-            );
-        }
-      } else {
-        this.productionPlanning.partyId = null;
-        this.productionPlanning.qualityId = null;
-       
-        this.getPartyList();
-        this.getQualityList();
-        this.getAllBatchData();
-        this.loading = false;
+              this.loading = false;
+            },
+            (error) => {
+              this.loading = false;
+            }
+          );
       }
+    }
+
+    else {
+      this.allBatchList = [];
+      this.productionPlanning.partyId = null;
+      this.productionPlanning.qualityId = null;
+
+      this.getPartyList();
+      this.getQualityList();
+      this.getAllBatchData();
+      this.loading = false;
+    }
 
 
   }
@@ -156,51 +205,97 @@ p_id:any;
     this.loading = true;
     if (event != undefined) {
       if (this.productionPlanning.qualityId) {
-        this.qualityList.forEach((e)=>{
-        
-          if(e.qualityId==this.productionPlanning.qualityId){
-          this.p_id=e.partyId;
-          this.productionPlanning.partyId=e.partyName;
-          this.productionPlanning.qualityEntryId=e.qualityEntryId;
-        }
-      });}
-    }
-    if (event != undefined) {
-      this.batchList = [];  
-    this.stockBatchService
-    .getBatchById(this.p_id,this.productionPlanning.qualityEntryId)
-    .subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.allBatchList = data["data"];
-          
-          this.allBatchList.forEach(element => {
-            if(element.productionPlanned == false){
-              this.batchList.push(element);
-            }
-          });
-          this.allBatchList=this.batchList;
-          
-         // console.log(this.batchList);
-          this.loading = false;
-        }
-         else {
-          // this.toastr.error(data["msg"]);
-          this.loading = false;
-        }
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
+        this.qualityList.forEach((e) => {
 
+          if (e.qualityId == this.productionPlanning.qualityId) {
+            this.p_id = e.partyId;
+            this.productionPlanning.partyId = e.partyName;
+            this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
+          }
+        });
+      }
+      if (this.productionPlanning.qualityEntryId) {
+        this.batchList = [];
+        this.programService
+          .getBatchByQuality(this.productionPlanning.qualityEntryId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.allBatchList = data["data"];
+                this.allBatchList.forEach(element => {
+                  if (element.productionPlanned == false) {
+                    this.batchList.push(element);
+                  }
+                });
+                this.allBatchList = this.batchList;
+
+                this.loading = false;
+              } else {
+                this.toastr.error(data["msg"]);
+                this.allBatchList = [];
+                this.loading = false;
+              }
+              this.loading = false;
+            },
+            (error) => {
+              this.loading = false;
+            }
+          );
+      }
+      // if (this.productionPlanning.qualityEntryId && this.productionPlanning.partyId != null) {
+      //   this.stockBatchService
+      //     .getBatchById(this.p_id, this.productionPlanning.qualityEntryId)
+      //     .subscribe(
+      //       (data) => {
+      //         if (data["success"]) {
+      //           this.allBatchList = data["data"];
+
+      //           this.allBatchList.forEach(element => {
+      //             if (element.productionPlanned == false) {
+      //               if (this.allBatchList.includes(element)) {
+      //                 this.batchList = this.batchList;
+      //               }
+      //               else {
+      //                 this.batchList.push(element);
+      //               }
+      //             }
+      //           });
+      //           this.allBatchList = this.batchList;
+
+      //           // console.log(this.batchList);
+      //           this.loading = false;
+      //         }
+      //         else {
+      //           this.toastr.error(data["msg"]);
+      //           this.loading = false;
+      //         }
+      //       }
+      //       ,
+      //       (error) => {
+      //         // this.toastr.error(errorData.Serever_Error);
+      //         this.loading = false;
+      //       }
+      //     );
+      // }
     }
-    else{
+  }
+
+  filter(event:any){
+    
+    let filterNumber = event.target.value;
+    if(filterNumber == ""){
       this.getAllBatchData();
     }
-
+    else
+    {
+      let data = this.allBatchList.filter(ele=>{
+        return ele.batchId == filterNumber;
+      });
+      this.allBatchList = data; 
+    }
+   
   }
+
 
   public onBatchSelect(batch_id) {
     let b_controlId;
@@ -211,33 +306,33 @@ p_id:any;
         party = e.partyId;
         quality = e.qualityEntryId;
       }
+
+
     });
-   
-  const modalRef = this.modalService.open(AddShadeComponent);
-  
-  if ((this.productionPlanning.partyId && this.productionPlanning.qualityId) == undefined) {
-    modalRef.componentInstance.party = party;
-    modalRef.componentInstance.quality = quality;
+
+    const modalRef = this.modalService.open(AddShadeComponent);
+
+    if ((this.productionPlanning.partyId && this.productionPlanning.qualityId) == undefined) {
+      modalRef.componentInstance.party = party;
+      modalRef.componentInstance.quality = quality;
+    }
+    else {
+      modalRef.componentInstance.party = this.p_id;
+      modalRef.componentInstance.quality = this.productionPlanning.qualityEntryId;
+    }
+    modalRef.componentInstance.batch = batch_id;
+    modalRef.componentInstance.batchControl = b_controlId;
+    modalRef.result.then(
+      (result) => {
+        // this.getAllBatchData();
+        // this.productionPlanning.partyId = null;
+        // this.productionPlanning.qualityId = null;
+        this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+          this.route.navigate(['/pages/production-planning']);
+        });
+      }
+    )
   }
-  else {
-    modalRef.componentInstance.party = this.p_id;
-    modalRef.componentInstance.quality = this.productionPlanning.qualityEntryId;
-  }
-  modalRef.componentInstance.batch = batch_id;
-  modalRef.componentInstance.batchControl = b_controlId;
-  modalRef.result.then(
-    (result)=>{
-      this.getAllBatchData();
-    } 
-  )
-}
-
-
-     
-
-
-
-
 }
 
 

@@ -37,6 +37,16 @@
                                 #qualityId1="ngModel"
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
                                 (change)="getUnit($event)" class="required-error-dropdown">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Name</div>
+                                        </div>
+                                    </div>
+                                 </ng-option>
                                 <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -61,11 +71,11 @@
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill No</label>
                             <input type="text" name="billNo" class="form-control" #billNo1="ngModel"
-                                [(ngModel)]='stockBatch.billNo' required
+                                [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}"
                                 min="0">
                             <div class="invalid-feedback" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
-                                <span>Bill no. is required</span>
+                                <span>Bill no. is required and should not contain special characters</span>
                             </div>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
@@ -84,12 +94,12 @@
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
                             <input type="text" name="chlNo" class="form-control" #chlNo1="ngModel"
-                                [(ngModel)]='stockBatch.chlNo' required
+                                [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
                             <div class="invalid-feedback"
                                 *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
-                                <span>Challan no. is required</span>
+                                <span>Challan no. is required and should not contain special characters</span>
                             </div>
                         </div>
 
@@ -128,7 +138,7 @@
                         <h2 class="batch-heading display-inline">BATCH</h2>
 
                     </header>
-                    <div *ngIf="stockDataValues[0].batchId != null || addFlag" class="row">
+                    <div *ngIf="stockDataValues[0].batchId != '' || addFlag || zeroValueBatch" class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
                             class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
@@ -244,9 +254,9 @@
                             <button type="button" class="btn btn-primary btn-sm btn-design mob-stock" *ngIf="addFlag"
                                 (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock"
-                                (click)="addStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design"
-                                (click)="updateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>

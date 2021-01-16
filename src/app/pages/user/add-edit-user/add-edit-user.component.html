@@ -8,7 +8,7 @@
       <h2 class="nb-text">Update User</h2>
     </ng-template>
   </nb-card-header>
-  <nb-card-body>
+  <nb-card-body style="overflow: revert;">
     <div>
       <form #myForm="ngForm">
         <div class="row">
@@ -127,7 +127,7 @@
               <label class="required">Designation</label>
               <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId"
                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation"
-                required class="required-error-dropdown">
+                required class="required-error-dropdown" (change)="designationSelected($event)">
                 <ng-option *ngFor="let dsgn of desiList" [value]="dsgn.id">{{dsgn.designation}}</ng-option>
               </ng-select>
               <div class="required-class"
@@ -137,7 +137,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!isMasterFlag">
           <div class="col-md-4">
             <div class="form-group">
               <label></label>

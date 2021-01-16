@@ -13,7 +13,7 @@ import {
   Step,
   StepsRecordData,
   TempratureControl,
-  WaterControl
+  WaterControl,
 } from "app/@theme/model/process";
 import { CommonService } from "app/@theme/services/common.service";
 import { ProcessService } from "app/@theme/services/process.service";
@@ -58,14 +58,13 @@ export class DynamicProcessComponent implements OnInit {
     this.processValue.steps = [];
     this.getItemData();
     if (this.currentProcessId) this.getUpdateDataOfProcess();
-    
-
   }
+
   getItemData() {
     this.processService.getAllItemWithSupplier().subscribe(
       (data) => {
         if (data["success"]) {
-            this.itemListArray = data["data"];
+          this.itemListArray = data["data"];
         } else {
           // this.toastr.error(data["msg"]);
         }
@@ -82,7 +81,7 @@ export class DynamicProcessComponent implements OnInit {
         if (data["success"]) {
           this.processValue = data["data"];
           this.setAllValuesForUpdate();
-        } 
+        }
         // else this.toastr.error(data["msg"]);
       },
       (error) => {
@@ -130,13 +129,19 @@ export class DynamicProcessComponent implements OnInit {
             dosingOb.dosingChemical = e.dosingChemical;
             this.chemicalOb = [...dosingOb.dosingChemical];
 
-          this.chemicalOb.forEach(element => { 
-            this.itemListArray.forEach((e) => {
-               if (e.itemId == element.itemId){
-                 element.supplierName = e.supplierName;
-               }
-             });
-           });
+            let inter = setInterval(()=>{
+              if (this.itemListArray) {
+                clearInterval(inter);
+                this.chemicalOb.forEach((element) => {
+                  this.itemListArray.forEach((e) => {
+                    if (e.itemId == element.itemId) {
+                      element.supplierName = e.supplierName;
+                    }
+                  });
+                });
+              }
+            },10);
+            
           } else if (e.isOperatorMessage) {
             operatorOb.operatorCode = e.operatorCode;
             operatorOb.operatorMessage = e.operatorMessage;
@@ -185,7 +190,6 @@ export class DynamicProcessComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.stepList, event.previousIndex, event.currentIndex);
-    console.log("CALLED IN");
   }
 
   dropFunction(event: CdkDragDrop<string[]>, stepPosition) {
@@ -256,7 +260,6 @@ export class DynamicProcessComponent implements OnInit {
         functionList[func.funcPosition - 1] = result;
       }
     });
-    
   }
 
   onStepClick(step) {
@@ -368,7 +371,7 @@ export class DynamicProcessComponent implements OnInit {
             if (data["success"]) {
               this.route.navigate(["/pages/process"]);
               this.toastr.success(data["msg"]);
-            } 
+            }
             // else this.toastr.error(data["msg"]);
           },
           (error) => {
@@ -376,7 +379,7 @@ export class DynamicProcessComponent implements OnInit {
           }
         );
       } else {
-        this.toastr.error("Enter the steps")
+        this.toastr.error("Enter the steps");
         return;
       }
     }
@@ -388,7 +391,6 @@ export class DynamicProcessComponent implements OnInit {
       this.convertFormAccordingToRequestObj(0);
       let user = this.commonService.getUser();
       this.processValue.updatedBy = user.userId;
-      console.log(this.processValue.steps);
       this.processService.updateProcess(this.processValue).subscribe(
         (data) => {
           if (data["success"]) {
