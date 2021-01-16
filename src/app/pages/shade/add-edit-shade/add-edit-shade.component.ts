@@ -63,11 +63,13 @@ export class AddEditShadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
-    this.getPartyList();
     this.getQualityList();
+    this.getPartyList();
     this.getProcessList();
     this.getSupplierList();
-    this.getUpdateData();
+    if (this.currentShadeId != null) {
+      this.getUpdateData();
+    }
   }
 
   updateColor() {
@@ -183,7 +185,6 @@ export class AddEditShadeComponent implements OnInit {
 
   getUpdateData() {
     this.loading = true;
-    if (this.currentShadeId != null) {
       this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
         (data) => {
           this.shades = data["data"];
@@ -191,15 +192,21 @@ export class AddEditShadeComponent implements OnInit {
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
-            this.getQualityList();
-            this.quality.forEach((e) => {
-              if (e.id == data["data"].qualityEntryId) {
-                this.shades.qualityId = e.qualityId;
-                this.shades.qualityName = e.qualityName;
-                this.shades.qualityType = e.qualityType;
+            
+            let inter = setInterval(()=>{
+              if(this.quality){
+                clearInterval(inter);
+                this.quality.forEach((e) => {
+                  if (e.id == data["data"].qualityEntryId) {
+                    this.shades.qualityId = e.qualityId;
+                    this.shades.qualityName = e.qualityName;
+                    this.shades.qualityType = e.qualityType;
+                  }
+                  this.loading = false;
+                });
               }
-              this.loading = false;
-            });
+            },10);
+            
             this.setProcessName(this.shades.processId);
             this.loading = false;
             this.disableButton=false;
@@ -218,7 +225,6 @@ export class AddEditShadeComponent implements OnInit {
 
         }
       );
-    }
     this.disableButton=false;
 
   }
@@ -485,7 +491,7 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       this.disableButton=false;
-
+      this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }

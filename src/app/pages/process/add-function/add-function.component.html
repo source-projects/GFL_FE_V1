@@ -83,7 +83,7 @@
                                 name="tempDosing" (keypress)="numberOnly($event)" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
                     </div>
                 </div>
-                <div class="col-md-5" *ngIf="dosing.doseType !== 'color'">
+                <div class="col-md-5" *ngIf="dosing.doseType === 'chemical'">
                     <div class="form-group">
                         <nb-checkbox name="doseHeat" [(ngModel)]="dosing.doseWhileHeating"> Dose while Heating
                         </nb-checkbox>

@@ -138,7 +138,6 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
-          console.log(this.qualityList);
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -176,7 +175,6 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.allBatchData = data["data"];
-          console.log(this.allBatchData);
         }
       },
       (error) => {
@@ -343,7 +341,6 @@ export class AddEditProgramComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
-            console.log(this.batchData);
             this.loading = false;
           } else {
             // this.toastr.error(data["msg"]);
@@ -456,8 +453,6 @@ export class AddEditProgramComponent implements OnInit {
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
       let id = this.programValues.programRecords[rowIndex].batchId;
-      console.log(id);
-     console.log(this.allBatchData)
       this.allBatchData.forEach((element) => {
         if (id == element.batchId) {
           let q_id=element.qualityId;
@@ -468,7 +463,6 @@ export class AddEditProgramComponent implements OnInit {
               this.list.push(x);
           }
           });
-          console.log(this.list);
         }
       }); 
   // if(this.programValues.qualityId == null || this.programValues.partyId == null){
@@ -502,7 +496,6 @@ export class AddEditProgramComponent implements OnInit {
             qty += e.wt
           });
           this.programValues.programRecords[rowIndex].quantity = Number(qty.toFixed(2));
-          console.log(id)
           this.batchData.forEach(element => {
             if(id==element.controlId){
               this.programValues.partyId=element.partyId;

@@ -734,23 +734,24 @@ export class ShuffleComponent implements OnInit {
             (data) => {
 
               if (data["success"]) {
-                this.route.navigate(["/pages"]);
+                location.reload();  
                 this.toastr.success(errorData.Update_Success)
               }
               else {
+                this.mergeArray = [];
                 this.toastr.error(data['msg'])
                 this.toastr.error(errorData.Update_Error)
               }
             },
             (error) => {
+              this.mergeArray = [];
               this.toastr.error(errorData.Serever_Error)
             }
           );
 
         }
-
         else {
-          alert("Please fill all the required fields");
+          this.toastr.error("Please fill all the required fields");
         }
       }
     }
@@ -759,11 +760,11 @@ export class ShuffleComponent implements OnInit {
 
   mergesubmit() {
     if (this.updateFlag == 0) {
-      alert("No batch was choosen to merge");
+      this.toastr.error("No batch was choosen to merge");
 
     }
     else if (this.shuffleForm.controls['batchName1'].value == this.shuffleForm.controls['batchName2'].value) {
-      alert("Cannot merge same batch");
+      this.toastr.error("Cannot merge same batch");
     }
     else {
       this.formSubmitted = true;
@@ -788,22 +789,23 @@ export class ShuffleComponent implements OnInit {
         this.mergeArray.push(this.objectOfBatch2);
         this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
           (data) => {
-
             if (data["success"]) {
-              this.route.navigate(["/pages"]);
+              location.reload();  
               this.toastr.success(errorData.Update_Success)
             }
             else {
+              this.mergeArray = [];
               this.toastr.error(errorData.Update_Error)
             }
           },
           (error) => {
+            this.mergeArray = [];
             this.toastr.error(errorData.Serever_Error)
           }
         );
       }
       else {
-        alert("Please fill all the required fields");
+        this.toastr.error("Please fill all the required fields");
 
       }
     }
