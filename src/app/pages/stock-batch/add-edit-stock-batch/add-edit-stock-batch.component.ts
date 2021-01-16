@@ -355,7 +355,7 @@ export class AddEditStockBatchComponent implements OnInit {
         let itemList = [...this.stockDataValues];
         itemList = _.sortBy(itemList, "batchId", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
-        ob.batchId = ++nextBatchId;
+        ob.batchId = (++nextBatchId);
         this.stockDataValues.push({ ...ob });
         const className = "collapsible-panel--expanded";
         if (e.target.classList.contains(className)) {
@@ -429,7 +429,7 @@ export class AddEditStockBatchComponent implements OnInit {
                       if (this.stockBatch.qualityId) { returnValue = true; return returnValue }
         }
       }
-      this.stockDataValues.every((ele) => {
+      this.stockDataValues.forEach((ele) => {
         let isNullOrUndefineFlag = ele.batchId ? false : true;
         if (isNullOrUndefineFlag) {
           returnValue = false;
