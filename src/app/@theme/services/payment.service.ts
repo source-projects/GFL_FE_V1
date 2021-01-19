@@ -21,4 +21,9 @@ getPendingBillByPartyId(partyId){
 getAdvancePayment(partyId){
   return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAdvancePayment/"+partyId);
 }
+
+addAdvancePayment(paymentData){
+  return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/addAdvancePayment",paymentData);
+
+}
 }

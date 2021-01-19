@@ -16,10 +16,9 @@ export class BillPaymentComponent implements OnInit {
   userHeadId: any;
   currentPaymentId: string;
   total:Number=0;
-
+  totalAdvance:Number = 0;
   formSubmitted = false;
   loading = false;
-
   party: any[];
   paymentList: any[];
   advancePaymentList: any[];
@@ -115,6 +114,22 @@ export class BillPaymentComponent implements OnInit {
     event.selected.forEach(element => {
       this.total=this.total+element.amt;
     });
+  }
+
+  advancePaymentSelected(event){
+    this.totalAdvance=0;
+    event.selected.forEach(element => {
+      this.totalAdvance=this.totalAdvance+element.amt;
+    });
+  }
+
+  onAddPayment(){
+    if(this.total!=this.totalAdvance){
+      this.toastr.error("total and advance payment are not equal");
+    }
+    else{
+      
+    }
   }
 
 }

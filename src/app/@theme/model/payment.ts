@@ -4,5 +4,10 @@ export class Payment {
     id:Number;
     isSendToParty:boolean;
     invoiceNo:string;
+    advancePayment:AdvancePayment;
 }
 
+export class AdvancePayment{
+    partyId: Number;
+    amt:Number;
+}
