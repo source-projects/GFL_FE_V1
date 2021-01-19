@@ -50,4 +50,12 @@ export class ProgramService {
     getAllBatch(){
         return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/batch/all');
     }
+    getBatchByParty(pid){
+        return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/batchListByPartyWithoutProductionPlan/'+pid);
+    }
+    getBatchByQuality(qid){
+        return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/batchListByQualityWithoutProductionPlan/'+qid);
+    }
+    
+   
 }

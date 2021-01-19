@@ -26,10 +26,10 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Discount %</label>
-                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %"
-                            formControlName="discountPercentage"
+                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %"  maxlength="1"
+                            formControlName="discountPercentage" 
                             [ngClass]="{'is-invalid':(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)}"
-                            min="0">
+                            maxlength="3" min="0" max="100">
                         <div class="invalid-feedback"
                             *ngIf="(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)">
                             <span>Discount % is Required</span>

@@ -22,12 +22,21 @@
         <td>{{j.name}}</td>
         <td>{{j.capacity}}</td>
         <td>
-          <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="j.jetDataList" class="example-list main-table-drag"
+          <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
+             class="example-list main-table-drag"
             (cdkDropListDropped)="drop($event,i)">
             <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" cdkDrag>
               {{index.batchId}}
             </div>
           </div>
+<!-- 
+          <div cdkDropList id="{{j.id}}" [cdkDropListData]="j.jetDataList" [cdkDropListConnectedTo]="connectedTo"
+             class="example-list main-table-drag"
+            (cdkDropListDropped)="drop($event,i)">
+            <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" cdkDrag>
+              {{index.batchId}}
+            </div>
+          </div> -->
 
         </td>
         <td>

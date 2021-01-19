@@ -155,6 +155,12 @@ export const routes: Routes = [
        
       },
       {
+        path: 'payment',
+        loadChildren: () => import('./pages/payment/payment.module')
+          .then(m => m.PaymentModule),
+       
+      },
+      {
         path: 'miscellaneous',
         loadChildren: () => import('./pages/miscellaneous/miscellaneous.module')
           .then(m => m.MiscellaneousModule),
