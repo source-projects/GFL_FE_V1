@@ -71,11 +71,11 @@
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill No</label>
                             <input type="text" name="billNo" class="form-control" #billNo1="ngModel"
-                                [(ngModel)]='stockBatch.billNo' required
+                                [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}"
                                 min="0">
                             <div class="invalid-feedback" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
-                                <span>Bill no. is required</span>
+                                <span>Bill no. is required and should not contain special characters</span>
                             </div>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
@@ -94,12 +94,12 @@
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
                             <input type="text" name="chlNo" class="form-control" #chlNo1="ngModel"
-                                [(ngModel)]='stockBatch.chlNo' required
+                                [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
                             <div class="invalid-feedback"
                                 *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
-                                <span>Challan no. is required</span>
+                                <span>Challan no. is required and should not contain special characters</span>
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
                         <h2 class="batch-heading display-inline">BATCH</h2>
 
                     </header>
-                    <div *ngIf="stockDataValues[0].batchId != undefined || addFlag || zeroValueBatch" class="row">
+                    <div *ngIf="stockDataValues[0].batchId != '' || addFlag || zeroValueBatch" class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
                             class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
