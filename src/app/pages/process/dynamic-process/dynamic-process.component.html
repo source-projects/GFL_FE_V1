@@ -25,7 +25,7 @@
                             <label class="required">Time(minutes)</label>
                             <input type="text" name="time" class="form-control" [(ngModel)]='processValue.time' required
                                 #time1="ngModel" [ngClass]="{'is-invalid':(time1.invalid)&&(formSubmitted  || time1.touched)}"
-                                (keypress)="numberOnly($event)" placeholder="Time(minutes)">
+                                (keypress)="numberOnly($event)" placeholder="Time(minutes)" >
                             <div class="invalid-feedback"
                                 *ngIf="(time1.invalid)&&(formSubmitted  || time1.touched)">
                                 <span>Time is required.</span>
@@ -91,10 +91,13 @@
                                                             <div class="col-md-12">
                                                                 <div *ngIf="func.funcValue==='temprature'">
                                                                     <div class="row">
+                                                                      
                                                                         <div class="col-md-4">
-                                                                            <label class="main-process-box"><b
-                                                                                    class="title-acc-processs">SV (Set
-                                                                                    Value)(C):</b>
+                                                                            <label class="main-process-box">
+                                                                                <b class="title-acc-processs">
+                                                                                    SV (Set
+                                                                                    Value)(C):
+                                                                                </b>
                                                                                 <div class="data-process">
                                                                                     {{func.tempratureControlFunc.setValue}}
                                                                                 </div>

@@ -44,11 +44,10 @@
                              </div>
                          </div>
                          </div> -->
-            <ngx-datatable [rows]="finalbatch" class="material" [headerHeight]="31" [footerHeight]="31"
+            <ngx-datatable [rows]="merge" class="material" [headerHeight]="31" [footerHeight]="31"
                 [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
                 <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true">
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
                 <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                 <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
                 <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
