@@ -42,11 +42,28 @@
 .btn-design {
     margin: 0;
     padding: 6px 20px;
-    background-color: #5e5b5e;
-    border-color: #5e5b5e;
-    border-radius: 0;
+    background-color: #aa3634;
+    border-color: #aa3634;
+    border-radius: 3px;
     font-weight: 700;
     margin-right: 20px;
+}
+
+.btn-design-cancel {
+    margin: 0;
+    padding: 6px 20px;
+    background-color: #edf1f7;
+    border-color: #edf1f7;
+    border-radius: 3px;
+    font-weight: 700;
+    margin-right: 20px;
+    color: #000;
+}
+
+.btn-design-cancel:hover {
+    background-color: #edf1f7;
+    border-color: #edf1f7;
+    color: #000;
 }
 
 .datatable-icon-up::before {
@@ -204,6 +221,13 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 1px 9px !important;
     font-size: 15px !important;
     font-weight: 700;
+}
+
+.btn-list:active,
+.btn-list:hover {
+    border-color: #fff !important;
+    background: #fff !important;
+    color: #5e5b5e !important;
 }
 
 .ngx-datatable {
@@ -414,11 +438,11 @@ input[type=number]::-webkit-outer-spin-button {
 .desktop-btn .btn-list:hover,
 .desktop-btn .btn-list:focus,
 .desktop-btn .btn-list:active {
-    color: #fff;
-    background-color: #5e5b5e!important;
-    border-color: #5e5b5e!important;
-    outline: none!important;
-    box-shadow: none!important;
+    color: #5e5b5e;
+    background-color: #ffffff!important;
+    border-color: #ffffff !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .datatable-header-cell:last-child {
@@ -594,8 +618,9 @@ input[type=number]::-webkit-outer-spin-button {
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show>.btn-primary.dropdown-toggle {
-    background-color: #aa3634!important;
-    border-color: #aa3634!important;
+    background-color: #ffffff!important;
+    border-color: #ffffff!important;
+    color: #5e5b5e !important;
 }
 
 .status-basic {

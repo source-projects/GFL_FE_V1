@@ -16,9 +16,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Party Name</label>
-                            <ng-select name="partyId" [(ngModel)]='programValues.partyId' required #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                (change)="enableQuality($event)" placeholder="Party Name" class="required-error-dropdown">
+                            <ng-select name="partyId" [(ngModel)]='programValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="enableQuality($event)" placeholder="Party Name" class="required-error-dropdown">
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
@@ -31,9 +29,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Id</label>
-                            <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required
-                                #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
-                                (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID" class="required-error-dropdown">
+                            <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}" (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID"
+                                class="required-error-dropdown">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -43,7 +40,7 @@
                                             <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
                                         </div>
                                     </div>
-                                 </ng-option>
+                                </ng-option>
                                 <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -53,7 +50,7 @@
                                             <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
                                         </div>
                                     </div>
-                                    </ng-option>
+                                </ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
                                 <span>Quality id is required</span>
@@ -65,8 +62,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Name</label>
-                            <input type="text" name="qualityName" #qualityName1="ngModel" class="form-control"
-                                [(ngModel)]='programValues.qualityName' readonly required placeholder="Quality Name">
+                            <input type="text" name="qualityName" #qualityName1="ngModel" class="form-control" [(ngModel)]='programValues.qualityName' readonly required placeholder="Quality Name">
                         </div>
                     </div>
 
@@ -74,8 +70,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Type</label>
-                            <input type="text" name="qualityType" #qualityType1="ngModel" class="form-control"
-                                [(ngModel)]='programValues.qualityType' readonly required placeholder="Quality Type">
+                            <input type="text" name="qualityType" #qualityType1="ngModel" class="form-control" [(ngModel)]='programValues.qualityType' readonly required placeholder="Quality Type">
                         </div>
                     </div>
 
@@ -83,15 +78,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Program Given By</label>
-                            <ng-select id="programGivenBy" #pgb1="ngModel" required
-                            [(ngModel)]='programValues.programGivenBy' name="programGivenBy"
-                            [ngClass]="{'is-invalid': (pgb1.invalid)&&(formSubmitted || pgb1.touched)}"
-                            placeholder="Program Given By" class="required-error-dropdown">
-                            <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
-                        </ng-select>
-                        <div class="required-class" *ngIf="formSubmitted && (pgb1.invalid)">
-                            <span>Program given by is required</span>
-                        </div>
+                            <ng-select id="programGivenBy" #pgb1="ngModel" required [(ngModel)]='programValues.programGivenBy' name="programGivenBy" [ngClass]="{'is-invalid': (pgb1.invalid)&&(formSubmitted || pgb1.touched)}" placeholder="Program Given By" class="required-error-dropdown">
+                                <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
+                            </ng-select>
+                            <div class="required-class" *ngIf="formSubmitted && (pgb1.invalid)">
+                                <span>Program given by is required</span>
+                            </div>
                         </div>
                     </div>
 
@@ -100,13 +92,11 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Priority</label>
-                            <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required  #priority1="ngModel"
-                                [ngClass]="{'is-invalid': (priority1.invalid)&&(formSubmitted || priority1.touched)}"
-                                 placeholder="Priority">
-                                 <ng-option *ngFor="let m of priorityData" [value]="m.name">{{m.name}}</ng-option>
+                            <ng-select id="priority" [(ngModel)]='programValues.priority' name="priority" required #priority1="ngModel" [ngClass]="{'is-invalid': (priority1.invalid)&&(formSubmitted || priority1.touched)}" placeholder="Priority">
+                                <ng-option *ngFor="let m of priorityData" [value]="m.name">{{m.name}}</ng-option>
 
-                                </ng-select>
-                           
+                            </ng-select>
+
                             <div class="required-class" *ngIf="(priority1.invalid)&&(formSubmitted || priority1.touched)">
                                 <span>Priority is required</span>
                             </div>
@@ -136,8 +126,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Remark</label>
-                            <textarea name="remark" class="form-control remark-resize" #remark1="ngModel"
-                                placeholder="Remark" [(ngModel)]='programValues.remark'></textarea>
+                            <textarea name="remark" class="form-control remark-resize" #remark1="ngModel" placeholder="Remark" [(ngModel)]='programValues.remark'></textarea>
                         </div>
                     </div>
                 </div>
@@ -146,30 +135,21 @@
                 <!-- NgxDatatable info -->
                 <div class="row">
                     <div class="col-md-12">
-                        <ngx-datatable #table class="material common-table datatable-auto-height"
-                            [rows]="programValues.programRecords" [headerHeight]="31" [footerHeight]="31">
+                        <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="programValues.programRecords" [headerHeight]="31" [footerHeight]="31">
                             <ngx-datatable-column name="Action" sortable="false">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                    let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItem(rowIndex)"></nb-icon>
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Party Shade No" [sortable]="false" [width]="300"
-                                prop="partyShadeNo">
+                            <ngx-datatable-column name="Party Shade No" [sortable]="false" [width]="300" prop="partyShadeNo">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel"
-                                        name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo"
-                                        [(ngModel)]="row.partyShadeNo" required
-                                        (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')"
-                                        [id]="'program'+rowIndex+'-0'"
+                                    <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel" name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo" [(ngModel)]="row.partyShadeNo" required (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')" [id]="'program'+rowIndex+'-0'"
                                         [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}">
                                         <option *ngFor="let p of partyShade" [value]="p.partyShadeNo">
                                             {{p.partyShadeNo}}
                                         </option>
                                     </select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tablePSN1.invalid)"
-                                        style="display: inline-block;">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tablePSN1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -177,17 +157,12 @@
 
                             <ngx-datatable-column name="Shade No" prop="shadeNo" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="shadeNoSelected(rowIndex,1)" #tableShadeNo1="ngModel"
-                                        name='tableShadeNo{{rowIndex}}-1' class="tableForm"
-                                        [(ngModel)]="row.shadeNo" required
-                                        [id]="'program'+rowIndex+'-1'"
-                                        [ngClass]="{'is-invalid': formSubmitted && tableShadeNo1.invalid}">
+                                    <select (change)="shadeNoSelected(rowIndex,1)" #tableShadeNo1="ngModel" name='tableShadeNo{{rowIndex}}-1' class="tableForm" [(ngModel)]="row.shadeNo" required [id]="'program'+rowIndex+'-1'" [ngClass]="{'is-invalid': formSubmitted && tableShadeNo1.invalid}">
                                         <option *ngFor="let p of partyShade" [value]="p.id">
                                             {{p.id}}
                                         </option>
                                     </select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableShadeNo1.invalid)"
-                                        style="display: inline-block;">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableShadeNo1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -195,22 +170,15 @@
 
                             <ngx-datatable-column name="Colour Tone" prop="colourTone" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #tableColourTone1="ngModel"
-                                        name='tableColourTone{{rowIndex}}' [(ngModel)]="row.colourTone"
-                                        (keyup)="onKeyUp($event,rowIndex,2,'colour_tone')"
-                                        [id]="'program'+rowIndex+'-2'" readonly>
+                                    <input class="tableForm" type="text" #tableColourTone1="ngModel" name='tableColourTone{{rowIndex}}' [(ngModel)]="row.colourTone" (keyup)="onKeyUp($event,rowIndex,2,'colour_tone')" [id]="'program'+rowIndex+'-2'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Quantity" prop="quantity" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="number"
-                                        (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-3'"
-                                        [(ngModel)]="row.quantity" #tableQuantity1="ngModel"
-                                        name='tableQuantity{{rowIndex}}' required
-                                        [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}" min="0">
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableQuantity1.invalid)"
-                                        style="display: inline-block;">
+                                    <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-3'" [(ngModel)]="row.quantity" #tableQuantity1="ngModel" name='tableQuantity{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}"
+                                        min="0">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableQuantity1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -218,18 +186,14 @@
 
                             <ngx-datatable-column name="Batch" prop="batchId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
-                                        [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
-                                        name='tableBatch{{rowIndex}}'
+                                    <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')" (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')" [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel" name='tableBatch{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
                                         <option *ngFor="let b of allBatchData" [value]="b.batchId">
                                             {{b.batchId}} - {{b.qualityName}}
                                         <option>
                                     </select>
 
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableBatch1.invalid)"
-                                        style="display: inline-block;">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableBatch1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -237,17 +201,13 @@
 
                             <ngx-datatable-column name="Stock" prop="stockId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
-                                        [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
-                                        name='tableLotNo{{rowIndex}}'
+                                    <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')" (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')" [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel" name='tableLotNo{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}">
                                         <option *ngFor="let s of stockData" [value]="s.id?s.id:s.stockId">
                                             {{s.id?s.id:s.stockId}}
                                         </option>
                                     </select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableLotNo1.invalid)"
-                                        style="display: inline-block;">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableLotNo1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -255,13 +215,11 @@
 
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" (keyup)="onKeyUp($event,rowIndex,6,'remark')"
-                                        [id]="'program'+rowIndex+'-6'" [(ngModel)]="row.remark" #tableRemark1="ngModel"
-                                        name='tableRemark{{rowIndex}}'>
+                                    <input class="tableForm" type="text" (keyup)="onKeyUp($event,rowIndex,6,'remark')" [id]="'program'+rowIndex+'-6'" [(ngModel)]="row.remark" #tableRemark1="ngModel" name='tableRemark{{rowIndex}}'>
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            
+
                         </ngx-datatable>
                     </div>
                 </div>
@@ -271,14 +229,10 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            
-                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
-                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design"
-                                routerLink="/pages/program">CANCEL</button>
-                                <button *ngIf="this.currentProgramId == null" type="button"
-                                class="btn btn-primary btn-sm btn-design"
-                                (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/program">CANCEL</button>
+                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="this.currentProgramId == null" type="button" class="btn btn-primary btn-sm btn-design" (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>
