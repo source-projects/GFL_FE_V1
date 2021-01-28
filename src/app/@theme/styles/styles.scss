@@ -66,6 +66,12 @@
     color: #000;
 }
 
+.btn-design-cancel:active {
+    background-color: #edf1f7 !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
 .datatable-icon-up::before {
     content: none;
 }
@@ -316,9 +322,10 @@ input[type=number]::-webkit-outer-spin-button {
     color: #aa3634!important;
 }
 
-.btn-design:hover {
-    border-color: #aa3634;
-    background-color: #aa3634;
+.btn-design:hover,
+.btn-design:active {
+    border-color: #aa3634 !important;
+    background-color: #aa3634 !important;
 }
 
 .creditors-debitors {
@@ -615,14 +622,13 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 12px 11px!important;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled).active,
-.show>.btn-primary.dropdown-toggle {
-    background-color: #ffffff!important;
-    border-color: #ffffff!important;
-    color: #5e5b5e !important;
-}
-
+// .btn-primary:not(:disabled):not(.disabled):active,
+// .btn-primary:not(:disabled):not(.disabled).active,
+// .show>.btn-primary.dropdown-toggle {
+//     background-color: #ffffff!important;
+//     border-color: #ffffff!important;
+//     color: #5e5b5e !important;
+// }
 .status-basic {
     display: inline-block!important;
 }

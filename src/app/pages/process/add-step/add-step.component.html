@@ -1,41 +1,39 @@
 <div class="modal-header nb-header">
-  <h4 class="modal-title nb-text" id="modal-basic-title">Add Step</h4>
-  <button type="button" class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
+    <h4 class="modal-title nb-text" id="modal-basic-title">Add Step</h4>
+    <button type="button" class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
     <span aria-hidden="true" class="close-icon">&times;</span>
   </button>
 </div>
 <form #stepForm="ngForm">
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Step Name</label>
-          <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel"
-            [ngClass]="{'is-invalid':(name1.invalid)&&(modalSubmitted || name1.touched)}" required placeholder="Step Name">
-          <div class="invalid-feedback" style="color: red;" *ngIf="(name1.invalid)&&(modalSubmitted || name1.touched)">
-            Step Name is required.
-          </div>
-        </div>
-      </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Step Name</label>
+                    <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel" [ngClass]="{'is-invalid':(name1.invalid)&&(modalSubmitted || name1.touched)}" required placeholder="Step Name">
+                    <div class="invalid-feedback" style="color: red;" *ngIf="(name1.invalid)&&(modalSubmitted || name1.touched)">
+                        Step Name is required.
+                    </div>
+                </div>
+            </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Step Position</label>
-          <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo"
-            #position1="ngModel" [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Step Position</label>
+                    <select [disabled]="editStep" class="form-control" [(ngModel)]="stepPosition" name="stepNo" #position1="ngModel" [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required>
             <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
           </select>
-          <div class="invalid-feedback" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
-            Step Position is required.
-          </div>
-        </div>
-      </div>
+                    <div class="invalid-feedback" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
+                        Step Position is required.
+                    </div>
+                </div>
+            </div>
 
-      <div class="col-md-12" *ngIf="stepList.length">
-        <h5 class="nb-badges">Current Steps</h5>
-        <div *ngFor="let s of stepList;let z=index" class="list-step">
-          <span class="nb-table-num">{{z+1}}.</span>&nbsp;<span>{{s.stepName}}</span>
-          <!-- <table class="table">
+            <div class="col-md-12" *ngIf="stepList.length">
+                <h5 class="nb-badges">Current Steps</h5>
+                <div *ngFor="let s of stepList;let z=index" class="list-step">
+                    <span class="nb-table-num">{{z+1}}.</span>&nbsp;<span>{{s.stepName}}</span>
+                    <!-- <table class="table">
             <tbody>
               <tr>
                 <th scope="row">{{z+1}}</th>
@@ -43,14 +41,12 @@
               </tr>
             </tbody>
           </table> -->
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-      (click)="onCreate(stepForm)">{{submitButton}}</button>
-    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-      (click)="activeModal.close(false)">Cancel</button>
-  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="onCreate(stepForm)">{{submitButton}}</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="activeModal.close(false)">Cancel</button>
+    </div>
 </form>
