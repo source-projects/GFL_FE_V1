@@ -94,8 +94,44 @@
   margin: 0 auto;
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-  width: 31cm;
+  // width: 31cm;
   /* height: 29.7cm; */
+}
+
+.t-table {
+  height: 800px;
+}
+
+.table-left-right{
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.table-left-right td{
+  padding: 3px 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.spacing-low th, .spacing-low td{
+  padding: 1px 0.75rem !important;
+}
+
+.border-dark{
+  border: 1px solid #000000 !important;
+}
+.border-top{
+  border: 0px 1px 1px 1px solid #000000 !important;
+}
+
+.border-zero{
+  border: 0 !important;
+}
+.footer-bottom{
+  position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 /* .section[size="A4"] {  
   width: 21cm;

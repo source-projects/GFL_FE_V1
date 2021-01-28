@@ -18,7 +18,7 @@ const routes: Routes = [
     path:'edit/:id',
     component:AddEditInvoiceComponent,
   },{
-    path: 'print/:id',
+    path: 'print',
     component:PrintLayoutComponent
   }
 ];
