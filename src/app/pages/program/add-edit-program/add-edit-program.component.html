@@ -29,7 +29,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Quality Id</label>
-                            <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}" (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID"
+                            <ng-select name="qualityId" [(ngModel)]='programValues.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}" (change)=getQualityInfo($event,programValues.qualityId) placeholder="Quality ID"
                                 class="required-error-dropdown">
                                 <ng-option disabled="true">
                                     <div class="row">
@@ -162,15 +162,6 @@
 
                             <ngx-datatable-column name="Shade No" prop="shadeNo" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select (change)="shadeNoSelected(rowIndex,1)" #tableShadeNo1="ngModel"
-                                        name='tableShadeNo{{rowIndex}}-1' class="tableForm"
-                                        [(ngModel)]="row.shadeNo" required
-                                        [id]="'program'+rowIndex+'-1'"
-                                        [ngClass]="{'is-invalid': formSubmitted && tableShadeNo1.invalid}">
-                                        <option *ngFor="let p of partyShade" [value]="p.id">
-                                            {{p.id}}
-                                        </option>
-                                    </select> -->
                                     <ng-select (change)="shadeNoSelected(rowIndex,1)" #tableShadeNo1="ngModel"
                                     name='tableShadeNo{{rowIndex}}-1' class="tableForm"
                                     [(ngModel)]="row.shadeNo" required
@@ -204,15 +195,6 @@
 
                             <ngx-datatable-column name="Batch" prop="batchId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
-                                        [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
-                                        name='tableBatch{{rowIndex}}'
-                                        [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
-                                        <option *ngFor="let b of allBatchData" [value]="b.batchId">
-                                            {{b.batchId}} - {{b.qualityName}}
-                                        <option>
-                                    </select> -->
                                     <ng-select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
                                     (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
                                     [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
@@ -231,15 +213,6 @@
 
                             <ngx-datatable-column name="Stock" prop="stockId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')"
-                                        (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
-                                        [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
-                                        name='tableLotNo{{rowIndex}}'
-                                        [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}">
-                                        <option *ngFor="let s of stockData" [value]="s.id?s.id:s.stockId">
-                                            {{s.id?s.id:s.stockId}}
-                                        </option>
-                                    </select> -->
                                     <ng-select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')"
                                     (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
                                     [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
