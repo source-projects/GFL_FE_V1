@@ -143,22 +143,13 @@
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Party Shade No" [sortable]="false" [width]="300" prop="partyShadeNo">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel"
-                                        name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo"
-                                        [(ngModel)]="row.partyShadeNo" required
-                                        (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')"
-                                        [id]="'program'+rowIndex+'-0'"
-                                        [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}">
-                                        <option *ngFor="let p of partyShade" [value]="p.partyShadeNo">
-                                            {{p.partyShadeNo}}
-                                        </option>
-                                    </select> -->
+                            
                                     <ng-select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel"
                                     name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo"
                                     [(ngModel)]="row.partyShadeNo" required
                                     (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')"
                                     [id]="'program'+rowIndex+'-0'"
-                                    [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}" appendTo="body">
+                                    [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}" appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let p of partyShade" [value]="p.partyShadeNo">{{p.partyShadeNo}}</ng-option>
                                      </ng-select>
                                      
@@ -184,7 +175,7 @@
                                     name='tableShadeNo{{rowIndex}}-1' class="tableForm"
                                     [(ngModel)]="row.shadeNo" required
                                     [id]="'program'+rowIndex+'-1'"
-                                    [ngClass]="{'is-invalid': formSubmitted && tableShadeNo1.invalid}">
+                                    [ngClass]="{'is-invalid': formSubmitted && tableShadeNo1.invalid}" appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let p of partyShade" [value]="p.id">{{p.id}}</ng-option>
                                      </ng-select>
 
@@ -197,13 +188,13 @@
 
                             <ngx-datatable-column name="Colour Tone" prop="colourTone" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #tableColourTone1="ngModel" name='tableColourTone{{rowIndex}}' [(ngModel)]="row.colourTone" (keyup)="onKeyUp($event,rowIndex,2,'colour_tone')" [id]="'program'+rowIndex+'-2'" readonly>
+                                    <input class="tableForm line-height-subtable" type="text" #tableColourTone1="ngModel" name='tableColourTone{{rowIndex}}' [(ngModel)]="row.colourTone" (keyup)="onKeyUp($event,rowIndex,2,'colour_tone')" [id]="'program'+rowIndex+'-2'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Quantity" prop="quantity" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-3'" [(ngModel)]="row.quantity" #tableQuantity1="ngModel" name='tableQuantity{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}"
+                                    <input class="tableForm line-height-subtable" type="number" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-3'" [(ngModel)]="row.quantity" #tableQuantity1="ngModel" name='tableQuantity{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}"
                                         min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (tableQuantity1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
@@ -226,7 +217,7 @@
                                     (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
                                     [id]="'program'+rowIndex+'-4'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
                                     name='tableBatch{{rowIndex}}'
-                                    [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}">
+                                    [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}" appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let b of allBatchData" [value]="b.batchId">
                                             {{b.batchId}} - {{b.qualityName}}
                                         </ng-option>
@@ -253,7 +244,7 @@
                                     (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
                                     [id]="'program'+rowIndex+'-5'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
                                     name='tableLotNo{{rowIndex}}'
-                                    [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}">
+                                    [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}" appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let s of stockData" [value]="s.id?s.id:s.stockId">
                                             {{s.id?s.id:s.stockId}}
                                         </ng-option>
@@ -267,7 +258,7 @@
 
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" (keyup)="onKeyUp($event,rowIndex,6,'remark')" [id]="'program'+rowIndex+'-6'" [(ngModel)]="row.remark" #tableRemark1="ngModel" name='tableRemark{{rowIndex}}'>
+                                    <input class="tableForm line-height-subtable" type="text" (keyup)="onKeyUp($event,rowIndex,6,'remark')" [id]="'program'+rowIndex+'-6'" [(ngModel)]="row.remark" #tableRemark1="ngModel" name='tableRemark{{rowIndex}}'>
                                 </ng-template>
                             </ngx-datatable-column>
 
