@@ -143,12 +143,17 @@
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Party Shade No" [sortable]="false" [width]="300" prop="partyShadeNo">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel" name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo" [(ngModel)]="row.partyShadeNo" required (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')" [id]="'program'+rowIndex+'-0'"
+                                    <!-- <select (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel" name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo" [(ngModel)]="row.partyShadeNo" required (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')" [id]="'program'+rowIndex+'-0'"
                                         [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}">
                                         <option *ngFor="let p of partyShade" [value]="p.partyShadeNo">
                                             {{p.partyShadeNo}}
                                         </option>
-                                    </select>
+                                    </select> -->
+                                    <ng-select appendTo="body" (change)="partyShadeNoSelected(rowIndex,0)" #tablePSN1="ngModel" name='tablePartyShadeNo{{rowIndex}}' class="tableForm" id="tablePartyShadeNo" [(ngModel)]="row.partyShadeNo" required (keyup)="onKeyUp($event,rowIndex,0,'partyShadeNo')"
+                                        [id]="'program'+rowIndex+'-0'" [ngClass]="{'is-invalid': formSubmitted && tablePSN1.invalid}" class="ng-select-br-none">
+                                        <ng-option *ngFor="let p of partyShade" [value]="p.partyShadeNo">
+                                            {{p.partyShadeNo}}</ng-option>
+                                    </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (tablePSN1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>

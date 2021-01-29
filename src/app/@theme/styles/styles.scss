@@ -1201,6 +1201,13 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 26px;
 }
 
+.ng-select-br-none .ng-select-container {
+    border: 0;
+    border-bottom: 1px solid #5e5b5e;
+    border-radius: 0;
+    border-color: #5e5b5e !important;
+}
+
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
         padding: 15px 0!important;
