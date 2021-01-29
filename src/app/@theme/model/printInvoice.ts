@@ -4,6 +4,16 @@ export class PrintInvoiceData {
     gst: string
     partyName: string
     qualityList: QualityList[]
+    invoiceNo: string
+    totalMtr: number
+    totalAmt: number
+    totalFinishMtr: number
+    totalPcs: number
+    discount: number
+    taxAmt: number
+    cgst: number
+    sgst: number
+    netAmt: number
   }
   
   export class BatchWithGrList {
@@ -36,5 +46,6 @@ export class PrintInvoiceData {
     qualityName: string
     rate: number
     totalMtr: number
+    pchalNo: string
   }
   
