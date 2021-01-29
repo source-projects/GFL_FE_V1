@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'app/@theme/services/common.service';
 import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NavigationExtras, Router } from '@angular/router';
 
 // import { Invoice } from "app/@theme/model/invoice";
 
@@ -16,6 +17,7 @@ export class GenerateInvoiceComponent implements OnInit {
   InvoiceList = [];
   copyInvoiceList = [];
   Invoice=[];
+  finalcheckedrows = [];
   // invoiceValues: Invoice = new Invoice();
 
   hidden :boolean=true;
@@ -26,6 +28,7 @@ export class GenerateInvoiceComponent implements OnInit {
     private commonService: CommonService,
     private generateInvoiceService: GenerateInvoiceService,
     private _NgbModal: NgbModal,
+    private router:Router
 
     
     ) { }
@@ -76,5 +79,28 @@ export class GenerateInvoiceComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  print(){
+
+    const queryParams: any = {};
+    const arrayOfValues = this.finalcheckedrows;
+    queryParams.myArray = JSON.stringify(arrayOfValues);
+    const navigationExtras: NavigationExtras = {
+      queryParams
+    };
+
+    this.router.navigate(['/pages/generate_invoice/print/'], navigationExtras);
+  }
+
+  onSelect(value: any) {
+
+    this.finalcheckedrows = [];
+    let arr:any[] = value.selected;
+    arr.forEach(ele =>{
+      this.finalcheckedrows.push(ele.invoiceNo)
+    })
+    // this.finalcheckedrows = arr;
+    console.log(this.finalcheckedrows)
   }
 }

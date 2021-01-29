@@ -20,7 +20,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              
+              "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
@@ -107,7 +107,7 @@
               "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
-              
+              "src/assets"
             ]
           }
         },
