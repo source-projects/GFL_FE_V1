@@ -643,16 +643,17 @@ export class AddEditProgramComponent implements OnInit {
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
       this.programValues.userHeadId = this.userHead.userHeadId;
-      delete this.programValues.qualityId;
-      delete this.programValues.qualityName;
-      delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].batchId;
-      delete this.programValues.programRecords[0].stockId;
-      this.programService.saveProgram(this.programValues).subscribe(
+            this.programService.saveProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Add_Success);
+            delete this.programValues.qualityId;
+            delete this.programValues.qualityName;
+            delete this.programValues.qualityType;
+            delete this.programValues.programRecords[0].batchId;
+            delete this.programValues.programRecords[0].stockId;
+
            
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -676,17 +677,17 @@ export class AddEditProgramComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.updatedBy = this.user.userId;
-      delete this.programValues.qualityId;
-      delete this.programValues.qualityName;
-      delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].batchId;
-      delete this.programValues.programRecords[0].stockId;
-      this.programService.updateProgram(this.programValues).subscribe(
+            this.programService.updateProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Update_Success);
-            
+            delete this.programValues.qualityId;
+            delete this.programValues.qualityName;
+            delete this.programValues.qualityType;
+            delete this.programValues.programRecords[0].batchId;
+            delete this.programValues.programRecords[0].stockId;
+      
            
           } else {
             this.toastr.error(errorData.Update_Error);
