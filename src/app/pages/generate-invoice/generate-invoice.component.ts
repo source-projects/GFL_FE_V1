@@ -14,6 +14,7 @@ export class GenerateInvoiceComponent implements OnInit {
   checked = false;
   public loading = false;
   InvoiceList = [];
+  copyInvoiceList = [];
   Invoice=[];
   // invoiceValues: Invoice = new Invoice();
 
@@ -33,6 +34,27 @@ export class GenerateInvoiceComponent implements OnInit {
     this.getAllInvoice();
   }
 
+  
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyInvoiceList.length;
+    const keys = Object.keys(this.copyInvoiceList[0]);
+    this.InvoiceList = this.copyInvoiceList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getAllInvoice() {
     this.loading = true;
    
@@ -41,6 +63,7 @@ export class GenerateInvoiceComponent implements OnInit {
        
         if (data["success"]) {
           this.InvoiceList = data["data"];
+          this.copyInvoiceList = data["data"];
           // this.Invoice=this.InvoiceList.map((element)=>({createdDate:element.createdDate, id: element.id, isSendToParty: element.isSendToParty}))
         }
         else {
