@@ -19,48 +19,38 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Party Name</label>
-                        <ng-select name="partyId" [(ngModel)]='advancePaymentValues.partyId' required #partyId1="ngModel"
-                            [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                             placeholder="Party Name" class="required-error-dropdown"
-                            >
+                        <ng-select name="partyId" [(ngModel)]='advancePaymentValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
 
-                        <div class="required-class"
-                            *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                        <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                             <span>Party name is required</span>
                         </div>
                     </div>
                 </div>
-           
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Amount</label>
-                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.amt"
-                        name="amt" #amt1="ngModel" 
-                        [ngClass]="{'is-invalid':(amt1.invalid)&&(formSubmitted || amt1.touched)}" required >
+                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.amt" name="amt" #amt1="ngModel" [ngClass]="{'is-invalid':(amt1.invalid)&&(formSubmitted || amt1.touched)}" required>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">cheque Amount</label>
-                        <input type="text" class="form-control" [(ngModel)]="chequeAmt"
-                        name="chequeAmt" #chequeAmt1="ngModel" 
-                        [ngClass]="{'is-invalid':(chequeAmt1.invalid)&&(formSubmitted || chequeAmt1.touched)}" required >
+                        <input type="text" class="form-control" [(ngModel)]="chequeAmt" name="chequeAmt" #chequeAmt1="ngModel" [ngClass]="{'is-invalid':(chequeAmt1.invalid)&&(formSubmitted || chequeAmt1.touched)}" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        
+
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
-                        <button type="button" class="btn btn-primary btn-sm btn-design"
-                            routerLink="/pages/payment">CANCEL</button>
-                        <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                           (click)="addAdvancePayment(paymentForm)" >SAVE</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
+                        <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design" (click)="addAdvancePayment(paymentForm)">SAVE</button>
                     </div>
 
                 </div>

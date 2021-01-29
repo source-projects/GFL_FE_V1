@@ -30,6 +30,8 @@ export class AddEditProgramComponent implements OnInit {
   party: any[];
   qualityList: any[];
   partyShade: any[];
+  copyPartyShade:any[];
+  shadeNoList = [];
   batchData: any[];
   stockData: any[];
   masterList: any[];
@@ -157,6 +159,7 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.partyShade = data["data"];
+          this.copyPartyShade = data["data"];
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -287,8 +290,15 @@ export class AddEditProgramComponent implements OnInit {
     //getStock and batch from quality
     this.getStockBatchData();
   }
-
+  
   enableQuality(event) {
+    this.shadeNoList = [];
+    this.copyPartyShade.forEach(ele=>{
+      if(ele.partyId == event){
+        this.shadeNoList.push(ele)
+      }
+    })
+    this.partyShade = this.shadeNoList;
     this.loading = true;
     if (event != undefined) {
       if (this.programValues.partyId) {
@@ -633,16 +643,17 @@ export class AddEditProgramComponent implements OnInit {
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
       this.programValues.userHeadId = this.userHead.userHeadId;
-      delete this.programValues.qualityId;
-      delete this.programValues.qualityName;
-      delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].batchId;
-      delete this.programValues.programRecords[0].stockId;
-      this.programService.saveProgram(this.programValues).subscribe(
+            this.programService.saveProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Add_Success);
+            delete this.programValues.qualityId;
+            delete this.programValues.qualityName;
+            delete this.programValues.qualityType;
+            delete this.programValues.programRecords[0].batchId;
+            delete this.programValues.programRecords[0].stockId;
+
            
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -666,17 +677,17 @@ export class AddEditProgramComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.updatedBy = this.user.userId;
-      delete this.programValues.qualityId;
-      delete this.programValues.qualityName;
-      delete this.programValues.qualityType;
-      delete this.programValues.programRecords[0].batchId;
-      delete this.programValues.programRecords[0].stockId;
-      this.programService.updateProgram(this.programValues).subscribe(
+            this.programService.updateProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
             this.toastr.success(errorData.Update_Success);
-            
+            delete this.programValues.qualityId;
+            delete this.programValues.qualityName;
+            delete this.programValues.qualityType;
+            delete this.programValues.programRecords[0].batchId;
+            delete this.programValues.programRecords[0].stockId;
+      
            
           } else {
             this.toastr.error(errorData.Update_Error);
