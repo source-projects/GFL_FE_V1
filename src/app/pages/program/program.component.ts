@@ -21,9 +21,10 @@ export class ProgramComponent implements OnInit {
   public loading = false;
   public errorData: any = (errorData as any).default;
   programList: any[];
-  program=[];
-  headers=["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority" ];
-  module="program";
+  copyProgramList = [];
+  program = [];
+  headers = ["Party Name", "Program By", "Quality Id", "Quality Name", "Quality Type", "Priority"];
+  module = "program";
 
   tableStyle = "bootstrap";
   flag = false;
@@ -32,36 +33,36 @@ export class ProgramComponent implements OnInit {
   userHeadId;
   radioSelect = 0;
   radioArray = [
-    { id: 1, value: "View Own" , disabled:false },
-    { id: 2, value: "View Group" , disabled:false},
-    { id: 3, value: "View All", disabled:false }
+    { id: 1, value: "View Own", disabled: false },
+    { id: 2, value: "View Group", disabled: false },
+    { id: 3, value: "View All", disabled: false }
   ];
   permissions: Number;
-  
 
-  hidden :boolean=true;
-  hiddenEdit:boolean=true;
-  hiddenView:boolean=true;
 
-  ownDelete=true;
-  allDelete=true;
-  groupDelete=true;
+  hidden: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenView: boolean = true;
 
-  ownEdit=true;
-  allEdit=true;
-  groupEdit=true;
-  disabled=false;
+  ownDelete = true;
+  allDelete = true;
+  groupDelete = true;
+
+  ownEdit = true;
+  allEdit = true;
+  groupEdit = true;
+  disabled = false;
   constructor(
-    private commonService: CommonService, 
-    private programService: ProgramService, 
-    private router: Router, 
+    private commonService: CommonService,
+    private programService: ProgramService,
+    private router: Router,
     public programGuard: ProgramGuard,
     private jwtToken: JwtTokenService,
-    private toastr: ToastrService, 
+    private toastr: ToastrService,
     private modalService: NgbModal,
     private exportService: ExportService
-    ) { }
- 
+  ) { }
+
   ngOnInit(): void {
 
     this.userId = this.commonService.getUser();
@@ -75,32 +76,32 @@ export class ProgramComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.programGuard.accessRights('view')){
-      this.getProgramList(this.userId,"own");
-      this.hidden=this.ownDelete; 
-      this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+    if (this.programGuard.accessRights('view')) {
+      this.getProgramList(this.userId, "own");
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
+      this.radioSelect = 1;
     }
-     else if(this.programGuard.accessRights('view group')){
-      this.getProgramList(this.userHeadId,"group");
-      this.hidden=this.groupDelete;
-      this.hiddenEdit=this.groupEdit;
-      this.radioSelect=2;
+    else if (this.programGuard.accessRights('view group')) {
+      this.getProgramList(this.userHeadId, "group");
+      this.hidden = this.groupDelete;
+      this.hiddenEdit = this.groupEdit;
+      this.radioSelect = 2;
     }
-    else if(this.programGuard.accessRights('view all')){
-      this.getProgramList(0,"all");
-      this.hidden=this.allDelete;
-      this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+    else if (this.programGuard.accessRights('view all')) {
+      this.getProgramList(0, "all");
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
+      this.radioSelect = 3;
 
     }
   }
-  getAddAcess(){
-    if(this.programGuard.accessRights('add')){
-      this.disabled=false;
+  getAddAcess() {
+    if (this.programGuard.accessRights('add')) {
+      this.disabled = false;
     }
-    else{
-      this.disabled=true;
+    else {
+      this.disabled = true;
     }
   }
   onChange(event) {
@@ -108,52 +109,78 @@ export class ProgramComponent implements OnInit {
     switch (event) {
       case 1:
         this.getProgramList(this.userId, "own");
-        this.hidden=this.ownDelete; 
-        this.hiddenEdit=this.ownEdit;
+        this.hidden = this.ownDelete;
+        this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
         this.getProgramList(this.userHeadId, "group");
-        this.hidden=this.groupDelete;
-        this.hiddenEdit=this.groupEdit;
+        this.hidden = this.groupDelete;
+        this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
         this.getProgramList(0, "all");
-        this.hidden=this.allDelete;
-        this.hiddenEdit=this.allEdit;
+        this.hidden = this.allDelete;
+        this.hiddenEdit = this.allEdit;
         break;
     }
   }
 
-  open(){
-    this.flag=true;
+  open() {
+    this.flag = true;
 
     const modalRef = this.modalService.open(ExportPopupComponent);
-     modalRef.componentInstance.headers = this.headers;
-     modalRef.componentInstance.list = this.program;
-     modalRef.componentInstance.moduleName = this.module;
+    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.list = this.program;
+    modalRef.componentInstance.moduleName = this.module;
 
   }
 
+  filter(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyProgramList.length;
+    const keys = Object.keys(this.copyProgramList[0]);
+    this.programList = this.copyProgramList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   public getProgramList(id, getBy) {
-    this.loading=true;
+    this.loading = true;
     this.programService.getProgramList(id, getBy).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
-          this.program=this.programList.map((element)=>({partyName:element.partyName, programBy: element.programBy,
-            qualityId: element.qualityId, qualityName:element.qualityName, qualityType:element.qualityType, priority:element.priority }))
-            this.loading=false;
+          this.program = this.programList.map((element) => ({
+            partyName: element.partyName, programBy: element.programBy,
+            qualityId: element.qualityId, qualityName: element.qualityName, qualityType: element.qualityType, priority: element.priority
+          }))
+          this.copyProgramList = this.programList.map((element) => ({
+            partyName: element.partyName, programGivenBy: element.programGivenBy,
+            qualityId: element.qualityId, qualityName: element.qualityName, qualityType: element.qualityType, priority: element.priority
+          }))
+          this.loading = false;
         }
         else {
           // this.toastr.error(data['msg']);
-          this.loading=false;
+          this.loading = false;
         }
       },
       error => {
         // this.toastr.error(errorData.Serever_Error);
-        this.loading=false;
+        this.loading = false;
       }
     )
   }
@@ -178,73 +205,73 @@ export class ProgramComponent implements OnInit {
   }
 
 
-  getViewAccess(){
-    if(!this.programGuard.accessRights('view')){
-      this.radioArray[0].disabled=true;
+  getViewAccess() {
+    if (!this.programGuard.accessRights('view')) {
+      this.radioArray[0].disabled = true;
     }
     else
-    this.radioArray[0].disabled=false;
+      this.radioArray[0].disabled = false;
 
-    if(!this.programGuard.accessRights('view group')){
-      this.radioArray[1].disabled=true;
+    if (!this.programGuard.accessRights('view group')) {
+      this.radioArray[1].disabled = true;
     }
     else
-    this.radioArray[1].disabled=false;
-     if(!this.programGuard.accessRights('view all')){
-      this.radioArray[2].disabled=true;
+      this.radioArray[1].disabled = false;
+    if (!this.programGuard.accessRights('view all')) {
+      this.radioArray[2].disabled = true;
     }
     else
-    this.radioArray[2].disabled=false;
+      this.radioArray[2].disabled = false;
 
   }
 
-  getDeleteAccess(){
-    if(this.programGuard.accessRights('delete')){
-      this.ownDelete=false;
-      this.hidden=this.ownEdit;
+  getDeleteAccess() {
+    if (this.programGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden = this.ownEdit;
     }
-     if(this.programGuard.accessRights('delete group')){
-      this.groupDelete=false;
-      this.hidden=this.groupDelete;
+    if (this.programGuard.accessRights('delete group')) {
+      this.groupDelete = false;
+      this.hidden = this.groupDelete;
     }
-     if(this.programGuard.accessRights('delete all')){
-      this.allDelete=false;
-      this.hidden=this.allDelete;
-    }
-  }
-
-  getDeleteAccess1(){
-    if(this.programGuard.accessRights('delete')){
-      this.ownDelete=false;
-      this.hidden=this.ownEdit;
-    }
-    else{
-      this.hidden=true;
+    if (this.programGuard.accessRights('delete all')) {
+      this.allDelete = false;
+      this.hidden = this.allDelete;
     }
   }
 
-  getEditAccess(){
-    if(this.programGuard.accessRights('edit')){
-      this.ownEdit=false;
-      this.hiddenEdit=this.ownEdit;
+  getDeleteAccess1() {
+    if (this.programGuard.accessRights('delete')) {
+      this.ownDelete = false;
+      this.hidden = this.ownEdit;
     }
-     if(this.programGuard.accessRights('edit group')){
-      this.groupEdit=false;
-      this.hiddenEdit=this.groupEdit;
-
-    }
-     if(this.programGuard.accessRights('edit all')){
-      this.allEdit=false;
-      this.hiddenEdit=this.allEdit;
+    else {
+      this.hidden = true;
     }
   }
-  getEditAccess1(){
-    if(this.programGuard.accessRights('edit')){
-      this.ownEdit=false;
-      this.hiddenEdit=this.ownEdit;
+
+  getEditAccess() {
+    if (this.programGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
     }
-    else{
-      this.hiddenEdit=true;
+    if (this.programGuard.accessRights('edit group')) {
+      this.groupEdit = false;
+      this.hiddenEdit = this.groupEdit;
+
+    }
+    if (this.programGuard.accessRights('edit all')) {
+      this.allEdit = false;
+      this.hiddenEdit = this.allEdit;
+    }
+  }
+  getEditAccess1() {
+    if (this.programGuard.accessRights('edit')) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
+    }
+    else {
+      this.hiddenEdit = true;
     }
   }
 

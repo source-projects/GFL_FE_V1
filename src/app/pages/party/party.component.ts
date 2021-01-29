@@ -24,6 +24,8 @@ export class PartyComponent implements OnInit {
   tablestyle = "bootstrap";
   disabled=false;
   partyList = [];
+  copyPartyList = [];
+  filteredPartyList = [];
   party=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
   module="party";
@@ -96,6 +98,27 @@ export class PartyComponent implements OnInit {
     }
   }
 
+
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyPartyList.length;
+    const keys = Object.keys(this.copyPartyList[0]);
+    this.partyList = this.copyPartyList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getAllParty(id,getBy) {
     this.loading = true;
    
@@ -104,8 +127,11 @@ export class PartyComponent implements OnInit {
        
         if (data["success"]) {
           this.partyList = data["data"];
+          this.copyPartyList = data["data"]
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
+          // this.copyPartyList = this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
+          //   city:element.city, state: element.state}));
         }
         else {
           // this.toastr.error(data['msg'])
