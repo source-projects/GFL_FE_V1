@@ -30,6 +30,8 @@ export class AddEditProgramComponent implements OnInit {
   party: any[];
   qualityList: any[];
   partyShade: any[];
+  copyPartyShade:any[];
+  shadeNoList = [];
   batchData: any[];
   stockData: any[];
   masterList: any[];
@@ -157,6 +159,7 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.partyShade = data["data"];
+          this.copyPartyShade = data["data"];
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -287,8 +290,15 @@ export class AddEditProgramComponent implements OnInit {
     //getStock and batch from quality
     this.getStockBatchData();
   }
-
+  
   enableQuality(event) {
+    this.shadeNoList = [];
+    this.copyPartyShade.forEach(ele=>{
+      if(ele.partyId == event){
+        this.shadeNoList.push(ele)
+      }
+    })
+    this.partyShade = this.shadeNoList;
     this.loading = true;
     if (event != undefined) {
       if (this.programValues.partyId) {
