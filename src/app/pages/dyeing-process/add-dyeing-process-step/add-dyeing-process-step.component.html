@@ -13,7 +13,7 @@
                     <label>Process Type</label>
                     <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
                     name="processType" #processType1="ngModel" [ngClass]="{'is-invalid':(processType1.invalid)&&(modalSubmitted || processType1.touched)}" required>
-                        <ng-option *ngFor="let p of processTypes" [value]="p">{{p}}</ng-option>
+                        <ng-option *ngFor="let p of processTypes | filterOutSelected : stepList" [value]="p">{{p}}</ng-option>
                       </ng-select>
                     <div class="invalid-feedback" style="color: red;" *ngIf="(processType1.invalid)&&(modalSubmitted || processType1.touched)">
                         Process Type is required.
