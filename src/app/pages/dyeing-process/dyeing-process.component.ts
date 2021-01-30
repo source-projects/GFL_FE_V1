@@ -50,7 +50,6 @@ export class DyeingProcessComponent implements OnInit {
               this.toastr.success(data["msg"]);
               this.dyeingProcessList = [];
               this.getAllDyeingProcesses();
-              this.toastr.success("Process deleted successfully");
             } else this.toastr.success(data["msg"]);
           },
           (error) => {

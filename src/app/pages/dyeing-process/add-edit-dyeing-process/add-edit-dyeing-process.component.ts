@@ -76,16 +76,20 @@ export class AddEditDyeingProcessComponent implements OnInit {
   }
 
   setChemicalData(){
-    this.dyeingProcessSteps.forEach(step=>{
-      step.dyeingChemicalData.forEach(item=>{
-        this.itemList.forEach(element => {
-          if(item.itemId == element.itemId){
-            item.supplierName = element.supplierName;
-          }
+    let inter = setInterval(()=>{
+      if(this.itemList){
+        this.dyeingProcessSteps.forEach(step=>{
+          step.dyeingChemicalData.forEach(item=>{
+            this.itemList.forEach(element => {
+              if(item.itemId == element.itemId){
+                item.supplierName = element.supplierName;
+              }
+            });
+          });
         });
-      });
-    });
-    
+        clearInterval(inter);
+      }
+    },10); 
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -120,7 +124,11 @@ export class AddEditDyeingProcessComponent implements OnInit {
   }
 
   addProcessStep() {
-    const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
+    if(this.dyeingProcessSteps.length == 4){
+      this.toastr.warning("You are done with all the steps!");
+    }
+    else{
+      const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
     modalRef.componentInstance.position = this.dyeingProcessSteps.length + 1;
     modalRef.componentInstance.stepList = this.dyeingProcessSteps;
     modalRef.componentInstance.editStep = false;
@@ -143,6 +151,8 @@ export class AddEditDyeingProcessComponent implements OnInit {
         }
       }
     });
+    }
+    
   }
 
   addUpdateDyeingProcess(myForm) {
