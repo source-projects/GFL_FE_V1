@@ -25,6 +25,7 @@ export class ColorComponent implements OnInit {
  
  tableStyle = 'bootstrap';
  colorList=[];
+ copyColorList = [];
  color=[];
  headers=["Supplier Name", "Bill No", "Bill Date", "Challan No", "Challan Date" ];
  module="color";
@@ -142,6 +143,26 @@ export class ColorComponent implements OnInit {
 
   }
 
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyColorList.length;
+    const keys = Object.keys(this.copyColorList[0]);
+    this.colorList = this.copyColorList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getColor(id, getBy) {
     this.loading=true;
     this.colorService.getColor(id, getBy).subscribe(
@@ -150,6 +171,7 @@ export class ColorComponent implements OnInit {
           this.colorList = data['data']
           this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
             billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
+          
           this.colorList = data['data'];
           let index = 0
           this.colorList.forEach(element => {
@@ -157,6 +179,9 @@ export class ColorComponent implements OnInit {
             this.colorList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
           });
+
+          this.copyColorList = this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
+            billDate: element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
         }
         // else {
         //   // this.toastr.error(data['msg']);

@@ -19,6 +19,7 @@ export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
   stockList;
+  copyStockList = [];
   stock = [];
   headers = ["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date"];
   module="stock-batch";
@@ -133,6 +134,26 @@ export class StockBatchComponent implements OnInit {
 
   }
 
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyStockList.length;
+    const keys = Object.keys(this.copyStockList[0]);
+    this.stockList = this.copyStockList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getStockBatchList(id, getBy) {
     this.loading = true;
     this.stockBatchService.getAllStockBatchList(id, getBy).subscribe(
@@ -146,7 +167,9 @@ export class StockBatchComponent implements OnInit {
             index++;
           });
           this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
-            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))         
+            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate })) 
+          this.copyStockList = this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))        
         } 
           
           this.loading = false;
