@@ -10,9 +10,9 @@
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">Dyeing Process</h2>
                     </div>
-                    <!-- <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+                    <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
                         <button style="float:right; "  class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
-                    </div> -->
+                    </div>
                 </div>
             </nb-card-header>
             <nb-card-body>
@@ -25,8 +25,7 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteDyeingProcess(row.id)" icon="trash" [hidden]="false"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" props="name"></ngx-datatable-column>
-                    <!-- <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column> -->
+                    <ngx-datatable-column name="Dyeing Process Name" props="dyeingProcessName"></ngx-datatable-column>
                     
                 </ngx-datatable>
             </nb-card-body>

@@ -94,12 +94,17 @@ export class AddDyeingProcessStepComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "program" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.dyeingChemicalData.length - 1) {
         let item = this.dyeingChemicalData[rowIndex];
 
         if (colName == "concentration") {
           if (!item.concentration) {
+            // this.toastr.error("Enter concentration");
+            return;
+          }
+        }else if(colName == "byChemical"){
+          if (!item.byChemical) {
             // this.toastr.error("Enter concentration");
             return;
           }

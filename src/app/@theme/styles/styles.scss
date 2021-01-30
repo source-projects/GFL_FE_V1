@@ -1408,6 +1408,14 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0;
 }
 
+.align-dis{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
         padding: 15px 0!important;
