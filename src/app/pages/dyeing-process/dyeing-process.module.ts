@@ -7,6 +7,7 @@ import { AddEditDyeingProcessComponent } from './add-edit-dyeing-process/add-edi
 import { SharedModule } from 'app/@theme/shared.module';
 import { FormsModule } from '@angular/forms';
 import { AddDyeingProcessStepComponent } from './add-dyeing-process-step/add-dyeing-process-step.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AddDyeingProcessStepComponent } from './add-dyeing-process-step/add-dye
     CommonModule,
     DyeingProcessRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ThemeModule
   ]
 })
 export class DyeingProcessModule { }
