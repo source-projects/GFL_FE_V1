@@ -88,7 +88,7 @@
                             <div class="list-popup">
                                 <ul class="list-type-none"  >
                                     <li *ngFor="let list of filterListDiv; let i = index" class="name">
-                                        <input type="checkbox" class="in-checkbox selector" name="{{list}}" checked>{{list}}
+                                        <input type="checkbox" (change)="checked($event.target.name,i)" class="in-checkbox selector" name="{{list}}" checked>{{list}}
                                     </li>
                                     
                                 </ul>

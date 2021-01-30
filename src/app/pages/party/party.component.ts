@@ -67,12 +67,14 @@ export class PartyComponent implements OnInit {
   distinctPartyContactList = [];
   distinctPartyCityList = [];
   distinctPartyStateList = [];
+  duplipartylist = [];
 
   filterListDiv = [];
   copyFilterListDiv = [];
 
   filterDivFlag: boolean = false;
   filterAndOrFlag: boolean = false;
+  stepFlag:boolean = false;
 
 
   constructor(
@@ -144,33 +146,78 @@ export class PartyComponent implements OnInit {
     });
   }
 
-  outside() {
 
-    this.checkedArray = [];
-    const vari = document.querySelectorAll(".selector");
-    vari.forEach((ele:HTMLInputElement) =>{
-      if(ele.checked){
-        this.checkedArray.push(ele.name)
-      }
+  checked(value:any,ind:any){
+    console.log("value:",value);
+    console.log("index:",ind);
 
-    })
-    const count = this.copyPartyList.length;
+    if (this.stepFlag) {
+      const count = this.duplipartylist.length;
+      const keys = Object.keys(this.duplipartylist[0]);
+      this.partyList = this.duplipartylist.filter(item => {
+        for (let i = 0; i < count; i++) {
+            if (
+              (item[keys[this.index]] &&
+                item[keys[this.index]]
+                  .toString()
+                  != value)
+            ) {
+              return true;
+            }
+          }
+          
+      });  
+      this.duplipartylist = this.partyList
+    }
+    else if (!this.stepFlag){
+      const count = this.copyPartyList.length;
     const keys = Object.keys(this.copyPartyList[0]);
     this.partyList = this.copyPartyList.filter(item => {
       for (let i = 0; i < count; i++) {
-        for(let j=0;j<this.checkedArray.length;j++){
           if (
-            (item[keys[j]] &&
-              item[keys[j]]
+            (item[keys[this.index]] &&
+              item[keys[this.index]]
                 .toString()
-                == this.checkedArray[i])
+                != value)
           ) {
             return true;
           }
         }
         
-      }
     });
+    this.copyPartyList = this.partyList;
+    }
+    
+
+  }
+
+  outside() {
+
+    // this.checkedArray = [];
+    // const vari = document.querySelectorAll(".selector");
+    // vari.forEach((ele:HTMLInputElement) =>{
+    //   if(ele.checked){
+    //     this.checkedArray.push(ele.name)
+    //   }
+
+    // })
+    // const count = this.copyPartyList.length;
+    // const keys = Object.keys(this.copyPartyList[0]);
+    // this.partyList = this.copyPartyList.filter(item => {
+    //   for (let i = 0; i < count; i++) {
+    //     for(let j=0;j<this.checkedArray.length;j++){
+    //       if (
+    //         (item[keys[j]] &&
+    //           item[keys[j]]
+    //             .toString()
+    //             == this.checkedArray[i])
+    //       ) {
+    //         return true;
+    //       }
+    //     }
+        
+    //   }
+    // });
     // this.partyList = this.copyPartyList.filter(ele=>{
     //   for(let i=0;i<this.checkedArray.length;i++){
     //     if (ele.partyName == this.checkedArray[i]) {
@@ -234,12 +281,14 @@ export class PartyComponent implements OnInit {
   }
 
   keyUpFilter(value: any) {
+    this.stepFlag = true;
     const val = value.toString().toLowerCase().trim();
     const count = this.copyPartyList.length;
     const count1 = this.copyFilterListDiv.length;
     // this.filterAndOrFlag = true;
     if (value == "") {
       this.filterAndOrFlag = false;
+      this.stepFlag = false;
     }
     if (this.selectedFilter1 == "Contains") {
       this.filterListDiv = this.copyFilterListDiv.filter((item) => {
@@ -266,6 +315,7 @@ export class PartyComponent implements OnInit {
           }
         }
       });
+      this.duplipartylist = this.partyList;
     }
     else if (this.selectedFilter1 == "Not Contains") {
 
@@ -303,6 +353,7 @@ export class PartyComponent implements OnInit {
             }
           }
         });
+        this.duplipartylist = this.partyList;
       }
       
     }
@@ -334,6 +385,7 @@ export class PartyComponent implements OnInit {
             }
           }
         });
+        this.duplipartylist = this.partyList;
       }
     }
     else if (this.selectedFilter1 == "Not Equals") {
@@ -364,6 +416,7 @@ export class PartyComponent implements OnInit {
             }
           }
         });
+        this.duplipartylist = this.partyList;
       }
     }
     else if (this.selectedFilter1 == "Starts with") {
@@ -394,6 +447,7 @@ export class PartyComponent implements OnInit {
             }
           }
         });
+        this.duplipartylist = this.partyList;
       }
     }
     else if (this.selectedFilter1 == "Ends with") {
@@ -423,6 +477,7 @@ export class PartyComponent implements OnInit {
             }
           }
         });
+        this.duplipartylist = this.partyList;
       }
     }
 
