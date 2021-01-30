@@ -25,8 +25,7 @@
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
 
-                        <div class="required-class"
-                            *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                        <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                             <span>Party name is required</span>
                         </div>
                     </div>
@@ -91,13 +90,11 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        
+
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
-                        <button type="button" class="btn btn-primary btn-sm btn-design"
-                            routerLink="/pages/payment">CANCEL</button>
-                        <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design"
-                           (click)="addAdvancePayment(paymentForm)" >SAVE</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
+                        <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design" (click)="addAdvancePayment(paymentForm)">SAVE</button>
                     </div>
 
                 </div>

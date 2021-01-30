@@ -26,6 +26,7 @@ export class ShadeComponent implements OnInit {
 
   tableStyle = "bootstrap";
   shadeList = [];
+  copyShadeList = [];
   shade = [];
   headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
   module="shade";
@@ -167,6 +168,10 @@ export class ShadeComponent implements OnInit {
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
+            this.copyShadeList = this.shadeList.map((element) => ({
+              partyShadeNo: element.partyShadeNo, processId: element.processId,
+              qualityId: element.qualityId, qualityName: element.qualityName, partyId: element.partyId, colorTone: element.colorTone
+            }))
        
           }
         }
@@ -176,6 +181,26 @@ export class ShadeComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyShadeList.length;
+    const keys = Object.keys(this.copyShadeList[0]);
+    this.shadeList = this.copyShadeList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
   }
 
   deleteShade(id) {
