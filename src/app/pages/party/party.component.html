@@ -21,7 +21,7 @@
                 <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
                     <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
-                <div class="ng-filter-main">
+                <div class="ng-filter-main-popup">
 
                     <div class="popup-ng">
                         <div class="popup-header text-center">
@@ -102,7 +102,7 @@
 
                         <ng-template ngx-datatable-header-template let-value="value">
                             party name
-                            <div class="filter-icon">
+                            <div class="filter-icon" id="onclickFilter">
                                 <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
 
                             </div>

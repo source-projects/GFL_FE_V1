@@ -1235,15 +1235,15 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 14px;
 }
 
-.ng-filter-main {
+.ng-filter-main-popup {
     border: solid 1px;
     border-color: #babfc7;
     border-color: var(--ag-border-color, #babfc7);
     background-color: var(--ag-control-panel-background-color, #f8f8f8);
     box-shadow: 0 1px 4px 1px #babfc766;
     min-width: 242px;
-    left: 157px;
-    top: 9px;
+    left: 323px;
+    top: 65px;
     max-height: 100%;
     overflow-y: auto;
     position: absolute;
@@ -1257,6 +1257,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 6px;
     padding: 0;
     z-index: 99;
+    display: block;
 }
 
 .filter-input input {
