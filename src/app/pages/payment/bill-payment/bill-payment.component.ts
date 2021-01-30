@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AdvancePayment, Payment, PaymentData} from 'app/@theme/model/payment'
+import {AdvancePayList, Payment, PaymentData} from 'app/@theme/model/payment'
 import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { PartyService } from 'app/@theme/services/party.service';
 import { PaymentService } from 'app/@theme/services/payment.service';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from 'app/@theme/json/error.json';
+
 @Component({
   selector: 'ngx-bill-payment',
   templateUrl: './bill-payment.component.html',
@@ -17,20 +19,26 @@ export class BillPaymentComponent implements OnInit {
   index: any;
 
   currentPaymentId: string;
-  total:Number=0;
-  totalAdvance:Number=0;
-  totalCredit:Number = 0;
+  //total:Number=0;
+  totalAdvance=0;
+  temp1 :any;
+  temp2:any;
+  temp3:any;
+  totalCredit = 0;
+  totalInvoice = 0;
+  totalCurrentPayment = 0;
   formSubmitted = false;
   loading = false;
   party: any[];
   invoiceList: any[];
   paymentTypeList:any[];
   paymentDetails:any[];
+  advancePaymentList:any[];
   paymentDataListArray: PaymentData[] = [];
 
   paymentValues: Payment = new Payment();
-
-  advancePaymentList: AdvancePayment = new AdvancePayment();
+  advancePayList:AdvancePayList = new AdvancePayList();
+  // advancePaymentList: AdvancePayment = new AdvancePayment();
   paymentDataList: PaymentData = new PaymentData();
 
 
@@ -53,6 +61,10 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
+    this.paymentValues.rdAmt = 0;
+    this.paymentValues.cdAmt = 0;
+    this.paymentValues.otherDiff = 0;
+    
   }
   public getUserId() {
     this.currentPaymentId = this._route.snapshot.paramMap.get("id");
@@ -136,7 +148,6 @@ export class BillPaymentComponent implements OnInit {
           (data) => {
               if (data["success"]) {
                 this.paymentDetails = data["data"];
-                console.log(this.paymentDetails);
                 this.loading = false;
                 //this.setPaymentDetails();
               } else {
@@ -159,17 +170,50 @@ export class BillPaymentComponent implements OnInit {
   }
 
   invoiceSelected(event){
-    this.total=0;
+    let selected=event.selected;
+    let inv=[];
+    selected.forEach(element=>
+      {
+         inv.push(element.invoicNo);
+      })
+      console.log(inv);
+      this.paymentValues.invoices=inv;
+    this.totalInvoice=0;
     event.selected.forEach(element => {
-      this.paymentValues.totalBill=this.total+element.amt;
+      this.totalInvoice=this.totalInvoice+element.amt;
     });
   }
 
   advancePaymentSelected(event){
+    let selected=event.selected;
+    let advance=[];
+    selected.forEach(element=>
+      {
+         advance.push(element.id);
+      })
+      console.log(advance);
+
+      this.paymentValues.advancePayList=advance;
+
     this.totalCredit=0;
     event.selected.forEach(element => {
       this.totalCredit=this.totalCredit+element.amt;
     });
+    if(this.totalCredit!=0 || this.totalCurrentPayment!=0){
+      this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+    }
+  }
+
+  gstSelected(event){
+    if(event.target.value || event.target.value == ""){
+      this.paymentValues.totalBill = this.totalInvoice;
+      this.paymentValues.amtToPay = this.totalInvoice;
+    }
+    let gst = Number(event.target.value);
+    // let a1= this.totalInvoice - gst;
+    this.paymentValues.totalBill = this.totalInvoice - gst;
+    this.paymentValues.amtToPay = this.totalInvoice;
+    //console.log(event.target.value);
   }
 
   getPaymentType(){
@@ -192,7 +236,6 @@ export class BillPaymentComponent implements OnInit {
   
 
   typeSelected(rowIndex, row,elementId) {
-    console.log(rowIndex ,row, elementId);
     let id = this.paymentValues.paymentData[rowIndex].payType;
     let flag = false;
     let count = 0;
@@ -206,13 +249,11 @@ export class BillPaymentComponent implements OnInit {
   
 
   onKeyUp(e, rowIndex, colIndex, colName) {
-    console.log(e, rowIndex, colIndex, colName);
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "paymentDetailsList" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.paymentValues.paymentData.length - 1) {
         let item = this.paymentValues.paymentData[rowIndex];
-        console.log(item);
         if (colName == "payType") {
           if (!item.payType) {
             this.toastr.error("Enter payment type", "payment type required");
@@ -251,6 +292,9 @@ export class BillPaymentComponent implements OnInit {
         id:null,
       };
       let list = this.paymentValues.paymentData;
+      // list.forEach(element=>{
+      //   this.totalCurrentPayment = this.totalCurrentPayment + element.payAmt;
+      // })
       list.push(obj);
       this.paymentValues.paymentData = [...list];
         let interval = setInterval(() => {
@@ -259,7 +303,7 @@ export class BillPaymentComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50);
+        }, 10);
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -267,7 +311,7 @@ export class BillPaymentComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50); alert("go to any last row input to add new row");
+        }, 10); alert("go to any last row input to add new row");
       }
      }
   }
@@ -276,7 +320,6 @@ export class BillPaymentComponent implements OnInit {
     //remove row
     let idCount = this.paymentValues.paymentData.length;
     let item = this.paymentValues.paymentData;
-    console.log(item);
     if (idCount == 1) {
       item[0].payType = null;
       item[0].payAmt = null;
@@ -292,12 +335,45 @@ export class BillPaymentComponent implements OnInit {
     }
   }
 
+  currentPaymentAdded(event){
+    if(event.target.value || event.target.value == ""){
+      this.totalCurrentPayment = 0;
+    }
+    
+    let curPay = Number(event.target.value);
+    this.totalCurrentPayment = this.totalCurrentPayment + curPay;
+    if(this.totalCredit!=0 || this.totalCurrentPayment!=0){
+      this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+    }
+  }
+
+  
+
+  cdSelected(event){
+    let val = Number(event.target.value);  
+    this.paymentValues.amtToPay = this.totalInvoice - ( this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff);
+  }
+
   onAddPayment(){
-    if(this.total!=this.totalAdvance){
-      this.toastr.error("total and advance payment are not equal");
+    if(this.paymentValues.amtToPay!=this.paymentValues.amtPaid){
+      this.toastr.error("amount to pay and amount paid are not equal");
     }
     else{
-      
+      console.log(this.paymentValues);
+      this.paymentService.savePayment(this.paymentValues).subscribe(
+        data => {
+          if (data['success']) {
+            this.route.navigate(["/pages/payment/bill-payment"]);
+            this.toastr.success(errorData.Add_Success);
+          }
+          else {
+            this.toastr.error(errorData.Add_Error)
+          }
+        },
+        error => {
+          this.toastr.error(errorData.Serever_Error)
+        }
+      )
     }
   }
 

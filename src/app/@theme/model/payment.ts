@@ -3,35 +3,26 @@ export class Payment {
     id:Number;
     isSendToParty:boolean;
     gstAmt:Number;
-    cdAmt:Number;
-    rdAmt:Number;
-    otherDiff:Number;
+    cdAmt:number;
+    rdAmt:number;
+    otherDiff:number;
     rdDetail:string;
     cdDetail:string;
     diffDetail:string;
-    amtToPay:Number;
+    amtToPay:number;
     amtPaid:Number;
     totalBill:Number;
     invoices:Invoices[];
     paymentData:PaymentData[];
-    advancePayment:AdvancePayment[];
-   // paymentDetails:PaymentDetails[];
+    advancePayList:AdvancePayList[];
 }
 export class Invoices{
     invoiceNo:string;
-
 }
 
-export class AdvancePayment{
-    partyId: Number;
-    amt:Number;
-    payTypeId:Number;
-    paymentBunchId:Number;
-    remark:String;
-    no:Number;
-    bank:String;
+export class AdvancePayList{
+    id:Number;
 }
-
 export class PaymentData{
     chequeDate:string;
     chequeNo:string;
@@ -43,10 +34,3 @@ export class PaymentData{
     remark:string;
     bank:string;
 }
-
-// export class PaymentDetails{
-//     type:String;
-//     amount:Number;
-//     date:String;
-//     remark:String;
-//   }

@@ -14,7 +14,7 @@
         </div>
     </nb-card-header>
     <nb-card-body>
-        <form #paymentForm="ngForm">
+        <form #advancePaymentForm="ngForm">
             <div  class="row">
                 <div class="col-md-3">
                     <div class="form-group">
@@ -30,70 +30,89 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="required">Payment Type:</label>
-                        <ng-select name="payTypeId" [(ngModel)]='advancePaymentValues.payTypeId' required #payType1="ngModel"
-                            [ngClass]="{'is-invalid': (payType1.invalid)&&(formSubmitted || payType1.touched)}"
-                             placeholder="Payment type" class="required-error-dropdown" (change)="paymentTypeSelected($event)">
-                            <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">{{type.paymentType}}</ng-option>
-                        </ng-select>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Payment Details:</label>
+                    <ngx-datatable #table class="material common-table datatable-auto-height"
+                        [rows]="advancePaymentArray" [headerHeight]="31" [footerHeight]="31">
+                        <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                let-rowIndex="rowIndex">
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                    (click)="removeItem(rowIndex)"></nb-icon>
+                            </ng-template>
+                        </ngx-datatable-column>
 
-                        <div class="required-class"
-                            *ngIf="(formSubmitted && payType1.invalid) || (payType1.invalid && payType1.touched)">
-                            <span>Payment type is required</span>
-                        </div>
-                    </div>
-                </div>
-           
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="required">Amount</label>
-                        <input type="number" class="form-control" [(ngModel)]="advancePaymentValues.amt"
-                        name="amt" #amt1="ngModel" 
-                        [ngClass]="{'is-invalid':(amt1.invalid)&&(formSubmitted || amt1.touched)}" required >
-                    </div>
-                </div>
+                        <ngx-datatable-column name="Type" prop="payTypeId" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <select (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                    name='payTypeId{{rowIndex}}' class="tableForm" id="payTypeId"
+                                    [(ngModel)]="row.payTypeId" required
+                                    (keyup)="onKeyUp($event,rowIndex,0,'payTypeId')"
+                                    [id]="'advancePaymentList'+rowIndex+'-0'">
+                                    <option *ngFor="let type of paymentTypeList" [value]="type.id">
+                                        {{type.paymentType}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)"
+                                    style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="required">Remark</label>
-                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.remark"
-                        name="remark" #remark1="ngModel" 
-                        [ngClass]="{'is-invalid':(remark1.invalid)&&(formSubmitted || remark1.touched)}" required >
-                    </div>
+                        <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="amt">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input type="number" #payAmt1="ngModel" name='amt{{rowIndex}}' class="tableForm"
+                                    id="amt" [(ngModel)]="row.amt"
+                                    (keyup)="onKeyUp($event,rowIndex,1,'amt')"
+                                    [id]="'advancePaymentList'+rowIndex+'-1'" min="0">
+                                <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)"
+                                    style="display: inline-block;">
+                                    <span>Required</span>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+
+                        <ngx-datatable-column name="Cheque No." prop="no" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input class="tableForm" type="text" #chequeNo1="ngModel"
+                                    name='no{{rowIndex}}' [(ngModel)]="row.no"
+                                    (keyup)="onKeyUp($event,rowIndex,3,'no')"
+                                    [id]="'advancePaymentList'+rowIndex+'-3'">
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Bank" prop="bank" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input class="tableForm" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
+                                    [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')"
+                                    [id]="'advancePaymentList'+rowIndex+'-4'">
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <input class="tableForm" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
+                                    [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')"
+                                    [id]="'advancePaymentList'+rowIndex+'-5'">
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
                 </div>
             </div>
-            <div *ngIf="cashSelected" class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="required">Cheque No.</label>
-                        <input type="number" class="form-control" [(ngModel)]="advancePaymentValues.no"
-                        name="no" #chequeNo1="ngModel" 
-                        [ngClass]="{'is-invalid':(chequeNo1.invalid)&&(formSubmitted || chequeNo1.touched)}" required >
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="required">Bank</label>
-                        <
-                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.bank"
-                        name="bank" #bank1="ngModel" 
-                        [ngClass]="{'is-invalid':(bank1.invalid)&&(formSubmitted || bank1.touched)}" required >
-                    </div>
-                </div>
 
                
-            </div>
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
 
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
-                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment/advance-payment">CANCEL</button>
                         <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design" (click)="addAdvancePayment(paymentForm)">SAVE</button>
                     </div>
 
