@@ -68,6 +68,7 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  CounterPipe,
   FilterSelectedProcessPipe
 ];
 
