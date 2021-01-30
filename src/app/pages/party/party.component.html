@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
                     </div>
                 </div>
-                <div class="ng-filter-main-popup">
+                <div *ngIf="filterDivFlag" class="ng-filter-main-popup">
 
                     <div class="popup-ng">
                         <div class="popup-header text-center">
@@ -36,63 +36,67 @@
                         </div>
                         <div class="popup-body">
                             <div class="section-1-popup">
-                                <ng-select appendTo="body" class="popup-select">
-                                    <ng-option [value]="1">name</ng-option>
-                                    <ng-option [value]="2">name</ng-option>
-                                    <ng-option [value]="3">name</ng-option>
-                                    <ng-option [value]="4">name</ng-option>
-                                    <ng-option [value]="5">name</ng-option>
+                                <ng-select appendTo="body" class="popup-select" placeholder="Select Filter" (change)="onChangeFilterSettings($event)" [(ngModel)]="selectedFilter1">
+                                    <ng-option [value]="1">Conatins</ng-option>
+                                    <ng-option [value]="2">Not Contains</ng-option>
+                                    <ng-option [value]="3">Equals</ng-option>
+                                    <ng-option [value]="4">Not Equals</ng-option>
+                                    <ng-option [value]="5">Starts With</ng-option>
+                                    <ng-option [value]="6">Ends With</ng-option>
                                 </ng-select>
 
                                 <div class="filter-input">
-                                    <input type="text" class="form-control" placeholder="Filter...">
+                                    <input type="text" class="form-control" placeholder="Filter..." (keyup)="keyUpFilter($event.target.value)">
                                 </div>
-                                <div class="radio-popup">
-                                    <div class="rd-1">
-                                        <input type="radio" id="and" name="select" class="radio-btn"><label for="and">AND</label>
+
+                                <div class="fil-border-top"></div>
+
+                                <div *ngIf="filterAndOrFlag">
+                                    <div class="radio-popup">
+                                        <div class="rd-1">
+                                            <input type="radio" id="and" name="select" class="radio-btn"><label for="and">AND</label>
+                                        </div>
+                                        <div class="rd-2">
+                                            <input type="radio" id="or" name="select" class="radio-btn"><label for="or">OR</label>
+                                        </div>
+    
                                     </div>
-                                    <div class="rd-2">
-                                        <input type="radio" id="or" name="select" class="radio-btn"><label for="or">OR</label>
+    
+                                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter">
+                                        <ng-option [value]="1">Conatins</ng-option>
+                                        <ng-option [value]="2">Not Contains</ng-option>
+                                        <ng-option [value]="3">Equals</ng-option>
+                                        <ng-option [value]="4">Not Equals</ng-option>
+                                        <ng-option [value]="5">Starts With</ng-option>
+                                        <ng-option [value]="6">Ends With</ng-option>
+                                    </ng-select>    
+    
+                                    <div class="filter-input">
+                                        <input type="text" class="form-control" placeholder="Filter...">
                                     </div>
-
                                 </div>
-
-                                <ng-select appendTo="body" class="popup-select">
-                                    <ng-option [value]="1">name</ng-option>
-                                    <ng-option [value]="2">name</ng-option>
-                                    <ng-option [value]="3">name</ng-option>
-                                    <ng-option [value]="4">name</ng-option>
-                                    <ng-option [value]="5">name</ng-option>
-                                </ng-select>
-
-                                <div class="filter-input">
-                                    <input type="text" class="form-control" placeholder="Filter...">
-                                </div>
+                                
                             </div>
 
-                            <div class="fil-border-top"></div>
+                            
                             <div class="section-1-popup">
                                 <div class="filter-input">
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <input type="text" class="form-control" placeholder="Search..." (keyup)="searchFilterList($event.target.value)">
                                 </div>
 
                             </div>
                             <div class="list-popup">
-                                <ul class="list-type-none">
-                                    <li><input type="checkbox" class="in-checkbox" id="in1"><label for="in1">(select All)</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in2"><label for="in2"> (Blanks)</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in3"><label for="in3"> A. J. Mleczko</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in4"><label for="in4"> Aaron Armstrong</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in5"><label for="in5"> Aaron Egbele</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in6"><label for="in6"> Aaron Gate</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in7"><label for="in7"> Aaron Gate</label></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
-                                    <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
+                                <ul class="list-type-none"  >
+                                    <li *ngFor="let list of filterListDiv; let i = index" class="name">
+                                        <input type="checkbox" class="in-checkbox selector" name="{{list}}" checked>{{list}}
+                                    </li>
+                                    
                                 </ul>
+                            </div>
+                            <div>
+                                <button (click)="outside()">
+                                    OK
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -105,21 +109,58 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column props="partyName">
+                    <ngx-datatable-column name="Party Name" props="partyName">
 
-                        <ng-template ngx-datatable-header-template let-value="value">
-                            party name
+                        <ng-template ngx-datatable-header-template let-value="value">Party Name
+                           
                             <div class="filter-icon" id="onclickFilter">
-                                <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
+                                <nb-icon icon="menu-outline" class="nb-icon-filter" (click)="filterOpen('partyName',0)"></nb-icon>
+
+                            </div>
+                            
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Party Address1" props="partyAddress1">
+                        <ng-template ngx-datatable-header-template let-value="value">Party Address1
+                           
+                            <div class="filter-icon" id="onclickFilter">
+                                <nb-icon icon="menu-outline" class="nb-icon-filter" (click)="filterOpen('partyAddress1',1)"></nb-icon>
 
                             </div>
 
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Party Address1" props="partyAddress1"></ngx-datatable-column>
-                    <ngx-datatable-column name="Contact No" props="contactNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="City" props="city"></ngx-datatable-column>
-                    <ngx-datatable-column name="State" props="state"></ngx-datatable-column>
+                    <ngx-datatable-column name="Contact No" props="contactNo">
+                        <ng-template ngx-datatable-header-template let-value="value">Contact No
+                           
+                            <div class="filter-icon" id="onclickFilter">
+                                <nb-icon icon="menu-outline" class="nb-icon-filter" (click)="filterOpen('contactNo',2)"></nb-icon>
+
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="City" props="city">
+                        <ng-template ngx-datatable-header-template let-value="value">City
+                           
+                            <div class="filter-icon" id="onclickFilter">
+                                <nb-icon icon="menu-outline" class="nb-icon-filter" (click)="filterOpen('city',3)"></nb-icon>
+
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="State" props="state">
+                        <ng-template ngx-datatable-header-template let-value="value">State
+                           
+                            <div class="filter-icon" id="onclickFilter">
+                                <nb-icon icon="menu-outline" class="nb-icon-filter" (click)="filterOpen('state',4)"></nb-icon>
+
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
                 </ngx-datatable>
             </nb-card-body>
 

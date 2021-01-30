@@ -1242,11 +1242,11 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: var(--ag-control-panel-background-color, #f8f8f8);
     box-shadow: 0 1px 4px 1px #babfc766;
     min-width: 242px;
-    left: 323px;
-    top: 65px;
+    left: 255px;
+    top: 202px;
     max-height: 100%;
     overflow-y: auto;
-    position: absolute;
+    position: fixed;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
