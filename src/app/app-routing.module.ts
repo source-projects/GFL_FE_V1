@@ -75,6 +75,14 @@ export const routes: Routes = [
         data: { PermissionName: ['view','view group','view all']}
       },
       {
+        path: 'dyeing-process',
+        loadChildren: () => import('./pages/dyeing-process/dyeing-process.module')
+          .then(m => m.DyeingProcessModule),
+        // canActivate: [ProgramGuard],
+        // canLoad: [ProgramGuard],
+        // data: { PermissionName: ['view','view group','view all']}
+      },
+      {
         path: 'process',
         loadChildren: () => import('./pages/process/process.module')
           .then(m => m.ProcessModule),
@@ -179,6 +187,8 @@ export const routes: Routes = [
     ],
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  
+  { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
     
   { path: '**', redirectTo: 'auth' },
 ];
@@ -186,7 +196,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules,
+    // preloadingStrategy: PreloadAllModules,
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
       useHash:false,
