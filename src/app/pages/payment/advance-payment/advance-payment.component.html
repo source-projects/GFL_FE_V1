@@ -15,14 +15,13 @@
     </nb-card-header>
     <nb-card-body>
         <form #paymentForm="ngForm">
-            <div class="row" class="row">
-                <div class="col-md-4">
+            <div  class="row">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label class="required">Party Name</label>
+                        <label class="required">Party Name:</label>
                         <ng-select name="partyId" [(ngModel)]='advancePaymentValues.partyId' required #partyId1="ngModel"
                             [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                             placeholder="Party Name" class="required-error-dropdown"
-                            >
+                             placeholder="Party Name" class="required-error-dropdown">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
 
@@ -32,24 +31,62 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="required">Payment Type:</label>
+                        <ng-select name="payTypeId" [(ngModel)]='advancePaymentValues.payTypeId' required #payType1="ngModel"
+                            [ngClass]="{'is-invalid': (payType1.invalid)&&(formSubmitted || payType1.touched)}"
+                             placeholder="Payment type" class="required-error-dropdown" (change)="paymentTypeSelected($event)">
+                            <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">{{type.paymentType}}</ng-option>
+                        </ng-select>
+
+                        <div class="required-class"
+                            *ngIf="(formSubmitted && payType1.invalid) || (payType1.invalid && payType1.touched)">
+                            <span>Payment type is required</span>
+                        </div>
+                    </div>
+                </div>
            
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label class="required">Amount</label>
-                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.amt"
+                        <input type="number" class="form-control" [(ngModel)]="advancePaymentValues.amt"
                         name="amt" #amt1="ngModel" 
                         [ngClass]="{'is-invalid':(amt1.invalid)&&(formSubmitted || amt1.touched)}" required >
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label class="required">cheque Amount</label>
-                        <input type="text" class="form-control" [(ngModel)]="chequeAmt"
-                        name="chequeAmt" #chequeAmt1="ngModel" 
-                        [ngClass]="{'is-invalid':(chequeAmt1.invalid)&&(formSubmitted || chequeAmt1.touched)}" required >
+                        <label class="required">Remark</label>
+                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.remark"
+                        name="remark" #remark1="ngModel" 
+                        [ngClass]="{'is-invalid':(remark1.invalid)&&(formSubmitted || remark1.touched)}" required >
                     </div>
                 </div>
+            </div>
+            <div *ngIf="cashSelected" class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="required">Cheque No.</label>
+                        <input type="number" class="form-control" [(ngModel)]="advancePaymentValues.no"
+                        name="no" #chequeNo1="ngModel" 
+                        [ngClass]="{'is-invalid':(chequeNo1.invalid)&&(formSubmitted || chequeNo1.touched)}" required >
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="required">Bank</label>
+                        <
+                        <input type="text" class="form-control" [(ngModel)]="advancePaymentValues.bank"
+                        name="bank" #bank1="ngModel" 
+                        [ngClass]="{'is-invalid':(bank1.invalid)&&(formSubmitted || bank1.touched)}" required >
+                    </div>
+                </div>
+
+               
             </div>
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">

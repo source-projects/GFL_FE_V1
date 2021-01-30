@@ -23,9 +23,11 @@ export class AdvancePaymentComponent implements OnInit {
 
   formSubmitted = false;
   loading = false;
-
+  cashSelected = false;
+  
   party: any[];
-  advancePaymentList: any[];
+  paymentTypeList:any[];
+  //advancePaymentList: any[];
 
   advancePaymentValues: AdvancePayment = new AdvancePayment();
 
@@ -45,6 +47,7 @@ export class AdvancePaymentComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId().userHeadId;
     this.getPartyList();
     this.getUserId();
+    this.getPaymentType();
   }
 
   public getUserId() {
@@ -68,6 +71,35 @@ export class AdvancePaymentComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  getPaymentType(){
+    this.paymentService.getAllPaymentType().subscribe(
+      (data) => {
+          if (data["success"]) {
+            this.paymentTypeList = data["data"];
+            console.log(this.paymentTypeList);
+            this.loading = false;
+          } else {
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
+          }
+        },
+        (error) => {
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
+        }
+    );
+  }
+
+  paymentTypeSelected(event){
+    if(event == 14460){
+      this.cashSelected = true;
+      this.advancePaymentValues.amt = 0;
+    }else{
+      this.cashSelected = false;
+
+    }
   }
 
   addAdvancePayment(event){
