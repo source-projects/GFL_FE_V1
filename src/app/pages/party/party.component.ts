@@ -50,6 +50,14 @@ export class PartyComponent implements OnInit {
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
+
+
+  selectedFilter1:any;
+
+  filterDivFlag:boolean = false;
+  filterAndOrFlag:boolean = false;
+
+
   constructor(
     private partyService: PartyService,
     private route: Router,
@@ -118,6 +126,42 @@ export class PartyComponent implements OnInit {
       }
     });
   }
+
+
+  filterOpen(){
+    this.filterDivFlag = true;
+  }
+
+  onChangeFilterSettings(value:any){
+
+    if(value == 1){
+      this.selectedFilter1 = "contains";
+    }
+    else if(value == 2){
+      this.selectedFilter1 = "notcontains";
+    }
+    else if(value == 3){
+      this.selectedFilter1 = "equals";
+    }
+    else if(value == 4){
+      this.selectedFilter1 = "notequals";
+    }
+    else if(value == 5){
+      this.selectedFilter1 = "startswith";
+    }
+    else if(value == 6){
+      this.selectedFilter1 = "endswith";
+    }
+
+  }
+
+  keyUpFilter(value:any){
+
+  }
+
+
+
+
 
   getAllParty(id,getBy) {
     this.loading = true;
