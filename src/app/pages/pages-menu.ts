@@ -91,6 +91,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
+    title: 'DyeingProcess',
+    icon: 'settings-2-outline',
+    link: '/pages/dyeing-process',
+    hidden:false
+  },
+  {
     title: 'Finished Meter',
     icon: 'bar-chart-outline',
     link: '/pages/finishedMeter',
