@@ -4,3 +4,4 @@ export * from './round.pipe';
 export * from './timing.pipe';
 export * from './number-with-commas.pipe';
 export * from './Counter.pipe';
+export * from './filter-selected-process.pipe';
