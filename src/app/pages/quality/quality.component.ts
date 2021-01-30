@@ -25,6 +25,7 @@ export class QualityComponent implements OnInit {
     {id:3, value:"View All" , disabled:false}
   ];
   qualityList=[];
+  copyQualityList = [];
   quality=[];
   headers=["Quality Id", "Quality Name", "Quality Type", "Party Name" ];
   module="quality";
@@ -102,6 +103,26 @@ export class QualityComponent implements OnInit {
     }
   }
 
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyQualityList.length;
+    const keys = Object.keys(this.copyQualityList[0]);
+    this.qualityList = this.copyQualityList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   onChange(event){
     this.qualityList = [];
     switch(event){
@@ -143,6 +164,8 @@ open(){
           this.qualityList = data['data']
           this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
              qualityType: element.qualityType,partyName:element.partyName }))
+             this.copyQualityList = this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+              qualityType: element.qualityType,partyName:element.partyName }));
             this.loading = false;
         }
         else {

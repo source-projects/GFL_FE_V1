@@ -23,6 +23,7 @@ export class SupplierComponent implements OnInit {
 
   //to get SupplierList
   supplierList = [];
+  copySupplierList = [];
   supplier = [];
   headers = ["Supplier Name", "Discount%", "GST%", "Payment Terms", "Remark"];
   module="supplier";
@@ -136,6 +137,28 @@ export class SupplierComponent implements OnInit {
     modalRef.componentInstance.moduleName = this.module;
 
   }
+
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copySupplierList.length;
+    const keys = Object.keys(this.copySupplierList[0]);
+    this.supplierList = this.copySupplierList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
+
   public getSupplierList(id, getBy) {
     this.loading = true;
     this.supplierService.getAllSupplier(id, getBy).subscribe(
@@ -145,6 +168,11 @@ export class SupplierComponent implements OnInit {
             this.supplierList = data['data']
 
             this.supplier = this.supplierList.map((element) => ({
+              supplierName: element.supplierName, discountPercentage: element.discountPercentage,
+              gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
+            }))
+
+            this.copySupplierList = this.supplierList.map((element) => ({
               supplierName: element.supplierName, discountPercentage: element.discountPercentage,
               gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
             }))
