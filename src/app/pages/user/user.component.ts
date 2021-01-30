@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   public loading = false;
   tableStyle = 'bootstrap';
   userList=[];
+  copyUserList = [];
   user=[];
   headers=["User Name", "First Name", "Last Name", "Company", "Designation" ];
   module="user";
@@ -140,6 +141,26 @@ export class UserComponent implements OnInit {
 
   }
 
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyUserList.length;
+    const keys = Object.keys(this.copyUserList[0]);
+    this.userList = this.copyUserList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getAllUser(id,getBy){
     this.loading = true;
     this.userService.getAllUser(id,getBy).subscribe(
@@ -148,7 +169,8 @@ export class UserComponent implements OnInit {
           this.userList = data['data'];
           this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
-           
+          this.copyUserList = this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+            lastName: element.lastName, company:element.company, designation:element.designation }))
           }
           this.loading = false;
       },

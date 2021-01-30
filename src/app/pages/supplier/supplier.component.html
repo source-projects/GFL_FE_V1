@@ -15,13 +15,19 @@
         </div>
     </nb-card-header>
     <nb-card-body>
-
-        <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-            <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
-                (valueChange)="onChange($event)">
-                {{radio.value}}</nb-radio>
-        </nb-radio-group>
-
+        <div class="row">
+            <div class="col-md-6">
+                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
+                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
+                        (valueChange)="onChange($event)">
+                        {{radio.value}}</nb-radio>
+                </nb-radio-group>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+            </div>
+        </div>
         <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
             [footerHeight]="31">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">

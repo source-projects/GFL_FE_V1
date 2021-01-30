@@ -18,9 +18,16 @@
             </nb-card-header>
 
             <nb-card-body>
-                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-                    <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
-                </nb-radio-group>
+                <div class="row">
+                    <div class="col-md-6">
+                        <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
+                            <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                        </nb-radio-group>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                    </div>
+                </div>
                 <div class="ng-filter-main-popup">
 
                     <div class="popup-ng">
