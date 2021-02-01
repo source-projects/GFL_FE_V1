@@ -122,7 +122,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Payment',
-    icon: 'shuffle-2-outline',
+    icon: 'credit-card-outline',
     children: [
       {
         title: 'Bill Payment',

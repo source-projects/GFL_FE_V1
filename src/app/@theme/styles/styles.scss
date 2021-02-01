@@ -1368,6 +1368,15 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0;
 }
 
+.dash-style {
+    background: #aa3634;
+    padding: 0 15px;
+}
+
+.main-dash-card {
+    border: 1px solid #aa3634;
+}
+
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
         padding: 15px 0!important;
