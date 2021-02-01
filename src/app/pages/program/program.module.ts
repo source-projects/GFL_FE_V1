@@ -5,7 +5,7 @@ import { ProgramRoutingModule } from './program-routing.module';
 import { ProgramComponent } from './program.component';
 import { AddEditProgramComponent } from './add-edit-program/add-edit-program.component';
 import { SharedModule } from 'app/@theme/shared.module';
-import { FormsModule } from '../forms/forms.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({

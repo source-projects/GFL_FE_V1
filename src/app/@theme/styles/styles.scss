@@ -1216,6 +1216,56 @@ input[type=number]::-webkit-outer-spin-button {
     border-color: #5e5b5e transparent transparent;
 }
 
+.dying-table th,
+.dying-table td {
+    padding: 6px 15px;
+    text-align: center;
+}
+
+.dying-table tr th {
+    font-size: 16px;
+}
+
+.dying-table tr td {
+    font-size: 14px;
+}
+
+.tb-ui {
+    margin-right: 5px;
+}
+
+.dis-fl {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.dis-fl-di {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.div-fl-1 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.num-bd {
+    background: #aa3634;
+    color: #fff;
+    border-radius: 26px;
+    text-align: center;
+    padding: 0px 12px;
+    font-size: 14px;
+}
+
+.dyn-title {
+    font-size: 17px !important;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 // table filter changes
 .datatable-header-cell-template-wrap {
     font-size: 14px;
@@ -1375,6 +1425,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .main-dash-card {
     border: 1px solid #aa3634;
+}
+
+.align-dis {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 @media (max-width: 767px) {
