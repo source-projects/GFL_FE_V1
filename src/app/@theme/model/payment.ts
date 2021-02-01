@@ -30,7 +30,7 @@ export class PaymentData{
     controlId:Number;
     id:Number;
     payAmt:Number;
-    payType:string;
+    payTypeId:number;
     remark:string;
     bank:string;
 }
