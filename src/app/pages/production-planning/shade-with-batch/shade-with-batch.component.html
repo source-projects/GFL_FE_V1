@@ -5,11 +5,48 @@
     </button>
 </div>
 <div class="modal-body">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list shade-with-batch-design"  (click)="onClick($event)" id="" >
-        <div class="example-box jet-popup-box production-list-popup" *ngFor="let s of allShade" cdkDrag> 
-           
-        
-            <div class="jet-popup-display"  ><span class="prouction-jet-number">{{s.batchId}}</span><input class="form-control input-jet"  [style.background]="s.colorTone" disabled ></div>
-        </div>
-    </div>
+    <form #myForm="ngForm">
+        <div class="row">
+            <!-- Party name -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="required">Select Jet: </label>
+                    <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel"
+                    [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}"
+                     placeholder="Jet Number" class="required-error-dropdown">
+                    <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}</ng-option>
+                </ng-select>
+                <div class="required-class" *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
+                    <span>Jet number is required</span>
+                </div>
+                            <!-- <input type="number" class="form-control" [(ngModel)]="jet" #jetNo1="ngModel" name="jet" required 
+                            [ngClass]="{'is-invalid':(jetNo1.invalid)&&(formSubmitted ||  jetNo1.touched)}" placeholder="Enter jet number">
+                            <div class="invalid-feedback" *ngIf="(jetNo1.invalid)&&(formSubmitted ||  jetNo1.touched)">
+
+                                <span>Jet No is required</span>
+                            </div> -->
+                        </div>
+                    </div>
+                   
+                    <!-- <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel"
+                        [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                         placeholder="Party Name" class="required-error-dropdown"
+                         (change)=partySelected($event)>
+                        <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+                    </ng-select> -->
+                    <!-- <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                        <span>Party Id is required</span>
+                    </div> -->
+                <!-- </div> -->
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button  type="button" (click)="onClick(myForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px">Ok</button>
+
+                    </div>
+                </div>
+            </div>
+            </form>
 </div>

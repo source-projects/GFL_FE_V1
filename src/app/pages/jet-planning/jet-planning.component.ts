@@ -8,6 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import * as errorData from "app/@theme/json/error.json";
 import { ProductionPlanningService } from 'app/@theme/services/production-planning.service';
 import { WarningPopupComponent } from 'app/@theme/components/warning-popup/warning-popup.component';
+import {ProductionPlanning} from "app/@theme/model/production-planning";
+import { PartyService } from 'app/@theme/services/party.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QualityService } from 'app/@theme/services/quality.service';
+import { CommonService } from 'app/@theme/services/common.service';
+import { StockBatchService } from 'app/@theme/services/stock-batch.service';
+import { ProgramService } from 'app/@theme/services/program.service';
+import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
   selector: 'ngx-jet-planning',
@@ -19,22 +27,23 @@ export class JetPlanningComponent implements OnInit {
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
   allShade: any;
-  constructor(
-    private modalService: NgbModal,
-    private jetService: JetPlanningService,
-    private toastr: ToastrService,
-    private productionPlanningService: ProductionPlanningService,
-
-  ) { }
-
-  ngOnInit(): void {
-
-    this.getJetData();
-    this.getshade();
-  }
-
+  productionPlanning: ProductionPlanning = new ProductionPlanning();
   public errorData: any = (errorData as any).default;
-
+  user: any;
+  userHead: any;
+  public loading = false;
+  formSubmitted: boolean = false;
+  batch: any;
+  p_id: any;
+  partyList: any[];
+  qualityList: any[];
+  batchListByParty: any[];
+  batchListParty: any[];
+  batchList:any[]=[];
+  allBatchList: any[]=[];
+  // batchList = [];
+  programValues: any;
+  qualityList1: any;
   array = [];
   array1 = [];
   index: any;
@@ -47,12 +56,305 @@ export class JetPlanningComponent implements OnInit {
     productionId: Number,
     sequence: Number,
   }
-  loading = false;
   count = 0;
   countArr = [];
   jetPlanning: JetPlanning = new JetPlanning();
   jetDataList: JetDataList = new JetDataList();
   JetDataListArray: JetDataList[] = [];
+
+
+  constructor(
+    private modalService: NgbModal,
+    private jetService: JetPlanningService,
+    private toastr: ToastrService,
+    private productionPlanningService: ProductionPlanningService,
+    private partyService: PartyService,
+    private _route: ActivatedRoute,
+    private qualityService: QualityService,
+    private route: Router,
+    private commonService: CommonService,
+    private stockBatchService: StockBatchService,
+    private programService: ProgramService,
+    private shadeService: ShadeService
+
+  ) { }
+
+  ngOnInit(): void {
+    this.getCurrentId();
+    this.getPartyList();
+    this.getQualityList();
+    //this.getAllBatchData();
+    this.getJetData();
+    //this.getshade();
+
+    //this.getAllBatchWithShade();
+  
+  }
+
+  
+  getCurrentId() {
+    this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
+  }
+  getPartyList() {
+    this.loading = true;
+    this.partyService.getAllPartyNameList().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.partyList = data["data"];
+          this.loading = false;
+        } else {
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
+        }
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    );
+  }
+
+  public getQualityList() {
+    this.loading = true;
+    this.qualityService.getQualityNameData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.qualityList = data["data"]
+          this.batchListByParty = data["data"];
+          if (this.allBatchList != null || this.allBatchList != undefined) {
+            this.allBatchList.forEach(element => {
+              if (element.productionPlanned == false) {
+                this.batchListParty.push(element);
+              }
+            });
+          }
+          this.batchListByParty = this.batchListParty;
+
+          this.loading = false;
+        } else {
+          this.toastr.error(data["msg"]);
+          this.loading = false;
+        }
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+
+        this.loading = false;
+      }
+    );
+  }
+
+  // public getAllBatchData() {
+  //   this.jetService.getAllProductionWithoutJetPlan().subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         this.allBatchList = data["data"];
+
+  //       }
+  //     },
+  //     (error) => {
+  //       this.toastr.error(errorData.Serever_Error);
+  //     }
+  //   );
+  // }
+
+  public partySelected(event) {
+    this.loading = true;
+    this.productionPlanning.qualityId = null;
+    if (event != undefined) {
+      if (this.productionPlanning.partyId) {
+        this.programService
+          .getQualityByParty(this.productionPlanning.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.qualityList = data["data"].qualityDataList;
+
+              } else {
+                this.productionPlanning.qualityId = null;
+                this.qualityList = [];
+
+              }
+              this.loading = false;
+            },
+            (error) => {
+              this.qualityList = [];
+              this.loading = false;
+            }
+          );
+      }
+    }
+    // if (event != undefined) {
+    //   this.batchList = [];
+    //   if (this.productionPlanning.partyId) {
+    //     this.jetService.getAllProductionWithoutJetPlan()
+    //       .subscribe(
+    //         (data) => {
+    //           if (data["success"]) {
+    //             this.allBatchList = data["data"];
+    //             this.allBatchList.forEach(element => {
+    //               if (element.productionPlanned == false) {
+    //                 this.batchList.push(element);
+    //               }
+    //             });
+    //             this.allBatchList = this.batchList;
+
+    //             this.loading = false;
+    //           } else {
+    //             this.toastr.error(data["msg"]);
+    //             this.allBatchList = [];
+    //             this.loading = false;
+    //           }
+    //           this.loading = false;
+    //         },
+    //         (error) => {
+    //           this.loading = false;
+    //         }
+    //       );
+    //   }
+    // }
+
+    // else {
+    //   this.allBatchList = [];
+    //   this.productionPlanning.partyId = null;
+    //   this.productionPlanning.qualityId = null;
+
+    //   this.getPartyList();
+    //   this.getQualityList();
+    //   //this.getAllBatchData();
+    //   this.loading = false;
+    // }
+
+
+  }
+
+  public qualitySelected(event) {
+    this.loading = true;
+    if (event != undefined) {
+      if (this.productionPlanning.qualityId) {
+        this.qualityList.forEach((e) => {
+
+          if (e.qualityId == this.productionPlanning.qualityId) {
+            this.p_id = e.partyId;
+            //this.productionPlanning.partyId = e.partyName;
+            this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
+          }
+        });
+      }
+      if (this.productionPlanning.qualityEntryId) {
+         this.allBatchList = [];
+        this.getAllBatchWithShade();
+       
+        
+        // this.programService
+        //   .getBatchByQuality(this.productionPlanning.qualityEntryId)
+        //   .subscribe(
+        //     (data) => {
+        //       if (data["success"]) {
+        //         this.allBatchList = data["data"];
+        //         this.allBatchList.forEach(element => {
+        //           if (element.productionPlanned == false) {
+        //             this.batchList.push(element);
+        //           }
+        //         });
+        //         this.allBatchList = this.batchList;
+
+        //         this.loading = false;
+        //       } else {
+        //         this.toastr.error(data["msg"]);
+        //         this.allBatchList = [];
+        //         this.loading = false;
+        //       }
+        //       this.loading = false;
+        //     },
+        //     (error) => {
+        //       this.loading = false;
+        //     }
+        //   );
+      }
+    }
+  }
+  getAllBatchWithShade(){
+
+    this.loading=true;
+   // let p_id;
+    this.productionPlanningService.getAllProductionPlan().subscribe(
+      (data) => {
+            if (data["success"]) {
+              this.batchList = data["data"];
+              // this.partyList.forEach(element => {
+              //   if(element.partyName == this.productionPlanning.partyId){
+              //     p_id = element.id;
+              //   }
+              // })
+              console.log(this.batchList, this.productionPlanning.partyId, this.productionPlanning.qualityEntryId);
+              this.batchList.forEach(element => {
+                if(this.productionPlanning.partyId == element.partyId && this.productionPlanning.qualityEntryId == element.qualityEntryId){
+                  this.allBatchList.push(element);
+                }
+               
+              })
+              console.log(this.allBatchList);
+              
+            }
+            else {
+              // this.toastr.error(data["msg"]);
+              this.loading = false;
+            }
+          },
+      (error) => {
+            // this.toastr.error(errorData.Serever_Error);
+            this.loading = false;
+          }
+    );}
+
+    batchSelected(event){
+      
+      const modalRef = this.modalService.open(ShadeWithBatchComponent).result.then(
+        (result) => {
+          
+          let id;
+          console.log(event);
+          console.log(this.jet);
+          console.log(result);
+
+          // this.jet.forEach(element => {
+          //   if(element.name == result.jet){
+          //     id = element.id;
+          //   }
+          // });
+           this.jetData1.controlId = result.jet;
+           this.jetData1.productionId = event.target.value;
+          //this.jetData1.sequence = index + 1;
+           let jetData2 = this.jetData1;
+           let arr =[];
+           arr.push(jetData2)
+          this.jetService.saveJetData(arr).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Add_Success);
+                this.getJetData();
+                this.getshade();
+              }
+              else {
+                this.toastr.error("Weight is more than jet capacity");
+                this.getJetData();
+                this.getshade();
+              }
+
+            }
+          )
+
+          // if (this.jet[index].jetDataList == null) {
+          //   this.jet[index].jetDataList = this.jetData1;
+          // }
+          // else {
+          //   this.jet[index].jetDataList.push(this.jetData1);
+          // }
+
+        })
+    }
 
   drop(event: CdkDragDrop<any[]>, i) {
 
@@ -151,35 +453,7 @@ export class JetPlanningComponent implements OnInit {
           //   this.jet[index].jetDataList.push(result);
 
           // }
-
-          this.jetData1.controlId = this.jet[index].id;
-          this.jetData1.productionId = result.id;
-          this.jetData1.sequence = index + 1;
-          let jetData2 = this.jetData1;
-          let arr =[];
-          arr.push(jetData2)
-          this.jetService.saveJetData(arr).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.toastr.success(errorData.Add_Success);
-                this.getJetData();
-                this.getshade();
-              }
-              else {
-                this.toastr.error("Weight is more than jet capacity");
-                this.getJetData();
-                this.getshade();
-              }
-
-            }
-          )
-
-          if (this.jet[index].jetDataList == null) {
-            this.jet[index].jetDataList = this.jetData1;
-          }
-          else {
-            this.jet[index].jetDataList.push(this.jetData1);
-          }
+          
         });
 
     }
@@ -196,17 +470,6 @@ export class JetPlanningComponent implements OnInit {
           this.jet.forEach(ele => {
             this.connectedTo.push(ele)
           })
-          // Object.keys(this.jet).forEach((key) => {
-          //   this.jetPlanning[key] = this.jet[key];
-
-          // })
-          // this.jetData = Object.keys(this.jetPlanning).map(key => {
-          //   return this.jetPlanning[key];
-          // })
-          // this.jet.forEach(element => {
-
-          //   element["production"] = [];
-          // })
         }
 
         else {
