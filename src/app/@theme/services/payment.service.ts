@@ -24,6 +24,19 @@ getAdvancePayment(partyId){
 
 addAdvancePayment(paymentData){
   return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/addAdvancePayment",paymentData);
+}
+
+getAllPaymentType(){
+  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAllPaymentType");
+}
+
+
+getPaymentDetailById(partyId){
+  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPaymentDetailById/"+partyId);
+
+}
+savePayment(paymentData){
+  return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/",paymentData);
 
 }
 }
