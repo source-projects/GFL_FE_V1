@@ -44,6 +44,11 @@ export class JetPlanningComponent implements OnInit {
   // batchList = [];
   programValues: any;
   qualityList1: any;
+   jetData1 = {
+    controlId: null,
+    productionId: null,
+    sequence: null,
+  }
   array = [];
   array1 = [];
   index: any;
@@ -51,11 +56,7 @@ export class JetPlanningComponent implements OnInit {
   production: any[];
   jet: any[];
   jetData: any[];
-  jetData1 = {
-    controlId: Number,
-    productionId: Number,
-    sequence: Number,
-  }
+  
   count = 0;
   countArr = [];
   jetPlanning: JetPlanning = new JetPlanning();
@@ -310,37 +311,42 @@ export class JetPlanningComponent implements OnInit {
     );}
 
     batchSelected(event){
-      
+      let p_id= Number(event.target.value);
       const modalRef = this.modalService.open(ShadeWithBatchComponent).result.then(
         (result) => {
           
-          let id;
+          let index;
           console.log(event);
           console.log(this.jet);
           console.log(result);
 
-          // this.jet.forEach(element => {
-          //   if(element.name == result.jet){
-          //     id = element.id;
-          //   }
-          // });
+          this.jet.forEach(element => {
+
+            if(element.id == result.jet){
+              
+              index = element.jetDataList.length;
+            }
+          });
+          
+          // console.log(this.jet.indexOf(result.jet));
            this.jetData1.controlId = result.jet;
-           this.jetData1.productionId = event.target.value;
-          //this.jetData1.sequence = index + 1;
+          this.jetData1.productionId = p_id;
+            this.jetData1.sequence = index;
            let jetData2 = this.jetData1;
            let arr =[];
+          //  jetData2.productionId = Number(jetData2.productionId);
            arr.push(jetData2)
           this.jetService.saveJetData(arr).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
                 this.getJetData();
-                this.getshade();
+                //this.getshade();
               }
               else {
                 this.toastr.error("Weight is more than jet capacity");
                 this.getJetData();
-                this.getshade();
+                //this.getshade();
               }
 
             }
