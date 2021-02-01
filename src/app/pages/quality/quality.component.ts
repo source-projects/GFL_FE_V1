@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
 import { QualityGuard } from 'app/@theme/guards/quality.guard';
+import { UtilsHelper } from 'app/@theme/helper/utils.helper';
 import * as errorData from 'app/@theme/json/error.json';
+import { Page } from 'app/@theme/model/page';
 import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { StoreTokenService } from 'app/@theme/services/store-token.service';
 import { ToastrService } from 'ngx-toastr';
 import { QualityService } from '../../@theme/services/quality.service';
-
 @Component({
   selector: 'ngx-quality',
   templateUrl: './quality.component.html',
@@ -50,6 +53,12 @@ export class QualityComponent implements OnInit {
   allEdit=true;
   groupEdit=true;
   disabled=false;
+
+  public page = new Page();
+  public pageSelector = new FormControl('10');
+  public limitArray: Array<number> = [10, 30, 50, 100];
+  pageSelected: number = 1;
+  @ViewChild(DatatableComponent, { static: false })  DataTable: DatatableComponent;
   
   constructor(
     private commonService: CommonService,
@@ -79,6 +88,7 @@ export class QualityComponent implements OnInit {
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
       this.radioSelect=1;
+      
     }
      else if(this.qualityGuard.accessRights('view group')){
       this.getQualityList(this.userHeadId,"group");
@@ -93,6 +103,9 @@ export class QualityComponent implements OnInit {
       this.radioSelect=3;
 
     }
+    this.page.pageNumber = 0;
+    this.page.size = 10;
+    
   }
   getAddAcess(){
     if(this.qualityGuard.accessRights('add')){
@@ -167,6 +180,8 @@ open(){
              this.copyQualityList = this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
               qualityType: element.qualityType,partyName:element.partyName }));
             this.loading = false;
+            if(this.qualityList.length>0)
+            this.updateDatatableFooterPage();
         }
         else {
           // this.toastr.error(data['msg'])
@@ -246,6 +261,42 @@ open(){
     else{
       this.hiddenEdit=true;
     }
+  }
+  get footerHeight() {
+    if (this.qualityList) {
+      return this.qualityList.length > 10 ? 50 : 0
+    } else {
+      return 0
+    }
+  }
+  public changePageSize() {
+    this.page.size = +this.pageSelector.value;
+    this.updateDatatableFooterPage();
+  }
+  /** update table footer page count */
+  public updateDatatableFooterPage() {
+      this.page.totalElements = this.qualityList.length;
+      this.page.totalPages = Math.ceil(
+        this.qualityList.length / this.page.size
+      );
+      this.page.pageNumber = 0;
+      this.pageSelected = 1;
+      if(this.DataTable){
+        this.DataTable.offset = 0;
+      }
+  
+    UtilsHelper.aftertableInit();
+  }
+  public pageChange(e) {
+    this.pageSelected = e.page;
+  }
+  public changePage() {
+      this.page.pageNumber = this.pageSelected - 1;
+      if (this.pageSelected == 1) {
+        this.updateDatatableFooterPage();
+      } else {
+        UtilsHelper.aftertableInit();
+      }
   }
 
 
