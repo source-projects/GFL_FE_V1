@@ -236,12 +236,12 @@ export class BillPaymentComponent implements OnInit {
   
 
   typeSelected(rowIndex, row,elementId) {
-    let id = this.paymentValues.paymentData[rowIndex].payType;
+    let id = this.paymentValues.paymentData[rowIndex].payTypeId;
     let flag = false;
     let count = 0;
     this.paymentValues.paymentData.forEach((e) => {
       if (count != rowIndex) {
-        if (e.payType == id) flag = true;
+        if (e.payTypeId == id) flag = true;
         count++;
       } else count++;
     });
@@ -255,7 +255,7 @@ export class BillPaymentComponent implements OnInit {
       if (rowIndex === this.paymentValues.paymentData.length - 1) {
         let item = this.paymentValues.paymentData[rowIndex];
         if (colName == "payType") {
-          if (!item.payType) {
+          if (!item.payTypeId) {
             this.toastr.error("Enter payment type", "payment type required");
             return;
           }
@@ -281,7 +281,7 @@ export class BillPaymentComponent implements OnInit {
           }
         }
        let obj = {
-        payType: null,
+        payTypeId: null,
         payAmt: null,
         chequeDate: null,
         chequeNo: null,
@@ -321,7 +321,7 @@ export class BillPaymentComponent implements OnInit {
     let idCount = this.paymentValues.paymentData.length;
     let item = this.paymentValues.paymentData;
     if (idCount == 1) {
-      item[0].payType = null;
+      item[0].payTypeId = null;
       item[0].payAmt = null;
       item[0].chequeDate = null;
       item[0].remark = null;

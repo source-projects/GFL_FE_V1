@@ -192,10 +192,10 @@
                         <ngx-datatable-column name="Type" prop="payType" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                 <select (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
-                                    name='payType{{rowIndex}}' class="tableForm" id="payType" [(ngModel)]="row.payType"
+                                    name='payType{{rowIndex}}' class="tableForm" id="payType" [(ngModel)]="row.payTypeId"
                                     required (keyup)="onKeyUp($event,rowIndex,0,'payType')"
                                     [id]="'paymentDetailsList'+rowIndex+'-0'">
-                                    <option *ngFor="let type of paymentTypeList" [value]="type.paymentType">
+                                    <option *ngFor="let type of paymentTypeList" [value]="type.id">
                                         {{type.paymentType}}</option>
                                 </select>
                                 <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)"
