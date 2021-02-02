@@ -17,7 +17,8 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./jet-planning.component.scss']
 })
 export class JetPlanningComponent implements OnInit {
-
+  public sendBatchId:string;
+  public sendSotckId:number;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
   items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
@@ -43,6 +44,12 @@ export class JetPlanningComponent implements OnInit {
         if(title === 'Print') this.generateSlip(true);
         else if(title === 'Edit And Print') this.generateSlip(false);
       });
+  }
+
+  setIndexForSlip(index){
+    //on click set batchId stockId to get print-slip data 
+    this.sendBatchId = index.batchId;
+    this.sendSotckId = index.productionId;
   }
 
   public errorData: any = (errorData as any).default;
@@ -223,6 +230,8 @@ export class JetPlanningComponent implements OnInit {
   generateSlip(directPrint){
     const modalRef = this.modalService.open(PlanningSlipComponent);
     modalRef.componentInstance.isPrintDirect = directPrint;
+    modalRef.componentInstance.batchId = this.sendBatchId;
+    modalRef.componentInstance.stockId = this.sendSotckId;
     modalRef.result.then((result) => {
       if (result) {
         console.log("Done");

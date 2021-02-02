@@ -12,8 +12,8 @@ export class PlanningSlipService {
     private commonService: CommonService
   ) { }
 
-  getSlipDataByBatch(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/'+id);
+  getSlipDataByBatchStockId(bId, sId){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/'+bId+'/'+sId);
   }
 
   updateSlipData(obj){

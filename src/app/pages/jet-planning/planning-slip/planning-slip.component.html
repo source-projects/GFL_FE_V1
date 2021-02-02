@@ -7,9 +7,9 @@
     </nb-card-header>
     <div id="editable-slip">
         <nb-card-body>
-            <div *ngIf="slipData != null">
+            <div *ngIf="slipData.dyeingSlipDataList != null">
                 <form #myForm='ngForm'>
-                    <div *ngFor="let process of slipData; let i=index;">
+                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{{process.processType}}</h3>
@@ -51,7 +51,7 @@
                                         <th>Action</th>
                                     </tr>
 
-                                    <tr *ngFor='let dc of process.dyeingChemicalData;let i1=index;'>
+                                    <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;'>
                                         <td>
                                             <select name="itemId{{i}}-{{i1}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
                                                 #itemId1="ngModel" class="tableForm" required
@@ -115,41 +115,79 @@
         </nb-card-body>
     </div>
 
-    <div id="print-slip" [hidden]="isPrinting">
-        <nb-card-body>
-            <div *ngIf="slipData != null">
-                <form #myForm1="ngForm">
-                    <div *ngFor="let process of slipData; let i=index;">
-                        <div class="row" style="padding: 0 20px;">
+    <div id="print-slip" [hidden]="isPrinting" class="print-slip " style="size: A5;">
+        <nb-card-body >
+            <div *ngIf="slipData.dyeingSlipDataList != null">
+                    <div class="container" style="width: 50% !important">
+                        <div class="mb-1">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label>Lot No:</label>  <span style="color: red">{{slipData.batchId}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label>Mc No:</label>  <span style="color: red">{{slipData.jetId}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="mb-1">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label>Lot Wt:</label>  <span>{{slipData.totalWt}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label>Date:</label>  <span >{{myDate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-1">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label>QualityId:</label>  <span>{{slipData.qualityId}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label>Party Shade No:</label>  <span >{{slipData.partyShadeNo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-1">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label>Taka/Cone:</label>  <span>{{slipData.batchCount}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label>Color Tone:</label>  <span >{{slipData.colorTone}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                
+                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;">
+                        <div class="row" >
                             <div class="col-md-12" style="display: flex;">
-                                <div class="form-group col-md-4" style="padding-left: 0px;">
+                                <div class="form-group col-md-4" style="padding: 0px;">
                                     <h3>{{process.processType}}</h3>
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
                                     <label>Temp:</label>&nbsp;
-                                    <div class="nb-badges" style="background-color: #aa3634;border-radius: 20px;">
+                                    <div class="nb-badges" style="color: #aa3634 !important;">
                                         {{process.temp}}</div>
 
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
                                     <label>Hold Time:</label>&nbsp;
-                                    <div class="nb-badges" style="background-color: #aa3634;border-radius: 20px;">
+                                    <div class="nb-badges" style="color: #aa3634 !important;">
                                         {{process.holdTime}}</div>
 
                                 </div>
                             </div>
-                            <div class="col-md-12" style="display: inline-flex;">
 
-                            </div>
-
-                            <!-- <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing'">
-                                <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
-                                    [(ngModel)]="process.isColor">
-                                </nb-checkbox>
-                                &nbsp;<label>Color</label>
-                            </div> -->
-
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-12 ">
                                 <h5 class="nb-badges">Item List</h5>
                                 <table class="table table-bordered table-striped table-process-fnt">
                                     <tr>
@@ -159,18 +197,17 @@
                                         <th>By</th>
                                     </tr>
 
-                                    <tr *ngFor='let dc of process.dyeingChemicalData;let i1=index;'>
-                                        <td>
+                                    <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;'>
+                                        <td class="pd-bt">
                                             {{dc.itemId}}
-
                                         </td>
-                                        <td>
+                                        <td class="pd-bt">
                                             {{dc.supplierName}}
                                         </td>
-                                        <td>
+                                        <td class="pd-bt">
                                             {{dc.concentration}}
                                         </td>
-                                        <td>
+                                        <td class="pd-bt">
                                             {{dc.byChemical}}
 
                                         </td>
@@ -183,7 +220,7 @@
 
 
                     
-                </form>
+                
 
             </div>
         </nb-card-body>
