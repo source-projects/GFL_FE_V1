@@ -1435,6 +1435,29 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
 }
 
+.center-txt-title {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.center-txt-title label {
+    margin: 0;
+}
+
+.main-input-sm input {
+    height: calc(1.5em + 5px + 2px) !important;
+}
+
+.dis-fl-right {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    right: 7px;
+}
+
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
         padding: 15px 0!important;
@@ -1530,6 +1553,17 @@ input[type=number]::-webkit-outer-spin-button {
     .table-jet,
     .main-table-drag {
         width: fit-content!important;
+    }
+    .border-top-mob {
+        border-top: 1px solid #a4a2a4ad;
+        width: 100%;
+        padding-bottom: 18px;
+    }
+}
+
+@media (min-width: 767px) {
+    .border-top-mob {
+        display: none;
     }
 }
 
