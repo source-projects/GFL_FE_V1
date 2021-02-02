@@ -17,6 +17,9 @@ import { StockBatchService } from 'app/@theme/services/stock-batch.service';
 import { ProgramService } from 'app/@theme/services/program.service';
 import { ShadeService } from 'app/@theme/services/shade.service';
 
+import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
+import { NbMenuService } from '@nebular/theme';
+import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-jet-planning',
   templateUrl: './jet-planning.component.html',
@@ -26,6 +29,7 @@ export class JetPlanningComponent implements OnInit {
 
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
+  items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
   allShade: any;
   productionPlanning: ProductionPlanning = new ProductionPlanning();
   public errorData: any = (errorData as any).default;
@@ -76,7 +80,8 @@ export class JetPlanningComponent implements OnInit {
     private commonService: CommonService,
     private stockBatchService: StockBatchService,
     private programService: ProgramService,
-    private shadeService: ShadeService
+    private shadeService: ShadeService,
+    private menuService: NbMenuService
 
   ) {
 
@@ -95,9 +100,17 @@ export class JetPlanningComponent implements OnInit {
     this.getQualityList();
     //this.getAllBatchData();
     this.getJetData();
-    //this.getshade();
 
-    //this.getAllBatchWithShade();
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        if(title === 'Print') this.generateSlip(true);
+        else if(title === 'Edit And Print') this.generateSlip(false);
+      });
+    
   
   }
 
@@ -498,6 +511,16 @@ export class JetPlanningComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  generateSlip(directPrint){
+    const modalRef = this.modalService.open(PlanningSlipComponent);
+    modalRef.componentInstance.isPrintDirect = directPrint;
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log("Done");
+      }
+    });
   }
 
 }
