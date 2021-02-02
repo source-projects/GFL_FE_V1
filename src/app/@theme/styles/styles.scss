@@ -1215,34 +1215,43 @@ input[type=number]::-webkit-outer-spin-button {
 .ng-select .ng-arrow-wrapper .ng-arrow {
     border-color: #5e5b5e transparent transparent;
 }
-.dying-table th, .dying-table td{
+
+.dying-table th,
+.dying-table td {
     padding: 6px 15px;
     text-align: center;
 }
-.dying-table tr th{
+
+.dying-table tr th {
     font-size: 16px;
 }
-.dying-table tr td{
+
+.dying-table tr td {
     font-size: 14px;
 }
-.tb-ui{
+
+.tb-ui {
     margin-right: 5px;
 }
-.dis-fl{
+
+.dis-fl {
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
-.dis-fl-di{
+
+.dis-fl-di {
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
-.div-fl-1{
+
+.div-fl-1 {
     display: inline-block;
     margin-right: 10px;
 }
-.num-bd{
+
+.num-bd {
     background: #aa3634;
     color: #fff;
     border-radius: 26px;
@@ -1250,7 +1259,8 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0px 12px;
     font-size: 14px;
 }
-.dyn-title{
+
+.dyn-title {
     font-size: 17px !important;
     margin-top: 10px;
     margin-bottom: 0;
@@ -1408,12 +1418,44 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0;
 }
 
-.align-dis{
+.dash-style {
+    background: #aa3634;
+    padding: 0 15px;
+}
+
+.main-dash-card {
+    border: 2px solid #aa3634;
+}
+
+.align-dis {
     margin: 0;
     height: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.center-txt-title {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.center-txt-title label {
+    margin: 0;
+}
+
+.main-input-sm input {
+    height: calc(1.5em + 5px + 2px) !important;
+}
+
+.dis-fl-right {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    right: 7px;
 }
 
 @media (max-width: 767px) {
@@ -1511,6 +1553,17 @@ input[type=number]::-webkit-outer-spin-button {
     .table-jet,
     .main-table-drag {
         width: fit-content!important;
+    }
+    .border-top-mob {
+        border-top: 1px solid #a4a2a4ad;
+        width: 100%;
+        padding-bottom: 18px;
+    }
+}
+
+@media (min-width: 767px) {
+    .border-top-mob {
+        display: none;
     }
 }
 

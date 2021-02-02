@@ -8,29 +8,48 @@ import { ToastrService } from 'ngx-toastr';
 import * as errorData from "app/@theme/json/error.json";
 import { ProductionPlanningService } from 'app/@theme/services/production-planning.service';
 import { WarningPopupComponent } from 'app/@theme/components/warning-popup/warning-popup.component';
-
+import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
+import { NbMenuService } from '@nebular/theme';
+import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-jet-planning',
   templateUrl: './jet-planning.component.html',
   styleUrls: ['./jet-planning.component.scss']
 })
 export class JetPlanningComponent implements OnInit {
-
+  public sendBatchId:string;
+  public sendSotckId:number;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
+  items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
   allShade: any;
   constructor(
     private modalService: NgbModal,
     private jetService: JetPlanningService,
     private toastr: ToastrService,
     private productionPlanningService: ProductionPlanningService,
-
+    private menuService: NbMenuService,
   ) { }
 
   ngOnInit(): void {
 
     this.getJetData();
     this.getshade();
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        if(title === 'Print') this.generateSlip(true);
+        else if(title === 'Edit And Print') this.generateSlip(false);
+      });
+  }
+
+  setIndexForSlip(index){
+    //on click set batchId stockId to get print-slip data 
+    this.sendBatchId = index.batchId;
+    this.sendSotckId = index.productionId;
   }
 
   public errorData: any = (errorData as any).default;
@@ -196,17 +215,6 @@ export class JetPlanningComponent implements OnInit {
           this.jet.forEach(ele => {
             this.connectedTo.push(ele)
           })
-          // Object.keys(this.jet).forEach((key) => {
-          //   this.jetPlanning[key] = this.jet[key];
-
-          // })
-          // this.jetData = Object.keys(this.jetPlanning).map(key => {
-          //   return this.jetPlanning[key];
-          // })
-          // this.jet.forEach(element => {
-
-          //   element["production"] = [];
-          // })
         }
 
         else {
@@ -217,6 +225,18 @@ export class JetPlanningComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  generateSlip(directPrint){
+    const modalRef = this.modalService.open(PlanningSlipComponent);
+    modalRef.componentInstance.isPrintDirect = directPrint;
+    modalRef.componentInstance.batchId = this.sendBatchId;
+    modalRef.componentInstance.stockId = this.sendSotckId;
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log("Done");
+      }
+    });
   }
 
 }

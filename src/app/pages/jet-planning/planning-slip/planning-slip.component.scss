@@ -1,0 +1,21 @@
+.print-slip {
+    width: 14.81cm;
+    height: 21.01cm;
+  }
+  @page {
+    /* dimensions for the whole page */
+    size: A5;
+    margin: 0;
+}
+
+
+.wth-50{
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pd-bt{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}

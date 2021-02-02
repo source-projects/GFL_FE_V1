@@ -32,6 +32,9 @@ export class LoginComponent {
     let location = window.location;
     if (location["hostname"] == "150.107.188.188")
       window["myValue"] = "http://150.107.188.188:8080/";
+    else if(location["hostname"] == "103.137.194.167"){
+      window["myValue"] = "http://103.137.194.167:8080/";
+    }
     else window["myValue"] = "http://13.235.71.124:8080/";
   }
 

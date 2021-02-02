@@ -27,7 +27,8 @@ import {
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
-  FilterSelectedProcessPipe,
+  CounterPipe,
+  FilterSelectedProcessPipe
 } from './pipes';
 import {
   OneColumnLayoutComponent,
@@ -67,6 +68,7 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  CounterPipe,
   FilterSelectedProcessPipe
 ];
 

@@ -23,13 +23,15 @@
 
                     <div class="col-md-7 col-12">
                         <div class="form-group text-right align-dis">
-                            <nb-icon icon="plus-circle" style="width: 40px;" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="addProcessStep()" class="plus-add add-modal"></nb-icon>
+                            <nb-icon icon="plus-circle" style="width: 40px;" status="primary"
+                                [options]="{ animation: { type: 'zoom' } }" (click)="addProcessStep()"
+                                class="plus-add add-modal"></nb-icon>
                         </div>
                     </div>
 
                     <!-- Process list -->
-                    <div class="col-md-12" style="margin-top: 10px;" *ngIf="dyeingProcessSteps? dyeingProcessSteps.length:dyeingProcessSteps;">
+                    <div class="col-md-12" style="margin-top: 10px;"
+                        *ngIf="dyeingProcessSteps? dyeingProcessSteps.length:dyeingProcessSteps;">
 
                         <div cdkDropList (cdkDropListDropped)="drop($event)" class="acc-under-css">
                             <nb-accordion multi *ngFor="let step of dyeingProcessSteps" cdkDrag class="acc-start">
@@ -112,13 +114,14 @@
                         <div class="padding-bt-tp">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
                                 style="margin-right:20px" routerLink='/pages/dyeing-process'>CANCEL</button>
-                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
-                            <button type="button" *ngIf="updateFlag" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                (click)="addUpdateDyeingProcess(myForm)">Update</button>
+                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design"
+                                style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
+                            <button type="button" *ngIf="updateFlag" class="btn btn-primary btn-sm btn-design"
+                                style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">Update</button>
                         </div>
                     </div>
                 </div>
+
             </form>
         </nb-card-body>
     </nb-card>
