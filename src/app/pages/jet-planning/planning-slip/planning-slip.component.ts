@@ -200,7 +200,7 @@ export class PlanningSlipComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName, parentDataIndex) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "itemList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "itemList"+parentDataIndex+"" + (rowIndex + 1) + "-" + colIndex;
       if (
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData.length - 1
