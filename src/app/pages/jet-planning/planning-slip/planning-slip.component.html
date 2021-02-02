@@ -1,0 +1,192 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div>
+            <h2 class="nb-text">Jet planning steps</h2>
+        </div>
+    </nb-card-header>
+    <div id="editable-slip">
+        <nb-card-body>
+            <div *ngIf="slipData != null">
+                <form #myForm='ngForm'>
+                    <div *ngFor="let process of slipData; let i=index;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{process.processType}}</h3>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="required">Temprarture</label>
+                                <input type="number" class="form-control" min="0" #temp1="ngModel"
+                                    [(ngModel)]="process.temp" name="Scouring-temp{{i}}"
+                                    [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }">
+
+                                <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                    <span>Temperarture is required</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="required">Hold Time</label>
+                                <input type="number" class="form-control" min="0" #hTime1="ngModel"
+                                    [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}"
+                                    [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }">
+                                <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
+                                    <span>Hold Time is required</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing'">
+                                <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
+                                    [(ngModel)]="process.isColor" name="isColor">
+                                </nb-checkbox>
+                                &nbsp;<label>Color</label>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <h5 class="nb-badges">Item List</h5>
+                                <table class="table table-responsive table-bordered table-striped table-process-fnt">
+                                    <tr>
+                                        <th>Item name</th>
+                                        <!-- <th>Supplier name</th> -->
+                                        <th>Concentration</th>
+                                        <th>By</th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    <tr *ngFor='let dc of process.dyeingChemicalData;let i1=index;'>
+                                        <td>
+                                            <select name="itemId{{i}}-{{i1}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
+                                                #itemId1="ngModel" class="tableForm" required
+                                                (change)="itemSelected(i1,i)">
+                                                <option *ngFor="let item of itemListArray" [value]="item.itemId"
+                                                    placeholder="Select Item">
+                                                    {{item.itemName}} - {{item.supplierName}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <!-- <td>
+                                            <input class="tableForm" type="text" #supplierName1="ngModel"
+                                                name='supplierName{{i}}-{{i1}}' [(ngModel)]="dc.supplierName"
+                                                (keyup)="onKeyUp($event,i1,1,'supplierName',i)"
+                                                [id]="'supplierList'+i1+'-1'" readonly>
+                                        </td> -->
+                                        <td>
+                                            <input type="number" #concentration1="ngModel"
+                                                name='concentration{{i}}-{{i1}}' class="tableForm"
+                                                [(ngModel)]="dc.concentration"
+                                                (keyup)="onKeyUp($event,i1,2,'concentration',i)"
+                                                [id]="'supplierList'+i1+'-2'" min="0">
+                                        </td>
+                                        <td>
+                                            <input type="text" #concentration1="ngModel" name='byChemical{{i}}-{{i1}}'
+                                                [value]="'L'" class="tableForm" [(ngModel)]="dc.byChemical"
+                                                (keyup)="onKeyUp($event,i1,3,'byChemical',i)"
+                                                [id]="'supplierList'+i1+'-3'" min="0">
+                                        </td>
+                                        <td>
+                                            <nb-icon icon="trash" status="danger"
+                                                [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(i1,i)">
+                                            </nb-icon>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="activeModal.close(false)">CANCEL</button>
+                            <button *ngIf="this.currentSlipId != null" type="button" (click)="saveSlipData()"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="this.currentSlipId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
+                            <button *ngIf="this.currentSlipId == null" type="button"
+                                class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                [disabled]="disableButton" (click)="printSlip(myForm)">Save And Print</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </nb-card-body>
+    </div>
+
+    <div id="print-slip" [hidden]="isPrinting">
+        <nb-card-body>
+            <div *ngIf="slipData != null">
+                <form #myForm1="ngForm">
+                    <div *ngFor="let process of slipData; let i=index;">
+                        <div class="row" style="padding: 0 20px;">
+                            <div class="col-md-12" style="display: flex;">
+                                <div class="form-group col-md-4" style="padding-left: 0px;">
+                                    <h3>{{process.processType}}</h3>
+                                </div>
+                                <div class="form-group col-md-4" style="padding: 0px;">
+                                    <label>Temp:</label>&nbsp;
+                                    <div class="nb-badges" style="background-color: #aa3634;border-radius: 20px;">
+                                        {{process.temp}}</div>
+
+                                </div>
+                                <div class="form-group col-md-4" style="padding: 0px;">
+                                    <label>Hold Time:</label>&nbsp;
+                                    <div class="nb-badges" style="background-color: #aa3634;border-radius: 20px;">
+                                        {{process.holdTime}}</div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="display: inline-flex;">
+
+                            </div>
+
+                            <!-- <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing'">
+                                <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
+                                    [(ngModel)]="process.isColor">
+                                </nb-checkbox>
+                                &nbsp;<label>Color</label>
+                            </div> -->
+
+                            <div class="form-group col-md-12">
+                                <h5 class="nb-badges">Item List</h5>
+                                <table class="table table-bordered table-striped table-process-fnt">
+                                    <tr>
+                                        <th>Item name</th>
+                                        <th>Supplier name</th>
+                                        <th>Concentration</th>
+                                        <th>By</th>
+                                    </tr>
+
+                                    <tr *ngFor='let dc of process.dyeingChemicalData;let i1=index;'>
+                                        <td>
+                                            {{dc.itemId}}
+
+                                        </td>
+                                        <td>
+                                            {{dc.supplierName}}
+                                        </td>
+                                        <td>
+                                            {{dc.concentration}}
+                                        </td>
+                                        <td>
+                                            {{dc.byChemical}}
+
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                </form>
+
+            </div>
+        </nb-card-body>
+    </div>
+
+</nb-card>
