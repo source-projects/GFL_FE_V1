@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { ShadeWithBatchComponent } from '../production-planning/shade-with-batch/shade-with-batch.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
 
 
 
 @NgModule({
-  declarations: [JetPlanningComponent,ShadeWithBatchComponent],
+  declarations: [JetPlanningComponent,ShadeWithBatchComponent, PlanningSlipComponent],
   imports: [
     CommonModule,
     JetPlanningRoutingModule,
