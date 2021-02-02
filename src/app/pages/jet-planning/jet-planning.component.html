@@ -5,7 +5,6 @@
         <div class="col-md-11 col-10">
           <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
         </div>
-
       </div>
     </div>
   </nb-card-header>
@@ -26,7 +25,9 @@
              class="example-list main-table-drag"
             (cdkDropListDropped)="drop($event,i)">
             <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" cdkDrag>
-              {{index.batchId}}
+              <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click">
+                {{index.batchId}}
+              </button>
             </div>
           </div>
 <!-- 

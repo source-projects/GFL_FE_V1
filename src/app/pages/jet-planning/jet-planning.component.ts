@@ -8,7 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import * as errorData from "app/@theme/json/error.json";
 import { ProductionPlanningService } from 'app/@theme/services/production-planning.service';
 import { WarningPopupComponent } from 'app/@theme/components/warning-popup/warning-popup.component';
-
+import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
+import { NbMenuService } from '@nebular/theme';
+import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-jet-planning',
   templateUrl: './jet-planning.component.html',
@@ -18,19 +20,29 @@ export class JetPlanningComponent implements OnInit {
 
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
+  items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
   allShade: any;
   constructor(
     private modalService: NgbModal,
     private jetService: JetPlanningService,
     private toastr: ToastrService,
     private productionPlanningService: ProductionPlanningService,
-
+    private menuService: NbMenuService,
   ) { }
 
   ngOnInit(): void {
 
     this.getJetData();
     this.getshade();
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        if(title === 'Print') this.generateSlip(true);
+        else if(title === 'Edit And Print') this.generateSlip(false);
+      });
   }
 
   public errorData: any = (errorData as any).default;
@@ -196,17 +208,6 @@ export class JetPlanningComponent implements OnInit {
           this.jet.forEach(ele => {
             this.connectedTo.push(ele)
           })
-          // Object.keys(this.jet).forEach((key) => {
-          //   this.jetPlanning[key] = this.jet[key];
-
-          // })
-          // this.jetData = Object.keys(this.jetPlanning).map(key => {
-          //   return this.jetPlanning[key];
-          // })
-          // this.jet.forEach(element => {
-
-          //   element["production"] = [];
-          // })
         }
 
         else {
@@ -217,6 +218,16 @@ export class JetPlanningComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  generateSlip(directPrint){
+    const modalRef = this.modalService.open(PlanningSlipComponent);
+    modalRef.componentInstance.isPrintDirect = directPrint;
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log("Done");
+      }
+    });
   }
 
 }
