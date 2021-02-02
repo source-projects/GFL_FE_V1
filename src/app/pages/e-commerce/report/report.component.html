@@ -1,7 +1,7 @@
 <ngx-loading [show]="loading"></ngx-loading>
 <nb-card size="large" class="nb-style">
     <nb-card-body>
-        <div class="machine-cards" *ngIf="optionFlag">
+        <!-- <div class="machine-cards" *ngIf="optionFlag">
             <div class="row">
                 <div class="col-md-6" (click)="machineReport()">
                     <button type="button" class="card-machine report-display">
@@ -55,14 +55,12 @@
                     </div>
                 </nb-card-header>
                 <nb-card-body>
-                    <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31"
-                        [footerHeight]="40">
+                    <ngx-datatable class="material" [rows]="purchaseRequestList" [headerHeight]="31" [footerHeight]="40">
                         <ngx-datatable-column name="Created By" prop="userName"></ngx-datatable-column>
                         <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
                         <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
                         <ngx-datatable-column name="Status" sortable="false">
-                            <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
-                                ngx-datatable-cell-template>
+                            <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                                 <div *ngIf="row.status === 1">APPROVED</div>
                                 <div *ngIf="row.status === 2">DECLINED</div>
                                 <div *ngIf="row.status === 0">
@@ -87,8 +85,7 @@
                     </div>
                 </nb-card-header>
                 <nb-card-body>
-                    <ngx-datatable [rows]="waterJetList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
-                        [footerHeight]="31">
+                    <ngx-datatable [rows]="waterJetList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="31">
                         <ngx-datatable-column name="Efficiency" prop="efficieny"></ngx-datatable-column>
                         <ngx-datatable-column name="Meter" prop="mtr"></ngx-datatable-column>
                     </ngx-datatable>
@@ -107,12 +104,12 @@
         </div>
         <div class="machine-cards" *ngIf="boilerFlag">
             <div class="row">
-                <ngx-boiler-report  style="width: 100%;"></ngx-boiler-report>
+                <ngx-boiler-report style="width: 100%;"></ngx-boiler-report>
             </div>
         </div>
         <div class="machine-cards" *ngIf="thermoFlag">
             <div class="row">
-                <ngx-thermopack-report  style="width: 100%;"></ngx-thermopack-report>
+                <ngx-thermopack-report style="width: 100%;"></ngx-thermopack-report>
             </div>
         </div>
         <div class="machine-cards" *ngIf="MachineFlag">
@@ -152,10 +149,8 @@
                             <div class="container">
                                 <div class="form-group">
                                     <strong><label>Select Date & Time</label></strong>
-                                    <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1"
-                                        [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
-                                    <owl-date-time [showSecondsTimer]="true" [startAt]="startAt"
-                                        (afterPickerClosed)="change(dt1)" #dt1>
+                                    <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1" [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                    <owl-date-time [showSecondsTimer]="true" [startAt]="startAt" (afterPickerClosed)="change(dt1)" #dt1>
                                     </owl-date-time>
                                 </div>
                             </div>
@@ -164,14 +159,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-6">
                                     <div class="day-machine">
-                                        <button type="button" (click)="day(machine)"
-                                            class="btn btn-primary btn-sm btn-design">Day</button>
+                                        <button type="button" (click)="day(machine)" class="btn btn-primary btn-sm btn-design">Day</button>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6">
                                     <div class="night-machine">
-                                        <button type="button" (click)="night(machine)"
-                                            class="btn btn-primary btn-sm btn-design">Night</button>
+                                        <button type="button" (click)="night(machine)" class="btn btn-primary btn-sm btn-design">Night</button>
                                     </div>
                                 </div>
                             </div>
@@ -181,9 +174,7 @@
             </div>
         </div>
         <div *ngIf="ChartFlag" class="chart-day-night">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
-                [plugins]="lineChartPlugins">
+            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
             </canvas>
         </div>
         <div *ngIf="NoDataFlag">
@@ -192,6 +183,121 @@
 
         <div *ngIf="buttonFlag" class="mobile-btn-center">
             <button class="btn btn-primary btn-sm btn-design" (click)="back()">BACK</button>
+        </div>
+ -->
+
+        <!-- design changes -->
+        <div class="main-dash-card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dash-style">
+                        <h2 class="nb-text">Party</h2>
+                    </div>
+                </div>
+            </div>
+            <nb-tabset fullWidth class="boiler-thermopack-tabheader">
+                <nb-tab tabTitle="Boiler">
+
+                    <div class="row">
+                        <div class="container">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </nb-tab>
+                <nb-tab tabTitle="Water Jet">
+
+                    <div class="row">
+                        <p>sc2</p>
+                    </div>
+
+                </nb-tab>
+                <nb-tab tabTitle="Stenter Machine">
+
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let machine of machines">
+                            <div class="machine-main-card">
+                                <div class="date-card">
+                                    <div class="date-card-header">
+                                        <h2>{{machine.machineName}}</h2>
+                                    </div>
+                                </div>
+                                <div class="date-card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="eff-text">
+                                                <h2 class="tble-txt">Eff:</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="eff-data">
+                                                <input type="text" class="tble-in">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="eff-text">
+                                                <h2 class="tble-txt">Speed:</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="eff-data">
+                                                <input type="text" class="tble-in">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="day-night-picker">
+                                    <div class="container">
+                                        <div class="form-group">
+                                            <strong><label>Select Date & Time</label></strong>
+                                            <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1" [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                                            <owl-date-time [showSecondsTimer]="true" [startAt]="startAt" (afterPickerClosed)="change(dt1)" #dt1>
+                                            </owl-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="date-time-btn container">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="day-machine">
+                                                <button type="button" (click)="day(machine)" class="btn btn-primary btn-sm btn-design">Day</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="night-machine">
+                                                <button type="button" (click)="night(machine)" class="btn btn-primary btn-sm btn-design">Night</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </nb-tab>
+                <nb-tab tabTitle="Folding Machine">
+
+
+                    <div class="row">
+                        <p>sc4</p>
+                    </div>
+
+                </nb-tab>
+                <nb-tab tabTitle="Thermopack">
+
+
+                    <div class="row">
+                        <div class="container">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </nb-tab>
+            </nb-tabset>
         </div>
 
     </nb-card-body>

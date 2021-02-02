@@ -69,12 +69,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/supplier',
     hidden:false
   },
-  {
-    title: 'Process',
-    icon: 'settings-2-outline',
-    link: '/pages/process',
-    hidden:false
-  },
+  // {
+  //   title: 'Process',
+  //   icon: 'settings-2-outline',
+  //   link: '/pages/process',
+  //   hidden:false
+  // },
   {
     title: 'DyeingProcess',
     icon: 'settings-2-outline',
@@ -113,7 +113,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Payment',
-    icon: 'shuffle-2-outline',
+    icon: 'credit-card-outline',
     children: [
       {
         title: 'Bill Payment',

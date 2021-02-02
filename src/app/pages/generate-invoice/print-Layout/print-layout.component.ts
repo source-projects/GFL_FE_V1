@@ -117,6 +117,7 @@ export class PrintLayoutComponent implements OnInit {
     let doc = new wijmo.PrintDocument({
       title: "",
     });
+    doc.append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">');
     doc.append(
       '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
     );
