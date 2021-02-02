@@ -15,17 +15,19 @@
     </nb-card-header>
     <nb-card-body>
         <form #paymentForm="ngForm">
-            <div class="row" class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="required">Party Name</label>
-                        <ng-select name="partyId" [(ngModel)]='paymentValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="partySelected($event)" placeholder="Party Name" class="required-error-dropdown"
-                            [readonly]="currentPaymentId != null">
-                            <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
-                        </ng-select>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Party Name</label>
+                            <ng-select name="partyId" [(ngModel)]='paymentValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="partySelected($event)" placeholder="Party Name" class="required-error-dropdown"
+                                [readonly]="currentPaymentId != null">
+                                <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
+                            </ng-select>
 
-                        <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
-                            <span>Party name is required</span>
+                            <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                                <span>Party name is required</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,27 +117,12 @@
                             </div>
                         </div>
 
-
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group center-txt-title">
-                                        <label>Amount to pay:</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group center-txt-title">
-                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="col-md-8 dis-fl-right">
+                    <div class="border-top-mob"></div>
+                    <div class="col-md-4 dis-fl-right">
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -151,25 +138,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group center-txt-title">
-                                                <label>Other Diff:</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group center-txt-title">
-                                                <input type="number" name="otherDiff" class="form-control" [(ngModel)]='paymentValues.otherDiff' required placeholder="Other Diff" (keyup)="cdSelected($event)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -186,7 +155,29 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                        </div>
+
+                    </div>
+                    <div class="border-top-mob"></div>
+                    <div class="col-md-4 dis-fl-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-4">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group center-txt-title">
+                                                <label>Other Diff:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group center-txt-title">
+                                                <input type="number" name="otherDiff" class="form-control" [(ngModel)]='paymentValues.otherDiff' required placeholder="Other Diff" (keyup)="cdSelected($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -202,27 +193,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group center-txt-title">
-                                                <label>Amount paid:</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group center-txt-title">
-                                                <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -234,7 +205,7 @@
                         <input type="number" name="gstAmount" class="form-control" [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount" (keyup)="gstSelected($event)">
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
@@ -242,12 +213,12 @@
                         <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
                     </div>
                 </div>
-                <!-- <div class="col-md-3">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>RD Amount:</label>
                         <input type="number" name="rdAmt" class="form-control" [(ngModel)]='paymentValues.rdAmt' required placeholder="RD Amount" (keyup)="cdSelected($event)">
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <div class="row">
@@ -302,8 +273,8 @@
                         <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div> -->
+            <!-- <div class="row">
 
 
                 <div class="col-md-3">
@@ -312,22 +283,79 @@
                         <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Advance Payments:</label>
-                        <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="advancePaymentSelected($event)">
-                            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
-                            </ngx-datatable-column>
-                            <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
-                            <ngx-datatable-column name="Type" prop="payType"></ngx-datatable-column>
-                            <ngx-datatable-column name="Date" prop="date"></ngx-datatable-column>
-                        </ngx-datatable>
+            </div> -->
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Advance Payments:</label>
+                            <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="advancePaymentSelected($event)">
+                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
+                                <ngx-datatable-column name="Type" prop="payType"></ngx-datatable-column>
+                                <ngx-datatable-column name="Date" prop="date"></ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Amount to pay:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Amount paid:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Current Payment Total:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
