@@ -46,7 +46,7 @@
                                 </ng-select>
 
                                 <div class="filter-input">
-                                    <input type="text" class="form-control" placeholder="Filter..." (keyup)="keyUpFilter($event.target.value)">
+                                    <input type="text" class="form-control" placeholder="Filter..." (keyup)="keyUpFilter($event.target.value)" [(ngModel)]="filterWord">
                                 </div>
 
                                 <div class="fil-border-top"></div>

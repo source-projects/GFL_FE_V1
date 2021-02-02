@@ -53,10 +53,11 @@ export class PartyComponent implements OnInit {
   groupEdit = true;
 
 
-  index:any;
-  selectedColumn:any;
+  index: any;
+  selectedColumn: any;
   checkedArray = [];
   selectedFilter1 = "Contains";
+  filterWord:any;
   partyNameList = [];
   partyAddressList = [];
   partyContactList = [];
@@ -74,7 +75,7 @@ export class PartyComponent implements OnInit {
 
   filterDivFlag: boolean = false;
   filterAndOrFlag: boolean = false;
-  stepFlag:boolean = false;
+  stepFlag: boolean = false;
 
 
   constructor(
@@ -147,92 +148,69 @@ export class PartyComponent implements OnInit {
   }
 
 
-  checked(value:any,ind:any){
-    console.log("value:",value);
-    console.log("index:",ind);
+  checked(value: any, ind: any) {
 
+    this.checkedArray = [];
+    const vari = document.querySelectorAll(".selector");
+    vari.forEach((ele: HTMLInputElement) => {
+      if (ele.checked) {
+        this.checkedArray.push(ele.name)
+      }
+
+    })
+    console.log("checked:", this.checkedArray)
+    console.log("dupli:", this.duplipartylist)
     if (this.stepFlag) {
       const count = this.duplipartylist.length;
       const keys = Object.keys(this.duplipartylist[0]);
       this.partyList = this.duplipartylist.filter(item => {
         for (let i = 0; i < count; i++) {
+          for (let j = 0; j < this.checkedArray.length; j++) {
             if (
-              (item[keys[this.index]] &&
-                item[keys[this.index]]
+              (item[keys[i]] &&
+                item[keys[i]]
                   .toString()
-                  != value)
+                == this.checkedArray[j])
             ) {
               return true;
             }
           }
-          
-      });  
-      this.duplipartylist = this.partyList
-    }
-    else if (!this.stepFlag){
-      const count = this.copyPartyList.length;
-    const keys = Object.keys(this.copyPartyList[0]);
-    this.partyList = this.copyPartyList.filter(item => {
-      for (let i = 0; i < count; i++) {
-          if (
-            (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                != value)
-          ) {
-            return true;
-          }
-        }
-        
-    });
-    this.copyPartyList = this.partyList;
-    }
-    
 
+        }
+      });
+    }
+    else if (!this.stepFlag) {
+
+      const count = this.copyPartyList.length;
+      const keys = Object.keys(this.copyPartyList[0]);
+      this.partyList = this.copyPartyList.filter(item => {
+        for (let i = 0; i < count; i++) {
+          for (let j = 0; j < this.checkedArray.length; j++) {
+            if (
+              (item[keys[i]] &&
+                item[keys[i]]
+                  .toString()
+                == this.checkedArray[j])
+            ) {
+              return true;
+            }
+          }
+
+        }
+      });
+    }
   }
 
   outside() {
 
-    // this.checkedArray = [];
-    // const vari = document.querySelectorAll(".selector");
-    // vari.forEach((ele:HTMLInputElement) =>{
-    //   if(ele.checked){
-    //     this.checkedArray.push(ele.name)
-    //   }
-
-    // })
-    // const count = this.copyPartyList.length;
-    // const keys = Object.keys(this.copyPartyList[0]);
-    // this.partyList = this.copyPartyList.filter(item => {
-    //   for (let i = 0; i < count; i++) {
-    //     for(let j=0;j<this.checkedArray.length;j++){
-    //       if (
-    //         (item[keys[j]] &&
-    //           item[keys[j]]
-    //             .toString()
-    //             == this.checkedArray[i])
-    //       ) {
-    //         return true;
-    //       }
-    //     }
-        
-    //   }
-    // });
-    // this.partyList = this.copyPartyList.filter(ele=>{
-    //   for(let i=0;i<this.checkedArray.length;i++){
-    //     if (ele.partyName == this.checkedArray[i]) {
-    //       return true;
-    //     }
-    //   }
-    // })
     this.filterDivFlag = false;
 
   }
 
-  filterOpen(value: any,i:any) {
+  filterOpen(value: any, i: any) {
     this.selectedColumn = value;
     this.index = i;
-    console.log("Index:",this.index)
+    console.log("Index:", this.index)
     this.partyList = this.copyPartyList;
     this.filterDivFlag = true;
     if (value == "partyName") {
@@ -261,21 +239,39 @@ export class PartyComponent implements OnInit {
 
     if (value == 1) {
       this.selectedFilter1 = "Contains";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
     else if (value == 2) {
       this.selectedFilter1 = "Not Contains";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
     else if (value == 3) {
       this.selectedFilter1 = "Equals";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
     else if (value == 4) {
       this.selectedFilter1 = "Not Equals";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
     else if (value == 5) {
       this.selectedFilter1 = "Starts with";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
     else if (value == 6) {
       this.selectedFilter1 = "Ends with";
+      this.filterWord = null;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
 
   }
@@ -319,22 +315,22 @@ export class PartyComponent implements OnInit {
     }
     else if (this.selectedFilter1 == "Not Contains") {
 
-      if(val == ""){
+      if (val == "") {
         this.partyList = this.copyPartyList;
       }
-      else{
+      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if (
               (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
               return false;
             }
-            else{
+            else {
               return true;
             }
           }
         })
-  
+
         const keys = Object.keys(this.copyPartyList[0]);
         this.partyList = this.copyPartyList.filter(item => {
           for (let i = 0; i < count; i++) {
@@ -348,38 +344,38 @@ export class PartyComponent implements OnInit {
             ) {
               return false;
             }
-            else{
+            else {
               return true;
             }
           }
         });
         this.duplipartylist = this.partyList;
       }
-      
+
     }
     else if (this.selectedFilter1 == "Equals") {
-      if(val == ""){
+      if (val == "") {
         this.partyList = this.copyPartyList;
       }
-      else{
+      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
-            if 
+            if
               (item.toString().toLowerCase() == val) {
               return true;
             }
           }
         })
-  
+
         const keys = Object.keys(this.copyPartyList[0]);
         this.partyList = this.copyPartyList.filter(item => {
           for (let i = 0; i < count; i++) {
-            if 
+            if
               (item[keys[this.index]] &&
-                item[keys[this.index]]
-                  .toString()
-                  .toLowerCase()
-                  == val
+              item[keys[this.index]]
+                .toString()
+                .toLowerCase()
+              == val
             ) {
               return true;
             }
@@ -389,28 +385,28 @@ export class PartyComponent implements OnInit {
       }
     }
     else if (this.selectedFilter1 == "Not Equals") {
-      if(val == ""){
+      if (val == "") {
         this.partyList = this.copyPartyList;
       }
-      else{
+      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
-            if 
+            if
               (item.toString().toLowerCase() != val) {
               return true;
             }
           }
         })
-  
+
         const keys = Object.keys(this.copyPartyList[0]);
         this.partyList = this.copyPartyList.filter(item => {
           for (let i = 0; i < count; i++) {
-            if 
+            if
               (item[keys[this.index]] &&
-                item[keys[this.index]]
-                  .toString()
-                  .toLowerCase()
-                  != val
+              item[keys[this.index]]
+                .toString()
+                .toLowerCase()
+              != val
             ) {
               return true;
             }
@@ -420,28 +416,28 @@ export class PartyComponent implements OnInit {
       }
     }
     else if (this.selectedFilter1 == "Starts with") {
-      if(val == ""){
+      if (val == "") {
         this.partyList = this.copyPartyList;
       }
-      else{
+      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
-            if 
+            if
               (item.toString().toLowerCase().charAt(0) == val) {
               return true;
             }
           }
         })
-  
+
         const keys = Object.keys(this.copyPartyList[0]);
         this.partyList = this.copyPartyList.filter(item => {
           for (let i = 0; i < count; i++) {
-            if 
+            if
               (item[keys[this.index]] &&
-                item[keys[this.index]]
-                  .toString()
-                  .toLowerCase().charAt(0)
-                  == val
+              item[keys[this.index]]
+                .toString()
+                .toLowerCase().charAt(0)
+              == val
             ) {
               return true;
             }
@@ -451,27 +447,27 @@ export class PartyComponent implements OnInit {
       }
     }
     else if (this.selectedFilter1 == "Ends with") {
-      if(val == ""){
+      if (val == "") {
         this.partyList = this.copyPartyList;
       }
-      else{
+      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
-            if 
+            if
               (item.toString().toLowerCase().endsWith(val)) {
               return true;
             }
           }
         })
-  
+
         const keys = Object.keys(this.copyPartyList[0]);
         this.partyList = this.copyPartyList.filter(item => {
           for (let i = 0; i < count; i++) {
-            if 
+            if
               (item[keys[this.index]] &&
-                item[keys[this.index]]
-                  .toString()
-                  .toLowerCase().endsWith(val)
+              item[keys[this.index]]
+                .toString()
+                .toLowerCase().endsWith(val)
             ) {
               return true;
             }
@@ -532,7 +528,7 @@ export class PartyComponent implements OnInit {
             if (element.partyName == null) {
               this.distinctPartyNameList = this.distinctPartyNameList;
             }
-            else{
+            else {
               this.distinctPartyNameList.push(element.partyName)
             }
           })
@@ -544,7 +540,7 @@ export class PartyComponent implements OnInit {
             if (element.partyAddress1 == null) {
               this.distinctPartyAddressList = this.distinctPartyAddressList;
             }
-            else{
+            else {
               this.distinctPartyAddressList.push(element.partyAddress1)
             }
           })
@@ -556,7 +552,7 @@ export class PartyComponent implements OnInit {
             if (element.contactNo == null) {
               this.distinctPartyContactList = this.distinctPartyContactList;
             }
-            else{
+            else {
               this.distinctPartyContactList.push(element.contactNo)
             }
           })
@@ -568,7 +564,7 @@ export class PartyComponent implements OnInit {
             if (element.city == null) {
               this.distinctPartyCityList = this.distinctPartyCityList;
             }
-            else{
+            else {
               this.distinctPartyCityList.push(element.city)
             }
           })
@@ -580,7 +576,7 @@ export class PartyComponent implements OnInit {
             if (element.state == null) {
               this.distinctPartyStateList = this.distinctPartyStateList;
             }
-            else{
+            else {
               this.distinctPartyStateList.push(element.state)
             }
           })
