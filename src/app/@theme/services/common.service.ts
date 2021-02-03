@@ -43,7 +43,7 @@ export class CommonService {
     // }
     // else url = "http://13.235.71.124:8080/";
     // return url;
-    return "localhost:8080/";
+    return "http://localhost:8080/";
   }
 
   decToBin(n): any{
