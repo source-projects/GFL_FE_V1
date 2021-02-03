@@ -46,7 +46,7 @@
                             <ng-select aria-placeholder="Select process name" [(ngModel)]="shades.processId" (change)="setProcessName(shades.processId)" #processName1="ngModel" name="processName" required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted   || processName1.touched) }"
                                 placeholder="Process Name" class="required-error-dropdown">
                                 <ng-option *ngFor="let p of processList" [value]="p.id">
-                                    {{p.name}}
+                                    {{p.dyeingProcessName}}
                                 </ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(processName1.invalid)&&(formSubmitted   || processName1.touched)">

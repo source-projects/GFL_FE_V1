@@ -4,7 +4,7 @@
         <span aria-hidden="true" class="close-icon">&times;</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body mb-4">
     <label class="required">Shade</label>
     <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
         [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
@@ -46,5 +46,5 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onOkClick()">Ok</button>
 
-    <button type="button" class="btn btn-primary btn-sm btn-design" disabled >Add to jet</button>
+    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="addToJetClick()" >Add to jet</button>
 </div>

@@ -5,6 +5,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { ShadeService } from 'app/@theme/services/shade.service';
 import * as errorData from "app/@theme/json/error.json";
 import { ToastrService } from 'ngx-toastr';
+import { JetPlanningService } from 'app/@theme/services/jet-planning.service';
 
 @Component({
   selector: 'ngx-shade-with-batch',
@@ -16,7 +17,11 @@ allShade:any[];
 shade:any[];
 loading = false;
 public errorData: any = (errorData as any).default;
-
+jet:any;
+jetList:any[]=[];
+formSubmitted: boolean = false;
+jetSelectedFlag = false;
+selectedJetData:any[]=[];
 //batch:any;
 color:any;
   constructor(    
@@ -24,46 +29,54 @@ color:any;
     private shadeService: ShadeService,
     private _NgbActiveModal: NgbActiveModal, 
     private toastr: ToastrService,
+    private jetService: JetPlanningService,
 
     ) { }
 
   ngOnInit(): void {
-    this.getAllBatchWithShade();
+    this.getJetData();
+
+    //this.getAllBatchWithShade();
   }
 
   get activeModal() {
     return this._NgbActiveModal;
   }
-
-  getAllBatchWithShade(){
-
-    this.loading=true;
-
-    this.productionPlanningService.getAllProductionPlan().subscribe(
+  getJetData() {
+    this.loading = true;
+    this.jetService.getAllJetData().subscribe(
       (data) => {
-            if (data["success"]) {
-              this.allShade = data["data"];
+        if (data["success"]) {
+          this.jetList = data["data"];
+          console.log(this.jetList);
+        
+        }
 
-              
-            }
-            else {
-              // this.toastr.error(data["msg"]);
-              this.loading = false;
-            }
-          },
+        else {
+          this.loading = false;
+        }
+      },
       (error) => {
-            // this.toastr.error(errorData.Serever_Error);
-            this.loading = false;
-          }
-    );}
+        this.loading = false;
+      }
+    );
+  }
+
+  jetSelected(event){
+    console.log(event);
+    this.jetSelectedFlag = true;
+    this.jetList.forEach(element => {
+      if(element.id == event){
+        this.selectedJetData = element.jetDataList;
+      }
+    });
+  }
+ 
 
     onClick(event){
-      this.allShade.forEach((e)=>{
-        if(e.batchId==event.target.innerText){
-          this.activeModal.close(e);
-        }
-      });
-     
+      console.log(event);
+      this.activeModal.close(event.value);
+      
     }
 
 }
