@@ -5,11 +5,50 @@
     </button>
 </div>
 <div class="modal-body">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list shade-with-batch-design"  (click)="onClick($event)" id="" >
-        <div class="example-box jet-popup-box production-list-popup" *ngFor="let s of allShade" cdkDrag> 
-           
-        
-            <div class="jet-popup-display"  ><span class="prouction-jet-number">{{s.batchId}}</span><input class="form-control input-jet"  [style.background]="s.colorTone" disabled ></div>
+    <form #myForm="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="required">Select Jet: </label>
+                    <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel" (change)="jetSelected($event)"
+                    [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}"
+                     placeholder="Jet Number" class="required-error-dropdown">
+                    <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}</ng-option>
+                </ng-select>
+                <div class="required-class" *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
+                    <span>Jet number is required</span>
+                </div>
+                          
+                        </div>
+            </div>
+                   
+                  
         </div>
-    </div>
+        <div class="row" *ngIf="jetSelectedFlag" >
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                    class="example-list main-table-drag">
+                   <div class="example-box trans-box-drop" *ngFor="let jetData of selectedJetData" cdkDrag>
+                     <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu"  nbContextMenuTrigger="click">
+                       {{jetData.batchId}}
+                     </button>
+                   </div>
+                 </div>
+                   
+
+                </div>
+            </div>
+        </div>
+
+
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button  type="button" (click)="onClick(myForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px">Ok</button>
+
+                    </div>
+                </div>
+            </div>
+            </form>
 </div>
