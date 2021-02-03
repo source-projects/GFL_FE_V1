@@ -34,9 +34,15 @@ export class CommonService {
   }
 
   envUrl(){
-    // let w = window.location;
-    // console.log(w.hostname)
-    return window['myValue'];
+    let url = "";
+    let location = window.location;
+    if (location["hostname"] == "150.107.188.188")
+      url = "http://150.107.188.188:8080/";
+    else if(location["hostname"] == "103.137.194.167"){
+      url = "http://103.137.194.167:8080/";
+    }
+    else url = "http://13.235.71.124:8080/";
+    return url;
   }
 
   decToBin(n): any{
