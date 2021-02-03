@@ -7,11 +7,10 @@
 <div class="modal-body">
     <form #myForm="ngForm">
         <div class="row">
-            <!-- Party name -->
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="required">Select Jet: </label>
-                    <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel"
+                    <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel" (change)="jetSelected($event)"
                     [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}"
                      placeholder="Jet Number" class="required-error-dropdown">
                     <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}</ng-option>
@@ -19,26 +18,29 @@
                 <div class="required-class" *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
                     <span>Jet number is required</span>
                 </div>
-                            <!-- <input type="number" class="form-control" [(ngModel)]="jet" #jetNo1="ngModel" name="jet" required 
-                            [ngClass]="{'is-invalid':(jetNo1.invalid)&&(formSubmitted ||  jetNo1.touched)}" placeholder="Enter jet number">
-                            <div class="invalid-feedback" *ngIf="(jetNo1.invalid)&&(formSubmitted ||  jetNo1.touched)">
-
-                                <span>Jet No is required</span>
-                            </div> -->
+                          
                         </div>
-                    </div>
-                   
-                    <!-- <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel"
-                        [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                         placeholder="Party Name" class="required-error-dropdown"
-                         (change)=partySelected($event)>
-                        <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
-                    </ng-select> -->
-                    <!-- <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
-                        <span>Party Id is required</span>
-                    </div> -->
-                <!-- </div> -->
             </div>
+                   
+                  
+        </div>
+        <div class="row" *ngIf="jetSelectedFlag" >
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                    class="example-list main-table-drag">
+                   <div class="example-box trans-box-drop" *ngFor="let jetData of selectedJetData" cdkDrag>
+                     <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu"  nbContextMenuTrigger="click">
+                       {{jetData.batchId}}
+                     </button>
+                   </div>
+                 </div>
+                   
+
+                </div>
+            </div>
+        </div>
+
 
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">

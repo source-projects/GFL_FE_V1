@@ -20,7 +20,8 @@ public errorData: any = (errorData as any).default;
 jet:any;
 jetList:any[]=[];
 formSubmitted: boolean = false;
-
+jetSelectedFlag = false;
+selectedJetData:any[]=[];
 //batch:any;
 color:any;
   constructor(    
@@ -48,9 +49,7 @@ color:any;
         if (data["success"]) {
           this.jetList = data["data"];
           console.log(this.jetList);
-          // this.jet.forEach(ele => {
-          //   this.connectedTo.push(ele)
-          // })
+        
         }
 
         else {
@@ -62,37 +61,22 @@ color:any;
       }
     );
   }
-  // getAllBatchWithShade(){
 
-  //   this.loading=true;
-
-  //   this.productionPlanningService.getAllProductionPlan().subscribe(
-  //     (data) => {
-  //           if (data["success"]) {
-  //             this.allShade = data["data"];
-
-              
-  //           }
-  //           else {
-  //             // this.toastr.error(data["msg"]);
-  //             this.loading = false;
-  //           }
-  //         },
-  //     (error) => {
-  //           // this.toastr.error(errorData.Serever_Error);
-  //           this.loading = false;
-  //         }
-  //   );}
+  jetSelected(event){
+    console.log(event);
+    this.jetSelectedFlag = true;
+    this.jetList.forEach(element => {
+      if(element.id == event){
+        this.selectedJetData = element.jetDataList;
+      }
+    });
+  }
+ 
 
     onClick(event){
       console.log(event);
       this.activeModal.close(event.value);
-      // this.allShade.forEach((e)=>{
-      //   if(e.batchId==event.target.innerText){
-      //     
-      //   }
-      // });
-     
+      
     }
 
 }

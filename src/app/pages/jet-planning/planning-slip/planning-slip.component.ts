@@ -6,13 +6,13 @@ import { JetPlanningService } from "app/@theme/services/jet-planning.service";
 import { PlanningSlipService } from "app/@theme/services/planning-slip.service";
 import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
-import { DatePipe } from '@angular/common';
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "ngx-planning-slip",
   templateUrl: "./planning-slip.component.html",
   styleUrls: ["./planning-slip.component.scss"],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
   public currentSlipId: any;
@@ -22,7 +22,7 @@ export class PlanningSlipComponent implements OnInit {
   public disableButton: boolean = false;
   public isPrinting: boolean = true;
   public index: string;
-  public myDate:any
+  public myDate: any;
   @Input() isPrintDirect: boolean;
   @Input() batchId;
   @Input() stockId;
@@ -152,11 +152,10 @@ export class PlanningSlipComponent implements OnInit {
     private planningSlipService: PlanningSlipService
   ) {
     this.myDate = new Date();
-    this.myDate = this.datePipe.transform(this.myDate, 'dd-MM-yyyy');
+    this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
   }
 
   ngOnInit(): void {
-    
     this.getItemData();
     if (this.batchId && this.stockId) this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
@@ -200,12 +199,16 @@ export class PlanningSlipComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName, parentDataIndex) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "itemList"+parentDataIndex+"" + (rowIndex + 1) + "-" + colIndex;
+      this.index =
+        "itemList" + parentDataIndex + "" + (rowIndex + 1) + "-" + colIndex;
       if (
         rowIndex ===
-        this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData.length - 1
+        this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
+          .length -
+          1
       ) {
-        let item = this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[rowIndex];
+        let item = this.slipData.dyeingSlipDataList[parentDataIndex]
+          .dyeingSlipItemData[rowIndex];
 
         if (colName == "concentration") {
           if (!item.concentration) {
@@ -220,7 +223,9 @@ export class PlanningSlipComponent implements OnInit {
         }
         let obj = new DyeingChemicalData();
         //let list = this.dyeingChemicalData;
-        this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData.push(obj);
+        this.slipData.dyeingSlipDataList[
+          parentDataIndex
+        ].dyeingSlipItemData.push(obj);
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -241,20 +246,34 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   removeItem(rowIndex, parentDataIndex) {
-    let idCount = this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData.length;
+    let idCount = this.slipData.dyeingSlipDataList[parentDataIndex]
+      .dyeingSlipItemData.length;
     if (idCount == 1) {
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].byChemical = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].concentration = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].controlId = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].id = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].itemId = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].itemName = null;
-      this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData[0].supplierName = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].byChemical = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].concentration = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].controlId = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].id = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].itemId = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].itemName = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData[0].supplierName = null;
     } else {
-      let removed = this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData.splice(
-        rowIndex,
-        1
-      );
+      let removed = this.slipData.dyeingSlipDataList[
+        parentDataIndex
+      ].dyeingSlipItemData.splice(rowIndex, 1);
     }
   }
 
@@ -264,10 +283,12 @@ export class PlanningSlipComponent implements OnInit {
         e.itemId ==
         this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
       ) {
-        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.supplierName =
-          e.supplierName;
-          this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemName =
-          e.itemName;
+        this.slipData.dyeingSlipDataList[
+          parentIndex
+        ].dyeingSlipItemData.supplierName = e.supplierName;
+        this.slipData.dyeingSlipDataList[
+          parentIndex
+        ].dyeingSlipItemData.itemName = e.itemName;
       }
     });
   }
@@ -298,29 +319,34 @@ export class PlanningSlipComponent implements OnInit {
     if (!this.isPrintDirect) {
       this.saveSlipData(myForm);
     }
-    let doc = new wijmo.PrintDocument({
-      title: "",
-    });
-    doc.append(
-      '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
-    );
-    doc.append(
-      '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
-    );
-    doc.append(
-      '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
-    );
-    doc.append(
-      '<link href="./planning-slip.component.scss" rel="stylesheet">'
-    )
-    let inter = setInterval(() => {
-      let element = <HTMLElement>document.getElementById("print-slip");
-      if (element) {
-        doc.append(element);
-        doc.print();
-        clearInterval(inter);
-        this.activeModal.close();
-      }
-    }, 10);
+    
+        let doc = new wijmo.PrintDocument({
+          title: "",
+        });
+        doc.append(
+          '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
+        );
+        doc.append(
+          '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
+        );
+        doc.append(
+          '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
+        );
+        doc.append(
+          '<link href="./planning-slip.component.scss" rel="stylesheet">'
+        );
+          let tempFlag = false;
+        let inter = setInterval(() => {
+          let element = <HTMLElement>document.getElementById("print-slip");
+          if (element) {
+            doc.append(element);
+            doc.print();
+            tempFlag = true;
+            clearInterval(inter);
+            this.activeModal.close();
+          }
+        }, 10);
+       
+         
   }
 }

@@ -99,11 +99,13 @@ export class AddShadeComponent implements OnInit {
           if(!this.addToJetFlag){
             this.toastr.success(errorData.Add_Success);
           }
-          this.productionPlanningService.addToJetClicked.emit(this.productionId);
-          this.router.navigate(['/pages/jet-planning']);
+
+          // this.productionPlanningService.addToJetClicked.emit(this.productionId);
+          this.activeModal.close(true);
+          this.router.navigate(['/pages/jet-planning/'+this.productionId]);
+
 
           //this.action.emit(true);
-          this.activeModal.close(true);
 
          // this.modalService.close(true);
           //this.route.navigate(["/pages/program"]);
