@@ -76,6 +76,11 @@ export class PartyComponent implements OnInit {
   filterDivFlag: boolean = false;
   filterAndOrFlag: boolean = false;
   stepFlag: boolean = false;
+  partyNameFirstTimeFlag:boolean = false;
+  partyAddress1FirstTimeFlag:boolean = false;
+  partyContactFirstTimeFlag:boolean = false;
+  partyCityFirstTimeFlag:boolean = false;
+  partyStateFirstTimeFlag:boolean = false;
 
 
   constructor(
@@ -98,6 +103,11 @@ export class PartyComponent implements OnInit {
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
+    this.partyNameFirstTimeFlag = false;
+    this.partyAddress1FirstTimeFlag  = false;
+    this.partyContactFirstTimeFlag = false;
+    this.partyCityFirstTimeFlag = false;
+    this.partyStateFirstTimeFlag = false;
     this.getViewAccess();
     this.getAddAcess();
     // this.getAllParty(this.userId,"own");
@@ -210,27 +220,120 @@ export class PartyComponent implements OnInit {
   filterOpen(value: any, i: any) {
     this.selectedColumn = value;
     this.index = i;
-    console.log("Index:", this.index)
-    this.partyList = this.copyPartyList;
+    // this.partyList = this.copyPartyList;
+    // this.partyList = this.copyPartyList;
     this.filterDivFlag = true;
+    // this.filterWord = null;
     if (value == "partyName") {
-      this.filterListDiv = this.distinctPartyNameList;
+      
+      if (!this.partyNameFirstTimeFlag) {
+        this.partyList = this.copyPartyList;
+        this.filterWord = null;
+        this.filterListDiv = this.distinctPartyNameList;
+        this.partyNameFirstTimeFlag = true;
+        this.partyAddress1FirstTimeFlag  = false;
+        this.partyContactFirstTimeFlag = false;
+        this.partyCityFirstTimeFlag = false;
+        this.partyStateFirstTimeFlag = false;
+      }
+      else if(this.partyNameFirstTimeFlag){
+        this.filterListDiv = [];
+        this.partyList.map(ele=>{
+          if (!this.filterListDiv.includes(ele.partyName)) {
+            this.filterListDiv.push(ele.partyName)
+          }
+        });
+      }
+      
       this.copyFilterListDiv = this.distinctPartyNameList;
     }
     else if (value == "partyAddress1") {
-      this.filterListDiv = this.distinctPartyAddressList;
+      if (!this.partyAddress1FirstTimeFlag) {
+        this.partyList = this.copyPartyList;
+        this.filterWord = null;
+        this.filterListDiv = this.distinctPartyAddressList;
+        this.partyNameFirstTimeFlag = false;
+        this.partyAddress1FirstTimeFlag  = true;
+        this.partyContactFirstTimeFlag = false;
+        this.partyCityFirstTimeFlag = false;
+        this.partyStateFirstTimeFlag = false;
+      }
+      else if(this.partyAddress1FirstTimeFlag){
+        this.filterListDiv = [];
+        this.partyList.map(ele=>{
+          if (!this.filterListDiv.includes(ele.partyAddress1)) {
+            this.filterListDiv.push(ele.partyAddress1)
+          }
+        });
+      }
+      
       this.copyFilterListDiv = this.distinctPartyAddressList;
+
     }
     else if (value == "contactNo") {
-      this.filterListDiv = this.distinctPartyContactList;
+      if (!this.partyContactFirstTimeFlag) {
+        this.partyList = this.copyPartyList;
+        this.filterWord = null;
+        this.filterListDiv = this.distinctPartyContactList;
+        this.partyContactFirstTimeFlag = true;
+        this.partyNameFirstTimeFlag = false;
+        this.partyAddress1FirstTimeFlag  = false;
+        this.partyCityFirstTimeFlag = false;
+        this.partyStateFirstTimeFlag = false;
+      }
+      else if(this.partyContactFirstTimeFlag){
+        this.filterListDiv = [];
+        this.partyList.map(ele=>{
+          if (!this.filterListDiv.includes(ele.contactNo)) {
+            this.filterListDiv.push(ele.contactNo)
+          }
+        });
+      }
+      
       this.copyFilterListDiv = this.distinctPartyContactList;
     }
     else if (value == "city") {
-      this.filterListDiv = this.distinctPartyCityList;
+      if (!this.partyCityFirstTimeFlag) {
+        this.partyList = this.copyPartyList;
+        this.filterWord = null;
+        this.filterListDiv = this.distinctPartyCityList;
+        this.partyContactFirstTimeFlag = false;
+        this.partyNameFirstTimeFlag = false;
+        this.partyAddress1FirstTimeFlag  = false;
+        this.partyCityFirstTimeFlag = true;
+        this.partyStateFirstTimeFlag = false;
+      }
+      else if(this.partyCityFirstTimeFlag){
+        this.filterListDiv = [];
+        this.partyList.map(ele=>{
+          if (!this.filterListDiv.includes(ele.city)) {
+            this.filterListDiv.push(ele.city)
+          }
+        });
+      }
+      
       this.copyFilterListDiv = this.distinctPartyCityList;
     }
     else if (value == "state") {
-      this.filterListDiv = this.distinctPartyStateList;
+      if (!this.partyStateFirstTimeFlag) {
+        this.partyList = this.copyPartyList;
+        this.filterWord = null;
+        this.filterListDiv = this.distinctPartyStateList;
+        this.partyContactFirstTimeFlag = false;
+        this.partyNameFirstTimeFlag = false;
+        this.partyAddress1FirstTimeFlag  = false;
+        this.partyCityFirstTimeFlag = false;
+        this.partyStateFirstTimeFlag = true;
+      }
+      else if(this.partyStateFirstTimeFlag){
+        this.filterListDiv = [];
+        this.partyList.map(ele=>{
+          if (!this.filterListDiv.includes(ele.state)) {
+            this.filterListDiv.push(ele.state)
+          }
+        });
+      }
+      
       this.copyFilterListDiv = this.distinctPartyStateList;
     }
   }
@@ -285,8 +388,10 @@ export class PartyComponent implements OnInit {
     if (value == "") {
       this.filterAndOrFlag = false;
       this.stepFlag = false;
+      this.partyList = this.copyPartyList;
+      this.filterListDiv = this.copyFilterListDiv;
     }
-    if (this.selectedFilter1 == "Contains") {
+   else if (this.selectedFilter1 == "Contains") {
       this.filterListDiv = this.copyFilterListDiv.filter((item) => {
         for (let i = 0; i < count1; i++) {
           if (
@@ -315,10 +420,6 @@ export class PartyComponent implements OnInit {
     }
     else if (this.selectedFilter1 == "Not Contains") {
 
-      if (val == "") {
-        this.partyList = this.copyPartyList;
-      }
-      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if (
@@ -350,18 +451,12 @@ export class PartyComponent implements OnInit {
           }
         });
         this.duplipartylist = this.partyList;
-      }
-
     }
     else if (this.selectedFilter1 == "Equals") {
-      if (val == "") {
-        this.partyList = this.copyPartyList;
-      }
-      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if
-              (item.toString().toLowerCase() == val) {
+              (item.toString() == val) {
               return true;
             }
           }
@@ -374,7 +469,7 @@ export class PartyComponent implements OnInit {
               (item[keys[this.index]] &&
               item[keys[this.index]]
                 .toString()
-                .toLowerCase()
+                
               == val
             ) {
               return true;
@@ -382,17 +477,12 @@ export class PartyComponent implements OnInit {
           }
         });
         this.duplipartylist = this.partyList;
-      }
     }
     else if (this.selectedFilter1 == "Not Equals") {
-      if (val == "") {
-        this.partyList = this.copyPartyList;
-      }
-      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if
-              (item.toString().toLowerCase() != val) {
+              (item.toString() != val) {
               return true;
             }
           }
@@ -405,7 +495,7 @@ export class PartyComponent implements OnInit {
               (item[keys[this.index]] &&
               item[keys[this.index]]
                 .toString()
-                .toLowerCase()
+                
               != val
             ) {
               return true;
@@ -413,13 +503,8 @@ export class PartyComponent implements OnInit {
           }
         });
         this.duplipartylist = this.partyList;
-      }
     }
     else if (this.selectedFilter1 == "Starts with") {
-      if (val == "") {
-        this.partyList = this.copyPartyList;
-      }
-      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if
@@ -444,13 +529,8 @@ export class PartyComponent implements OnInit {
           }
         });
         this.duplipartylist = this.partyList;
-      }
     }
     else if (this.selectedFilter1 == "Ends with") {
-      if (val == "") {
-        this.partyList = this.copyPartyList;
-      }
-      else {
         this.filterListDiv = this.copyFilterListDiv.filter((item) => {
           for (let i = 0; i < count1; i++) {
             if
@@ -474,7 +554,6 @@ export class PartyComponent implements OnInit {
           }
         });
         this.duplipartylist = this.partyList;
-      }
     }
 
   }
@@ -537,7 +616,7 @@ export class PartyComponent implements OnInit {
             (thing, i, arr) => arr.findIndex(t => t.partyAddress1 === thing.partyAddress1) === i
           );
           this.partyAddressList.map((element) => {
-            if (element.partyAddress1 == null) {
+            if (element.partyAddress1 == "") {
               this.distinctPartyAddressList = this.distinctPartyAddressList;
             }
             else {
