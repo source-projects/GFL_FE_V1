@@ -22,4 +22,9 @@ export class JetPlanningService {
   updateJetData(obj){
     return this.httpClient.put(this.commonService.envUrl() + 'api/jet/updateJetData',obj);
   }
+  
+  getAllProductionWithoutJetPlan(){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/productionPlan/all');
+
+}
 }

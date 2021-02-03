@@ -7,7 +7,10 @@ const routes: Routes = [
     path:'',
     component:JetPlanningComponent,
   },
-
+  {
+    path:':id',
+    component:JetPlanningComponent,
+  },
  
 ];
 
