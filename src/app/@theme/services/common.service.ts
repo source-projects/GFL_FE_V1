@@ -38,8 +38,8 @@ export class CommonService {
     let location = window.location;
     if(location["hostname"] == "103.137.194.167"){
       url = "http://localhost:8080/";
-    }else if(location['hostname'] == "13.235.71.124")
-      url = "http://http://13.235.71.124:8080/";
+    }else if(location['hostname'] == "13.235.71.124" || location['hostname'] == "localhost")
+      url = "http://13.235.71.124:8080/";
     else url = "http://103.137.194.167:8080/";
     return url;
     //return url "http://http://13.235.71.124:8080/";
