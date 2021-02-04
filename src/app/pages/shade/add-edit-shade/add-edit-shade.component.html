@@ -32,7 +32,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Party Shade No</label>
-                            <input type="text" class="form-control" [(ngModel)]="shades.partyShadeNo" #partyShadeNo1="ngModel" name="partyShadeNo" required [ngClass]="{'is-invalid':(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)}" placeholder="Party Shade No">
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="shades.partyShadeNo" #partyShadeNo1="ngModel" name="partyShadeNo" required [ngClass]="{'is-invalid':(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)}"
+                                placeholder="Party Shade No">
                             <div class="invalid-feedback" *ngIf="(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)">
 
                                 <span>Party Shade No is required</span>
@@ -91,14 +92,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Quality Name</label>
-                            <input type="text" name="qualityName" #qualityName1="ngModel" [(ngModel)]="shades.qualityName" readonly class="form-control" placeholder="Quality Name">
+                            <input type="text" name="qualityName" #qualityName1="ngModel" [(ngModel)]="shades.qualityName" readonly class="form-control size-small" fieldsize="small" nbinput placeholder="Quality Name">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Quality Type</label>
-                            <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType" class="form-control" placeholder="Quality Type">
+                            <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType" class="form-control size-small" fieldsize="small" nbinput placeholder="Quality Type">
                         </div>
                     </div>
 
@@ -109,7 +110,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Color Tone</label>
-                            <input class="form-control" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
+                            <input class="form-control size-small" fieldsize="small" nbinput [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
                         </div>
                         <!--<div class="invalid-feedback"
                         *ngIf="formSubmitted && (color1.invalid || (color1.dirty || color1.untouched) )">
@@ -120,7 +121,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Lab Color No</label>
-                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo" class="form-control" placeholder="Lab Color No">
+                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo" class="form-control size-small" fieldsize="small" nbinput placeholder="Lab Color No">
                         </div>
                     </div>
                     <div class="col-md-4">
