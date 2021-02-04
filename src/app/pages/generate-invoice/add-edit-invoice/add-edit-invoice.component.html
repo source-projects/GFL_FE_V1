@@ -13,15 +13,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Party Name</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel"
-                            [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                            (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown"
+                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown"
                             [readonly]="currentInvoiceId != null">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
 
-                        <div class="required-class"
-                            *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                        <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                             <span>Party name is required</span>
                         </div>
                     </div>
@@ -44,8 +41,7 @@
                              </div>
                          </div>
                          </div> -->
-            <ngx-datatable [rows]="merge" class="material" [headerHeight]="31" [footerHeight]="31"
-                [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
+            <ngx-datatable [rows]="merge" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
                 <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
@@ -57,9 +53,7 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                            (click)="currentInvoiceId == null ? addInvoice(invoiceForm) : updateInvoice(invoiceForm)"
-                            [disabled]="flag">Generate
+                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="currentInvoiceId == null ? addInvoice(invoiceForm) : updateInvoice(invoiceForm)" [disabled]="flag">Generate
                             Invoice</button>
                     </div>
                 </div>

@@ -156,10 +156,11 @@
                                         <option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
                                             {{s.supplierName}}</option>
                                     </select> -->
-                                    <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none">
-                                        <ng-option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
-                                            {{s.supplierName}}</ng-option>
-                                     </ng-select>
+                                    <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body"
+                                        class="ng-select-br-none">
+                                        <ng-option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
+                                        </ng-option>
+                                    </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -168,8 +169,8 @@
 
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300" prop="shades.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'"
-                                        min="0">
+                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')"
+                                        [id]="'supplierList'+rowIndex+'-1'" min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -201,9 +202,9 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button class="btn btn-primary btn-sm btn-design-cancel" routerLink='/pages/shade'>CANCEL</button>
-                            <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>

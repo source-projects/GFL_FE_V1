@@ -24,7 +24,7 @@
         </div>
         <div class="row" *ngIf="jetSelectedFlag">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group mb-0">
                     <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal" class="example-list main-table-drag jet-plan">
                         <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
                             <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click">

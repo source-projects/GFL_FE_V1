@@ -288,71 +288,17 @@
                         <div class="form-group">
                             <label>Advance Payments:</label>
                             <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="advancePaymentSelected($event)">
-                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
+                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" [width]="5">
                                 </ngx-datatable-column>
-                                <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
-                                <ngx-datatable-column name="Type" prop="payType"></ngx-datatable-column>
-                                <ngx-datatable-column name="Date" prop="date"></ngx-datatable-column>
+                                <ngx-datatable-column name="Amount" prop="amt" [width]="30"></ngx-datatable-column>
+                                <ngx-datatable-column name="Type" prop="payType" [width]="30"></ngx-datatable-column>
+                                <ngx-datatable-column name="Date" prop="date" [width]="30"></ngx-datatable-column>
                             </ngx-datatable>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group center-txt-title">
-                                        <label>Amount to pay:</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group center-txt-title">
-                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group center-txt-title">
-                                        <label>Amount paid:</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group center-txt-title">
-                                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group center-txt-title">
-                                        <label>Current Payment Total:</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group center-txt-title">
-                                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12">
@@ -415,6 +361,62 @@
                 </div>
             </div>
 
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Amount to pay:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Amount paid:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group center-txt-title">
+                                        <label>Current Payment Total:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group center-txt-title">
+                                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
@@ -422,7 +424,7 @@
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
                         <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
-                        <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design" (click)="onAddPayment()">SAVE</button>
+                        <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="onAddPayment()">SAVE</button>
                     </div>
 
                 </div>

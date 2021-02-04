@@ -7,8 +7,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Shift:</label>
-                            <select class="form-control" (change)="shiftBoilerchange($event.target.value)"
-                                class="browser-default custom-select form-control">
+                            <select class="form-control" (change)="shiftBoilerchange($event.target.value)" class="browser-default custom-select form-control">
                                 <option *ngFor="let sh of shift" [value]="sh.id">
                                     {{sh.name}}</option>
                             </select>
@@ -17,8 +16,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Date:</label><span style="color: red;"> *</span>
-                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt1"
-                                [owlDateTime]="dt1" [max]="max" placeholder="Select Date" ([ngModel])="dateSelected">
+                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [max]="max" placeholder="Select Date" ([ngModel])="dateSelected">
                             <owl-date-time (afterPickerClosed)="changeBoiler(dt1)" [pickerType]="'calendar'" #dt1>
                             </owl-date-time>
                         </div>
@@ -26,13 +24,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Time:</label>
-                            <select class="form-control" (change)="selectedBoilerTime($event.target.value)"
-                                class="browser-default custom-select form-control" aria-placeholder="Select Time">
+                            <select class="form-control" (change)="selectedBoilerTime($event.target.value)" class="browser-default custom-select form-control" aria-placeholder="Select Time">
                                 <option value="9999">Select Time</option>
                                 <option *ngFor="let t of timeList" [value]="t.id">
                                     {{t.name}}</option>
                             </select>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -40,15 +37,13 @@
                 <div *ngIf="BoilerdayFlag">
 
                     <form #logForm="ngForm">
-                        <table border="3px" style="width: 100%;text-align: center;"
-                            class="table-responsive table-input-width table-display-inline">
+                        <table border="3px" style="width: 100%;text-align: center;" class="table-responsive table-input-width table-display-inline">
                             <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Boiler</strong>
                                 </td>
                                 <td colspan="4">
-                                    <select class="browser-default custom-select sheet-dashboard"
-                                        (change)="boilerchange($event.target.value)">
+                                    <select class="browser-default custom-select sheet-dashboard" (change)="boilerchange($event.target.value)">
                                         <option *ngFor="let boi of boiler" [value]="boi.id">
                                             {{boi.machineName}}</option>
                                     </select>
@@ -95,12 +90,10 @@
                             </div>
                         </div>
                         <div *ngIf="submitBoilerFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitBoilerday(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                            <input type="button" (click)="submitBoilerday(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
                         </div>
                         <div *ngIf="updateBoilerFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitBoilerday(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
+                            <input type="button" (click)="submitBoilerday(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
                         </div>
 
                     </form>
@@ -110,15 +103,13 @@
                 <div *ngIf="BoilernightFlag">
 
                     <form #logForm="ngForm">
-                        <table border="3px" style="width: 100%;text-align: center;"
-                        class="table-responsive table-input-width table-display-inline">
+                        <table border="3px" style="width: 100%;text-align: center;" class="table-responsive table-input-width table-display-inline">
                             <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Boiler</strong>
                                 </td>
                                 <td colspan="4">
-                                    <select class="browser-default custom-select sheet-dashboard"
-                                        (change)="boilerchange($event.target.value)">
+                                    <select class="browser-default custom-select sheet-dashboard" (change)="boilerchange($event.target.value)">
                                         <option *ngFor="let boi of boiler" [value]="boi.id">
                                             {{boi.machineName}}</option>
                                     </select>
@@ -137,7 +128,7 @@
                                     {{val.Attribute}}
                                 </td>
                                 <td *ngIf="BoilerNight22Flag" colspan="2">
-                                    <input  [readonly]="readonlyBoilerNightFlag" type="number" [(ngModel)]="val.time_22" [name]="val.Attribute+'22'" class="form-control">
+                                    <input [readonly]="readonlyBoilerNightFlag" type="number" [(ngModel)]="val.time_22" [name]="val.Attribute+'22'" class="form-control">
                                 </td>
                                 <td *ngIf="BoilerNight00Flag" colspan="2">
                                     <input [readonly]="readonlyBoilerNightFlag" type="number" [(ngModel)]="val.time_00" [name]="val.Attribute+'00'" class="form-control">
@@ -169,8 +160,7 @@
                             <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitBoilernight(logForm)" value="Submit">
                         </div>
                         <div *ngIf="updateBoilerFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitBoilernight(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
+                            <input type="button" (click)="submitBoilernight(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
                         </div>
 
                     </form>
@@ -181,8 +171,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Shift:</label>
-                            <select class="form-control" (change)="shiftThermopackchange($event.target.value)"
-                                class="browser-default custom-select form-control">
+                            <select class="form-control" (change)="shiftThermopackchange($event.target.value)" class="browser-default custom-select form-control">
                                 <option *ngFor="let sh of shift" [value]="sh.id">
                                     {{sh.name}}</option>
                             </select>
@@ -191,8 +180,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Date:</label><span style="color: red;"> *</span>
-                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt2"
-                                [owlDateTime]="dt2" [max]="max" placeholder="Select Date" ([ngModel])="dateSelected">
+                            <input class="form-control" style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" [max]="max" placeholder="Select Date" ([ngModel])="dateSelected">
                             <owl-date-time (afterPickerClosed)="changeThermo(dt2)" [pickerType]="'calendar'" #dt2>
                             </owl-date-time>
                         </div>
@@ -200,13 +188,12 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="shift">Select Time:</label>
-                            <select class="form-control" (change)="selectedThermopackTime($event.target.value)"
-                                class="browser-default custom-select form-control" aria-placeholder="Select Time">
+                            <select class="form-control" (change)="selectedThermopackTime($event.target.value)" class="browser-default custom-select form-control" aria-placeholder="Select Time">
                                 <option value="9999">Select Time</option>
                                 <option *ngFor="let t of timeList" [value]="t.id">
                                     {{t.name}}</option>
                             </select>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -214,15 +201,13 @@
                 <div *ngIf="ThermopackdayFlag">
 
                     <form #logForm="ngForm">
-                        <table border="3px" style="width: 100%;text-align: center;"
-                            class="table-responsive table-input-width table-display-inline">
+                        <table border="3px" style="width: 100%;text-align: center;" class="table-responsive table-input-width table-display-inline">
                             <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Thermopack</strong>
                                 </td>
                                 <td colspan="4">
-                                    <select class="browser-default custom-select sheet-dashboard"
-                                        (change)="thermopackchange($event.target.value)">
+                                    <select class="browser-default custom-select sheet-dashboard" (change)="thermopackchange($event.target.value)">
                                         <option *ngFor="let ther of thermopack" [value]="ther.id">
                                             {{ther.machineName}}</option>
                                     </select>
@@ -261,12 +246,10 @@
                             </tr>
                         </table>
                         <div *ngIf="submitThermopackFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitThermopackday(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                            <input type="button" (click)="submitThermopackday(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
                         </div>
                         <div *ngIf="updateThermopackFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitThermopackday(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
+                            <input type="button" (click)="submitThermopackday(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
                         </div>
 
                     </form>
@@ -276,15 +259,13 @@
                 <div *ngIf="ThermopacknightFlag">
 
                     <form #logForm="ngForm">
-                        <table border="3px" style="width: 100%;text-align: center;"
-                        class="table-responsive table-input-width table-display-inline">
+                        <table border="3px" style="width: 100%;text-align: center;" class="table-responsive table-input-width table-display-inline">
                             <tr>
                                 <td colspan="14">
                                     <strong style="font-size: 20px;">Thermopack</strong>
                                 </td>
                                 <td colspan="4">
-                                    <select class="browser-default custom-select sheet-dashboard"
-                                        (change)="thermopackchange($event.target.value)">
+                                    <select class="browser-default custom-select sheet-dashboard" (change)="thermopackchange($event.target.value)">
                                         <option *ngFor="let ther of thermopack" [value]="ther.id">
                                             {{ther.machineName}}</option>
                                     </select>
@@ -323,11 +304,10 @@
                             </tr>
                         </table>
                         <div *ngIf="submitThermopackFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" class="btn btn-primary btn-sm btn-design sheet-btn" (click)="submitThermopacknight(logForm)" value="Submit">
+                            <button type="button" class="btn btn-primary btn-sm btn-design sheet-btn button-base ripple" (click)="submitThermopacknight(logForm)" value="Submit">SUBMIT</button>
                         </div>
                         <div *ngIf="updateThermopackFlag" class="padding-bt-tp mobile-btn-center text-btn-right">
-                            <input type="button" (click)="submitThermopacknight(logForm)"
-                                class="btn btn-primary btn-sm btn-design sheet-btn" value="Update">
+                            <button type="button" (click)="submitThermopacknight(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn button-base ripple" value="Update">UPDATE</button>
                         </div>
 
                     </form>

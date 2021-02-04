@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Party Name</label>
-                        <input type="text" id="partyName" class="form-control" formControlName="partyName" placeholder="Party Name" [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched)}" />
+                        <input type="text" id="partyName" fieldsize="small" class="form-control" formControlName="partyName" placeholder="Party Name" [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched)}" />
 
                         <div class="invalid-feedback" *ngIf="partyForm.get('partyName').errors?.required ">
                             <span>Party Name is required</span>
@@ -26,7 +26,7 @@
 
                     <div class="form-group col-md-4">
                         <label class="required">Party Code</label>
-                        <input type="text" id="partyCode" class="form-control" formControlName="partyCode" placeholder="Party Code" (change)="checkPartyCode()" (keypress)="resetFlag($event)" required [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched)}"
+                        <input type="text" id="partyCode" fieldsize="small" class="form-control" formControlName="partyCode" placeholder="Party Code" (change)="checkPartyCode()" (keypress)="resetFlag($event)" required [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched)}"
                         />
                         <div class="text-danger" *ngIf="!partyCodeExist">
                             <span>Party Code is already Exist </span>
@@ -42,7 +42,8 @@
 
                     <div class="form-group col-md-4">
                         <label>Email</label>
-                        <input type="text" id="mailId" class="form-control" nbinput fullwidth fieldsize="small" formControlName="mailId" placeholder="Email" [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid)&&(formSubmitted || partyForm.get('mailId').touched)}" />
+                        <input type="text" id="mailId" fieldsize="small" class="form-control" nbinput fullwidth fieldsize="small" formControlName="mailId" placeholder="Email" [ngClass]="{'is-invalid':(partyForm.get('mailId').invalid)&&(formSubmitted || partyForm.get('mailId').touched)}"
+                        />
                         <div class="invalid-feedback" *ngIf="partyForm.get('mailId').errors?.required">
                             <span>Email is required</span>
                         </div>
@@ -145,9 +146,9 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="goBackToPreviousPage()">CANCEL</button>
-                        <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                        <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
+                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
                     </div>
                 </div>
             </form>

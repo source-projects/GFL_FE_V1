@@ -89,10 +89,11 @@
                                             {{s.itemName}}
                                         </option>
                                     </select> -->
-                                    <ng-select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)" appendTo="body" class="ng-select-br-none">
+                                    <ng-select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)" appendTo="body"
+                                        class="ng-select-br-none">
                                         <ng-option *ngFor="let s of supplierListRate" [value]="s.id">
                                             {{s.itemName}}</ng-option>
-                                     </ng-select>
+                                    </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -112,7 +113,8 @@
 
                             <ngx-datatable-column name="No. of box" prop="noOfBox" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm  line-height-subtable" type="number" #noOfBox1="ngModel" name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox" (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')" (input)="calculateTotalQuantity(rowIndex,2)" [id]="'colorList'+rowIndex+'-2'" required min="0">
+                                    <input class="tableForm  line-height-subtable" type="number" #noOfBox1="ngModel" name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox" (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')" (input)="calculateTotalQuantity(rowIndex,2)" [id]="'colorList'+rowIndex+'-2'"
+                                        required min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (noOfBox1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -144,9 +146,9 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button class="btn btn-primary btn-sm btn-design-cancel" routerLink='/pages/color'>CANCEL</button>
-                            <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="addColor(colorForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="this.currentColorId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addColor(colorForm)" [disabled]="disableButton">SAVE</button>
                         </div>
                     </div>
                 </div>

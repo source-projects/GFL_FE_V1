@@ -63,9 +63,9 @@
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
                         <button class="btn btn-primary btn-sm btn-design-cancel" (click)="goBackToPreviousPage()">CANCEL</button>
-                        <ng-template #update><input type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="UPDATE"></ng-template>
+                        <ng-template #update><button type="button" (click)="updateSupplier()" class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton" value="UPDATE">UPDATE</button></ng-template>
 
-                        <input *ngIf="selectedSupplierId == null; else update" type="submit" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="SAVE">
+                        <button *ngIf="selectedSupplierId == null; else update" type="submit" class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton" value="SAVE">SAVE</button>
                     </div>
                 </div>
             </div>
