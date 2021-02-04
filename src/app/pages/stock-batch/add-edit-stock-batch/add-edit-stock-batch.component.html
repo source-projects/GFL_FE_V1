@@ -194,9 +194,9 @@
                         <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock" routerLink="/pages/stock-batch">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
-                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
-                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>
