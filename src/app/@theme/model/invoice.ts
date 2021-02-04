@@ -19,6 +19,13 @@ export class Invoice {
     invoiceNo:string;
 }
 
+export class InvoiceReportRequest{
+  userHeadId: number;
+  partyId: number;
+  from: Date;
+  to: Date;
+}
+
 export class DispatchData {
     batchEntryId:Number;
     controlId:Number;

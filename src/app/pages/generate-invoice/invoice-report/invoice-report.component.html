@@ -1,0 +1,66 @@
+<nb-card>
+    <nb-card-header class="nb-header">
+        <div>
+            <h2 class="nb-text">Invoice Report</h2>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form #invoiceForm="ngForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Master</label>
+                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required #userHeadId1="ngModel"
+                            (change)=" null" placeholder="Select Master" class="required-error-dropdown">
+                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Party</label>
+                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required #partyId1="ngModel"
+                            (change)="null" placeholder="Select Party" class="required-error-dropdown">
+                            <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Batch Id -->
+            <!-- <div class="row">
+                            <div class="col-md-4">
+                             <div class="form-group">
+                                 <label class="required">Batch Id</label>
+                                 <ng-select name="batchId" [(ngModel)]='invoiceValues.batchId' required #batchId1="ngModel"
+                                     [ngClass]="{'is-invalid': (batchId1.invalid)&&(formSubmitted || batchId1.touched)}"
+                                     (change)="getMtrList($event)" placeholder="Batch Id" class="required-error-dropdown">
+                                     <ng-option *ngFor="let q of batch" [value]="q.batchId">{{q.batchId}}</ng-option>
+                                 </ng-select>
+                                 <div class="required-class" *ngIf="(formSubmitted && batchId1.invalid) || (batchId1.invalid && batchId1.touched)">
+                                     <span>Batch Id is required</span>
+                                 </div>
+                             </div>
+                         </div>
+                         </div> -->
+            <!-- <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
+                                  [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
+                                  <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
+                                  <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
+                                  <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
+                                  <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
+                                  <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
+                                </ngx-datatable> -->
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <!-- <div class="padding-bt-tp">
+                                     <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                                     (click)="addInvoice(invoiceForm)">Generate Invoice</button>
+                                </div> -->
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>
