@@ -1,8 +1,8 @@
-name: Deploy Angular
+name: Deploy Angular AWS
 
 on:
   push:
-    branches: [ main ]
+    branches: [ development ]
 
 jobs:
   build:

@@ -1042,7 +1042,7 @@ input[type=number]::-webkit-outer-spin-button {
 .table-jet,
 .main-table-drag {
     width: 100% !important;
-    overflow-x: scroll !important;
+    // overflow-x: scroll !important;
 }
 
 .table-jet {
@@ -1126,7 +1126,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    color:white;
+    color: white;
 }
 
 .boiler-thermopack-tabheader .tabset li .tab-link {
@@ -1457,6 +1457,20 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: center;
     align-items: flex-end;
     right: 7px;
+}
+
+.jet-box,
+.jet-plan {
+    display: inline-block !important;
+}
+
+.jet-box {
+    padding: 8px 20px !important;
+}
+
+.jet-plan {
+    height: 141px;
+    overflow: auto !important;
 }
 
 @media (max-width: 767px) {
