@@ -59,8 +59,8 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Wt / 100 mtrs</label>
-                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control size-small"
-                        placeholder="Wt Per 100m" [ngClass]="{'is-invalid':(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)}" min="0" nbinput fieldsize="small" />
+                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46" name="itemConsumption" type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control size-small" nbinput fieldsize="small"
+                        placeholder="Wt Per 100m" [ngClass]="{'is-invalid':(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)}" min="0" />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)">
                         <span>Wt / 100 mtrs is required</span>
                     </div>
@@ -81,8 +81,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">Rate</label>
-                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="text" class="form-control size-small" id="rate" formControlName="rate" placeholder="Enter Rate"
-                        [ngClass]="{'is-invalid':(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched) }" fieldsize="small" nbinput />
+                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46" name="itemConsumption" type="text" class="form-control size-small" nbinput fieldsize="small" id="rate" formControlName="rate" placeholder="Enter Rate"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched) }" />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched)">
                         <span>Rate is required</span>
                     </div>
