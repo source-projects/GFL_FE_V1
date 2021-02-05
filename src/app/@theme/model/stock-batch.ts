@@ -26,17 +26,18 @@ export class BatchData {
 export class BatchMrtWt {
     mtr: number;
     wt: number;
-    constructor(){
-        this.mtr = null;
-        this.wt = null;
+    constructor(m?, w?){
+        m? this.mtr = m : null;
+        w? this.wt = w : null;
     }
 }
 
 export class BatchCard{
     batchId: number;
     batchMW: BatchMrtWt[];
-    constructor(){
-        this.batchId = null;
+    constructor(batchId?){
+        batchId? this.batchId = batchId : this.batchId = null;
         this.batchMW = [];
     }
+    
 }

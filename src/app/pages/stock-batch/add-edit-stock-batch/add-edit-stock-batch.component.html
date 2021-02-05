@@ -115,14 +115,15 @@
                         <h2 class="batch-heading display-inline">BATCH</h2>
 
                     </header>
-                    <div *ngIf="stockDataValues[0].batchId != '' || addFlag || zeroValueBatch" class="row">
+                    <div class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i" class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-8">
                                             <label style="float: left;">Batch No</label>
-                                            <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId' [disabled]="flag && production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
+                                            <input [attr.id]="'batchNo'+i" required type="number" [(ngModel)]='block.batchId' [disabled]="flag && production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
+                                            
                                         </div>
                                         <div class="col-md-6 col-4">
                                             <nb-icon status="danger" style="float: right;margin-right: 10px;;" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="removeBatch(i);"></nb-icon>
