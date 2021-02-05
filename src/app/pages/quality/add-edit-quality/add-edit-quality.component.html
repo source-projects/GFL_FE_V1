@@ -24,12 +24,12 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Party Code</label>
-                    <input type="text" id="partyCode" class="form-control" formControlName="partyCode" placeholder="Party Code" readonly />
+                    <input type="text" id="partyCode" class="form-control size-small" fieldsize="small" nbinput formControlName="partyCode" placeholder="Party Code" readonly />
                 </div>
 
                 <div class="form-group col-md-4">
                     <label class="required">Quality ID</label>
-                    <input type="text" class="form-control" id="qualityId" (change)="checkQulityId()" (keypress)="resetFlag($event)" required formControlName="qualityId" placeholder="Enter Quality ID" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)}"
+                    <input type="text" class="form-control size-small" id="qualityId" nbinput fieldsize="small" (change)="checkQulityId()" (keypress)="resetFlag($event)" required formControlName="qualityId" placeholder="Enter Quality ID" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)}"
                     />
 
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">Quality Name</label>
-                    <input type="text" class="form-control" id="qualityName" formControlName="qualityName" placeholder="Enter Quality Name" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityName').invalid)&&(formSubmitted || addEditQualityForm.get('qualityName').touched) }"
+                    <input type="text" class="form-control size-small" id="qualityName" nbinput fieldsize="small" formControlName="qualityName" placeholder="Enter Quality Name" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityName').invalid)&&(formSubmitted || addEditQualityForm.get('qualityName').touched) }"
                     />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('qualityName').invalid)&&(formSubmitted || addEditQualityForm.get('qualityName').touched)">
                         <span>Quality Name is required</span>
@@ -50,7 +50,7 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Quality Type</label>
-                    <input type="text" disabled id="qualityType" formControlName="qualityType" class="form-control" aria-placeholder="Select Quality type" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityType').invalid)&&(formSubmitted || addEditQualityForm.get('qualityType').touched)}"
+                    <input type="text" disabled id="qualityType" formControlName="qualityType" class="form-control size-small" nbinput fieldsize="small" aria-placeholder="Select Quality type" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityType').invalid)&&(formSubmitted || addEditQualityForm.get('qualityType').touched)}"
                     />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('qualityType').invalid)&&(formSubmitted || addEditQualityForm.get('qualityType').touched)">
                         <span>Quality type is required</span>
@@ -59,8 +59,8 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Wt / 100 mtrs</label>
-                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control"
-                        placeholder="Wt Per 100m" [ngClass]="{'is-invalid':(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)}" min="0" />
+                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="number" id="wtPer100m" formControlName="wtPer100m" class="form-control size-small"
+                        placeholder="Wt Per 100m" [ngClass]="{'is-invalid':(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)}" min="0" nbinput fieldsize="small" />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)">
                         <span>Wt / 100 mtrs is required</span>
                     </div>
@@ -68,7 +68,7 @@
 
                 <div class="form-group col-md-4">
                     <label>Remark</label>
-                    <input type="text" id="remark" formControlName="remark" class="form-control input-sm" placeholder="Enter Remark" />
+                    <input type="text" id="remark" fieldsize="small" nbinput formControlName="remark" class="form-control input-sm size-small" placeholder="Enter Remark" />
                 </div>
 
                 <div class="form-group col-md-4">
@@ -81,8 +81,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">Rate</label>
-                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="text" class="form-control" id="rate" formControlName="rate" placeholder="Enter Rate"
-                        [ngClass]="{'is-invalid':(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched) }" />
+                    <input onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" type="text" class="form-control size-small" id="rate" formControlName="rate" placeholder="Enter Rate"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched) }" fieldsize="small" nbinput />
                     <div class="invalid-feedback" *ngIf="(addEditQualityForm.get('rate').invalid)&&(formSubmitted || addEditQualityForm.get('rate').touched)">
                         <span>Rate is required</span>
                     </div>

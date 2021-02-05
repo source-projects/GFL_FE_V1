@@ -316,8 +316,11 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 15px!important;
 }
 
-.form-control {
-    height: calc(1.5em + 8px + 2px);
+// .form-control {
+//     height: calc(1.5em + 8px + 2px);
+// }
+.nb-theme-default .size-small:not(.input-full-width) {
+    max-width: 100% !important;
 }
 
 .dr-txt,
