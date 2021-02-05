@@ -153,13 +153,9 @@
 
                             <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'">
-                                        <option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
-                                            {{s.supplierName}}</option>
-                                    </select> -->
                                     <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body"
                                         class="ng-select-br-none">
-                                        <ng-option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
+                                        <ng-option *ngFor="let s of (supplierList | filterOutSelectedShade : shades.shadeDataList)" [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
                                         </ng-option>
                                     </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
