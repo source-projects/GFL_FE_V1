@@ -75,7 +75,6 @@ export class AddEditProgramComponent implements OnInit {
     this.getMasterList();
     this.programValues.priority = "Medium";
     this.getAllStockBatchData();
-    this.getAllBatchData();
   }
 
   getCurrentId() {
@@ -177,7 +176,7 @@ export class AddEditProgramComponent implements OnInit {
     this.stockBatchService.getAllBatch().subscribe(
       (data) => {
         if (data["success"]) {
-          this.allBatchData = data["data"];
+          this.batchData = data["data"];
         }
       },
       (error) => {
@@ -463,7 +462,7 @@ export class AddEditProgramComponent implements OnInit {
   public setQuantity(rowIndex, col, value) {
     if (value == "batch") {
       let id = this.programValues.programRecords[rowIndex].batchId;
-      this.allBatchData.forEach((element) => {
+      this.batchData.forEach((element) => {
         if (id == element.batchId) {
           let q_id=element.qualityId;
           this.programValues.programRecords[rowIndex].quantity = element.totalWt;
@@ -496,7 +495,7 @@ export class AddEditProgramComponent implements OnInit {
       //setQuality party info
       
 
-    } else {
+    } else if(value == "stock") {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
         let stockId = element.id?element.id:element.stockId

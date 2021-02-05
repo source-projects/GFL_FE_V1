@@ -41,7 +41,7 @@ export class PrintLayoutComponent implements OnInit {
     } else {
       this.invoiceIds = JSON.parse(myArray);
     }
-    console.log("Invoice NO:", this.invoiceIds);
+    //console.log("Invoice NO:", this.invoiceIds);
     // this.invoiceNo = this._route.snapshot.paramMap.get("id");
 
     this.start();
@@ -137,6 +137,7 @@ export class PrintLayoutComponent implements OnInit {
 
     setTimeout(() => {
       doc.print();
-    }, 1000);
+      this.router.navigate(['pages/generate_invoice']);
+    }, 100);
   }
 }

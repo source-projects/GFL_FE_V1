@@ -32,7 +32,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Party Shade No</label>
-                            <input type="text" class="form-control" [(ngModel)]="shades.partyShadeNo" #partyShadeNo1="ngModel" name="partyShadeNo" required [ngClass]="{'is-invalid':(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)}" placeholder="Party Shade No">
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="shades.partyShadeNo" #partyShadeNo1="ngModel" name="partyShadeNo" required [ngClass]="{'is-invalid':(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)}"
+                                placeholder="Party Shade No">
                             <div class="invalid-feedback" *ngIf="(partyShadeNo1.invalid)&&(formSubmitted ||  partyShadeNo1.touched)">
 
                                 <span>Party Shade No is required</span>
@@ -91,14 +92,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Quality Name</label>
-                            <input type="text" name="qualityName" #qualityName1="ngModel" [(ngModel)]="shades.qualityName" readonly class="form-control" placeholder="Quality Name">
+                            <input type="text" name="qualityName" #qualityName1="ngModel" [(ngModel)]="shades.qualityName" readonly class="form-control size-small" fieldsize="small" nbinput placeholder="Quality Name">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Quality Type</label>
-                            <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType" class="form-control" placeholder="Quality Type">
+                            <input type="text" name="qualityType" readonly #qualityType1="ngModel" [(ngModel)]="shades.qualityType" class="form-control size-small" fieldsize="small" nbinput placeholder="Quality Type">
                         </div>
                     </div>
 
@@ -109,7 +110,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Color Tone</label>
-                            <input class="form-control" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
+                            <input class="form-control size-small" fieldsize="small" nbinput [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
                         </div>
                         <!--<div class="invalid-feedback"
                         *ngIf="formSubmitted && (color1.invalid || (color1.dirty || color1.untouched) )">
@@ -120,7 +121,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Lab Color No</label>
-                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo" class="form-control" placeholder="Lab Color No">
+                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shades.labColorNo" class="form-control size-small" fieldsize="small" nbinput placeholder="Lab Color No">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -156,10 +157,11 @@
                                         <option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
                                             {{s.supplierName}}</option>
                                     </select> -->
-                                    <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none">
-                                        <ng-option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} -
-                                            {{s.supplierName}}</ng-option>
-                                     </ng-select>
+                                    <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body"
+                                        class="ng-select-br-none">
+                                        <ng-option *ngFor="let s of supplierList" [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
+                                        </ng-option>
+                                    </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (itemName1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -168,8 +170,8 @@
 
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300" prop="shades.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')" [id]="'supplierList'+rowIndex+'-1'"
-                                        min="0">
+                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')"
+                                        [id]="'supplierList'+rowIndex+'-1'" min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (concentration1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
@@ -201,9 +203,9 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button class="btn btn-primary btn-sm btn-design-cancel" routerLink='/pages/shade'>CANCEL</button>
-                            <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="this.currentShadeId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addShade(shadeForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>

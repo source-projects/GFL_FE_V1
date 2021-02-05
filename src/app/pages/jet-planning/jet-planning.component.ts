@@ -164,7 +164,7 @@ export class JetPlanningComponent implements OnInit {
 
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
+          //this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
@@ -225,8 +225,6 @@ export class JetPlanningComponent implements OnInit {
       if (this.productionPlanning.qualityEntryId) {
          this.allBatchList = [];
         this.getAllBatchWithShade();
-       
-    
       }
     }
   }
@@ -238,15 +236,13 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
             if (data["success"]) {
               this.batchList = data["data"];
-             
-              console.log(this.batchList, this.productionPlanning.partyId, this.productionPlanning.qualityEntryId);
               this.batchList.forEach(element => {
                 if(this.productionPlanning.partyId == element.partyId && this.productionPlanning.qualityEntryId == element.qualityEntryId){
                   this.allBatchList.push(element);
                 }
                
               })
-              console.log(this.allBatchList);
+              
               
             }
             else {
@@ -269,13 +265,7 @@ export class JetPlanningComponent implements OnInit {
       }
       const modalRef = this.modalService.open(ShadeWithBatchComponent).result.then(
         (result) => {
-          
-          let index;
-          console.log(event);
-          console.log(this.jet);
-          console.log(result);
 
-         
            this.jetData1.controlId = result.jet;
           this.jetData1.productionId = p_id;
             this.jetData1.sequence = 1;
@@ -301,7 +291,7 @@ export class JetPlanningComponent implements OnInit {
            
           }
           else {
-            this.toastr.error("Weight is more than jet capacity");
+            this.toastr.error(data['msg']);
             this.getJetData();
             //this.getshade();
           }
