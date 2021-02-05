@@ -14,7 +14,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Supplier Name</label>
-                        <input type="text" class="form-control" name="supplierName" placeholder="Supplier Name" formControlName="supplierName" [ngClass]="{'is-invalid':(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched) }">
+                        <input type="text" class="form-control size-small" nbinput fieldsize="small" name="supplierName" placeholder="Supplier Name" formControlName="supplierName" [ngClass]="{'is-invalid':(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched) }">
                         <div class="invalid-feedback" *ngIf="(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched)">
                             <span>Supplier Name is Required</span>
                         </div>
@@ -23,7 +23,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Discount %</label>
-                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %" 
+                        <input type="number" class="form-control size-small" nbinput fieldsize="small" id="discountPercentage" placeholder="Discount %" 
                         onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46" 
                         formControlName="discountPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)}"
                             maxlength="3" min="0" max="100">
@@ -36,7 +36,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">GST %</label>
-                        <input type="number" class="form-control" id="gstPercentage" placeholder="GST %" 
+                        <input type="number" class="form-control size-small" nbinput fieldsize="small" id="gstPercentage" placeholder="GST %" 
                         onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
                         formControlName="gstPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.gstPercentage.invalid)&&(formSubmitted || addSupplier.controls.gstPercentage.touched)}" min="0">
                         <div class="invalid-feedback" *ngIf="(addSupplier.controls.gstPercentage.invalid)&&(formSubmitted || addSupplier.controls.gstPercentage.touched)">
@@ -47,7 +47,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Payment Terms</label>
-                        <input type="number" class="form-control" id="paymentTerms" placeholder="Payment Terms"
+                        <input type="number" class="form-control size-small" nbinput fieldsize="small" id="paymentTerms" placeholder="Payment Terms"
                         onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
                          formControlName="paymentTerms" required [ngClass]="{'is-invalid':(addSupplier.controls.paymentTerms.invalid )&&(formSubmitted || addSupplier.controls.paymentTerms.touched )}"
                             min="0">
