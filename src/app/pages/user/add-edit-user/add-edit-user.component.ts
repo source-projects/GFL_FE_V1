@@ -28,6 +28,7 @@ export class AddEditUserComponent implements OnInit {
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
+  isMasterFlag = false;
   status;
   allRightsFlag;
   user: User = new User();
@@ -151,6 +152,24 @@ export class AddEditUserComponent implements OnInit {
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentUserId = this._route.snapshot.paramMap.get("id");
+  }
+
+  designationSelected(event){
+    if(event == undefined){
+      this.isMasterFlag=false;
+      
+      this.user.isUserHead = false;
+    }else{
+      const found = this.desiList.find(element => element.designation == "Master");
+      if(event == found.id){
+        //hide userHeadId fields.
+        this.isMasterFlag = true;
+        this.user.isUserHead = false;
+        this.user.userHeadId = Number(this.commonService.getUser().userId);
+      }else{
+        this.isMasterFlag = false;
+      }
+    }
   }
 
   getUserHrads(event) {
@@ -342,6 +361,14 @@ export class AddEditUserComponent implements OnInit {
       case "Jet Planning": {
         let index = this.permissionArray.findIndex(
           (v) => v.module == "Jet Planning"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+      case "Input Data": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Input Data"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -604,11 +631,16 @@ export class AddEditUserComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.user = data["data"];
-            this.user.designationId = data["data"].designationId.id
-            if (this.user.userHeadId != 0)
+            if (data['data'].designationId.designation != "Master" ){
               this.user.isUserHead = true;
-            else
+              this.isMasterFlag = false;
+            }
+            else{
               this.user.isUserHead = false;
+              this.isMasterFlag = true;
+            }
+            this.user.designationId = data["data"].designationId.id          
+            
             this.getCurrentCheckValue(this.user);
 
           } 
@@ -635,7 +667,7 @@ export class AddEditUserComponent implements OnInit {
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
       if (!this.user.isUserHead)
-        this.user.userHeadId = 0;
+        this.user.userHeadId = this.commonService.getUser().userId;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -674,7 +706,8 @@ export class AddEditUserComponent implements OnInit {
       let md5 = new Md5();
       this.user.password = String(md5.appendStr(this.user.password).end())
       this.user.createdBy = this.userId.userId;
-      if (!this.user.isUserHead) this.user.userHeadId = 0;
+      if (!this.user.isUserHead)
+      this.user.userHeadId = this.commonService.getUser().userId;
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {

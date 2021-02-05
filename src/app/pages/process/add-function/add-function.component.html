@@ -4,7 +4,7 @@
         <span aria-hidden="true" class="close-icon">&times;</span>
     </button>
 </div>
-<form #functionForm="ngForm">
+<form #functionForm="ngForm" >
     <div class="modal-body">
         <div class="row">
             <div class="col-md-6">
@@ -80,10 +80,10 @@
                         <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose">
                             dose at Temp(C) 
                             <input type="number" class="col-md-5 input-add-num" fieldSize="small"
-                                name="tempDosing" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
+                                name="tempDosing" (keypress)="numberOnly($event)" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
                     </div>
                 </div>
-                <div class="col-md-5" *ngIf="dosing.doseType !== 'color'">
+                <div class="col-md-5" *ngIf="dosing.doseType === 'chemical'">
                     <div class="form-group">
                         <nb-checkbox name="doseHeat" [(ngModel)]="dosing.doseWhileHeating"> Dose while Heating
                         </nb-checkbox>
@@ -155,19 +155,20 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>S V (Set Value)(C)</label>
-                        <input type="number" class="form-control" [(ngModel)]="tempratureControl.setValue"
-                            name="setValue" #setValueC="ngModel"
-                            [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required>
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.setValue"
+                            name="setValue" #setValueC="ngModel" (keypress)="numberOnly($event)"
+                            [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required >
+                            <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
+                                Required
+                            </div>
                     </div>
-                    <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
-                        Required
-                    </div>
+                 
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
                         <label>Rate of Rise (C/minute)</label>
-                        <input type="number" class="form-control" [(ngModel)]="tempratureControl.rateOfRise"
-                            name="rateOfRise" #rateOfRiseCM="ngModel"
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.rateOfRise"
+                            name="rateOfRise" #rateOfRiseCM="ngModel" (keypress)="numberOnly($event)"
                             [ngClass]="{'is-invalid':(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)}" required>
                         <div class="invalid-feedback" *ngIf="(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)">
                             Required
@@ -177,8 +178,8 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Hold Time</label>
-                        <input type="number" class="form-control" [(ngModel)]="tempratureControl.holdTime"
-                            name="holdTime" #holdTime1="ngModel"
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.holdTime"
+                            name="holdTime" #holdTime1="ngModel" min="0" (keypress)="numberOnly($event)"
                             [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required>
                         <div class="invalid-feedback" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
                             Required
@@ -205,7 +206,7 @@
                     <div class="form-group">
                         <label>Pump Speed(%)</label>
                         <input type="number" class="form-control" name="pumpSpeed" [(ngModel)]="pumpControl.pumpSpeed"
-                            #pumpSpeed1="ngModel" required
+                            #pumpSpeed1="ngModel" required (keypress)="numberOnly($event)"
                             [ngClass]="{'is-invalid':(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)}">
                         <div class="invalid-feedback" *ngIf="(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)">
                             Required
@@ -292,7 +293,7 @@
                     <div class="form-group">
                         <label>Start at Temp</label>
                         <input type="number" name="startat" class="form-control input-group input-group-sm"
-                            [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel"
+                            [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel" (keypress)="numberOnly($event)"
                             [ngClass]="{'is-invalid':(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)}" />
                         <div class="invalid-feedback" *ngIf="(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)">
                             Required

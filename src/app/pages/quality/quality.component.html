@@ -3,26 +3,33 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                <button class="btn btn-primary btn-md btn-list" routerLink="add" [disabled]="disabled" >ADD</button>
+                <button class="btn btn-md btn-list" routerLink="add" [disabled]="disabled">ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Quality</h2>
             </div>
             <div class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
-                <button style="float:right; " class="btn btn-primary btn-md btn-list" (click)="open()">EXPORT</button>
+                <button style="float:right; " class="btn btn-md btn-list" (click)="open()">EXPORT</button>
             </div>
-        </div>  
+        </div>
     </nb-card-header>
     <nb-card-body>
-
-        <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
-            <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
-                (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
-        </nb-radio-group>
+        <div class="row">
+            <div class="col-md-6">
+                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="nb-radio">
+                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
+                        (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                </nb-radio-group>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+            </div>
+        </div>
 
         <!--  ngx- DataTable  -->
-        <ngx-datatable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
-            [footerHeight]="40">
+        <ngx-datatable #DataTable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+            [footerHeight]="footerHeight" [limit]="page.size" [offset]="page.pageNumber" [count]="page.totalElements">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
@@ -33,7 +40,52 @@
             <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
             <ngx-datatable-column name="Quality Type" prop="qualityType"></ngx-datatable-column>
             <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
-
+            <ngx-datatable-footer>
+                <ng-template ngx-datatable-footer-template 
+                let-rowCount="rowCount" 
+                let-pageSize="pageSize"
+                let-selectedCount="selectedCount" 
+                let-curPage="curPage" 
+                let-offset="offset" 
+                let-isVisible="isVisible">
+                <div class="d-flex justify-content-between flex-fill" *ngIf="page.totalPages >= 0">
+                    <div class="d-flex align-items-center">
+                      <div class="table-items d-flex align-items-center mr-36">
+                        Items per page:
+                        <div class=" ml-8">
+                          <select class="custom-select border-less" [formControl]="pageSelector"
+                            (change)="changePageSize()">
+                            <option *ngFor="let limit of limitArray;" [value]="limit">{{ limit }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <span>
+                        {{(rowCount > 0 ? (( offset * pageSize ) + 1 ) : 0)}} -
+                        {{(rowCount> (curPage*pageSize)) ? (curPage*pageSize):(rowCount)}} of
+                        {{(rowCount > 1) ? (rowCount) +' items' : (rowCount) +' item'}}
+                      </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <select class="custom-select border-less" [(ngModel)]="pageSelected"
+                        (change)="changePage()">
+                        <option
+                          *ngFor='let num of page.totalPages | counterPipe;let i= index'
+                          [value]="i+1">
+                          Page {{ i+1 }} of {{page.totalPages}}
+                        </option>
+                      </select>
+                      <div class="ml-8">
+                        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left icon icon-angle-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right icon icon-angle-right'"
+                          [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+                          (change)="DataTable.onFooterPage($event);pageChange($event)">
+                        </datatable-pager>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-footer>
         </ngx-datatable>
 
     </nb-card-body>

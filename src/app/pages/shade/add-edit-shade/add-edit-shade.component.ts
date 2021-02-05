@@ -63,11 +63,13 @@ export class AddEditShadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
-    this.getPartyList();
     this.getQualityList();
+    this.getPartyList();
     this.getProcessList();
     this.getSupplierList();
-    this.getUpdateData();
+    if (this.currentShadeId != null) {
+      this.getUpdateData();
+    }
   }
 
   updateColor() {
@@ -145,7 +147,7 @@ export class AddEditShadeComponent implements OnInit {
 
   getProcessList() {
     this.loading = true;
-    this.shadeService.getQualityProcessList("all", 0).subscribe(
+    this.shadeService.getAllDyeingProcess().subscribe(
       (data) => {
         if (data["success"]) {
           this.processList = data["data"];
@@ -183,7 +185,6 @@ export class AddEditShadeComponent implements OnInit {
 
   getUpdateData() {
     this.loading = true;
-    if (this.currentShadeId != null) {
       this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
         (data) => {
           this.shades = data["data"];
@@ -191,15 +192,21 @@ export class AddEditShadeComponent implements OnInit {
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
-            this.getQualityList();
-            this.quality.forEach((e) => {
-              if (e.id == data["data"].qualityEntryId) {
-                this.shades.qualityId = e.qualityId;
-                this.shades.qualityName = e.qualityName;
-                this.shades.qualityType = e.qualityType;
+            
+            let inter = setInterval(()=>{
+              if(this.quality){
+                clearInterval(inter);
+                this.quality.forEach((e) => {
+                  if (e.id == data["data"].qualityEntryId) {
+                    this.shades.qualityId = e.qualityId;
+                    this.shades.qualityName = e.qualityName;
+                    this.shades.qualityType = e.qualityType;
+                  }
+                  this.loading = false;
+                });
               }
-              this.loading = false;
-            });
+            },10);
+            
             this.setProcessName(this.shades.processId);
             this.loading = false;
             this.disableButton=false;
@@ -218,7 +225,6 @@ export class AddEditShadeComponent implements OnInit {
 
         }
       );
-    }
     this.disableButton=false;
 
   }
@@ -244,6 +250,9 @@ export class AddEditShadeComponent implements OnInit {
 
   getQualityFromParty(event) {
     this.loading = true;
+    this.shades.qualityId = null;
+    this.shades.qualityName = null;
+    this.shades.qualityType = null;
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -278,7 +287,7 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
 
-  itemSelected(rowIndex, row) {
+  itemSelected(rowIndex, row,elementId) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
     let flag = false;
     let count = 0;
@@ -307,7 +316,10 @@ export class AddEditShadeComponent implements OnInit {
       }
     } else {
       this.toastr.error("This item name is already selected");
-      this.shades.shadeDataList[rowIndex].itemName = "";
+
+
+      // this.shades.shadeDataList[rowIndex].itemName = "";
+      this.shades.shadeDataList[rowIndex].itemName=undefined;
       this.shades.shadeDataList[rowIndex].concentration = null;
       this.shades.shadeDataList[rowIndex].supplierId = 0;
       this.shades.shadeDataList[rowIndex].rate = null;
@@ -422,6 +434,7 @@ export class AddEditShadeComponent implements OnInit {
           } else {
             this.toastr.error(errorData.Add_Error);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
@@ -478,7 +491,7 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       this.disableButton=false;
-
+      this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }

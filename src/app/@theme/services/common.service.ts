@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { JwtTokenService } from './jwt-token.service';
 import { StoreTokenService } from './store-token.service';
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 export class CommonService {
+  // private broadCastMesaage=new BehaviorSubject<string>("Demo");
+  // broadCast=this.broadCastMesaage.asObservable();
 
   constructor(private token: StoreTokenService, private jwt:JwtTokenService) { }
-
+  
+  // updateBrodCast(newMassge:string){
+  //   this.broadCastMesaage.next(newMassge);
+  // }
   getUser(){
     this.jwt.setToken(this.token.get('token'));
     this.jwt.decodeToken();
@@ -36,6 +42,7 @@ export class CommonService {
       url = "http://13.235.71.124:8080/";
     else url = "http://103.137.194.167:8080/";
     return url;
+    //return url "http://13.235.71.124:8080/";
   }
 
   decToBin(n): any{

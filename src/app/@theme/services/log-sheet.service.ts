@@ -31,7 +31,17 @@ export class LogSheetService{
     }
 
     saveThermoData(data){
-      let response = this._http.post(this.commonService.envUrl() +  "api/thermoPackRecord",data);
+      let response = this._http.post(this.commonService.envUrl() +  "api/thermopack/",data);
+      return response;
+    }
+
+    fetchBoilerData(data){
+      let response = this._http.post(this.commonService.envUrl() +  "api/boilerRecord/basedOnFilter/",data);
+      return response;
+    }
+
+    fetchThermoData(data){
+      let response = this._http.post(this.commonService.envUrl() +  "api/thermopack/filter/basedOnShift/",data);
       return response;
     }
     

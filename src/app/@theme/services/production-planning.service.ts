@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from './common.service';
 
@@ -8,7 +8,13 @@ import { CommonService } from './common.service';
 })
 export class ProductionPlanningService {
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
+  addToJetClicked: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private httpClient: HttpClient, private commonService: CommonService) {
+    this.addToJetClicked.subscribe(ele => {
+      console.log(ele);
+    })
+   }
 
   saveProductionPlan(productionData): any {
     return this.httpClient.post(this.commonService.envUrl() + 'api/productionPlan/', productionData);
@@ -16,5 +22,6 @@ export class ProductionPlanningService {
   getAllProductionPlan(): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/productionPlan/all');
   }
-  
+
+ 
 }

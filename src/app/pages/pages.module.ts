@@ -9,6 +9,8 @@ import { PartyModule } from './party/party.module';
 import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
 import {UserModule} from './user/user.module';
+import { InputDataComponent } from './input-data/input-data/input-data.component';
+//import { InputDataModule } from './input-data/input-data.module';
 
 
 @NgModule({
@@ -25,8 +27,8 @@ import {UserModule} from './user/user.module';
   ],
   declarations: [
     PagesComponent,
-    
   ],
+ 
  
   providers: [],
 })

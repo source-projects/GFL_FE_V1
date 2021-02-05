@@ -19,14 +19,14 @@ export class GenerateInvoiceService {
   }
 
   addInvoicedata(invoiceData): any {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch',invoiceData);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/',invoiceData);
   }
 
   updateInvoice(invoiceData): any {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/updateDispatch/', invoiceData);
+    return this.httpClient.put(this.commonService.envUrl() + 'api/dispatch/updateDispatch/', invoiceData);
   }
   getDataByInvoiceNumber(id):any{
-    return this.httpClient.get(this.commonService.envUrl() + 'api/getDispatch/byInvoiceNumber/'+id);
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getDispatch/byInvoiceNumber/'+id);
  
   }
 }

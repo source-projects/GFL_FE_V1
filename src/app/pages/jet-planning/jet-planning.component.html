@@ -5,42 +5,104 @@
         <div class="col-md-11 col-10">
           <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
         </div>
-
       </div>
     </div>
   </nb-card-header>
   <nb-card-body>
+    <div>
+      <form #myForm="ngForm">
+          <div class="row">
+              <!-- Party name -->
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label class="required">Party</label>
+                      <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel"
+                          [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                           placeholder="Party Name" class="required-error-dropdown"
+                           (change)=partySelected($event)>
+                          <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+                      </ng-select>
+                      <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                          <span>Party Id is required</span>
+                      </div>
+                  </div>
+              </div>
 
+              <!--Quality Name-->
+
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label class="required">Quality</label>
+                      <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required
+                          #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
+                           placeholder="Quality ID" class="required-error-dropdown"
+                           (change)=qualitySelected($event)>
+                           <ng-option disabled="true">
+                              <div class="row">
+                                  <div class="col-md-6 col-6">
+                                      <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                  </div>
+                                  <div class="col-md-6 col-6">
+                                      <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
+                                  </div>
+                              </div>
+                           </ng-option>
+                          <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                              <div class="row">
+                                  <div class="col-md-6 col-6">
+                                      <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                  </div>
+                                  <div class="col-md-6 col-6">
+                                      <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
+                                  </div>
+                              </div>
+                              </ng-option>
+                      </ng-select>
+                      <div class="required-class" *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
+                          <span>Quality id is required</span>
+                      </div>
+                  </div>
+              </div>
+
+             
+              
+          </div>
+          <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                  
+                      <button nbButton  size="small" style="margin-left: 10px; color:white; border-radius: 20px;" class="jet-popup-box production-list-popup" 
+                      *ngFor="let b of allBatchList" [value]="b.id" class="jet-popup-display " [style.background]="b.colorTone" (click)="batchSelected($event)">
+                       {{b.batchId}} </button>
+                 
+              </div>
+          </div>
+      </div>
+      </form>
+  </div>
     <table class="user-per-table table-responsive table-jet">
       <tr width="100%">
         <th width="5%">Jet</th>
         <th width="8%">Capacity</th>
         <th width="82%">Sequence</th>
-        <th width="5%">Add Production</th>
       </tr>
       <tr *ngFor="let j of jet;let i=index">
         <td>{{j.name}}</td>
         <td>{{j.capacity}}</td>
         <td>
-          <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="j.jetDataList" class="example-list main-table-drag"
+          <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
+             class="example-list main-table-drag"
             (cdkDropListDropped)="drop($event,i)">
-            <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" cdkDrag>
-              {{index.batchId}}
+            <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" (click)="setIndexForSlip(index)" cdkDrag>
+              <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click">
+                {{index.batchId}}
+              </button>
             </div>
           </div>
+           
 
         </td>
-        <td>
-          <div class="nb-icon-add">
-            <a class="" media="Linkedin">
-              <!-- <div class="tooltip jet-tooltip">Add Production</div> -->
-              <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNew($event,i)" icon="plus"
-                class="add-icon display-inline jet-icon">
-              </nb-icon>
-            </a>
-
-          </div>
-        </td>
+        
       </tr>
     </table>
 

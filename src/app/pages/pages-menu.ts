@@ -1,17 +1,13 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
+  
   {
     title: 'Dashboard',
     icon: 'home-outline',
     link: '/pages/dashboard',
     home: false,
   },
-  // {
-  //   title: 'IoT Dashboard',
-  //   icon: 'home-outline',
-  //   link: '/pages/iot-dashboard',
-  // },
   {
     title: 'Party',
     icon: 'person-outline',
@@ -31,16 +27,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/user',
     hidden:false
   },
-  // {
-  //   title: 'Fabric-In',
-  //   icon: 'home-outline',
-  //   link: '/pages/fabric-in',
-  // },
-  // {
-  //   title: 'Batch',
-  //   icon: 'home-outline',
-  //   link: '/pages/batch',
-  // },
   {
     title: 'Color',
     icon: 'color-palette-outline',
@@ -83,10 +69,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/supplier',
     hidden:false
   },
+  // {
+  //   title: 'Process',
+  //   icon: 'settings-2-outline',
+  //   link: '/pages/process',
+  //   hidden:false
+  // },
   {
-    title: 'Process',
+    title: 'DyeingProcess',
     icon: 'settings-2-outline',
-    link: '/pages/process',
+    link: '/pages/dyeing-process',
     hidden:false
   },
   {
@@ -120,72 +112,23 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: 'Payment',
+    icon: 'credit-card-outline',
+    children: [
+      {
+        title: 'Bill Payment',
+        link: '/pages/payment/bill-payment',
+      },
+      {
+        title: 'Advance Payment',
+        link: '/pages/payment/advance-payment',
+      },
+    ],
+  },
+  {
     title: 'FEATURES',
     group: true,
   },
-  // {
-  //   title: 'Forms',
-  //   icon: 'edit-2-outline',
-  //   children: [
-  //     {
-  //       title: 'Form Inputs',
-  //       link: '/pages/forms/inputs',
-  //     },
-  //     {
-  //       title: 'Form Layouts',
-  //       link: '/pages/forms/layouts',
-  //     },
-  //     {
-  //       title: 'Buttons',
-  //       link: '/pages/forms/buttons',
-  //     },
-  //     {
-  //       title: 'Datepicker',
-  //       link: '/pages/forms/datepicker',
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Modal & Overlays',
-  //   icon: 'browser-outline',
-  //   children: [
-  //     {
-  //       title: 'Dialog',
-  //       link: '/pages/modal-overlays/dialog',
-  //     },
-  //     {
-  //       title: 'Window',
-  //       link: '/pages/modal-overlays/window',
-  //     },
-  //     {
-  //       title: 'Popover',
-  //       link: '/pages/modal-overlays/popover',
-  //     },
-  //     {
-  //       title: 'Toastr',
-  //       link: '/pages/modal-overlays/toastr',
-  //     },
-  //     {
-  //       title: 'Tooltip',
-  //       link: '/pages/modal-overlays/tooltip',
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Extra Components',
-  //   icon: 'message-circle-outline',
-  //   children: [
-  //     {
-  //       title: 'Spinner',
-  //       link: '/pages/extra-components/spinner',
-  //     },
-  //     {
-  //       title: 'Alert',
-  //       link: '/pages/extra-components/alert',
-  //     }
-  //   ],
-  // },
-  
   {
     title: 'Miscellaneous',
     icon: 'shuffle-2-outline',
@@ -196,26 +139,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  // {
-  //   title: 'Auth',
-  //   icon: 'lock-outline',
-  //   children: [
-  //     {
-  //       title: 'Login',
-  //       link: '/auth/login',
-  //     },
-  //     {
-  //       title: 'Register',
-  //       link: '/auth/register',
-  //     },
-  //     {
-  //       title: 'Request Password',
-  //       link: '/auth/request-password',
-  //     },
-  //     {
-  //       title: 'Reset Password',
-  //       link: '/auth/reset-password',
-  //     },
-  //   ],
-  // },
 ];

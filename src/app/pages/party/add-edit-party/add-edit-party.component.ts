@@ -76,6 +76,7 @@ export class AddEditPartyComponent implements OnInit {
   creditor: boolean = false;
   debtor: boolean = false;
   partyAdressSetFlag: boolean = false;
+  partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
   userHead;
   constructor(
@@ -129,8 +130,8 @@ export class AddEditPartyComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^[a-zA-Z0-9]{4}$/),
       ]),
-      creditor: new FormControl(false, Validators.required),
-      debtor: new FormControl(false, Validators.required),
+      creditor: new FormControl(false),
+      debtor: new FormControl(false),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null, Validators.required),
@@ -188,96 +189,92 @@ export class AddEditPartyComponent implements OnInit {
       }
     );
   }
-
+  resetFlag($event) {
+    this.partyCodeExist = true;
+  }
   public addParty() {
-this.disableButton=true;
+    this.disableButton = true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
-        if (
-          (this.debtor == true &&
-          this.partyForm.get("partyAddress1").value != "") || (this.creditor==true && (this.partyForm.get("partyAddress1").value != "" || this.partyForm.get("partyAddress1").value == ""))
-        ) {
-          if(this.debtor==true){
-            this.partyAdressSetFlag=true;
-          }
-          this.partyForm.value.createdBy = this.user.userId;
-          if (this.partyForm.get("gstin") == null) {
-            this.partyForm.patchValue({
-              gstin: "",
-            });
-          }
-          this.partyService.saveParty(this.partyForm.value).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.currentParty = data["data"];
-                this.route.navigate(["pages/party"]);
-                this.toastr.success(errorData.Add_Success);
+        this.partyForm.value.createdBy = this.user.userId;
 
-              } else {
-                this.toastr.error(errorData.Add_Error);
-              }
-              this.disableButton=false;
-
-            },
-            (error) => {
-              this.toastr.error(errorData.Serever_Error);
-              this.disableButton=false;
-            }
-          );
+        if (this.partyForm.get("gstin") == null) {
+          this.partyForm.patchValue({
+            gstin: "",
+          });
         }
-      }
-       else {
-        this.disableButton=false;
+        this.partyService.saveParty(this.partyForm.value).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.currentParty = data["data"];
+              this.route.navigate(["pages/party"]);
+              this.toastr.success(errorData.Add_Success);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+            this.disableButton = false;
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+            this.disableButton = false;
+          }
+        );
+      } else {
+        this.disableButton = false;
         return;
       }
     } else {
-      this.disableButton=false;
+      this.disableButton = false;
       return;
     }
   }
 
   public updateParty() {
-    this.disableButton=true;
+    this.disableButton = true;
     this.loading = true;
     this.formSubmitted = true;
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
-        if((this.debtor == true &&
-          this.partyForm.get("partyAddress1").value != "") || (this.creditor==true && (this.partyForm.get("partyAddress1").value != "" || this.partyForm.get("partyAddress1").value == ""))){
-            if(this.debtor==true){
-              this.partyAdressSetFlag=true;
-            }
-
-        this.partyForm.value.updatedBy = this.user.userId;
-        let body = {
-          ...this.partyForm.value,
-          id: this.currentPartyId,
-        };
-        this.partyService.updateParty(body).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Update_Success);
-               this.route.navigate(["/pages/party"]);
-          
-            } else {
-              this.toastr.error(errorData.Update_Error);
-            }
-            this.loading = false;
-          },
-          (error) => {
-            this.toastr.error(errorData.Update_Error);
-            this.loading = false;
+        if (
+          (this.debtor == true &&
+            this.partyForm.get("partyAddress1").value != "") ||
+          (this.creditor == true &&
+            (this.partyForm.get("partyAddress1").value != "" ||
+              this.partyForm.get("partyAddress1").value == ""))
+        ) {
+          if (this.debtor == true) {
+            this.partyAdressSetFlag = true;
           }
-        );
+
+          this.partyForm.value.updatedBy = this.user.userId;
+          let body = {
+            ...this.partyForm.value,
+            id: this.currentPartyId,
+          };
+          this.partyService.updateParty(body).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Update_Success);
+                this.route.navigate(["/pages/party"]);
+              } else {
+                this.toastr.error(errorData.Update_Error);
+              }
+              this.loading = false;
+              this.disableButton = false;
+            },
+            (error) => {
+              this.toastr.error(errorData.Update_Error);
+              this.loading = false;
+              this.disableButton = false;
+            }
+          );
         }
       }
-      this.disableButton=false;
-
+      this.disableButton = false;
     }
-    this.disableButton=false;
+    this.disableButton = false;
     this.loading = false;
-
   }
 
   public goBackToPreviousPage(): any {
@@ -296,30 +293,29 @@ this.disableButton=true;
     this.partyForm.patchValue({
       debtor: this.debtor,
     });
-    if (this.partyForm.get("debtor").value == true) {
-      this.partyAdressSetFlag = true;
-    }
+    this.partyAdressSetFlag = checked;
   }
 
   checkPartyCode() {
-    this.partyCodeExist=true
-    this.partyService.getPartyCode(this.partyForm.get("partyCode").value).subscribe(
-      data=>{
-        this.partyCodeExist=data['data'];
-      },
-      error=>{
-      }
-    )
+    this.partyCodeExist = true;
+    this.partyService
+      .getPartyCode(this.partyForm.get("partyCode").value)
+      .subscribe(
+        (data) => {
+          this.partyCodeExist = data["data"];
+        },
+        (error) => {}
+      );
   }
 
-  checkAddress(){
-    if(this.partyForm.get('partyAddress1').value!=""){
-      this.partyAdressSetFlag=false
+  checkAddress() {
+    if (this.partyForm.get("partyAddress1").value != "") {
+      this.partyAdressSetFlag1 = false;
     }
   }
 
   setState() {
-    if(this.partyForm.get('gstin').value!=""){
+    if (this.partyForm.get("gstin").value != "") {
       let tempGstNo = this.partyForm.get("gstin").value;
       let stateDigit = tempGstNo.slice(0, 2);
       this.stateList.forEach((element) => {
@@ -330,9 +326,8 @@ this.disableButton=true;
         }
       });
       this.partyForm.get("state").disable();
-    }
-    else{
-      this.partyForm.get('state').enable();
+    } else {
+      this.partyForm.get("state").enable();
     }
   }
 }

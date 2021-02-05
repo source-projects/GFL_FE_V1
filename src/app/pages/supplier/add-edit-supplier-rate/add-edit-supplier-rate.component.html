@@ -43,7 +43,7 @@
 
                         <ngx-datatable-column name="itemName" prop="itemName" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm" type="text" (keyup)="onKeyUp($event,rowIndex,0,'itemName')"
+                                <input class="tableForm line-height-subtable" type="text" (keyup)="onKeyUp($event,rowIndex,0,'itemName')"
                                     [id]="'supplierList'+rowIndex+'-0'" [(ngModel)]="row.itemName" #tableitem="ngModel"
                                     name='tableSupplierItemName{{rowIndex}}' required
                                     [ngClass]="{'is-invalid': formSubmitted && tableitem.invalid}">
@@ -56,14 +56,15 @@
 
                         <ngx-datatable-column name="itemType" prop="itemType" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <select class="tableForm" #tableItemType="ngModel"
-                                    name='tableSupplierItemType{{rowIndex}}' [(ngModel)]="row.itemType" required
-                                    (keyup)="onKeyUp($event,rowIndex,1,'itemType')" [id]="'supplierList'+rowIndex+'-1'"
-                                    [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name"
-                                    bindValue="id">
-                                    <option value="dye">Dye</option>
-                                    <option value="chemical">Chemical</option>
-                                </select>
+                               
+                                <ng-select #tableItemType="ngModel"
+                                name='tableSupplierItemType{{rowIndex}}' [(ngModel)]="row.itemType" required
+                                (keyup)="onKeyUp($event,rowIndex,1,'itemType')" [id]="'supplierList'+rowIndex+'-1'"
+                                [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name"
+                                bindValue="id" appendTo="body" class="ng-select-br-none">
+                                    <ng-option value="Color">Color</ng-option>
+                                    <ng-option value="Chemical">Chemical</ng-option>
+                                 </ng-select>
                                 <div class="invalid-feedback" *ngIf="formSubmitted && (tableItemType.invalid)"
                                     style="display: inline-block;">
                                     <span>Required</span>
@@ -73,7 +74,7 @@
 
                         <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm" type="number" #tableRate1="ngModel"
+                                <input class="tableForm line-height-subtable" type="number" #tableRate1="ngModel"
                                     name='tableRate{{rowIndex}}' [(ngModel)]="row.rate"
                                     (keyup)="onKeyUp($event,rowIndex,2,'rate')"
                                     (input)="calculateGstDiscountPercentage(rowIndex,1)"
@@ -89,7 +90,7 @@
                         <ngx-datatable-column name="Discounted Rate" prop="discountedRate" [sortable]="false"
                             [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm" type="number" #tablediscount1="ngModel"
+                                <input class="tableForm line-height-subtable" type="number" #tablediscount1="ngModel"
                                     name='tableDiscount{{rowIndex}}' [(ngModel)]="row.discountedRate"
                                     [id]="'supplierList'+rowIndex+'-3'" readonly>
                             </ng-template>
@@ -97,7 +98,7 @@
 
                         <ngx-datatable-column name="Gst Rate" prop="gstRate" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm" type="number" #tableGst1="ngModel" name='tableGst{{rowIndex}}'
+                                <input class="tableForm line-height-subtable" type="number" #tableGst1="ngModel" name='tableGst{{rowIndex}}'
                                     [(ngModel)]="row.gstRate" [id]="'supplierList'+rowIndex+'-4'" readonly>
                             </ng-template>
                         </ngx-datatable-column>

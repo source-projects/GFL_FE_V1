@@ -43,4 +43,10 @@ export class ShadeService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/shade/'+ q_id+'/'+p_id);
 
   }
+
+  
+getAllDyeingProcess(){
+  return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingProcess/all');
+
+}
 }
