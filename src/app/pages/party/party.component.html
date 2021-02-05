@@ -105,10 +105,9 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column props="partyName">
-
+                    <ngx-datatable-column name="Party Name" props="partyName">
                         <ng-template ngx-datatable-header-template let-value="value">
-                            party name
+                            Party Name
                             <div class="filter-icon" id="onclickFilter">
                                 <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
                             </div>

@@ -1,9 +1,9 @@
 <div id="target"></div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
-       
-            <h2 class="nb-text">Production Planning</h2>
-        
+
+        <h2 class="nb-text">Production Planning</h2>
+
     </nb-card-header>
     <nb-card-body>
         <div>
@@ -13,10 +13,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                 placeholder="Party Name" class="required-error-dropdown"
-                                 (change)=partySelected($event)>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
                                 <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
@@ -30,11 +27,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required
-                                #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
-                                 placeholder="Quality ID" class="required-error-dropdown"
-                                 (change)=qualitySelected($event)>
-                                 <ng-option disabled="true">
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}" placeholder="Quality ID" class="required-error-dropdown" (change)=qualitySelected($event)>
+                                <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
                                             <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
@@ -43,7 +37,7 @@
                                             <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
                                         </div>
                                     </div>
-                                 </ng-option>
+                                </ng-option>
                                 <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -53,7 +47,7 @@
                                             <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
                                         </div>
                                     </div>
-                                    </ng-option>
+                                </ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
                                 <span>Quality id is required</span>
@@ -64,25 +58,23 @@
                     <!--Batch List-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label >Batch Filter</label>
-                            <input type="text"  #batchFilter1="ngModel" class="form-control" name="batch"
-                            [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
-                           
+                            <label>Batch Filter</label>
+                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
+
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        
-                            <button nbButton  size="small" style="margin-left: 10px;" 
-                            *ngFor="let b of allBatchList"   (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <button nbButton size="small" style="margin-left: 10px;" *ngFor="let b of allBatchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                              {{b.batchId}} </button>
-                       
+
+                        </div>
                     </div>
                 </div>
-            </div>
             </form>
         </div>
     </nb-card-body>

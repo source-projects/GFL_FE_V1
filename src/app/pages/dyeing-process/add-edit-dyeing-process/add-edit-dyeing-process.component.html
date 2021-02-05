@@ -9,7 +9,8 @@
                     <div class="col-md-5 col-12">
                         <div class="form-group">
                             <label class="required">Process Name</label>
-                            <input type="text" name="processName" class="form-control" #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}" placeholder="Process Name">
+                            <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
+                                placeholder="Process Name">
                             <div class="invalid-feedback" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
                             </div>
