@@ -20,129 +20,17 @@ export class PlanningSlipComponent implements OnInit {
   public loading: boolean = false;
   public formSubmitted: boolean = false;
   public disableButton: boolean = false;
+  public isSaved: boolean = false;
   public isPrinting: boolean = true;
+  public saveClicked: boolean = false;
   public index: string;
   public myDate: any;
   @Input() isPrintDirect: boolean;
   @Input() batchId;
   @Input() stockId;
   public itemListArray: any = [];
-  public slipData: any = {};
-  // {
-  //   batchId: 111,
-  //   jetId: 123,
-  //   totalWt: 123,
-  //   qualityId: 50,
-  //   partyShadeNo: 2,
-  //   batchCount: 1,
-  //   colorTone: "Blue",
-  //   dyeingSlipDataList: [
-  //     {
-  //       id: 14497,
-  //       controlId: 14496,
-  //       processType: "Dyeing",
-  //       temp: 0,
-  //       holdTime: 12,
-  //       sequence: 1,
-  //       isColor: null,
-  //       liquerRation: null,
-  //       dyeingSlipItemData: [
-  //         {
-  //           id: 14498,
-  //           controlId: 14497,
-  //           itemId: 642,
-  //           itemName: "Item 3",
-  //           byChemical: "L",
-  //           concentration: 4,
-  //         },
-  //         {
-  //           id: 14498,
-  //           controlId: 14497,
-  //           itemId: 642,
-  //           itemName: "Item 3",
-  //           byChemical: "L",
-  //           concentration: 4,
-  //         },
-  //         {
-  //           id: 14498,
-  //           controlId: 14497,
-  //           itemId: 642,
-  //           itemName: "Item 3",
-  //           byChemical: "L",
-  //           concentration: 4,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 14521,
-  //       controlId: 14496,
-  //       processType: "Scouring",
-  //       temp: 12,
-  //       holdTime: 12,
-  //       sequence: 2,
-  //       isColor: null,
-  //       liquerRation: null,
-  //       dyeingSlipItemData: [
-  //         {
-  //           id: 14522,
-  //           controlId: 14521,
-  //           itemId: 13884,
-  //           itemName: "Test_Item2",
-  //           byChemical: "L",
-  //           concentration: 10,
-  //         },
-  //         {
-  //           id: 14523,
-  //           controlId: 14521,
-  //           itemId: 13812,
-  //           itemName: "itemKushal2",
-  //           byChemical: "L",
-  //           concentration: 20,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 14530,
-  //       controlId: 14496,
-  //       processType: "RC",
-  //       temp: 213,
-  //       holdTime: 3125,
-  //       sequence: 3,
-  //       isColor: null,
-  //       liquerRation: null,
-  //       dyeingSlipItemData: [
-  //         {
-  //           id: 14531,
-  //           controlId: 14530,
-  //           itemId: 640,
-  //           itemName: "Item 1",
-  //           byChemical: "L",
-  //           concentration: 3,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 14532,
-  //       controlId: 14496,
-  //       processType: "Cold Wash",
-  //       temp: 5,
-  //       holdTime: 5,
-  //       sequence: 4,
-  //       isColor: null,
-  //       liquerRation: null,
-  //       dyeingSlipItemData: [
-  //         {
-  //           id: 14533,
-  //           controlId: 14532,
-  //           itemId: 640,
-  //           itemName: "Item 1",
-  //           byChemical: "L",
-  //           concentration: 5,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // };
+  public slipData: any;
+
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -300,15 +188,18 @@ export class PlanningSlipComponent implements OnInit {
       this.planningSlipService.updateSlipData(this.slipData).subscribe(
         (data) => {
           if (data["success"]) {
+            this.isSaved = true;
             this.toastr.success(data["msg"]);
+            if(this.saveClicked)
+            this.activeModal.close();
           } else {
             this.toastr.error(data["msg"]);
           }
-          this.activeModal.close();
+          this.disableButton = false;
         },
         (error) => {
           this.toastr.error("Internal server error!");
-          this.activeModal.close();
+          this.disableButton = false;
         }
       );
     }
@@ -318,8 +209,14 @@ export class PlanningSlipComponent implements OnInit {
     this.isPrinting = false;
     if (!this.isPrintDirect) {
       this.saveSlipData(myForm);
+    } else {
+      this.isSaved = true;
+      this.getSlipDataFromBatch();
     }
-    
+
+    let interval1 = setInterval(() => {
+      if (this.slipData && this.isSaved) {
+        clearInterval(interval1);
         let doc = new wijmo.PrintDocument({
           title: "",
         });
@@ -335,7 +232,7 @@ export class PlanningSlipComponent implements OnInit {
         doc.append(
           '<link href="./planning-slip.component.scss" rel="stylesheet">'
         );
-          let tempFlag = false;
+        let tempFlag = false;
         let inter = setInterval(() => {
           let element = <HTMLElement>document.getElementById("print-slip");
           if (element) {
@@ -346,7 +243,8 @@ export class PlanningSlipComponent implements OnInit {
             this.activeModal.close();
           }
         }, 10);
-       
-         
+      }
+    }, 10);
+    
   }
 }

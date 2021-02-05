@@ -23,10 +23,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Discount %</label>
-                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %" maxlength="1" formControlName="discountPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)}"
+                        <input type="number" class="form-control" id="discountPercentage" placeholder="Discount %" 
+                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46" 
+                        formControlName="discountPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)}"
                             maxlength="3" min="0" max="100">
                         <div class="invalid-feedback" *ngIf="(addSupplier.controls.discountPercentage.invalid)&&(formSubmitted || addSupplier.controls.discountPercentage.touched)">
-                            <span>Discount % is Required</span>
+                            <span>Discount % is required and should be &lt; 100 </span>
                         </div>
                     </div>
                 </div>
@@ -34,16 +36,20 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">GST %</label>
-                        <input type="number" class="form-control" id="gstPercentage" placeholder="GST %" formControlName="gstPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.gstPercentage.invalid)&&(formSubmitted || addSupplier.controls.gstPercentage.touched)}" min="0">
+                        <input type="number" class="form-control" id="gstPercentage" placeholder="GST %" 
+                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
+                        formControlName="gstPercentage" [ngClass]="{'is-invalid':(addSupplier.controls.gstPercentage.invalid)&&(formSubmitted || addSupplier.controls.gstPercentage.touched)}" min="0">
                         <div class="invalid-feedback" *ngIf="(addSupplier.controls.gstPercentage.invalid)&&(formSubmitted || addSupplier.controls.gstPercentage.touched)">
-                            <span>GST % is Required</span>
+                            <span>GST % is Required and should be &lt; 100 </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Payment Terms</label>
-                        <input type="number" class="form-control" id="paymentTerms" placeholder="Payment Terms" formControlName="paymentTerms" required [ngClass]="{'is-invalid':(addSupplier.controls.paymentTerms.invalid )&&(formSubmitted || addSupplier.controls.paymentTerms.touched )}"
+                        <input type="number" class="form-control" id="paymentTerms" placeholder="Payment Terms"
+                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
+                         formControlName="paymentTerms" required [ngClass]="{'is-invalid':(addSupplier.controls.paymentTerms.invalid )&&(formSubmitted || addSupplier.controls.paymentTerms.touched )}"
                             min="0">
                         <div class="invalid-feedback" *ngIf="(addSupplier.controls.paymentTerms.invalid )&&(formSubmitted || addSupplier.controls.paymentTerms.touched )">
                             <span>Payment Terms is Required</span>
