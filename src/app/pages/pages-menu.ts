@@ -106,6 +106,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
+    title: 'Issue-Color-Box',
+    icon: 'file-text-outline',
+    link: '/pages/issue-color-box',
+    hidden:false
+  },
+  {
     title: 'Input Data',
     icon: 'edit-2-outline',
     link: '/pages/input-data',

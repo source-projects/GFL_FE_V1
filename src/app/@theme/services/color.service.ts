@@ -24,4 +24,14 @@ export class ColorService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/color/' + colorId);
   }
 
+  
+getColorBox(itemId){
+  return this.httpClient.get(this.commonService.envUrl() + 'api/color/box/notIssued/' + itemId);
+
+}
+issueBox(boxNo){
+  return this.httpClient.post(this.commonService.envUrl() + 'api/color/box/issue',boxNo);
+
+}
+
 }
