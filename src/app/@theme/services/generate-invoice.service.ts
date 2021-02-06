@@ -8,9 +8,15 @@ import { HttpClient } from '@angular/common/http';
 export class GenerateInvoiceService {
 
   constructor(private httpClient: HttpClient, private commonService: CommonService) { }
-  // getDipatchList() {
-  //   return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/');
-  // }
+  
+  getShortInvoiceReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/forConslidateBill',obj);
+  }
+
+  getDetailedInvoiceReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/getBill',obj);
+  }
+
   getAllDipatch(){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getAll');
   }

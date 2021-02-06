@@ -43,7 +43,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   deleteFlag = 0;
   validationCardRowIndex = 0;
-  flag = 1;
+  flag = 0;
 
   stockDataValues = [
     {

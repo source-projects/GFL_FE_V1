@@ -5,11 +5,11 @@ import { GenerateInvoiceRoutingModule } from './generate-invoice-routing.module'
 import { GenerateInvoiceComponent } from './generate-invoice.component';
 import { SharedModule } from 'app/@theme/shared.module';
 import { AddEditInvoiceComponent } from './add-edit-invoice/add-edit-invoice.component';
+import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { PrintLayoutComponent } from './print-Layout/print-layout.component';
 
-
 @NgModule({
-  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent],
+  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent],
   imports: [
     CommonModule,
     GenerateInvoiceRoutingModule,
