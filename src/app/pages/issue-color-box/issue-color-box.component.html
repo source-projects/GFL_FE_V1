@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="required">Supplier Name</label>
-                        <ng-select name="supplierName" [(ngModel)]='item' required
+                        <ng-select appendTo="body" name="supplierName" [(ngModel)]='item' required
                             #supplierName1="ngModel" [ngClass]="{'is-invalid': (supplierName1.invalid)&& (formSubmitted || supplierName1.touched)}"
                              placeholder="Quality ID" class="required-error-dropdown"
                              (change)=itemSelected($event)>
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="required">Box No</label>
-                        <ng-select name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel"
+                        <ng-select appendTo="body" name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel"
                             [ngClass]="{'is-invalid': (boxNo1.invalid)&&(formSubmitted || boxNo1.touched)}"
                              placeholder="Box No." class="required-error-dropdown">
                         <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option>

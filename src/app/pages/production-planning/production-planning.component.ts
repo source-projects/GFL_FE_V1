@@ -245,10 +245,12 @@ export class ProductionPlanningComponent implements OnInit {
     }
     else
     {
-      let data = this.allBatchList.filter(ele=>{
-        return ele.batchId == filterNumber;
-      });
-      this.allBatchList = data; 
+      let displayArray = this.allBatchList.filter((item)=>{
+      if ( (item.batchId.indexOf(filterNumber) !== -1 ) || !filterNumber ) {
+        return true;
+      }
+    })
+      this.allBatchList = displayArray; 
     }
    
   }
