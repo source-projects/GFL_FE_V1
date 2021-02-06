@@ -59,43 +59,51 @@
             <div *ngIf="shortReport && shortReport.length > 0" style="margin-top: 50px;" id="shortReport">
                 <div *ngFor="let invoice of shortReport">
                     <!-- Invoice No: {{invoice.invoiceNo}} Party: {{invoice.partyName}} Master: {{invoice.headName}} Total Mtr: {{invoice.totalBatchMtr}} Total Finish Mtr: {{invoice.totalFinishMtr}} Total Amount: {{invoice.amt}} -->
+                    <div style="margin:0 25px; text-align: center;">
+                        <h1 style="font-size: 25px;">INVOICE REPORT</h1>
+                        <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
+                            <tr>
+                                <th>Invoice No</th>
+                                <th>Party</th>
+                                <th>Master</th>
+                                <th>Total Mtr</th>
+                                <th>Total Finish Mtr</th>
+                                <th>Total Amount</th>
+                            </tr>
+                            <tr>
+                                <td>{{invoice.invoiceNo}}</td>
+                                <td> {{invoice.partyName}}</td>
+                                <td>{{invoice.headName}}</td>
+                                <td>{{invoice.totalBatchMtr}}</td>
+                                <td>{{invoice.totalFinishMtr}}</td>
+                                <td>{{invoice.amt}}</td>
+                            </tr>
 
-                    <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
-                        <tr>
-                            <th>Invoice No</th>
-                            <th>Party</th>
-                            <th>Master</th>
-                            <th>Total Mtr</th>
-                            <th>Total Finish Mtr</th>
-                            <th>Total Amount</th>
-                        </tr>
-                        <tr>
-                            <td>{{invoice.invoiceNo}}</td>
-                            <td> {{invoice.partyName}}</td>
-                            <td>{{invoice.headName}}</td>
-                            <td>{{invoice.totalBatchMtr}}</td>
-                            <td>{{invoice.totalFinishMtr}}</td>
-                            <td>{{invoice.amt}}</td>
-                        </tr>
-
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <div class="container" *ngIf="detailedReport && detailedReport.length > 0" style="margin-top: 50px;margin-left:50px" id="detailedReport">
                 <div *ngFor="let invoice of detailedReport">
                     <div class="row">
-                        <!-- <div class="col-md-3" style="width: 33%;" class="font-styles">
-                            <h3> Master:</h3> {{invoice.headName}}
+                        <div class="col-md-3" style="width: 30%;" class="font-styles">
+                            <div style="text-align: center;">
+                                <h2 style="display: inline-block; margin-right: 10px; font-size: 25px;"> Master:</h2> <span style="font-size: 23px; display: inline-block;" class="tb-name">{{invoice.headName}}</span>
+                            </div>
                         </div>
-                        <div class="col-md-3" style="width: 33%;" class="font-styles">
-                            <h3> Party:</h3> {{invoice.partyName}}
+                        <div class="col-md-3" style="width: 32%;" class="font-styles">
+                            <div style="text-align: center;">
+                                <h2 style="display: inline-block; margin-right: 10px; font-size: 25px;"> Party:</h2> <span style="font-size: 23px; display: inline-block;" class="tb-name">{{invoice.partyName}}</span>
+                            </div>
                         </div>
-                        <div class="col-md-3" style="width: 33%;" class="font-styles">
-                            <h3>Invoice No:</h3> {{invoice.invoiceNo}}
-                        </div> -->
+                        <div class="col-md-3" style="width: 32%;" class="font-styles">
+                            <div style="text-align: center;">
+                                <h2 style="display: inline-block; margin-right: 10px; font-size: 25px;">Invoice No:</h2> <span style="font-size: 23px; display: inline-block;" class="tb-name">{{invoice.invoiceNo}}</span>
+                            </div>
+                        </div>
 
-                        <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
+                        <!-- <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
                             <tr>
                                 <th>Master</th>
                                 <th>Party</th>
@@ -109,13 +117,35 @@
 
                             </tr>
 
-                        </table>
-                    </div>
-                    <br><br>
-                    <h3>Quality List</h3>
-                    <div *ngFor="let quality of invoice.qualityList">
+                        </table> -->
 
-                        BatchId: {{quality.batchId}} Quality ID: {{quality.qulityId}} Total Meter: {{quality.totalMtr}} Total Finished Meter: {{quality.totalFinishMtr}} Rate: {{quality.rate}} Total Amount: {{quality.amt}}
+                        <br><br>
+
+                        <div *ngFor="let quality of invoice.qualityList" class="col-md-12" style="width: 100%; margin-top: 55px;">
+                            <div style="text-align: center; width: 90%;">
+                                <h1 style="font-size: 25px;">Quality List</h1>
+                                <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
+                                    <tr>
+                                        <th>Batch Id</th>
+                                        <th>Quality ID</th>
+                                        <th>Total Meter</th>
+                                        <th>Total Finished Meter</th>
+                                        <th>Rate</th>
+                                        <th>Total Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{quality.batchId}}</td>
+                                        <td>{{quality.qulityId}}</td>
+                                        <td>{{quality.totalMtr}}</td>
+                                        <td>{{quality.totalFinishMtr}}</td>
+                                        <td>{{quality.rate}}</td>
+                                        <td>{{quality.amt}}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <!-- BatchId: {{quality.batchId}} Quality ID: {{quality.qulityId}} Total Meter: {{quality.totalMtr}} Total Finished Meter: {{quality.totalFinishMtr}} Rate: {{quality.rate}} Total Amount: {{quality.amt}} -->
+                        </div>
                     </div>
                 </div>
             </div>
