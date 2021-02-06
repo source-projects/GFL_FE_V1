@@ -57,7 +57,8 @@ export class PartyComponent implements OnInit {
   selectedColumn: any;
   checkedArray = [];
   selectedFilter1 = "Contains";
-  filterWord:any;
+  selectedFilter2 = "Greater Than"
+  filterWord: any;
   partyNameList = [];
   partyAddressList = [];
   partyContactList = [];
@@ -68,20 +69,19 @@ export class PartyComponent implements OnInit {
   distinctPartyContactList = [];
   distinctPartyCityList = [];
   distinctPartyStateList = [];
-  duplipartylist = [];
-
-  filterListDiv = [];
-  copyFilterListDiv = [];
-
   filterDivFlag: boolean = false;
-  filterAndOrFlag: boolean = false;
-  stepFlag: boolean = false;
-  partyNameFirstTimeFlag:boolean = false;
-  partyAddress1FirstTimeFlag:boolean = false;
-  partyContactFirstTimeFlag:boolean = false;
-  partyCityFirstTimeFlag:boolean = false;
-  partyStateFirstTimeFlag:boolean = false;
 
+  globalFlag: boolean = false;
+  stringFlag: boolean = true;
+  numberFlag: boolean = false;
+
+  global = [];
+  column = [];
+  columnFilter = [];
+  temp = [];
+  tempGlobal = [];
+
+  firstTimeOpenFlag: boolean = false;
 
   constructor(
     private partyService: PartyService,
@@ -99,15 +99,13 @@ export class PartyComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.firstTimeOpenFlag = false;
+
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId['userHeadId'];
-    this.partyNameFirstTimeFlag = false;
-    this.partyAddress1FirstTimeFlag  = false;
-    this.partyContactFirstTimeFlag = false;
-    this.partyCityFirstTimeFlag = false;
-    this.partyStateFirstTimeFlag = false;
+    this.globalFlag = false;
     this.getViewAccess();
     this.getAddAcess();
     // this.getAllParty(this.userId,"own");
@@ -137,439 +135,12 @@ export class PartyComponent implements OnInit {
   }
 
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const count = this.copyPartyList.length;
-    const keys = Object.keys(this.copyPartyList[0]);
-    this.partyList = this.copyPartyList.filter(item => {
-      for (let i = 0; i < count; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]]
-              .toString()
-              .toLowerCase()
-              .indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
-        }
-      }
-    });
-  }
 
 
-  checked(value: any, ind: any) {
 
-    this.checkedArray = [];
-    const vari = document.querySelectorAll(".selector");
-    vari.forEach((ele: HTMLInputElement) => {
-      if (ele.checked) {
-        this.checkedArray.push(ele.name)
-      }
 
-    })
-    console.log("checked:", this.checkedArray)
-    console.log("dupli:", this.duplipartylist)
-    if (this.stepFlag) {
-      const count = this.duplipartylist.length;
-      const keys = Object.keys(this.duplipartylist[0]);
-      this.partyList = this.duplipartylist.filter(item => {
-        for (let i = 0; i < count; i++) {
-          for (let j = 0; j < this.checkedArray.length; j++) {
-            if (
-              (item[keys[i]] &&
-                item[keys[i]]
-                  .toString()
-                == this.checkedArray[j])
-            ) {
-              return true;
-            }
-          }
 
-        }
-      });
-    }
-    else if (!this.stepFlag) {
 
-      const count = this.copyPartyList.length;
-      const keys = Object.keys(this.copyPartyList[0]);
-      this.partyList = this.copyPartyList.filter(item => {
-        for (let i = 0; i < count; i++) {
-          for (let j = 0; j < this.checkedArray.length; j++) {
-            if (
-              (item[keys[i]] &&
-                item[keys[i]]
-                  .toString()
-                == this.checkedArray[j])
-            ) {
-              return true;
-            }
-          }
-
-        }
-      });
-    }
-  }
-
-  outside() {
-
-    this.filterDivFlag = false;
-
-  }
-
-  filterOpen(value: any, i: any) {
-    this.selectedColumn = value;
-    this.index = i;
-    // this.partyList = this.copyPartyList;
-    // this.partyList = this.copyPartyList;
-    this.filterDivFlag = true;
-    // this.filterWord = null;
-    if (value == "partyName") {
-      
-      if (!this.partyNameFirstTimeFlag) {
-        this.partyList = this.copyPartyList;
-        this.filterWord = null;
-        this.filterListDiv = this.distinctPartyNameList;
-        this.partyNameFirstTimeFlag = true;
-        this.partyAddress1FirstTimeFlag  = false;
-        this.partyContactFirstTimeFlag = false;
-        this.partyCityFirstTimeFlag = false;
-        this.partyStateFirstTimeFlag = false;
-      }
-      else if(this.partyNameFirstTimeFlag){
-        this.filterListDiv = [];
-        this.partyList.map(ele=>{
-          if (!this.filterListDiv.includes(ele.partyName)) {
-            this.filterListDiv.push(ele.partyName)
-          }
-        });
-      }
-      
-      this.copyFilterListDiv = this.distinctPartyNameList;
-    }
-    else if (value == "partyAddress1") {
-      if (!this.partyAddress1FirstTimeFlag) {
-        this.partyList = this.copyPartyList;
-        this.filterWord = null;
-        this.filterListDiv = this.distinctPartyAddressList;
-        this.partyNameFirstTimeFlag = false;
-        this.partyAddress1FirstTimeFlag  = true;
-        this.partyContactFirstTimeFlag = false;
-        this.partyCityFirstTimeFlag = false;
-        this.partyStateFirstTimeFlag = false;
-      }
-      else if(this.partyAddress1FirstTimeFlag){
-        this.filterListDiv = [];
-        this.partyList.map(ele=>{
-          if (!this.filterListDiv.includes(ele.partyAddress1)) {
-            this.filterListDiv.push(ele.partyAddress1)
-          }
-        });
-      }
-      
-      this.copyFilterListDiv = this.distinctPartyAddressList;
-
-    }
-    else if (value == "contactNo") {
-      if (!this.partyContactFirstTimeFlag) {
-        this.partyList = this.copyPartyList;
-        this.filterWord = null;
-        this.filterListDiv = this.distinctPartyContactList;
-        this.partyContactFirstTimeFlag = true;
-        this.partyNameFirstTimeFlag = false;
-        this.partyAddress1FirstTimeFlag  = false;
-        this.partyCityFirstTimeFlag = false;
-        this.partyStateFirstTimeFlag = false;
-      }
-      else if(this.partyContactFirstTimeFlag){
-        this.filterListDiv = [];
-        this.partyList.map(ele=>{
-          if (!this.filterListDiv.includes(ele.contactNo)) {
-            this.filterListDiv.push(ele.contactNo)
-          }
-        });
-      }
-      
-      this.copyFilterListDiv = this.distinctPartyContactList;
-    }
-    else if (value == "city") {
-      if (!this.partyCityFirstTimeFlag) {
-        this.partyList = this.copyPartyList;
-        this.filterWord = null;
-        this.filterListDiv = this.distinctPartyCityList;
-        this.partyContactFirstTimeFlag = false;
-        this.partyNameFirstTimeFlag = false;
-        this.partyAddress1FirstTimeFlag  = false;
-        this.partyCityFirstTimeFlag = true;
-        this.partyStateFirstTimeFlag = false;
-      }
-      else if(this.partyCityFirstTimeFlag){
-        this.filterListDiv = [];
-        this.partyList.map(ele=>{
-          if (!this.filterListDiv.includes(ele.city)) {
-            this.filterListDiv.push(ele.city)
-          }
-        });
-      }
-      
-      this.copyFilterListDiv = this.distinctPartyCityList;
-    }
-    else if (value == "state") {
-      if (!this.partyStateFirstTimeFlag) {
-        this.partyList = this.copyPartyList;
-        this.filterWord = null;
-        this.filterListDiv = this.distinctPartyStateList;
-        this.partyContactFirstTimeFlag = false;
-        this.partyNameFirstTimeFlag = false;
-        this.partyAddress1FirstTimeFlag  = false;
-        this.partyCityFirstTimeFlag = false;
-        this.partyStateFirstTimeFlag = true;
-      }
-      else if(this.partyStateFirstTimeFlag){
-        this.filterListDiv = [];
-        this.partyList.map(ele=>{
-          if (!this.filterListDiv.includes(ele.state)) {
-            this.filterListDiv.push(ele.state)
-          }
-        });
-      }
-      
-      this.copyFilterListDiv = this.distinctPartyStateList;
-    }
-  }
-
-  onChangeFilterSettings(value: any) {
-
-    if (value == 1) {
-      this.selectedFilter1 = "Contains";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-    else if (value == 2) {
-      this.selectedFilter1 = "Not Contains";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-    else if (value == 3) {
-      this.selectedFilter1 = "Equals";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-    else if (value == 4) {
-      this.selectedFilter1 = "Not Equals";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-    else if (value == 5) {
-      this.selectedFilter1 = "Starts with";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-    else if (value == 6) {
-      this.selectedFilter1 = "Ends with";
-      this.filterWord = null;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-
-  }
-
-  keyUpFilter(value: any) {
-    this.stepFlag = true;
-    const val = value.toString().toLowerCase().trim();
-    const count = this.copyPartyList.length;
-    const count1 = this.copyFilterListDiv.length;
-    // this.filterAndOrFlag = true;
-    if (value == "") {
-      this.filterAndOrFlag = false;
-      this.stepFlag = false;
-      this.partyList = this.copyPartyList;
-      this.filterListDiv = this.copyFilterListDiv;
-    }
-   else if (this.selectedFilter1 == "Contains") {
-      this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-        for (let i = 0; i < count1; i++) {
-          if (
-            (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
-            return true;
-          }
-        }
-      })
-
-      const keys = Object.keys(this.copyPartyList[0]);
-      this.partyList = this.copyPartyList.filter(item => {
-        for (let i = 0; i < count; i++) {
-          if (
-            (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                .toLowerCase()
-                .indexOf(val) !== -1) ||
-            !val
-          ) {
-            return true;
-          }
-        }
-      });
-      this.duplipartylist = this.partyList;
-    }
-    else if (this.selectedFilter1 == "Not Contains") {
-
-        this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-          for (let i = 0; i < count1; i++) {
-            if (
-              (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-        })
-
-        const keys = Object.keys(this.copyPartyList[0]);
-        this.partyList = this.copyPartyList.filter(item => {
-          for (let i = 0; i < count; i++) {
-            if (
-              (item[keys[this.index]] &&
-                item[keys[this.index]]
-                  .toString()
-                  .toLowerCase()
-                  .indexOf(val) !== -1) ||
-              !val
-            ) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-        });
-        this.duplipartylist = this.partyList;
-    }
-    else if (this.selectedFilter1 == "Equals") {
-        this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-          for (let i = 0; i < count1; i++) {
-            if
-              (item.toString() == val) {
-              return true;
-            }
-          }
-        })
-
-        const keys = Object.keys(this.copyPartyList[0]);
-        this.partyList = this.copyPartyList.filter(item => {
-          for (let i = 0; i < count; i++) {
-            if
-              (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                
-              == val
-            ) {
-              return true;
-            }
-          }
-        });
-        this.duplipartylist = this.partyList;
-    }
-    else if (this.selectedFilter1 == "Not Equals") {
-        this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-          for (let i = 0; i < count1; i++) {
-            if
-              (item.toString() != val) {
-              return true;
-            }
-          }
-        })
-
-        const keys = Object.keys(this.copyPartyList[0]);
-        this.partyList = this.copyPartyList.filter(item => {
-          for (let i = 0; i < count; i++) {
-            if
-              (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                
-              != val
-            ) {
-              return true;
-            }
-          }
-        });
-        this.duplipartylist = this.partyList;
-    }
-    else if (this.selectedFilter1 == "Starts with") {
-        this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-          for (let i = 0; i < count1; i++) {
-            if
-              (item.toString().toLowerCase().charAt(0) == val) {
-              return true;
-            }
-          }
-        })
-
-        const keys = Object.keys(this.copyPartyList[0]);
-        this.partyList = this.copyPartyList.filter(item => {
-          for (let i = 0; i < count; i++) {
-            if
-              (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                .toLowerCase().charAt(0)
-              == val
-            ) {
-              return true;
-            }
-          }
-        });
-        this.duplipartylist = this.partyList;
-    }
-    else if (this.selectedFilter1 == "Ends with") {
-        this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-          for (let i = 0; i < count1; i++) {
-            if
-              (item.toString().toLowerCase().endsWith(val)) {
-              return true;
-            }
-          }
-        })
-
-        const keys = Object.keys(this.copyPartyList[0]);
-        this.partyList = this.copyPartyList.filter(item => {
-          for (let i = 0; i < count; i++) {
-            if
-              (item[keys[this.index]] &&
-              item[keys[this.index]]
-                .toString()
-                .toLowerCase().endsWith(val)
-            ) {
-              return true;
-            }
-          }
-        });
-        this.duplipartylist = this.partyList;
-    }
-
-  }
-
-  searchFilterList(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const count = this.copyFilterListDiv.length;
-    this.filterListDiv = this.copyFilterListDiv.filter((item) => {
-      for (let i = 0; i < count; i++) {
-        if (
-          (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
-          return true;
-        }
-      }
-    })
-  }
 
 
   getAllParty(id, getBy) {
@@ -599,6 +170,7 @@ export class PartyComponent implements OnInit {
             partyName: element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city: element.city, state: element.state
           }));
+
 
           this.partyNameList = this.partyList.filter(
             (thing, i, arr) => arr.findIndex(t => t.partyName === thing.partyName) === i
@@ -802,5 +374,758 @@ export class PartyComponent implements OnInit {
     });
   }
 
+  searchFilterList(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    this.columnFilter = this.columnFilter.filter((item) => {
+        if (
+          (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
+          return true;
+        }
+    })
+  }
 
+  filterOpen(value: any, i: any) {
+    // this.globalFlag = true;
+    this.selectedColumn = value;
+    this.index = i;
+    this.filterDivFlag = true;
+    this.filterWord = null;
+    if (value == "partyName") {
+
+      this.stringFlag = true;
+      this.numberFlag = false;
+
+      if (!this.firstTimeOpenFlag) {
+
+        if (!this.globalFlag) {
+          this.partyList = this.copyPartyList;
+          this.columnFilter = this.distinctPartyNameList;
+        }
+        else if (this.globalFlag) {
+          this.partyList = this.global;
+          this.columnFilter = [];
+          this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.partyName)) {
+            this.columnFilter.push(ele.partyName)
+          }
+        });
+        }
+        this.filterWord = null;
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.columnFilter = [];
+        this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.partyName)) {
+            this.columnFilter.push(ele.partyName)
+          }
+        });
+      }
+
+    }
+    else if (value == "partyAddress1") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+      if (!this.firstTimeOpenFlag) {
+        if (!this.globalFlag) {
+          this.partyList = this.copyPartyList;
+          this.columnFilter = this.distinctPartyAddressList;
+        }
+        else if (this.globalFlag) {
+          this.partyList = this.global;
+          this.columnFilter = [];
+          this.partyList.map(ele => {
+          if (ele.partyAddress1 != "") {
+            if (!this.columnFilter.includes(ele.partyAddress1)) {
+              this.columnFilter.push(ele.partyAddress1)
+            }
+          }
+        });
+        }
+        this.filterWord = null;
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.columnFilter = [];
+        this.partyList.map(ele => {
+          if (ele.partyAddress1 != "") {
+            if (!this.columnFilter.includes(ele.partyAddress1)) {
+              this.columnFilter.push(ele.partyAddress1)
+            }
+          }
+        });
+      }
+    }
+    else if (value == "contactNo") {
+      this.stringFlag = false;
+      this.numberFlag = true;
+      if (!this.firstTimeOpenFlag) {
+        if (!this.globalFlag) {
+          this.partyList = this.copyPartyList;
+          this.columnFilter = this.distinctPartyContactList;
+        }
+        else if (this.globalFlag) {
+          this.partyList = this.global;
+          this.columnFilter = [];
+          this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.contactNo)) {
+            this.columnFilter.push(ele.contactNo)
+          }
+        });
+        }
+        this.filterWord = null;
+        
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.columnFilter = [];
+        this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.contactNo)) {
+            this.columnFilter.push(ele.contactNo)
+          }
+        });
+      }
+    }
+    else if (value == "city") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+      if (!this.firstTimeOpenFlag) {
+        if (!this.globalFlag) {
+          this.partyList = this.copyPartyList;
+          this.columnFilter = this.distinctPartyCityList;
+        }
+        else if (this.globalFlag) {
+          this.partyList = this.global;
+          this.columnFilter = [];
+          this.partyList.map(ele => {
+            if (!this.columnFilter.includes(ele.city)) {
+              this.columnFilter.push(ele.city)
+            }
+          });
+        }
+        this.filterWord = null;
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.columnFilter = [];
+        this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.city)) {
+            this.columnFilter.push(ele.city)
+          }
+        });
+      }
+    }
+    else if (value == "state") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+      if (!this.firstTimeOpenFlag) {
+        if (!this.globalFlag) {
+          this.partyList = this.copyPartyList;
+          this.columnFilter = this.distinctPartyStateList;
+        }
+        else if (this.globalFlag) {
+          this.partyList = this.global;
+          this.columnFilter = [];
+          this.partyList.map(ele => {
+            if (!this.columnFilter.includes(ele.state)) {
+              this.columnFilter.push(ele.state)
+            }
+          });
+        }
+        this.filterWord = null;
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.columnFilter = [];
+        this.partyList.map(ele => {
+          if (!this.columnFilter.includes(ele.state)) {
+            this.columnFilter.push(ele.state)
+          }
+        });
+      }
+    }
+  }
+
+
+  keyUpFilter(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    if (val == "") {
+      if(!this.globalFlag)
+      {
+        this.partyList = this.column;
+        this.columnFilter = this.columnFilter;
+      }
+      else if(this.globalFlag){
+        this.partyList = this.global;
+      this.columnFilter = this.columnFilter;
+      }
+      if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+        if (this.selectedColumn == "partyName") {
+          this.columnFilter = this.distinctPartyNameList;
+        }
+        else if (this.selectedColumn == "partyAddress1") {
+          this.columnFilter = this.distinctPartyAddressList;
+        }
+        else if (this.selectedColumn == "contactNo") {
+          this.columnFilter = this.distinctPartyContactList;
+        }
+        else if (this.selectedColumn == "city") {
+          this.columnFilter = this.distinctPartyCityList;
+        }
+        else if (this.selectedColumn == "state") {
+          this.columnFilter = this.distinctPartyStateList;
+        }
+
+      }
+      else if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+    }
+
+    else if (this.stringFlag && val != "") {
+      if (this.selectedFilter1 == "Contains") {
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if (
+            (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
+            return true;
+          }
+        })
+
+        if (!this.firstTimeOpenFlag) {
+          const keys = Object.keys(this.copyPartyList[0]);
+          this.partyList = this.copyPartyList.filter(item => {
+            if (
+              (item[keys[this.index]] &&
+                item[keys[this.index]]
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(val) !== -1) ||
+              !val
+            ) {
+              return true;
+            }
+          });
+          this.firstTimeOpenFlag = true;
+        }
+        else if (this.firstTimeOpenFlag) {
+          const keys = Object.keys(this.column[0]);
+          this.partyList = this.column.filter(item => {
+            if (
+              (item[keys[this.index]] &&
+                item[keys[this.index]]
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(val) !== -1) ||
+              !val
+            ) {
+              return true;
+            }
+          });
+        }
+
+        this.column = this.partyList;
+      }
+      else if (this.selectedFilter1 == "Not Contains") {
+
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if (
+            (item.toString().toLowerCase().indexOf(val) !== -1) || !val) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        })
+
+        if (!this.firstTimeOpenFlag) {
+          const keys = Object.keys(this.copyPartyList[0]);
+          this.partyList = this.copyPartyList.filter(item => {
+            if (
+              (item[keys[this.index]] &&
+                item[keys[this.index]]
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(val) !== -1) ||
+              !val
+            ) {
+              return false;
+            }
+            else {
+              return true;
+            }
+          });
+          this.firstTimeOpenFlag = true;
+        }
+        else if (this.firstTimeOpenFlag) {
+          const keys = Object.keys(this.column[0]);
+          this.partyList = this.column.filter(item => {
+            if (
+              (item[keys[this.index]] &&
+                item[keys[this.index]]
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(val) !== -1) ||
+              !val
+            ) {
+              return false;
+            }
+            else {
+              return true;
+            }
+          });
+        }
+
+        this.column = this.partyList;
+      }
+
+      else if (this.selectedFilter1 == "Equals") {
+        console.log("val:", val);
+        this.columnFilter = this.columnFilter.filter((item) => {
+          console.log("Item:", item);
+          if
+            (item.toString() == val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] &&
+            item[keys[this.index]]
+              .toString()
+
+            == val
+          ) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+      else if (this.selectedFilter1 == "Not Equals") {
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if
+            (item.toString() != val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] &&
+            item[keys[this.index]]
+              .toString()
+
+            != val
+          ) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+      else if (this.selectedFilter1 == "Starts with") {
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if
+            (item.toString().toLowerCase().charAt(0) == val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] &&
+            item[keys[this.index]]
+              .toString()
+              .toLowerCase().charAt(0)
+            == val
+          ) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+      else if (this.selectedFilter1 == "Ends with") {
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if
+            (item.toString().toLowerCase().endsWith(val)) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] &&
+            item[keys[this.index]]
+              .toString()
+              .toLowerCase().endsWith(val)
+          ) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+
+    }
+    else if (this.numberFlag && val != "") {
+      this.firstTimeOpenFlag = true;
+      if (this.selectedFilter2 == "Greater Than") {
+
+        this.columnFilter = this.columnFilter.filter((item) => {
+          console.log("Item:", item)
+          if
+            (item > val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] > val) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+
+      else if (this.selectedFilter2 == "Less Than") {
+
+        this.columnFilter = this.columnFilter.filter((item) => {
+          if
+            (item < val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] < val) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+
+      else if (this.selectedFilter2 == "Equals") {
+
+        this.columnFilter = this.columnFilter.filter((item) => {
+          console.log("Item:", item)
+          if
+            (item == val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] == val) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+
+      else if (this.selectedFilter2 == "Not Equals") {
+
+        this.columnFilter = this.columnFilter.filter((item) => {
+          console.log("Item:", item)
+          if
+            (item != val) {
+            return true;
+          }
+        })
+
+        const keys = Object.keys(this.copyPartyList[0]);
+        this.partyList = this.copyPartyList.filter(item => {
+          if
+            (item[keys[this.index]] != val) {
+            return true;
+          }
+        });
+        this.column = this.partyList;
+      }
+    }
+  }
+
+  filter(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    this.tempGlobal = this.global;
+    if (!this.globalFlag) {
+      const keys = Object.keys(this.copyPartyList[0]);
+      const count = keys.length;
+      
+      this.partyList = this.copyPartyList.filter(item => {
+        for (let i = 0; i < count; i++) {
+          if (
+            (item[keys[i]] &&
+              item[keys[i]]
+                .toString()
+                .toLowerCase()
+                .indexOf(val) !== -1) ||
+            !val
+          ) {
+            return true;
+          }
+        }
+      });
+      this.globalFlag = true;
+      this.global = this.partyList;
+    }
+    else if (this.globalFlag) {
+      if (val == ""){
+        this.partyList = this.copyPartyList;
+      }
+      else if (val != ""){
+        const keys = Object.keys(this.global[0]);
+        const count = keys.length;
+      
+      this.partyList = this.global.filter(item => {
+        for (let i = 0; i < count; i++) {
+          if (
+            (item[keys[i]] &&
+              item[keys[i]]
+                .toString()
+                .toLowerCase()
+                .indexOf(val) !== -1) ||
+            !val
+          ) {
+            return true;
+          }
+        }
+      });
+      }
+    }
+  }
+
+
+  checked(value: any, ind: any) {
+
+    this.checkedArray = [];
+    const vari = document.querySelectorAll(".selector");
+    vari.forEach((ele: HTMLInputElement) => {
+      if (ele.checked) {
+        this.checkedArray.push(ele.name)
+      }
+
+    })
+    this.temp = this.column;
+    if (value == false) {
+      if (!this.firstTimeOpenFlag) {
+        const keys = Object.keys(this.copyPartyList[0]);
+        const count = keys.length;
+        
+        this.partyList = this.copyPartyList.filter(item => {
+          for (let i = 0; i < count; i++) {
+            for (let j = 0; j < this.checkedArray.length; j++) {
+              if (item[keys[i]] &&
+                item[keys[i]]
+                  .toString()
+                == this.checkedArray[j]) {
+                return true;
+              }
+            }
+          }
+        });
+        this.firstTimeOpenFlag = true;
+        this.column = this.partyList;
+      }
+      else if (this.firstTimeOpenFlag) {
+        const keys = Object.keys(this.partyList[0]);
+        const count = keys.length;
+        
+        this.partyList = this.partyList.filter(item => {
+          for (let i = 0; i < count; i++) {
+            for (let j = 0; j < this.checkedArray.length; j++) {
+              if (item[keys[i]] &&
+                item[keys[i]]
+                  .toString()
+                == this.checkedArray[j]) {
+                return true;
+              }
+            }
+          }
+        });
+        // this.column = this.partyList;
+      }
+
+    }
+    else if (value == true) {
+      if (!this.firstTimeOpenFlag) {
+        const keys = Object.keys(this.copyPartyList[0]);
+        const count = keys.length;
+        
+        this.partyList = this.copyPartyList.filter(item => {
+          for (let i = 0; i < count; i++) {
+            for (let j = 0; j < this.checkedArray.length; j++) {
+              if (item[keys[i]] &&
+                item[keys[i]]
+                  .toString()
+                == this.checkedArray[j]) {
+                return true;
+              }
+            }
+          }
+        });
+        this.firstTimeOpenFlag = true;
+        this.column = this.partyList;
+      }
+      else if (this.firstTimeOpenFlag) {
+        const keys = Object.keys(this.temp[0]);
+        const count = keys.length;
+        
+        this.partyList = this.temp.filter(item => {
+          for (let i = 0; i < count; i++) {
+            for (let j = 0; j < this.checkedArray.length; j++) {
+              if (item[keys[i]] &&
+                item[keys[i]]
+                  .toString()
+                == this.checkedArray[j]) {
+                return true;
+              }
+            }
+          }
+        });
+        this.column = this.partyList;
+      }
+    }
+  }
+  outside() {
+
+    this.filterDivFlag = false;
+
+  }
+
+
+
+  onChangeFilterNumberSettings(value: any) {
+
+    if (value == 1) {
+      this.selectedFilter2 = "Greater Than";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 2) {
+      this.selectedFilter2 = "Less Than";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 3) {
+      this.selectedFilter2 = "Equals";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 4) {
+      this.selectedFilter2 = "Not Equals";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+  }
+  onChangeFilterSettings(value: any) {
+
+    if (value == 1) {
+      this.selectedFilter1 = "Contains";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 2) {
+      this.selectedFilter1 = "Not Contains";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 3) {
+      this.selectedFilter1 = "Equals";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 4) {
+      this.selectedFilter1 = "Not Equals";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 5) {
+      this.selectedFilter1 = "Starts with";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+    else if (value == 6) {
+      this.selectedFilter1 = "Ends with";
+      this.filterWord = null;
+      this.columnFilter = this.columnFilter;
+      if (this.firstTimeOpenFlag) {
+        this.partyList = this.column;
+      }
+      else if (!this.firstTimeOpenFlag) {
+        this.partyList = this.copyPartyList;
+      }
+    }
+
+  }
+
+
+  clear() {
+
+    this.partyList = this.copyPartyList;
+    this.filterWord = null;
+    this.columnFilter = [];
+    this.column = [];
+    this.tempGlobal = [];
+    this.temp = [];
+    this.filterDivFlag = false;
+  }
 }
+

@@ -31,19 +31,29 @@
                 <div *ngIf="filterDivFlag" class="ng-filter-main-popup">
 
                     <div class="popup-ng">
-                        <div class="popup-header text-center">
+                        <div class="popup-header text-center" (click)="outside()"y>
                             <nb-icon icon="funnel-outline" class="nb-icon-fil"></nb-icon>
                         </div>
                         <div class="popup-body">
                             <div class="section-1-popup">
-                                <ng-select appendTo="body" class="popup-select" placeholder="Select Filter" (change)="onChangeFilterSettings($event)" [(ngModel)]="selectedFilter1">
-                                    <ng-option [value]="1">Conatins</ng-option>
-                                    <ng-option [value]="2">Not Contains</ng-option>
-                                    <ng-option [value]="3">Equals</ng-option>
-                                    <ng-option [value]="4">Not Equals</ng-option>
-                                    <ng-option [value]="5">Starts With</ng-option>
-                                    <ng-option [value]="6">Ends With</ng-option>
-                                </ng-select>
+                                <ng-container *ngIf="stringFlag">
+                                    <ng-select  appendTo="body" class="popup-select" placeholder="Select Filter" (change)="onChangeFilterSettings($event)" [(ngModel)]="selectedFilter1">
+                                        <ng-option [value]="1">Conatins</ng-option>
+                                        <ng-option [value]="2">Not Contains</ng-option>
+                                        <ng-option [value]="3">Equals</ng-option>
+                                        <ng-option [value]="4">Not Equals</ng-option>
+                                        <ng-option [value]="5">Starts With</ng-option>
+                                        <ng-option [value]="6">Ends With</ng-option>
+                                    </ng-select>
+                                </ng-container>
+                                <ng-container *ngIf="numberFlag">
+                                    <ng-select  appendTo="body" class="popup-select" placeholder="Select Filter" (change)="onChangeFilterNumberSettings($event)" [(ngModel)]="selectedFilter2">
+                                        <ng-option [value]="1">Greater Than</ng-option>
+                                        <ng-option [value]="2">Less Than</ng-option>
+                                        <ng-option [value]="3">Equals</ng-option>
+                                        <ng-option [value]="4">Not Equals</ng-option>
+                                    </ng-select>
+                                </ng-container>
 
                                 <div class="filter-input">
                                     <input type="text" class="form-control" placeholder="Filter..." (keyup)="keyUpFilter($event.target.value)" [(ngModel)]="filterWord">
@@ -51,7 +61,7 @@
 
                                 <div class="fil-border-top"></div>
 
-                                <div *ngIf="filterAndOrFlag">
+                                <!-- <div *ngIf="filterAndOrFlag">
                                     <div class="radio-popup">
                                         <div class="rd-1">
                                             <input type="radio" id="and" name="select" class="radio-btn"><label for="and">AND</label>
@@ -74,7 +84,7 @@
                                     <div class="filter-input">
                                         <input type="text" class="form-control" placeholder="Filter...">
                                     </div>
-                                </div>
+                                </div> -->
                                 
                             </div>
 
@@ -87,15 +97,18 @@
                             </div>
                             <div class="list-popup">
                                 <ul class="list-type-none"  >
-                                    <li *ngFor="let list of filterListDiv; let i = index" class="name">
-                                        <input type="checkbox" (change)="checked($event.target.name,i)" class="in-checkbox selector" name="{{list}}" checked>{{list}}
+                                    <li *ngFor="let list of columnFilter; let i = index" class="name">
+                                        <input type="checkbox" (change)="checked($event.target.checked,i)" class="in-checkbox selector" name="{{list}}" checked>{{list}}
                                     </li>
                                     
                                 </ul>
                             </div>
-                            <div>
+                            <div class="col-md-12">
                                 <button (click)="outside()">
                                     OK
+                                </button>
+                                <button (click)="clear()">
+                                    Clear All
                                 </button>
                             </div>
                         </div>
