@@ -28,6 +28,7 @@ import { filter, map } from 'rxjs/operators';
 export class JetPlanningComponent implements OnInit {
   public sendBatchId:string;
   public sendSotckId:number;
+  public sendControlId:number;
   public changeStatusShow:boolean = false;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
@@ -116,9 +117,11 @@ export class JetPlanningComponent implements OnInit {
     this.changeStatusShow = true;
     const modalRef = this.modalService.open(ShadeWithBatchComponent);
     modalRef.componentInstance.statusChange = this.changeStatusShow;
+    modalRef.componentInstance.ctrlId = this.sendControlId;
+    modalRef.componentInstance.productionId = this.sendSotckId;
     modalRef.result.then((result) => {
       if (result) {
-        //this.dyeingProcessSteps[step.sequence - 1].processType = result.name;
+        this.getJetData();
       }
     });
   }
@@ -128,14 +131,14 @@ export class JetPlanningComponent implements OnInit {
     //on click set batchId stockId to get print-slip data 
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
+    this.sendControlId = index.controlId;
   }
 
-
-  
   getCurrentId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
   }
+
   getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
@@ -371,6 +374,7 @@ export class JetPlanningComponent implements OnInit {
   
 
   getJetData() {
+    this.jet = [];
     this.loading = true;
     this.jetService.getAllJetData().subscribe(
       (data) => {
