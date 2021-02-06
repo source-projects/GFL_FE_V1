@@ -59,7 +59,7 @@
                                
                                 <ng-select #tableItemType="ngModel"
                                 name='tableSupplierItemType{{rowIndex}}' [(ngModel)]="row.itemType" required
-                                (keyup)="onKeyUp($event,rowIndex,1,'itemType')" [id]="'supplierList'+rowIndex+'-1'"
+                                 [id]="'supplierList'+rowIndex+'-1'"
                                 [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name"
                                 bindValue="id" appendTo="body" class="ng-select-br-none">
                                     <ng-option value="Color">Color</ng-option>
@@ -97,7 +97,7 @@
                             </ng-template>
                         </ngx-datatable-column>
 
-                        <ngx-datatable-column name="Gst Rate" prop="gstRate" [sortable]="false" [width]="300">
+                        <ngx-datatable-column name="Rate With GST" prop="gstRate" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                 <input class="tableForm line-height-subtable" type="number" #tableGst1="ngModel" name='tableGst{{rowIndex}}'
                                     [(ngModel)]="row.gstRate" [id]="'supplierList'+rowIndex+'-4'" readonly>

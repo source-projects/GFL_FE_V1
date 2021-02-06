@@ -92,7 +92,7 @@
                                             {{s.itemName}}
                                         </option>
                                     </select> -->
-                                    <ng-select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)" appendTo="body"
+                                    <ng-select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)" appendTo="body"
                                         class="ng-select-br-none">
                                         <ng-option *ngFor="let s of supplierListRate" [value]="s.id">
                                             {{s.itemName}}</ng-option>
