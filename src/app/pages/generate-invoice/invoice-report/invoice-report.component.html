@@ -7,58 +7,101 @@
     <nb-card-body>
         <form #invoiceForm="ngForm">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>Master</label>
-                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required #userHeadId1="ngModel"
-                            (change)=" null" placeholder="Select Master" class="required-error-dropdown">
-                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.name}}</ng-option>
+                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required
+                            #userHeadId1="ngModel" (change)=" null" placeholder="Select Master"
+                            class="required-error-dropdown" appendTo="body">
+                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.firstName}}
+                                {{head.lastName}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>Party</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required #partyId1="ngModel"
-                            (change)="null" placeholder="Select Party" class="required-error-dropdown">
+                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required
+                            #partyId1="ngModel" (change)="null" placeholder="Select Party"
+                            class="required-error-dropdown" appendTo="body">
                             <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
+                    </div>
+                </div>
 
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>From date:</label>
+                        <input class="form-control" name="fromDate" [max]="maxDate"
+                            [(ngModel)]="invoiceReportRequest.from" style="width: 100%;height: 100%;"
+                            [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1" placeholder="Select Date">
+                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
+                        </owl-date-time>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>To date:</label>
+                        <input class="form-control" name="toDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.to"
+                            style="width: 100%;height: 100%;" [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1"
+                            placeholder="Select Date">
+                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtTo1>
+                        </owl-date-time>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                            style="margin-right:20px" (click)="getShortReport()" [disabled]="disableButton">Get
+                            Report</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                            style="margin-right:20px" (click)="getDetailedReport()" [disabled]="disableButton">Get
+                            Detailed
+                            Report</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Batch Id -->
-            <!-- <div class="row">
-                            <div class="col-md-4">
-                             <div class="form-group">
-                                 <label class="required">Batch Id</label>
-                                 <ng-select name="batchId" [(ngModel)]='invoiceValues.batchId' required #batchId1="ngModel"
-                                     [ngClass]="{'is-invalid': (batchId1.invalid)&&(formSubmitted || batchId1.touched)}"
-                                     (change)="getMtrList($event)" placeholder="Batch Id" class="required-error-dropdown">
-                                     <ng-option *ngFor="let q of batch" [value]="q.batchId">{{q.batchId}}</ng-option>
-                                 </ng-select>
-                                 <div class="required-class" *ngIf="(formSubmitted && batchId1.invalid) || (batchId1.invalid && batchId1.touched)">
-                                     <span>Batch Id is required</span>
-                                 </div>
-                             </div>
-                         </div>
-                         </div> -->
-            <!-- <ngx-datatable [rows]="batch"  class="material" [headerHeight]="31"
-                                  [footerHeight]="31" [selectionType]="'checkbox'"  (select)="onSelect($event)">
-                                  <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" ></ngx-datatable-column>
-                                  <ngx-datatable-column name="Contro Id" prop="controlId"></ngx-datatable-column>
-                                  <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
-                                  <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
-                                  <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
-                                  <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
-                                </ngx-datatable> -->
-            <div class="row">
-                <div class="col-md-12 mobile-btn-center text-btn-right">
-                    <!-- <div class="padding-bt-tp">
-                                     <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                     (click)="addInvoice(invoiceForm)">Generate Invoice</button>
-                                </div> -->
+            <div *ngIf="shortReport && shortReport.length > 0" style="margin-top: 50px;" id="shortReport">
+                <div *ngFor="let invoice of shortReport">
+                    Invoice No: {{invoice.invoiceNo}}
+                    Party: {{invoice.partyName}}
+                    Master: {{invoice.headName}}
+                    Total Mtr: {{invoice.totalBatchMtr}}
+                    Total Finish Mtr: {{invoice.totalFinishMtr}}
+                    Total Amount: {{invoice.amt}}
+                </div>
+            </div>
+
+            <div class="container" *ngIf="detailedReport && detailedReport.length > 0"
+                style="margin-top: 50px;margin-left:50px" id="detailedReport">
+                <div *ngFor="let invoice of detailedReport">
+                    <div class="row">
+                        <div class="col-md-3" style="width: 33%;" class="font-styles">
+                            <h3> Master:</h3> {{invoice.headName}}
+                        </div>
+                        <div class="col-md-3" style="width: 33%;" class="font-styles">
+                            <h3> Party:</h3> {{invoice.partyName}}
+                        </div>
+                        <div class="col-md-3" style="width: 33%;" class="font-styles">
+                            <h3>Invoice No:</h3> {{invoice.invoiceNo}}
+                        </div>
+                    </div>
+                    <br><br>
+                    <h3>Quality List</h3>
+                    <div *ngFor="let quality of invoice.qualityList">
+
+                        BatchId: {{quality.batchId}}
+                        Quality ID: {{quality.qulityId}}
+                        Total Meter: {{quality.totalMtr}}
+                        Total Finished Meter: {{quality.totalFinishMtr}}
+                        Rate: {{quality.rate}}
+                        Total Amount: {{quality.amt}}
+                    </div>
                 </div>
             </div>
         </form>

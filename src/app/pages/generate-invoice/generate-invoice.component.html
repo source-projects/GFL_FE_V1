@@ -1,12 +1,15 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <div class="col-md-2 col-5 mobile-btn desktop-btn">
+            <div class="col-md-3 col-5 mobile-btn desktop-btn">
                 <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list txt-ov-elips">Generate
                     Invoice</button>
             </div>
-            <div class="col-md-9 col-4">
+            <div class="col-md-7 col-4">
                 <h2 class="nb-text txt-ov-elips">Generate Invoice</h2>
+            </div>
+            <div class="col-md-1 col-3 mobile-btn desktop-btn dek-jus">
+                <button style="float:right;" class="btn btn-primary btn-md btn-list" (click)="goToReport()">REPORT</button>
             </div>
             <div class="col-md-1 col-3 mobile-btn desktop-btn dek-jus">
                 <button style="float:right;" class="btn btn-primary btn-md btn-list" (click)="print()">PRINT</button>
