@@ -84,7 +84,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   getAllStockBatchData() {
-    this.programService.getAllStock().subscribe(
+    this.programService.getAllStockWithourProductionPlan().subscribe(
       (data) => {
         if (data["success"]) this.stockData = data["data"];
       },
@@ -474,10 +474,6 @@ export class AddEditProgramComponent implements OnInit {
           });
         }
       }); 
-  // if(this.programValues.qualityId == null || this.programValues.partyId == null){
-  //     this.qualityList=this.list;
-  //   }
-  //   console.log(this.list);
       if (this.batchData != undefined) {
         this.batchData.forEach((element) => {
           if (id == element.batchId) {
@@ -492,18 +488,20 @@ export class AddEditProgramComponent implements OnInit {
         this.setQualityTypeForStockBatch();
       }
 
-      //setQuality party info
-      
-
     } else if(value == "stock") {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
         let stockId = element.id?element.id:element.stockId
         if (id == stockId) {
           let qty:number = 0;
-          element.batchData.forEach(e => {
-            qty += e.wt
-          });
+          if(element.stockId){
+            qty = element.qty;
+          }else{
+            element.batchData.forEach(e => {
+              qty += e.wt
+            });
+          }
+          
           this.programValues.programRecords[rowIndex].quantity = Number(qty.toFixed(2));
           this.batchData.forEach(element => {
             if(id==element.controlId){
@@ -516,12 +514,8 @@ export class AddEditProgramComponent implements OnInit {
           this.setQualityTypeForStockBatch();  
         }
       });
-      //setQuality party info
+     
     }
-    // if(this.programValues.qualityId == null || this.programValues.partyId == null){
-    //   this.qualityList=this.list;
-    // }
-    // console.log(this.list);
   }
 
   setQualityTypeForStockBatch(){

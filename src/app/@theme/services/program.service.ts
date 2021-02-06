@@ -47,6 +47,10 @@ export class ProgramService {
         return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/all/all/0');
     }
 
+    getAllStockWithourProductionPlan(){
+        return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/getAllStockWithoutPlan');
+    }
+
     getAllBatch(){
         return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/batch/all');
     }

@@ -28,6 +28,8 @@ import { filter, map } from 'rxjs/operators';
 export class JetPlanningComponent implements OnInit {
   public sendBatchId:string;
   public sendSotckId:number;
+  public sendControlId:number;
+  public changeStatusShow:boolean = false;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
   items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
@@ -84,17 +86,13 @@ export class JetPlanningComponent implements OnInit {
     private shadeService: ShadeService,
     private menuService: NbMenuService
 
-  ) {
-
-    
-   }
+  ) { }
 
   ngOnInit(): void {
 
     this.currentProductionId = this._route.snapshot.paramMap.get("id");
     if (this.currentProductionId != null) this.batchSelected(this.currentProductionId);
 
-   
     this.getCurrentId();
     this.getPartyList();
     this.getQualityList();
@@ -109,9 +107,23 @@ export class JetPlanningComponent implements OnInit {
       .subscribe(title => {
         if(title === 'Print') this.generateSlip(true);
         else if(title === 'Edit And Print') this.generateSlip(false);
+        else if(title === 'Change Status') this.changeStatus();
       });
     
   
+  }
+
+  changeStatus(){
+    this.changeStatusShow = true;
+    const modalRef = this.modalService.open(ShadeWithBatchComponent);
+    modalRef.componentInstance.statusChange = this.changeStatusShow;
+    modalRef.componentInstance.ctrlId = this.sendControlId;
+    modalRef.componentInstance.productionId = this.sendSotckId;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.getJetData();
+      }
+    });
   }
  
 
@@ -119,14 +131,14 @@ export class JetPlanningComponent implements OnInit {
     //on click set batchId stockId to get print-slip data 
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
+    this.sendControlId = index.controlId;
   }
 
-
-  
   getCurrentId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
   }
+
   getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
@@ -362,14 +374,12 @@ export class JetPlanningComponent implements OnInit {
   
 
   getJetData() {
+    this.jet = [];
     this.loading = true;
     this.jetService.getAllJetData().subscribe(
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
-          // this.jet.forEach(ele => {
-          //   this.connectedTo.push(ele)
-          // })
         }
 
         else {
