@@ -376,9 +376,6 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
-          // this.jet.forEach(ele => {
-          //   this.connectedTo.push(ele)
-          // })
         }
 
         else {
