@@ -102,6 +102,7 @@ export class AddShadeComponent implements OnInit {
 
           // this.productionPlanningService.addToJetClicked.emit(this.productionId);
           this.activeModal.close(true);
+
           this.router.navigate(['/pages/jet-planning/'+this.productionId]);
 
 

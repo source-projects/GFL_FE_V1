@@ -75,12 +75,10 @@ export class ProductionPlanningComponent implements OnInit {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -101,16 +99,12 @@ export class ProductionPlanningComponent implements OnInit {
             });
           }
           this.batchListByParty = this.batchListParty;
-
           this.loading = false;
         } else {
-          this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-
         this.loading = false;
       }
     );
@@ -121,7 +115,6 @@ export class ProductionPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
-
         }
       },
       (error) => {
@@ -174,7 +167,6 @@ export class ProductionPlanningComponent implements OnInit {
 
                 this.loading = false;
               } else {
-                this.toastr.error(data["msg"]);
                 this.allBatchList = [];
                 this.loading = false;
               }
@@ -231,7 +223,6 @@ export class ProductionPlanningComponent implements OnInit {
 
                 this.loading = false;
               } else {
-                this.toastr.error(data["msg"]);
                 this.allBatchList = [];
                 this.loading = false;
               }
@@ -242,41 +233,7 @@ export class ProductionPlanningComponent implements OnInit {
             }
           );
       }
-      // if (this.productionPlanning.qualityEntryId && this.productionPlanning.partyId != null) {
-      //   this.stockBatchService
-      //     .getBatchById(this.p_id, this.productionPlanning.qualityEntryId)
-      //     .subscribe(
-      //       (data) => {
-      //         if (data["success"]) {
-      //           this.allBatchList = data["data"];
-
-      //           this.allBatchList.forEach(element => {
-      //             if (element.productionPlanned == false) {
-      //               if (this.allBatchList.includes(element)) {
-      //                 this.batchList = this.batchList;
-      //               }
-      //               else {
-      //                 this.batchList.push(element);
-      //               }
-      //             }
-      //           });
-      //           this.allBatchList = this.batchList;
-
-      //           // console.log(this.batchList);
-      //           this.loading = false;
-      //         }
-      //         else {
-      //           this.toastr.error(data["msg"]);
-      //           this.loading = false;
-      //         }
-      //       }
-      //       ,
-      //       (error) => {
-      //         // this.toastr.error(errorData.Serever_Error);
-      //         this.loading = false;
-      //       }
-      //     );
-      // }
+     
     }
   }
 
@@ -306,8 +263,6 @@ export class ProductionPlanningComponent implements OnInit {
         party = e.partyId;
         quality = e.qualityEntryId;
       }
-
-
     });
 
     const modalRef = this.modalService.open(AddShadeComponent);
@@ -322,16 +277,13 @@ export class ProductionPlanningComponent implements OnInit {
     }
     modalRef.componentInstance.batch = batch_id;
     modalRef.componentInstance.batchControl = b_controlId;
-    modalRef.result.then(
-      (result) => {
-        // this.getAllBatchData();
-        // this.productionPlanning.partyId = null;
-        // this.productionPlanning.qualityId = null;
-        this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['/pages/production-planning']);
-        });
-      }
-    )
+    // modalRef.result.then(
+    //   (result) => {
+    //     this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+    //       //this.route.navigate(['/pages/production-planning']);
+    //     });
+    //   }
+    // )
   }
 }
 
