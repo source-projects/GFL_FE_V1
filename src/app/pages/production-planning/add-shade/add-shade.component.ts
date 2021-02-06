@@ -4,6 +4,9 @@ import {ShadeService} from 'app/@theme/services/shade.service';
 import {ProductionPlanningService} from 'app/@theme/services/production-planning.service';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from "app/@theme/json/error.json";
+import { ShadeWithBatchComponent } from '../shade-with-batch/shade-with-batch.component';
+import { JetPlanningService } from 'app/@theme/services/jet-planning.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-shade',
@@ -17,10 +20,15 @@ export class AddShadeComponent implements OnInit {
   @Input('batch') batch:any;
   @Input('batchControl') batchControl:any;
   @Output() action = new EventEmitter();
+  @Output() addToJetClicked = new EventEmitter();
   shadeList:any[];
   public loading = false;
   shadeId:Number;
   formSubmitted: boolean = false;
+  productionList:any[]=[];
+  jetList:any[]=[];
+  productionId:any;
+  addToJetFlag:boolean = false;
   public errorData: any = (errorData as any).default;
 
    productionData={
@@ -29,15 +37,15 @@ export class AddShadeComponent implements OnInit {
     qualityEntryId:null,
     shadeId:null,
     stockId:null,
-    id:null
+   // id:null
   }
   constructor(    private _NgbActiveModal: NgbActiveModal,   
     private shadeService: ShadeService ,
     private productionPlanningService: ProductionPlanningService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-
-
+    private jetPlanningService: JetPlanningService,
+    private router:Router
     ) { }
 
   ngOnInit(): void {
@@ -62,7 +70,6 @@ export class AddShadeComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.shadeList = data["data"];
-          console.log(this.shadeList);
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -82,14 +89,23 @@ export class AddShadeComponent implements OnInit {
     this.productionData.qualityEntryId=this.quality;
     this.productionData.shadeId=this.shadeId;
     this.productionData.stockId=this.batchControl;
+
     this.productionPlanningService
     .saveProductionPlan(this.productionData)
     .subscribe(
       (data) => {
         if (data["success"]) {
-          this.action.emit(true);
+          this.productionId = data["data"];
+          if(!this.addToJetFlag){
+            this.toastr.success(errorData.Add_Success);
+          }
+
+          // this.productionPlanningService.addToJetClicked.emit(this.productionId);
           this.activeModal.close(true);
-          this.toastr.success(errorData.Add_Success);
+          this.router.navigate(['/pages/jet-planning/'+this.productionId]);
+
+
+          //this.action.emit(true);
 
          // this.modalService.close(true);
           //this.route.navigate(["/pages/program"]);
@@ -100,6 +116,12 @@ export class AddShadeComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  addToJetClick(){
+    //this.productionPlanningService.addToJetClicked.emit("abc");
+    this.addToJetFlag = true;
+   this.onOkClick();
   }
 
 }

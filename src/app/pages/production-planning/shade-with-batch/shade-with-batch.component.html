@@ -1,15 +1,100 @@
-<div class="modal-header nb-header">
-    <h4 class="modal-title nb-text">Production List</h4>
-    <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true" class="close-icon">&times;</span>
-    </button>
+<div *ngIf="!statusChange">
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Production List</h4>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #myForm="ngForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Select Jet: </label>
+                        <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel" (change)="jetSelected($event)"
+                            [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}"
+                            placeholder="Jet Number" class="required-error-dropdown">
+                            <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
+                            </ng-option>
+                        </ng-select>
+                        <div class="required-class"
+                            *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
+                            <span>Jet number is required</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row" *ngIf="jetSelectedFlag">
+                <div class="col-md-12">
+                    <div class="form-group mb-0">
+                        <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                            class="example-list main-table-drag jet-plan">
+                            <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData"
+                                cdkDrag>
+                                <button style="color:white;border: none;background: none;"
+                                    nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click">
+                                    {{jetData.batchId}}
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button type="button" (click)="onClick(myForm)" class="btn btn-primary btn-sm btn-design"
+                            style="margin-right:20px">Ok</button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-<div class="modal-body">
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list shade-with-batch-design"  (click)="onClick($event)" id="" >
-        <div class="example-box jet-popup-box production-list-popup" *ngFor="let s of allShade" cdkDrag> 
-           
-        
-            <div class="jet-popup-display"  ><span class="prouction-jet-number">{{s.batchId}}</span><input class="form-control input-jet"  [style.background]="s.colorTone" disabled ></div>
+<div *ngIf="statusChange">
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Change status</h4>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="required">Select Status: </label>
+                    <ng-select name="jet" [(ngModel)]='jetStatus' required #jetStatus1="ngModel"
+                        (change)="jetSelected($event)"
+                        [ngClass]="{'is-invalid': (jetStatus1.invalid)&&(formSubmitted || jetStatus1.touched)}"
+                        placeholder="Status" class="required-error-dropdown">
+                        <ng-option *ngFor="let s of status" [value]="s.status">{{s.status}}
+                        </ng-option>
+                    </ng-select>
+                    <div class="required-class"
+                        *ngIf="(formSubmitted && jetStatus1.invalid) || (jetStatus1.invalid && jetStatus1.touched)">
+                        <span>Jet status is required</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mobile-btn-center text-btn-right">
+                <div class="padding-bt-tp">
+                    <button type="button" (click)="changeStatus()" class="btn btn-primary btn-sm btn-design"
+                        style="margin-right:20px">Save</button>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

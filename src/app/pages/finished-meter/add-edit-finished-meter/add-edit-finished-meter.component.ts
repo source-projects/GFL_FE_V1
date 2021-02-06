@@ -62,10 +62,10 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
-        } else this.toastr.error(data["msg"]);
+        } //else this.toastr.error(data["msg"]);
       },
       (error) => {
-        this.toastr.error(errorData.Internal_Error);
+        //this.toastr.error(errorData.Internal_Error);
       }
     );
   }
@@ -76,10 +76,10 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
-        } else this.toastr.error(data["msg"]);
+        } //else this.toastr.error(data["msg"]);
       },
       (error) => {
-        this.toastr.error(errorData.Internal_Error);
+        //this.toastr.error(errorData.Internal_Error);
       }
     );
   }
@@ -90,10 +90,10 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.masterList = data["data"];
-        } else this.toastr.error(data["msg"]);
+        } //else this.toastr.error(data["msg"]);
       },
       (error) => {
-        this.toastr.error(errorData.Internal_Error);
+        //this.toastr.error(errorData.Internal_Error);
       }
     );
   }

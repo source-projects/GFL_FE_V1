@@ -49,15 +49,17 @@ export class AddEditQualityComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getData();
-    this.getUpdateData();
     this.getPartyList();
+    await this.getUpdateData();
+    
   }
+
   resetFlag($event){
     this.qulityIdExist=false;
-
   }
+  
   checkQulityId() {
     this.qualityService.getQulityIdExist(this.addEditQualityForm.get("qualityId").value).subscribe(
       data=>{
@@ -107,6 +109,8 @@ export class AddEditQualityComponent implements OnInit {
             createdBy: this.qualityList.createdBy,
             id: this.qualityList.id
           });
+          this.setPartyCode();          
+      
           this.loading = false;
         },
         (error) => {
@@ -137,15 +141,12 @@ export class AddEditQualityComponent implements OnInit {
     );
   }
   setPartyCode(){
-    if(this.addEditQualityForm.get('partyId').value!=null){
-      this.party.forEach(element => {
-        if(this.addEditQualityForm.get('partyId').value==element.id){
-          this.addEditQualityForm.patchValue({
-            partyCode:element.partyCode,
-          })
-        }
-      });
-    }
+    //setPartyCode...
+    let p = this.party.filter(party1 => party1.id === this.addEditQualityForm.get('partyId').value);
+    this.addEditQualityForm.patchValue({
+      partyCode:  p[0].partyCode
+    })
+    
   }
 
   addQuality() {

@@ -85,12 +85,19 @@ export class GenerateInvoiceComponent implements OnInit {
 
     const queryParams: any = {};
     const arrayOfValues = this.finalcheckedrows;
-    queryParams.myArray = JSON.stringify(arrayOfValues);
+    if(arrayOfValues.length != 0){
+      queryParams.myArray = JSON.stringify(arrayOfValues);
     const navigationExtras: NavigationExtras = {
       queryParams
     };
 
     this.router.navigate(['/pages/generate_invoice/print/'], navigationExtras);
+    }
+    
+  }
+
+  goToReport(){
+    this.router.navigate(['/pages/generate_invoice/report']);
   }
 
   onSelect(value: any) {
@@ -101,6 +108,6 @@ export class GenerateInvoiceComponent implements OnInit {
       this.finalcheckedrows.push(ele.invoiceNo)
     })
     // this.finalcheckedrows = arr;
-    console.log(this.finalcheckedrows)
+    
   }
 }

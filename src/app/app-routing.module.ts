@@ -146,6 +146,12 @@ export const routes: Routes = [
         data: { PermissionName: ['view','view group','view all']}
       },
       {
+        path: 'issue-color-box',
+        loadChildren: () => import('./pages/issue-color-box/issue-color-box.module')
+          .then(m => m.IssueColorBoxModule),
+       
+      },
+      {
         path: 'production-planning',
         loadChildren: () => import('./pages/production-planning/production-planning.module')
           .then(m => m.ProductionPlanningModule),

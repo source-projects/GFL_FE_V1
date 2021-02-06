@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Stock In Type</label>
-                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control" [(ngModel)]='stockBatch.stockInType' required readonly>
+                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]='stockBatch.stockInType' required readonly>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Party Name</label>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill Date:</label>
-                            <input name="billDate" class="form-control" #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
+                            <input name="billDate" class="form-control size-small" fieldsize="small" nbinput #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
 
                             <div class="required-class" *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
@@ -79,7 +79,8 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
-                            <input type="text" name="chlNo" class="form-control" #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}" min="0">
+                            <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
+                                min="0">
                             <div class="invalid-feedback" *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
                                 <span>Challan no. is required and should not contain special characters</span>
                             </div>
@@ -91,7 +92,7 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Challan Date:</label>
-                            <input name="chlDate" class="form-control" #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
+                            <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
 
                             <div class="required-class" *ngIf="(formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)">
@@ -100,7 +101,7 @@
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label>Unit:</label>
-                            <input type="text" name="unit" class="form-control" readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
+                            <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
 
                         </div>
                         <div class="col-md-4">
@@ -114,14 +115,15 @@
                         <h2 class="batch-heading display-inline">BATCH</h2>
 
                     </header>
-                    <div *ngIf="stockDataValues[0].batchId != '' || addFlag || zeroValueBatch" class="row">
+                    <div class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i" class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-8">
                                             <label style="float: left;">Batch No</label>
-                                            <input [attr.id]="'batchNo'+i" type="number" [(ngModel)]='block.batchId' [disabled]="flag && production_flag[i]" class="form-control" name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
+                                            <input [attr.id]="'batchNo'+i" required type="number" [(ngModel)]='block.batchId' [disabled]="flag && production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
+                                            
                                         </div>
                                         <div class="col-md-6 col-4">
                                             <nb-icon status="danger" style="float: right;margin-right: 10px;;" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="removeBatch(i);"></nb-icon>
@@ -161,16 +163,6 @@
                                                         </ng-template>
                                                     </ngx-datatable-column>
 
-                                                    <!-- <ngx-datatable-footer>
-                                                        <ng-template let-row="row"
-                                                          ngx-datatable-footer-template
-                                                          let-rowCount="rowCount">
-                                                          <div class="col-md-4">Total Mtr: {{row.totalMtr}}</div>
-                                                          <div class="col-md-4">Total Wt:  {{row.totalWt}}</div>
-                                                          <div class="col-md-4">Total gr-mtr: {{rowCount}}</div>
-                                                        </ng-template>
-                                                        </ngx-datatable-footer> -->
-
                                                 </ngx-datatable>
                                             </div>
                                         </div>
@@ -194,9 +186,9 @@
                         <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock" routerLink="/pages/stock-batch">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
-                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
-                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>

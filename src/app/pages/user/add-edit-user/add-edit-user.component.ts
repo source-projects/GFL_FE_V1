@@ -157,6 +157,7 @@ export class AddEditUserComponent implements OnInit {
   designationSelected(event){
     if(event == undefined){
       this.isMasterFlag=false;
+      
       this.user.isUserHead = false;
     }else{
       const found = this.desiList.find(element => element.designation == "Master");
@@ -164,7 +165,7 @@ export class AddEditUserComponent implements OnInit {
         //hide userHeadId fields.
         this.isMasterFlag = true;
         this.user.isUserHead = false;
-        this.user.userHeadId = 0;
+        this.user.userHeadId = Number(this.commonService.getUser().userId);
       }else{
         this.isMasterFlag = false;
       }
@@ -630,8 +631,7 @@ export class AddEditUserComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.user = data["data"];
-            this.user.designationId = data["data"].designationId.id
-            if (this.user.userHeadId != 0){
+            if (data['data'].designationId.designation != "Master" ){
               this.user.isUserHead = true;
               this.isMasterFlag = false;
             }
@@ -639,6 +639,8 @@ export class AddEditUserComponent implements OnInit {
               this.user.isUserHead = false;
               this.isMasterFlag = true;
             }
+            this.user.designationId = data["data"].designationId.id          
+            
             this.getCurrentCheckValue(this.user);
 
           } 
@@ -665,7 +667,7 @@ export class AddEditUserComponent implements OnInit {
       this.getCheckedItem();
       //this.user.designationId = this.user.designationId.id;
       if (!this.user.isUserHead)
-        this.user.userHeadId = 0;
+        this.user.userHeadId = this.commonService.getUser().userId;
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -704,7 +706,8 @@ export class AddEditUserComponent implements OnInit {
       let md5 = new Md5();
       this.user.password = String(md5.appendStr(this.user.password).end())
       this.user.createdBy = this.userId.userId;
-      if (!this.user.isUserHead) this.user.userHeadId = 0;
+      if (!this.user.isUserHead)
+      this.user.userHeadId = this.commonService.getUser().userId;
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {

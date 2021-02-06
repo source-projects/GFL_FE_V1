@@ -43,7 +43,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   deleteFlag = 0;
   validationCardRowIndex = 0;
-  flag = 1;
+  flag = 0;
 
   stockDataValues = [
     {
@@ -221,15 +221,11 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
             if (!this.stockBatch.batchData.length) {
-              this.zeroValueBatch = true;
+              //this.zeroValueBatch = true;
             }
             else {
-              this.stockBatch.batchData = _.sortBy(data["data"].batchData, [
-                function (o) {
-                  return o.batchId;
-                },
-              ]);
-              this.setStockDataValues();
+              this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
+              this.setStockDataValues1();
             }
 
           } else {
@@ -242,43 +238,23 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       );
   }
-  setStockDataValues() {
-    var prev = this.stockBatch.batchData[0].batchId;
-    let k = 0;
-    let i = 0;
-    this.stockDataValues[0].batchId = prev;
-    this.stockBatch.batchData.forEach((element) => {
-      if (prev == element.batchId) {
-        if (!this.stockDataValues[k])
-          this.stockDataValues.push({ batchId: 0, batchMW: [] });
-        if (!this.stockDataValues[k].batchMW[i])
-          this.stockDataValues[k].batchMW.push({ mtr: 0, wt: 0 });
-        this.stockDataValues[k].batchMW[i].mtr = element.mtr;
-        this.stockDataValues[k].batchMW[i].wt = element.wt;
-        i++;
-      } else {
-        i = 0;
-        ++k;
-        prev = element.batchId;
-        if (!this.stockDataValues[k])
-          this.stockDataValues.push({ batchId: 0, batchMW: [] });
-        this.stockDataValues[k].batchId = prev;
-        this.stockDataValues[k].batchMW.push({ mtr: 0, wt: 0 });
-        this.stockDataValues[k].batchMW[i].mtr = element.mtr;
-        this.stockDataValues[k].batchMW[i].wt = element.wt;
-        i++;
-      }
-      if (element.isProductionPlanned) {
-        this.production_flag[this.stockBatch.batchData.indexOf(element)] = 1;
-      } else {
-        this.production_flag[this.stockBatch.batchData.indexOf(element)] = 0;
-      }
-      //}else{f=false;}
-      // if(element.isProductionPlanned==true)
+  setStockDataValues1(){
+    let batchIDs = [...new Set(this.stockBatch.batchData.map(x => x.batchId))];
+    this.stockDataValues = [];
+    batchIDs.forEach((x)=>{
+      this.stockDataValues.push(new BatchCard(x));
     });
 
-    this.flag = 0;
+    this.stockDataValues.forEach((batch)=>{
+      this.stockBatch.batchData.forEach((x)=>{
+        if(x.batchId == batch.batchId){
+          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt));
+        }
+      })
+    });
   }
+
+  
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
       this.flag = 1;

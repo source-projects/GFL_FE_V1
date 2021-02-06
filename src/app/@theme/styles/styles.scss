@@ -316,6 +316,13 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 15px!important;
 }
 
+// .form-control {
+//     height: calc(1.5em + 8px + 2px);
+// }
+.nb-theme-default .size-small:not(.input-full-width) {
+    max-width: 100% !important;
+}
+
 .dr-txt,
 .cr-txt {
     padding: 0!important;
@@ -326,6 +333,7 @@ input[type=number]::-webkit-outer-spin-button {
 .btn-design:active {
     border-color: #aa3634 !important;
     background-color: #aa3634 !important;
+    transition: opacity 200ms cubic-bezier(0.35, 0, 0.25, 1), background-color 200ms cubic-bezier(0.35, 0, 0.25, 1);
 }
 
 .creditors-debitors {
@@ -1042,7 +1050,7 @@ input[type=number]::-webkit-outer-spin-button {
 .table-jet,
 .main-table-drag {
     width: 100% !important;
-    overflow-x: scroll !important;
+    // overflow-x: scroll !important;
 }
 
 .table-jet {
@@ -1126,6 +1134,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 
 .boiler-thermopack-tabheader .tabset li .tab-link {
@@ -1456,6 +1465,81 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: center;
     align-items: flex-end;
     right: 7px;
+}
+
+.jet-box,
+.jet-plan {
+    display: inline-block !important;
+}
+
+.jet-box {
+    padding: 8px 20px !important;
+}
+
+.jet-plan {
+    height: 94px;
+    overflow: auto !important;
+}
+
+// btn effect
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple:before {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+}
+
+.ripple:focus:before {
+    transition: all 0.5s ease-out;
+    opacity: 0;
+    width: 160px;
+    height: 160px;
+    margin-top: -80px;
+    margin-left: -80px;
+}
+
+// .button-base:hover {
+//     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+// }
+.button-base {
+    font-family: 'Roboto', sans-serif;
+    -webkit-appearance: none;
+    border: none;
+    text-transform: none;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #aa3634;
+    color: #fff;
+    vertical-align: middle;
+    border-radius: 3px;
+    line-height: 36px;
+    min-height: 36px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    min-width: 5.14em;
+    padding: 0 1em;
+    margin: 0 0.25em;
+    // box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+
+.button-base:focus {
+    outline: 0;
+}
+
+.tb-name {
+    border: 1px solid rgb(185, 185, 185);
+    padding: 5px 15px;
 }
 
 @media (max-width: 767px) {
