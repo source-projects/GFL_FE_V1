@@ -15,6 +15,11 @@ export class JetPlanningService {
   getAllJetData(){
     return this.httpClient.get(this.commonService.envUrl() + 'api/jet/getAllJetDetail');
   }
+
+  getAllStatuses(){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/jet/getJet/allStatusList');
+  }
+
   saveJetData(jetData){
     return this.httpClient.post(this.commonService.envUrl() + 'api/jet/addJetData',jetData);
   }

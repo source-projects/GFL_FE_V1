@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {ProductionPlanningService} from 'app/@theme/services/production-planning.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
@@ -17,11 +17,14 @@ allShade:any[];
 shade:any[];
 loading = false;
 public errorData: any = (errorData as any).default;
+@Input() statusChange:boolean;
+public status = [];
 jet:any;
 jetList:any[]=[];
 formSubmitted: boolean = false;
 jetSelectedFlag = false;
 selectedJetData:any[]=[];
+
 //batch:any;
 color:any;
   constructor(    
@@ -34,9 +37,24 @@ color:any;
     ) { }
 
   ngOnInit(): void {
-    this.getJetData();
-
+    
+    if(this.statusChange){
+      this.getAllStatus();
+    }else{
+      this.getJetData();
+    }
     //this.getAllBatchWithShade();
+  }
+
+  getAllStatus(){
+    this.jetService.getAllStatuses().subscribe(
+      data=>{
+        if(data['success']){
+          this.status = data['data'];
+        }
+      },error=>{
+      }
+    )
   }
 
   get activeModal() {

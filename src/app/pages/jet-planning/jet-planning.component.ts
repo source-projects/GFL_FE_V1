@@ -28,6 +28,7 @@ import { filter, map } from 'rxjs/operators';
 export class JetPlanningComponent implements OnInit {
   public sendBatchId:string;
   public sendSotckId:number;
+  public changeStatusShow:boolean = false;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
   items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
@@ -84,17 +85,13 @@ export class JetPlanningComponent implements OnInit {
     private shadeService: ShadeService,
     private menuService: NbMenuService
 
-  ) {
-
-    
-   }
+  ) { }
 
   ngOnInit(): void {
 
     this.currentProductionId = this._route.snapshot.paramMap.get("id");
     if (this.currentProductionId != null) this.batchSelected(this.currentProductionId);
 
-   
     this.getCurrentId();
     this.getPartyList();
     this.getQualityList();
@@ -109,9 +106,21 @@ export class JetPlanningComponent implements OnInit {
       .subscribe(title => {
         if(title === 'Print') this.generateSlip(true);
         else if(title === 'Edit And Print') this.generateSlip(false);
+        else if(title === 'Change Status') this.changeStatus();
       });
     
   
+  }
+
+  changeStatus(){
+    this.changeStatusShow = true;
+    const modalRef = this.modalService.open(ShadeWithBatchComponent);
+    modalRef.componentInstance.statusChange = this.changeStatusShow;
+    modalRef.result.then((result) => {
+      if (result) {
+        //this.dyeingProcessSteps[step.sequence - 1].processType = result.name;
+      }
+    });
   }
  
 
