@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { NgxLoadingModule } from 'ngx-loading';
 import { NgxCheckboxModule } from 'ngx-checkbox';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {
@@ -83,7 +84,7 @@ const NB_MODULES = [
   declarations: [    ExportPopupComponent , WarningPopupComponent
   ],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
-    OwlNativeDateTimeModule, NgbModule,NgxCheckboxModule
+    OwlNativeDateTimeModule, NgbModule,NgxCheckboxModule, AgGridModule
   ],
 
   exports: [...NB_MODULES ,NgxLoadingModule,OwlDateTimeModule,
