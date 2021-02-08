@@ -1540,6 +1540,11 @@ input[type=number]::-webkit-outer-spin-button {
     outline: 0;
 }
 
+.tb-name {
+    border: 1px solid rgb(185, 185, 185);
+    padding: 5px 15px;
+}
+
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
         padding: 15px 0!important;
