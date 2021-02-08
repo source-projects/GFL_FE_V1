@@ -26,6 +26,7 @@ import {
 } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
+import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -52,6 +53,12 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
       closeButton: true,
       preventDuplicates: true,
     }),
+  ],
+  providers:[
+    {  provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+   },
   ],
 
   bootstrap: [AppComponent],

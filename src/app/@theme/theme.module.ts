@@ -39,6 +39,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
+import { FilterSelectedShadePipe } from './pipes/filter-selected-shade.pipe';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -69,7 +70,8 @@ const PIPES = [
   TimingPipe,
   NumberWithCommasPipe,
   CounterPipe,
-  FilterSelectedProcessPipe
+  FilterSelectedProcessPipe,
+  FilterSelectedShadePipe
 ];
 
 @NgModule({

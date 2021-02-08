@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label class="required">User Head List</label>
                             <select name="userHeadId" class="form-control" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
-                <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}
+                <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.firstName}} {{head.lastName}}
                 </option>
               </select>
                             <div class="invalid-feedback" *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">

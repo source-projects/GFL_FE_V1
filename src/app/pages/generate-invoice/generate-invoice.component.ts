@@ -96,6 +96,10 @@ export class GenerateInvoiceComponent implements OnInit {
     
   }
 
+  goToReport(){
+    this.router.navigate(['/pages/generate_invoice/report']);
+  }
+
   onSelect(value: any) {
 
     this.finalcheckedrows = [];

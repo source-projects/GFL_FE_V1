@@ -70,7 +70,6 @@ export class AddEditSupplierRateComponent implements OnInit {
     private supplierService: SupplierService,
     private router: Router,
     private _route: ActivatedRoute,
-    private toastrService: NbToastrService,
     private toastr: ToastrService
   ) {}
 
@@ -151,8 +150,8 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.remark;
       delete this.formValues.paymentTerms;
       delete this.formValues.updatedBy;
-      delete this.formValues.supplierRates[0].discountedRate;
-      delete this.formValues.supplierRates[0].gstRate;
+      //delete this.formValues.supplierRates[0].discountedRate;
+      //delete this.formValues.supplierRates[0].gstRate;
       this.formValues.supplierRates.forEach((e) => {
         e.createdBy = this.user.userId;
         e.userHeadId = this.userHead.userHeadId;
@@ -188,8 +187,8 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.paymentTerms;
       delete this.formValues.createdBy;
       this.formValues.supplierRates.forEach((e) => {
-        delete e.discountedRate;
-        delete e.gstRate;
+        //delete e.discountedRate;
+        //delete e.gstRate;
         e.updatedBy = this.user.userId;
         e.supplierId = this.formValues.supplierId;
       });
