@@ -35,9 +35,6 @@ export class JwtTokenService {
       case 'stockBatch':
         return this.tokens.permissions.sb;
 
-      case 'process':
-        return this.tokens.permissions.pr;
-
       case 'user':
         return this.tokens.permissions.u;
 
@@ -56,11 +53,29 @@ export class JwtTokenService {
       case 'jetPlanning':
         return this.tokens.permissions.jp;
 
-      case 'processPlanning':
+      case 'productionPlanning':
         return this.tokens.permissions.pp;
 
       case 'supplierRate':
         return this.tokens.permissions.sr;
+
+      case 'dyeingProcess':
+        return this.tokens.permissions.pr;
+
+      case 'paymentTerms':
+        return this.tokens.permissions.pt;
+
+      case 'dispatch':
+        return this.tokens.permissions.d;  
+      
+      case 'batch':
+        return this.tokens.permissions.bf;
+
+      case 'machine':
+        return this.tokens.permissions.ip;
+      
+      case 'waterJet':
+        return this.tokens.permissions.wt;
 
       case 'userId':
         return this.tokens.sub;

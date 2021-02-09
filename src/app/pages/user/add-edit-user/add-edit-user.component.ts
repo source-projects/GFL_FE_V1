@@ -58,10 +58,13 @@ export class AddEditUserComponent implements OnInit {
     "Supplier",
     "Supplier Rate",
     "Color Stock",
-    "Process",
-    "Process Planning",
+    "Dyeing Process",
+    "Production Planning",
     "Jet Planning",
     "Input Data",
+    "Payment",
+    "Invoice",
+    "Batch-shuffle",
   ];
 
   userHradIdList;
@@ -228,7 +231,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
 
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < 16; j++) {
       this.checkIfAllSelected(j);
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
@@ -342,17 +345,17 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Process": {
+      case "Dyeing Process": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Process"
+          (v) => v.module == "Dyeing Process"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
-      case "Process Planning": {
+      case "Production Planning": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Process Planning"
+          (v) => v.module == "Production Planning"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -374,9 +377,36 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Payment": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Payment"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Invoice": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Invoice"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Batch-shuffle": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Batch-shuffle"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
     }
 
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < 16; j++) {
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
         break;
@@ -488,6 +518,10 @@ export class AddEditUserComponent implements OnInit {
       pr: "",
       pp: "",
       jp: "",
+      pt: "",
+      d: "",
+      bf: "",
+      ip: ""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
