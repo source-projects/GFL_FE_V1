@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -7,10 +8,13 @@ import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PartyGuard } from 'app/@theme/guards/party.guard';
 import * as errorData from 'app/@theme/json/error.json';
+import { BtnCellRenderer } from 'app/@theme/renderer/button-cell-renderer.component';
 import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { PartyService } from "app/@theme/services/party.service";
 import { ToastrService } from 'ngx-toastr';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css';
 
 @Component({
   selector: "ngx-party",
@@ -27,6 +31,7 @@ export class PartyComponent implements OnInit {
   copyPartyList = [];
   filteredPartyList = [];
   party=[];
+  testingData=[];
   headers=["Party Name", "Party Address1", "Contact No", "City", "State" ];
   module="party";
   flag=false;
@@ -50,6 +55,20 @@ export class PartyComponent implements OnInit {
   ownEdit=true;
   allEdit=true;
   groupEdit=true;
+
+
+  gridApi;
+  gridColumnApi;
+  gridOptions;
+   context;
+  columnDefs;
+  defaultColDef;
+  frameworkComponents;
+  rowData;
+  paginationPageSize;
+   rowModelType;
+   serverSideStoreType;
+   rowSelection;
   constructor(
     private partyService: PartyService,
     private route: Router,
@@ -61,10 +80,20 @@ export class PartyComponent implements OnInit {
     //private exportService: ExportService,
     private _NgbModal: NgbModal,
     private jwtToken: JwtTokenService,
+    private http: HttpClient
     
-  ) { }
+  ) {
+    this.frameworkComponents = {
+      btnCellRenderer: BtnCellRenderer
+    }
+   
+  }
+
+   
 
   ngOnInit(): void {
+    this.getRecords();
+
 
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
@@ -96,8 +125,137 @@ export class PartyComponent implements OnInit {
       this.radioSelect=3;
 
     }
+     
+
+
+  
   }
 
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   var gridDiv = document.querySelector('#myGrid');
+  //   new agGrid.Grid(gridDiv, gridOptions);
+  
+  //   agGrid
+  //     .simpleHttpRequest({
+  //       url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
+  //     })
+  //     .then(function (data) {
+  //       gridOptions.api.setRowData(data);
+  //     });
+  // });
+
+  onGridReady(params) {
+    
+      this.gridApi = params.api;
+      this.gridColumnApi = params.columnApi;
+      // this.gridOptions.api.refreshView();
+      // this.gridOptions.columnApi.sizeColumnsToFit();
+    }
+ 
+    
+  getGrid(){
+    this.gridOptions = {
+      pagination: true,
+      rowSelection: 'multiple',
+    }
+
+    this.columnDefs = [
+      {
+        headerName: 'Action',
+        field:'value',
+        cellRenderer: 'btnCellRenderer',
+        cellRendererParams: {
+          onClick: this.onBtnClick1.bind(this),
+          label: 'delete'
+        },
+        maxWidth: 150,
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+
+      },
+      {
+        headerName: 'Party Name',
+        field: 'partyName',
+        maxWidth: 150,
+
+      },
+      {
+        headerName: 'Party Address1',
+        field: 'partyAddress1',
+        minWidth: 150,
+      },
+      {
+        headerName: 'Contact No',
+        field: 'contactNo',
+        minWidth: 90,
+      },
+      {
+        headerName: 'City',
+        field: 'city',
+        minWidth: 30,
+      },
+      {
+        headerName: 'State',
+        field: 'state',
+        minWidth: 90,
+      },
+    ];
+    // setTimeout(()=>{
+    //   this.rowData = this.partyList;
+    // },1000)
+
+     
+    this.defaultColDef = {
+      //
+      flex: 1,
+      minWidth: 100,
+     // editable: true,
+      sortable: true,
+      filter: true,
+      resizable: true,
+
+    },
+   
+    this.paginationPageSize = 10;
+    this.rowSelection = 'multiple';
+    // this.rowModelType = 'serverSide';
+    // this.serverSideStoreType = 'partial';
+  }
+
+  onBtnClick1(e) {
+    
+
+    this.deleteParty(e.rowData.id);
+  }
+  
+  drop(event) {
+    console.log(event);
+    alert("BUTTON CLICKEFD")
+}
+  getRecords(){
+    this.partyService.getAllPartyNameList().subscribe(
+      (data) => {
+       
+        if (data["success"]) {
+          this.testingData = data["data"];
+        
+          this.getGrid();
+
+        }
+        else {
+          // this.toastr.error(data['msg'])
+        }
+        this.loading = false;
+      },
+      (error) => {
+        //this.toastr.error(errorData.Serever_Error)
+        this.loading = false;
+      }
+    )
+   // return this.testingData;
+  }
+
+ 
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
@@ -127,6 +285,8 @@ export class PartyComponent implements OnInit {
        
         if (data["success"]) {
           this.partyList = data["data"];
+          this.rowData = this.partyList;
+
           this.copyPartyList = data["data"]
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
@@ -273,6 +433,7 @@ open(){
       }
     });
   }
+
 
  
 }

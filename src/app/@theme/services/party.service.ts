@@ -39,4 +39,10 @@ export class PartyService {
   getPartyCode(id){
     return this.httpClient.get(this.commonService.envUrl()+'api/party/partyCodeExist/'+id);
   }
+
+  
+getRecords(){
+  return this.httpClient.get(this.commonService.envUrl()+'api/testing');
+
+}
 }
