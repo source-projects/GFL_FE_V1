@@ -33,13 +33,13 @@ export class UserService {
     return this.httpClient.get(this.commonService.envUrl()+'api/user/AllUsers/'+getBy+'/'+id);
   }
   getDesignation():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/designation');
+    return this.httpClient.get(this.commonService.envUrl()+'api/user/designation');
   }
   saveDesignation(desiData):any{
-    return this.httpClient.post(this.commonService.envUrl()+'api/designation',desiData);
+    return this.httpClient.post(this.commonService.envUrl()+'api/user/designation',desiData);
   }
   getDesignationById():any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/designation/'+id);
+    return this.httpClient.get(this.commonService.envUrl()+'api/user/designation/'+id);
   }
 
 }

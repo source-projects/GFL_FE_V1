@@ -7,6 +7,12 @@ import { ShadeGuard } from 'app/@theme/guards/shade.guard';
 import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
 import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
 import { UserGuard } from 'app/@theme/guards/user.guard';
+import { DyeingProcessGuard } from 'app/@theme/guards/dyeing-process.guard';
+import { JetPlanningGuard } from 'app/@theme/guards/jet-planning.guard';
+import { ProductionPlanningGuard } from 'app/@theme/guards/production-planning.guard';
+import { WaterJetGuard } from 'app/@theme/guards/water-jet.guard';
+import { InvoiceGuard } from 'app/@theme/guards/invoice.guard';
+import { PaymentGuard } from 'app/@theme/guards/payment.guard';
 import { AnyAaaaRecord } from 'dns';
 import { BehaviorSubject } from 'rxjs';
 import { MENU_ITEMS } from './pages-menu';
@@ -36,7 +42,12 @@ export class PagesComponent implements OnInit{
     public shadeGuard: ShadeGuard,
     public stockBatchGuard: StockBatchGuard,
     public programGuard: ProgramGuard,
-    
+    public dyeingProcessGuard: DyeingProcessGuard,
+    public jetPlanningGuard: JetPlanningGuard,
+    public productionPlanningGuard: ProductionPlanningGuard,
+    public waterJetGuard: WaterJetGuard,
+    public invoiceGuard: InvoiceGuard,
+    public paymentGuard: PaymentGuard,
     ){
     }
   ngOnInit(): void {
