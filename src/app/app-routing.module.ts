@@ -10,6 +10,14 @@ import { StockBatchGuard } from './@theme/guards/stock-batch.guard';
 import { StopAuthGuard } from './@theme/guards/stop-auth.guard';
 import { SupplierGuard } from './@theme/guards/supplier.guard';
 import { UserGuard } from './@theme/guards/user.guard';
+import { DyeingProcessGuard } from './@theme/guards/dyeing-process.guard';
+import { JetPlanningGuard } from './@theme/guards/jet-planning.guard';
+import { ProductionPlanningGuard } from './@theme/guards/production-planning.guard';
+import { WaterJetGuard } from './@theme/guards/water-jet.guard';
+import { InvoiceGuard } from './@theme/guards/invoice.guard';
+import { PaymentGuard } from './@theme/guards/payment.guard';
+
+
 import { ECommerceComponent } from './pages/e-commerce/e-commerce.component';
 import { InputDataComponent } from './pages/input-data/input-data/input-data.component';
 import { NotFoundComponent } from './pages/miscellaneous/not-found/not-found.component';
@@ -78,8 +86,8 @@ export const routes: Routes = [
         path: 'dyeing-process',
         loadChildren: () => import('./pages/dyeing-process/dyeing-process.module')
           .then(m => m.DyeingProcessModule),
-        // canActivate: [ProgramGuard],
-        // canLoad: [ProgramGuard],
+        canActivate: [DyeingProcessGuard],
+         canLoad: [DyeingProcessGuard],
         // data: { PermissionName: ['view','view group','view all']}
       },
       {
@@ -99,11 +107,16 @@ export const routes: Routes = [
         data: { PermissionName: ['view','view group','view all']}
       },
       { path: 'generate_invoice', loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
-      .then(m => m.GenerateInvoiceModule) },
+      .then(m => m.GenerateInvoiceModule) ,
+      canActivate: [InvoiceGuard],
+      canLoad: [InvoiceGuard],
+    },
       {
         path: 'waterJet',
         loadChildren: () => import('./pages/water-jet/water-jet.module')
           .then(m => m.WaterJetModule),
+          canActivate: [WaterJetGuard],
+          canLoad: [WaterJetGuard],
         
       },
       {
@@ -155,12 +168,16 @@ export const routes: Routes = [
         path: 'production-planning',
         loadChildren: () => import('./pages/production-planning/production-planning.module')
           .then(m => m.ProductionPlanningModule),
+          canActivate: [ProductionPlanningGuard],
+          canLoad: [ProductionPlanningGuard],
        
       },
       {
         path: 'jet-planning',
         loadChildren: () => import('./pages/jet-planning/jet-planning.module')
           .then(m => m.JetPlanningModule),
+          canActivate: [JetPlanningGuard],
+          canLoad: [JetPlanningGuard],
        
       },
       {
@@ -172,6 +189,8 @@ export const routes: Routes = [
         path: 'payment',
         loadChildren: () => import('./pages/payment/payment.module')
           .then(m => m.PaymentModule),
+          canActivate: [PaymentGuard],
+          canLoad: [PaymentGuard],
        
       },
       {
