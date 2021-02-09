@@ -113,7 +113,7 @@ export class PartyComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.partyGuard.accessRights('view group')){
-      this.getAllParty(this.userHeadId,"group");
+      this.getAllParty(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
@@ -130,19 +130,6 @@ export class PartyComponent implements OnInit {
 
   
   }
-
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   var gridDiv = document.querySelector('#myGrid');
-  //   new agGrid.Grid(gridDiv, gridOptions);
-  
-  //   agGrid
-  //     .simpleHttpRequest({
-  //       url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
-  //     })
-  //     .then(function (data) {
-  //       gridOptions.api.setRowData(data);
-  //     });
-  // });
 
   onGridReady(params) {
     
@@ -200,9 +187,9 @@ export class PartyComponent implements OnInit {
         minWidth: 90,
       },
     ];
-    // setTimeout(()=>{
-    //   this.rowData = this.partyList;
-    // },1000)
+    setTimeout(()=>{
+      this.rowData = this.partyList;
+    },1000)
 
      
     this.defaultColDef = {
