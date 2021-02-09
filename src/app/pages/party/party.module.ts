@@ -9,9 +9,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule} from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ThemeModule } from 'app/@theme/theme.module';
+import { AgGridModule } from 'ag-grid-angular';
+import { BtnCellRenderer } from 'app/@theme/renderer/button-cell-renderer.component';
+
 //import {ExportService} from '../../@theme/services/export.service';
 @NgModule({
-  declarations: [PartyComponent, AddEditPartyComponent ],
+  declarations: [PartyComponent, AddEditPartyComponent, BtnCellRenderer ],
   imports: [
     CommonModule,
     SharedModule,
@@ -19,7 +22,8 @@ import { ThemeModule } from 'app/@theme/theme.module';
     PartyRoutingModule,
     ReactiveFormsModule,
     NbCheckboxModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    AgGridModule.withComponents([BtnCellRenderer])
   ],
 
 })

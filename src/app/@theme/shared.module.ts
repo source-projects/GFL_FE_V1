@@ -41,6 +41,7 @@ import{ ExportService} from './services/export.service';
 import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 
 import {WarningPopupComponent} from './components/warning-popup/warning-popup.component'
+import { BtnCellRenderer } from './renderer/button-cell-renderer.component';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -80,7 +81,7 @@ const NB_MODULES = [
 ];
 
 @NgModule({
-  declarations: [    ExportPopupComponent , WarningPopupComponent
+  declarations: [    ExportPopupComponent , WarningPopupComponent, 
   ],
   imports: [NgxLoadingModule.forRoot({}),CommonModule, ...NB_MODULES, OwlDateTimeModule,
     OwlNativeDateTimeModule, NgbModule,NgxCheckboxModule
