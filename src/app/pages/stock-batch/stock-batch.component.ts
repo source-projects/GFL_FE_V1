@@ -80,7 +80,7 @@ export class StockBatchComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.stockBatchGuard.accessRights('view group')){
-      this.getStockBatchList(this.userHeadId,"group");
+      this.getStockBatchList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

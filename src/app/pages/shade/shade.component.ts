@@ -103,7 +103,7 @@ export class ShadeComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.shadeGuard.accessRights('view group')){
-      this.getallShades(this.userHeadId,"group");
+      this.getallShades(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

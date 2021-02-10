@@ -91,7 +91,7 @@ export class QualityComponent implements OnInit {
       
     }
      else if(this.qualityGuard.accessRights('view group')){
-      this.getQualityList(this.userHeadId,"group");
+      this.getQualityList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

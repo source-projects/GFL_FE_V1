@@ -89,7 +89,7 @@ export class ColorComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.colorGuard.accessRights('view group')){
-      this.getColor(this.userHeadId,"group");
+      this.getColor(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

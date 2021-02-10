@@ -32,9 +32,9 @@ export class SupplierComponent implements OnInit {
   flag = false;
   disabled = false;
   radioArray = [
-    { id: 1, value: "View Own", disabled: false },
-    { id: 2, value: "View Group", disabled: false },
-    { id: 3, value: "View All", disabled: false }
+    { id: 1, value: "View Own", disabled: false , checked:false},
+    { id: 2, value: "View Group", disabled: false, checked:false },
+    { id: 3, value: "View All", disabled: false , checked:true }
   ];
   userHeadId;
   userId;
@@ -66,6 +66,7 @@ export class SupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -84,7 +85,7 @@ export class SupplierComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.supplierGuard.accessRights('view group')){
-      this.getSupplierList(this.userHeadId,"group");
+      this.getSupplierList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

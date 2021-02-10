@@ -19,7 +19,7 @@
                         <label class="required">Supplier Name</label>
                         <ng-select appendTo="body" name="supplierName" [(ngModel)]='item' required
                             #supplierName1="ngModel" [ngClass]="{'is-invalid': (supplierName1.invalid)&& (formSubmitted || supplierName1.touched)}"
-                             placeholder="Quality ID" class="required-error-dropdown"
+                             placeholder="Supplier Name" class="required-error-dropdown"
                              (change)=itemSelected($event)>
                              <ng-option disabled="true">
                                 <div class="row">
@@ -54,7 +54,27 @@
                         <ng-select appendTo="body" name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel"
                             [ngClass]="{'is-invalid': (boxNo1.invalid)&&(formSubmitted || boxNo1.touched)}"
                              placeholder="Box No." class="required-error-dropdown">
-                        <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option>
+                             <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Box No</div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Quantity</div>
+                                    </div>
+                                </div>
+                             </ng-option>
+                            <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips"> {{colorBox.boxNo}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips"> {{colorBox.quantity}}</div>
+                                    </div>
+                                </div>
+                                </ng-option>
+                        <!-- <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option> -->
                         </ng-select>
                         <div class="required-class" *ngIf="(formSubmitted && boxNo1.invalid) || (boxNo1.invalid && boxNo1.touched)">
                             <span>Box no is required</span>

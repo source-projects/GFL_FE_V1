@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddEditWaterJetComponent } from './add-edit-water-jet/add-edit-water-jet.component';
-
+import { WaterJetGuard } from 'app/@theme/guards/water-jet.guard';
 const routes: Routes = [
   {
     path:'',
-    component:AddEditWaterJetComponent
+    component:AddEditWaterJetComponent,
+    // canActivate:[WaterJetGuard],
+    // canLoad:[WaterJetGuard],
+    // data: { PermissionName: ['view','view group','view all']}
   },
   {
     path:'waterjet',
-    component:AddEditWaterJetComponent
+    component:AddEditWaterJetComponent,
+    // canActivate:[WaterJetGuard],
+    // canLoad:[WaterJetGuard],
+    // data: { PermissionName: ['view','view group','view all']}
   }
 ];
 

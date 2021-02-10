@@ -87,7 +87,7 @@ export class UserComponent implements OnInit {
       this.radioSelect=1;
     }
      else if(this.userGuard.accessRights('view group')){
-      this.getAllUser(this.userHeadId,"group");
+      this.getAllUser(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;

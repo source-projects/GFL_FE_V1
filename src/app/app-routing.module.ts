@@ -160,7 +160,7 @@ export const routes: Routes = [
       },
       {
         path: 'issue-color-box',
-        loadChildren: () => import('./pages/issue-color-box/issue-color-box.module')
+        loadChildren: () => import('./pages/color/issue-color-box/issue-color-box.module')
           .then(m => m.IssueColorBoxModule),
        
       },

@@ -38,6 +38,7 @@ export class IssueColorBoxComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.supplierList = data["data"];
+          console.log(this.supplierList);
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
@@ -54,6 +55,7 @@ export class IssueColorBoxComponent implements OnInit {
   }
 
   itemSelected(event){
+    console.log(event);
     this.colorService.getColorBox(event).subscribe(
       (data) => {
         if (data["success"]) {
