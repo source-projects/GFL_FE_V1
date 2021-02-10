@@ -279,13 +279,13 @@ export class ProductionPlanningComponent implements OnInit {
     }
     modalRef.componentInstance.batch = batch_id;
     modalRef.componentInstance.batchControl = b_controlId;
-    // modalRef.result.then(
-    //   (result) => {
-    //     this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-    //       //this.route.navigate(['/pages/production-planning']);
-    //     });
-    //   }
-    // )
+    modalRef.result.then(
+      (result) => {
+        this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+          //this.route.navigate(['/pages/production-planning']);
+        });
+      }
+    )
   }
 }
 

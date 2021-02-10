@@ -31,12 +31,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Color',
     icon: 'color-palette-outline',
     link: '/pages/color',
+    hidden:false,
     children: [
+      {
+        title: 'Color-Stock',
+        icon: 'file-text-outline',
+        link: '/pages/color',
+      },
       {
         title: 'Issue-Color-Box',
         icon: 'file-text-outline',
         link: '/pages/color/issue-color-box',
-      },]
+      },
+    ]
   },
   {
     title: 'Program',
