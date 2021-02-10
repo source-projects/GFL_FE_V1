@@ -98,6 +98,7 @@ export class JetPlanningComponent implements OnInit {
     this.getQualityList();
     //this.getAllBatchData();
     this.getJetData();
+    this.getAllBatchWithShade();
 
     this.menuService.onItemClick()
       .pipe(
@@ -214,7 +215,22 @@ export class JetPlanningComponent implements OnInit {
               this.loading = false;
             }
           );
+
+          this.allBatchList = [];
+
+            this.batchList.forEach(element => {
+                   if(this.productionPlanning.partyId == element.partyId){
+                     this.allBatchList.push(element);
+                   }
+                 })
+           //this.getAllBatchWithShade();
+         
       }
+    }else{
+      this.productionPlanning.partyId = null;
+      this.getAllBatchWithShade();
+
+
     }
 
 
@@ -234,11 +250,23 @@ export class JetPlanningComponent implements OnInit {
           }
         });
       }
+      this.allBatchList = [];
+
       if (this.productionPlanning.qualityEntryId) {
-         this.allBatchList = [];
-        this.getAllBatchWithShade();
+         this.batchList.forEach(element => {
+                if(this.productionPlanning.qualityEntryId == element.qualityEntryId){
+                  this.allBatchList.push(element);
+                }
+              })
+        //this.getAllBatchWithShade();
       }
+    }else{
+      this.productionPlanning.qualityId = null;
+      this.getAllBatchWithShade();
+
+
     }
+
   }
   getAllBatchWithShade(){
 
@@ -248,12 +276,13 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
             if (data["success"]) {
               this.batchList = data["data"];
-              this.batchList.forEach(element => {
-                if(this.productionPlanning.partyId == element.partyId && this.productionPlanning.qualityEntryId == element.qualityEntryId){
-                  this.allBatchList.push(element);
-                }
+              this.allBatchList = data["data"];
+              // this.batchList.forEach(element => {
+              //   if(this.productionPlanning.partyId == element.partyId && this.productionPlanning.qualityEntryId == element.qualityEntryId){
+              //     this.allBatchList.push(element);
+              //   }
                
-              })
+              // })
               
               
             }

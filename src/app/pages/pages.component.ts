@@ -124,6 +124,25 @@ export class PagesComponent implements OnInit{
               e.hidden=true;
             }
             break;   
+
+          //   case 'Water-jet':
+          // this.view=this.supplierGuard.accessRights('view');
+          // this.view_all=this.supplierGuard.accessRights('view all');
+          // this.view_group=this.supplierGuard.accessRights('view group');
+          //     if(this.view == false && this.view_all==false && this.view_group==false){
+          //       e.hidden=true;
+          //     }
+          //     break;   
+          //   case 'DyeingProcess':
+          // this.view=this.supplierGuard.accessRights('view');
+          // this.view_all=this.supplierGuard.accessRights('view all');
+          // this.view_group=this.supplierGuard.accessRights('view group');
+          //     if(this.view == false && this.view_all==false && this.view_group==false){
+          //       e.hidden=true;
+          //     }
+          //     break;   
+              
+           
     }
     })
   }

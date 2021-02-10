@@ -16,12 +16,12 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   //data fatch supplier Name
   supplier: [];
-
-  itemTypeData = [
-    { id: "dye", name: "Dye" },
-    { id: "chemical", name: "chemical" },
-  ];
-
+  itemTypeData = ["Color" , "Chemical"]
+  // itemTypeData = [
+  //   { id: "color", name: "Color" },
+  //   { id: "chemical", name: "Chemical" },
+  // ];
+  selectedType = 'Color';
   //Form Validation flag
   formSubmitted: boolean = false;
   discount: number;
@@ -40,7 +40,7 @@ export class AddEditSupplierRateComponent implements OnInit {
     supplierId: null,
     supplierRates: [
       {
-        itemType: null,
+        itemType: "Color",
         supplierId: null,
         createdBy: null,
         updatedBy: null,
@@ -102,7 +102,7 @@ export class AddEditSupplierRateComponent implements OnInit {
               paymentTerms: null,
               userHeadId: null,
               supplierId: null,
-              itemType: null,
+              itemType: "Color",
               itemName: null,
               rate: null,
               discountedRate: null,
@@ -262,7 +262,7 @@ export class AddEditSupplierRateComponent implements OnInit {
           paymentTerms: null,
           userHeadId: null,
           supplierId: null,
-          itemType: null,
+          itemType: "Color",
           itemName: null,
           rate: null,
           discountedRate: null,

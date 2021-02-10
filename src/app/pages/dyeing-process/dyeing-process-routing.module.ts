@@ -1,21 +1,31 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AddEditDyeingProcessComponent } from "./add-edit-dyeing-process/add-edit-dyeing-process.component";
+import { DyeingProcessGuard } from 'app/@theme/guards/dyeing-process.guard';
 
 import { DyeingProcessComponent } from "./dyeing-process.component";
 
 const routes: Routes = [
   { 
     path: "", 
-    component: DyeingProcessComponent 
+    component: DyeingProcessComponent,
+    // canActivate:[DyeingProcessGuard],
+    // canLoad:[DyeingProcessGuard],
+    // data: { PermissionName: ['view','view group','view all']}
   },
   {
     path: "add",
-    component: AddEditDyeingProcessComponent
+    // component: AddEditDyeingProcessComponent,
+    // canActivate:[DyeingProcessGuard],
+    // canLoad:[DyeingProcessGuard],
+    // data: { PermissionName: ['add']}
   },
   {
     path: "edit/:id",
-    component: AddEditDyeingProcessComponent
+    // component: AddEditDyeingProcessComponent,
+    // canActivate:[DyeingProcessGuard],
+    // canLoad:[DyeingProcessGuard],
+    // data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 

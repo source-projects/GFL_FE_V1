@@ -83,7 +83,7 @@ export class ProgramComponent implements OnInit {
       this.radioSelect = 1;
     }
     else if (this.programGuard.accessRights('view group')) {
-      this.getProgramList(this.userHeadId, "group");
+      this.getProgramList(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;

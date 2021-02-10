@@ -31,7 +31,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Color',
     icon: 'color-palette-outline',
     link: '/pages/color',
-    hidden:false
+    children: [
+      {
+        title: 'Issue-Color-Box',
+        icon: 'file-text-outline',
+        link: '/pages/color/issue-color-box',
+      },]
   },
   {
     title: 'Program',
@@ -105,12 +110,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/generate_invoice',
     hidden:false
   },
-  {
-    title: 'Issue-Color-Box',
-    icon: 'file-text-outline',
-    link: '/pages/issue-color-box',
-    hidden:false
-  },
+  // {
+  //   title: 'Issue-Color-Box',
+  //   icon: 'file-text-outline',
+  //   link: '/pages/issue-color-box',
+  //   hidden:false
+  // },
   {
     title: 'Input Data',
     icon: 'edit-2-outline',
