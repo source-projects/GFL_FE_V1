@@ -91,7 +91,7 @@ export class BillPaymentComponent implements OnInit {
   partySelected(event){
     this.getPendingInvoices(event);
     this.getAdvancePaymentList(event);
-    this.getPaymentDetailsByParty(event);
+    //this.getPaymentDetailsByParty(event);
   }
 
   getPendingInvoices(event){
@@ -182,6 +182,8 @@ export class BillPaymentComponent implements OnInit {
     event.selected.forEach(element => {
       this.totalInvoice=this.totalInvoice+element.amt;
     });
+    this.paymentValues.totalBill = this.totalInvoice;
+    this.paymentValues.amtToPay = this.totalInvoice;
   }
 
   advancePaymentSelected(event){
@@ -211,8 +213,8 @@ export class BillPaymentComponent implements OnInit {
     }
     let gst = Number(event.target.value);
     // let a1= this.totalInvoice - gst;
-    this.paymentValues.totalBill = this.totalInvoice - gst;
-    this.paymentValues.amtToPay = this.totalInvoice;
+    //this.paymentValues.totalBill = this.totalInvoice - gst;
+    this.paymentValues.amtToPay = this.totalInvoice - gst;
     //console.log(event.target.value);
   }
 
@@ -364,6 +366,7 @@ export class BillPaymentComponent implements OnInit {
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/payment/bill-payment"]);
+            this.paymentValues = null;
             this.toastr.success(errorData.Add_Success);
           }
           else {

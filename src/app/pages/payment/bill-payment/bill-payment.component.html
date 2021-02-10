@@ -126,14 +126,16 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group center-txt-title">
-                                                <label>Credit Amount:</label>
+                                                <label>CD Amount:</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group center-txt-title">
-                                                <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
+                                            <div class="form-group">
+                                               
+                                                <input type="number" name="cdAmt" class="form-control" [(ngModel)]='paymentValues.cdAmt' required placeholder="CD Amount" (keyup)="cdSelected($event)">
                                             </div>
                                         </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -296,6 +298,13 @@
                             </ngx-datatable>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group center-txt-title">
+                            <label>Credit Details:</label>
+                            <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
 
