@@ -380,7 +380,7 @@ export class PartyComponent implements OnInit {
               break;
 
       case 2: 
-              this.getAllParty(this.userHeadId,"group");
+              this.getAllParty(this.userId,"group");
                 this.hidden=this.groupDelete;
                 this.hiddenEdit=this.groupEdit;
               break;
