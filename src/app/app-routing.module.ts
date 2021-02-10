@@ -86,8 +86,8 @@ export const routes: Routes = [
         path: 'dyeing-process',
         loadChildren: () => import('./pages/dyeing-process/dyeing-process.module')
           .then(m => m.DyeingProcessModule),
-        canActivate: [DyeingProcessGuard],
-         canLoad: [DyeingProcessGuard],
+        // canActivate: [DyeingProcessGuard],
+        //  canLoad: [DyeingProcessGuard],
         // data: { PermissionName: ['view','view group','view all']}
       },
       {
@@ -108,15 +108,15 @@ export const routes: Routes = [
       },
       { path: 'generate_invoice', loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
       .then(m => m.GenerateInvoiceModule) ,
-      canActivate: [InvoiceGuard],
-      canLoad: [InvoiceGuard],
+      // canActivate: [InvoiceGuard],
+      // canLoad: [InvoiceGuard],
     },
       {
         path: 'waterJet',
         loadChildren: () => import('./pages/water-jet/water-jet.module')
           .then(m => m.WaterJetModule),
-          canActivate: [WaterJetGuard],
-          canLoad: [WaterJetGuard],
+          // canActivate: [WaterJetGuard],
+          // canLoad: [WaterJetGuard],
         
       },
       {
@@ -146,9 +146,9 @@ export const routes: Routes = [
         path: 'batch-shuffle',
         loadChildren: () => import('./pages/batch-shuffle/batch-shuffle.module')
           .then(m => m.BatchShuffleModule),
-        canActivate: [SupplierGuard],
-        canLoad: [SupplierGuard],
-        data: { PermissionName: ['view','view group','view all']}
+        // canActivate: [SupplierGuard],
+        // canLoad: [SupplierGuard],
+        // data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'stock-batch',
@@ -168,16 +168,16 @@ export const routes: Routes = [
         path: 'production-planning',
         loadChildren: () => import('./pages/production-planning/production-planning.module')
           .then(m => m.ProductionPlanningModule),
-          canActivate: [ProductionPlanningGuard],
-          canLoad: [ProductionPlanningGuard],
+          // canActivate: [ProductionPlanningGuard],
+          // canLoad: [ProductionPlanningGuard],
        
       },
       {
         path: 'jet-planning',
         loadChildren: () => import('./pages/jet-planning/jet-planning.module')
           .then(m => m.JetPlanningModule),
-          canActivate: [JetPlanningGuard],
-          canLoad: [JetPlanningGuard],
+          // canActivate: [JetPlanningGuard],
+          // canLoad: [JetPlanningGuard],
        
       },
       {
@@ -189,8 +189,8 @@ export const routes: Routes = [
         path: 'payment',
         loadChildren: () => import('./pages/payment/payment.module')
           .then(m => m.PaymentModule),
-          canActivate: [PaymentGuard],
-          canLoad: [PaymentGuard],
+          // canActivate: [PaymentGuard],
+          // canLoad: [PaymentGuard],
        
       },
       {
