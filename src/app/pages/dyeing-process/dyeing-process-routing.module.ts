@@ -15,14 +15,14 @@ const routes: Routes = [
   },
   {
     path: "add",
-    // component: AddEditDyeingProcessComponent,
+     component: AddEditDyeingProcessComponent,
     // canActivate:[DyeingProcessGuard],
     // canLoad:[DyeingProcessGuard],
     // data: { PermissionName: ['add']}
   },
   {
     path: "edit/:id",
-    // component: AddEditDyeingProcessComponent,
+     component: AddEditDyeingProcessComponent,
     // canActivate:[DyeingProcessGuard],
     // canLoad:[DyeingProcessGuard],
     // data: { PermissionName: ['edit','edit group','edit all']}
