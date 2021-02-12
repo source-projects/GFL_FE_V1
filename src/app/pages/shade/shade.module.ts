@@ -6,10 +6,11 @@ import { ShadeComponent } from './shade.component';
 import { AddEditShadeComponent } from './add-edit-shade/add-edit-shade.component';
 import { SharedModule } from '../../@theme/shared.module';
 import { ThemeModule } from 'app/@theme/theme.module';
+import { PendingApcComponent } from './pending-apc/pending-apc.component';
 
 
 @NgModule({
-  declarations: [ShadeComponent, AddEditShadeComponent],
+  declarations: [ShadeComponent, AddEditShadeComponent, PendingApcComponent],
   imports: [
     CommonModule,
     ThemeModule,
