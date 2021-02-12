@@ -120,7 +120,7 @@ export class ColorComponent implements OnInit {
         break;
 
       case 2:
-        this.getColor(this.userHeadId, "group");
+        this.getColor(this.userId, "group");
         this.hidden=this.groupDelete;
         this.hiddenEdit=this.groupEdit;
         break;

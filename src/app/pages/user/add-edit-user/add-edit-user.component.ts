@@ -32,7 +32,7 @@ export class AddEditUserComponent implements OnInit {
   status;
   allRightsFlag;
   user: User = new User();
-
+  desi_list;
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
   companyList=[
@@ -65,6 +65,7 @@ export class AddEditUserComponent implements OnInit {
     "Payment",
     "Invoice",
     "Batch-shuffle",
+    "Finished Meter"
   ];
 
   userHradIdList;
@@ -163,7 +164,9 @@ export class AddEditUserComponent implements OnInit {
       
       this.user.isUserHead = false;
     }else{
-      const found = this.desiList.find(element => element.designation == "Master");
+      
+      const found = this.desi_list.find(element => element.designation == "Master");
+
       if(event == found.id){
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -231,7 +234,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < 17; j++) {
       this.checkIfAllSelected(j);
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
@@ -404,9 +407,18 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Finished Meter": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Finished Meter"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
     }
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < 17; j++) {
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
         break;
@@ -770,6 +782,16 @@ export class AddEditUserComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.desiList = data["data"];
+          if(this.userHead > 0){
+            this.desiList.forEach(element => {
+              if(element.designation != "Master")
+              this.desi_list = element;
+            });
+             console.log(this.desi_list);
+          }else{
+            this.desi_list=this.desiList;
+          }
+         
           this.loading = false;
         } else {
           // this.toastr.error(errorData.Internal_Error);

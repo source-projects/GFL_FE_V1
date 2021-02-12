@@ -118,7 +118,7 @@ export class UserComponent implements OnInit {
               break;
 
       case 2: 
-              this.getAllUser(this.userHeadId,"group");
+              this.getAllUser(this.userId,"group");
               this.hidden=this.groupDelete;
               this.hiddenEdit=this.groupEdit;
               break;

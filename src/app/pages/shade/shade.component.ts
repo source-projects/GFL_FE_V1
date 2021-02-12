@@ -134,7 +134,7 @@ export class ShadeComponent implements OnInit {
         break;
 
       case 2:
-        this.getallShades(this.userHeadId, "group");
+        this.getallShades(this.userId, "group");
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;

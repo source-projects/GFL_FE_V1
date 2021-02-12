@@ -16,6 +16,6 @@
   "include": [
     "../src/*.ts",
     "../src/**/*.ts",
-    "../node_modules/@nebular/**/*.ts", "app/@theme/guards/.guard.ts"
+    "../node_modules/@nebular/**/*.ts", "app/@theme/guards/.guard.ts", "app/@theme/guards/.guard.ts"
   ]
 }

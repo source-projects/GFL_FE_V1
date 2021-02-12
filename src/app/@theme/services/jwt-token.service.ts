@@ -59,23 +59,23 @@ export class JwtTokenService {
       case 'supplierRate':
         return this.tokens.permissions.sr;
 
-      // case 'dyeingProcess':
-      //   return this.tokens.permissions.pr;
+      case 'dyeingProcess':
+        return this.tokens.permissions.pr;
 
-      // case 'paymentTerms':
-      //   return this.tokens.permissions.pt;
+      case 'payment':
+        return this.tokens.permissions.pt;
 
-      // case 'dispatch':
-      //   return this.tokens.permissions.d;  
+      case 'dispatch':
+        return this.tokens.permissions.d;  
       
-      // case 'batch':
-      //   return this.tokens.permissions.bf;
+      case 'batch':
+        return this.tokens.permissions.bf;
 
-      // case 'machine':
-      //   return this.tokens.permissions.ip;
+      case 'machine':
+        return this.tokens.permissions.ip;
       
-      // case 'waterJet':
-      //   return this.tokens.permissions.wt;
+      case 'waterJet':
+        return this.tokens.permissions.wt;
 
       case 'userId':
         return this.tokens.sub;

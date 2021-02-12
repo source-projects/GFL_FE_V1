@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { InvoiceGuard } from 'app/@theme/guards/invoice.guard';
 import { AddEditInvoiceComponent } from './add-edit-invoice/add-edit-invoice.component';
 
 import { GenerateInvoiceComponent } from './generate-invoice.component';
@@ -9,15 +10,24 @@ import { PrintLayoutComponent } from './print-Layout/print-layout.component';
 const routes: Routes = [
   { 
     path: '', 
-    component: GenerateInvoiceComponent 
+    component: GenerateInvoiceComponent,
+    canActivate:[InvoiceGuard],
+    canLoad:[InvoiceGuard],
+    data: { PermissionName: ['view','view group','view all']} 
   },
   {
     path:'add',
-    component:AddEditInvoiceComponent
+    component:AddEditInvoiceComponent,
+    canActivate:[InvoiceGuard],
+    canLoad:[InvoiceGuard],
+    data: { PermissionName: ['add']} 
   },
   {
     path:'edit/:id',
     component:AddEditInvoiceComponent,
+    canActivate:[InvoiceGuard],
+    canLoad:[InvoiceGuard],
+    data: { PermissionName: ['edit','edit group','edit all']} 
   },
   {
     path:'report',
