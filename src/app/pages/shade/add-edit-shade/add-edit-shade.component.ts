@@ -28,6 +28,7 @@ export class AddEditShadeComponent implements OnInit {
 
   //Form Validation
   formSubmitted: boolean = false;
+  pendingFlag = true;
   index: any;
   //to Store UserId
   user: any;
@@ -38,6 +39,7 @@ export class AddEditShadeComponent implements OnInit {
   currentShade: [];
   //To store Supplier data
   supplierList: any;
+  checked = true;
   quality: any[];
   processList: any[];
   qualityId: any;
@@ -62,12 +64,16 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shades.pending = this.pendingFlag;
+
     this.getUserId();
     this.getQualityList();
     this.getPartyList();
     this.getProcessList();
     this.getSupplierList();
     if (this.currentShadeId != null) {
+      this.pendingFlag = false;
+      //this.shades.pending = this.pen
       this.getUpdateData();
     }
   }
@@ -192,7 +198,7 @@ export class AddEditShadeComponent implements OnInit {
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
-            
+            this.shades.pending = false;
             let inter = setInterval(()=>{
               if(this.quality){
                 clearInterval(inter);
@@ -206,7 +212,12 @@ export class AddEditShadeComponent implements OnInit {
                 });
               }
             },10);
-            
+            if(this.shades.shadeDataList.length == 0)
+            {
+              this.shadeDataListArray.push(this.shadeDataList);
+              this.shades.shadeDataList = this.shadeDataListArray;
+
+            }
             this.setProcessName(this.shades.processId);
             this.loading = false;
             this.disableButton=false;
@@ -286,6 +297,11 @@ export class AddEditShadeComponent implements OnInit {
       );
     }
   }
+
+  // toggle(event){
+  //   console.log(event);
+  //   this.shades.pending = event;
+  // }
 
   itemSelected(rowIndex, row,elementId) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
@@ -419,13 +435,15 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
-
+ 
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
+    
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
       this.shades.userHeadId = this.userHead.userHeadId;
+      this.shades.pending = this.pendingFlag;
       this.shadeService.addShadeData(this.shades).subscribe(
         (data) => {
           if (data["success"]) {
@@ -442,6 +460,25 @@ export class AddEditShadeComponent implements OnInit {
         }
       );
     } else {
+      if(shadeForm.value.apcNo && shadeForm.value.partyName && shadeForm.value.processName && shadeForm.value.qualityName){
+        this.shades.createdBy = this.user.userId;
+        this.shades.userHeadId = this.userHead.userHeadId;
+        this.shadeService.addShadeData(this.shades).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.route.navigate(["/pages/shade"]);
+              this.toastr.success(errorData.Add_Success);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+            this.disableButton = false;
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+            this.disableButton=false;
+          }
+        );
+      }
       this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();

@@ -108,7 +108,9 @@ export const routes: Routes = [
         canLoad: [ShadeGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
-      { path: 'generate_invoice', loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
+
+      { path: 'generate_invoice', 
+      loadChildren: () => import('./pages/generate-invoice/generate-invoice.module')
       .then(m => m.GenerateInvoiceModule) ,
       canActivate: [InvoiceGuard],
       canLoad: [InvoiceGuard],
@@ -174,6 +176,14 @@ export const routes: Routes = [
           canLoad: [ColorGuard],
           data: { PermissionName: ['view','view group','view all']}
       },
+      // {
+      //   path: 'pending-apc',
+      //   loadChildren: () => import('./pages/shade/pending-apc/pending-apc.module')
+      //     .then(m => m.IssueColorBoxModule),
+      //     canActivate: [ColorGuard],
+      //     canLoad: [ColorGuard],
+      //     data: { PermissionName: ['view','view group','view all']}
+      // },
       {
         path: 'production-planning',
         loadChildren: () => import('./pages/production-planning/production-planning.module')
@@ -191,8 +201,6 @@ export const routes: Routes = [
           canActivate: [JetPlanningGuard],
           canLoad: [JetPlanningGuard],
           data: { PermissionName: ['view','view group','view all']}
-
-       
       },
       {
         path: 'input-data',
@@ -200,8 +208,6 @@ export const routes: Routes = [
         canActivate: [InputDataGuard],
         canLoad: [InputDataGuard],
         data: { PermissionName: ['view','view group','view all']}
-
-       
       },
       {
         path: 'payment',
@@ -210,8 +216,14 @@ export const routes: Routes = [
           canActivate: [PaymentGuard],
           canLoad: [PaymentGuard],
           data: { PermissionName: ['view','view group','view all']}
-
-       
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./pages/admin/admin.module')
+          .then(m => m.AdminModule),
+          canActivate: [PaymentGuard],
+          canLoad: [PaymentGuard],
+          data: { PermissionName: ['view','view group','view all']}
       },
       {
         path: 'miscellaneous',

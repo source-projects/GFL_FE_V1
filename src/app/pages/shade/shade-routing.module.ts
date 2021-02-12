@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShadeComponent } from './shade.component';
 import { AddEditShadeComponent } from './add-edit-shade/add-edit-shade.component';
 import { ShadeGuard } from 'app/@theme/guards/shade.guard';
+import { PendingApcComponent } from './pending-apc/pending-apc.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,13 @@ const routes: Routes = [
   {
     path:'edit/:id',
     component:AddEditShadeComponent,
+    canActivate:[ShadeGuard],
+    canLoad:[ShadeGuard],
+    data: { PermissionName: ['edit','edit group','edit all']}
+  },
+  {
+    path:'pending-apc',
+    component:PendingApcComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],
     data: { PermissionName: ['edit','edit group','edit all']}

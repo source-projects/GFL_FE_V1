@@ -187,9 +187,9 @@ export class PartyComponent implements OnInit {
         minWidth: 90,
       },
     ];
-    setTimeout(()=>{
+   // setTimeout(()=>{
       this.rowData = this.partyList;
-    },1000)
+    //},1000)
 
      
     this.defaultColDef = {
@@ -220,25 +220,25 @@ export class PartyComponent implements OnInit {
     alert("BUTTON CLICKEFD")
 }
   getRecords(){
-    this.partyService.getAllPartyNameList().subscribe(
-      (data) => {
+    // this.partyService.getAllPartyNameList().subscribe(
+    //   (data) => {
        
-        if (data["success"]) {
-          this.testingData = data["data"];
+    //     if (data["success"]) {
+    //       this.testingData = data["data"];
         
           this.getGrid();
 
-        }
-        else {
-          // this.toastr.error(data['msg'])
-        }
-        this.loading = false;
-      },
-      (error) => {
-        //this.toastr.error(errorData.Serever_Error)
-        this.loading = false;
-      }
-    )
+    //     }
+    //     else {
+    //       // this.toastr.error(data['msg'])
+    //     }
+    //     this.loading = false;
+    //   },
+    //   (error) => {
+    //     //this.toastr.error(errorData.Serever_Error)
+    //     this.loading = false;
+    //   }
+    // )
    // return this.testingData;
   }
 
@@ -273,7 +273,7 @@ export class PartyComponent implements OnInit {
         if (data["success"]) {
           this.partyList = data["data"];
           this.rowData = this.partyList;
-
+          //this.getGrid();
           this.copyPartyList = data["data"]
           this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))

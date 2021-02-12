@@ -1,4 +1,6 @@
 export class Shade {
+  apcNo:Number;
+  pending:Boolean;
   partyShadeNo: String;
   processName: String;
   qualityId: String;
