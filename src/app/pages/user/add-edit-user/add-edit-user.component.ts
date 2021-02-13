@@ -32,7 +32,7 @@ export class AddEditUserComponent implements OnInit {
   status;
   allRightsFlag;
   user: User = new User();
-
+  desi_list=[];
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
   companyList=[
@@ -64,7 +64,8 @@ export class AddEditUserComponent implements OnInit {
     "Input Data",
     "Payment",
     "Invoice",
-    "Batch-shuffle",
+    "Finished Meter",
+    "Water Jet"
   ];
 
   userHradIdList;
@@ -163,7 +164,9 @@ export class AddEditUserComponent implements OnInit {
       
       this.user.isUserHead = false;
     }else{
-      const found = this.desiList.find(element => element.designation == "Master");
+      
+      const found = this.desi_list.find(element => element.designation == "Master");
+
       if(event == found.id){
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -231,7 +234,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
       this.checkIfAllSelected(j);
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
@@ -396,9 +399,11 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
 
-      case "Batch-shuffle": {
+     
+
+      case "Finished Meter": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Batch-shuffle"
+          (v) => v.module == "Finished Meter"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -406,7 +411,7 @@ export class AddEditUserComponent implements OnInit {
       }
     }
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
         break;
@@ -478,7 +483,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.checkIfAllSelected(i);
 
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
           if (!this.permissionArray[j].selectAll) {
             this.allRightsFlag = false;
             break;
@@ -619,7 +624,7 @@ export class AddEditUserComponent implements OnInit {
       perString = "";
     }
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < this.forms.length; i++) {
       if (!this.permissionArray[i].selectAll) {
         this.allRightsFlag = false;
       }
@@ -629,7 +634,7 @@ export class AddEditUserComponent implements OnInit {
     }
 
 
-    for (let j = 0; j < 12; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
           if (!this.permissionArray[j].selectAll) {
             this.allRightsFlag = false;
             break;
@@ -770,6 +775,16 @@ export class AddEditUserComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.desiList = data["data"];
+          if(this.userHead.userHeadId > 0){
+            this.desiList.forEach(element => {
+              if(element.designation != "Master")
+              this.desi_list.push(element);
+            });
+             console.log(this.desi_list);
+          }else{
+            this.desi_list=this.desiList;
+          }
+         
           this.loading = false;
         } else {
           // this.toastr.error(errorData.Internal_Error);

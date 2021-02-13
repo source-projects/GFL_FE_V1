@@ -16,7 +16,7 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   //data fatch supplier Name
   supplier: [];
-  itemTypeData = ["Color" , "Chemical"]
+  itemTypeData = ["Color" , ]
   // itemTypeData = [
   //   { id: "color", name: "Color" },
   //   { id: "chemical", name: "Chemical" },
@@ -297,7 +297,7 @@ export class AddEditSupplierRateComponent implements OnInit {
     let itemRate = Number(this.formValues.supplierRates[rowIndex].rate);
     let D = Number((itemRate * this.discount) / 100);
     calculatedDiscount = Number(itemRate - D);
-    let CGst = Number((calculatedDiscount + this.gst) / 100);
+    let CGst = Number((calculatedDiscount * this.gst) / 100);
     calculatedGst = Number(calculatedDiscount + CGst);
     this.formValues.supplierRates[rowIndex].discountedRate = Number(
       parseFloat(calculatedDiscount).toFixed(2)

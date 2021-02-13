@@ -37,12 +37,15 @@ export class CommonService {
     let url = "";
     let location = window.location;
     if(location["hostname"] == "192.168.1.103"){
-      url = "http://192.168.1.103:8080/";
-    }else if(location['hostname'] == "13.235.71.124" || location['hostname'] == "localhost")
-      url = "http://13.235.71.124:8080/";
+
+      url = "http://192.168.1.1030:8080/";
+    }else if(location['hostname'] == "15.206.179.225" || location['hostname'] == "localhost")
+      url = "http://15.206.179.225:8080/";
+
     else url = "http://103.137.194.167:8080/";
     return url;
     //return url "http://13.235.71.124:8080/";
+    
   }
 
   decToBin(n): any{

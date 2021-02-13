@@ -116,7 +116,7 @@ export class SupplierComponent implements OnInit {
         break;
 
       case 2:
-        this.getSupplierList(this.userHeadId, "group");
+        this.getSupplierList(this.userId, "group");
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;

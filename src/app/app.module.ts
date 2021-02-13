@@ -54,6 +54,13 @@ import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
       preventDuplicates: true,
     }),
   ],
+  providers:[
+    {  provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+   },
+  ],
+ 
   
   bootstrap: [AppComponent],
 })

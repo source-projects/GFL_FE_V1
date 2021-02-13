@@ -34,6 +34,9 @@ export class JetPlanningService {
   
   getAllProductionWithoutJetPlan(){
     return this.httpClient.get(this.commonService.envUrl() + 'api/productionPlan/all');
+  }
 
-}
+  getBatchDetailByProductionId(p_id,b_id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/productionPlan/getBatchDetailByProductionAndBatch/'+p_id+'/'+b_id);
+  }
 }

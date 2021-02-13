@@ -1084,9 +1084,20 @@ input[type=number]::-webkit-outer-spin-button {
 .trans-box-drop {
     background: #580058 !important;
     color: #fff!important;
-    max-width: 31vh;
-    padding: 8px 25px !important;
+    // max-width: 31vh;
+    // padding: 8px 25px !important;
+    min-width: 15vh;
+    padding: 8px 9px !important;
     flex-grow: unset !important
+}
+
+.jet-btn-changes {
+    min-width: 15vh;
+    padding: 0 9px !important;
+}
+
+.jet-btn-changes:focus {
+    outline: none;
 }
 
 .jet-icon {
@@ -1547,6 +1558,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 5px 15px;
 }
 
+
 .name-print {
     font-size: 22px !important;
     text-transform: capitalize;
@@ -1559,6 +1571,24 @@ input[type=number]::-webkit-outer-spin-button {
 .pr-pd-0 {
     padding: 0!important;
 }
+
+
+// printing menu
+
+.nb-menu-printing{
+    // border: 1px solid;
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    top: 42%;
+    left: 24%;
+}
+.nb-menu-printing ul{
+    position: absolute;
+    background: #fff;
+}
+
+
 
 @media (max-width: 767px) {
     .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {

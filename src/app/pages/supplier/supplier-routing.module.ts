@@ -4,7 +4,7 @@ import { SupplierComponent } from './supplier.component';
 import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.component';
 import { AddEditSupplierRateComponent } from './add-edit-supplier-rate/add-edit-supplier-rate.component';
 import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
-
+import {SupplierRateGuard} from 'app/@theme/guards/supplier-rate.guard';
 const routes: Routes = [
   {
     path:'',
@@ -23,14 +23,18 @@ const routes: Routes = [
   {
     path:'addSupplierRate',
     component:AddEditSupplierRateComponent,
-    canActivate:[SupplierGuard],
-    canLoad:[SupplierGuard],
+    canActivate:[SupplierRateGuard],
+    canLoad:[SupplierRateGuard],
+    data: { PermissionName: ['add']}
+
   },
   {
     path:'editSupplierRate/:id',
     component:AddEditSupplierRateComponent,
-    canActivate:[SupplierGuard],
-    canLoad:[SupplierGuard],
+    canActivate:[SupplierRateGuard],
+    canLoad:[SupplierRateGuard],
+    data: { PermissionName: ['edit','edit group','edit all']}
+
   },
   {
     path:'edit/:id',

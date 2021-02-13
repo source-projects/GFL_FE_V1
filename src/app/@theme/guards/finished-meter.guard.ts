@@ -12,7 +12,7 @@ import { StoreTokenService } from '../services/store-token.service';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceGuard implements CanActivate {
+export class FinishedMeterGuard implements CanActivate {
   public errorData: any = (errorData as any).default;
   permis: String
   constructor(private commonService: CommonService, 
@@ -21,10 +21,11 @@ export class InvoiceGuard implements CanActivate {
      private toastr:ToastrService,
      private _router: Router, 
      private auth: AuthService) { }
+
   canActivate(route:ActivatedRouteSnapshot,state:RouterStateSnapshot): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree  {
      //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
      this.jwtToken.setToken(this.storeTokenService.get('token'));
-     var permission = this.jwtToken.getDecodeToken('dispatch');
+     var permission = this.jwtToken.getDecodeToken('batch');
      this.permis = this.commonService.decToBin(permission);
      let PermissionName = route.data["PermissionName"]; 
 
@@ -119,7 +120,7 @@ export class InvoiceGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //0:v, 1:W, 2:U, 3:D, 4:VG 5:VA, 6:EG, 7:EA, 8:DG, 9:DA
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('dispatch');
+    var permission = this.jwtToken.getDecodeToken('batch');
     let permis: String = this.commonService.decToBin(permission);
 
     if (permis[0] == '1' || permis[4] == '1' || permis[5] == '1' )
@@ -131,7 +132,7 @@ export class InvoiceGuard implements CanActivate {
   
   accessRights(PermissionName):Boolean{
     this.jwtToken.setToken(this.storeTokenService.get('token'));
-    var permission = this.jwtToken.getDecodeToken('dispatch');
+    var permission = this.jwtToken.getDecodeToken('batch');
     this.permis = this.commonService.decToBin(permission);
     switch (PermissionName) {
       case 'view':

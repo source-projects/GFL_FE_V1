@@ -9,23 +9,23 @@ const routes: Routes = [
   { 
     path: "", 
     component: DyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    // data: { PermissionName: ['view','view group','view all']}
+    canActivate:[DyeingProcessGuard],
+    canLoad:[DyeingProcessGuard],
+    data: { PermissionName: ['view','view group','view all']}
   },
   {
     path: "add",
      component: AddEditDyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    // data: { PermissionName: ['add']}
+    canActivate:[DyeingProcessGuard],
+    canLoad:[DyeingProcessGuard],
+    data: { PermissionName: ['add']}
   },
   {
     path: "edit/:id",
      component: AddEditDyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    // data: { PermissionName: ['edit','edit group','edit all']}
+    canActivate:[DyeingProcessGuard],
+    canLoad:[DyeingProcessGuard],
+    data: { PermissionName: ['edit','edit group','edit all']}
   }
 ];
 
