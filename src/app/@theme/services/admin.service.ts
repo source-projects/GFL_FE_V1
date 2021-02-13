@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -7,43 +7,44 @@ import { CommonService } from './common.service';
 })
 export class AdminService {
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService) {
-  }
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
   getAllJetData(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/allPartyWithName');
+    return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/allJet');
   }
   
   getAllDesignation(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/all/');
+    return this.httpClient.get(this.commonService.envUrl()+'api/user/designation');
   }
 
   getAllCompanyData(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/allPartyWithName');
+    return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/allCompany');
   }
 
   getAllApproveByData(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/allPartyWithName');
+    return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/approvedBy');
   }
 
   saveJetData(jetData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/party', jetData);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/jet/addJet', jetData);
   }
 
-  saveDesignationData(jetData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/party', jetData);
+  saveDesignationData(data) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/user/designation', data);
   }
 
-  saveCompanyData(jetData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/party', jetData);
+  saveCompanyData(name) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/company/', name);
   }
 
-  saveApproveByData(jetData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/party', jetData);
+  saveApproveByData(data) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/approvedBy', data);
   }
 
   deleteJetById(id) {
-    return this.httpClient.delete(this.commonService.envUrl() + 'api/party/' + id);
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/admin/delete/jet/' + id);
   }
- 
+  deleteDesignationById(id) {
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/user/designation/' + id);
+  }
 }

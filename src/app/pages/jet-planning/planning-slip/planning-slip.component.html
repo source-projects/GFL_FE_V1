@@ -4,6 +4,9 @@
         <div>
             <h2 class="nb-text">Jet planning steps</h2>
         </div>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
     </nb-card-header>
     <div id="editable-slip">
         <nb-card-body>
@@ -86,8 +89,8 @@
 
                         <div class="row">
                             <div class="col-md-12 mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                                    (click)="activeModal.close(false)">CANCEL</button>
+                                <!-- <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                    (click)="activeModal.close(false)">CANCEL</button> -->
                                 <button *ngIf="this.currentSlipId != null" type="button" (click)="saveClicked=true;saveSlipData();"
                                     class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                                     [disabled]="disableButton">UPDATE</button>
