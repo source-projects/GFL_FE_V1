@@ -1,32 +1,34 @@
 <nb-card class="nb-style">
     <nb-card-body>
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
-            <nb-tab tabTitle="Add Jet">
+            <nb-tab tabTitle="Jet">
+                <!-- <form #advancePaymentForm="ngForm"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Jet No.</label>
-                            <input type="text" class="form-control"  placeholder="Enter Jet No." ([ngModel])="addJet.name">
+                            <label>Jet Name</label>
+                            <input type="text" class="form-control"  placeholder="Enter Jet Name" [(ngModel)]="addJet.name">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Jet Capacity</label>
-                            <input type="text" class="form-control"  placeholder="Enter Jet Capacity" ([ngModel])="addJet.capacity">
+                            <input type="number" class="form-control"  placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Liquor Ratio</label>
-                            <input type="text" class="form-control"  placeholder="Enter Liquor Ratio" ([ngModel])="addJet.liquorRatio">
+                            <input type="number" class="form-control"  placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio">
                         </div>
                     </div>
                     
                 </div>
+                <!-- </form> -->
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="addJetArray" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="jetList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeJet(row.id)"></nb-icon>
@@ -55,40 +57,36 @@
                 </div>
                
             </nb-tab>
-            <nb-tab tabTitle="Add Company">
-
+            <nb-tab tabTitle="Company">
+                <!-- <form #advancePaymentForm="ngForm"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Company Name</label>
-                            <input type="text" class="form-control"  placeholder="Enter Company Name." ([ngModel])="addCompany.name">
+                            <input type="text" class="form-control"  placeholder="Enter Company Name." [(ngModel)]="addCompany.name">
                         </div>
                     </div>
 
                     
                     
                 </div>
+                <!-- </form> -->
 
-                <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="addJetArray" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeJet(row.id)"></nb-icon>
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeCompany(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-
-                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
+                    
 
                    
 
-                </ngx-datatable> -->
+                </ngx-datatable>
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="onCancel()">CANCEL</button>
@@ -96,39 +94,35 @@
                     </div>
                 </div>
             </nb-tab>
-            <nb-tab tabTitle="Add Designation">
-
+            <nb-tab tabTitle="Designation">
+                <!-- <form #advancePaymentForm="ngForm"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Designation</label>
-                            <input type="text" class="form-control"  placeholder="Enter Designation" ([ngModel])="adddesignation.designation">
+                            <input type="text" class="form-control"  placeholder="Enter Designation" [(ngModel)]="addDesignation.designation">
                         </div>
                     </div>
 
                    
                 </div>
+                <!-- </form> -->
 
-                <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="adddesignationArray" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="designationList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeJet(row.id)"></nb-icon>
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeDesignation(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-
-                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300">
+                    <ngx-datatable-column name="Designation" prop="designation" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
 
                    
 
-                </ngx-datatable> -->
+                   
+
+                </ngx-datatable>
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="onCancel()">CANCEL</button>
@@ -137,51 +131,52 @@
                 </div>
             </nb-tab>
             <nb-tab tabTitle="Approve By">
-
+                <!-- <form #approveBy="ngForm"> -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control"  placeholder="Enter Name" ([ngModel])="approveBy.name">
+                            <input type="text" class="form-control"  placeholder="Enter Name" [(ngModel)]="approveBy.name">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Contact No</label>
-                            <input type="text" class="form-control"  placeholder="Enter Contact No." ([ngModel])="approveBy.contact">
+                            <input type="number" class="form-control"  placeholder="Enter Contact No." [(ngModel)]="approveBy.contact">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" class="form-control"  placeholder="Enter Email" ([ngModel])="approveBy.email">
+                            <input type="text" class="form-control"  placeholder="Enter Email" [(ngModel)]="approveBy.email">
                         </div>
                     </div>
                     
                 </div>
+                <!-- </form> -->
 
-                <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="addJetArray" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveByList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeJet(row.id)"></nb-icon>
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeApproveBy(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300">
+                    <ngx-datatable-column name="Contact No" prop="contact" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
 
 
-                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300">
+                    <ngx-datatable-column name="Email" prop="email" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
 
                    
 
-                </ngx-datatable> -->
+                </ngx-datatable>
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="onCancel()">CANCEL</button>

@@ -18,7 +18,7 @@ import { ProgramService } from 'app/@theme/services/program.service';
 import { ShadeService } from 'app/@theme/services/shade.service';
 
 import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-jet-planning',
@@ -32,7 +32,7 @@ export class JetPlanningComponent implements OnInit {
   public changeStatusShow:boolean = false;
   finalobj = [];
   public connectedTo: CdkDropList[] = [];
-  items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}];
+  
   allShade: any;
   productionPlanning: ProductionPlanning = new ProductionPlanning();
   public errorData: any = (errorData as any).default;
@@ -43,6 +43,7 @@ export class JetPlanningComponent implements OnInit {
   batch: any;
   p_id: any;
   partyList: any[];
+  detailsList:any[] = [];
   qualityList: any[];
   batchListByParty: any[];
   batchListParty: any[];
@@ -69,7 +70,9 @@ export class JetPlanningComponent implements OnInit {
   jetPlanning: JetPlanning = new JetPlanning();
   jetDataList: JetDataList = new JetDataList();
   JetDataListArray: JetDataList[] = [];
-
+  detailsFlag = false;
+  showMenuFlag= false;
+  items :NbMenuItem[] = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}, {title: 'Details'}];
 
   constructor(
     private modalService: NgbModal,
@@ -99,6 +102,8 @@ export class JetPlanningComponent implements OnInit {
     //this.getAllBatchData();
     this.getJetData();
     this.getAllBatchWithShade();
+    
+    //this.getBatchDetails();
 
     this.menuService.onItemClick()
       .pipe(
@@ -109,22 +114,30 @@ export class JetPlanningComponent implements OnInit {
         if(title === 'Print') this.generateSlip(true);
         else if(title === 'Edit And Print') this.generateSlip(false);
         else if(title === 'Change Status') this.changeStatus();
+        else if(title === 'Details'){
+          this.detailsFlag = true;
+          this.getBatchDetails();
+        }
       });
     
   
   }
 
+  showMenu(){
+    this.showMenuFlag = true;
+  }
+
   changeStatus(){
     this.changeStatusShow = true;
-    const modalRef = this.modalService.open(ShadeWithBatchComponent);
-    modalRef.componentInstance.statusChange = this.changeStatusShow;
-    modalRef.componentInstance.ctrlId = this.sendControlId;
-    modalRef.componentInstance.productionId = this.sendSotckId;
-    modalRef.result.then((result) => {
-      if (result) {
-        this.getJetData();
-      }
-    });
+    // const modalRef = this.modalService.open(ShadeWithBatchComponent);
+    // modalRef.componentInstance.statusChange = this.changeStatusShow;
+    // modalRef.componentInstance.ctrlId = this.sendControlId;
+    // modalRef.componentInstance.productionId = this.sendSotckId;
+    // modalRef.result.then((result) => {
+    //   if (result) {
+    //     this.getJetData();
+    //   }
+    // });
   }
  
 
@@ -174,6 +187,35 @@ export class JetPlanningComponent implements OnInit {
             });
           }
           this.batchListByParty = this.batchListParty;
+
+          this.loading = false;
+        } else {
+          //this.toastr.error(data["msg"]);
+          this.loading = false;
+        }
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+
+        this.loading = false;
+      }
+    );
+  }
+
+  public getBatchDetails(){
+    this.jetService.getBatchDetailByProductionId(this.sendSotckId,this.sendBatchId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.detailsList = data["data"]
+          // this.batchListByParty = data["data"];
+          // if (this.allBatchList != null || this.allBatchList != undefined) {
+          //   this.allBatchList.forEach(element => {
+          //     if (element.productionPlanned == false) {
+          //       this.batchListParty.push(element);
+          //     }
+          //   });
+          // }
+          // this.batchListByParty = this.batchListParty;
 
           this.loading = false;
         } else {

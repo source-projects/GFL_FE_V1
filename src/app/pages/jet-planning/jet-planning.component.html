@@ -85,13 +85,21 @@
                 <td>
                     <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
                         <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" (click)="setIndexForSlip(index)" cdkDrag>
-                            <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes">
-                {{index.batchId}}
-              </button>
+                            <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes">          
+                            {{index.batchId}}
+                            </button>
+                            <!-- <button style="color:white;border: none;background: none;"  class="jet-btn-changes" (click)="showMenu()">          
+                                {{index.batchId}}
+                            </button> -->
+                            
                         </div>
+                       
                     </div>
-
-
+                    <!-- <div *ngIf="showMenuFlag">
+                        <nb-menu [items]="items"class="nb-menu-printing">
+                        </nb-menu>
+                    </div> -->
+                   
                 </td>
 
             </tr>

@@ -305,15 +305,15 @@ export class AddEditShadeComponent implements OnInit {
 
   itemSelected(rowIndex, row,elementId) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
-    let flag = false;
+    // let flag = false;
     let count = 0;
     this.shades.shadeDataList.forEach((e) => {
       if (count != rowIndex) {
-        if (e.itemName == id) flag = true;
+        if (e.itemName == id)  // flag = true;
         count++;
       } else count++;
     });
-    if (!flag) {
+    // if (!flag) {
       let newSupplierId;
       for (let s of this.supplierList) {
         if (id == s.itemName) {
@@ -330,17 +330,17 @@ export class AddEditShadeComponent implements OnInit {
           break;
         }
       }
-    } else {
-      this.toastr.error("This item name is already selected");
+    // } else {
+    //   this.toastr.error("This item name is already selected");
 
 
-      // this.shades.shadeDataList[rowIndex].itemName = "";
-      this.shades.shadeDataList[rowIndex].itemName=undefined;
-      this.shades.shadeDataList[rowIndex].concentration = null;
-      this.shades.shadeDataList[rowIndex].supplierId = 0;
-      this.shades.shadeDataList[rowIndex].rate = null;
-      this.shades.shadeDataList[rowIndex].amount = null;
-      // .splice(rowIndex,1);
+    //   // this.shades.shadeDataList[rowIndex].itemName = "";
+    //   this.shades.shadeDataList[rowIndex].itemName=undefined;
+    //   this.shades.shadeDataList[rowIndex].concentration = null;
+    //   this.shades.shadeDataList[rowIndex].supplierId = 0;
+    //   this.shades.shadeDataList[rowIndex].rate = null;
+    //   this.shades.shadeDataList[rowIndex].amount = null;
+    //   // .splice(rowIndex,1);
 
       // let obj = {
       //   itemName: null,
@@ -354,7 +354,7 @@ export class AddEditShadeComponent implements OnInit {
       // let list = this.shades.shadeDataList;
       // list.push(obj);
       // this.shades.shadeDataList = [...list];
-    }
+    
     this.calculateAmount(rowIndex);
   }
 

@@ -16,7 +16,7 @@ const routes: Routes = [
     component:JetPlanningComponent,
     canActivate:[JetPlanningGuard],
     canLoad:[JetPlanningGuard],
-    data: { PermissionName: ['view','view group','view all','add','edit','edit all','edit group','delete','delete all', 'delete group']}
+    data: { PermissionName: ['view','view group','view all']}
 
   },
  

@@ -64,7 +64,8 @@ export class AddEditUserComponent implements OnInit {
     "Input Data",
     "Payment",
     "Invoice",
-    "Finished Meter"
+    "Finished Meter",
+    "Water Jet"
   ];
 
   userHradIdList;
@@ -233,7 +234,7 @@ export class AddEditUserComponent implements OnInit {
     this.permissionArray[i].viewAll = true;
     this.permissionArray[i].viewGroup = true;
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
       this.checkIfAllSelected(j);
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
@@ -410,7 +411,7 @@ export class AddEditUserComponent implements OnInit {
       }
     }
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
       if (!this.permissionArray[j].selectAll) {
         this.allRightsFlag = false;
         break;
@@ -482,7 +483,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.checkIfAllSelected(i);
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
           if (!this.permissionArray[j].selectAll) {
             this.allRightsFlag = false;
             break;
@@ -623,7 +624,7 @@ export class AddEditUserComponent implements OnInit {
       perString = "";
     }
 
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.forms.length; i++) {
       if (!this.permissionArray[i].selectAll) {
         this.allRightsFlag = false;
       }
@@ -633,7 +634,7 @@ export class AddEditUserComponent implements OnInit {
     }
 
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < this.forms.length; j++) {
           if (!this.permissionArray[j].selectAll) {
             this.allRightsFlag = false;
             break;

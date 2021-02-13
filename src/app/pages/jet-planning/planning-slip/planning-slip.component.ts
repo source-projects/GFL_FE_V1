@@ -51,11 +51,14 @@ export class PlanningSlipComponent implements OnInit {
       this.printSlip();
     }
   }
-
-  // get activeModel() {
-
-  //   return this.activeModal;
+  // get activeModal() {
+  //   return this._NgbActiveModal;
   // }
+
+  get activeModel() {
+
+    return this.activeModal;
+  }
 
   getItemData() {
     this.DyeingProcessService.getAllItemWithSupplier().subscribe(
@@ -76,6 +79,8 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
+            
+            
           } else {
             this.toastr.error(data["msg"]);
           }
