@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import 'rxjs/Rx';
 import { CommonService } from './common.service';
 import { StoreTokenService } from './store-token.service';
 
@@ -23,6 +22,4 @@ export class AuthService {
   checkUserLogin(data): any {
     return this.httpClient.post(this.commonService.envUrl() + 'api/login', data);
   }
-
-
 }

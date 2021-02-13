@@ -1,11 +1,10 @@
+import * as errorData from "../../@theme/json/error.json";
+import { AddJet, AddCompany, AddDesignation, ApproveBy } from '../../@theme/model/admin';
+import { AdminService } from '../../@theme/services/admin.service';
+import {ConfirmationDialogComponent} from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { Component, OnInit } from '@angular/core';
-import {AddJet , AddCompany, AddDesignation, ApproveBy} from 'app/@theme/model/admin';
-import { AdminService } from 'app/@theme/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from "app/@theme/json/error.json";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-admin',
@@ -33,13 +32,9 @@ export class AdminComponent implements OnInit {
   formSubmitted: boolean = false;
   loading = false;
   constructor(
-    private adminService: AdminService,
+    private adminService:AdminService ,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private route: Router,
-
-    
-
   ) {
     this.addJetArray.push(this.addJet);
     this.addCompanyArray.push(this.addCompany);
@@ -139,15 +134,9 @@ export class AdminComponent implements OnInit {
     this.adminService.saveJetData(this.addJet).subscribe(
         (data) => {
           if (data["success"]) {
-            // this.currentParty = data["data"];
-            // this.route.navigate(["pages/party"]);
             this.toastr.success(errorData.Add_Success);
             this.getAllJetData();
-            this.route.navigate(["/pages/admin"]);
-            //this.addJet
-
-
-          } else {
+            } else {
             this.toastr.error(errorData.Add_Error);
           }
         },
@@ -227,8 +216,8 @@ saveCompany(){
       if (result) {
         this.adminService.deleteJetById(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);
+            this.getAllJetData();
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
