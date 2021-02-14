@@ -195,6 +195,8 @@ export class AddEditPartyComponent implements OnInit {
   public addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
+    this.partyForm.value.createdBy = this.user.userId;
+
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         this.partyForm.value.createdBy = this.user.userId;

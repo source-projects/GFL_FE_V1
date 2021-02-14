@@ -249,6 +249,8 @@ saveCompany(){
           (data) => {
             //this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);
+            this.getAllDesignationData();
+
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -264,10 +266,12 @@ saveCompany(){
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteJetById(id).subscribe(
+        this.adminService.deleteCompanyById(id).subscribe(
           (data) => {
             //this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);
+            this.getAllCompanyData();
+
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -283,10 +287,12 @@ saveCompany(){
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteJetById(id).subscribe(
+        this.adminService.deleteApproveById(id).subscribe(
           (data) => {
             //this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);
+            this.getAllApproveByData();
+
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);

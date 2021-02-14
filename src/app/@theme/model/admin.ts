@@ -15,7 +15,7 @@ export class AddCompany{
     id:number;
     name:string;
     constructor() {
-        this.id = null;
+        this.id = 0;
         this.name = null;
       
     }

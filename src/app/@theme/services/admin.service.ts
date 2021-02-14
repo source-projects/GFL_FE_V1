@@ -34,11 +34,11 @@ export class AdminService {
   }
 
   saveCompanyData(name) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/company/', name);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/company/' , name);
   }
 
   saveApproveByData(data) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/approvedBy', data);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/admin/add/approvedBy/', data);
   }
 
   deleteJetById(id) {
@@ -46,5 +46,11 @@ export class AdminService {
   }
   deleteDesignationById(id) {
     return this.httpClient.delete(this.commonService.envUrl() + 'api/user/designation/' + id);
+  }
+  deleteCompanyById(id) {
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/admin/delete/companyBy/' + id);
+  }
+  deleteApproveById(id) {
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/admin/delete/approved/' + id);
   }
 }
