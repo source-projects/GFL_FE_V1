@@ -136,7 +136,14 @@ export class AdminComponent implements OnInit {
           if (data["success"]) {
             this.toastr.success(errorData.Add_Success);
             this.getAllJetData();
-            } else {
+            this.addJet.name = null;
+            this.addJet.capacity = null;
+            this.addJet.liquorRatio = null;
+           // this.route.navigate(["/pages/admin"]);
+            //this.addJet
+
+
+          } else {
             this.toastr.error(errorData.Add_Error);
           }
         },
@@ -155,6 +162,9 @@ export class AdminComponent implements OnInit {
             // this.route.navigate(["pages/party"]);
             this.toastr.success(errorData.Add_Success);
             this.getAllApproveByData();
+            this.approveBy.name = null;
+            this.approveBy.email = null;
+            this.approveBy.contact = null;
 
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -176,6 +186,7 @@ saveDesignation(){
             // this.route.navigate(["pages/party"]);
             this.toastr.success(errorData.Add_Success);
             this.getAllDesignationData();
+            this.addDesignation.designation = null;
 
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -197,6 +208,7 @@ saveCompany(){
             // this.route.navigate(["pages/party"]);
             this.toastr.success(errorData.Add_Success);
             this.getAllCompanyData();
+            this.addCompany.name = null;
 
           } else {
             this.toastr.error(errorData.Add_Error);
