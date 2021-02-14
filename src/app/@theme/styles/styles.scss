@@ -1558,6 +1558,21 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 5px 15px;
 }
 
+
+.name-print {
+    font-size: 22px !important;
+    text-transform: capitalize;
+}
+
+.pr-mr-0 {
+    margin-bottom: 0 !important;
+}
+
+.pr-pd-0 {
+    padding: 0!important;
+}
+
+
 // printing menu
 
 .nb-menu-printing{
@@ -1572,6 +1587,7 @@ input[type=number]::-webkit-outer-spin-button {
     position: absolute;
     background: #fff;
 }
+
 
 
 @media (max-width: 767px) {

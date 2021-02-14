@@ -1,18 +1,17 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { StockBatch, BatchData, BatchCard, BatchMrtWt } from "app/@theme/model/stock-batch";
-
-import * as errorData from "app/@theme/json/error.json";
-import { PartyService } from "app/@theme/services/party.service";
+import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
-import { StockBatchService } from "app/@theme/services/stock-batch.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { QualityService } from "app/@theme/services/quality.service";
 import * as _ from "lodash";
 import {
   NgbDateAdapter,
   NgbDateNativeAdapter,
 } from "@ng-bootstrap/ng-bootstrap";
-import { CommonService } from "app/@theme/services/common.service";
+import { StockBatch, BatchCard, BatchMrtWt,BatchData } from '../../..//@theme/model/stock-batch';
+import { PartyService } from '../../..//@theme/services/party.service';
+import { QualityService } from '../../..//@theme/services/quality.service';
+import { StockBatchService } from '../../..//@theme/services/stock-batch.service';
+import { CommonService } from '../../..//@theme/services/common.service';
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
