@@ -29,6 +29,7 @@ export class AddEditUserComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   isMasterFlag = false;
+  adminFlag = false;
   status;
   allRightsFlag;
   user: User = new User();
@@ -155,6 +156,9 @@ export class AddEditUserComponent implements OnInit {
   public getUserId() {
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+    if(this.userHead.userHeadId == 0){
+      this.adminFlag = true;
+    }
     this.currentUserId = this._route.snapshot.paramMap.get("id");
   }
 

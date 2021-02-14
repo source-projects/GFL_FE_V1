@@ -78,6 +78,9 @@ export class AddEditPartyComponent implements OnInit {
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
+  adminFlag = false;
+  masterFlag = false;
+  operatorFlag = false;
   userHead;
   constructor(
     private partyService: PartyService,
@@ -98,6 +101,10 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = true;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+    if(this.userHead.userHeadId == 0){
+      this.adminFlag = true;
+    }
+    // else if(this.userHead.userHeadId)
     this.partyForm = new FormGroup({
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
