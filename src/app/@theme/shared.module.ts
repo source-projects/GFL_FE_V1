@@ -82,7 +82,6 @@ const NB_MODULES = [
   NbTabsetModule,
   //NgbModal
   NbAccordionModule,
-  NbPopoverModule,
 ];
 
 @NgModule({
