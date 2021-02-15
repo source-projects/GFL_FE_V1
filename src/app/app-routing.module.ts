@@ -226,6 +226,14 @@ export const routes: Routes = [
           data: { PermissionName: ['view','view group','view all']}
       },
       {
+        path: 'addition-slip',
+        loadChildren: () => import('./pages/addition-slip/addition-slip.module')
+          .then(m => m.AdditionSlipModule),
+          canActivate: [PaymentGuard],
+          canLoad: [PaymentGuard],
+          data: { PermissionName: ['view','view group','view all']}
+      },
+      {
         path: 'miscellaneous',
         loadChildren: () => import('./pages/miscellaneous/miscellaneous.module')
           .then(m => m.MiscellaneousModule),

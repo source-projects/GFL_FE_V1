@@ -18,6 +18,7 @@ import { BehaviorSubject } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "app/@theme/guards/input-data.guard";
+import { CommonService } from 'app/@theme/services/common.service';
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -33,6 +34,8 @@ export class PagesComponent implements OnInit {
   view: Boolean = true;
   view_all: Boolean = true;
   view_group: Boolean = true;
+  user:any;
+  userHead:any;
 
   constructor(
     public partyGuard: PartyGuard,
@@ -50,9 +53,15 @@ export class PagesComponent implements OnInit {
     public invoiceGuard: InvoiceGuard,
     public paymentGuard: PaymentGuard,
     public finishedMeterGuard: FinishedMeterGuard,
-    public inputDataGuard: InputDataGuard
+    public inputDataGuard: InputDataGuard,
+    private commonService: CommonService,
+
   ) {}
   ngOnInit(): void {
+
+    this.getData();
+
+
     this.menu.forEach((e) => {
       switch (e.title) {
         case "Party":
@@ -82,16 +91,22 @@ export class PagesComponent implements OnInit {
           break;
 
         case "User":
-          this.view = this.userGuard.accessRights("view");
-          this.view_all = this.userGuard.accessRights("view all");
-          this.view_group = this.userGuard.accessRights("view group");
-          if (
-            this.view == false &&
-            this.view_all == false &&
-            this.view_group == false
-          ) {
+          if(this.userHead.userHeadId != 0){
             e.hidden = true;
+          }else{
+            e.hidden = false;
+            this.view = this.userGuard.accessRights("view");
+            this.view_all = this.userGuard.accessRights("view all");
+            this.view_group = this.userGuard.accessRights("view group");
+            if (
+              this.view == false &&
+              this.view_all == false &&
+              this.view_group == false
+            ) {
+              e.hidden = true;
+            }
           }
+        
           break;
 
         case "Color":
@@ -291,5 +306,10 @@ export class PagesComponent implements OnInit {
           break;
       }
     });
+  }
+
+  public getData() {
+    this.user = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
   }
 }

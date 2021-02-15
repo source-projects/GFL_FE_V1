@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'app/@theme/services/common.service';
 import { ShadeService } from 'app/@theme/services/shade.service';
 
 @Component({
@@ -10,12 +11,21 @@ export class PendingApcComponent implements OnInit {
   apcList = [];
   tableStyle = "bootstrap";
   loading = false;
+  userId:any;
+  userHeadId:any;
   constructor(
     private shadeService: ShadeService,
+    private commonService: CommonService,
 
   ) { }
 
   ngOnInit(): void {
+    this.userId = this.commonService.getUser();
+    this.userId = this.userId["userId"];
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId["userHeadId"];
+    this.getallShades(this.userId , 'all')
+   
   }
 
   getallShades(id, getBy) {

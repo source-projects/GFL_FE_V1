@@ -435,7 +435,10 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
- 
+  checkedChange(event){
+    
+    this.shades.pending = event;
+  }
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -443,7 +446,10 @@ export class AddEditShadeComponent implements OnInit {
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
       this.shades.userHeadId = this.userHead.userHeadId;
-      this.shades.pending = this.pendingFlag;
+      if (this.currentShadeId != null) {
+        this.shades.pending = this.pendingFlag;
+
+      }
       this.shadeService.addShadeData(this.shades).subscribe(
         (data) => {
           if (data["success"]) {
