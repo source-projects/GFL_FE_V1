@@ -2,7 +2,9 @@
 <nb-card class="nb-style pr-mr-0">
     <nb-card-header class="nb-header">
         <div>
-            <h2 class="nb-text">Jet planning steps</h2>
+            <h2 *ngIf="additionSlipFlag" class="nb-text">Generate slip</h2>
+
+            <h2 *ngIf="!additionSlipFlag" class="nb-text">Jet planning steps</h2>
         </div>
         <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
             <span aria-hidden="true" class="close-icon">&times;</span>

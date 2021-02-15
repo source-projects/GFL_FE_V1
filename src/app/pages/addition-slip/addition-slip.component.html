@@ -1,10 +1,9 @@
-<p>addition-slip works!</p>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div>
             <div class="row">
                 <div class="col-md-11 col-10">
-                    <h2 class="nb-text" style="display: inline;">Jet Planning</h2>
+                    <h2 class="nb-text" style="display: inline;">Addition Slip</h2>
                 </div>
             </div>
         </div>
@@ -13,16 +12,17 @@
         <div>
             <form #myForm="ngForm">
                 <div class="row">
-                    <!-- Party name -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required">Party</label>
-                            <!-- <ng-select name="partyId" [(ngModel)]='lotNo' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
-                                <ng-option >123</ng-option>
-                            </ng-select> -->
-                            <!-- <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
-                                <span>Party Id is required</span>
-                            </div> -->
+                            <label class="required">Batch No:</label>
+                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' required #batchNo1="ngModel" 
+                            [ngClass]="{'is-invalid': (batchNo1.invalid)&&(formSubmitted || batchNo1.touched)}" 
+                            placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                                <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
+                            </ng-select>
+                            <div class="required-class" *ngIf="(formSubmitted && batchNo1.invalid) || (batchNo1.invalid && batchNo1.touched)">
+                                <span>Batch no is required</span>
+                            </div>
                         </div>
                     </div>
                     </div>

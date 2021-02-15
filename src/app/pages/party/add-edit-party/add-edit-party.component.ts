@@ -147,16 +147,19 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = false;
   }
   public getMaster() {
+    let masterId;
     this.loading = true;
     this.partyService.getAllMaster().subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
-          // this.master.forEach(element => {
-          //   if(this.adminFlag){
-          //     this.masterList = this.master;
-          //   }else if(this.userHead+)
-          // })
+            //masterId = this.master[0].userHeadId;
+            // if(this.adminFlag){
+            //   this.masterList = this.master;
+            // }else if(this.userHead.userHeadId == masterId){
+            //   this.masterList
+            // }
+         
           this.loading = false;
         } else {
           this.loading = false;

@@ -41,11 +41,13 @@ export class ShadeService {
   }
   getShadesByQualityAndPartyId(p_id,q_id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/shade/'+ q_id+'/'+p_id);
-
   }
 
+  getAllPendingShade(){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/shade/allPendingAPC');
+  }
   
-getAllDyeingProcess(){
+  getAllDyeingProcess(){
   return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingProcess/all');
 
 }

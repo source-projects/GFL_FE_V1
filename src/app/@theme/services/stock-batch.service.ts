@@ -35,9 +35,10 @@ export class StockBatchService {
 
   getBatchById(p_id,q_id){
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+q_id+'/'+p_id);
-
   }
-
+  getAllBatchForAdditionSlip(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/getAllBatchForFinishMtr');
+  }
   
 
 }

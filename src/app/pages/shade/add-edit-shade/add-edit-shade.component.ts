@@ -15,9 +15,9 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
+
   public loading = false;
   public disableButton = false;
-
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
@@ -195,6 +195,12 @@ export class AddEditShadeComponent implements OnInit {
         (data) => {
           this.shades = data["data"];
           this.color = this.shades.colorTone;
+          if(this.shades.shadeDataList.length == 0)
+            {
+              this.shadeDataListArray.push(this.shadeDataList);
+              this.shades.shadeDataList = this.shadeDataListArray;
+
+            }
           if (!data["success"]) {
             this.shades = data["data"];
             this.color = this.shades.colorTone;
@@ -212,7 +218,7 @@ export class AddEditShadeComponent implements OnInit {
                 });
               }
             },10);
-            if(this.shades.shadeDataList.length == 0)
+            if(this.shades.shadeDataList.length == 1)
             {
               this.shadeDataListArray.push(this.shadeDataList);
               this.shades.shadeDataList = this.shadeDataListArray;
@@ -436,7 +442,8 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   checkedChange(event){
-    
+      this.pendingFlag = event;
+   
     this.shades.pending = event;
   }
   addShade(shadeForm) {
@@ -456,6 +463,7 @@ export class AddEditShadeComponent implements OnInit {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
           } else {
+            this.toastr.error(data["msg"]);
             this.toastr.error(errorData.Add_Error);
           }
           this.disableButton = false;

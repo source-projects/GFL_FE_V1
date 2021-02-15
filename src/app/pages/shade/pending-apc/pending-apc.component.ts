@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from 'app/@theme/services/common.service';
 import { ShadeService } from 'app/@theme/services/shade.service';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from "app/@theme/json/error.json";
 
 @Component({
   selector: 'ngx-pending-apc',
@@ -16,6 +20,8 @@ export class PendingApcComponent implements OnInit {
   constructor(
     private shadeService: ShadeService,
     private commonService: CommonService,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
 
   ) { }
 
@@ -31,19 +37,11 @@ export class PendingApcComponent implements OnInit {
   getallShades(id, getBy) {
     let shadeList1 = [];
     this.loading = true;
-    this.shadeService.getShadeMastList(id, getBy).subscribe(
+    this.shadeService.getAllPendingShade().subscribe(
       data => {
         if (data['success']) {
           if (data['data'].length > 0) {
             this.apcList = data['data'];
-            this.apcList.forEach(element => {
-              if(element.pending){
-                shadeList1.push(element);
-              }
-            })
-            this.apcList = shadeList1;
-        
-       
           }
         }
         this.loading = false;
@@ -55,7 +53,20 @@ export class PendingApcComponent implements OnInit {
   }
 
   deletePendingAPC(id){
-
-  }
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.shadeService.deleteShadeData(id).subscribe(
+          (data) => {
+            this.toastr.success(errorData.Delete);
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });  }
 
 }
