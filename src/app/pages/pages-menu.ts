@@ -135,6 +135,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/generate_invoice',
     hidden:false
   },
+  {
+    title: 'Addition Slip',
+    icon: 'file-text-outline',
+    link: '/pages/addition-slip',
+    hidden:false
+  },
   // {
   //   title: 'Issue-Color-Box',
   //   icon: 'file-text-outline',

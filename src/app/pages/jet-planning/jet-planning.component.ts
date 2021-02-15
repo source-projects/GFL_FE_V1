@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShadeWithBatchComponent } from '../production-planning/shade-with-batch/shade-with-batch.component';
@@ -18,7 +18,7 @@ import { ProgramService } from 'app/@theme/services/program.service';
 import { ShadeService } from 'app/@theme/services/shade.service';
 
 import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
-import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbMenuService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-jet-planning',
@@ -72,8 +72,8 @@ export class JetPlanningComponent implements OnInit {
   JetDataListArray: JetDataList[] = [];
   detailsFlag = false;
   showMenuFlag= false;
-  items :NbMenuItem[] = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}, {title: 'Details'}];
-
+  items = [{ title: 'Change Status' }, { title: 'Print' }, {title: 'Edit And Print'}, {title: 'Details'}];
+  
   constructor(
     private modalService: NgbModal,
     private jetService: JetPlanningService,
@@ -129,15 +129,15 @@ export class JetPlanningComponent implements OnInit {
 
   changeStatus(){
     this.changeStatusShow = true;
-    // const modalRef = this.modalService.open(ShadeWithBatchComponent);
-    // modalRef.componentInstance.statusChange = this.changeStatusShow;
-    // modalRef.componentInstance.ctrlId = this.sendControlId;
-    // modalRef.componentInstance.productionId = this.sendSotckId;
-    // modalRef.result.then((result) => {
-    //   if (result) {
-    //     this.getJetData();
-    //   }
-    // });
+    const modalRef = this.modalService.open(ShadeWithBatchComponent);
+    modalRef.componentInstance.statusChange = this.changeStatusShow;
+    modalRef.componentInstance.ctrlId = this.sendControlId;
+    modalRef.componentInstance.productionId = this.sendSotckId;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.getJetData();
+      }
+    });
   }
  
 

@@ -31,7 +31,7 @@ export class ShadeComponent implements OnInit {
   headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
   module="shade";
 
-
+  
   radioSelect = 0;
   flag = false;
 

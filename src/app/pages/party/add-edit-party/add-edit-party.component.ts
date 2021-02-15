@@ -82,6 +82,7 @@ export class AddEditPartyComponent implements OnInit {
   masterFlag = false;
   operatorFlag = false;
   userHead;
+  masterList = [];
   constructor(
     private partyService: PartyService,
     private commonService: CommonService,
@@ -151,6 +152,11 @@ export class AddEditPartyComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
+          // this.master.forEach(element => {
+          //   if(this.adminFlag){
+          //     this.masterList = this.master;
+          //   }else if(this.userHead+)
+          // })
           this.loading = false;
         } else {
           this.loading = false;
