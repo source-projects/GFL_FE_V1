@@ -196,7 +196,7 @@
                             <ngx-datatable-column name="Item Name" prop="shades.itemName" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemName" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" appendTo="body"
-                                        class="ng-select-br-none">
+                                        class="ng-select-br-none" [disabled]="pendingFlag">
                                         <ng-option *ngFor="let s of (supplierList | filterOutSelectedShade : shades.shadeDataList)" [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
                                         </ng-option>
                                     </ng-select>
@@ -211,8 +211,10 @@
 
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300" prop="shades.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')"
-                                        [id]="'supplierList'+rowIndex+'-1'" min="0">
+                                    <input type="number" #concentration1="ngModel" name='concentration{{rowIndex}}' 
+                                    class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" 
+                                    (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event,rowIndex,1,'concentration')"
+                                        [id]="'supplierList'+rowIndex+'-1'" min="0" [disabled]="pendingFlag">
 
                                         <div [ngClass]="{'required':!pendingFlag }">
 
@@ -225,18 +227,22 @@
 
                             <ngx-datatable-column name="Supplier Name" prop="supplierId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #supplierName1="ngModel" name='supplierName{{rowIndex}}' [(ngModel)]="row.supplierName" (keyup)="onKeyUp($event,rowIndex,2,'supplierName')" [id]="'supplierList'+rowIndex+'-2'" readonly>
+                                    <input class="tableForm line-height-subtable" type="text" #supplierName1="ngModel" name='supplierName{{rowIndex}}'
+                                     [(ngModel)]="row.supplierName" (keyup)="onKeyUp($event,rowIndex,2,'supplierName')" 
+                                     [id]="'supplierList'+rowIndex+'-2'"  readonly>
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #rate1="ngModel" name='rate{{rowIndex}}' [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,3,'rate')" [id]="'supplierList'+rowIndex+'-3'" readonly>
+                                    <input class="tableForm line-height-subtable" type="text" #rate1="ngModel" name='rate{{rowIndex}}' 
+                                    [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,3,'rate')" [id]="'supplierList'+rowIndex+'-3'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #rate1="ngModel" name='amount{{rowIndex}}' [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,4,'amount')" [id]="'supplierList'+rowIndex+'-4'" readonly>
+                                    <input class="tableForm line-height-subtable" type="text" #rate1="ngModel" name='amount{{rowIndex}}' 
+                                    [(ngModel)]="row.amount" (keyup)="onKeyUp($event,rowIndex,4,'amount')" [id]="'supplierList'+rowIndex+'-4'" readonly>
                                 </ng-template>
                             </ngx-datatable-column>
 
