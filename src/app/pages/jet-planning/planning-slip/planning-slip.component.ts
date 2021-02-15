@@ -28,6 +28,8 @@ export class PlanningSlipComponent implements OnInit {
   @Input() isPrintDirect: boolean;
   @Input() batchId;
   @Input() stockId;
+  @Input() additionSlipFlag: boolean;
+
   public itemListArray: any = [];
   public slipData: any;
 
@@ -44,6 +46,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // console.log(this.additionSlipFlag)
     this.getItemData();
     if (this.batchId && this.stockId) this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
