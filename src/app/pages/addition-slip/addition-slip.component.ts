@@ -1,34 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { StockBatchService } from 'app/@theme/services/stock-batch.service';
-import { PlanningSlipComponent } from '../jet-planning/planning-slip/planning-slip.component';
+import { Component, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { StockBatchService } from "app/@theme/services/stock-batch.service";
+import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
 
 @Component({
-  selector: 'ngx-addition-slip',
-  templateUrl: './addition-slip.component.html',
-  styleUrls: ['./addition-slip.component.scss']
+  selector: "ngx-addition-slip",
+  templateUrl: "./addition-slip.component.html",
+  styleUrls: ["./addition-slip.component.scss"],
 })
 export class AdditionSlipComponent implements OnInit {
-
-  batchNo:any;
+  batchNo: any;
   formSubmitted = false;
   batchList = [];
   loading = true;
   constructor(
     private modalService: NgbModal,
     private batchService: StockBatchService
-    
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAllBatch();
   }
-  getAllBatch(){
+  getAllBatch() {
     this.batchService.getAllBatchForAdditionSlip().subscribe(
       (data) => {
         if (data["success"]) {
-          this.batchList = data["data"]
+          this.batchList = data["data"];
+          console.log(this.batchList);
           this.loading = false;
         } else {
           //this.toastr.error(data["msg"]);
@@ -40,10 +38,9 @@ export class AdditionSlipComponent implements OnInit {
 
         this.loading = false;
       }
-    )
-
+    );
   }
-  batchSelected(event){
+  batchSelected(event) {
     // let batch = event.target.value;
     console.log(event);
     const modalRef = this.modalService.open(PlanningSlipComponent);
@@ -51,13 +48,11 @@ export class AdditionSlipComponent implements OnInit {
     modalRef.componentInstance.batchId = event.batchId;
     modalRef.componentInstance.additionSlipFlag = true;
 
-    //modalRef.componentInstance.stockId = this.sendSotckId;
+    modalRef.componentInstance.stockId = event.productionId;
     modalRef.result.then((result) => {
       if (result) {
         console.log("Done");
       }
     });
-
   }
-
 }
