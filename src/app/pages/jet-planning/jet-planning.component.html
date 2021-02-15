@@ -16,10 +16,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
+                                #partyId1="ngModel"
+                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                                placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
                                 <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                            <div class="required-class"
+                                *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                                 <span>Party Id is required</span>
                             </div>
                         </div>
@@ -30,14 +34,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}" placeholder="Quality ID" class="required-error-dropdown" (change)=qualitySelected($event)>
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required
+                                #qualityId1="ngModel"
+                                [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
+                                placeholder="Quality ID" class="required-error-dropdown"
+                                (change)=qualitySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Quality Id</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party Name</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -52,7 +62,8 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
+                            <div class="required-class"
+                                *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
                                 <span>Quality id is required</span>
                             </div>
                         </div>
@@ -65,8 +76,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
 
-                            <button nbButton size="small" style="margin-left: 10px; color:white; border-radius: 20px;" class="jet-popup-box production-list-popup" *ngFor="let b of allBatchList" [value]="b.id" class="jet-popup-display " [style.background]="b.colorTone" (click)="batchSelected($event)">
-                       {{b.batchId}} </button>
+                            <button nbButton size="small" style="margin-left: 10px; color:white; border-radius: 20px;"
+                                class="jet-popup-box production-list-popup" *ngFor="let b of allBatchList"
+                                [value]="b.id" class="jet-popup-display " [style.background]="b.colorTone"
+                                (click)="batchSelected($event)">
+                                {{b.batchId}} </button>
 
                         </div>
                     </div>
@@ -83,29 +97,34 @@
                 <td>{{j.name}}</td>
                 <td>{{j.capacity}}</td>
                 <td>
-                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList" (click)="setIndexForSlip(index)" cdkDrag>
-                            <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes">          
-                            {{index.batchId}}
+                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
+                        class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
+                        <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList"
+                            (click)="setIndexForSlip(index)" cdkDrag>
+                            <button style="color:white;border: none;background: none;"
+                                nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                class="jet-btn-changes">
+                                {{index.batchId}}
                             </button>
+
                             <!-- <button style="color:white;border: none;background: none;"  class="jet-btn-changes" (click)="showMenu()">          
                                 {{index.batchId}}
                             </button> -->
-                            
+
                         </div>
-                       
+
                     </div>
                     <!-- <div *ngIf="showMenuFlag">
                         <nb-menu [items]="items"class="nb-menu-printing" (click)="changeStatus()">
                         </nb-menu> -->
-                        <!-- <div let i of items>{{i.title}}</div> -->
+                    <!-- <div let i of items>{{i.title}}</div> -->
                     <!-- </div>{{changeStatusShow}}
                     <div *ngIf="changeStatusShow">
                         <nb-menu [items]="items123" class="nb-menu-printing-1">
                         </nb-menu> -->
-                        <!-- <div let i of items>{{i.title}}</div> -->
+                    <!-- <div let i of items>{{i.title}}</div> -->
                     <!-- </div> -->
-                   
+
                 </td>
 
             </tr>
