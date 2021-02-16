@@ -83,4 +83,22 @@ export class AdminService {
       this.commonService.envUrl() + "api/admin/delete/approved/" + id
     );
   }
+
+  addDepartment(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/department",
+      data
+    );
+  }
+
+  deleteDepartmentById(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/admin/delete/department/" + id
+    );
+  }
+  getAllDepartmentData() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/department"
+    );
+  }
 }

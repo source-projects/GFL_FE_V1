@@ -10,8 +10,8 @@
     "url": "https://github.com/akveo/ngx-admin/issues"
   },
   "scripts": {
-    "install:clean": "rm -rf node_modules && npm i",
-    "build:local": "rm -rf node_modules && npm i && npm run build",
+    "install:clean": "npm i",
+    "build:local": "npm run build",
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
     "start": "npm run install:clean && ng serve",

@@ -5,10 +5,10 @@ import {
   NbGlobalPosition,
   NbToastrConfig,
 } from "@nebular/theme";
-import * as errorData from "app/@theme/json/error.json";
-import { Permissions, User } from "app/@theme/model/user";
-import { CommonService } from "app/@theme/services/common.service";
-import { UserService } from "app/@theme/services/user.service";
+import * as errorData from "../../../@theme/json/error.json";
+import { Permissions, User } from "../../../@theme/model/user";
+import { CommonService } from "../../../@theme/services/common.service";
+import { UserService } from "../../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Md5 } from "ts-md5/dist/md5";
 
@@ -37,6 +37,7 @@ export class AddEditUserComponent implements OnInit {
   permissions: Permissions = new Permissions();
   permissionArray: any[] = [];
   companyList = [];
+  departmentList = [];
   desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -119,6 +120,7 @@ export class AddEditUserComponent implements OnInit {
     this.getDesignation();
     this.getAllUserHrads();
     this.getAllCompany();
+    this.getAllDepartment();
     this.getUserId();
     if (this.currentUserId) {
       this.getCurrentUser();
@@ -179,6 +181,17 @@ export class AddEditUserComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.companyList = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  getAllDepartment() {
+    this.userService.getAllDepartmentData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.departmentList = data["data"];
         }
       },
       (error) => {}
