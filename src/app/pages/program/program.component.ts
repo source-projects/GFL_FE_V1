@@ -76,11 +76,11 @@ export class ProgramComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.programGuard.accessRights('view')) {
-      this.getProgramList(this.userId, "own");
+    if (this.programGuard.accessRights('view all')) {
+      this.getProgramList(0, "all");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
-      this.radioSelect = 1;
+      this.radioSelect = 3;
     }
     else if (this.programGuard.accessRights('view group')) {
       this.getProgramList(this.userId, "group");
@@ -88,11 +88,11 @@ export class ProgramComponent implements OnInit {
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     }
-    else if (this.programGuard.accessRights('view all')) {
-      this.getProgramList(0, "all");
+    else if (this.programGuard.accessRights('view')) {
+      this.getProgramList(this.userId, "own");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
-      this.radioSelect = 3;
+      this.radioSelect = 1;
 
     }
   }

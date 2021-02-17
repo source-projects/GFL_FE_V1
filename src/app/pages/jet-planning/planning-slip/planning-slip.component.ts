@@ -34,6 +34,7 @@ export class PlanningSlipComponent implements OnInit {
   @Input() additionSlipData;
   public itemListArray: any = [];
   public printFlag = false;
+  public saveFlag = false;
   public slipData: any;
   public temp;
   public holdTime;
@@ -84,9 +85,9 @@ export class PlanningSlipComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItemData();
-    if (!this.additionSlipFlag) {
+    // if (!this.additionSlipFlag) {
       if (this.batchId && this.stockId) this.getSlipDataFromBatch();
-    }
+    // }
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
@@ -113,6 +114,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   getSlipDataFromBatch() {
+
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
       .subscribe(
@@ -278,7 +280,7 @@ export class PlanningSlipComponent implements OnInit {
         };
         this.isSaved = true;
 
-        if (this.isPrinting) {
+        if (this.saveFlag) {
           this.activeModal.close(this.slipObj);
         }
       } else {
@@ -345,7 +347,7 @@ export class PlanningSlipComponent implements OnInit {
           if (element) {
             doc.append(element);
             doc.print();
-            this.printFlag = true;
+           // this.printFlag = true;
             this.activeModal.close(this.slipObj);
             tempFlag = true;
             clearInterval(inter);

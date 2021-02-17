@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ShadeService } from 'app/@theme/services/shade.service';
+import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { CommonService } from '../../../@theme/services/common.service';
+import { ShadeService } from '../../../@theme/services/shade.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from "app/@theme/json/error.json";
+import * as errorData from "../../../@theme/json/error.json";
 
 @Component({
   selector: 'ngx-pending-apc',

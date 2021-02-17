@@ -73,11 +73,11 @@ export class StockBatchComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.stockBatchGuard.accessRights('view')){
-      this.getStockBatchList(this.userId,"own");
+    if(this.stockBatchGuard.accessRights('view all')){
+      this.getStockBatchList(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.stockBatchGuard.accessRights('view group')){
       this.getStockBatchList(this.userId,"group");
@@ -85,11 +85,11 @@ export class StockBatchComponent implements OnInit {
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.stockBatchGuard.accessRights('view all')){
-      this.getStockBatchList(0,"all");
+    else if(this.stockBatchGuard.accessRights('view')){
+      this.getStockBatchList(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
