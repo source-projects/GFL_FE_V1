@@ -30,7 +30,7 @@
         <!--  ngx- DataTable  -->
         <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
             [footerHeight]="40">
-            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
+            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>

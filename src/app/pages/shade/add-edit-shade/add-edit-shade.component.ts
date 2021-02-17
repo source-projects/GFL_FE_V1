@@ -12,23 +12,21 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "ngx-add-edit-shade",
   templateUrl: "./add-edit-shade.component.html",
-  styleUrls: ["./add-edit-shade.component.scss"],
+  styleUrls: ["./add-edit-shade.component.scss"]
 })
 export class AddEditShadeComponent implements OnInit {
-
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
 
   shadeDataListArray: ShadeDataList[] = [];
 
-  shades: Shade = new Shade();
+  shadeObj: Shade = new Shade();
   shadeDataList: ShadeDataList = new ShadeDataList();
   qualityListEmpty: QualityListEmpty = new QualityListEmpty();
 
   //Form Validation
   formSubmitted: boolean = false;
-  pendingFlag = true;
   index: any;
   //to Store UserId
   user: any;
@@ -40,7 +38,7 @@ export class AddEditShadeComponent implements OnInit {
   //To store Supplier data
   supplierList: any;
   checked = true;
-  quality: any[];
+  qualityList: any[];
   processList: any[];
   qualityId: any;
   color: any = "";
@@ -58,28 +56,25 @@ export class AddEditShadeComponent implements OnInit {
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
     private renderer: Renderer2
-  ) {
-    this.shadeDataListArray.push(this.shadeDataList);
-    this.shades.shadeDataList = this.shadeDataListArray;
-  }
+  ) {}
 
-  ngOnInit(): void {
-    this.shades.pending = this.pendingFlag;
-
+  async ngOnInit() {
+    await this.getQualityList();
+    await this.getPartyList();
+    await this.getProcessList();
+    await this.getSupplierList();
     this.getUserId();
-    this.getQualityList();
-    this.getPartyList();
-    this.getProcessList();
-    this.getSupplierList();
-    if (this.currentShadeId != null) {
-      this.pendingFlag = false;
-      //this.shades.pending = this.pen
-      this.getUpdateData();
+    if (this.currentShadeId) {
+      this.getShadeById();
+    } else {
+      this.shadeDataListArray.push(this.shadeDataList);
+      this.shadeObj.shadeDataList = this.shadeDataListArray;
     }
+    
   }
 
   updateColor() {
-    this.shades.colorTone = this.color;
+    this.shadeObj.colorTone = this.color;
   }
 
   public getUserId() {
@@ -91,7 +86,7 @@ export class AddEditShadeComponent implements OnInit {
   public getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.partyList = data["data"];
           this.loading = false;
@@ -100,7 +95,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -110,7 +105,7 @@ export class AddEditShadeComponent implements OnInit {
   getSupplierList() {
     this.loading = true;
     this.supplierService.getAllSupplierRates().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
             this.supplierList = data["data"];
@@ -125,7 +120,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -135,7 +130,7 @@ export class AddEditShadeComponent implements OnInit {
   getAllSupplier() {
     this.loading = true;
     this.supplierService.getAllSupplier(0, "all").subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.supplierListRate = data["data"];
           this.loading = false;
@@ -144,7 +139,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -154,7 +149,7 @@ export class AddEditShadeComponent implements OnInit {
   getProcessList() {
     this.loading = true;
     this.shadeService.getAllDyeingProcess().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.processList = data["data"];
           this.loading = false;
@@ -163,7 +158,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -173,93 +168,74 @@ export class AddEditShadeComponent implements OnInit {
   getQualityList() {
     this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
-          this.quality = data["data"];
+          this.qualityList = data["data"];
           this.loading = false;
         } else {
           // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
   }
 
-  getUpdateData() {
+  getShadeById() {
     this.loading = true;
-      this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
-        (data) => {
-          this.shades = data["data"];
-          this.color = this.shades.colorTone;
-          if(this.shades.shadeDataList.length == 0)
-            {
-              this.shadeDataListArray.push(this.shadeDataList);
-              this.shades.shadeDataList = this.shadeDataListArray;
-
-            }
-          if (!data["success"]) {
-            this.shades = data["data"];
-            this.color = this.shades.colorTone;
-            this.shades.pending = false;
-            let inter = setInterval(()=>{
-              if(this.quality){
-                clearInterval(inter);
-                this.quality.forEach((e) => {
-                  if (e.id == data["data"].qualityEntryId) {
-                    this.shades.qualityId = e.qualityId;
-                    this.shades.qualityName = e.qualityName;
-                    this.shades.qualityType = e.qualityType;
-                  }
-                  this.loading = false;
-                });
-              }
-            },10);
-            if(this.shades.shadeDataList.length == 1)
-            {
-              this.shadeDataListArray.push(this.shadeDataList);
-              this.shades.shadeDataList = this.shadeDataListArray;
-
-            }
-            this.setProcessName(this.shades.processId);
-            this.loading = false;
-            this.disableButton=false;
-
+    this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
+      data => {
+        if (data["success"]) {
+          let res = data['data'];
+          this.shadeObj = res;
+          this.color = this.shadeObj.colorTone;
+          if (!this.shadeObj.shadeDataList.length) {
+            this.shadeDataListArray.push(this.shadeDataList);
+            this.shadeObj.shadeDataList = this.shadeDataListArray;
           } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-            this.disableButton=false;
-
+            this.shadeDataListArray = this.shadeObj.shadeDataList;
           }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
+          let qualityIndex =this.qualityList&& this.qualityList.length ? this.qualityList.findIndex(v=> v.id == res.qualityEntryId) : -1;
+          if(qualityIndex > -1) {
+            this.shadeObj.qualityId = this.qualityList[qualityIndex].qualityId;
+            this.shadeObj.qualityName = this.qualityList[qualityIndex].qualityName;
+            this.shadeObj.qualityType = this.qualityList[qualityIndex].qualityType;
+          }
+          this.setProcessName(this.shadeObj.processId);
           this.loading = false;
-          this.disableButton=false;
-
+          this.disableButton = false;
+        } else {
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
+          this.disableButton = false;
         }
-      );
-    this.disableButton=false;
-
+      },
+      error => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+        this.disableButton = false;
+      }
+    );
+    this.disableButton = false;
   }
 
   qualityIdSelected(event) {
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
-      this.shades.partyId = null;
-      this.shades.qualityName = null;
-      this.shades.qualityType = null;
+      this.shadeObj.partyId = null;
+      this.shadeObj.qualityName = null;
+      this.shadeObj.qualityType = null;
     } else {
-      this.quality.forEach((element) => {
-        if (this.shades.qualityId == element.qualityId) {
-          this.shades.qualityId = element.qualityId;
-          this.shades.qualityName = element.qualityName;
-          this.shades.qualityType = element.qualityType;
-          this.shades.partyId = element.partyId;
+      this.qualityList.forEach(element => {
+        if (this.shadeObj.qualityId == element.qualityId) {
+          this.shadeObj.qualityId = element.qualityId;
+          this.shadeObj.qualityName = element.qualityName;
+          this.shadeObj.qualityType = element.qualityType;
+          this.shadeObj.partyId = element.partyId;
         }
       });
     }
@@ -267,36 +243,36 @@ export class AddEditShadeComponent implements OnInit {
 
   getQualityFromParty(event) {
     this.loading = true;
-    this.shades.qualityId = null;
-    this.shades.qualityName = null;
-    this.shades.qualityType = null;
+    this.shadeObj.qualityId = null;
+    this.shadeObj.qualityName = null;
+    this.shadeObj.qualityType = null;
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
-      this.shades.qualityId = null;
-      this.shades.qualityName = null;
-      this.shades.qualityType = null;
+      this.shadeObj.qualityId = null;
+      this.shadeObj.qualityName = null;
+      this.shadeObj.qualityType = null;
       this.loading = false;
     } else {
-      this.shadeService.getQualityFromParty(this.shades.partyId).subscribe(
-        (data) => {
+      this.shadeService.getQualityFromParty(this.shadeObj.partyId).subscribe(
+        data => {
           if (data["success"]) {
-            this.quality = data["data"].qualityDataList;
-            this.shades.qualityId = this.quality[0].qualityId;
-            this.shades.qualityName = this.quality[0].qualityName;
-            this.shades.qualityType = this.quality[0].qualityType;
-            this.quality.forEach((e) => {
+            this.qualityList = data["data"].qualityDataList;
+            this.shadeObj.qualityId = this.qualityList[0].qualityId;
+            this.shadeObj.qualityName = this.qualityList[0].qualityName;
+            this.shadeObj.qualityType = this.qualityList[0].qualityType;
+            this.qualityList.forEach(e => {
               e.partyName = data["data"].partyName;
               this.loading = false;
             });
             this.loading = false;
           } else {
             // this.toastr.error(data["msg"]);
-            this.quality = null;
+            this.qualityList = null;
             this.loading = false;
           }
         },
-        (error) => {
+        error => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
@@ -306,85 +282,86 @@ export class AddEditShadeComponent implements OnInit {
 
   // toggle(event){
   //   console.log(event);
-  //   this.shades.pending = event;
+  //   this.shadeObj.pending = event;
   // }
 
-  itemSelected(rowIndex, row,elementId) {
-    let id = this.shades.shadeDataList[rowIndex].itemName;
+  itemSelected(rowIndex, row, elementId) {
+    let id = this.shadeObj.shadeDataList[rowIndex].itemName;
     // let flag = false;
     let count = 0;
-    this.shades.shadeDataList.forEach((e) => {
+    this.shadeObj.shadeDataList.forEach(e => {
       if (count != rowIndex) {
-        if (e.itemName == id)  // flag = true;
-        count++;
+        if (e.itemName == id)
+          // flag = true;
+          count++;
       } else count++;
     });
     // if (!flag) {
-      let newSupplierId;
-      for (let s of this.supplierList) {
-        if (id == s.itemName) {
-          this.shades.shadeDataList[rowIndex].rate = s.rate;
-          newSupplierId = s.supplierId;
-          this.shades.shadeDataList[rowIndex].supplierItemId = s.id;
-          break;
-        }
+    let newSupplierId;
+    for (let s of this.supplierList) {
+      if (id == s.itemName) {
+        this.shadeObj.shadeDataList[rowIndex].rate = s.rate;
+        newSupplierId = s.supplierId;
+        this.shadeObj.shadeDataList[rowIndex].supplierItemId = s.id;
+        break;
       }
-      for (let s1 of this.supplierListRate) {
-        if (newSupplierId == s1.id) {
-          this.shades.shadeDataList[rowIndex].supplierName = s1.supplierName;
-          this.shades.shadeDataList[rowIndex].supplierId = s1.id;
-          break;
-        }
+    }
+    for (let s1 of this.supplierListRate) {
+      if (newSupplierId == s1.id) {
+        this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
+        this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
+        break;
       }
+    }
     // } else {
     //   this.toastr.error("This item name is already selected");
 
-
-    //   // this.shades.shadeDataList[rowIndex].itemName = "";
-    //   this.shades.shadeDataList[rowIndex].itemName=undefined;
-    //   this.shades.shadeDataList[rowIndex].concentration = null;
-    //   this.shades.shadeDataList[rowIndex].supplierId = 0;
-    //   this.shades.shadeDataList[rowIndex].rate = null;
-    //   this.shades.shadeDataList[rowIndex].amount = null;
+    //   // this.shadeObj.shadeDataList[rowIndex].itemName = "";
+    //   this.shadeObj.shadeDataList[rowIndex].itemName=undefined;
+    //   this.shadeObj.shadeDataList[rowIndex].concentration = null;
+    //   this.shadeObj.shadeDataList[rowIndex].supplierId = 0;
+    //   this.shadeObj.shadeDataList[rowIndex].rate = null;
+    //   this.shadeObj.shadeDataList[rowIndex].amount = null;
     //   // .splice(rowIndex,1);
 
-      // let obj = {
-      //   itemName: null,
-      //   concentration: null,
-      //   supplierName: null,
-      //   rate: null,
-      //   amount: null,
-      //   supplierId: null,
-      //   supplierItemId: null,
-      // };
-      // let list = this.shades.shadeDataList;
-      // list.push(obj);
-      // this.shades.shadeDataList = [...list];
-    
+    // let obj = {
+    //   itemName: null,
+    //   concentration: null,
+    //   supplierName: null,
+    //   rate: null,
+    //   amount: null,
+    //   supplierId: null,
+    //   supplierItemId: null,
+    // };
+    // let list = this.shadeObj.shadeDataList;
+    // list.push(obj);
+    // this.shadeObj.shadeDataList = [...list];
+
     this.calculateAmount(rowIndex);
   }
 
   calculateAmount(rowIndex) {
-    let con = this.shades.shadeDataList[rowIndex].concentration;
-    let newRate = this.shades.shadeDataList[rowIndex].rate;
+    let con = this.shadeObj.shadeDataList[rowIndex].concentration;
+    let newRate = this.shadeObj.shadeDataList[rowIndex].rate;
     let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-    if (amount) this.shades.shadeDataList[rowIndex].amount = amount;
+    if (amount) this.shadeObj.shadeDataList[rowIndex].amount = amount;
   }
 
   setProcessName(id) {
-    this.processList.forEach((element) => {
-      if (id == element.id) {
-        this.shades.processName = element.name;
-      }
-    });
+    let processIndex = this.processList && this.processList.length ?this.processList.findIndex(v=> v.id == id): -1;
+    if(processIndex > -1) {
+      this.shadeObj.processName = this.processList[processIndex].name;
+    } else {
+      this.shadeObj.processName = '';
+    }
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
-      if (rowIndex === this.shades.shadeDataList.length - 1) {
-        let item = this.shades.shadeDataList[rowIndex];
+      if (rowIndex === this.shadeObj.shadeDataList.length - 1) {
+        let item = this.shadeObj.shadeDataList[rowIndex];
         if (colName == "itemName") {
           if (!item.itemName) {
             this.toastr.error("Enter item name", "item name required");
@@ -418,11 +395,11 @@ export class AddEditShadeComponent implements OnInit {
           rate: null,
           amount: null,
           supplierId: null,
-          supplierItemId: null,
+          supplierItemId: null
         };
-        let list = this.shades.shadeDataList;
+        let list = this.shadeObj.shadeDataList;
         list.push(obj);
-        this.shades.shadeDataList = [...list];
+        this.shadeObj.shadeDataList = [...list];
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -441,24 +418,21 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
-  checkedChange(event){
-      this.pendingFlag = event;
-   
-    this.shades.pending = event;
-  }
+
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
-    
-    if (shadeForm.valid) {
-      this.shades.createdBy = this.user.userId;
-      this.shades.userHeadId = this.userHead.userHeadId;
-      if (this.currentShadeId != null) {
-        this.shades.pending = this.pendingFlag;
 
+    if (shadeForm.valid) {
+      this.shadeObj.createdBy = this.user.userId;
+      this.shadeObj.userHeadId = this.userHead.userHeadId;
+
+      if(!Object.keys(this.shadeObj.shadeDataList.length).length){
+        this.shadeObj.shadeDataList = [];
       }
-      this.shadeService.addShadeData(this.shades).subscribe(
-        (data) => {
+
+      this.shadeService.addShadeData(this.shadeObj).subscribe(
+        data => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
@@ -468,17 +442,27 @@ export class AddEditShadeComponent implements OnInit {
           }
           this.disableButton = false;
         },
-        (error) => {
+        error => {
           this.toastr.error(errorData.Serever_Error);
-          this.disableButton=false;
+          this.disableButton = false;
         }
       );
     } else {
-      if(shadeForm.value.apcNo && shadeForm.value.partyName && shadeForm.value.processName && shadeForm.value.qualityName){
-        this.shades.createdBy = this.user.userId;
-        this.shades.userHeadId = this.userHead.userHeadId;
-        this.shadeService.addShadeData(this.shades).subscribe(
-          (data) => {
+      if (
+        shadeForm.value.apcNo &&
+        shadeForm.value.partyName &&
+        shadeForm.value.processName &&
+        shadeForm.value.qualityName
+      ) {
+
+        if(!Object.keys(this.shadeObj.shadeDataList.length).length){
+          this.shadeObj.shadeDataList = [];
+        }
+
+        this.shadeObj.createdBy = this.user.userId;
+        this.shadeObj.userHeadId = this.userHead.userHeadId;
+        this.shadeService.addShadeData(this.shadeObj).subscribe(
+          data => {
             if (data["success"]) {
               this.route.navigate(["/pages/shade"]);
               this.toastr.success(errorData.Add_Success);
@@ -487,9 +471,9 @@ export class AddEditShadeComponent implements OnInit {
             }
             this.disableButton = false;
           },
-          (error) => {
+          error => {
             this.toastr.error(errorData.Serever_Error);
-            this.disableButton=false;
+            this.disableButton = false;
           }
         );
       }
@@ -501,8 +485,8 @@ export class AddEditShadeComponent implements OnInit {
 
   removeItem(id) {
     //remove row
-    let idCount = this.shades.shadeDataList.length;
-    let item = this.shades.shadeDataList;
+    let idCount = this.shadeObj.shadeDataList.length;
+    let item = this.shadeObj.shadeDataList;
     if (idCount == 1) {
       item[0].itemName = null;
       item[0].concentration = null;
@@ -510,11 +494,11 @@ export class AddEditShadeComponent implements OnInit {
       item[0].rate = null;
       item[0].amount = null;
       let list = item;
-      this.shades.shadeDataList = [...list];
+      this.shadeObj.shadeDataList = [...list];
     } else {
       let removed = item.splice(id, 1);
       let list = item;
-      this.shades.shadeDataList = [...list];
+      this.shadeObj.shadeDataList = [...list];
     }
   }
   updateShade(shadeForm) {
@@ -523,9 +507,9 @@ export class AddEditShadeComponent implements OnInit {
     this.loading = true;
     this.formSubmitted = true;
     if (shadeForm.valid) {
-      this.shades.updatedBy = this.user.userId;
-      this.shadeService.updateShadeData(this.shades).subscribe(
-        (data) => {
+      this.shadeObj.updatedBy = this.user.userId;
+      this.shadeService.updateShadeData(this.shadeObj).subscribe(
+        data => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
@@ -534,14 +518,14 @@ export class AddEditShadeComponent implements OnInit {
           }
           this.loading = false;
         },
-        (error) => {
+        error => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
-          this.disableButton=false;
+          this.disableButton = false;
         }
       );
     } else {
-      this.disableButton=false;
+      this.disableButton = false;
       this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();

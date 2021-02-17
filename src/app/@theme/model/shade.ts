@@ -1,36 +1,39 @@
 export class Shade {
-  apcNo:Number;
-  pending:Boolean;
-  partyShadeNo: String;
-  processName: String;
-  qualityId: String;
-  qualityName: String;
-  qualityType: String;
-  colorTone: String;
-  labColorNo: String;
-  category: String;
-  remark: String;
-  createdBy: Number;
-  updatedBy: Number;
-  cuttingId: Number;
-  partyId: Number;
-  processId: Number;
-  userHeadId: Number;
+  apcNo: number;
+  pending: Boolean;
+  partyShadeNo: string;
+  processName: string;
+  qualityId: string;
+  qualityName: string;
+  qualityType: string;
+  colorTone: string;
+  labColorNo: string;
+  category: string;
+  remark: string;
+  createdBy: number;
+  updatedBy: number;
+  cuttingId: number;
+  partyId: number;
+  processId: number;
+  userHeadId: number;
   shadeDataList: ShadeDataList[];
+
+  constructor() {
+    this.pending = true;
+  }
 }
 
 export class ShadeDataList {
-  amount: Number;
-  concentration: Number;
-  itemName: String;
-  rate: Number;
-  supplierName: String;
-  supplierId: Number;
-  supplierItemId: Number;
+  amount: number;
+  concentration: number;
+  itemName: string;
+  rate: number;
+  supplierName: string;
+  supplierId: number;
+  supplierItemId: number;
 }
 
 export class QualityListEmpty {
-  qualityName: null
-  qualityType: null
-
+  qualityName: null;
+  qualityType: null;
 }

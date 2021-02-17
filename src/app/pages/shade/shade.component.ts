@@ -165,10 +165,12 @@ export class ShadeComponent implements OnInit {
           if (data['data'].length > 0) {
             this.shadeList = data['data'];
             this.shade = this.shadeList.map((element) => ({
+              id:element.id,
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
             this.copyShadeList = this.shadeList.map((element) => ({
+              id:element.id,
               partyShadeNo: element.partyShadeNo, processId: element.processId,
               qualityId: element.qualityId, qualityName: element.qualityName, partyId: element.partyId, colorTone: element.colorTone
             }))
