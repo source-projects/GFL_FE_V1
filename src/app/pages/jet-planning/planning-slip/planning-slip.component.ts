@@ -1,13 +1,15 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { DyeingChemicalData } from "app/@theme/model/dyeing-process";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
-import { JetPlanningService } from "app/@theme/services/jet-planning.service";
-import { PlanningSlipService } from "app/@theme/services/planning-slip.service";
+import { DyeingChemicalData } from "../../../@theme/model/dyeing-process";
+import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
+import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
+import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
 import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
-
+// import {AdditionSlip} from  "../../../@theme/model/additon-slip";
+// import {DyeingSlipItemDatum} from  "../../../@theme/model/additon-slip";
+// import {DyeingSlipData} from "../../../@theme/model/additon-slip";
 @Component({
   selector: "ngx-planning-slip",
   templateUrl: "./planning-slip.component.html",
@@ -16,7 +18,6 @@ import { DatePipe } from "@angular/common";
 })
 export class PlanningSlipComponent implements OnInit {
   public currentSlipId: any;
-
   public loading: boolean = false;
   public formSubmitted: boolean = false;
   public disableButton: boolean = false;
@@ -29,10 +30,34 @@ export class PlanningSlipComponent implements OnInit {
   @Input() batchId;
   @Input() stockId;
   @Input() additionSlipFlag: boolean;
-
+  @Input() editAdditionFlag: boolean;
   public itemListArray: any = [];
   public slipData: any;
+  public temp;
+  public holdTime;
+  public isColor;
+  public liquorRatio;
+  public itemList=[{
+    itemId:String,
+    quantity:Number,
+  }]
 
+  planningSlipArray = [
+    {
+      temp: null,
+      holdTime:null,
+      color:null,
+      itemList: [
+        {
+          itemName: null,
+          quantity: null,
+        },
+      ],
+    },
+  ];
+
+  //dyeingData:DyeingSlipData = new DyeingSlipData();
+  //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -46,13 +71,16 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.additionSlipFlag)
+    console.log(this.additionSlipFlag , this.batchId,this.stockId)
     this.getItemData();
     if (this.batchId && this.stockId) this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
     }
+    // if(this.editAdditionFlag){
+    //   this.getAdditionSlipData();
+    // }
   }
   // get activeModal() {
   //   return this._NgbActiveModal;
@@ -82,7 +110,8 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            
+            console.log(this.slipData)
+
             
           } else {
             this.toastr.error(data["msg"]);
@@ -141,6 +170,32 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
+  onKeyUp1(e, rowIndex, colIndex, colName){
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      this.index =
+        "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+
+        let obj = {
+          itemId : null,
+          quantity : null
+        }
+    
+        this.itemList.push(obj);
+            
+    }
+
+
+
+   
+       
+
+  }
+
+  removeItem1(rowIndex){
+    this.itemList.splice(rowIndex , 1);
+  }
+
   removeItem(rowIndex, parentDataIndex) {
     let idCount = this.slipData.dyeingSlipDataList[parentDataIndex]
       .dyeingSlipItemData.length;
@@ -190,9 +245,22 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   saveSlipData(myForm) {
+    console.log(myForm.value);
     this.formSubmitted = true;
     this.disableButton = true;
     if (myForm.valid) {
+    if(this.additionSlipFlag){
+      let slipObj = {
+        temp : myForm.value.temp,
+        holdTime : myForm.value.holdTime,
+        liquorRatio : myForm.value.liquorRatio,
+        isColor : myForm.value.isColor,
+        items : this.itemList
+
+
+      }
+      this.activeModal.close(slipObj);
+    }else{
       this.planningSlipService.updateSlipData(this.slipData).subscribe(
         (data) => {
           if (data["success"]) {
@@ -210,6 +278,9 @@ export class PlanningSlipComponent implements OnInit {
           this.disableButton = false;
         }
       );
+    }
+   
+     
     }
   }
 
@@ -255,4 +326,39 @@ export class PlanningSlipComponent implements OnInit {
     }, 10);
     
   }
+
+
+
+  addNew(e) {
+    console.log("usdhj");
+    // var ob = new BatchCard();
+    // ob.batchMW.push(new BatchMrtWt());
+    // if (this.stockDataValues.length) {
+    //   let index = this.stockDataValues.findIndex((v) => v.batchId == null);
+    //   if (index > -1 || this.flag) {
+    //     this.toastr.error("Please fill all the required fields");
+    //   } else {
+    //     let itemList = [...this.stockDataValues];
+    //     itemList = _.sortBy(itemList, "batchId", "asc");
+    //     let nextBatchId = itemList[itemList.length - 1].batchId;
+    //     ob.batchId = (++nextBatchId);
+    //     this.stockDataValues.push({ ...ob });
+    //     const className = "collapsible-panel--expanded";
+    //     if (e.target.classList.contains(className)) {
+    //       e.target.classList.remove(className);
+    //     } else {
+    //       e.target.classList.add(className);
+    //     }
+    //   }
+    // }
+  }
+
+  removeBatch(index) {
+  //   if (this.stockDataValues.length == 1) {
+  //     this.stockDataValues[0] = new BatchCard();
+  //     this.stockDataValues[0].batchMW.push(new BatchMrtWt());
+  //    }else {
+  //     this.stockDataValues.splice(index, 1);
+  //   }
+   }
 }

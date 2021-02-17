@@ -7,20 +7,20 @@ import {
 } from "@angular/cdk/drag-drop";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ShadeWithBatchComponent } from "../production-planning/shade-with-batch/shade-with-batch.component";
-import { JetPlanningService } from "app/@theme/services/jet-planning.service";
-import { JetPlanning, JetDataList } from "app/@theme/model/jet-planning";
+import { JetPlanningService } from "../../@theme/services/jet-planning.service";
+import { JetPlanning, JetDataList } from "../../@theme/model/jet-planning";
 import { ToastrService } from "ngx-toastr";
-import * as errorData from "app/@theme/json/error.json";
-import { ProductionPlanningService } from "app/@theme/services/production-planning.service";
-import { WarningPopupComponent } from "app/@theme/components/warning-popup/warning-popup.component";
-import { ProductionPlanning } from "app/@theme/model/production-planning";
-import { PartyService } from "app/@theme/services/party.service";
+import * as errorData from "../../@theme/json/error.json";
+import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
+import { WarningPopupComponent } from "../../@theme/components/warning-popup/warning-popup.component";
+import { ProductionPlanning } from "../../@theme/model/production-planning";
+import { PartyService } from "../../@theme/services/party.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { QualityService } from "app/@theme/services/quality.service";
-import { CommonService } from "app/@theme/services/common.service";
-import { StockBatchService } from "app/@theme/services/stock-batch.service";
-import { ProgramService } from "app/@theme/services/program.service";
-import { ShadeService } from "app/@theme/services/shade.service";
+import { QualityService } from "../../@theme/services/quality.service";
+import { CommonService } from "../../@theme/services/common.service";
+import { StockBatchService } from "../../@theme/services/stock-batch.service";
+import { ProgramService } from "../../@theme/services/program.service";
+import { ShadeService } from "../../@theme/services/shade.service";
 
 import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
@@ -533,6 +533,9 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.isPrintDirect = directPrint;
     modalRef.componentInstance.batchId = this.sendBatchId;
     modalRef.componentInstance.stockId = this.sendSotckId;
+    modalRef.componentInstance.additionSlipFlag = false;
+
+    
     modalRef.result.then((result) => {
       if (result) {
         console.log("Done");
