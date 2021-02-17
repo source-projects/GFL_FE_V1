@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DyeingChemicalData } from "../../../@theme/model/dyeing-process";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
@@ -7,9 +7,8 @@ import { PlanningSlipService } from "../../../@theme/services/planning-slip.serv
 import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
-// import {AdditionSlip} from  "../../../@theme/model/additon-slip";
-// import {DyeingSlipItemDatum} from  "../../../@theme/model/additon-slip";
-// import {DyeingSlipData} from "../../../@theme/model/additon-slip";
+import { AddShadeComponent } from "../../production-planning/add-shade/add-shade.component";
+
 @Component({
   selector: "ngx-planning-slip",
   templateUrl: "./planning-slip.component.html",
@@ -24,6 +23,7 @@ export class PlanningSlipComponent implements OnInit {
   public isSaved: boolean = false;
   public isPrinting: boolean = true;
   public saveClicked: boolean = false;
+  public approveByFlag: boolean = false;
   public index: string;
   public myDate: any;
   @Input() isPrintDirect: boolean;
@@ -31,30 +31,41 @@ export class PlanningSlipComponent implements OnInit {
   @Input() stockId;
   @Input() additionSlipFlag: boolean;
   @Input() editAdditionFlag: boolean;
+  @Input() additionSlipData;
   public itemListArray: any = [];
+  public printFlag = false;
   public slipData: any;
   public temp;
   public holdTime;
   public isColor;
   public liquorRatio;
-  public itemList=[{
-    itemId:String,
-    quantity:Number,
-  }]
+  public itemList = [
+    {
+      itemName: String,
+      itemId: String,
+      qty: Number,
+      supplierId: Number,
+      supplierName: String,
+    },
+  ];
 
   planningSlipArray = [
     {
       temp: null,
-      holdTime:null,
-      color:null,
+      holdTime: null,
+      color: null,
       itemList: [
         {
           itemName: null,
-          quantity: null,
+          itemId: null,
+          qty: null,
+          supplierId: null,
+          supplierName: null,
         },
       ],
     },
   ];
+  slipObj: any;
 
   //dyeingData:DyeingSlipData = new DyeingSlipData();
   //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
@@ -64,30 +75,28 @@ export class PlanningSlipComponent implements OnInit {
     private toastr: ToastrService,
     private datePipe: DatePipe,
     private DyeingProcessService: DyeingProcessService,
-    private planningSlipService: PlanningSlipService
+    private planningSlipService: PlanningSlipService,
+    private modalService: NgbModal
   ) {
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
   }
 
   ngOnInit(): void {
-    console.log(this.additionSlipFlag , this.batchId,this.stockId)
     this.getItemData();
-    if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+    if (!this.additionSlipFlag) {
+      if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+    }
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
     }
-    // if(this.editAdditionFlag){
-    //   this.getAdditionSlipData();
-    // }
+    if (this.editAdditionFlag) {
+      this.getUpdateDataForAdditionSlip();
+    }
   }
-  // get activeModal() {
-  //   return this._NgbActiveModal;
-  // }
 
   get activeModel() {
-
     return this.activeModal;
   }
 
@@ -110,9 +119,6 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            console.log(this.slipData)
-
-            
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -170,30 +176,24 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  onKeyUp1(e, rowIndex, colIndex, colName){
+  onKeyUp1(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index =
-        "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
 
-        let obj = {
-          itemId : null,
-          quantity : null
-        }
-    
-        this.itemList.push(obj);
-            
+      let obj = {
+        itemName: null,
+        itemId: null,
+        qty: null,
+        supplierId: null,
+        supplierName: null,
+      };
+      this.itemList.push(obj);
     }
-
-
-
-   
-       
-
   }
 
-  removeItem1(rowIndex){
-    this.itemList.splice(rowIndex , 1);
+  removeItem1(rowIndex) {
+    this.itemList.splice(rowIndex, 1);
   }
 
   removeItem(rowIndex, parentDataIndex) {
@@ -244,44 +244,73 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
 
+  itemSelected1(event, index) {
+    let i_id = event.target.value;
+    this.itemListArray.forEach((element) => {
+      if (element.itemId == i_id) {
+        this.itemList[index].itemName = element.itemName;
+        this.itemList[index].supplierId = element.supplierId;
+        this.itemList[index].supplierName = element.supplierName;
+      }
+    });
+  }
+
+  getUpdateDataForAdditionSlip() {
+    let additionData = this.additionSlipData.dyeingSlipData;
+    this.temp = additionData.temp;
+    this.holdTime = additionData.holdTime;
+    this.isColor = additionData.isColor;
+    this.liquorRatio = additionData.liquerRation;
+    this.itemList = additionData.dyeingSlipItemData;
+  }
+
   saveSlipData(myForm) {
-    console.log(myForm.value);
     this.formSubmitted = true;
     this.disableButton = true;
     if (myForm.valid) {
-    if(this.additionSlipFlag){
-      let slipObj = {
-        temp : myForm.value.temp,
-        holdTime : myForm.value.holdTime,
-        liquorRatio : myForm.value.liquorRatio,
-        isColor : myForm.value.isColor,
-        items : this.itemList
+      if (this.additionSlipFlag) {
+        this.slipObj = {
+          temp: myForm.value.temp,
+          holdTime: myForm.value.holdTime,
+          liquorRatio: myForm.value.liquorRatio,
+          isColor: myForm.value.isColor,
+          items: this.itemList,
+        };
+        this.isSaved = true;
 
-
-      }
-      this.activeModal.close(slipObj);
-    }else{
-      this.planningSlipService.updateSlipData(this.slipData).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.isSaved = true;
-            this.toastr.success(data["msg"]);
-            if(this.saveClicked)
-            this.activeModal.close();
-          } else {
-            this.toastr.error(data["msg"]);
-          }
-          this.disableButton = false;
-        },
-        (error) => {
-          this.toastr.error("Internal server error!");
-          this.disableButton = false;
+        if (this.isPrinting) {
+          this.activeModal.close(this.slipObj);
         }
-      );
+      } else {
+        this.planningSlipService.updateSlipData(this.slipData).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.isSaved = true;
+              this.toastr.success(data["msg"]);
+              if (this.saveClicked) this.activeModal.close();
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+            this.disableButton = false;
+          },
+          (error) => {
+            this.toastr.error("Internal server error!");
+            this.disableButton = false;
+          }
+        );
+      }
     }
-   
-     
-    }
+  }
+
+  approveByClicked() {
+    this.approveByFlag = true;
+    const modalRef = this.modalService.open(AddShadeComponent);
+    modalRef.componentInstance.editDyeingSlipFlag = true;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.slipData.approvedId = result;
+      }
+    });
   }
 
   printSlip(myForm?) {
@@ -292,7 +321,6 @@ export class PlanningSlipComponent implements OnInit {
       this.isSaved = true;
       this.getSlipDataFromBatch();
     }
-
     let interval1 = setInterval(() => {
       if (this.slipData && this.isSaved) {
         clearInterval(interval1);
@@ -317,6 +345,8 @@ export class PlanningSlipComponent implements OnInit {
           if (element) {
             doc.append(element);
             doc.print();
+            this.printFlag = true;
+            this.activeModal.close(this.slipObj);
             tempFlag = true;
             clearInterval(inter);
             this.activeModal.close();
@@ -324,41 +354,7 @@ export class PlanningSlipComponent implements OnInit {
         }, 10);
       }
     }, 10);
-    
   }
 
-
-
-  addNew(e) {
-    console.log("usdhj");
-    // var ob = new BatchCard();
-    // ob.batchMW.push(new BatchMrtWt());
-    // if (this.stockDataValues.length) {
-    //   let index = this.stockDataValues.findIndex((v) => v.batchId == null);
-    //   if (index > -1 || this.flag) {
-    //     this.toastr.error("Please fill all the required fields");
-    //   } else {
-    //     let itemList = [...this.stockDataValues];
-    //     itemList = _.sortBy(itemList, "batchId", "asc");
-    //     let nextBatchId = itemList[itemList.length - 1].batchId;
-    //     ob.batchId = (++nextBatchId);
-    //     this.stockDataValues.push({ ...ob });
-    //     const className = "collapsible-panel--expanded";
-    //     if (e.target.classList.contains(className)) {
-    //       e.target.classList.remove(className);
-    //     } else {
-    //       e.target.classList.add(className);
-    //     }
-    //   }
-    // }
-  }
-
-  removeBatch(index) {
-  //   if (this.stockDataValues.length == 1) {
-  //     this.stockDataValues[0] = new BatchCard();
-  //     this.stockDataValues[0].batchMW.push(new BatchMrtWt());
-  //    }else {
-  //     this.stockDataValues.splice(index, 1);
-  //   }
-   }
+  addNew(event) {}
 }

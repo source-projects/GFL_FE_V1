@@ -1,50 +1,104 @@
-<div class="modal-header nb-header">
-    <h4 class="modal-title nb-text">Choose Shade</h4>
-    <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true" class="close-icon">&times;</span>
-    </button>
-</div>
-<div class="modal-body mb-4">
-    <label class="required">Shade</label>
-    <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
-        [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
-         placeholder="Select Shade" class="required-error-dropdown">
-         <ng-option disabled="true">
-            <div class="row">
-                <div class="col-md-4 col-4">
-                    <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Shade Id</div>
-                </div>
-                <div class="col-md-4 col-4">
-                    <div class="text-center txt-ov-elips" style="font-weight:bold;font-size: large;">Party Code</div>
-                </div>
-                <div class="col-md-4 col-4">
-                    <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Color Tone</div>
-                </div>
-            </div>
-         </ng-option>
-        <ng-option *ngFor="let s of shadeList" [value]="s.id">
-            <div class="row">
-                <div class="col-md-4 col-4">
-                    <div class="text-left txt-ov-elips"> {{s.id}}</div>
-                </div>
-                <div class="col-md-4 col-4">
-                    <div class="text-center txt-ov-elips"> {{s.partyCode}}</div>
-                </div>
-                <div class="col-md-4 col-4" style="display: flex;justify-content: center;">
-                    <div class="text-right txt-ov-elips" style="width: 70%;">
-                        <input [(colorPicker)]="s.colorTone" style="width: 100%;" [style.background]="s.colorTone"
-                        [value]="s.colorTone" disabled="true"/>
+<div *ngIf="!editDyeingSlipFlag">
+
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Choose Shade</h4>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body mb-4">
+        <label class="required">Shade</label>
+        <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
+            [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
+            placeholder="Select Shade" class="required-error-dropdown">
+            <ng-option disabled="true">
+                <div class="row">
+                    <div class="col-md-4 col-4">
+                        <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Shade Id</div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <div class="text-center txt-ov-elips" style="font-weight:bold;font-size: large;">Party Code
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Color Tone</div>
                     </div>
                 </div>
-            </div>
-        </ng-option>
-    </ng-select>
-    <div class="required-class" *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
-        <span>Shade Id is required</span>
+            </ng-option>
+            <ng-option *ngFor="let s of shadeList" [value]="s.id">
+                <div class="row">
+                    <div class="col-md-4 col-4">
+                        <div class="text-left txt-ov-elips"> {{s.id}}</div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <div class="text-center txt-ov-elips"> {{s.partyCode}}</div>
+                    </div>
+                    <div class="col-md-4 col-4" style="display: flex;justify-content: center;">
+                        <div class="text-right txt-ov-elips" style="width: 70%;">
+                            <input [(colorPicker)]="s.colorTone" style="width: 100%;" [style.background]="s.colorTone"
+                                [value]="s.colorTone" disabled="true" />
+                        </div>
+                    </div>
+                </div>
+            </ng-option>
+        </ng-select>
+        <div class="required-class"
+            *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
+            <span>Shade Id is required</span>
+        </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onOkClick()">Ok</button>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onOkClick()">Ok</button>
 
-    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="addToJetClick()" >Add to jet</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="addToJetClick()">Add to jet</button>
+    </div>
+
+</div>
+
+
+<div *ngIf="editDyeingSlipFlag">
+
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Select Approve By</h4>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body mb-4">
+        <label class="required">Approve By</label>
+        <ng-select name="approveBy" [(ngModel)]='approveBy' required #approveBy1="ngModel"
+            [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}"
+            placeholder="Select approve by" class="required-error-dropdown">
+            <ng-option disabled="true">
+                <div class="row">
+                    <div class="col-md-4 col-4">
+                        <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Name</div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <div class="text-center txt-ov-elips" style="font-weight:bold;font-size: large;">Contact</div>
+                    </div>
+
+                </div>
+            </ng-option>
+            <ng-option *ngFor="let approve of approveByList" [value]="approve.id">
+                <div class="row">
+                    <div class="col-md-4 col-4">
+                        <div class="text-left txt-ov-elips"> {{approve.name}}</div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <div class="text-center txt-ov-elips"> {{approve.contact}}</div>
+                    </div>
+
+                </div>
+            </ng-option>
+        </ng-select>
+        <div class="required-class"
+            *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
+            <span>approve by is required</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onApproveClick()">Ok</button>
+    </div>
+
 </div>
