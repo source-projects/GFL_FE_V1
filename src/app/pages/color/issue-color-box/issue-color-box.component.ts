@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorService } from 'app/@theme/services/color.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ColorService } from '../../../@theme/services/color.service';
+import { SupplierService } from '../../../@theme/services/supplier.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from "app/@theme/json/error.json";
+import * as errorData from "../../../@theme/json/error.json";
 import { Router } from '@angular/router';
 
 
@@ -86,8 +86,7 @@ issueBox(form){
       }
       else {
         this.toastr.error(data['msg']);
-       //this.getJetData();
-        //this.getshade();
+
       }
 
     }
