@@ -31,7 +31,7 @@ export class PlanningSlipService {
   }
 
   getAlladditionSlipById(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/additionalDyeingSlipBy/'+id);
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipBy/'+id);
 
   }
 
@@ -41,7 +41,7 @@ export class PlanningSlipService {
   }
 
   deleteAdditionSlip(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/additionalDyeingSlipBy/'+id);
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/dyeingSlip/deleteAdditionalDyeingSlipBy/'+id);
 
   }
 }
