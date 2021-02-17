@@ -249,9 +249,9 @@
                                     <!-- <button *ngIf="this.currentSlipId != null" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
 
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
-                                        style="margin-right:20px" (click)="saveSlipData(myForm)">SAVE</button>
+                                        style="margin-right:20px" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
-                                        style="margin-right:20px" (click)="printSlip(myForm)">Save And Print</button>
+                                        style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And Print</button>
 
                                 </div>
                             </div>
@@ -460,7 +460,7 @@
                                         {{item.itemName}}
                                     </td>
                                     <td class="pd-bt">
-                                        {{item.qty | number}}
+                                        {{item.qty}}
                                     </td>
 
 

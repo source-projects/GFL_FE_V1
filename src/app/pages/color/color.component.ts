@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { ColorGuard } from 'app/@theme/guards/color.guard';
-import * as errorData from 'app/@theme/json/error.json';
-import { ColorService } from 'app/@theme/services/color.service';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
+import { ColorGuard } from '../../@theme/guards/color.guard';
+import * as errorData from '../../@theme/json/error.json';
+import { ColorService } from '../../@theme/services/color.service';
+import { CommonService } from '../../@theme/services/common.service';
+import { ExportService } from '../../@theme/services/export.service';
+import { JwtTokenService } from '../../@theme/services/jwt-token.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -82,11 +82,11 @@ export class ColorComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.colorGuard.accessRights('view')){
-      this.getColor(this.userId,"own");
+    if(this.colorGuard.accessRights('view all')){
+      this.getColor(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.colorGuard.accessRights('view group')){
       this.getColor(this.userId,"group");
@@ -94,11 +94,11 @@ export class ColorComponent implements OnInit {
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.colorGuard.accessRights('view all')){
-      this.getColor(0,"all");
+    else if(this.colorGuard.accessRights('view')){
+      this.getColor(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
