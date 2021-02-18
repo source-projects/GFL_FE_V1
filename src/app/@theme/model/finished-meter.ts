@@ -20,7 +20,7 @@ export class BatchData{
     isProductionPlanned:Boolean = false;
     isExtra:Boolean = false;
     sequenceId:number;
-    finishMtr:number;
+    finishMtr:string;
     isBillGenrated:Boolean = false;
 
     constructor(){
@@ -33,7 +33,7 @@ export class BatchData{
         this.isProductionPlanned= false;
         this.isExtra= false;
         this.sequenceId=0;
-        this.finishMtr=0;
+        this.finishMtr='0';
         this.isBillGenrated= false;   
     }
 }
