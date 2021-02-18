@@ -45,6 +45,7 @@ export class AddEditShadeComponent implements OnInit {
   supplierListRate: any;
   partyList: any[];
   categoryList = [{ name: "light" }, { name: "dark" }];
+  refreshFlag: any = 0;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -285,24 +286,17 @@ export class AddEditShadeComponent implements OnInit {
   //   this.shadeObj.pending = event;
   // }
 
-  itemSelected(rowIndex, row, elementId) {
-    let id = this.shadeObj.shadeDataList[rowIndex].itemName;
-    // let flag = false;
-    let count = 0;
-    this.shadeObj.shadeDataList.forEach(e => {
-      if (count != rowIndex) {
-        if (e.itemName == id)
-          // flag = true;
-          count++;
-      } else count++;
-    });
-    // if (!flag) {
+  itemSelected(rowIndex, row) {
+    if(this.refreshFlag > 10){
+      this.refreshFlag = 0;
+    }
+    this.refreshFlag++;
     let newSupplierId;
     for (let s of this.supplierList) {
-      if (id == s.itemName) {
-        this.shadeObj.shadeDataList[rowIndex].rate = s.rate;
+      if (row.supplierItemId == s.id) {
+        row.rate = s.rate;
         newSupplierId = s.supplierId;
-        this.shadeObj.shadeDataList[rowIndex].supplierItemId = s.id;
+        row.itemName = s.itemName;
         break;
       }
     }
@@ -313,29 +307,6 @@ export class AddEditShadeComponent implements OnInit {
         break;
       }
     }
-    // } else {
-    //   this.toastr.error("This item name is already selected");
-
-    //   // this.shadeObj.shadeDataList[rowIndex].itemName = "";
-    //   this.shadeObj.shadeDataList[rowIndex].itemName=undefined;
-    //   this.shadeObj.shadeDataList[rowIndex].concentration = null;
-    //   this.shadeObj.shadeDataList[rowIndex].supplierId = 0;
-    //   this.shadeObj.shadeDataList[rowIndex].rate = null;
-    //   this.shadeObj.shadeDataList[rowIndex].amount = null;
-    //   // .splice(rowIndex,1);
-
-    // let obj = {
-    //   itemName: null,
-    //   concentration: null,
-    //   supplierName: null,
-    //   rate: null,
-    //   amount: null,
-    //   supplierId: null,
-    //   supplierItemId: null,
-    // };
-    // let list = this.shadeObj.shadeDataList;
-    // list.push(obj);
-    // this.shadeObj.shadeDataList = [...list];
 
     this.calculateAmount(rowIndex);
   }
@@ -427,7 +398,7 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.createdBy = this.user.userId;
       this.shadeObj.userHeadId = this.userHead.userHeadId;
 
-      if(!Object.keys(this.shadeObj.shadeDataList.length).length){
+      if(this.shadeObj.shadeDataList.length && !Object.keys(this.shadeObj.shadeDataList[0]).length){
         this.shadeObj.shadeDataList = [];
       }
 
@@ -455,7 +426,7 @@ export class AddEditShadeComponent implements OnInit {
         shadeForm.value.qualityName
       ) {
 
-        if(!Object.keys(this.shadeObj.shadeDataList.length).length){
+        if(this.shadeObj.shadeDataList.length && !Object.keys(this.shadeObj.shadeDataList[0]).length){
           this.shadeObj.shadeDataList = [];
         }
 

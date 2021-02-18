@@ -219,18 +219,18 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Item Name" prop="shadeObj.itemName" [sortable]="false"
+                            <ngx-datatable-column name="Item Name" prop="shadeObj.supplierItemId" [sortable]="false"
                                 [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <ng-select (change)="itemSelected(rowIndex,row)" #itemName1="ngModel"
                                         name='itemName{{rowIndex}}' class="tableForm" id="itemName"
-                                        [(ngModel)]="row.itemName" required
+                                        [(ngModel)]="row.supplierItemId" required
                                         (keyup)="onKeyUp($event,rowIndex,0,'itemName')"
                                         [id]="'supplierList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none"
                                         [disabled]="shadeObj.pending">
                                         <ng-option
-                                            *ngFor="let s of (supplierList | filterOutSelectedShade : shadeObj.shadeDataList)"
-                                            [value]="s.itemName">{{s.itemName}} - {{s.supplierName}}
+                                            *ngFor="let s of (supplierList | filterOutSelectedShade : shadeObj.shadeDataList:refreshFlag)"
+                                            [value]="s.id">{{s.itemName}} - {{s.supplierName}}
                                         </ng-option>
                                     </ng-select>
                                     <div [ngClass]="{'required':!shadeObj.pending }">
