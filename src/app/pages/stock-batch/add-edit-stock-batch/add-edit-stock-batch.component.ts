@@ -224,6 +224,9 @@ export class AddEditStockBatchComponent implements OnInit {
             }
             else {
               this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
+              this.stockBatch.batchData.forEach((element,index) => {
+                  this.production_flag[index] = element.isProductionPlanned
+              })
               this.setStockDataValues1();
             }
 

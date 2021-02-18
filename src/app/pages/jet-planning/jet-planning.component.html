@@ -99,8 +99,8 @@
                 <td>
                     <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
                         class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop" *ngFor="let index of j.jetDataList"
-                            (click)="setIndexForSlip(index)" cdkDrag>
+                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone"
+                            (click)="setIndexForSlip(index)" cdkDrag><!--[style.background]="index.colorTone"-->
                             <button style="color:white;border: none;background: none;"
                                 nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click"
                                 class="jet-btn-changes">
