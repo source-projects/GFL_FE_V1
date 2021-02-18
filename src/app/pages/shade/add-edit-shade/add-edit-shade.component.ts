@@ -420,10 +420,10 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       if (
-        shadeForm.value.apcNo &&
-        shadeForm.value.partyName &&
-        shadeForm.value.processName &&
-        shadeForm.value.qualityName
+        this.shadeObj.apcNo &&
+        this.shadeObj.partyId &&
+        this.shadeObj.processId &&
+        this.shadeObj.qualityId
       ) {
 
         if(this.shadeObj.shadeDataList.length && !Object.keys(this.shadeObj.shadeDataList[0]).length){

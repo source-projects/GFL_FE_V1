@@ -20,6 +20,8 @@ export class Shade {
 
   constructor() {
     this.pending = true;
+    this.apcNo = null;
+    this.partyShadeNo = null;
   }
 }
 
