@@ -132,7 +132,6 @@ export class JetPlanningComponent implements OnInit {
       status: this.jetStatus,
     };
     this.changeJetStatusApiCall(obj);
-    console.log(obj);
   }
   completeChangeStatus() {
     this.jetStatus = "success";
@@ -142,7 +141,6 @@ export class JetPlanningComponent implements OnInit {
       status: this.jetStatus,
     };
     this.changeJetStatusApiCall(obj);
-    console.log(obj);
   }
 
   changeJetStatusApiCall(data: any) {
@@ -276,7 +274,6 @@ export class JetPlanningComponent implements OnInit {
               data["data"].partyShadeNo +
               " Batch Weight: " +
               data["data"].totalWt;
-            console.log(this.detailsList);
             this.items = [
               {
                 title: "Change Status",
@@ -538,7 +535,6 @@ export class JetPlanningComponent implements OnInit {
     
     modalRef.result.then((result) => {
       if (result) {
-        console.log("Done");
       }
     });
   }

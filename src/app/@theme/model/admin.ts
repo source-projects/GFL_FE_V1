@@ -1,46 +1,49 @@
-export class AddJet{
-    capacity: number;
-    liquorRatio: number;
-    name: string;
+export class AddJet {
+  capacity: number;
+  liquorRatio: number;
+  name: string;
 
-    constructor() {
-        this.capacity = null;
-        this.liquorRatio = null;
-        this.name = null;
-      
-    }
+  constructor() {
+    this.capacity = null;
+    this.liquorRatio = null;
+    this.name = null;
+  }
 }
 
-export class AddCompany{
-    id:number;
-    name:string;
-    constructor() {
-        this.id = 0;
-        this.name = null;
-      
-    }
+export class AddCompany {
+  id: number;
+  name: string;
+  constructor() {
+    this.id = 0;
+    this.name = null;
+  }
+}
+export class AddDepartment {
+  id: number;
+  name: string;
+  constructor() {
+    this.id = 0;
+    this.name = null;
+  }
+}
+export class AddDesignation {
+  id: number;
+  designation: string;
+  constructor() {
+    this.id = null;
+    this.designation = null;
+  }
 }
 
-export class AddDesignation{
-    id:number;
-    designation:string;
-    constructor() {
-        this.id = null;
-        this.designation = null;
-      
-    }
-}
-
-export class ApproveBy{
-    id:number;
-    name:string;
-    contact:string;
-    email:string;
-    constructor() {
-        this.id = null;
-        this.name = null;
-        this.contact = null;
-        this.email = null;
-      
-    }
+export class ApproveBy {
+  id: number;
+  name: string;
+  contact: string;
+  email: string;
+  constructor() {
+    this.id = null;
+    this.name = null;
+    this.contact = null;
+    this.email = null;
+  }
 }
