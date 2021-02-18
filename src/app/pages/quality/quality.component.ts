@@ -175,9 +175,9 @@ open(){
       data => {
         if (data['success']) {
           this.qualityList = data['data']
-          this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+          this.quality=this.qualityList.map((element)=>({id:element.id,qualityId:element.qualityId, qualityName: element.qualityName,
              qualityType: element.qualityType,partyName:element.partyName }))
-             this.copyQualityList = this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+             this.copyQualityList = this.qualityList.map((element)=>({id:element.id,qualityId:element.qualityId, qualityName: element.qualityName,
               qualityType: element.qualityType,partyName:element.partyName }));
             this.loading = false;
             if(this.qualityList.length>0)

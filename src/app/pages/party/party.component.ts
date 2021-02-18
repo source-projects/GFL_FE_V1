@@ -275,10 +275,10 @@ export class PartyComponent implements OnInit {
           this.rowData = this.partyList;
           //this.getGrid();
           this.copyPartyList = data["data"]
-          this.party=this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
+          this.party=this.partyList.map((element)=>({id:element.id,partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
             city:element.city, state: element.state}))
-          // this.copyPartyList = this.partyList.map((element)=>({partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
-          //   city:element.city, state: element.state}));
+          this.copyPartyList = this.partyList.map((element)=>({id:element.id,partyName:element.partyName, partyAddress1: element.partyAddress1, contactNo: element.contactNo,
+            city:element.city, state: element.state}));
         }
         else {
           // this.toastr.error(data['msg'])

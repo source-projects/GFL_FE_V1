@@ -13,6 +13,7 @@ import * as errorData from "../../../@theme/json/error.json";
 })
 export class PendingApcComponent implements OnInit {
   apcList = [];
+  copyApcList = [];
   tableStyle = "bootstrap";
   loading = false;
   userId:any;
@@ -34,6 +35,26 @@ export class PendingApcComponent implements OnInit {
    
   }
 
+  filter(value:any){
+    const val = value.toString().toLowerCase().trim();
+    const count = this.copyApcList.length;
+    const keys = Object.keys(this.copyApcList[0]);
+    this.apcList = this.copyApcList.filter(item => {
+      for (let i = 0; i < count; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]]
+              .toString()
+              .toLowerCase()
+              .indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
   getallShades(id, getBy) {
     let shadeList1 = [];
     this.loading = true;
@@ -42,6 +63,12 @@ export class PendingApcComponent implements OnInit {
         if (data['success']) {
           if (data['data'].length > 0) {
             this.apcList = data['data'];
+
+            this.copyApcList = this.apcList.map((element) => ({
+              id:element.id,apcNo: element.apcNo, partyShadeNo: element.partyShadeNo,
+              processName: element.processName, pending: element.pending, qualityId: element.qualityId,
+              qualityName: element.qualityName, partyId: element.partyId, colorTone: element.colorTone
+            }))
           }
         }
         this.loading = false;
