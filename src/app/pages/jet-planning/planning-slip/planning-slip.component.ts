@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { DyeingChemicalData } from "../../../@theme/model/dyeing-process";
+import { DyeingChemicalData, DyeingProcessData } from "../../../@theme/model/dyeing-process";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
@@ -17,6 +17,22 @@ import { DatePipe } from "@angular/common";
   providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
+
+  count:any;
+  supplierSelected = [];
+  itemIndex:number;
+  public processTypes = [
+    "Scouring",
+    "Dyeing",
+    "RC",
+    "Cold Wash",
+    "Addition"
+  ];
+
+
+  addNewFlag:boolean = false;
+  dyeingProcessStepNew:any;
+  dyeingChemicalData = [];
   public currentSlipId: any;
   public loading: boolean = false;
   public formSubmitted: boolean = false;
@@ -31,7 +47,7 @@ export class PlanningSlipComponent implements OnInit {
   @Input() stockId;
   @Input() additionSlipFlag: boolean;
   @Input() editAdditionFlag: boolean;
-  public itemListArray: any = [];
+  public itemListArray = [];
   public slipData: any;
   public temp;
   public holdTime;
@@ -71,7 +87,6 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.additionSlipFlag , this.batchId,this.stockId)
     this.getItemData();
     if (this.batchId && this.stockId) this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
@@ -110,8 +125,7 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            console.log(this.slipData)
-
+            console.log("Slip Data:",this.slipData)
             
           } else {
             this.toastr.error(data["msg"]);
@@ -228,24 +242,29 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  itemSelected(rowIndex, parentIndex) {
-    this.itemListArray.forEach((e) => {
-      if (
-        e.itemId ==
-        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
-      ) {
-        this.slipData.dyeingSlipDataList[
-          parentIndex
-        ].dyeingSlipItemData.supplierName = e.supplierName;
-        this.slipData.dyeingSlipDataList[
-          parentIndex
-        ].dyeingSlipItemData.itemName = e.itemName;
-      }
-    });
+  itemSelected(event, parentIndex) {
+    console.log("Event:",event);
+    console.log("Index:",parentIndex)
+
+    this.supplierSelected.push(event);
+    this.itemIndex = parentIndex;
+    // this.itemListArray.forEach((e) => {
+    //   if (
+    //     e.itemId ==
+    //     this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
+    //   ) {
+    //     this.slipData.dyeingSlipDataList[
+    //       parentIndex
+    //     ].dyeingSlipItemData.supplierName = e.supplierName;
+    //     this.slipData.dyeingSlipDataList[
+    //       parentIndex
+    //     ].dyeingSlipItemData.itemName = e.itemName;
+    //   }
+    // });
   }
 
   saveSlipData(myForm) {
-    console.log(myForm.value);
+    console.log("FORM:",myForm.value);
     this.formSubmitted = true;
     this.disableButton = true;
     if (myForm.valid) {
@@ -329,29 +348,60 @@ export class PlanningSlipComponent implements OnInit {
 
 
 
-  addNew(e) {
-    console.log("usdhj");
-    // var ob = new BatchCard();
-    // ob.batchMW.push(new BatchMrtWt());
-    // if (this.stockDataValues.length) {
-    //   let index = this.stockDataValues.findIndex((v) => v.batchId == null);
-    //   if (index > -1 || this.flag) {
-    //     this.toastr.error("Please fill all the required fields");
-    //   } else {
-    //     let itemList = [...this.stockDataValues];
-    //     itemList = _.sortBy(itemList, "batchId", "asc");
-    //     let nextBatchId = itemList[itemList.length - 1].batchId;
-    //     ob.batchId = (++nextBatchId);
-    //     this.stockDataValues.push({ ...ob });
-    //     const className = "collapsible-panel--expanded";
-    //     if (e.target.classList.contains(className)) {
-    //       e.target.classList.remove(className);
-    //     } else {
-    //       e.target.classList.add(className);
-    //     }
-    //   }
-    // }
+  addNew(){
+    this.dyeingChemicalData = [];
+    this.supplierSelected = [];
+    this.liquorRatio = null;
+    this.isColor = false;
+    this.count = this.count + 1;
+    this.addNewFlag = true;
+    this.dyeingProcessStepNew = new DyeingProcessData();
+    this.dyeingChemicalData.push(new DyeingChemicalData());
   }
+
+  onCreate(){
+
+    console.log("dyeingProcessStepNew:",this.dyeingProcessStepNew)
+    console.log("dyeingChemicalData:",this.dyeingChemicalData)
+
+
+    this.count = this.slipData.dyeingSlipDataList.length;
+    this.slipData.dyeingSlipDataList.push(this.dyeingProcessStepNew);
+    this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData = [];
+    this.slipData.dyeingSlipDataList[this.count].liquerRation = this.liquorRatio;
+    this.slipData.dyeingSlipDataList[this.count].isColor = this.isColor;
+
+    for(let i=0;i<this.supplierSelected.length;i++){
+      this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData.push(this.dyeingChemicalData[i]);
+
+      this.itemListArray.forEach((ele)=>{
+        if (ele.itemId == this.supplierSelected[i]){
+          this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[i].supplierId = ele.supplierId;
+          this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[i].supplierName = ele.supplierName;
+          this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[i].itemName = ele.itemName;
+        }
+      })
+    }
+
+    
+    this.addNewFlag = false;
+  }
+
+
+  onEnter(e){
+
+    let keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {  
+      this.dyeingChemicalData.push  (new DyeingChemicalData());
+    }
+  }
+
+  removeChemicalData(index:any){
+
+    this.dyeingChemicalData.splice(index,1);
+  }
+  
+  
 
   removeBatch(index) {
   //   if (this.stockDataValues.length == 1) {
