@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { DyeingChemicalData } from "app/@theme/model/dyeing-process";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
-import { JetPlanningService } from "app/@theme/services/jet-planning.service";
-import { PlanningSlipService } from "app/@theme/services/planning-slip.service";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DyeingChemicalData } from "../../../@theme/model/dyeing-process";
+import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
+import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
+import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
 import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
+import { AddShadeComponent } from "../../production-planning/add-shade/add-shade.component";
 
 @Component({
   selector: "ngx-planning-slip",
@@ -16,50 +17,87 @@ import { DatePipe } from "@angular/common";
 })
 export class PlanningSlipComponent implements OnInit {
   public currentSlipId: any;
-
   public loading: boolean = false;
   public formSubmitted: boolean = false;
   public disableButton: boolean = false;
   public isSaved: boolean = false;
   public isPrinting: boolean = true;
   public saveClicked: boolean = false;
+  public approveByFlag: boolean = false;
   public index: string;
   public myDate: any;
   @Input() isPrintDirect: boolean;
   @Input() batchId;
   @Input() stockId;
   @Input() additionSlipFlag: boolean;
-
+  @Input() editAdditionFlag: boolean;
+  @Input() additionSlipData;
   public itemListArray: any = [];
+  public printFlag = false;
+  public saveFlag = false;
   public slipData: any;
+  public temp;
+  public holdTime;
+  public isColor;
+  public liquorRatio;
+  public itemList = [
+    {
+      itemName: String,
+      itemId: String,
+      qty: Number,
+      supplierId: Number,
+      supplierName: String,
+    },
+  ];
 
+  planningSlipArray = [
+    {
+      temp: null,
+      holdTime: null,
+      color: null,
+      itemList: [
+        {
+          itemName: null,
+          itemId: null,
+          qty: null,
+          supplierId: null,
+          supplierName: null,
+        },
+      ],
+    },
+  ];
+  slipObj: any;
+
+  //dyeingData:DyeingSlipData = new DyeingSlipData();
+  //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
 
   constructor(
     public activeModal: NgbActiveModal,
     private toastr: ToastrService,
     private datePipe: DatePipe,
     private DyeingProcessService: DyeingProcessService,
-    private planningSlipService: PlanningSlipService
+    private planningSlipService: PlanningSlipService,
+    private modalService: NgbModal
   ) {
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
   }
 
   ngOnInit(): void {
-    // console.log(this.additionSlipFlag)
     this.getItemData();
-    if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+    // if (!this.additionSlipFlag) {
+      if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+    // }
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
     }
+    if (this.editAdditionFlag) {
+      this.getUpdateDataForAdditionSlip();
+    }
   }
-  // get activeModal() {
-  //   return this._NgbActiveModal;
-  // }
 
   get activeModel() {
-
     return this.activeModal;
   }
 
@@ -76,14 +114,13 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   getSlipDataFromBatch() {
+
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            
-            
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -141,6 +178,26 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
+  onKeyUp1(e, rowIndex, colIndex, colName) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      this.index = "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+
+      let obj = {
+        itemName: null,
+        itemId: null,
+        qty: null,
+        supplierId: null,
+        supplierName: null,
+      };
+      this.itemList.push(obj);
+    }
+  }
+
+  removeItem1(rowIndex) {
+    this.itemList.splice(rowIndex, 1);
+  }
+
   removeItem(rowIndex, parentDataIndex) {
     let idCount = this.slipData.dyeingSlipDataList[parentDataIndex]
       .dyeingSlipItemData.length;
@@ -189,28 +246,73 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
 
+  itemSelected1(event, index) {
+    let i_id = event.target.value;
+    this.itemListArray.forEach((element) => {
+      if (element.itemId == i_id) {
+        this.itemList[index].itemName = element.itemName;
+        this.itemList[index].supplierId = element.supplierId;
+        this.itemList[index].supplierName = element.supplierName;
+      }
+    });
+  }
+
+  getUpdateDataForAdditionSlip() {
+    let additionData = this.additionSlipData.dyeingSlipData;
+    this.temp = additionData.temp;
+    this.holdTime = additionData.holdTime;
+    this.isColor = additionData.isColor;
+    this.liquorRatio = additionData.liquerRation;
+    this.itemList = additionData.dyeingSlipItemData;
+  }
+
   saveSlipData(myForm) {
     this.formSubmitted = true;
     this.disableButton = true;
     if (myForm.valid) {
-      this.planningSlipService.updateSlipData(this.slipData).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.isSaved = true;
-            this.toastr.success(data["msg"]);
-            if(this.saveClicked)
-            this.activeModal.close();
-          } else {
-            this.toastr.error(data["msg"]);
-          }
-          this.disableButton = false;
-        },
-        (error) => {
-          this.toastr.error("Internal server error!");
-          this.disableButton = false;
+      if (this.additionSlipFlag) {
+        this.slipObj = {
+          temp: myForm.value.temp,
+          holdTime: myForm.value.holdTime,
+          liquorRatio: myForm.value.liquorRatio,
+          isColor: myForm.value.isColor,
+          items: this.itemList,
+        };
+        this.isSaved = true;
+
+        if (this.saveFlag) {
+          this.activeModal.close(this.slipObj);
         }
-      );
+      } else {
+        this.planningSlipService.updateSlipData(this.slipData).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.isSaved = true;
+              this.toastr.success(data["msg"]);
+              if (this.saveClicked) this.activeModal.close();
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+            this.disableButton = false;
+          },
+          (error) => {
+            this.toastr.error("Internal server error!");
+            this.disableButton = false;
+          }
+        );
+      }
     }
+  }
+
+  approveByClicked() {
+    this.approveByFlag = true;
+    const modalRef = this.modalService.open(AddShadeComponent);
+    modalRef.componentInstance.editDyeingSlipFlag = true;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.slipData.approvedId = result;
+      }
+    });
   }
 
   printSlip(myForm?) {
@@ -221,7 +323,6 @@ export class PlanningSlipComponent implements OnInit {
       this.isSaved = true;
       this.getSlipDataFromBatch();
     }
-
     let interval1 = setInterval(() => {
       if (this.slipData && this.isSaved) {
         clearInterval(interval1);
@@ -246,6 +347,8 @@ export class PlanningSlipComponent implements OnInit {
           if (element) {
             doc.append(element);
             doc.print();
+           // this.printFlag = true;
+            this.activeModal.close(this.slipObj);
             tempFlag = true;
             clearInterval(inter);
             this.activeModal.close();
@@ -253,6 +356,7 @@ export class PlanningSlipComponent implements OnInit {
         }, 10);
       }
     }, 10);
-    
   }
+
+  addNew(event) {}
 }

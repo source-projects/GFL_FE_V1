@@ -7,6 +7,8 @@ import * as errorData from "../../../@theme/json/error.json";
 import { ShadeWithBatchComponent } from "../shade-with-batch/shade-with-batch.component";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { Router } from "@angular/router";
+import { AdminService } from "../../../@theme/services/admin.service";
+// import { AdminService } from '../../../@theme/services/admin.service';
 
 @Component({
   selector: "ngx-add-shade",
@@ -20,9 +22,12 @@ export class AddShadeComponent implements OnInit {
   @Input("batchControl") batchControl: any;
   @Input("shadeId") shadeIdReceived: any;
   @Input("colorTone") colorToneReceviced: any;
+  @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
+  approveBy: any;
+  approveByList: any[];
   public loading = false;
   shadeId: Number;
   formSubmitted: boolean = false;
@@ -42,6 +47,7 @@ export class AddShadeComponent implements OnInit {
   };
   constructor(
     private _NgbActiveModal: NgbActiveModal,
+    private adminService: AdminService,
     private shadeService: ShadeService,
     private productionPlanningService: ProductionPlanningService,
     private modalService: NgbModal,
@@ -51,11 +57,11 @@ export class AddShadeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getShadeList();
-    // console.log(this.party);
-    // console.log(this.quality);
-    // console.log(this.batch);
-    // console.log(this.batchControl);
+    if (this.editDyeingSlipFlag) {
+      this.getApproveBy();
+    } else {
+      this.getShadeList();
+    }
   }
 
   get activeModal() {
@@ -84,6 +90,22 @@ export class AddShadeComponent implements OnInit {
       );
   }
 
+  getApproveBy() {
+    this.loading = true;
+
+    this.adminService.getAllApproveByData().subscribe((data) => {
+      if (data["success"]) {
+        this.approveByList = data["data"];
+        this.loading = false;
+      } else {
+        // this.toastr.error(data["msg"]);
+        this.loading = false;
+      }
+    });
+  }
+  onApproveClick() {
+    this.activeModal.close(this.approveBy);
+  }
   onOkClick() {
     this.productionData.batchId = this.batch;
     this.productionData.partyId = this.party;
