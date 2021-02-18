@@ -22,10 +22,17 @@
 
 .slip-value{
   border-style: groove; 
-  width:100px
+  width:150px;
+
 }
 
 .slip-background{
   display: flex;
   background-color: cadetblue;
+}
+
+.print-data{
+  color: #aa3634 !important; 
+  border-style: groove;
+  width: 50px;
 }
