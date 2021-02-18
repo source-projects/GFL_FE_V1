@@ -183,15 +183,9 @@ export class JetPlanningComponent implements OnInit {
     this.items = [
       {
         title: "Change Status",
-        children: [
-          {
-            title: "Complete",
-          },
-          {
-            title: "Pause",
-          },
-        ],
       },
+      { title: "Complete" },
+      { title: "Pause" },
       { title: "Print" },
       { title: "Edit And Print" },
       {
@@ -277,15 +271,9 @@ export class JetPlanningComponent implements OnInit {
             this.items = [
               {
                 title: "Change Status",
-                children: [
-                  {
-                    title: "Complete",
-                  },
-                  {
-                    title: "Pause",
-                  },
-                ],
               },
+              { title: "Complete" },
+              { title: "Pause" },
               { title: "Print" },
               { title: "Edit And Print" },
               {
@@ -532,7 +520,6 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.stockId = this.sendSotckId;
     modalRef.componentInstance.additionSlipFlag = false;
 
-    
     modalRef.result.then((result) => {
       if (result) {
       }

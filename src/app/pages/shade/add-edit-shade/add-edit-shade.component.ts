@@ -50,6 +50,10 @@ export class AddEditShadeComponent implements OnInit {
   supplierListRate: any;
   partyList: any[];
   categoryList = [{ name: "light" }, { name: "dark" }];
+  totalAmount: any = 0;
+  costKg: any = 0;
+  costMtr: any = 0;
+  amountArray: any[] = [];
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -68,7 +72,7 @@ export class AddEditShadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.shades.pending = this.pendingFlag;
-
+    this.totalAmount = 0;
     this.getUserId();
     this.getQualityList();
     this.getPartyList();
@@ -305,65 +309,96 @@ export class AddEditShadeComponent implements OnInit {
   // }
 
   itemSelected(rowIndex, row, elementId) {
-    let id = this.shades.shadeDataList[rowIndex].itemName;
-    // let flag = false;
-    let count = 0;
-    this.shades.shadeDataList.forEach((e) => {
-      if (count != rowIndex) {
-        if (e.itemName == id)
-          // flag = true;
-          count++;
-      } else count++;
-    });
-    // if (!flag) {
-    let newSupplierId;
-    for (let s of this.supplierList) {
-      if (id == s.itemName) {
-        this.shades.shadeDataList[rowIndex].rate = s.rate;
-        newSupplierId = s.supplierId;
-        this.shades.shadeDataList[rowIndex].supplierItemId = s.id;
-        break;
+    if (this.shades.qualityId != undefined) {
+      let id = this.shades.shadeDataList[rowIndex].itemName;
+      // let flag = false;
+      let count = 0;
+      this.shades.shadeDataList.forEach((e) => {
+        if (count != rowIndex) {
+          if (e.itemName == id)
+            // flag = true;
+            count++;
+        } else count++;
+      });
+      // if (!flag) {
+      let newSupplierId;
+      for (let s of this.supplierList) {
+        if (id == s.itemName) {
+          this.shades.shadeDataList[rowIndex].rate = s.rate;
+          newSupplierId = s.supplierId;
+          this.shades.shadeDataList[rowIndex].supplierItemId = s.id;
+          break;
+        }
       }
-    }
-    for (let s1 of this.supplierListRate) {
-      if (newSupplierId == s1.id) {
-        this.shades.shadeDataList[rowIndex].supplierName = s1.supplierName;
-        this.shades.shadeDataList[rowIndex].supplierId = s1.id;
-        break;
+      for (let s1 of this.supplierListRate) {
+        if (newSupplierId == s1.id) {
+          this.shades.shadeDataList[rowIndex].supplierName = s1.supplierName;
+          this.shades.shadeDataList[rowIndex].supplierId = s1.id;
+          break;
+        }
       }
+      // } else {
+      //   this.toastr.error("This item name is already selected");
+
+      //   // this.shades.shadeDataList[rowIndex].itemName = "";
+      //   this.shades.shadeDataList[rowIndex].itemName=undefined;
+      //   this.shades.shadeDataList[rowIndex].concentration = null;
+      //   this.shades.shadeDataList[rowIndex].supplierId = 0;
+      //   this.shades.shadeDataList[rowIndex].rate = null;
+      //   this.shades.shadeDataList[rowIndex].amount = null;
+      //   // .splice(rowIndex,1);
+
+      // let obj = {
+      //   itemName: null,
+      //   concentration: null,
+      //   supplierName: null,
+      //   rate: null,
+      //   amount: null,
+      //   supplierId: null,
+      //   supplierItemId: null,
+      // };
+      // let list = this.shades.shadeDataList;
+      // list.push(obj);
+      // this.shades.shadeDataList = [...list];
+
+      this.calculateAmount(rowIndex);
+    } else {
+      this.shades.shadeDataList[rowIndex].itemName = "";
+      this.toastr.error("Select Quality");
+      return;
     }
-    // } else {
-    //   this.toastr.error("This item name is already selected");
-
-    //   // this.shades.shadeDataList[rowIndex].itemName = "";
-    //   this.shades.shadeDataList[rowIndex].itemName=undefined;
-    //   this.shades.shadeDataList[rowIndex].concentration = null;
-    //   this.shades.shadeDataList[rowIndex].supplierId = 0;
-    //   this.shades.shadeDataList[rowIndex].rate = null;
-    //   this.shades.shadeDataList[rowIndex].amount = null;
-    //   // .splice(rowIndex,1);
-
-    // let obj = {
-    //   itemName: null,
-    //   concentration: null,
-    //   supplierName: null,
-    //   rate: null,
-    //   amount: null,
-    //   supplierId: null,
-    //   supplierItemId: null,
-    // };
-    // let list = this.shades.shadeDataList;
-    // list.push(obj);
-    // this.shades.shadeDataList = [...list];
-
-    this.calculateAmount(rowIndex);
   }
 
   calculateAmount(rowIndex) {
-    let con = this.shades.shadeDataList[rowIndex].concentration;
-    let newRate = this.shades.shadeDataList[rowIndex].rate;
-    let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-    if (amount) this.shades.shadeDataList[rowIndex].amount = amount;
+    if (this.shades.qualityId != undefined) {
+      let con = this.shades.shadeDataList[rowIndex].concentration;
+      let newRate = this.shades.shadeDataList[rowIndex].rate;
+      let amount = Number((Number(con) * Number(newRate)).toFixed(2));
+      if (amount) {
+        this.shades.shadeDataList[rowIndex].amount = amount;
+        this.amountArray.push(amount);
+        this.calculateTotalAmount();
+      }
+    } else {
+      this.shades.shadeDataList[rowIndex].concentration = null;
+      this.toastr.error("Select Quality");
+      return;
+    }
+  }
+  calculateTotalAmount() {
+    this.totalAmount = 0;
+    let wt100m;
+    this.quality.forEach((element) => {
+      if (this.shades.qualityId == element.qualityId) {
+        wt100m = element.wtPer100m;
+      }
+    });
+    this.amountArray.forEach((element) => {
+      this.totalAmount = this.totalAmount + element;
+    });
+    this.costKg = (this.totalAmount / 100).toFixed(2);
+    let A = wt100m / 100;
+    this.costMtr = (this.costKg / A).toFixed(2);
   }
 
   setProcessName(id) {
@@ -401,6 +436,7 @@ export class AddEditShadeComponent implements OnInit {
             return;
           }
         } else if (colName == "amount") {
+          console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
             return;
