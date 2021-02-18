@@ -30,7 +30,7 @@
         <!--  ngx- DataTable  -->
         <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
             [footerHeight]="40">
-            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
+            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
@@ -39,7 +39,7 @@
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
-            <ngx-datatable-column name="Process Name" prop="processId"></ngx-datatable-column>
+            <ngx-datatable-column name="Process Name" prop="processName"></ngx-datatable-column>
             <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
             <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
             <ngx-datatable-column name="Party Name" prop="partyId"></ngx-datatable-column>

@@ -122,7 +122,7 @@
                     <div class="form-group col-md-4">
                         <label class="required">Master Name</label>
                         <ng-select name="userHeadId" id="userHeadId" formControlName="userHeadId" required [ngClass]="{'is-invalid':(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)}" placeholder="Select Master Name" class="dropdown-name required-error-dropdown">
-                            <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}} {{m.lastName}}</ng-option>
+                            <ng-option *ngFor="let m of master" [value]="m.id">{{m.firstName}}</ng-option>
                         </ng-select>
                         <div class="required-class" *ngIf="(partyForm.get('userHeadId').invalid)&&(formSubmitted || partyForm.get('userHeadId').touched)">
                             <span>Master Name is required</span>

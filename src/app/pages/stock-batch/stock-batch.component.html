@@ -36,7 +36,7 @@
                 </div>
                 <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="31"
                     class="material  table-responsive" [footerHeight]="40">
-                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
                                 [hidden]="hiddenEdit" [routerLink]="['edit',row.id]"></nb-icon>

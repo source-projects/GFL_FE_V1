@@ -30,7 +30,7 @@
         <!--  ngx- DataTable  -->
         <ngx-datatable #DataTable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
             [footerHeight]="footerHeight" [limit]="page.size" [offset]="page.pageNumber" [count]="page.totalElements">
-            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false">
+            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                         [hidden]="hiddenEdit" [routerLink]="['/pages/quality/edit',row.id]"></nb-icon>

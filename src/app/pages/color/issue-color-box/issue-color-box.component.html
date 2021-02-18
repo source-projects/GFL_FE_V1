@@ -1,0 +1,109 @@
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+      <div>
+        <div class="row">
+          <div class="col-md-11 col-10">
+            <h2 class="nb-text" style="display: inline;">Issue Color Box</h2>
+          </div>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div>
+        <form #myForm="ngForm">
+            <div class="row">
+                <!-- Supplier name -->
+                 
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Supplier Name</label>
+                        <ng-select appendTo="body" name="supplierName" [(ngModel)]='item' required
+                            #supplierName1="ngModel" [ngClass]="{'is-invalid': (supplierName1.invalid)&& (formSubmitted || supplierName1.touched)}"
+                             placeholder="Supplier Name" class="required-error-dropdown"
+                             (change)=itemSelected($event)>
+                             <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Supplier Name</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Item Name</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Left Quantity</div>
+                                    </div>
+                                </div>
+                             </ng-option>
+                            <ng-option *ngFor="let supplier of supplierList" [value]="supplier.itemId">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-left txt-ov-elips"> {{supplier.name}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips"> {{supplier.itemName}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips"> {{supplier.leftQty}}</div>
+                                    </div>
+                                </div>
+                                </ng-option>
+                        </ng-select>
+                        <div class="required-class" *ngIf="(supplierName1.invalid)&& (formSubmitted || supplierName1.touched)">
+                            <span>Supplier name is required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Box No</label>
+                        <ng-select appendTo="body" name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel"
+                            [ngClass]="{'is-invalid': (boxNo1.invalid)&&(formSubmitted || boxNo1.touched)}"
+                             placeholder="Box No." class="required-error-dropdown">
+                             <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Box No</div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Quantity</div>
+                                    </div>
+                                </div>
+                             </ng-option>
+                            <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips"> {{colorBox.boxNo}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips"> {{colorBox.quantity}}</div>
+                                    </div>
+                                </div>
+                                </ng-option>
+                        <!-- <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option> -->
+                        </ng-select>
+                        <div class="required-class" *ngIf="(formSubmitted && boxNo1.invalid) || (boxNo1.invalid && boxNo1.touched)">
+                            <span>Box no is required</span>
+                        </div>
+                    </div>
+                </div>
+  
+               
+                
+            </div>
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <div class="padding-bt-tp">
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel()">CANCEL</button>
+                            <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
+
+                            <button  type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="issueBox(myForm)">Issue</button>
+                        </div>
+
+                    </div>
+                </div>
+        </form>
+    </div>
+     
+    </nb-card-body>
+  </nb-card>

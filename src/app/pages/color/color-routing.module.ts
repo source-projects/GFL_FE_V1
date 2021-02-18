@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ColorComponent } from './color.component';
 import { AddEditColorComponent } from './add-edit-color/add-edit-color.component';
 import { ColorGuard } from 'app/@theme/guards/color.guard';
+import { IssueColorBoxComponent } from './issue-color-box/issue-color-box.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,13 @@ const routes: Routes = [
     canActivate:[ColorGuard],
     canLoad:[ColorGuard],
     data: { PermissionName: ['edit','edit group','edit all']}
+  },
+  {
+    path:'issue-color-box',
+    component:IssueColorBoxComponent,
+    // canActivate:[ColorGuard],
+    // canLoad:[ColorGuard],
+    // data: { PermissionName: ['edit','edit group','edit all']}
   },
 
 ];

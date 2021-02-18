@@ -97,8 +97,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- <ag-grid-angular
+                    #agGrid
+                    style="width: 100%; height: 100vh;"
+                    id="myGrid"
+                    class="ag-theme-alpine"
+                    [columnDefs]="columnDefs"
+                    [defaultColDef]="defaultColDef"
+                    [rowData]="rowData"
+                    [frameworkComponents]="frameworkComponents"
+                    [rowSelection]="rowSelection"
+                    [pagination]="true"
+                    [paginationPageSize]="paginationPageSize"
+                    (gridReady)="onGridReady($event)"
+                    ></ag-grid-angular> -->
                 <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;

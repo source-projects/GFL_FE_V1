@@ -83,24 +83,24 @@ export class QualityComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.qualityGuard.accessRights('view')){
-      this.getQualityList(this.userId,"own");
+    if(this.qualityGuard.accessRights('view all')){
+      this.getQualityList(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
       
     }
      else if(this.qualityGuard.accessRights('view group')){
-      this.getQualityList(this.userHeadId,"group");
+      this.getQualityList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.qualityGuard.accessRights('view all')){
-      this.getQualityList(0,"all");
+    else if(this.qualityGuard.accessRights('view')){
+      this.getQualityList(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
     this.page.pageNumber = 0;
@@ -146,7 +146,7 @@ export class QualityComponent implements OnInit {
               break;
 
       case 2: 
-              this.getQualityList(this.userHeadId,"group");
+              this.getQualityList(this.userId,"group");
               this.hidden=this.groupDelete;
               this.hiddenEdit=this.groupEdit;
               break;
@@ -175,9 +175,9 @@ open(){
       data => {
         if (data['success']) {
           this.qualityList = data['data']
-          this.quality=this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+          this.quality=this.qualityList.map((element)=>({id:element.id,qualityId:element.qualityId, qualityName: element.qualityName,
              qualityType: element.qualityType,partyName:element.partyName }))
-             this.copyQualityList = this.qualityList.map((element)=>({qualityId:element.qualityId, qualityName: element.qualityName,
+             this.copyQualityList = this.qualityList.map((element)=>({id:element.id,qualityId:element.qualityId, qualityName: element.qualityName,
               qualityType: element.qualityType,partyName:element.partyName }));
             this.loading = false;
             if(this.qualityList.length>0)

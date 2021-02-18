@@ -80,23 +80,23 @@ export class UserComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.userGuard.accessRights('view')){
-      this.getAllUser(this.userId,"own");
+    if(this.userGuard.accessRights('view all')){
+      this.getAllUser(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.userGuard.accessRights('view group')){
-      this.getAllUser(this.userHeadId,"group");
+      this.getAllUser(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.userGuard.accessRights('view all')){
-      this.getAllUser(0,"all");
+    else if(this.userGuard.accessRights('view')){
+      this.getAllUser(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
@@ -118,7 +118,7 @@ export class UserComponent implements OnInit {
               break;
 
       case 2: 
-              this.getAllUser(this.userHeadId,"group");
+              this.getAllUser(this.userId,"group");
               this.hidden=this.groupDelete;
               this.hiddenEdit=this.groupEdit;
               break;
@@ -167,9 +167,9 @@ export class UserComponent implements OnInit {
       data =>{
         if(data["success"]){
           this.userList = data['data'];
-          this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+          this.user=this.userList.map((element)=>({id:element.id,userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
-          this.copyUserList = this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+          this.copyUserList = this.userList.map((element)=>({id:element.id,userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
           }
           this.loading = false;

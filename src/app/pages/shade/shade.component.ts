@@ -31,7 +31,7 @@ export class ShadeComponent implements OnInit {
   headers = ["Party Shade No","Process Name","Quality Id","Quality Name","Party Name","Color Tone"];
   module="shade";
 
-
+  
   radioSelect = 0;
   flag = false;
 
@@ -96,23 +96,23 @@ export class ShadeComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.shadeGuard.accessRights('view')){
-      this.getallShades(this.userId,"own");
+    if(this.shadeGuard.accessRights('view all')){
+      this.getallShades(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.shadeGuard.accessRights('view group')){
-      this.getallShades(this.userHeadId,"group");
+      this.getallShades(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.shadeGuard.accessRights('view all')){
-      this.getallShades(0,"all");
+    else if(this.shadeGuard.accessRights('view')){
+      this.getallShades(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
@@ -134,7 +134,7 @@ export class ShadeComponent implements OnInit {
         break;
 
       case 2:
-        this.getallShades(this.userHeadId, "group");
+        this.getallShades(this.userId, "group");
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
@@ -165,10 +165,12 @@ export class ShadeComponent implements OnInit {
           if (data['data'].length > 0) {
             this.shadeList = data['data'];
             this.shade = this.shadeList.map((element) => ({
+              id:element.id,
               partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyName: element.partyName, colorTone: element.colorTone
             }))
             this.copyShadeList = this.shadeList.map((element) => ({
+              id:element.id,
               partyShadeNo: element.partyShadeNo, processId: element.processId,
               qualityId: element.qualityId, qualityName: element.qualityName, partyId: element.partyId, colorTone: element.colorTone
             }))

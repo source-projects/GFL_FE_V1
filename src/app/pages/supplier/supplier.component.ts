@@ -32,9 +32,9 @@ export class SupplierComponent implements OnInit {
   flag = false;
   disabled = false;
   radioArray = [
-    { id: 1, value: "View Own", disabled: false },
-    { id: 2, value: "View Group", disabled: false },
-    { id: 3, value: "View All", disabled: false }
+    { id: 1, value: "View Own", disabled: false , checked:false},
+    { id: 2, value: "View Group", disabled: false, checked:false },
+    { id: 3, value: "View All", disabled: false , checked:true }
   ];
   userHeadId;
   userId;
@@ -66,6 +66,7 @@ export class SupplierComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.userId = this.commonService.getUser();
     this.userId = this.userId['userId'];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -77,23 +78,23 @@ export class SupplierComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.supplierGuard.accessRights('view')){
-      this.getSupplierList(this.userId,"own");
+    if(this.supplierGuard.accessRights('view all')){
+      this.getSupplierList(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.supplierGuard.accessRights('view group')){
-      this.getSupplierList(this.userHeadId,"group");
+      this.getSupplierList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.supplierGuard.accessRights('view all')){
-      this.getSupplierList(0,"all");
+    else if(this.supplierGuard.accessRights('view')){
+      this.getSupplierList(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
@@ -115,7 +116,7 @@ export class SupplierComponent implements OnInit {
         break;
 
       case 2:
-        this.getSupplierList(this.userHeadId, "group");
+        this.getSupplierList(this.userId, "group");
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
@@ -166,14 +167,14 @@ export class SupplierComponent implements OnInit {
         if (data['success']) {
           if (data['data'].length > 0) {
             this.supplierList = data['data']
-
+            console.log(this.supplierList)
             this.supplier = this.supplierList.map((element) => ({
-              supplierName: element.supplierName, discountPercentage: element.discountPercentage,
+              id:element.id,supplierName: element.supplierName, discountPercentage: element.discountPercentage,
               gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
             }))
 
             this.copySupplierList = this.supplierList.map((element) => ({
-              supplierName: element.supplierName, discountPercentage: element.discountPercentage,
+              id:element.id,supplierName: element.supplierName, discountPercentage: element.discountPercentage,
               gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
             }))
           }

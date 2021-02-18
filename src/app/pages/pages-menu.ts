@@ -9,6 +9,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: false,
   },
   {
+    title: 'Admin',
+    icon: 'edit-2-outline',
+    link: '/pages/admin',
+    hidden: false,
+  },
+  {
     title: 'Party',
     icon: 'person-outline',
     link: '/pages/party',
@@ -31,7 +37,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Color',
     icon: 'color-palette-outline',
     link: '/pages/color',
-    hidden:false
+    hidden:false,
+    children: [
+      {
+        title: 'Color-Stock',
+        icon: 'file-text-outline',
+        link: '/pages/color',
+      },
+      {
+        title: 'Issue-Color-Box',
+        icon: 'file-text-outline',
+        link: '/pages/color/issue-color-box',
+      },
+    ]
   },
   {
     title: 'Program',
@@ -61,7 +79,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Shade',
     icon: 'brush-outline',
     link: '/pages/shade',
-    hidden:false
+    hidden:false,
+    children: [
+      {
+        title: 'Shade',
+        icon: 'brush-outline',
+        link: '/pages/shade',
+      },
+      {
+        title: 'Pending APC',
+        icon: 'file-text-outline',
+        link: '/pages/shade/pending-apc',
+      },
+    ]
   },
   {
     title: 'Supplier',
@@ -106,11 +136,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden:false
   },
   {
-    title: 'Issue-Color-Box',
+    title: 'Addition Slip',
     icon: 'file-text-outline',
-    link: '/pages/issue-color-box',
+    link: '/pages/addition-slip',
     hidden:false
   },
+  // {
+  //   title: 'Issue-Color-Box',
+  //   icon: 'file-text-outline',
+  //   link: '/pages/issue-color-box',
+  //   hidden:false
+  // },
   {
     title: 'Input Data',
     icon: 'edit-2-outline',

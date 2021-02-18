@@ -61,8 +61,9 @@
                                 name='tableSupplierItemType{{rowIndex}}' [(ngModel)]="row.itemType" required
                                  [id]="'supplierList'+rowIndex+'-1'"
                                 [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name"
+                
                                 bindValue="id" appendTo="body" class="ng-select-br-none">
-                                    <ng-option value="Color">Color</ng-option>
+                                    <ng-option selected value="Color">Color</ng-option>
                                     <ng-option value="Chemical">Chemical</ng-option>
                                  </ng-select>
                                 <div class="invalid-feedback" *ngIf="formSubmitted && (tableItemType.invalid)"

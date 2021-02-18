@@ -60,7 +60,8 @@ import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
       multi: true
    },
   ],
-
+ 
+  
   bootstrap: [AppComponent],
 })
 export class AppModule {}

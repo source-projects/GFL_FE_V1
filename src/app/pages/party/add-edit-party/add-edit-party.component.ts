@@ -78,7 +78,11 @@ export class AddEditPartyComponent implements OnInit {
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
+  adminFlag = false;
+  masterFlag = false;
+  operatorFlag = false;
   userHead;
+  masterList = [];
   constructor(
     private partyService: PartyService,
     private commonService: CommonService,
@@ -98,6 +102,10 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = true;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+    if(this.userHead.userHeadId == 0){
+      this.adminFlag = true;
+    }
+    // else if(this.userHead.userHeadId)
     this.partyForm = new FormGroup({
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
@@ -139,11 +147,19 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = false;
   }
   public getMaster() {
+    let masterId;
     this.loading = true;
     this.partyService.getAllMaster().subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
+            //masterId = this.master[0].userHeadId;
+            // if(this.adminFlag){
+            //   this.masterList = this.master;
+            // }else if(this.userHead.userHeadId == masterId){
+            //   this.masterList
+            // }
+         
           this.loading = false;
         } else {
           this.loading = false;
@@ -195,6 +211,8 @@ export class AddEditPartyComponent implements OnInit {
   public addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
+    this.partyForm.value.createdBy = this.user.userId;
+
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         this.partyForm.value.createdBy = this.user.userId;

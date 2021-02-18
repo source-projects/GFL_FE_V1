@@ -10,6 +10,7 @@ import { QualityModule } from './quality/quality.module';
 import { SupplierModule } from './supplier/supplier.module';
 import {UserModule} from './user/user.module';
 import { InputDataComponent } from './input-data/input-data/input-data.component';
+import {SharedModule} from '../@theme/shared.module';
 //import { InputDataModule } from './input-data/input-data.module';
 
 
@@ -24,6 +25,7 @@ import { InputDataComponent } from './input-data/input-data/input-data.component
     SupplierModule,
     MiscellaneousModule,
     UserModule,
+    SharedModule
   ],
   declarations: [
     PagesComponent,

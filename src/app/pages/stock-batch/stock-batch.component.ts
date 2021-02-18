@@ -73,23 +73,23 @@ export class StockBatchComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.stockBatchGuard.accessRights('view')){
-      this.getStockBatchList(this.userId,"own");
+    if(this.stockBatchGuard.accessRights('view all')){
+      this.getStockBatchList(0,"all");
       this.hidden=this.ownDelete; 
       this.hiddenEdit=this.ownEdit;
-      this.radioSelect=1;
+      this.radioSelect=3;
     }
      else if(this.stockBatchGuard.accessRights('view group')){
-      this.getStockBatchList(this.userHeadId,"group");
+      this.getStockBatchList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.stockBatchGuard.accessRights('view all')){
-      this.getStockBatchList(0,"all");
+    else if(this.stockBatchGuard.accessRights('view')){
+      this.getStockBatchList(this.userId,"own");
       this.hidden=this.allDelete;
       this.hiddenEdit=this.allEdit;
-      this.radioSelect=3;
+      this.radioSelect=1;
 
     }
   }
@@ -111,7 +111,7 @@ export class StockBatchComponent implements OnInit {
         break;
 
       case 2:
-        this.getStockBatchList(this.userHeadId, "group");
+        this.getStockBatchList(this.userId, "group");
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
@@ -166,9 +166,9 @@ export class StockBatchComponent implements OnInit {
             this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
           });
-          this.stock=this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+          this.stock=this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
             billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate })) 
-          this.copyStockList = this.stockList.map((element)=>({stockInType:element.stockInType, partyName: element.partyName,
+          this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
             billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))        
         } 
           
