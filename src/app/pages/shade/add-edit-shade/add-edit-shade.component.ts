@@ -16,7 +16,7 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "ngx-add-edit-shade",
   templateUrl: "./add-edit-shade.component.html",
-  styleUrls: ["./add-edit-shade.component.scss"]
+  styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
   public loading = false;
@@ -50,6 +50,10 @@ export class AddEditShadeComponent implements OnInit {
   partyList: any[];
   categoryList = [{ name: "light" }, { name: "dark" }];
   refreshFlag: any = 0;
+  totalAmount: any = 0;
+  costKg: any = 0;
+  costMtr: any = 0;
+  amountArray: any[] = [];
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -75,7 +79,6 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeDataListArray.push(this.shadeDataList);
       this.shadeObj.shadeDataList = this.shadeDataListArray;
     }
-    
   }
 
   updateColor() {
@@ -91,7 +94,7 @@ export class AddEditShadeComponent implements OnInit {
   public getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
           this.loading = false;
@@ -100,7 +103,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -110,7 +113,7 @@ export class AddEditShadeComponent implements OnInit {
   getSupplierList() {
     this.loading = true;
     this.supplierService.getAllSupplierRates().subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
             this.supplierList = data["data"];
@@ -125,7 +128,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -135,7 +138,7 @@ export class AddEditShadeComponent implements OnInit {
   getAllSupplier() {
     this.loading = true;
     this.supplierService.getAllSupplier(0, "all").subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.supplierListRate = data["data"];
           this.loading = false;
@@ -144,7 +147,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -154,7 +157,7 @@ export class AddEditShadeComponent implements OnInit {
   getProcessList() {
     this.loading = true;
     this.shadeService.getAllDyeingProcess().subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.processList = data["data"];
           this.loading = false;
@@ -163,7 +166,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -173,7 +176,7 @@ export class AddEditShadeComponent implements OnInit {
   getQualityList() {
     this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
           this.loading = false;
@@ -182,7 +185,7 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
@@ -192,22 +195,34 @@ export class AddEditShadeComponent implements OnInit {
   getShadeById() {
     this.loading = true;
     this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
-          let res = data['data'];
+          let res = data["data"];
           this.shadeObj = res;
           this.color = this.shadeObj.colorTone;
           if (!this.shadeObj.shadeDataList.length) {
             this.shadeDataListArray.push(this.shadeDataList);
             this.shadeObj.shadeDataList = this.shadeDataListArray;
+            console.log(this.shadeObj.shadeDataList);
           } else {
             this.shadeDataListArray = this.shadeObj.shadeDataList;
           }
-          let qualityIndex =this.qualityList&& this.qualityList.length ? this.qualityList.findIndex(v=> v.id == res.qualityEntryId) : -1;
-          if(qualityIndex > -1) {
+          let qualityIndex =
+            this.qualityList && this.qualityList.length
+              ? this.qualityList.findIndex((v) => v.id == res.qualityEntryId)
+              : -1;
+          if (qualityIndex > -1) {
             this.shadeObj.qualityId = this.qualityList[qualityIndex].qualityId;
-            this.shadeObj.qualityName = this.qualityList[qualityIndex].qualityName;
-            this.shadeObj.qualityType = this.qualityList[qualityIndex].qualityType;
+            this.shadeObj.qualityName = this.qualityList[
+              qualityIndex
+            ].qualityName;
+            this.shadeObj.qualityType = this.qualityList[
+              qualityIndex
+            ].qualityType;
+            console.log(this.shadeDataListArray);
+            this.shadeDataListArray.forEach((element, index) => {
+              this.calculateAmount(index);
+            });
           }
           this.setProcessName(this.shadeObj.processId);
           this.loading = false;
@@ -218,7 +233,7 @@ export class AddEditShadeComponent implements OnInit {
           this.disableButton = false;
         }
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
         this.disableButton = false;
@@ -235,7 +250,7 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.qualityName = null;
       this.shadeObj.qualityType = null;
     } else {
-      this.qualityList.forEach(element => {
+      this.qualityList.forEach((element) => {
         if (this.shadeObj.qualityId == element.qualityId) {
           this.shadeObj.qualityId = element.qualityId;
           this.shadeObj.qualityName = element.qualityName;
@@ -260,13 +275,13 @@ export class AddEditShadeComponent implements OnInit {
       this.loading = false;
     } else {
       this.shadeService.getQualityFromParty(this.shadeObj.partyId).subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
             this.qualityList = data["data"].qualityDataList;
             this.shadeObj.qualityId = this.qualityList[0].qualityId;
             this.shadeObj.qualityName = this.qualityList[0].qualityName;
             this.shadeObj.qualityType = this.qualityList[0].qualityType;
-            this.qualityList.forEach(e => {
+            this.qualityList.forEach((e) => {
               e.partyName = data["data"].partyName;
               this.loading = false;
             });
@@ -277,7 +292,7 @@ export class AddEditShadeComponent implements OnInit {
             this.loading = false;
           }
         },
-        error => {
+        (error) => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
@@ -291,43 +306,78 @@ export class AddEditShadeComponent implements OnInit {
   // }
 
   itemSelected(rowIndex, row) {
-    if(this.refreshFlag > 10){
-      this.refreshFlag = 0;
-    }
-    this.refreshFlag++;
-    let newSupplierId;
-    for (let s of this.supplierList) {
-      if (row.supplierItemId == s.id) {
-        row.rate = s.rate;
-        newSupplierId = s.supplierId;
-        row.itemName = s.itemName;
-        break;
+    if (this.shadeObj.qualityId != undefined) {
+      if (this.refreshFlag > 10) {
+        this.refreshFlag = 0;
       }
-    }
-    for (let s1 of this.supplierListRate) {
-      if (newSupplierId == s1.id) {
-        this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
-        this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
-        break;
+      this.refreshFlag++;
+      let newSupplierId;
+      for (let s of this.supplierList) {
+        if (row.supplierItemId == s.id) {
+          row.rate = s.rate;
+          newSupplierId = s.supplierId;
+          row.itemName = s.itemName;
+          break;
+        }
       }
-    }
+      for (let s1 of this.supplierListRate) {
+        if (newSupplierId == s1.id) {
+          this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
+          this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
+          break;
+        }
+      }
 
-    this.calculateAmount(rowIndex);
+      this.calculateAmount(rowIndex);
+    } else {
+      this.shadeObj.shadeDataList[rowIndex].itemName = "";
+      this.shadeObj.shadeDataList[rowIndex].supplierItemId = null;
+      this.toastr.error("Select Quality");
+      return;
+    }
   }
 
   calculateAmount(rowIndex) {
-    let con = this.shadeObj.shadeDataList[rowIndex].concentration;
-    let newRate = this.shadeObj.shadeDataList[rowIndex].rate;
-    let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-    if (amount) this.shadeObj.shadeDataList[rowIndex].amount = amount;
+    if (this.shadeObj.qualityId != undefined) {
+      let con = this.shadeObj.shadeDataList[rowIndex].concentration;
+      let newRate = this.shadeObj.shadeDataList[rowIndex].rate;
+      let amount = Number((Number(con) * Number(newRate)).toFixed(2));
+      if (amount) {
+        this.shadeObj.shadeDataList[rowIndex].amount = amount;
+        this.amountArray.push(amount);
+        this.calculateTotalAmount();
+      }
+    } else {
+      this.shadeObj.shadeDataList[rowIndex].concentration = null;
+      this.toastr.error("Select Quality");
+      return;
+    }
+  }
+  calculateTotalAmount() {
+    this.totalAmount = 0;
+    let wt100m;
+    this.qualityList.forEach((element) => {
+      if (this.shadeObj.qualityId == element.qualityId) {
+        wt100m = element.wtPer100m;
+      }
+    });
+    this.amountArray.forEach((element) => {
+      this.totalAmount = this.totalAmount + element;
+    });
+    this.costKg = (this.totalAmount / 100).toFixed(2);
+    let A = wt100m / 100;
+    this.costMtr = (this.costKg / A).toFixed(2);
   }
 
   setProcessName(id) {
-    let processIndex = this.processList && this.processList.length ?this.processList.findIndex(v=> v.id == id): -1;
-    if(processIndex > -1) {
+    let processIndex =
+      this.processList && this.processList.length
+        ? this.processList.findIndex((v) => v.id == id)
+        : -1;
+    if (processIndex > -1) {
       this.shadeObj.processName = this.processList[processIndex].name;
     } else {
-      this.shadeObj.processName = '';
+      this.shadeObj.processName = "";
     }
   }
 
@@ -358,6 +408,7 @@ export class AddEditShadeComponent implements OnInit {
             return;
           }
         } else if (colName == "amount") {
+          console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
             return;
@@ -370,7 +421,7 @@ export class AddEditShadeComponent implements OnInit {
           rate: null,
           amount: null,
           supplierId: null,
-          supplierItemId: null
+          supplierItemId: null,
         };
         let list = this.shadeObj.shadeDataList;
         list.push(obj);
@@ -401,12 +452,15 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.createdBy = this.user.userId;
       this.shadeObj.userHeadId = this.userHead.userHeadId;
 
-      if(this.shadeObj.shadeDataList.length && !Object.keys(this.shadeObj.shadeDataList[0]).length){
+      if (
+        this.shadeObj.shadeDataList.length &&
+        !Object.keys(this.shadeObj.shadeDataList[0]).length
+      ) {
         this.shadeObj.shadeDataList = [];
       }
 
       this.shadeService.addShadeData(this.shadeObj).subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Add_Success);
@@ -416,7 +470,7 @@ export class AddEditShadeComponent implements OnInit {
           }
           this.disableButton = false;
         },
-        error => {
+        (error) => {
           this.toastr.error(errorData.Serever_Error);
           this.disableButton = false;
         }
@@ -428,15 +482,17 @@ export class AddEditShadeComponent implements OnInit {
         this.shadeObj.processId &&
         this.shadeObj.qualityId
       ) {
-
-        if(this.shadeObj.shadeDataList.length && !Object.keys(this.shadeObj.shadeDataList[0]).length){
+        if (
+          this.shadeObj.shadeDataList.length &&
+          !Object.keys(this.shadeObj.shadeDataList[0]).length
+        ) {
           this.shadeObj.shadeDataList = [];
         }
 
         this.shadeObj.createdBy = this.user.userId;
         this.shadeObj.userHeadId = this.userHead.userHeadId;
         this.shadeService.addShadeData(this.shadeObj).subscribe(
-          data => {
+          (data) => {
             if (data["success"]) {
               this.route.navigate(["/pages/shade"]);
               this.toastr.success(errorData.Add_Success);
@@ -445,7 +501,7 @@ export class AddEditShadeComponent implements OnInit {
             }
             this.disableButton = false;
           },
-          error => {
+          (error) => {
             this.toastr.error(errorData.Serever_Error);
             this.disableButton = false;
           }
@@ -483,7 +539,7 @@ export class AddEditShadeComponent implements OnInit {
     if (shadeForm.valid) {
       this.shadeObj.updatedBy = this.user.userId;
       this.shadeService.updateShadeData(this.shadeObj).subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
             this.toastr.success(errorData.Update_Success);
@@ -492,7 +548,7 @@ export class AddEditShadeComponent implements OnInit {
           }
           this.loading = false;
         },
-        error => {
+        (error) => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
           this.disableButton = false;
