@@ -164,11 +164,11 @@ export class ProgramComponent implements OnInit {
         if (data['success']) {
           this.programList = data['data']
           this.program = this.programList.map((element) => ({
-            partyName: element.partyName, programBy: element.programBy,
+            id:element.id,partyName: element.partyName, programBy: element.programBy,
             qualityId: element.qualityId, qualityName: element.qualityName, qualityType: element.qualityType, priority: element.priority
           }))
           this.copyProgramList = this.programList.map((element) => ({
-            partyName: element.partyName, programGivenBy: element.programGivenBy,
+            id:element.id,partyName: element.partyName, programGivenBy: element.programGivenBy,
             qualityId: element.qualityId, qualityName: element.qualityName, qualityType: element.qualityType, priority: element.priority
           }))
           this.loading = false;
