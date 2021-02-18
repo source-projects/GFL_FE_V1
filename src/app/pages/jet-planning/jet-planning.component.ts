@@ -185,19 +185,11 @@ export class JetPlanningComponent implements OnInit {
     this.sendControlId = index.controlId;
     var detail = this.getBatchDetails();
     this.items = [
+     
+      { title: "Complete" },
+      { title: "Pause" },
       {
-        title: "Change Status",
-        children: [
-          {
-            title: "Complete",
-          },
-          {
-            title: "Pause",
-          },
-          {
-            title: "Remove",
-          },
-        ],
+        title: "Remove",
       },
       { title: "Print" },
       { title: "Edit And Print" },
@@ -306,19 +298,10 @@ export class JetPlanningComponent implements OnInit {
               " Batch Weight: " +
               data["data"].totalWt;
             this.items = [
+              { title: "Complete" },
+              { title: "Pause" },
               {
-                title: "Change Status",
-                children: [
-                  {
-                    title: "Complete",
-                  },
-                  {
-                    title: "Pause",
-                  },
-                  {
-                    title: "Remove",
-                  },
-                ],
+                title: "Remove",
               },
               { title: "Print" },
               { title: "Edit And Print" },
@@ -567,7 +550,6 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.stockId = this.sendSotckId;
     modalRef.componentInstance.additionSlipFlag = false;
 
-    
     modalRef.result.then((result) => {
       if (result) {
       }
