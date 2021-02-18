@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorService } from 'app/@theme/services/color.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ColorService } from '../../../@theme/services/color.service';
+import { SupplierService } from '../../../@theme/services/supplier.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from "app/@theme/json/error.json";
+import * as errorData from "../../../@theme/json/error.json";
 import { Router } from '@angular/router';
 
 
@@ -30,10 +30,10 @@ export class IssueColorBoxComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getSupplierWithItem();
+    this.getSupplierItemWithAvailableStock();
   }
 
-  getSupplierWithItem(){
+  getSupplierItemWithAvailableStock(){
     this.supplierService.getItemWithSupplier().subscribe(
       (data) => {
         if (data["success"]) {
@@ -82,16 +82,17 @@ issueBox(form){
       if (data["success"]) {
         this.toastr.success(errorData.Add_Success);
         this.route.navigate(["/pages/issue-color-box"]);
-
       }
       else {
         this.toastr.error(data['msg']);
-       //this.getJetData();
-        //this.getshade();
       }
-
     }
   )
+}
+
+onCancel(){
+  this.box = null;
+  this.item = null;
 }
 
 }

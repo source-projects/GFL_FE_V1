@@ -15,36 +15,37 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' required #batchNo1="ngModel" 
-                            [ngClass]="{'is-invalid': (batchNo1.invalid)&&(formSubmitted || batchNo1.touched)}" 
-                            placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' required #batchNo1="ngModel"
+                                [ngClass]="{'is-invalid': (batchNo1.invalid)&&(formSubmitted || batchNo1.touched)}"
+                                placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
                                 <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="(formSubmitted && batchNo1.invalid) || (batchNo1.invalid && batchNo1.touched)">
+                            <div class="required-class"
+                                *ngIf="(formSubmitted && batchNo1.invalid) || (batchNo1.invalid && batchNo1.touched)">
                                 <span>Batch no is required</span>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
 
-                    <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
-            [footerHeight]="40">
-            <ngx-datatable-column name="Action"  sortable="false">
-                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                    (click)="editSlip(row.id)" ></nb-icon>
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
-                        (click)="deleteSlip(row.id)"></nb-icon>
-                </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Batch No." prop="batchId"></ngx-datatable-column>
-            <ngx-datatable-column name="Hold Time" prop="holdTime"></ngx-datatable-column>
-            <ngx-datatable-column name="Liquor Ratio" prop="liquerRation"></ngx-datatable-column>
-            <ngx-datatable-column name="Temperature" prop="temp"></ngx-datatable-column>
-           
+                <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
+                    [footerHeight]="40">
+                    <ngx-datatable-column name="Action" sortable="false">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                (click)="editSlip(row.id)"></nb-icon>
+                            <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"
+                                (click)="deleteSlip(row.id)"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Batch No." prop="batchId"></ngx-datatable-column>
+                    <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime"></ngx-datatable-column>
+                    <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation"></ngx-datatable-column>
+                    <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp"></ngx-datatable-column>
 
-        </ngx-datatable>
-                    </form>
-                    </div>
-                    </nb-card-body>
-                    </nb-card>
+
+                </ngx-datatable>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

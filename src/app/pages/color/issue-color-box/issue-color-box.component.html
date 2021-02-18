@@ -23,21 +23,27 @@
                              (change)=itemSelected($event)>
                              <ng-option disabled="true">
                                 <div class="row">
-                                    <div class="col-md-6 col-6">
+                                    <div class="col-md-4 col-4">
                                         <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Supplier Name</div>
                                     </div>
-                                    <div class="col-md-6 col-6">
+                                    <div class="col-md-4 col-4">
                                         <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Item Name</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Left Quantity</div>
                                     </div>
                                 </div>
                              </ng-option>
                             <ng-option *ngFor="let supplier of supplierList" [value]="supplier.itemId">
                                 <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-left txt-ov-elips"> {{supplier.supplierName}}</div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-left txt-ov-elips"> {{supplier.name}}</div>
                                     </div>
-                                    <div class="col-md-6 col-6">
+                                    <div class="col-md-4 col-4">
                                         <div class="text-right txt-ov-elips"> {{supplier.itemName}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-right txt-ov-elips"> {{supplier.leftQty}}</div>
                                     </div>
                                 </div>
                                 </ng-option>
@@ -88,10 +94,10 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/program">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel()">CANCEL</button>
                             <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
 
-                            <button  type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="issueBox(myForm)">SAVE</button>
+                            <button  type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="issueBox(myForm)">Issue</button>
                         </div>
 
                     </div>
