@@ -1,12 +1,16 @@
 import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from "app/@theme/json/error.json";
-import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import { CommonService } from "app/@theme/services/common.service";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { ShadeService } from "app/@theme/services/shade.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
+import * as errorData from "../../../@theme/json/error.json";
+import {
+  QualityListEmpty,
+  Shade,
+  ShadeDataList,
+} from "../../../@theme/model/shade";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -15,7 +19,6 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
-
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -191,59 +194,51 @@ export class AddEditShadeComponent implements OnInit {
 
   getUpdateData() {
     this.loading = true;
-      this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
-        (data) => {
+    this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
+      (data) => {
+        this.shades = data["data"];
+        this.color = this.shades.colorTone;
+        if (this.shades.shadeDataList.length == 0) {
+          this.shadeDataListArray.push(this.shadeDataList);
+          this.shades.shadeDataList = this.shadeDataListArray;
+        }
+        if (!data["success"]) {
           this.shades = data["data"];
           this.color = this.shades.colorTone;
-          if(this.shades.shadeDataList.length == 0)
-            {
-              this.shadeDataListArray.push(this.shadeDataList);
-              this.shades.shadeDataList = this.shadeDataListArray;
-
+          this.shades.pending = false;
+          let inter = setInterval(() => {
+            if (this.quality) {
+              clearInterval(inter);
+              this.quality.forEach((e) => {
+                if (e.id == data["data"].qualityEntryId) {
+                  this.shades.qualityId = e.qualityId;
+                  this.shades.qualityName = e.qualityName;
+                  this.shades.qualityType = e.qualityType;
+                }
+                this.loading = false;
+              });
             }
-          if (!data["success"]) {
-            this.shades = data["data"];
-            this.color = this.shades.colorTone;
-            this.shades.pending = false;
-            let inter = setInterval(()=>{
-              if(this.quality){
-                clearInterval(inter);
-                this.quality.forEach((e) => {
-                  if (e.id == data["data"].qualityEntryId) {
-                    this.shades.qualityId = e.qualityId;
-                    this.shades.qualityName = e.qualityName;
-                    this.shades.qualityType = e.qualityType;
-                  }
-                  this.loading = false;
-                });
-              }
-            },10);
-            if(this.shades.shadeDataList.length == 1)
-            {
-              this.shadeDataListArray.push(this.shadeDataList);
-              this.shades.shadeDataList = this.shadeDataListArray;
-
-            }
-            this.setProcessName(this.shades.processId);
-            this.loading = false;
-            this.disableButton=false;
-
-          } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-            this.disableButton=false;
-
+          }, 10);
+          if (this.shades.shadeDataList.length == 1) {
+            this.shadeDataListArray.push(this.shadeDataList);
+            this.shades.shadeDataList = this.shadeDataListArray;
           }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
+          this.setProcessName(this.shades.processId);
           this.loading = false;
-          this.disableButton=false;
-
+          this.disableButton = false;
+        } else {
+          // this.toastr.error(data["msg"]);
+          this.loading = false;
+          this.disableButton = false;
         }
-      );
-    this.disableButton=false;
-
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+        this.disableButton = false;
+      }
+    );
+    this.disableButton = false;
   }
 
   qualityIdSelected(event) {
@@ -309,36 +304,36 @@ export class AddEditShadeComponent implements OnInit {
   //   this.shades.pending = event;
   // }
 
-  itemSelected(rowIndex, row,elementId) {
+  itemSelected(rowIndex, row, elementId) {
     let id = this.shades.shadeDataList[rowIndex].itemName;
     // let flag = false;
     let count = 0;
     this.shades.shadeDataList.forEach((e) => {
       if (count != rowIndex) {
-        if (e.itemName == id)  // flag = true;
-        count++;
+        if (e.itemName == id)
+          // flag = true;
+          count++;
       } else count++;
     });
     // if (!flag) {
-      let newSupplierId;
-      for (let s of this.supplierList) {
-        if (id == s.itemName) {
-          this.shades.shadeDataList[rowIndex].rate = s.rate;
-          newSupplierId = s.supplierId;
-          this.shades.shadeDataList[rowIndex].supplierItemId = s.id;
-          break;
-        }
+    let newSupplierId;
+    for (let s of this.supplierList) {
+      if (id == s.itemName) {
+        this.shades.shadeDataList[rowIndex].rate = s.rate;
+        newSupplierId = s.supplierId;
+        this.shades.shadeDataList[rowIndex].supplierItemId = s.id;
+        break;
       }
-      for (let s1 of this.supplierListRate) {
-        if (newSupplierId == s1.id) {
-          this.shades.shadeDataList[rowIndex].supplierName = s1.supplierName;
-          this.shades.shadeDataList[rowIndex].supplierId = s1.id;
-          break;
-        }
+    }
+    for (let s1 of this.supplierListRate) {
+      if (newSupplierId == s1.id) {
+        this.shades.shadeDataList[rowIndex].supplierName = s1.supplierName;
+        this.shades.shadeDataList[rowIndex].supplierId = s1.id;
+        break;
       }
+    }
     // } else {
     //   this.toastr.error("This item name is already selected");
-
 
     //   // this.shades.shadeDataList[rowIndex].itemName = "";
     //   this.shades.shadeDataList[rowIndex].itemName=undefined;
@@ -348,19 +343,19 @@ export class AddEditShadeComponent implements OnInit {
     //   this.shades.shadeDataList[rowIndex].amount = null;
     //   // .splice(rowIndex,1);
 
-      // let obj = {
-      //   itemName: null,
-      //   concentration: null,
-      //   supplierName: null,
-      //   rate: null,
-      //   amount: null,
-      //   supplierId: null,
-      //   supplierItemId: null,
-      // };
-      // let list = this.shades.shadeDataList;
-      // list.push(obj);
-      // this.shades.shadeDataList = [...list];
-    
+    // let obj = {
+    //   itemName: null,
+    //   concentration: null,
+    //   supplierName: null,
+    //   rate: null,
+    //   amount: null,
+    //   supplierId: null,
+    //   supplierItemId: null,
+    // };
+    // let list = this.shades.shadeDataList;
+    // list.push(obj);
+    // this.shades.shadeDataList = [...list];
+
     this.calculateAmount(rowIndex);
   }
 
@@ -441,21 +436,20 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
-  checkedChange(event){
-      this.pendingFlag = event;
-   
+  checkedChange(event) {
+    this.pendingFlag = event;
+
     this.shades.pending = event;
   }
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
-    
+
     if (shadeForm.valid) {
       this.shades.createdBy = this.user.userId;
       this.shades.userHeadId = this.userHead.userHeadId;
       if (this.currentShadeId != null) {
         this.shades.pending = this.pendingFlag;
-
       }
       this.shadeService.addShadeData(this.shades).subscribe(
         (data) => {
@@ -470,11 +464,16 @@ export class AddEditShadeComponent implements OnInit {
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
-          this.disableButton=false;
+          this.disableButton = false;
         }
       );
     } else {
-      if(shadeForm.value.apcNo && shadeForm.value.partyName && shadeForm.value.processName && shadeForm.value.qualityName){
+      if (
+        shadeForm.value.apcNo &&
+        shadeForm.value.partyName &&
+        shadeForm.value.processName &&
+        shadeForm.value.qualityName
+      ) {
         this.shades.createdBy = this.user.userId;
         this.shades.userHeadId = this.userHead.userHeadId;
         this.shadeService.addShadeData(this.shades).subscribe(
@@ -489,7 +488,7 @@ export class AddEditShadeComponent implements OnInit {
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
-            this.disableButton=false;
+            this.disableButton = false;
           }
         );
       }
@@ -537,11 +536,11 @@ export class AddEditShadeComponent implements OnInit {
         (error) => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
-          this.disableButton=false;
+          this.disableButton = false;
         }
       );
     } else {
-      this.disableButton=false;
+      this.disableButton = false;
       this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();

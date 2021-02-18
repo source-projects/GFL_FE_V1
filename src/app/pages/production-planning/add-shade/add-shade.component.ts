@@ -20,6 +20,8 @@ export class AddShadeComponent implements OnInit {
   @Input("quality") quality: any;
   @Input("batch") batch: any;
   @Input("batchControl") batchControl: any;
+  @Input("shadeId") shadeIdReceived: any;
+  @Input("colorTone") colorToneReceviced: any;
   @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
@@ -91,21 +93,15 @@ export class AddShadeComponent implements OnInit {
   getApproveBy() {
     this.loading = true;
 
-    this.adminService.getAllApproveByData().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.approveByList = data["data"];
-          this.loading = false;
-        } else {
-          // this.toastr.error(data["msg"]);
-          this.loading = false;
-        }
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
+    this.adminService.getAllApproveByData().subscribe((data) => {
+      if (data["success"]) {
+        this.approveByList = data["data"];
+        this.loading = false;
+      } else {
+        // this.toastr.error(data["msg"]);
         this.loading = false;
       }
-    );
+    });
   }
   onApproveClick() {
     this.activeModal.close(this.approveBy);

@@ -67,4 +67,9 @@ export class UserService {
       this.commonService.envUrl() + "api/admin/get/allCompany"
     );
   }
+  getAllDepartmentData() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/department"
+    );
+  }
 }
