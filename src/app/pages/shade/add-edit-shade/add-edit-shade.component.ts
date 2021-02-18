@@ -67,7 +67,6 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shades.pending = this.pendingFlag;
 
     this.getUserId();
     this.getQualityList();
@@ -79,6 +78,8 @@ export class AddEditShadeComponent implements OnInit {
       //this.shades.pending = this.pen
       this.getUpdateData();
     }
+    this.shades.pending = this.pendingFlag;
+
   }
 
   updateColor() {
@@ -476,6 +477,7 @@ export class AddEditShadeComponent implements OnInit {
       ) {
         this.shades.createdBy = this.user.userId;
         this.shades.userHeadId = this.userHead.userHeadId;
+        console.log(this.shades);
         this.shadeService.addShadeData(this.shades).subscribe(
           (data) => {
             if (data["success"]) {
