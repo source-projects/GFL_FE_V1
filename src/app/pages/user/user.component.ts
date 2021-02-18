@@ -167,9 +167,9 @@ export class UserComponent implements OnInit {
       data =>{
         if(data["success"]){
           this.userList = data['data'];
-          this.user=this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+          this.user=this.userList.map((element)=>({id:element.id,userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
-          this.copyUserList = this.userList.map((element)=>({userName:element.userName, firstName: element.firstName,
+          this.copyUserList = this.userList.map((element)=>({id:element.id,userName:element.userName, firstName: element.firstName,
             lastName: element.lastName, company:element.company, designation:element.designation }))
           }
           this.loading = false;

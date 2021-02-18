@@ -169,8 +169,8 @@ export class ColorComponent implements OnInit {
       data => {
         if (data["success"]) {
           this.colorList = data['data']
-          this.color=this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
-            billDate: element.billDate, challanNo:element.challanNo, challanDate:element.challanDate }))
+          this.color=this.colorList.map((element)=>({id:element.id,supplierName:element.supplierName, billNo: element.billNo,
+            billDate: element.billDate, chlNo:element.chlNo, chlDate:element.chlDate}))
           
           this.colorList = data['data'];
           let index = 0
@@ -180,7 +180,7 @@ export class ColorComponent implements OnInit {
             index++;
           });
 
-          this.copyColorList = this.colorList.map((element)=>({supplierName:element.supplierName, billNo: element.billNo,
+          this.copyColorList = this.colorList.map((element)=>({id:element.id,supplierName:element.supplierName, billNo: element.billNo,
             billDate: element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
         }
         // else {
