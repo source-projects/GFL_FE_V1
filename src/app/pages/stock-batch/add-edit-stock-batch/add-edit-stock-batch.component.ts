@@ -244,11 +244,12 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
             if (!this.stockBatch.batchData.length) {
               //this.zeroValueBatch = true;
-            } else {
-              this.stockBatch.batchData = _.sortBy(
-                data["data"].batchData,
-                "batchId"
-              );
+            }
+            else {
+              this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
+              this.stockBatch.batchData.forEach((element,index) => {
+                  this.production_flag[index] = element.isProductionPlanned
+              })
               this.setStockDataValues1();
             }
           } else {
