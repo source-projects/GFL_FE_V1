@@ -51,6 +51,6 @@ export class SupplierService {
   }
 
   getItemWithSupplier(){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/getItemWithSupplierName/all');
+    return this.httpClient.get(this.commonService.envUrl() + 'api/color/supplierList/getSupplierItemWithAvailableStock');
   }
 }

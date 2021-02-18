@@ -1,12 +1,16 @@
 import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from "app/@theme/json/error.json";
-import { QualityListEmpty, Shade, ShadeDataList } from "app/@theme/model/shade";
-import { CommonService } from "app/@theme/services/common.service";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { ShadeService } from "app/@theme/services/shade.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
+import * as errorData from "../../../@theme/json/error.json";
+import {
+  QualityListEmpty,
+  Shade,
+  ShadeDataList,
+} from "../../../@theme/model/shade";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -389,7 +393,6 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
-
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;

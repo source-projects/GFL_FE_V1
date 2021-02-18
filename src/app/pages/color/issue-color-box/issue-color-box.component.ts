@@ -30,10 +30,10 @@ export class IssueColorBoxComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getSupplierWithItem();
+    this.getSupplierItemWithAvailableStock();
   }
 
-  getSupplierWithItem(){
+  getSupplierItemWithAvailableStock(){
     this.supplierService.getItemWithSupplier().subscribe(
       (data) => {
         if (data["success"]) {
@@ -82,15 +82,17 @@ issueBox(form){
       if (data["success"]) {
         this.toastr.success(errorData.Add_Success);
         this.route.navigate(["/pages/issue-color-box"]);
-
       }
       else {
         this.toastr.error(data['msg']);
-
       }
-
     }
   )
+}
+
+onCancel(){
+  this.box = null;
+  this.item = null;
 }
 
 }
