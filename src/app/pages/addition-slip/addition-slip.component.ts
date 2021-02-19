@@ -112,10 +112,11 @@ export class AdditionSlipComponent implements OnInit {
   }
 
   editSlip(id) {
-    let prodId;
+    let prodId , batchId;
     this.additionSlipList.forEach((element) => {
       if (element.id == id) {
         prodId = element.productionId;
+        batchId = element.batchId;
       }
     });
     this.getAdditionSlipDataById(id);
@@ -124,7 +125,7 @@ export class AdditionSlipComponent implements OnInit {
       if (this.additionSlipData) {
         const modalRef = this.modalService.open(PlanningSlipComponent);
         modalRef.componentInstance.isPrintDirect = false;
-        modalRef.componentInstance.batchId = id;
+        modalRef.componentInstance.batchId = batchId;
         modalRef.componentInstance.editAdditionFlag = true;
         modalRef.componentInstance.additionSlipFlag = true;
 
