@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, QueryList, Renderer2, ViewChildren, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import {
@@ -12,6 +12,7 @@ import { QualityService } from "../../../@theme/services/quality.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
   selector: "ngx-add-edit-shade",
@@ -19,6 +20,7 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -65,7 +67,7 @@ export class AddEditShadeComponent implements OnInit {
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.getQualityList();
@@ -80,6 +82,13 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.shadeDataList = this.shadeDataListArray;
     }
   }
+
+  ngAfterViewInit() {
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
+  }
+
 
   updateColor() {
     this.shadeObj.colorTone = this.color;
@@ -384,7 +393,7 @@ export class AddEditShadeComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.shadeObj.shadeDataList.length - 1) {
         let item = this.shadeObj.shadeDataList[rowIndex];
         if (colName == "itemName") {
