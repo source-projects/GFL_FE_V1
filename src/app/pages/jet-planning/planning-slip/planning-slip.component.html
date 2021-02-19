@@ -337,10 +337,10 @@
                         <div class="mb-1">
                             <div class="row">
                                 <div class="col-md-6 wth-50 ">
-                                    <label>Lot No:</label> <span class="slip-value">{{slipData.batchId}}</span>
+                                    <label class="font-20">Lot No:</label> <span class="slip-value">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label>Mc No:</label> <span class="slip-value">{{slipData.jetId}}</span>
+                                    <label class="font-20">Mc No:</label> <span class="slip-value">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -349,21 +349,10 @@
                         <div class="mb-1">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label>Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
+                                    <label class="font-20">Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label>Date:</label> <span class="slip-value">{{myDate}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-1">
-                            <div class="row">
-                                <div class="col-md-6 wth-50">
-                                    <label>QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
-                                </div>
-                                <div class="col-md-6 wth-50">
-                                    <label>Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                    <label class="font-20">Date:</label> <span class="slip-value">{{myDate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -371,10 +360,21 @@
                         <div class="mb-1">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label>Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
+                                    <label class="font-20">QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label>Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
+                                    <label class="font-20">Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-1">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-20">Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-20">Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
                                 </div>
                             </div>
                         </div>
@@ -383,25 +383,25 @@
                     </div>
 
                     <div class="container print-container mr-top">
-                        <div class="row print-wth-100 background-c6daf0" style=" border-style: solid; background-color: #c6daf0;">
-                            <div class="print-wth-100" style="display: flex;">
-                                <div class="form-group mr-left-right col-md-4" style="padding: 0px; margin-top:2px; width: 25% !important;">
-                                    <h3>Addition</h3>
+                        <div class="row print-wth-100 background-c6daf0" style=" border-style: solid; background-color: #c6daf0;width: 100% !important;margin: 0 !important;">
+                            <div class="print-wth-100" style="display: flex; margin-top: 10px;">
+                                <div class="form-group mr-left-right col-md-4" style="padding: 0px; margin-top:2px; width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                    <h3 class="font-20" style="font-size: 25px;">Addition</h3>
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right">Temperature:</label>
+                                    <label class="mr-right font-20">Temperature:</label>
                                     <div class="print-data">
                                         {{temp}}</div>
 
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right">Hold Time:</label>
+                                    <label class="mr-right font-20">Hold Time:</label>
                                     <div class="print-data">
                                         {{holdTime}}</div>
 
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right">Liquor Ratio:</label>
+                                    <label class="mr-right font-20">Liquor Ratio:</label>
                                     <div class="print-data">
                                         {{liquorRatio}}</div>
 
@@ -409,21 +409,24 @@
                             </div>
 
                             <div class="form-group col-md-12 ">
-                                <h5 class="nb-badges mr-bt">Item List</h5>
-                                <table class="table table-bordered table-process-fnt" id="border-table" style=" background-color: transparent;">
+
+                                <table class="table table-bordered table-process-fnt text-center" id="border-table" style=" background-color: transparent;">
                                     <tr>
-                                        <th>Item name</th>
-                                        <th>Quantity</th>
+                                        <th class="font-25" style="font-size: 25px;">Item name</th>
+                                        <th class="font-25" style="font-size: 25px;">Quantity</th>
+                                        <th class="font-25" style="font-size: 25px;">Supplier Name</th>
                                     </tr>
 
                                     <tr *ngFor='let item of itemList;let i1=index;'>
-                                        <td class="pd-bt">
-                                            {{item.itemName}}
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.itemName}}</p>
                                         </td>
-                                        <td class="pd-bt">
-                                            {{item.qty}}
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.qty}}</p>
                                         </td>
-
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.supplierName}}</p>
+                                        </td>
 
                                     </tr>
                                 </table>

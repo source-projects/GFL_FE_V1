@@ -1649,10 +1649,29 @@ input[type="number"]::-webkit-outer-spin-button {
     .mr-right {
         margin-right: 10px;
     }
-    .slip-value {
-        border: 1px solid rgb(34, 34, 34);
+    .slip-value,
+    .print-data {
+        border-top: 1px solid rgb(34, 34, 34);
+        border-bottom: 1px solid rgb(34, 34, 34);
         border-left: 1px solid rgb(34, 34, 34);
         border-right: 1px solid rgb(34, 34, 34);
+    }
+    .slip-value,
+    .print-data {
+        padding: 5px 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 15px;
+    }
+    .mr-top-5 {
+        margin-top: 5px;
+    }
+    .font-20 {
+        font-size: 20px;
+    }
+    .font-25 {
+        font-size: 25px;
     }
 }
 
