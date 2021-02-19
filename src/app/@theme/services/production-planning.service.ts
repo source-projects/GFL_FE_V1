@@ -34,4 +34,13 @@ export class ProductionPlanningService {
         "api/productionPlan/allProductionWithoutFilter"
     );
   }
+  getWeightByStockIdAndBatchId(id, id1): any {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/stockBatch/getWtByStockIdAndBatchId/" +
+        id +
+        "/" +
+        id1
+    );
+  }
 }

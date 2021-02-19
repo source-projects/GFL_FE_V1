@@ -56,6 +56,7 @@ export class AddEditShadeComponent implements OnInit {
   costKg: any = 0;
   costMtr: any = 0;
   amountArray: any[] = [];
+  apcFlag: any = false;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -66,8 +67,10 @@ export class AddEditShadeComponent implements OnInit {
     private route: Router,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private renderer: Renderer2
-  ) { }
+    private renderer: Renderer2,
+  ) {
+    this.apcFlag = this.route.getCurrentNavigation().extras.state;
+  }
 
   async ngOnInit() {
     await this.getQualityList();
@@ -315,6 +318,7 @@ export class AddEditShadeComponent implements OnInit {
   // }
 
   itemSelected(rowIndex, row) {
+    let gst;
     if (this.shadeObj.qualityId != undefined) {
       if (this.refreshFlag > 10) {
         this.refreshFlag = 0;
@@ -323,9 +327,11 @@ export class AddEditShadeComponent implements OnInit {
       let newSupplierId;
       for (let s of this.supplierList) {
         if (row.supplierItemId == s.id) {
-          row.rate = s.rate;
+
           newSupplierId = s.supplierId;
           row.itemName = s.itemName;
+          gst = (s.rate * s.gstRate)/100;
+          row.rate = s.rate + gst;
           break;
         }
       }
@@ -416,7 +422,8 @@ export class AddEditShadeComponent implements OnInit {
             this.toastr.error("Enter rate", "rate is required");
             return;
           }
-        } else if (colName == "amount") {
+        }
+         else if (colName == "amount") {
           console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
@@ -486,7 +493,6 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       if (
-        this.shadeObj.apcNo &&
         this.shadeObj.partyId &&
         this.shadeObj.processId &&
         this.shadeObj.qualityId

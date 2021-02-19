@@ -165,40 +165,12 @@ export class AddEditInvoiceComponent implements OnInit {
       this.loading = false;
     }
   }
-
-  // getMtrList(event) {
-  //   this.loading = true;
-  //   if(event !=undefined){
-  //   if(this.invoiceValues.batchId ){
-  //     this.batch.forEach(e=>{
-  //       if(e.batchId==this.invoiceValues.batchId){
-  //         this.invoiceValues.controlId=e.controlId;
-  //       }
-  //     })
-
-  //   this.generateInvoiceService.getFinishedMtrList(this.invoiceValues.batchId,this.invoiceValues.controlId).subscribe(
-  //     (data) => {
-  //       if (data["success"]) {
-  //         this.mtrList = data["data"];
-  //          this.mtr=data['data']
-  //         this.loading = false;
-  //       } else {
-  //         this.loading = false;[]
-  //       }
-  //     }, 
-  //     (error) => {
-  //       this.loading = false;
-  //     }
-  //   );
-  //   }
-  // }
-  // else{
-  //   this.loading = false;
-  // }
-  // }
+  
   final = [];
   selected = [];
   addInvoice(invoiceForm) {
+    this.disableButton = true;
+    this.formSubmitted = true;
 
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
@@ -211,8 +183,7 @@ export class AddEditInvoiceComponent implements OnInit {
       createdBy: this.userId,
       userHeadId: this.userHeadId
     }
-    this.disableButton = true;
-    this.formSubmitted = true;
+    
     if (invoiceForm.valid) {
       this.generateInvoiceService.addInvoicedata(obj).subscribe(
         data => {
@@ -220,23 +191,28 @@ export class AddEditInvoiceComponent implements OnInit {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
             this.merge = [];
+            this.disableButton = false;
           }
           else {
+            this.disableButton = false;
             this.toastr.error(errorData.Add_Error)
             this.merge = [];
           }
         },
         error => {
+          this.disableButton = false;
           this.toastr.error(errorData.Serever_Error)
         }
       )
     }
-    this.disableButton = false;
   }
 
   updateInvoice(invoiceForm) {
+    this.disableButton = true;
+    this.formSubmitted = true;
+
     this.final = [];
-    this.finalcheckedrows = this.selected
+    //this.finalcheckedrows = this.selected
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
@@ -250,29 +226,28 @@ export class AddEditInvoiceComponent implements OnInit {
       updatedBy:this.userId
     }
 
-    this.disableButton = true;
-    this.formSubmitted = true;
     if (invoiceForm.valid) {
       this.generateInvoiceService.updateInvoice(obj).subscribe(
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Update_Success);
+            this.disableButton = false;
           }
           else {
+            this.disableButton = false;
             this.toastr.error(errorData.Update_Error)
           }
         },
         error => {
+          this.disableButton = false;
           this.toastr.error(errorData.Serever_Error)
         }
       )
     }
-    this.disableButton = false;
   }
+
   onSelect(value: any) {
-
-
     let arr: any = value.selected;
     this.finalcheckedrows = arr;
 
