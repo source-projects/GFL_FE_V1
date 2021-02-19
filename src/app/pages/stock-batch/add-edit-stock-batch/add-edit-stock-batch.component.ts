@@ -182,12 +182,14 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
   getUnit(event) {
+    this.weightFlag = false;
     if (event != undefined) {
       if (this.stockBatch.qualityId == null) {
         this.flag = 1;
         this.toastr.error("Please select quality first");
       } else {
         this.flag = 0;
+        this.weightFlag = false;
         this.qualityList.forEach((element) => {
           element.id ? (this.stockBatch.partyId = element.partyId) : null;
           let id = element.id ? element.id : element.qualityEntryId;
@@ -195,6 +197,9 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.unit = element.unit;
             if (this.stockBatch.unit === "weight") {
               this.weightFlag = true;
+            }
+            else {
+              this.weightFlag = false;
             }
             this.wtPer100M = element.wtPer100m;
           }
@@ -301,7 +306,13 @@ export class AddEditStockBatchComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "grData" + (rowIndex + 1) + "-" + 0 + "" + idx;
+      if(this.weightFlag){
+        this.index = "grData" + (rowIndex + 1) + "-" + 1 + "" + idx;  
+      }
+      else if(!this.weightFlag){
+        this.index = "grData" + (rowIndex + 1) + "-" + 0 + "" + idx;
+
+      }
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
         let item = this.stockDataValues[idx].batchMW[rowIndex];
         if (colName == "mtr") {

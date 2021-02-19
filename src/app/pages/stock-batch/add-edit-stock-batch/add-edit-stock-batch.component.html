@@ -178,7 +178,7 @@
                                                             let-rowIndex="rowIndex">
                                                             <input class="tableForm" type="number"
                                                                 (keyup)="onKeyUp($event,rowIndex,0,'mtr',i)"
-                                                                [(ngModel)]="row.mtr" [id]="'grData'+rowIndex +'-0'+i"
+                                                                [(ngModel)]="row.mtr" [id]="'grData'+rowIndex+'-0'+i"
                                                                 #forFocus #meter1="ngModel" name="mtr{{rowIndex}}{{i}}"
                                                                 required
                                                                 (input)="calculateWt(meter1.value,i,rowIndex,0);"
