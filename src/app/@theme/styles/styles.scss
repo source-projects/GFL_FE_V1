@@ -1116,7 +1116,14 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 8px 9px !important;
   flex-grow: unset !important;
 }
-
+.trans-box-drop-1{
+  color: #fff !important;
+  // max-width: 31vh;
+  // padding: 8px 25px !important;
+  min-width: 15vh;
+  padding: 8px 9px !important;
+  flex-grow: unset !important;
+}
 .jet-btn-changes {
   min-width: 15vh;
   padding: 0 9px !important;

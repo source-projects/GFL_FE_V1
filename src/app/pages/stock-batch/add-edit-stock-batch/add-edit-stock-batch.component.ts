@@ -7,11 +7,16 @@ import {
   NgbDateAdapter,
   NgbDateNativeAdapter,
 } from "@ng-bootstrap/ng-bootstrap";
-import { StockBatch, BatchCard, BatchMrtWt,BatchData } from '../../..//@theme/model/stock-batch';
-import { PartyService } from '../../..//@theme/services/party.service';
-import { QualityService } from '../../..//@theme/services/quality.service';
-import { StockBatchService } from '../../..//@theme/services/stock-batch.service';
-import { CommonService } from '../../..//@theme/services/common.service';
+import {
+  StockBatch,
+  BatchCard,
+  BatchMrtWt,
+  BatchData,
+} from "../../..//@theme/model/stock-batch";
+import { PartyService } from "../../..//@theme/services/party.service";
+import { QualityService } from "../../..//@theme/services/quality.service";
+import { StockBatchService } from "../../..//@theme/services/stock-batch.service";
+import { CommonService } from "../../..//@theme/services/common.service";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -47,6 +52,8 @@ export class AddEditStockBatchComponent implements OnInit {
   stockDataValues = [
     {
       batchId: null,
+      totalWt: null,
+      totalMt: null,
       batchMW: [
         {
           mtr: null,
@@ -60,7 +67,12 @@ export class AddEditStockBatchComponent implements OnInit {
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   batchIdArray = [];
-
+  totalMtr: any = 0;
+  wtArray: any[] = [];
+  mtArray: any[] = [];
+  totalWt: any = 0;
+  dateRange: any;
+  weightFlag: boolean = false;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -70,7 +82,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getQualityList();
@@ -88,6 +100,8 @@ export class AddEditStockBatchComponent implements OnInit {
       23,
       59
     );
+    this.stockBatch.billDate = this.maxDate;
+    this.stockBatch.chlDate = this.maxDate;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
   }
@@ -177,16 +191,25 @@ export class AddEditStockBatchComponent implements OnInit {
           let id = element.id ? element.id : element.qualityEntryId;
           if (id == this.stockBatch.qualityId) {
             this.stockBatch.unit = element.unit;
+            if (this.stockBatch.unit === "weight") {
+              this.weightFlag = true;
+            }
             this.wtPer100M = element.wtPer100m;
           }
         });
 
+        let reCalcMt;
+        let reCalcWt;
         //re-calculate mtr/wt when quality changed
         this.stockDataValues.forEach((e) => {
           e.batchMW.forEach((e1) => {
             if (this.stockBatch.unit == "mtr") {
-              e1.wt = (e1.mtr / 100) * this.wtPer100M;
-            } else e1.mtr = (e1.wt * 100) / this.wtPer100M;
+              reCalcWt = (e1.mtr / 100) * this.wtPer100M;
+              e1.wt = reCalcWt.toFixed(2);
+            } else {
+              reCalcMt = (e1.wt * 100) / this.wtPer100M;
+            }
+            e1.mtr = reCalcMt.toFixed(2);
           });
         });
       }
@@ -224,9 +247,11 @@ export class AddEditStockBatchComponent implements OnInit {
             }
             else {
               this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
+              this.stockBatch.batchData.forEach((element,index) => {
+                  this.production_flag[index] = element.isProductionPlanned
+              })
               this.setStockDataValues1();
             }
-
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -237,23 +262,32 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       );
   }
-  setStockDataValues1(){
-    let batchIDs = [...new Set(this.stockBatch.batchData.map(x => x.batchId))];
+  setStockDataValues1() {
+    let batchIDs = [
+      ...new Set(this.stockBatch.batchData.map((x) => x.batchId)),
+    ];
     this.stockDataValues = [];
-    batchIDs.forEach((x)=>{
+    batchIDs.forEach((x) => {
       this.stockDataValues.push(new BatchCard(x));
     });
 
-    this.stockDataValues.forEach((batch)=>{
-      this.stockBatch.batchData.forEach((x)=>{
-        if(x.batchId == batch.batchId){
+    this.stockDataValues.forEach((batch) => {
+      this.stockBatch.batchData.forEach((x) => {
+        if (x.batchId == batch.batchId) {
           batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt));
+          batch.batchMW.forEach((element) => {
+            this.mtArray.push(element.mtr);
+            this.wtArray.push(element.wt);
+          });
+          this.totalWt = this.calculateTotalMtrWt(this.wtArray);
+          this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
+          batch.totalMt = this.totalMtr;
+          batch.totalWt = this.totalWt;
         }
-      })
+      });
     });
   }
 
-  
   batchInsertCheck() {
     if (this.stockBatch.qualityId == null) {
       this.flag = 1;
@@ -280,7 +314,7 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         }
         //let obj:BatchMrtWt  = new BatchMrtWt();
-        let obj = { mtr: null, wt: null };
+        let obj = { mtr: null, wt: null, totalMt: null, totalWt: null };
         let list = this.stockDataValues[idx].batchMW;
         list.push({ ...obj });
         this.stockDataValues[idx].batchMW = [...list];
@@ -330,7 +364,9 @@ export class AddEditStockBatchComponent implements OnInit {
         let itemList = [...this.stockDataValues];
         itemList = _.sortBy(itemList, "batchId", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
-        ob.batchId = (++nextBatchId);
+        ob.batchId = ++nextBatchId;
+        this.wtArray = [];
+        this.mtArray = [];
         this.stockDataValues.push({ ...ob });
         const className = "collapsible-panel--expanded";
         if (e.target.classList.contains(className)) {
@@ -346,7 +382,7 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.stockDataValues.length == 1) {
       this.stockDataValues[0] = new BatchCard();
       this.stockDataValues[0].batchMW.push(new BatchMrtWt());
-     }else {
+    } else {
       this.stockDataValues.splice(index, 1);
     }
   }
@@ -378,22 +414,45 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   calculateWt(meter, i, j, col) {
-    let w;
+    let w: number;
     w = (meter / 100) * this.wtPer100M;
     this.stockDataValues[i].batchMW[j].wt = w.toFixed(2);
+    this.wtArray.push(w.toFixed(2));
+    this.mtArray.push(meter.toFixed(2));
+    this.totalWt = this.calculateTotalMtrWt(this.wtArray);
+    this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
+    this.stockDataValues[i].totalMt = this.totalMtr;
+    this.stockDataValues[i].totalWt = this.totalWt;
   }
-
+  calculateTotalMtrWt(dataArray) {
+    let total = 0;
+    dataArray.forEach((element) => {
+      total = Number(total) + Number(element);
+    });
+    return total.toFixed(2);
+  }
   calculateMtr(weight, i, j, col) {
     let m;
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
+    this.mtArray.push(this.stockDataValues[i].batchMW[j].mtr);
+    this.wtArray.push(m.toFixed(2));
+    this.mtArray.push(weight.toFixed(2));
+    this.totalWt = this.calculateTotalMtrWt(this.wtArray);
+    this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
+    this.stockDataValues[i].totalMt = this.totalMtr;
+    this.stockDataValues[i].totalWt = this.totalWt;
   }
 
   checkValidation(myForm) {
     let returnValue = true;
     if (this.stockDataValues && this.stockDataValues.length) {
       if (this.stockDataValues.length == 1) {
-        if (!this.stockDataValues[0].batchId && !this.stockDataValues[0].batchMW[0].mtr && !this.stockDataValues[0].batchMW[0].wt) {
+        if (
+          !this.stockDataValues[0].batchId &&
+          !this.stockDataValues[0].batchMW[0].mtr &&
+          !this.stockDataValues[0].batchMW[0].wt
+        ) {
           returnValue = false;
           if (this.stockBatch.billDate)
             if (this.stockBatch.billNo)
@@ -401,7 +460,10 @@ export class AddEditStockBatchComponent implements OnInit {
                 if (this.stockBatch.chlNo)
                   if (this.stockBatch.stockInType)
                     if (this.stockBatch.partyId)
-                      if (this.stockBatch.qualityId) { returnValue = true; return returnValue }
+                      if (this.stockBatch.qualityId) {
+                        returnValue = true;
+                        return returnValue;
+                      }
         }
       }
       this.stockDataValues.forEach((ele) => {
@@ -456,10 +518,12 @@ export class AddEditStockBatchComponent implements OnInit {
         if (ele.batchMW && ele.batchMW.length) {
           ele.batchMW.forEach((subele) => {
             if (!!subele.mtr && !!subele.wt) {
-              let obj = { batchId: 0, mtr: 0, wt: 0 };
+              let obj = { batchId: 0, mtr: 0, wt: 0, totalMt: 0, totalWt: 0 };
               obj.batchId = ele.batchId;
               obj.mtr = subele.mtr;
               obj.wt = subele.wt;
+              obj.totalMt = ele.totalMt;
+              obj.totalWt = ele.totalWt;
               this.stockBatchArray.push(obj);
             }
           });

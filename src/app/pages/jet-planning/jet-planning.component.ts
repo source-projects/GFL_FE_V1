@@ -25,6 +25,7 @@ import { ShadeService } from "../../@theme/services/shade.service";
 import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
 import { filter, map } from "rxjs/operators";
+import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: "ngx-jet-planning",
   templateUrl: "./jet-planning.component.html",
@@ -79,6 +80,7 @@ export class JetPlanningComponent implements OnInit {
   detailsFlag = false;
   showMenuFlag = false;
   items: any[] = [];
+  color = "red";
   constructor(
     private modalService: NgbModal,
     private jetService: JetPlanningService,
@@ -121,6 +123,7 @@ export class JetPlanningComponent implements OnInit {
         else if (title === "Change Status") this.changeStatus();
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Pause") this.pauseChangeStatus();
+        else if (title === "Remove") this.removeBatchFromJet();
         else if (title === "Details") this.getBatchDetails();
       });
   }
@@ -175,22 +178,18 @@ export class JetPlanningComponent implements OnInit {
   }
 
   setIndexForSlip(index) {
+    console.log(index);
     //on click set batchId stockId to get print-slip data
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
     var detail = this.getBatchDetails();
     this.items = [
+     
+      { title: "Complete" },
+      { title: "Pause" },
       {
-        title: "Change Status",
-        children: [
-          {
-            title: "Complete",
-          },
-          {
-            title: "Pause",
-          },
-        ],
+        title: "Remove",
       },
       { title: "Print" },
       { title: "Edit And Print" },
@@ -201,8 +200,32 @@ export class JetPlanningComponent implements OnInit {
             title: detail,
           },
         ],
-      },
+      }
     ];
+  }
+
+  removeBatchFromJet(){
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.jetService.removeProductionFromJet(this.sendControlId, this.sendSotckId).subscribe(
+          (data) => {
+            this.toastr.success(errorData.Delete);
+            this.getJetData();
+            this.getAllBatchWithShade();
+
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+
+    
+
   }
 
   getCurrentId() {
@@ -275,16 +298,10 @@ export class JetPlanningComponent implements OnInit {
               " Batch Weight: " +
               data["data"].totalWt;
             this.items = [
+              { title: "Complete" },
+              { title: "Pause" },
               {
-                title: "Change Status",
-                children: [
-                  {
-                    title: "Complete",
-                  },
-                  {
-                    title: "Pause",
-                  },
-                ],
+                title: "Remove",
               },
               { title: "Print" },
               { title: "Edit And Print" },
@@ -425,6 +442,7 @@ export class JetPlanningComponent implements OnInit {
     const modalRef = this.modalService
       .open(ShadeWithBatchComponent)
       .result.then((result) => {
+        console.log(result);
         this.jetData1.controlId = result.jet;
         this.jetData1.productionId = p_id;
         this.jetData1.sequence = 1;
@@ -532,7 +550,6 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.stockId = this.sendSotckId;
     modalRef.componentInstance.additionSlipFlag = false;
 
-    
     modalRef.result.then((result) => {
       if (result) {
       }
