@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectComponent } from "@ng-select/ng-select";
 import {
   DyeingChemicalData,
   DyeingProcessData,
@@ -12,7 +13,9 @@ import { DyeingProcessService } from "app/@theme/services/dyeing-process.service
   styleUrls: ["./add-dyeing-process-step.component.scss"],
 })
 export class AddDyeingProcessStepComponent implements OnInit {
-  
+
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
+
   public dyeingProcessStep: DyeingProcessData;
   public dyeingChemicalData: DyeingChemicalData[] = [];
   public index: string;
@@ -51,10 +54,10 @@ export class AddDyeingProcessStepComponent implements OnInit {
     } else {
       this.submitButton = "Update";
       if (this.position > 0) {
-        this.dyeingChemicalData = this.stepList[this.position-1].dyeingChemicalData;
+        this.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
         this.dyeingProcessStep.sequence = this.position;
-        this.dyeingProcessStep.temp = this.stepList[this.position-1].temp;
-        this.dyeingProcessStep.holdTime = this.stepList[this.position-1].holdTime;
+        this.dyeingProcessStep.temp = this.stepList[this.position - 1].temp;
+        this.dyeingProcessStep.holdTime = this.stepList[this.position - 1].holdTime;
         this.dyeingProcessStep.processType = this.stepList[
           this.position - 1
         ].processType;
@@ -64,6 +67,10 @@ export class AddDyeingProcessStepComponent implements OnInit {
       }
     }
   }
+
+  ngAfterViewInit() {
+  }
+
 
   onCreate(myForm) {
     this.modalSubmitted = true;
@@ -87,14 +94,14 @@ export class AddDyeingProcessStepComponent implements OnInit {
         } else {
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.dyeingChemicalData.length - 1) {
         let item = this.dyeingChemicalData[rowIndex];
 
@@ -103,7 +110,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
             // this.toastr.error("Enter concentration");
             return;
           }
-        }else if(colName == "byChemical"){
+        } else if (colName == "byChemical") {
           if (!item.byChemical) {
             // this.toastr.error("Enter concentration");
             return;
@@ -129,6 +136,10 @@ export class AddDyeingProcessStepComponent implements OnInit {
         }, 10);
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
+
   }
 
   removeItem(rowIndex) {
