@@ -366,6 +366,9 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
 
+  removeProcess(processIndex) {
+    this.slipData.dyeingSlipDataList.splice(processIndex,1);
+  }
   printSlip(myForm?) {
     this.isPrinting = false;
     if (!this.isPrintDirect) {
