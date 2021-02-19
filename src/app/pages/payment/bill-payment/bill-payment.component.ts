@@ -68,6 +68,13 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.otherDiff = 0;
 
   }
+
+  ngAfterViewInit() {
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
+  }
+
   public getUserId() {
     this.currentPaymentId = this._route.snapshot.paramMap.get("id");
   }
@@ -254,6 +261,7 @@ export class BillPaymentComponent implements OnInit {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "paymentDetailsList" + (rowIndex + 1) + "-" + 0;
+      console.log("INDEX:",this.index)
       if (rowIndex === this.paymentValues.paymentData.length - 1) {
         let item = this.paymentValues.paymentData[rowIndex];
         if (colName == "payType") {

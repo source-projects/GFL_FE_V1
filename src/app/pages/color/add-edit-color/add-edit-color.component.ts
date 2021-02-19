@@ -75,11 +75,6 @@ export class AddEditColorComponent implements OnInit {
     this.color.chlDate = this.maxDate;
   }
 
-  ngAfterViewInit() {
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
-  }
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -232,6 +227,9 @@ export class AddEditColorComponent implements OnInit {
         }, 10);
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
   }
 
   calculateAmount(rowIndex) {
