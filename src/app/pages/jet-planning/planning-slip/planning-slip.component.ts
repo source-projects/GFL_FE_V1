@@ -33,6 +33,8 @@ export class PlanningSlipComponent implements OnInit {
   @Input() editAdditionFlag: boolean;
   @Input() additionSlipData;
   public itemListArray: any = [];
+  public itemListArray1: any = [];
+  public colorFlag = false;
   public printFlag = false;
   public saveFlag = false;
   public slipData: any;
@@ -40,6 +42,7 @@ export class PlanningSlipComponent implements OnInit {
   public holdTime;
   public isColor;
   public liquorRatio;
+  public list = [];
   public itemList = [
     {
       itemName: String,
@@ -106,6 +109,7 @@ export class PlanningSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
+          this.itemListArray1 = this.itemListArray;
         } else {
         }
       },
@@ -121,6 +125,16 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
+            console.log(this.slipData);
+            let quantity;
+            this.slipData.dyeingSlipDataList.forEach(element => {
+              element.dyeingSlipItemData.forEach(element1 => {
+                if(element1.qty){
+                  quantity = (element1.qty).toFixed(3);
+                }
+                element1.qty = quantity;
+              });
+            });
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -230,6 +244,31 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
+  colorSelected(event, i){
+    this.list = [];
+    let colorItemList = [];
+    console.log(event , i);
+    if(event){
+      this.colorFlag = true;
+      this.slipData.dyeingSlipDataList[i].dyeingSlipItemData.forEach(element => {
+        if(element.isColor){
+          colorItemList.push(element);
+        }
+      });
+      this.list = colorItemList;
+     
+      console.log(this.list);
+
+    }else{
+      this.colorFlag = false;
+      console.log(this.slipData.dyeingSlipDataList[i].dyeingSlipItemData)
+      this.list = this.slipData.dyeingSlipDataList[i].dyeingSlipItemData;
+      this.itemListArray = this.itemListArray1;
+    }
+   
+   
+  }
+
   itemSelected(rowIndex, parentIndex) {
     this.itemListArray.forEach((e) => {
       if (
@@ -305,12 +344,16 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    this.approveByFlag = true;
     const modalRef = this.modalService.open(AddShadeComponent);
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
+        this.approveByFlag = true;
         this.slipData.approvedId = result;
+      }
+      else{
+        this.approveByFlag = false;
+
       }
     });
   }

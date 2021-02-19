@@ -55,7 +55,7 @@ export class IssueColorBoxComponent implements OnInit {
 
   itemSelected(event){
     this.box = null;
-    this.colorService.getColorBox(event).subscribe(
+    this.colorService.getColorBox(event , false).subscribe(
       (data) => {
         if (data["success"]) {
           this.colorBoxList = data["data"];
