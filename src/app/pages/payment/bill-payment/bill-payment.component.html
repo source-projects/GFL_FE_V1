@@ -20,12 +20,15 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Party Name</label>
-                            <ng-select name="partyId" [(ngModel)]='paymentValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="partySelected($event)" placeholder="Party Name" class="required-error-dropdown"
-                                [readonly]="currentPaymentId != null">
+                            <ng-select name="partyId" [(ngModel)]='paymentValues.partyId' required #partyId1="ngModel"
+                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                                (change)="partySelected($event)" placeholder="Party Name"
+                                class="required-error-dropdown" [readonly]="currentPaymentId != null">
                                 <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
 
-                            <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                            <div class="required-class"
+                                *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                                 <span>Party name is required</span>
                             </div>
                         </div>
@@ -38,8 +41,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Pending Invoices:</label>
-                            <ngx-datatable [rows]="invoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="invoiceSelected($event)">
-                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
+                            <ngx-datatable [rows]="invoiceList" class="material" [headerHeight]="31" [footerHeight]="31"
+                                [selectionType]="'checkbox'" (select)="invoiceSelected($event)">
+                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true"
+                                    [checkboxable]="true">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Invoice No" prop="invoicNo">
                                 </ngx-datatable-column>
@@ -65,7 +70,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="billTotal" class="form-control" [(ngModel)]='paymentValues.totalBill' required placeholder="Bill Total">
+                                        <input type="number" name="billTotal" class="form-control"
+                                            [(ngModel)]='paymentValues.totalBill' required placeholder="Bill Total">
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +86,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="gstAmount" class="form-control" [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount" (keyup)="gstSelected($event)">
+                                        <input type="number" name="gstAmount" class="form-control"
+                                            [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount"
+                                            (keyup)="gstSelected($event)">
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +103,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="rdAmt" class="form-control" [(ngModel)]='paymentValues.rdAmt' required placeholder="RD Amount" (keyup)="cdSelected($event)">
+                                        <input type="number" name="rdAmt" class="form-control"
+                                            [(ngModel)]='paymentValues.rdAmt' required placeholder="RD Amount"
+                                            (keyup)="cdSelected($event)">
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +120,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <textarea type="text" name="rdDetail" class="form-control" [(ngModel)]='paymentValues.rdDetail' required placeholder="RD Details"></textarea>
+                                        <textarea type="text" name="rdDetail" class="form-control"
+                                            [(ngModel)]='paymentValues.rdDetail' required
+                                            placeholder="RD Details"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +144,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
 
-                                                <input type="number" name="cdAmt" class="form-control" [(ngModel)]='paymentValues.cdAmt' required placeholder="CD Amount" (keyup)="cdSelected($event)">
+                                                <input type="number" name="cdAmt" class="form-control"
+                                                    [(ngModel)]='paymentValues.cdAmt' required placeholder="CD Amount"
+                                                    (keyup)="cdSelected($event)">
                                             </div>
                                         </div>
 
@@ -149,7 +163,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group center-txt-title">
-                                                <textarea type="text" name="cdDetail" class="form-control" [(ngModel)]='paymentValues.cdDetail' required placeholder="CD Details"></textarea>
+                                                <textarea type="text" name="cdDetail" class="form-control"
+                                                    [(ngModel)]='paymentValues.cdDetail' required
+                                                    placeholder="CD Details"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +188,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group center-txt-title">
-                                                <input type="number" name="otherDiff" class="form-control" [(ngModel)]='paymentValues.otherDiff' required placeholder="Other Diff" (keyup)="cdSelected($event)">
+                                                <input type="number" name="otherDiff" class="form-control"
+                                                    [(ngModel)]='paymentValues.otherDiff' required
+                                                    placeholder="Other Diff" (keyup)="cdSelected($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +206,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group center-txt-title">
-                                                <textarea type="text" name="diffDetail" class="form-control" [(ngModel)]='paymentValues.diffDetail' required placeholder="Other Details"></textarea>
+                                                <textarea type="text" name="diffDetail" class="form-control"
+                                                    [(ngModel)]='paymentValues.diffDetail' required
+                                                    placeholder="Other Details"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -289,8 +309,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Advance Payments:</label>
-                            <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="advancePaymentSelected($event)">
-                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" [width]="5">
+                            <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31"
+                                [footerHeight]="31" [selectionType]="'checkbox'"
+                                (select)="advancePaymentSelected($event)">
+                                <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true"
+                                    [checkboxable]="true" [width]="5">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Amount" prop="amt" [width]="30"></ngx-datatable-column>
                                 <ngx-datatable-column name="Type" prop="payType" [width]="30"></ngx-datatable-column>
@@ -301,7 +324,8 @@
                     <div class="col-md-6 desktop-btn">
                         <div class="form-group center-txt-title user-per-check-display">
                             <label style="width: 87%;">Credit Amount:</label>
-                            <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
+                            <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit"
+                                required placeholder="Total Credit">
                         </div>
                     </div>
 
@@ -313,20 +337,36 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Payment Details:</label>
-                        <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="paymentValues.paymentData" [headerHeight]="31" [footerHeight]="31">
+                        <ngx-datatable #table class="material common-table datatable-auto-height"
+                            [rows]="paymentValues.paymentData" [headerHeight]="31" [footerHeight]="31">
                             <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Type" prop="payType" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select (change)="typeSelected(rowIndex,row)" #payType1="ngModel" name='payType{{rowIndex}}' class="tableForm" id="payType" [(ngModel)]="row.payTypeId" required (keyup)="onKeyUp($event,rowIndex,0,'payType')" [id]="'paymentDetailsList'+rowIndex+'-0'">
+                                    <!-- <select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                        name='payType{{rowIndex}}' class="tableForm" id="payType"
+                                        [(ngModel)]="row.payTypeId" required
+                                        (keyup)="onKeyUp($event,rowIndex,0,'payType')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-0'">
                                         <option *ngFor="let type of paymentTypeList" [value]="type.id">
                                             {{type.paymentType}}</option>
-                                    </select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)" style="display: inline-block;">
+                                    </select> -->
+                                    <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                    name='payType{{rowIndex}}' class="tableForm" id="payType"
+                                    [(ngModel)]="row.payTypeId" required
+                                    (keyup)="onKeyUp($event,rowIndex,0,'payType')"
+                                    [id]="'paymentDetailsList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none">
+                                        <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
+                                            {{type.paymentType}}</ng-option>
+                                    </ng-select>
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)"
+                                        style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -334,8 +374,13 @@
 
                             <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="payAmt">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm" id="payAmt" [(ngModel)]="row.payAmt" (keyup)="onKeyUp($event,rowIndex,1,'payAmt')" [id]="'paymentDetailsList'+rowIndex+'-1'" min="0" (keyup)="currentPaymentAdded($event)">
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)" style="display: inline-block;">
+                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable"
+                                        id="payAmt" [(ngModel)]="row.payAmt"
+                                        (keyup)="onKeyUp($event,rowIndex,1,'payAmt')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-1'" min="0"
+                                        (keyup)="currentPaymentAdded($event)">
+                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)"
+                                        style="display: inline-block;">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -343,25 +388,35 @@
 
                             <ngx-datatable-column name="Date" prop="chequeDate" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #chequeDate1="ngModel" name='chequeDate{{rowIndex}}' [(ngModel)]="row.chequeDate" (keyup)="onKeyUp($event,rowIndex,2,'chequeDate')" [id]="'paymentDetailsList'+rowIndex+'-2'">
+                                    <input class="tableForm line-height-subtable" type="text" #chequeDate1="ngModel"
+                                        name='chequeDate{{rowIndex}}' [(ngModel)]="row.chequeDate"
+                                        (keyup)="onKeyUp($event,rowIndex,2,'chequeDate')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-2'">
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Cheque No." prop="chequeNo" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #chequeNo1="ngModel" name='chequeNo{{rowIndex}}' [(ngModel)]="row.chequeNo" (keyup)="onKeyUp($event,rowIndex,3,'chequeNo')" [id]="'paymentDetailsList'+rowIndex+'-3'">
+                                    <input class="tableForm line-height-subtable" type="text" #chequeNo1="ngModel"
+                                        name='chequeNo{{rowIndex}}' [(ngModel)]="row.chequeNo"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'chequeNo')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-3'">
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Bank" prop="bank" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #bank1="ngModel" name='bank{{rowIndex}}' [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')" [id]="'paymentDetailsList'+rowIndex+'-4'">
+                                    <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
+                                        [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-4'">
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #remark1="ngModel" name='remark{{rowIndex}}' [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')" [id]="'paymentDetailsList'+rowIndex+'-5'">
+                                    <input class="tableForm line-height-subtable" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
+                                        [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-5'">
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -382,7 +437,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
+                                        <input type="number" name="amtToPay" class="form-control"
+                                            [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
                                     </div>
                                 </div>
                             </div>
@@ -398,7 +454,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
+                                        <input type="number" name="amtPaid" class="form-control"
+                                            [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
                                     </div>
                                 </div>
                             </div>
@@ -414,7 +471,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
+                                        <input type="number" name="totalCurrentPayment" class="form-control"
+                                            [(ngModel)]="totalCurrentPayment" required
+                                            placeholder="Total Current Payment">
                                     </div>
                                 </div>
                             </div>
@@ -432,8 +491,11 @@
 
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
-                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
-                        <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="onAddPayment()">SAVE</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
+                            routerLink="/pages/payment">CANCEL</button>
+                        <button *ngIf="this.currentPaymentId == null" type="button"
+                            class="btn btn-primary btn-sm btn-design button-base ripple"
+                            (click)="onAddPayment()">SAVE</button>
                     </div>
 
                 </div>

@@ -48,7 +48,9 @@ export class PlanningSlipComponent implements OnInit {
   @Input() additionSlipFlag: boolean;
   @Input() editAdditionFlag: boolean;
   @Input() additionSlipData;
-  public itemListArray = [];
+  public itemListArray: any = [];
+  public itemListArray1: any = [];
+  public colorFlag = false;
   public printFlag = false;
   public saveFlag = false;
   public slipData: any;
@@ -56,6 +58,7 @@ export class PlanningSlipComponent implements OnInit {
   public holdTime;
   public isColor;
   public liquorRatio;
+  public list = [];
   public itemList = [
     {
       itemName: String,
@@ -122,6 +125,7 @@ export class PlanningSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
+          this.itemListArray1 = this.itemListArray;
         } else {
         }
       },
@@ -137,6 +141,16 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
+            console.log(this.slipData);
+            let quantity;
+            this.slipData.dyeingSlipDataList.forEach(element => {
+              element.dyeingSlipItemData.forEach(element1 => {
+                if(element1.qty){
+                  quantity = (element1.qty).toFixed(3);
+                }
+                element1.qty = quantity;
+              });
+            });
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -246,25 +260,45 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  itemSelected(event, parentIndex) {
-    console.log("Event:",event);
-    console.log("Index:",parentIndex)
+  colorSelected(event, i){
+    this.list = [];
+    let colorItemList = [];
+    console.log(event , i);
+    if(event){
+      this.colorFlag = true;
+      this.slipData.dyeingSlipDataList[i].dyeingSlipItemData.forEach(element => {
+        if(element.isColor){
+          colorItemList.push(element);
+        }
+      });
+      this.list = colorItemList;
+     
+      console.log(this.list);
 
-    this.supplierSelected.push(event);
-    this.itemIndex = parentIndex;
-    // this.itemListArray.forEach((e) => {
-    //   if (
-    //     e.itemId ==
-    //     this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
-    //   ) {
-    //     this.slipData.dyeingSlipDataList[
-    //       parentIndex
-    //     ].dyeingSlipItemData.supplierName = e.supplierName;
-    //     this.slipData.dyeingSlipDataList[
-    //       parentIndex
-    //     ].dyeingSlipItemData.itemName = e.itemName;
-    //   }
-    // });
+    }else{
+      this.colorFlag = false;
+      console.log(this.slipData.dyeingSlipDataList[i].dyeingSlipItemData)
+      this.list = this.slipData.dyeingSlipDataList[i].dyeingSlipItemData;
+      this.itemListArray = this.itemListArray1;
+    }
+   
+   
+  }
+
+  itemSelected(rowIndex, parentIndex) {
+    this.itemListArray.forEach((e) => {
+      if (
+        e.itemId ==
+        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
+      ) {
+        this.slipData.dyeingSlipDataList[
+          parentIndex
+        ].dyeingSlipItemData.supplierName = e.supplierName;
+        this.slipData.dyeingSlipDataList[
+          parentIndex
+        ].dyeingSlipItemData.itemName = e.itemName;
+      }
+    });
   }
 
   itemSelected1(event, index) {
@@ -326,12 +360,16 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    this.approveByFlag = true;
     const modalRef = this.modalService.open(AddShadeComponent);
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
+        this.approveByFlag = true;
         this.slipData.approvedId = result;
+      }
+      else{
+        this.approveByFlag = false;
+
       }
     });
   }
@@ -365,6 +403,7 @@ export class PlanningSlipComponent implements OnInit {
         let tempFlag = false;
         let inter = setInterval(() => {
           let element = <HTMLElement>document.getElementById("print-slip");
+          console.log("ELEMENT:",element)
           if (element) {
             doc.append(element);
             doc.print();

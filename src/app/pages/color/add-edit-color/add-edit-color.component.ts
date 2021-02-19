@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import * as errorData from 'app/@theme/json/error.json';
-import { Color, ColorDataList } from "app/@theme/model/color";
-import { ColorService } from "app/@theme/services/color.service";
-import { CommonService } from 'app/@theme/services/common.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
+import {
+  NgbDateAdapter,
+  NgbDateNativeAdapter,
+} from "@ng-bootstrap/ng-bootstrap";
+import * as errorData from "../../../@theme/json/error.json";
+import { Color, ColorDataList } from "../../../@theme/model/color";
+import { ColorService } from "../../../@theme/services/color.service";
+import { CommonService } from "../../../@theme/services/common.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
+import { ToastrService } from "ngx-toastr";
+import { NgSelectComponent } from "@ng-select/ng-select";
 @Component({
-  selector: 'ngx-add-edit-color',
-  templateUrl: './add-edit-color.component.html',
-  styleUrls: ['./add-edit-color.component.scss'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+  selector: "ngx-add-edit-color",
+  templateUrl: "./add-edit-color.component.html",
+  styleUrls: ["./add-edit-color.component.scss"],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditColorComponent implements OnInit {
+
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
-  dateForPicker=new Date();
+  dateForPicker = new Date();
   userHead;
   public errorData: any = (errorData as any).default;
   colorDataListArray: ColorDataList[] = [];
@@ -40,7 +46,7 @@ export class AddEditColorComponent implements OnInit {
   convertedDate: any;
   convertedDate2: any;
 
-  maxDate:any;
+  maxDate: any;
   // const isDisabled = (date: NgbDate, current: {month: number}) => day.date === 13;
   constructor(
     private _route: ActivatedRoute,
@@ -48,154 +54,153 @@ export class AddEditColorComponent implements OnInit {
     private supplierService: SupplierService,
     private colorService: ColorService,
     private route: Router,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
-  
   }
-  
+
   ngOnInit(): void {
-    this.maxDate = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(),this.dateForPicker.getDate(), 23, 59);
+    this.maxDate = new Date(
+      this.dateForPicker.getFullYear(),
+      this.dateForPicker.getMonth(),
+      this.dateForPicker.getDate(),
+      23,
+      59
+    );
     this.getData();
     this.getUpdateData();
     this.getSupplierList();
-
+    this.color.billDate = this.maxDate;
+    this.color.chlDate = this.maxDate;
   }
+
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
-    this.currentColorId = this._route.snapshot.paramMap.get('id');
+    this.currentColorId = this._route.snapshot.paramMap.get("id");
   }
 
   getUpdateData() {
-    this.loading=true;
+    this.loading = true;
     if (this.currentColorId != null) {
       this.colorService.getColorDataById(this.currentColorId).subscribe(
-        data => {
+        (data) => {
           this.color = data["data"];
           //For Item Name List
-          this.supplierService.getSupplierItemWithRateById(this.color.supplierId).subscribe(
-            data => {
-              if (data['success']) {
-                this.supplierListRate = data['data'];
+          this.supplierService
+            .getSupplierItemWithRateById(this.color.supplierId)
+            .subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.supplierListRate = data["data"];
+                } else {
+                  // this.toastr.error(data['msg'])
+                }
+                this.loading = false;
+              },
+              (error) => {
+                // this.toastr.error(errorData.Serever_Error)
+                this.loading = false;
               }
-              else {
-                // this.toastr.error(data['msg'])
-              
-              }
-              this.loading=false;
-            },
-            error => {
-              // this.toastr.error(errorData.Serever_Error)
-              this.loading=false;
-            })
+            );
           this.color.billDate = new Date(this.color.billDate);
           this.color.chlDate = new Date(this.color.chlDate);
-          for(let i=0;i<this.color.colorDataList.length;i++)
-          {
+          for (let i = 0; i < this.color.colorDataList.length; i++) {
             this.calculateTotalQuantity(i);
             this.calculateAmount(i);
           }
-          
-          let amount: any
-          this.color.colorDataList.forEach(element => {
+
+          let amount: any;
+          this.color.colorDataList.forEach((element) => {
             amount = Number(element.rate) * Number(element.quantity);
             element.amount = parseInt(amount);
-            this.loading=false;
+            this.loading = false;
           });
         },
-        error => {
+        (error) => {
           // this.toastr.error(errorData.Serever_Error)
-          this.loading=false;
+          this.loading = false;
         }
-      )
+      );
     }
   }
 
   getSupplierList() {
-    this.loading=true;
+    this.loading = true;
     this.supplierService.getSupplierName(0, "all").subscribe(
-      data => {
-        if (data['success']) {
-          this.supplierList = data['data'];
+      (data) => {
+        if (data["success"]) {
+          this.supplierList = data["data"];
+        } else {
+          // this.toastr.error(data['msg'])
         }
-        else {
-          // this.toastr.error(data['msg']) 
-        }
-        this.loading=false;
+        this.loading = false;
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error)
-        this.loading=false;
+        this.loading = false;
       }
-    )
-    this.loading=false;
+    );
+    this.loading = false;
   }
 
   getAllSupplierRate(event) {
-    this.loading=true;
+    this.loading = true;
     if (event != undefined) {
       if (this.color.supplierId) {
-        this.supplierService.getSupplierItemWithRateById(this.color.supplierId).subscribe(
-          data => {
-            if (data['success']) {
-              this.supplierListRate = data['data'];
-             
+        this.supplierService
+          .getSupplierItemWithRateById(this.color.supplierId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.supplierListRate = data["data"];
+              } else {
+                // this.toastr.error(data['msg'])
+              }
+              this.loading = false;
+            },
+            (error) => {
+              // this.toastr.error(errorData.Serever_Error)
+              this.loading = false;
             }
-            else {
-              // this.toastr.error(data['msg'])
-              
-            }
-            this.loading=false;
-          },
-          error => {
-            // this.toastr.error(errorData.Serever_Error)
-            this.loading=false;
-          }
-        )
+          );
       }
-    }
-    else {
+    } else {
       this.getSupplierList();
     }
-    this.loading=false;
+    this.loading = false;
   }
-
 
   itemSelected(rowIndex) {
     let id = this.color.colorDataList[rowIndex].itemId;
-    this.supplierListRate.forEach(element => {
+    this.supplierListRate.forEach((element) => {
       if (id == element.id) {
         this.color.colorDataList[rowIndex].rate = element.rate;
       }
     });
     this.calculateAmount(rowIndex);
-
   }
- 
 
   onKeyUp(e, rowIndex, colIndex, colName) {
-    var keyCode = (e.keyCode ? e.keyCode : e.which);
+    var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "colorList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.color.colorDataList.length - 1) {
         let item = this.color.colorDataList[rowIndex];
-        if (colName == 'quantityPerBox') {
+        if (colName == "quantityPerBox") {
           if (!item.quantityPerBox) {
-            this.toastr.error('Quantity per box required');
+            this.toastr.error("Quantity per box required");
             return;
           }
-        }
-        else if (colName == 'noOfBox') {
+        } else if (colName == "noOfBox") {
           if (!item.noOfBox) {
-            this.toastr.error('No of box required');
+            this.toastr.error("No of box required");
             return;
           }
-        }
-        else if (colName == 'quantity') {
+        } else if (colName == "quantity") {
           if (!item.quantity) {
-            this.toastr.error('Total quantity required');
+            this.toastr.error("Total quantity required");
             return;
           }
         }
@@ -205,25 +210,26 @@ export class AddEditColorComponent implements OnInit {
         list.push(obj);
         this.color.colorDataList = [...list];
         let interval = setInterval(() => {
-
-          let field = document.getElementById(this.index)
+          let field = document.getElementById(this.index);
 
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
-        }, 10)
-      }
-      else {
+        }, 10);
+      } else {
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index)
+          let field = document.getElementById(this.index);
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
-        }, 10)
+        }, 10);
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
   }
 
   calculateAmount(rowIndex) {
@@ -248,41 +254,37 @@ export class AddEditColorComponent implements OnInit {
   }
 
   addColor(colorForm) {
-    this.disableButton=true;
+    this.disableButton = true;
     this.formSubmitted = true;
     if (colorForm.valid) {
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
       this.colorService.addColor(this.color).subscribe(
-        data => {
-          if (data['success']) {
-           this.route.navigate(["/pages/color"]);
+        (data) => {
+          if (data["success"]) {
+            this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Add_Success);
             // this.disableButton=true;
-
-          }
-          else {
-            this.toastr.error(errorData.Add_Error)
+          } else {
+            this.toastr.error(errorData.Add_Error);
           }
         },
-        error => {
-          this.toastr.error(errorData.Serever_Error)
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      )
+      );
     }
-    this.disableButton=false;
-
+    this.disableButton = false;
   }
 
   removeItem(id) {
-    let idCount = this.color.colorDataList.length
+    let idCount = this.color.colorDataList.length;
     let item = this.color.colorDataList;
     if (idCount == 1) {
       let ob = new ColorDataList();
-      let list = [{...ob}];
+      let list = [{ ...ob }];
       this.color.colorDataList = [...list];
-    }
-    else {
+    } else {
       let removed = item.splice(id, 1);
       let list = item;
       this.color.colorDataList = [...list];
@@ -290,28 +292,27 @@ export class AddEditColorComponent implements OnInit {
   }
 
   updateColor(myForm) {
-    this.loading=true;
-    this.disableButton=true;
+    this.loading = true;
+    this.disableButton = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
       this.colorService.updateColor(this.color).subscribe(
-        data => {
-          if (data['success']) {
+        (data) => {
+          if (data["success"]) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(errorData.Update_Success);
           }
-          this.loading=false;
+          this.loading = false;
         },
-        error => {
+        (error) => {
           this.toastr.error(errorData.Update_Error);
-          this.loading=false;
+          this.loading = false;
         }
-      )
-    }
-    else{
+      );
+    } else {
       this.loading = false;
-    this.disableButton=false;
+      this.disableButton = false;
     }
   }
 }
