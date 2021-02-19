@@ -1,5 +1,6 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Component, OnInit, QueryList, Renderer2, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgSelectComponent } from "@ng-select/ng-select";
 import * as errorData from "app/@theme/json/error.json";
 import { Program, ProgramRecords } from "app/@theme/model/program";
 import { CommonService } from "app/@theme/services/common.service";
@@ -15,6 +16,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddEditProgramComponent implements OnInit {
   //programValues
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   programRecordArray: ProgramRecords[] = [];
@@ -26,11 +28,11 @@ export class AddEditProgramComponent implements OnInit {
   //form Validation
   formSubmitted: boolean = false;
   //for fatching dropdown list data
-  pName:any;
+  pName: any;
   party: any[];
   qualityList: any[];
   partyShade: any[];
-  copyPartyShade:any[];
+  copyPartyShade: any[];
   shadeNoList = [];
   batchData: any[];
   stockData: any[];
@@ -38,7 +40,7 @@ export class AddEditProgramComponent implements OnInit {
   priorityData = [
     { name: "Very High" },
     { name: "High" },
-    { name: "Medium" ,SELECTED: true},
+    { name: "Medium", SELECTED: true },
     { name: "Low" },
   ];
 
@@ -46,10 +48,10 @@ export class AddEditProgramComponent implements OnInit {
   index: any;
   currentProgramId: any;
   user: any;
-  list=[];
+  list = [];
   userHead;
   allBatchData: any[];
-  partyQuality:any[];
+  partyQuality: any[];
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -77,6 +79,12 @@ export class AddEditProgramComponent implements OnInit {
     this.getAllStockBatchData();
   }
 
+  ngAfterViewInit() {
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
+  }
+
   getCurrentId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -88,7 +96,7 @@ export class AddEditProgramComponent implements OnInit {
       (data) => {
         if (data["success"]) this.stockData = data["data"];
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -172,7 +180,7 @@ export class AddEditProgramComponent implements OnInit {
     );
   }
 
-  public getAllBatchData(){
+  public getAllBatchData() {
     this.stockBatchService.getAllBatch().subscribe(
       (data) => {
         if (data["success"]) {
@@ -183,7 +191,7 @@ export class AddEditProgramComponent implements OnInit {
         this.toastr.error(errorData.Serever_Error);
       }
     );
-    }
+  }
 
   public getUpdateData() {
     this.loading = true;
@@ -202,7 +210,7 @@ export class AddEditProgramComponent implements OnInit {
                   this.programValues.qualityType = element.qualityType;
                 }
                 this.loading = false;
-                this.disableButton=false;
+                this.disableButton = false;
 
               });
 
@@ -217,7 +225,7 @@ export class AddEditProgramComponent implements OnInit {
                     (error) => {
                       // this.toastr.error(errorData.Serever_Error);
                       this.loading = false;
-                      this.disableButton=false;
+                      this.disableButton = false;
 
                     }
                   );
@@ -239,7 +247,7 @@ export class AddEditProgramComponent implements OnInit {
                     (error) => {
                       // this.toastr.error(errorData.Serever_Error);
                       this.loading = false;
-                      this.disableButton=false;
+                      this.disableButton = false;
 
                     }
                   );
@@ -252,13 +260,13 @@ export class AddEditProgramComponent implements OnInit {
           );
         } else {
           // this.toastr.error(data["msg"]);
-          this.disableButton=false;
+          this.disableButton = false;
 
           this.loading = false;
         }
       },
       (error) => {
-        this.disableButton=false;
+        this.disableButton = false;
 
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
@@ -289,11 +297,11 @@ export class AddEditProgramComponent implements OnInit {
     //getStock and batch from quality
     this.getStockBatchData();
   }
-  
+
   enableQuality(event) {
     this.shadeNoList = [];
-    this.copyPartyShade.forEach(ele=>{
-      if(ele.partyId == event){
+    this.copyPartyShade.forEach(ele => {
+      if (ele.partyId == event) {
         this.shadeNoList.push(ele)
       }
     })
@@ -391,7 +399,7 @@ export class AddEditProgramComponent implements OnInit {
           this.programValues.qualityType = e.qualityType;
           //this.pName=e.partyName;
           this.programValues.partyId = e.partyId;
-         // this.programValues.partyId = 
+          // this.programValues.partyId = 
           if (e.id != undefined)
             this.programValues.qualityEntryId = e.id;
           else
@@ -448,7 +456,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public selectQualityId() {
-   
+
     if (
       this.programValues.qualityId == null &&
       (this.batchData == null || this.stockData == null)
@@ -464,75 +472,74 @@ export class AddEditProgramComponent implements OnInit {
       let id = this.programValues.programRecords[rowIndex].batchId;
       this.batchData.forEach((element) => {
         if (id == element.batchId) {
-          let q_id=element.qualityId;
+          let q_id = element.qualityId;
           this.programValues.programRecords[rowIndex].quantity = element.totalWt;
-          this.qualityList.filter((x) =>
-          { 
-            if(x.qualityId===q_id){
+          this.qualityList.filter((x) => {
+            if (x.qualityId === q_id) {
               this.list.push(x);
-          }
+            }
           });
         }
-      }); 
+      });
       if (this.batchData != undefined) {
         this.batchData.forEach((element) => {
           if (id == element.batchId) {
             this.programValues.programRecords[rowIndex].quantity =
-            Number(element.totalWt.toFixed(2));
-            this.programValues.partyId=element.partyId;
-            this.programValues.qualityId=element.qualityId;
-            this.programValues.qualityName=element.qualityName;
-            this.programValues.qualityEntryId=element.qualityEntryId;
+              Number(element.totalWt.toFixed(2));
+            this.programValues.partyId = element.partyId;
+            this.programValues.qualityId = element.qualityId;
+            this.programValues.qualityName = element.qualityName;
+            this.programValues.qualityEntryId = element.qualityEntryId;
           }
         });
         this.setQualityTypeForStockBatch();
       }
 
-    } else if(value == "stock") {
+    } else if (value == "stock") {
       let id = this.programValues.programRecords[rowIndex].stockId;
       this.stockData.forEach((element) => {
-        let stockId = element.id?element.id:element.stockId
+        let stockId = element.id ? element.id : element.stockId
         if (id == stockId) {
-          let qty:number = 0;
-          if(element.stockId){
+          let qty: number = 0;
+          if (element.stockId) {
             qty = element.qty;
-          }else{
+          } else {
             element.batchData.forEach(e => {
               qty += e.wt
             });
           }
-          
+
           this.programValues.programRecords[rowIndex].quantity = Number(qty.toFixed(2));
           this.batchData.forEach(element => {
-            if(id==element.controlId){
-              this.programValues.partyId=element.partyId;
-              this.programValues.qualityId=element.qualityId;
-              this.programValues.qualityName=element.qualityName;
-              this.programValues.qualityEntryId=element.qualityEntryId;
+            if (id == element.controlId) {
+              this.programValues.partyId = element.partyId;
+              this.programValues.qualityId = element.qualityId;
+              this.programValues.qualityName = element.qualityName;
+              this.programValues.qualityEntryId = element.qualityEntryId;
             }
           });
-          this.setQualityTypeForStockBatch();  
+          this.setQualityTypeForStockBatch();
         }
       });
-     
+
     }
   }
 
-  setQualityTypeForStockBatch(){
+  setQualityTypeForStockBatch() {
     this.qualityList.forEach(element => {
-      if(element.qualityId==this.programValues.qualityId){
-        this.programValues.qualityType=element.qualityType;
+      if (element.qualityId == this.programValues.qualityId) {
+        this.programValues.qualityType = element.qualityType;
       }
     });
   }
-  
-  
+
+
 
   //On enter pressed -> check empty field, add new row
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "program" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "program" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.programValues.programRecords.length - 1) {
         let item = this.programValues.programRecords[rowIndex];
 
@@ -631,12 +638,12 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public addProgram(myForm) {
-    this.disableButton=true;
+    this.disableButton = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
       this.programValues.userHeadId = this.userHead.userHeadId;
-            this.programService.saveProgram(this.programValues).subscribe(
+      this.programService.saveProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
@@ -647,7 +654,7 @@ export class AddEditProgramComponent implements OnInit {
             delete this.programValues.programRecords[0].batchId;
             delete this.programValues.programRecords[0].stockId;
 
-           
+
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -658,19 +665,19 @@ export class AddEditProgramComponent implements OnInit {
         }
       );
     } else {
-      this.disableButton=false;
+      this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }
   }
 
   public updateProgram(myForm) {
-    this.disableButton=true;
+    this.disableButton = true;
     this.loading = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.updatedBy = this.user.userId;
-            this.programService.updateProgram(this.programValues).subscribe(
+      this.programService.updateProgram(this.programValues).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
@@ -680,26 +687,26 @@ export class AddEditProgramComponent implements OnInit {
             delete this.programValues.qualityType;
             delete this.programValues.programRecords[0].batchId;
             delete this.programValues.programRecords[0].stockId;
-      
-           
+
+
           } else {
             this.toastr.error(errorData.Update_Error);
-            
+
           }
           this.loading = false;
         },
         (error) => {
-          this.disableButton=false;
+          this.disableButton = false;
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
     } else {
-      this.disableButton=false;
+      this.disableButton = false;
       this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
-      
+
     }
   }
 }

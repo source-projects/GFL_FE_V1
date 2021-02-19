@@ -47,6 +47,9 @@
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
                                 (click)="removeJet(row.id)"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" 
+                             (click)="editClicked(row.id)"></nb-icon>&nbsp;&nbsp;
+    
                         </ng-template>
                     </ngx-datatable-column>
 
