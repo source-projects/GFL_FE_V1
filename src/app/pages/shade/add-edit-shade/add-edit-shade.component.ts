@@ -309,6 +309,7 @@ export class AddEditShadeComponent implements OnInit {
   // }
 
   itemSelected(rowIndex, row) {
+    let gst;
     if (this.shadeObj.qualityId != undefined) {
       if (this.refreshFlag > 10) {
         this.refreshFlag = 0;
@@ -317,10 +318,11 @@ export class AddEditShadeComponent implements OnInit {
       let newSupplierId;
       for (let s of this.supplierList) {
         if (row.supplierItemId == s.id) {
-          row.rate = s.rate;
+
           newSupplierId = s.supplierId;
           row.itemName = s.itemName;
-          row.gstRate = s.gstRate
+          gst = (s.rate * s.gstRate)/100;
+          row.rate = s.rate + gst;
           break;
         }
       }
@@ -411,11 +413,6 @@ export class AddEditShadeComponent implements OnInit {
             this.toastr.error("Enter rate", "rate is required");
             return;
           }
-        }else if (colName == "gstRate") {
-          if (!item.gstRate) {
-            this.toastr.error("Enter gstRate", " gst rate is required");
-            return;
-          }
         }
          else if (colName == "amount") {
           console.log(item.amount);
@@ -429,7 +426,6 @@ export class AddEditShadeComponent implements OnInit {
           concentration: null,
           supplierName: null,
           rate: null,
-          gstRate: null,
           amount: null,
           supplierId: null,
           supplierItemId: null,
@@ -532,7 +528,6 @@ export class AddEditShadeComponent implements OnInit {
       item[0].concentration = null;
       item[0].supplierName = null;
       item[0].rate = null;
-      item[0].gstRate = null;
       item[0].amount = null;
       let list = item;
       this.shadeObj.shadeDataList = [...list];
