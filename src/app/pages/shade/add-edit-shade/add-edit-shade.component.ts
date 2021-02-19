@@ -86,13 +86,6 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
-  }
-
-
   updateColor() {
     this.shadeObj.colorTone = this.color;
   }
@@ -459,6 +452,9 @@ export class AddEditShadeComponent implements OnInit {
         }, 50); //alert("go to any last row input to add new row");
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
   }
   addShade(shadeForm) {
     this.disableButton = true;

@@ -349,14 +349,22 @@
 
                             <ngx-datatable-column name="Type" prop="payType" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                    <!-- <select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
                                         name='payType{{rowIndex}}' class="tableForm" id="payType"
                                         [(ngModel)]="row.payTypeId" required
                                         (keyup)="onKeyUp($event,rowIndex,0,'payType')"
                                         [id]="'paymentDetailsList'+rowIndex+'-0'">
                                         <option *ngFor="let type of paymentTypeList" [value]="type.id">
                                             {{type.paymentType}}</option>
-                                    </select>
+                                    </select> -->
+                                    <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                    name='payType{{rowIndex}}' class="tableForm" id="payType"
+                                    [(ngModel)]="row.payTypeId" required
+                                    (keyup)="onKeyUp($event,rowIndex,0,'payType')"
+                                    [id]="'paymentDetailsList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none">
+                                        <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
+                                            {{type.paymentType}}</ng-option>
+                                    </ng-select>
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)"
                                         style="display: inline-block;">
                                         <span>Required</span>
@@ -366,7 +374,7 @@
 
                             <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="payAmt">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm"
+                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable"
                                         id="payAmt" [(ngModel)]="row.payAmt"
                                         (keyup)="onKeyUp($event,rowIndex,1,'payAmt')"
                                         [id]="'paymentDetailsList'+rowIndex+'-1'" min="0"
@@ -380,7 +388,7 @@
 
                             <ngx-datatable-column name="Date" prop="chequeDate" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #chequeDate1="ngModel"
+                                    <input class="tableForm line-height-subtable" type="text" #chequeDate1="ngModel"
                                         name='chequeDate{{rowIndex}}' [(ngModel)]="row.chequeDate"
                                         (keyup)="onKeyUp($event,rowIndex,2,'chequeDate')"
                                         [id]="'paymentDetailsList'+rowIndex+'-2'">
@@ -389,7 +397,7 @@
 
                             <ngx-datatable-column name="Cheque No." prop="chequeNo" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #chequeNo1="ngModel"
+                                    <input class="tableForm line-height-subtable" type="text" #chequeNo1="ngModel"
                                         name='chequeNo{{rowIndex}}' [(ngModel)]="row.chequeNo"
                                         (keyup)="onKeyUp($event,rowIndex,3,'chequeNo')"
                                         [id]="'paymentDetailsList'+rowIndex+'-3'">
@@ -398,7 +406,7 @@
 
                             <ngx-datatable-column name="Bank" prop="bank" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
+                                    <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
                                         [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')"
                                         [id]="'paymentDetailsList'+rowIndex+'-4'">
                                 </ng-template>
@@ -406,7 +414,7 @@
 
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
+                                    <input class="tableForm line-height-subtable" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
                                         [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')"
                                         [id]="'paymentDetailsList'+rowIndex+'-5'">
                                 </ng-template>

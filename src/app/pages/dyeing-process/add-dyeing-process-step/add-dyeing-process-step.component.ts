@@ -68,10 +68,6 @@ export class AddDyeingProcessStepComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-  }
-
-
   onCreate(myForm) {
     this.modalSubmitted = true;
     if (myForm.valid) {

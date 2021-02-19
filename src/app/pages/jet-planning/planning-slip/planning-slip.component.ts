@@ -344,6 +344,7 @@ export class PlanningSlipComponent implements OnInit {
         let tempFlag = false;
         let inter = setInterval(() => {
           let element = <HTMLElement>document.getElementById("print-slip");
+          console.log("ELEMENT:",element)
           if (element) {
             doc.append(element);
             doc.print();
