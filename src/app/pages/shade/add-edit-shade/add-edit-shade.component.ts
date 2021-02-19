@@ -54,6 +54,7 @@ export class AddEditShadeComponent implements OnInit {
   costKg: any = 0;
   costMtr: any = 0;
   amountArray: any[] = [];
+  apcFlag: any = false;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -64,8 +65,10 @@ export class AddEditShadeComponent implements OnInit {
     private route: Router,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private renderer: Renderer2
-  ) {}
+    private renderer: Renderer2,
+  ) {
+    this.apcFlag = this.route.getCurrentNavigation().extras.state;
+  }
 
   async ngOnInit() {
     await this.getQualityList();
@@ -317,6 +320,7 @@ export class AddEditShadeComponent implements OnInit {
           row.rate = s.rate;
           newSupplierId = s.supplierId;
           row.itemName = s.itemName;
+          row.gstRate = s.gstRate
           break;
         }
       }
@@ -407,7 +411,13 @@ export class AddEditShadeComponent implements OnInit {
             this.toastr.error("Enter rate", "rate is required");
             return;
           }
-        } else if (colName == "amount") {
+        }else if (colName == "gstRate") {
+          if (!item.gstRate) {
+            this.toastr.error("Enter gstRate", " gst rate is required");
+            return;
+          }
+        }
+         else if (colName == "amount") {
           console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
@@ -419,6 +429,7 @@ export class AddEditShadeComponent implements OnInit {
           concentration: null,
           supplierName: null,
           rate: null,
+          gstRate: null,
           amount: null,
           supplierId: null,
           supplierItemId: null,
@@ -477,7 +488,6 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       if (
-        this.shadeObj.apcNo &&
         this.shadeObj.partyId &&
         this.shadeObj.processId &&
         this.shadeObj.qualityId
@@ -522,6 +532,7 @@ export class AddEditShadeComponent implements OnInit {
       item[0].concentration = null;
       item[0].supplierName = null;
       item[0].rate = null;
+      item[0].gstRate = null;
       item[0].amount = null;
       let list = item;
       this.shadeObj.shadeDataList = [...list];

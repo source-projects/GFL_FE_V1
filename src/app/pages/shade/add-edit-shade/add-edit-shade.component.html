@@ -37,7 +37,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label [ngClass]="{'required':!shadeObj.pending }">Party Shade No</label>
+                            <label class="required">Party Shade No</label>
                             <input type="text" class="form-control size-small" fieldsize="small" nbinput
                                 name="partyShadeNo" [(ngModel)]="shadeObj.partyShadeNo" #partyShadeNo1="ngModel"
                                 required
@@ -189,7 +189,7 @@
                             </nb-checkbox>
                         </div>
                     </div>
-                    <div class="col-md-4" *ngIf="shadeObj.pending">
+                    <!-- <div class="col-md-4" *ngIf="shadeObj.pending">
                         <div class="form-group">
                             <label [ngClass]="{'required':shadeObj.pending }">APC No</label>
                             <input type="text" class="form-control size-small" fieldsize="small" nbinput name="apc"
@@ -205,7 +205,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -282,6 +282,14 @@
                                         readonly>
                                 </ng-template>
                             </ngx-datatable-column>
+                            <ngx-datatable-column name="Gst Rate" prop="gstRate" [sortable]="false" [width]="300">
+                                <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                    <input class="tableForm line-height-subtable" type="text" #gstRate1="ngModel"
+                                        name='gstRate{{rowIndex}}' [(ngModel)]="row.gstRate"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'gstRate')" [id]="'supplierList'+rowIndex+'-3'"
+                                        readonly>
+                                </ng-template>
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #rate1="ngModel"
@@ -314,8 +322,10 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button class="btn btn-primary btn-sm btn-design-cancel"
+                            <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade'>CANCEL</button>
+                            <button *ngIf="apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
+                                routerLink='/pages/shade/pending-apc'>CANCEL</button>
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px"
                                 [disabled]="disableButton">UPDATE</button>
