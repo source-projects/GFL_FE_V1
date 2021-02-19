@@ -21,6 +21,9 @@
                             *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
                             <span>Jet number is required</span>
                         </div>
+                        <div class="required-class" *ngIf="jetCapacity">
+                            <span>Weight is greater than selected jet capacity</span>
+                        </div>
 
                     </div>
                 </div>
