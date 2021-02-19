@@ -1,5 +1,4 @@
 export class Shade {
-  apcNo: number;
   pending: Boolean;
   partyShadeNo: string;
   processName: string;
@@ -19,8 +18,7 @@ export class Shade {
   shadeDataList: ShadeDataList[];
 
   constructor() {
-    this.pending = true;
-    this.apcNo = null;
+    this.pending = false;
     this.partyShadeNo = null;
   }
 }
@@ -30,6 +28,7 @@ export class ShadeDataList {
   concentration: number;
   itemName: string;
   rate: number;
+  gstRate: number;
   supplierName: string;
   supplierId: number;
   supplierItemId: number;
