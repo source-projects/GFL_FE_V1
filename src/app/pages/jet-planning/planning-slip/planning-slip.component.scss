@@ -1,38 +1,37 @@
 .print-slip {
-    width: 14.81cm;
-    height: 21.01cm;
-  }
-  @page {
-    /* dimensions for the whole page */
-    size: A5;
-    margin: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 10%;
+}
+@page {
+  /* dimensions for the whole page */
+  size: A5;
+  margin: 0;
 }
 
-
-.wth-50{
-  width: 25%;
+.wth-50 {
+  width: 50%;
   display: flex;
   justify-content: space-between;
 }
 
-.pd-bt{
+.pd-bt {
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
-.slip-value{
-  border-style: groove; 
-  width:150px;
-
+.slip-value {
+  border-style: groove;
+  width: 150px;
 }
 
-.slip-background{
+.slip-background {
   display: flex;
   background-color: cadetblue;
 }
 
-.print-data{
-  color: #aa3634 !important; 
+.print-data {
+  color: #aa3634 !important;
   border-style: groove;
   width: 50px;
 }

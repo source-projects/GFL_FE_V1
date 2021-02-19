@@ -294,9 +294,11 @@
                                     <!-- <button *ngIf="this.currentSlipId != null" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
 
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
-                                        style="margin-right:20px" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
+                                        style="margin-right:20px"
+                                        (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
                                     <button type="button" class="btn btn-primary btn-sm btn-design"
-                                        style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And Print</button>
+                                        style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And
+                                        Print</button>
 
                                 </div>
                             </div>
@@ -315,7 +317,7 @@
         <nb-card-body *ngIf="!additionSlipFlag">
             <div *ngIf="slipData != null || slipData != undefined">
                 <div *ngIf="slipData.dyeingSlipDataList != null">
-                    <div class="container" style="width: 50% !important">
+                    <div class="container" style="width: 100% !important">
                         <div class="mb-1">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
@@ -417,7 +419,7 @@
 
             <div *ngIf="slipData != null || slipData != undefined">
                 <div *ngIf="slipData.dyeingSlipDataList != null">
-                    <div class="container" style="width: 50% !important">
+                    <div class="container" style="width: 100% !important">
                         <div class="mb-1">
                             <div class="row">
                                 <div class="col-md-6 wth-50 ">
@@ -447,7 +449,8 @@
                                     <label>QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label>Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                    <label>Party Shade No:</label> <span
+                                        class="slip-value">{{slipData.partyShadeNo}}</span>
                                 </div>
                             </div>
                         </div>
@@ -467,7 +470,7 @@
                     </div>
 
 
-                    <div class="row" style=" border-style: solid; background-color: rgb(208, 229, 230);" >
+                    <div class="row" style=" border-style: solid; background-color: rgb(208, 229, 230);">
                         <div class="col-md-12" style="display: flex;">
                             <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;">
                                 <h3>Addition</h3>

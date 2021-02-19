@@ -25,7 +25,7 @@ import { ShadeService } from "../../@theme/services/shade.service";
 import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
 import { filter, map } from "rxjs/operators";
-import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 @Component({
   selector: "ngx-jet-planning",
   templateUrl: "./jet-planning.component.html",
@@ -185,7 +185,6 @@ export class JetPlanningComponent implements OnInit {
     this.sendControlId = index.controlId;
     var detail = this.getBatchDetails();
     this.items = [
-     
       { title: "Complete" },
       { title: "Pause" },
       {
@@ -200,32 +199,30 @@ export class JetPlanningComponent implements OnInit {
             title: detail,
           },
         ],
-      }
+      },
     ];
   }
 
-  removeBatchFromJet(){
+  removeBatchFromJet() {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.jetService.removeProductionFromJet(this.sendControlId, this.sendSotckId).subscribe(
-          (data) => {
-            this.toastr.success(errorData.Delete);
-            this.getJetData();
-            this.getAllBatchWithShade();
-
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
+        this.jetService
+          .removeProductionFromJet(this.sendControlId, this.sendSotckId)
+          .subscribe(
+            (data) => {
+              this.toastr.success(errorData.Delete);
+              this.getJetData();
+              this.getAllBatchWithShade();
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+            }
+          );
       }
     });
-
-    
-
   }
 
   getCurrentId() {
@@ -433,25 +430,34 @@ export class JetPlanningComponent implements OnInit {
   }
 
   batchSelected(event) {
-    let p_id;
+    let p_id, selectedBatchID, selectedStockId;
     if (event.target) {
       p_id = Number(event.target.value);
     } else {
       p_id = event;
     }
-    const modalRef = this.modalService
-      .open(ShadeWithBatchComponent)
-      .result.then((result) => {
-        console.log(result);
-        this.jetData1.controlId = result.jet;
-        this.jetData1.productionId = p_id;
-        this.jetData1.sequence = 1;
-        let jetData2 = this.jetData1;
-        let arr = [];
-        //  jetData2.productionId = Number(jetData2.productionId);
-        arr.push(jetData2);
-        this.addJetData(arr);
-      });
+    this.batchList.forEach((element) => {
+      if (p_id == element.id) {
+        selectedBatchID = element.batchId;
+        selectedStockId = element.stockId;
+      }
+    });
+    console.log(selectedBatchID);
+    console.log("stock", selectedStockId);
+    const modalRef = this.modalService.open(ShadeWithBatchComponent);
+    modalRef.componentInstance.batchId = selectedBatchID;
+    modalRef.componentInstance.stockId = selectedStockId;
+    modalRef.result.then((result) => {
+      console.log(result);
+      this.jetData1.controlId = result.jet;
+      this.jetData1.productionId = p_id;
+      this.jetData1.sequence = 1;
+      let jetData2 = this.jetData1;
+      let arr = [];
+      //  jetData2.productionId = Number(jetData2.productionId);
+      arr.push(jetData2);
+      this.addJetData(arr);
+    });
   }
 
   addJetData(arr) {
