@@ -28,7 +28,6 @@ export class ShadeDataList {
   concentration: number;
   itemName: string;
   rate: number;
-  gstRate: number;
   supplierName: string;
   supplierId: number;
   supplierItemId: number;

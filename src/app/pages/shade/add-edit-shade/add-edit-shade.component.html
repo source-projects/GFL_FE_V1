@@ -282,14 +282,7 @@
                                         readonly>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Gst Rate" prop="gstRate" [sortable]="false" [width]="300">
-                                <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #gstRate1="ngModel"
-                                        name='gstRate{{rowIndex}}' [(ngModel)]="row.gstRate"
-                                        (keyup)="onKeyUp($event,rowIndex,3,'gstRate')" [id]="'supplierList'+rowIndex+'-3'"
-                                        readonly>
-                                </ng-template>
-                            </ngx-datatable-column>
+                           
                             <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #rate1="ngModel"
