@@ -65,6 +65,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Liquer Ration</label>
+                    <input class="form-control input-group" min="0" type="number" name="liquerRation"
+                        [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"
+                        [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)}" required
+                        placeholder="Liquer ration">
+                    <div class="invalid-feedback" style="color: red;"
+                        *ngIf="(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)">
+                        Liquer ration is required.
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-12">
                 <h5 class="nb-badges">Add Chemical List</h5>
