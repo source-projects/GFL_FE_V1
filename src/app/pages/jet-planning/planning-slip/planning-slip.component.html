@@ -1,17 +1,17 @@
 <nb-card class="nb-style pr-mr-0">
     <nb-card-header class="nb-header">
         <div class="row">
-            <div class="col-md-10" *ngIf="additionSlipFlag">
+            <div class="col-md-11" *ngIf="additionSlipFlag">
                 <h2 class="nb-text">Generate slip</h2>
             </div>
             <div class="col-md-6" *ngIf="!additionSlipFlag">
                 <h2 class="nb-text">Jet planning steps</h2>
 
             </div>
-            <div class="col-md-5 " *ngIf="!additionSlipFlag">
+            <div class="col-md-5 display-flex-end" *ngIf="!additionSlipFlag">
                 <button type="button" (click)="approveByClicked();" class="btn btn-primary btn-sm btn-edit" style="margin-right:20px">Edit</button>
             </div>
-            <div class="col-md-1 display-flex-end">
+            <div class="col-md-1 user-per-check-display">
                 <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
                     <span aria-hidden="true" class="close-icon">&times;</span>
                 </button>
@@ -26,39 +26,41 @@
                 <div *ngIf="slipData != null || slipData != undefined" class="container">
                     <div *ngIf="slipData.dyeingSlipDataList != null">
                         <form #myForm='ngForm'>
-                            <fieldset [disabled]="!approveByFlag">
-                                <nb-card class="padding-box">
+                            <fieldset [disabled]="!approveByFlag" class="pd-mr-0">
+                                <nb-card class="padding-box border-0 pd-0">
 
                                     <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h3 class="name-print">{{process.processType}}</h3>
-                                                <nb-icon icon="trash" status="danger" *ngIf="approveByFlag" [options]="{ animation: { type: 'zoom' } }" (click)="removeProcess(i)">
-                                                </nb-icon>
+                                                <div class="display-flex-between">
+                                                    <h3 class="name-print">{{process.processType}}</h3>
+                                                    <nb-icon icon="trash" status="danger" *ngIf="approveByFlag" [options]="{ animation: { type: 'zoom' } }" (click)="removeProcess(i)">
+                                                    </nb-icon>
+                                                </div>
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                <label class="required">Temprarture</label>
+                                            <div class="form-group col-md-3">
+                                                <label class="required font-13">Temprarture</label>
                                                 <input type="number" class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }">
 
                                                 <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                     <span>Temperarture is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                <label class="required">Hold Time</label>
+                                            <div class="form-group col-md-3">
+                                                <label class="required font-13">Hold Time</label>
                                                 <input type="number" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }">
                                                 <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                                     <span>Hold Time is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                <label class="required">Liquer Ratio</label>
+                                            <div class="form-group col-md-3">
+                                                <label class="required font-13">Liquer Ratio</label>
                                                 <input type="number" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }">
                                                 <div class="required-class" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
+                                            <div class="form-group col-md-3 desktop-btn" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
                                                 <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}" [(ngModel)]="process.isColor" name="isColor" (checkedChange)="colorSelected($event, i)">
                                                 </nb-checkbox>
                                                 &nbsp;<label>Color</label>
@@ -66,7 +68,7 @@
 
                                             <div class="form-group col-md-12">
                                                 <h5 class="nb-badges">Item List</h5>
-                                                <table class="table table-bordered table-striped table-process-fnt">
+                                                <table class="table table-bordered table-striped table-process-fnt text-center">
                                                     <tr>
                                                         <th>Item name</th>
                                                         <th>Quantity</th>
@@ -380,10 +382,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -428,24 +430,24 @@
                     <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" class="container print-container mr-bt-50 " style="width: 100% !important; border-style: solid; background-color: c6daf0;margin-bottom: 20px !important;">
                         <div class="row print-wth-100" style="width: 100% !important;">
                             <div class="col-md-12" style="width: 100% !important;padding-top: 15px;">
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <h3 style="font-size: 30px;">{{process.processType}}</h3>
+                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 20% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                    <h3 style="font-size: 40px;">{{process.processType}}</h3>
                                 </div>
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Temperature:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;">
+                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 28% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Temperature:</label>
+                                    <div class="print-data print-text-center" style="width: 30%;color: #000!important;">
                                         {{process.temp}}</div>
 
                                 </div>
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Hold Time:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;">
+                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Hold Time:</label>
+                                    <div class="print-data print-text-center" style="width: 30%;color: #000 !important;">
                                         {{process.holdTime}}</div>
 
                                 </div>
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Liquor Ratio:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;">
+                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 27% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Liquor Ratio:</label>
+                                    <div class="print-data print-text-center" style="width: 30%;color: #000!important;border-left: 1px solid;">
                                         {{process.liquerRation}}</div>
 
                                 </div>
@@ -485,19 +487,19 @@
             <div *ngIf="slipData != null || slipData != undefined">
                 <div *ngIf="slipData.dyeingSlipDataList != null">
                     <div class="container print-container mr-bt-50">
-                        <div class="mb-1 pd-bt-25">
+                        <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50 ">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
 
 
-                        <div class="mb-1 pd-bt-25">
+                        <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
                                     <label class="font-25">Lot Wt:</label> <span class="slip-value" style="width: 60%;">{{slipData.totalWt}}</span>
@@ -508,7 +510,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-1 pd-bt-25">
+                        <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
                                     <label class="font-25">QualityId:</label> <span class="slip-value" style="width: 60%;">{{slipData.qualityId}}</span>
@@ -519,7 +521,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-1 pd-bt-25">
+                        <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
                                     <label class="font-25">Taka/Cone:</label> <span class="slip-value" style="width: 60%;">{{slipData.batchCount}}</span>
@@ -546,26 +548,26 @@
 
                         <div class="row print-wth-100 background-c6daf0" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="col-md-12" style="width: 100% !important;">
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
+                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 20% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
                                     <h3 style="font-size: 30px;">Addition</h3>
                                 </div>
 
-                                <div class=" form-group col-md-4 " style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 ">Temperature:</label>&nbsp;
-                                    <div class="print-data ">
+                                <div class=" form-group col-md-4 " style="padding: 0px;width: 28% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
+                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Temperature:</label>&nbsp;
+                                    <div class="print-data " style="width: 30%;color: #000!important;">
                                         {{temp}}</div>&nbsp;
 
                                 </div>
 
 
                                 <div class="form-group col-md-4 " style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 ">Hold Time:</label>
-                                    <div class="print-data ">
+                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Hold Time:</label>
+                                    <div class="print-data " style="width: 30%;color: #000!important;">
                                         {{holdTime}}</div>
                                 </div>
-                                <div class="form-group col-md-4 " style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 ">Liquor Ratio:</label>
-                                    <div class="print-data ">
+                                <div class="form-group col-md-4 " style="padding: 0px;width: 27% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
+                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Liquor Ratio:</label>
+                                    <div class="print-data " style="width: 30%;color: #000!important;border-left: 1px solid;">
                                         {{liquorRatio}}</div>
 
                                 </div>
