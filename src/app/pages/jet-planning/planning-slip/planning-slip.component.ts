@@ -26,7 +26,7 @@ export class PlanningSlipComponent implements OnInit {
 
   addNewFlag: boolean = false;
   dyeingProcessStepNew: any;
-  dyeingChemicalData = [];
+  dyeingChemicalData:DyeingChemicalData[] = [];
   public currentSlipId: any;
   public loading: boolean = false;
   public formSubmitted: boolean = false;
@@ -44,7 +44,7 @@ export class PlanningSlipComponent implements OnInit {
   @Input() editAdditionFlag: boolean;
   @Input() additionSlipData;
   public itemListArray: any = [];
-  public itemListArray1: any = [];
+  public itemListArrayCopy: any = [];
   public colorFlag = false;
   public printFlag = false;
   public saveFlag = false;
@@ -118,7 +118,7 @@ export class PlanningSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
-          this.itemListArray1 = this.itemListArray;
+          this.itemListArrayCopy = this.itemListArray;
         } else {
         }
       },
@@ -254,23 +254,21 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  itemSelected(event, parentIndex) {
-
+  itemSelected(event, parentIndex, index?) {
     this.supplierSelected.push(event);
     this.itemIndex = parentIndex;
-    // this.itemListArray.forEach((e) => {
-    //   if (
-    //     e.itemId ==
-    //     this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
-    //   ) {
-    //     this.slipData.dyeingSlipDataList[
-    //       parentIndex
-    //     ].dyeingSlipItemData.supplierName = e.supplierName;
-    //     this.slipData.dyeingSlipDataList[
-    //       parentIndex
-    //     ].dyeingSlipItemData.itemName = e.itemName;
-    //   }
-    // });
+    this.itemListArray.forEach((e) => {
+      let item = 0;
+      if(!index){
+        item = this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
+      }else{
+        item = this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData[index].itemId
+      }
+      if (e.itemId == item ) {
+        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.supplierName = e.supplierName;
+        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemName = e.itemName;
+      }
+    });
   }
 
   colorSelected(event, i) {
@@ -289,7 +287,7 @@ export class PlanningSlipComponent implements OnInit {
     } else {
       this.colorFlag = false;
       this.list = this.slipData.dyeingSlipDataList[i].dyeingSlipItemData;
-      this.itemListArray = this.itemListArray1;
+      this.itemListArray = this.itemListArrayCopy;
     }
   }
 
@@ -411,6 +409,10 @@ export class PlanningSlipComponent implements OnInit {
         }, 10);
       }
     }, 10);
+  }
+
+  trackByFn(index: number,obj: any) {
+    return obj ? obj['_id'] || obj : index ;
   }
 
   addNew() {

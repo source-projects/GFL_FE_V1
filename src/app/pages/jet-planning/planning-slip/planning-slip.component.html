@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
                                                 <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
-                                                    [(ngModel)]="process.isColor" name="isColor"
+                                                    [(ngModel)]="process.isColor" name="isColor{{i}}"
                                                     (checkedChange)="colorSelected($event, i)">
                                                 </nb-checkbox>
                                                 &nbsp;<label>Color</label>
@@ -80,13 +80,13 @@
                                                         <th>Quantity</th>
                                                         <th>Action</th>
                                                     </tr>
-                                                    <ng-container *ngIf="!colorFlag || process.processType != 'Dyeing' || process.processType != 'Addition'">
-                                                        <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;'>
+                                                    <ng-container>
+                                                        <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;trackBy:trackByFn'>
                                                             <td>
                                                                 <select name="itemId{{i}}-{{i1}}" itemId1="ngModel"
                                                                     [(ngModel)]="dc.itemId" #itemId1="ngModel"
                                                                     class="tableForm" required
-                                                                    (change)="itemSelected(i1,i)">
+                                                                    (change)="itemSelected($event.target.value,i1,i)">
 
                                                                     <option *ngFor="let item of itemListArray" 
                                                                         [value]="item.itemId" placeholder="Select Item">
@@ -120,7 +120,7 @@
                                                         </tr>
                                                     </ng-container>
 
-                                                    <ng-container *ngIf="colorFlag && (process.processType == 'Dyeing' || process.processType == 'Dyeing')">
+                                                    <!-- <ng-container *ngIf="colorFlag && (process.processType == 'Dyeing' || process.processType == 'Dyeing')">
                                                         <tr *ngFor='let dc of list;let i1=index;'>
                                                             <td>
                                                                 <select name="itemId{{i}}-{{i1}}" itemId1="ngModel"
@@ -132,10 +132,6 @@
                                                                         [value]="item.itemId" placeholder="Select Item">
                                                                         {{item.itemName}}-{{item.supplierName}}
                                                                     </option>
-
-
-
-
                                                                 </select>
                                                             </td>
                                                             <td>
@@ -153,7 +149,7 @@
                                                                 </nb-icon>
                                                             </td>
                                                         </tr>
-                                                    </ng-container>
+                                                    </ng-container> -->
                                                 </table>
                                             </div>
                                         </div>
@@ -276,12 +272,12 @@
                                                                 <th>Action</th>
                                                             </tr>
 
-                                                            <tr *ngFor='let dc of dyeingChemicalData;let i=index;'>
+                                                            <tr *ngFor='let dc of dyeingChemicalData;let dcIndex=index;trackBy:trackByFn'>
                                                                 <td>
-                                                                    <select name="itemID{{i}}"
-                                                                        [(ngModel)]="dc.itemId" #itemId1="ngModel"
-                                                                        class="tableForm" required [id]="'itemList'+i+'-0'"
-                                                                        (change)="itemSelected($event.target.value,i)">
+                                                                <select name="dcId{{dc._id}}"
+                                                                        [(ngModel)]="dc.itemId"
+                                                                        class="tableForm" required
+                                                                        (change)="itemSelected($event.target.value,dcIndex)">
                                                                         <option *ngFor="let item of itemListArray"
                                                                             [value]="item.itemId"
                                                                             placeholder="Select Item">
@@ -290,15 +286,15 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" #quantity1="ngModel"
-                                                                        name='QTY{{i}}' class="tableForm" required
-                                                                        [(ngModel)]="dc.qty" (keyup)="onEnter($event)"
-                                                                        [id]="'itemList'+i+'-1'" min="0">
+                                                                    <input type="number"
+                                                                        name='dcqty{{dc._id}}' class="tableForm" required
+                                                                        [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)"
+                                                                         min="0">
                                                                 </td>
                                                                 <td>
                                                                     <nb-icon icon="trash" status="danger"
                                                                         [options]="{ animation: { type: 'zoom' } }"
-                                                                        (click)="removeChemicalData(i)"></nb-icon>
+                                                                        (click)="removeChemicalData(dcIndex)"></nb-icon>
                                                                 </td>
                                                             </tr>
                                                         </table>

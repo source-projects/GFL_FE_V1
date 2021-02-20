@@ -27,7 +27,20 @@ export class DyeingProcess {
     id: number;
     itemId: number;
     itemName: string;
-    supplierName: string
+    supplierName: string;
+    qty: number;
+    _id: string;
+    constructor() {
+      this._id = uuidv4();
+    }
+  }
+  
+  function uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 
 // export class DyeingProcess1 {
