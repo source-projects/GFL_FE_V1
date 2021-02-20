@@ -117,6 +117,8 @@ export class AdditionSlipComponent implements OnInit {
       if (element.id == id) {
         prodId = element.productionId;
         batchId = element.batchId;
+        this.additionSlip.batchId = batchId;
+        this.additionSlip.productionId = prodId;
       }
     });
     this.getAdditionSlipDataById(id);
@@ -176,9 +178,11 @@ export class AdditionSlipComponent implements OnInit {
         );
       }
     });
-  }
+  } 
 
   updateAdditionSlip(result) {
+    this.dyeingSlipData = new DyeingSlipData();
+    this.additionSlip.dyeingSlipData = this.dyeingSlipData;
     this.additionSlip.dyeingSlipData.holdTime = result.holdTime;
     this.additionSlip.dyeingSlipData.temp = result.temp;
     this.additionSlip.dyeingSlipData.isColor = result.isColor;

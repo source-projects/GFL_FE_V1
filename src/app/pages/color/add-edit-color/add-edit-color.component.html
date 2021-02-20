@@ -137,7 +137,7 @@
                                         class="tableForm  line-height-subtable" id="quantityPerBox"
                                         [id]="'colorList'+rowIndex+'-1'" [(ngModel)]="row.quantityPerBox"
                                         (keyup)="onKeyUp($event,rowIndex,1,'quantityPerBox')"
-                                        (input)="calculateTotalQuantity(rowIndex,1)" [id]="'colorList'+rowIndex+'-1'"
+                                        (input)="calculateTotalQuantity(rowIndex,1)" [id]="'colorList'+rowIndex+'-quantityPerBox'"
                                         required min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (quantityPerBox1.invalid)"
                                         style="display: inline-block;">
@@ -151,7 +151,7 @@
                                     <input class="tableForm  line-height-subtable" type="number" #noOfBox1="ngModel"
                                         name='noOfBox{{rowIndex}}' [(ngModel)]="row.noOfBox"
                                         (keyup)="onKeyUp($event,rowIndex,2,'noOfBox')"
-                                        (input)="calculateTotalQuantity(rowIndex,2)" [id]="'colorList'+rowIndex+'-2'"
+                                        (input)="calculateTotalQuantity(rowIndex,2)" [id]="'colorList'+rowIndex+'-noOfBox'"
                                         required min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (noOfBox1.invalid)"
                                         style="display: inline-block;">
@@ -165,7 +165,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm  line-height-subtable" type="number" #quantity1="ngModel"
                                         name='quantity{{rowIndex}}' [(ngModel)]="row.quantity"
-                                        (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'colorList'+rowIndex+'-3'"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'colorList'+rowIndex+'-quantity'"
                                         readonly>
                                 </ng-template>
                             </ngx-datatable-column>
@@ -174,14 +174,14 @@
                                     <input class="tableForm  line-height-subtable" type="number" #rate1="ngModel"
                                         name='rate{{rowIndex}}' [(ngModel)]="row.rate"
                                         (keyup)="onKeyUp($event,rowIndex,4,'rate')"
-                                        (input)="calculateAmount(rowIndex,4)" [id]="'colorList'+rowIndex+'-4'" min="0">
+                                        (input)="calculateAmount(rowIndex,4)" [id]="'colorList'+rowIndex+'-rate'" min="0">
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm  line-height-subtable" type="number" #amount1="ngModel"
                                         name='amount{{rowIndex}}' [(ngModel)]="row.amount"
-                                        (keyup)="onKeyUp($event,rowIndex,5,'amount')" [id]="'colorList'+rowIndex+'-5'"
+                                        (keyup)="onKeyUp($event,rowIndex,5,'amount')" [id]="'colorList'+rowIndex+'-amount'"
                                         readonly>
                                 </ng-template>
                             </ngx-datatable-column>

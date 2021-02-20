@@ -79,12 +79,6 @@ export class AddEditProgramComponent implements OnInit {
     this.getAllStockBatchData();
   }
 
-  ngAfterViewInit() {
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
-  }
-
   getCurrentId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -539,7 +533,7 @@ export class AddEditProgramComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "program" + (rowIndex + 1) + "-" + 0;
+      this.index = "program" + (rowIndex + 1) + "-" + colName;
       if (rowIndex === this.programValues.programRecords.length - 1) {
         let item = this.programValues.programRecords[rowIndex];
 
@@ -598,13 +592,10 @@ export class AddEditProgramComponent implements OnInit {
         let list = this.programValues.programRecords;
         list.push(obj);
         this.programValues.programRecords = [...list];
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 50);
+
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);

@@ -69,12 +69,6 @@ export class BillPaymentComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
-  }
-
   public getUserId() {
     this.currentPaymentId = this._route.snapshot.paramMap.get("id");
   }
@@ -260,7 +254,7 @@ export class BillPaymentComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "paymentDetailsList" + (rowIndex + 1) + "-" + 0;
+      this.index = "paymentDetailsList" + (rowIndex + 1) + "-" + colName;
       console.log("INDEX:",this.index)
       if (rowIndex === this.paymentValues.paymentData.length - 1) {
         let item = this.paymentValues.paymentData[rowIndex];
@@ -307,13 +301,10 @@ export class BillPaymentComponent implements OnInit {
         // })
         list.push(obj);
         this.paymentValues.paymentData = [...list];
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 10);
+
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -321,7 +312,7 @@ export class BillPaymentComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 10); alert("go to any last row input to add new row");
+        }, 10);
       }
     }
   }
