@@ -1627,6 +1627,9 @@ input[type="number"]::-webkit-outer-spin-button {
     .print-slip {
         margin: 50px 25px;
     }
+    .jet-slip {
+        margin: 25px;
+    }
     .mr-top {
         margin-top: 25px;
     }
@@ -1639,7 +1642,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .mr-bt {
         margin-bottom: 10px;
     }
-    .border-table {
+    #border-table {
         border-collapse: separate;
         border-spacing: 5px;
     }
@@ -1663,6 +1666,7 @@ input[type="number"]::-webkit-outer-spin-button {
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 20px;
+        width: 30%;
     }
     .mr-top-5 {
         margin-top: 5px;
@@ -1675,6 +1679,20 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .mb-1 {
         margin-bottom: 50px;
+    }
+    .mr-bt-50 {
+        margin-bottom: 20px;
+    }
+    .pd-bt-25 {
+        padding-bottom: 10px;
+    }
+    .btn-edit {
+        margin: 0;
+        padding: 6px 20px;
+        background-color: #fff;
+        border-color: #fff;
+        border-radius: 3px;
+        font-weight: 700;
     }
 }
 
