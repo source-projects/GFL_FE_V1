@@ -34,6 +34,7 @@ export class ProductionPlanningComponent implements OnInit {
   allBatchList: any[];
   productionPlanning: ProductionPlanning = new ProductionPlanning();
   batchList = [];
+  allBatchListCopy = [];
   programValues: any;
   qualityList1: any;
   plannedProductionList: any[];
@@ -116,6 +117,7 @@ export class ProductionPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.allBatchList = data["data"];
+          this.allBatchListCopy = this.allBatchList;
         }
       },
       (error) => {
@@ -232,15 +234,31 @@ export class ProductionPlanningComponent implements OnInit {
 
   filter(event: any) {
     let filterNumber = event.target.value;
+    console.log(filterNumber);
     if (filterNumber == "") {
       this.getAllBatchData();
     } else {
-      let displayArray = this.allBatchList.filter((item) => {
-        if (item.batchId.indexOf(filterNumber) !== -1 || !filterNumber) {
-          return true;
+
+      if(event.key == "Backspace"){
+        this.allBatchList = this.allBatchListCopy;
+    
+        }else{
+          let displayArray = this.allBatchList.filter((item) => {
+            if (item.batchId.indexOf(filterNumber) !== -1 || !filterNumber) {
+             // if (
+             //   (item.batchId &&
+             //     item.batchId
+             //       .toString()
+             //       .toLowerCase()
+             //       .indexOf(filterNumber) !== -1) ||
+             //   !filterNumber
+             // )
+             return true;
+           }
+          }
+         );
+         this.allBatchList = displayArray;
         }
-      });
-      this.allBatchList = displayArray;
     }
   }
 
@@ -283,12 +301,16 @@ export class ProductionPlanningComponent implements OnInit {
     modalRef.componentInstance.shadeId = shadeId;
     modalRef.componentInstance.colorTone = colorTone;
     modalRef.result.then((result) => {
+    if(result){
       this.getAllBatchData();
       this.plannedProductionListForDataTable();
       //this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
       //this.route.navigate(['/pages/production-planning']);
       // });
-    });
+    }else{
+
+    }
+  });
     this.editProductionPlanFlag = false;
   }
 
