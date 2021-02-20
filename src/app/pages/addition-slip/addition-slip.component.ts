@@ -183,7 +183,6 @@ export class AdditionSlipComponent implements OnInit {
   updateAdditionSlip(result) {
     this.dyeingSlipData = new DyeingSlipData();
     this.additionSlip.dyeingSlipData = this.dyeingSlipData;
-    console.log("result:",result)
     this.additionSlip.dyeingSlipData.holdTime = result.holdTime;
     this.additionSlip.dyeingSlipData.temp = result.temp;
     this.additionSlip.dyeingSlipData.isColor = result.isColor;
