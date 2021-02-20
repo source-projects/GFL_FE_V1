@@ -53,6 +53,7 @@ export class PlanningSlipComponent implements OnInit {
   public temp;
   public holdTime;
   public isColor;
+  public id;
   public liquorRatio;
   public list = [];
   public itemList : DyeingChemicalData[] = [];
@@ -287,6 +288,7 @@ export class PlanningSlipComponent implements OnInit {
     this.isColor = additionData.isColor;
     this.liquorRatio = additionData.liquerRation;
     this.itemList = additionData.dyeingSlipItemData;
+    this.id = additionData.id;
   }
 
   saveSlipData(myForm) {
@@ -296,6 +298,7 @@ export class PlanningSlipComponent implements OnInit {
     if (myForm.valid) {
       if (this.additionSlipFlag) {
         this.slipObj = {
+          id:this.id,
           temp: myForm.value.temp,
           holdTime: myForm.value.holdTime,
           liquorRatio: myForm.value.liquorRatio,
