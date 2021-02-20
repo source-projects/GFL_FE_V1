@@ -188,6 +188,7 @@ export class AdditionSlipComponent implements OnInit {
     this.additionSlip.dyeingSlipData.isColor = result.isColor;
     this.additionSlip.dyeingSlipData.liquerRation = result.liquorRatio;
     this.additionSlip.dyeingSlipData.processType = "addition";
+    this.additionSlip.dyeingSlipData.id = result.id;
     this.additionSlip.dyeingSlipData.dyeingSlipItemData = result.items;
 
     this.planningService.updateAdditionDyeingSlip(this.additionSlip).subscribe(
