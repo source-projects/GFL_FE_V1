@@ -58,6 +58,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
         this.dyeingProcessStep.sequence = this.position;
         this.dyeingProcessStep.temp = this.stepList[this.position - 1].temp;
         this.dyeingProcessStep.holdTime = this.stepList[this.position - 1].holdTime;
+        this.dyeingProcessStep.liquerRation = this.stepList[this.position - 1].liquerRation;
         this.dyeingProcessStep.processType = this.stepList[
           this.position - 1
         ].processType;
@@ -72,10 +73,11 @@ export class AddDyeingProcessStepComponent implements OnInit {
     this.modalSubmitted = true;
     if (myForm.valid) {
       let obj = {
-        name: this.dyeingProcessStep.processType,
+        processType: this.dyeingProcessStep.processType,
         position: this.dyeingProcessStep.sequence,
         temp: this.dyeingProcessStep.temp,
         holdTime: this.dyeingProcessStep.holdTime,
+        liquerRation: this.dyeingProcessStep.liquerRation,
         chemicalList: this.dyeingChemicalData,
       };
       this.activeModal.close(obj);
