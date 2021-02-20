@@ -133,7 +133,6 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            console.log(this.slipData);
             let quantity;
             this.slipData.dyeingSlipDataList.forEach((element) => {
               element.dyeingSlipItemData.forEach((element1) => {
@@ -229,6 +228,9 @@ export class PlanningSlipComponent implements OnInit {
       ].dyeingSlipItemData[0].byChemical = null;
       this.slipData.dyeingSlipDataList[
         parentDataIndex
+      ].dyeingSlipItemData[0].qty = null;
+      this.slipData.dyeingSlipDataList[
+        parentDataIndex
       ].dyeingSlipItemData[0].concentration = null;
       this.slipData.dyeingSlipDataList[
         parentDataIndex
@@ -253,8 +255,6 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   itemSelected(event, parentIndex) {
-    console.log("Event:", event);
-    console.log("Index:", parentIndex);
 
     this.supplierSelected.push(event);
     this.itemIndex = parentIndex;
@@ -288,7 +288,6 @@ export class PlanningSlipComponent implements OnInit {
       this.list = colorItemList;
     } else {
       this.colorFlag = false;
-      console.log(this.slipData.dyeingSlipDataList[i].dyeingSlipItemData);
       this.list = this.slipData.dyeingSlipDataList[i].dyeingSlipItemData;
       this.itemListArray = this.itemListArray1;
     }
@@ -400,7 +399,6 @@ export class PlanningSlipComponent implements OnInit {
         let tempFlag = false;
         let inter = setInterval(() => {
           let element = <HTMLElement>document.getElementById("print-slip");
-          console.log("ELEMENT:", element);
           if (element) {
             doc.append(element);
             doc.print();

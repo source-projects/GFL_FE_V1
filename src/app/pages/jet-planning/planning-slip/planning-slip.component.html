@@ -28,7 +28,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h3 class="name-print">{{process.processType}}</h3>
-                                                <nb-icon icon="trash" status="danger"
+                                                <nb-icon icon="trash" status="danger" *ngIf="approveByFlag"
                                                     [options]="{ animation: { type: 'zoom' } }"
                                                     (click)="removeProcess(i)">
                                                 </nb-icon>
@@ -54,7 +54,17 @@
                                                     <span>Hold Time is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing'">
+                                            <div class="form-group col-md-4">
+                                                <label class="required">Liquer Ratio</label>
+                                                <input type="number" class="form-control" min="0" #lRatio1="ngModel"
+                                                    [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}"
+                                                    [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }">
+                                                <div class="required-class"
+                                                    *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                    <span>Liqure ratio is required</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
                                                 <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
                                                     [(ngModel)]="process.isColor" name="isColor"
                                                     (checkedChange)="colorSelected($event, i)">
@@ -70,7 +80,7 @@
                                                         <th>Quantity</th>
                                                         <th>Action</th>
                                                     </tr>
-                                                    <ng-container *ngIf="!colorFlag || process.processType != 'Dyeing'">
+                                                    <ng-container *ngIf="!colorFlag || process.processType != 'Dyeing' || process.processType != 'Addition'">
                                                         <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;'>
                                                             <td>
                                                                 <select name="itemId{{i}}-{{i1}}" itemId1="ngModel"
@@ -78,7 +88,7 @@
                                                                     class="tableForm" required
                                                                     (change)="itemSelected(i1,i)">
 
-                                                                    <option *ngFor="let item of itemListArray"
+                                                                    <option *ngFor="let item of itemListArray" 
                                                                         [value]="item.itemId" placeholder="Select Item">
                                                                         {{item.itemName}}-{{item.supplierName}}
                                                                     </option>
@@ -102,7 +112,7 @@
                                                             </td>
 
                                                             <td>
-                                                                <nb-icon icon="trash" status="danger"
+                                                                <nb-icon icon="trash" status="danger" *ngIf="approveByFlag"
                                                                     [options]="{ animation: { type: 'zoom' } }"
                                                                     (click)="removeItem(i1,i)">
                                                                 </nb-icon>
@@ -110,7 +120,7 @@
                                                         </tr>
                                                     </ng-container>
 
-                                                    <ng-container *ngIf="colorFlag && process.processType == 'Dyeing'">
+                                                    <ng-container *ngIf="colorFlag && (process.processType == 'Dyeing' || process.processType == 'Dyeing')">
                                                         <tr *ngFor='let dc of list;let i1=index;'>
                                                             <td>
                                                                 <select name="itemId{{i}}-{{i1}}" itemId1="ngModel"
@@ -137,7 +147,7 @@
                                                             </td>
 
                                                             <td>
-                                                                <nb-icon icon="trash" status="danger"
+                                                                <nb-icon icon="trash" status="danger" *ngIf="approveByFlag"
                                                                     [options]="{ animation: { type: 'zoom' } }"
                                                                     (click)="removeItem(i1,i)">
                                                                 </nb-icon>
@@ -268,9 +278,9 @@
 
                                                             <tr *ngFor='let dc of dyeingChemicalData;let i=index;'>
                                                                 <td>
-                                                                    <select name="itemId{{i}}" itemId1="ngModel"
+                                                                    <select name="itemID{{i}}"
                                                                         [(ngModel)]="dc.itemId" #itemId1="ngModel"
-                                                                        class="tableForm" required
+                                                                        class="tableForm" required [id]="'itemList'+i+'-0'"
                                                                         (change)="itemSelected($event.target.value,i)">
                                                                         <option *ngFor="let item of itemListArray"
                                                                             [value]="item.itemId"
@@ -281,9 +291,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="number" #quantity1="ngModel"
-                                                                        name='quantity{{i}}' class="tableForm" required
+                                                                        name='QTY{{i}}' class="tableForm" required
                                                                         [(ngModel)]="dc.qty" (keyup)="onEnter($event)"
-                                                                        [id]="'itemList'+i" min="0">
+                                                                        [id]="'itemList'+i+'-1'" min="0">
                                                                 </td>
                                                                 <td>
                                                                     <nb-icon icon="trash" status="danger"
@@ -372,7 +382,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="required">Liqour Ratio</label>
+                                        <label class="required">Liqure Ratio</label>
                                         <input type="number" class="form-control" min="0" #lRatio1="ngModel"
                                             [(ngModel)]="liquorRatio" name="liquorRatio"
                                             [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }">
@@ -522,6 +532,12 @@
                                     <label>Hold Time:</label>&nbsp;
                                     <div class="nb-badges" style="color: #aa3634 !important;">
                                         {{process.holdTime}}</div>
+
+                                </div>
+                                <div class="form-group col-md-4" style="padding: 0px;">
+                                    <label>Liqure Ratio:</label>&nbsp;
+                                    <div class="nb-badges" style="color: #aa3634 !important;">
+                                        {{process.liquerRation}}</div>
 
                                 </div>
                             </div>
