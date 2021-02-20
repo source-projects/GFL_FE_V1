@@ -80,7 +80,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input type="number" #payAmt1="ngModel" name='amt{{rowIndex}}' class="tableForm line-height-subtable"
                                         id="amt" [(ngModel)]="row.amt" (keyup)="onKeyUp($event,rowIndex,1,'amt')"
-                                        [id]="'advancePaymentList'+rowIndex+'-1'" min="0">
+                                        [id]="'advancePaymentList'+rowIndex+'-amt'" min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)"
                                         style="display: inline-block;">
                                         <span>Required</span>
@@ -93,7 +93,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #chequeNo1="ngModel" name='no{{rowIndex}}'
                                         [(ngModel)]="row.no" (keyup)="onKeyUp($event,rowIndex,3,'no')"
-                                        [id]="'advancePaymentList'+rowIndex+'-3'">
+                                        [id]="'advancePaymentList'+rowIndex+'-no'">
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -101,7 +101,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
                                         [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')"
-                                        [id]="'advancePaymentList'+rowIndex+'-4'">
+                                        [id]="'advancePaymentList'+rowIndex+'-bank'">
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -109,7 +109,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
                                         [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')"
-                                        [id]="'advancePaymentList'+rowIndex+'-5'">
+                                        [id]="'advancePaymentList'+rowIndex+'-remark'">
                                 </ng-template>
                             </ngx-datatable-column>
 
