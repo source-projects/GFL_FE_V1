@@ -97,11 +97,8 @@ export class JetPlanningComponent implements OnInit {
     private menuService: NbMenuService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.currentProductionId = this._route.snapshot.paramMap.get("id");
-    if (this.currentProductionId != null)
-      this.batchSelected(this.currentProductionId);
-
     this.getCurrentId();
     this.getPartyList();
     this.getQualityList();
@@ -411,12 +408,9 @@ export class JetPlanningComponent implements OnInit {
         if (data["success"]) {
           this.batchList = data["data"];
           this.allBatchList = data["data"];
-          // this.batchList.forEach(element => {
-          //   if(this.productionPlanning.partyId == element.partyId && this.productionPlanning.qualityEntryId == element.qualityEntryId){
-          //     this.allBatchList.push(element);
-          //   }
-
-          // })
+          if (this.currentProductionId != null) {
+            this.batchSelected(this.currentProductionId);
+          }
         } else {
           // this.toastr.error(data["msg"]);
           this.loading = false;
@@ -442,21 +436,21 @@ export class JetPlanningComponent implements OnInit {
         selectedStockId = element.stockId;
       }
     });
-    console.log(selectedBatchID);
-    console.log("stock", selectedStockId);
     const modalRef = this.modalService.open(ShadeWithBatchComponent);
     modalRef.componentInstance.batchId = selectedBatchID;
     modalRef.componentInstance.stockId = selectedStockId;
     modalRef.result.then((result) => {
-      console.log(result);
-      this.jetData1.controlId = result.jet;
-      this.jetData1.productionId = p_id;
-      this.jetData1.sequence = 1;
-      let jetData2 = this.jetData1;
-      let arr = [];
-      //  jetData2.productionId = Number(jetData2.productionId);
-      arr.push(jetData2);
-      this.addJetData(arr);
+      this.currentProductionId = null;
+      if (result) {
+        this.jetData1.controlId = result.jet;
+        this.jetData1.productionId = p_id;
+        this.jetData1.sequence = 1;
+        let jetData2 = this.jetData1;
+        let arr = [];
+        //  jetData2.productionId = Number(jetData2.productionId);
+        arr.push(jetData2);
+        this.addJetData(arr);
+      }
     });
   }
 
