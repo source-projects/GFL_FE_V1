@@ -448,15 +448,20 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.batchId = selectedBatchID;
     modalRef.componentInstance.stockId = selectedStockId;
     modalRef.result.then((result) => {
-      console.log(result);
-      this.jetData1.controlId = result.jet;
-      this.jetData1.productionId = p_id;
-      this.jetData1.sequence = 1;
-      let jetData2 = this.jetData1;
-      let arr = [];
-      //  jetData2.productionId = Number(jetData2.productionId);
-      arr.push(jetData2);
-      this.addJetData(arr);
+      if(result){
+        console.log(result);
+        this.jetData1.controlId = result.jet;
+        this.jetData1.productionId = p_id;
+        this.jetData1.sequence = 1;
+        let jetData2 = this.jetData1;
+        let arr = [];
+        //  jetData2.productionId = Number(jetData2.productionId);
+        arr.push(jetData2);
+        this.addJetData(arr);
+      }else{
+        
+      }
+      
     });
   }
 

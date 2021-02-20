@@ -99,6 +99,12 @@ export class ShadeWithBatchComponent implements OnInit {
       if (element.id == event) {
         if (element.capacity > this.weight) {
           this.selectedJetData = element.jetDataList;
+          if(!this.selectedJetData){
+            this.jetSelectedFlag = false;
+          }else{
+            this.jetSelectedFlag = true;
+
+          }
         } else {
           this.jetCapacity = true;
           this.jetSelectedFlag = false;

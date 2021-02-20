@@ -97,9 +97,9 @@ export class PlanningSlipComponent implements OnInit {
     this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
   }
 
-  ngOnInit(): void {
-    this.getItemData();
-    if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+  async ngOnInit() {
+    await this.getItemData();
+    if (this.batchId && this.stockId) await this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
