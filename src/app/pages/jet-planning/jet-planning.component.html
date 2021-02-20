@@ -20,7 +20,29 @@
                                 #partyId1="ngModel"
                                 [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
                                 placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
-                                <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party Name</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party Code</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+
+                                <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
                             </ng-select>
                             <div class="required-class"
                                 *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
@@ -99,8 +121,9 @@
                 <td>
                     <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
                         class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone"
-                            (click)="setIndexForSlip(index)" cdkDrag><!--[style.background]="index.colorTone"-->
+                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList"
+                            [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
+                            <!--[style.background]="index.colorTone"-->
                             <button style="color:white;border: none;background: none;"
                                 nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click"
                                 class="jet-btn-changes">
