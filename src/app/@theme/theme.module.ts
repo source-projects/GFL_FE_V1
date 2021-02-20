@@ -28,7 +28,9 @@ import {
   TimingPipe,
   NumberWithCommasPipe,
   CounterPipe,
-  FilterSelectedProcessPipe
+  FilterSelectedProcessPipe,
+  FilterProcessNamePipe,
+  FilterItemPipe
 } from './pipes';
 import {
   OneColumnLayoutComponent,
@@ -71,7 +73,9 @@ const PIPES = [
   NumberWithCommasPipe,
   CounterPipe,
   FilterSelectedProcessPipe,
-  FilterSelectedShadePipe
+  FilterSelectedShadePipe,
+  FilterProcessNamePipe,
+  FilterItemPipe
 ];
 
 @NgModule({

@@ -31,6 +31,10 @@ getColorBox(itemId , issued){
 }
 issueBox(boxNo){
   return this.httpClient.post(this.commonService.envUrl() + 'api/color/box/issue',boxNo);
+}
+
+getAllBoxes(){
+  return this.httpClient.get(this.commonService.envUrl() + 'api/color/box/all');
 
 }
 
