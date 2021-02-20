@@ -99,6 +99,7 @@ export class AddEditInvoiceComponent implements OnInit {
             this.loading = false;
             this.disableButton = false;
             this.selected = data["data"].batchWithControlIdList;
+            this.finalcheckedrows = [...this.selected];
           } else {
             // this.toastr.error(data["msg"]);
             this.loading = false;
@@ -208,11 +209,12 @@ export class AddEditInvoiceComponent implements OnInit {
   }
 
   updateInvoice(invoiceForm) {
+
+    console.log("FORM:",invoiceForm);
     this.disableButton = true;
     this.formSubmitted = true;
 
     this.final = [];
-    //this.finalcheckedrows = this.selected
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
