@@ -1595,6 +1595,24 @@ input[type="number"]::-webkit-outer-spin-button {
     background: #fff;
 }
 
+.pd-0 {
+    padding: 0!important;
+}
+
+.font-13 {
+    font-size: 13px !important;
+}
+
+.btn-edit {
+    margin: 0!important;
+    padding: 1px 14px;
+    background-color: #fff !important;
+    border-color: #fff !important;
+    border-radius: 3px;
+    font-weight: 700;
+    color: #aa3634 !important;
+}
+
 // print dialog
 .display-flex-end {
     display: flex;
@@ -1602,12 +1620,15 @@ input[type="number"]::-webkit-outer-spin-button {
     align-items: center;
 }
 
-.pd-0 {
-    padding: 0!important;
+.pd-mr-0 {
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.font-13 {
-    font-size: 13px !important;
+.display-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media print {
@@ -1658,6 +1679,7 @@ input[type="number"]::-webkit-outer-spin-button {
         border-bottom: 1px solid rgb(34, 34, 34);
         border-left: 1px solid rgb(34, 34, 34);
         border-right: 1px solid rgb(34, 34, 34);
+        font-weight: bold;
     }
     .slip-value,
     .print-data {
@@ -1665,8 +1687,10 @@ input[type="number"]::-webkit-outer-spin-button {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 20px;
+        font-size: 25px;
         width: 30%;
+        color: #000;
+        font-weight: bold;
     }
     .mr-top-5 {
         margin-top: 5px;
@@ -1685,14 +1709,6 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .pd-bt-25 {
         padding-bottom: 10px;
-    }
-    .btn-edit {
-        margin: 0;
-        padding: 6px 20px;
-        background-color: #fff;
-        border-color: #fff;
-        border-radius: 3px;
-        font-weight: 700;
     }
 }
 
