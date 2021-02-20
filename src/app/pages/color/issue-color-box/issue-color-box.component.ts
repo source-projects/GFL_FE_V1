@@ -1,47 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ColorService } from '../../../@theme/services/color.service';
-import { SupplierService } from '../../../@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { ColorService } from "../../../@theme/services/color.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
+import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
-import { Router } from '@angular/router';
-
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'ngx-issue-color-box',
-  templateUrl: './issue-color-box.component.html',
-  styleUrls: ['./issue-color-box.component.scss']
+  selector: "ngx-issue-color-box",
+  templateUrl: "./issue-color-box.component.html",
+  styleUrls: ["./issue-color-box.component.scss"]
 })
 export class IssueColorBoxComponent implements OnInit {
-
-  itemList:any[]=[];
-  colorBoxList:any[]=[];
+  itemList: any[] = [];
+  colorBoxList: any[] = [];
   allBoxList = [];
-  allBoxList1 = [];
+  allBoxListCopy = [];
 
   loading = false;
   formSubmitted: boolean = false;
-  box:any;
-  item:any;
+  box: any;
+  item: any;
   notIssued = false;
   consolidated = false;
   list = [];
   constructor(
-    private supplierService :SupplierService,
-    private colorService : ColorService,
+    private supplierService: SupplierService,
+    private colorService: ColorService,
     private toastr: ToastrService,
-    private route: Router,
-
-
-  ) { }
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.getSupplierItemWithAvailableStock();
     this.getAllBox();
   }
 
-  getSupplierItemWithAvailableStock(){
+  getSupplierItemWithAvailableStock() {
     this.supplierService.getItemWithSupplier().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.itemList = data["data"];
           this.loading = false;
@@ -50,20 +46,18 @@ export class IssueColorBoxComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
-
-
   }
-  getAllBox(){
+  getAllBox() {
     this.colorService.getAllBoxes().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.allBoxList = data["data"];
-          this.allBoxList1 = this.allBoxList;
+          this.allBoxListCopy = data["data"];
 
           this.loading = false;
         } else {
@@ -71,21 +65,17 @@ export class IssueColorBoxComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         this.loading = false;
-
       }
-    )
+    );
   }
-  itemSelected(event){
-    this.allBoxList = this.allBoxList1;
-
-    let list1 = [];
-    console.log(event);
-    if(event){
+  itemSelected(event) {
+    if (event) {
       this.box = null;
-      this.colorService.getColorBox(event , false).subscribe(
-        (data) => {
+      this.allBoxList = this.allBoxListCopy.filter(v => v.itemId == event);
+      this.colorService.getColorBox(event, false).subscribe(
+        data => {
           if (data["success"]) {
             this.colorBoxList = data["data"];
             this.loading = false;
@@ -95,77 +85,56 @@ export class IssueColorBoxComponent implements OnInit {
             this.loading = false;
           }
         },
-        (error) => {
+        error => {
           // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
-
-      this.allBoxList.forEach(element => {
-        if(element.itemId == event){
-          list1.push(element);
-        }
-      })
-      this.allBoxList = list1;
-    }else{
-      this.allBoxList = this.allBoxList1;
-
-    }
-    
-
-    
-  }
-
-  issuedSelected(event){
-    console.log(event);
-    // let list = [];
-    if(event){
-      this.notIssued = true;
-      this.allBoxList.forEach(element => {
-        if(!element.issued){
-          this.list.push(element);
-        }
-      })
-      this.allBoxList = this.list;
-
-    }else{
-      this.notIssued = false;
-      this.allBoxList = this.allBoxList1;
+      
+    } else {
+      this.allBoxList = [...this.allBoxListCopy];
     }
   }
 
-  consoSelected(event){
+  issuedSelected(event) {
+    if (event) {
+      this.allBoxList = this.allBoxListCopy.filter(v => !v.issued);
+    } else {
+      this.allBoxList = [...this.allBoxListCopy];
+    }
+  }
+
+  consoSelected(event) {
     console.log(event);
 
-    if(event){
+    if (event) {
       this.consolidated = true;
-
-    }else{
+    } else {
       this.consolidated = false;
-
     }
   }
 
-issueBox(form){
-  this.colorService.issueBox(form.value.boxNo).subscribe(
-    (data) => {
-      if (data["success"]) {
-        this.toastr.success(errorData.Add_Success);
-        this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-          this.route.navigate(["/pages/issue-color-box"]);
-
-      }); 
-      }
-      else {
-        this.toastr.error(data['msg']);
-      }
+  issueBox(form) {
+    this.formSubmitted = true;
+    if(form.valid){
+      this.colorService.issueBox(form.value.boxNo).subscribe(data => {
+        if (data["success"]) {
+          this.formSubmitted = false;
+          this.toastr.success(errorData.Add_Success);
+          this.route
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+            .then(() => {
+              this.route.navigate(["/pages/issue-color-box"]);
+            });
+        } else {
+          this.toastr.error(data["msg"]);
+        }
+      });
     }
-  )
-}
+  }
 
-onCancel(){
-  this.box = null;
-  this.item = null;
-}
-
+  onCancel() {
+    this.box = null;
+    this.item = null;
+  }
 }
