@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, QueryList, Renderer2, ViewChildren, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import {
@@ -12,6 +12,7 @@ import { QualityService } from "../../../@theme/services/quality.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
   selector: "ngx-add-edit-shade",
@@ -19,6 +20,7 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -54,6 +56,7 @@ export class AddEditShadeComponent implements OnInit {
   costKg: any = 0;
   costMtr: any = 0;
   amountArray: any[] = [];
+  apcFlag: any = false;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -64,8 +67,10 @@ export class AddEditShadeComponent implements OnInit {
     private route: Router,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private renderer: Renderer2
-  ) {}
+    private renderer: Renderer2,
+  ) {
+    this.apcFlag = this.route.getCurrentNavigation().extras.state;
+  }
 
   async ngOnInit() {
     await this.getQualityList();
@@ -306,6 +311,7 @@ export class AddEditShadeComponent implements OnInit {
   // }
 
   itemSelected(rowIndex, row) {
+    let gst;
     if (this.shadeObj.qualityId != undefined) {
       if (this.refreshFlag > 10) {
         this.refreshFlag = 0;
@@ -314,9 +320,11 @@ export class AddEditShadeComponent implements OnInit {
       let newSupplierId;
       for (let s of this.supplierList) {
         if (row.supplierItemId == s.id) {
-          row.rate = s.rate;
+
           newSupplierId = s.supplierId;
           row.itemName = s.itemName;
+          gst = (s.rate * s.gstRate)/100;
+          row.rate = s.rate + gst;
           break;
         }
       }
@@ -384,7 +392,7 @@ export class AddEditShadeComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.shadeObj.shadeDataList.length - 1) {
         let item = this.shadeObj.shadeDataList[rowIndex];
         if (colName == "itemName") {
@@ -407,7 +415,8 @@ export class AddEditShadeComponent implements OnInit {
             this.toastr.error("Enter rate", "rate is required");
             return;
           }
-        } else if (colName == "amount") {
+        }
+         else if (colName == "amount") {
           console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
@@ -443,6 +452,9 @@ export class AddEditShadeComponent implements OnInit {
         }, 50); //alert("go to any last row input to add new row");
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
   }
   addShade(shadeForm) {
     this.disableButton = true;
@@ -477,7 +489,6 @@ export class AddEditShadeComponent implements OnInit {
       );
     } else {
       if (
-        this.shadeObj.apcNo &&
         this.shadeObj.partyId &&
         this.shadeObj.processId &&
         this.shadeObj.qualityId

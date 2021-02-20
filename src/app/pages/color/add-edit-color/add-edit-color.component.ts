@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   NgbDateAdapter,
@@ -10,6 +10,7 @@ import { ColorService } from "../../../@theme/services/color.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
+import { NgSelectComponent } from "@ng-select/ng-select";
 @Component({
   selector: "ngx-add-edit-color",
   templateUrl: "./add-edit-color.component.html",
@@ -17,6 +18,8 @@ import { ToastrService } from "ngx-toastr";
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditColorComponent implements OnInit {
+
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   dateForPicker = new Date();
@@ -71,6 +74,7 @@ export class AddEditColorComponent implements OnInit {
     this.color.billDate = this.maxDate;
     this.color.chlDate = this.maxDate;
   }
+
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -181,7 +185,7 @@ export class AddEditColorComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "colorList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "colorList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.color.colorDataList.length - 1) {
         let item = this.color.colorDataList[rowIndex];
         if (colName == "quantityPerBox") {
@@ -223,6 +227,9 @@ export class AddEditColorComponent implements OnInit {
         }, 10);
       }
     }
+    this.data.changes.subscribe(() => {
+      this.data.last.focus();
+    })
   }
 
   calculateAmount(rowIndex) {

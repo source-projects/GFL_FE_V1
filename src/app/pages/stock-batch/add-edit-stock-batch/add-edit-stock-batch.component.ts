@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -25,6 +25,8 @@ import { CommonService } from "../../..//@theme/services/common.service";
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditStockBatchComponent implements OnInit {
+
+  @ViewChild('forFocus') searchElement: ElementRef;
   public loading = false;
   public disableButton = false;
   public formSubmitted = false;
@@ -82,7 +84,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getQualityList();
@@ -180,12 +182,14 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
   getUnit(event) {
+    this.weightFlag = false;
     if (event != undefined) {
       if (this.stockBatch.qualityId == null) {
         this.flag = 1;
         this.toastr.error("Please select quality first");
       } else {
         this.flag = 0;
+        this.weightFlag = false;
         this.qualityList.forEach((element) => {
           element.id ? (this.stockBatch.partyId = element.partyId) : null;
           let id = element.id ? element.id : element.qualityEntryId;
@@ -193,6 +197,9 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.unit = element.unit;
             if (this.stockBatch.unit === "weight") {
               this.weightFlag = true;
+            }
+            else {
+              this.weightFlag = false;
             }
             this.wtPer100M = element.wtPer100m;
           }
@@ -247,8 +254,8 @@ export class AddEditStockBatchComponent implements OnInit {
             }
             else {
               this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
-              this.stockBatch.batchData.forEach((element,index) => {
-                  this.production_flag[index] = element.isProductionPlanned
+              this.stockBatch.batchData.forEach((element, index) => {
+                this.production_flag[index] = element.isProductionPlanned
               })
               this.setStockDataValues1();
             }
@@ -299,7 +306,13 @@ export class AddEditStockBatchComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "grData" + (rowIndex + 1) + "-" + colIndex + "" + idx;
+      if(this.weightFlag){
+        this.index = "grData" + (rowIndex + 1) + "-" + 1 + "" + idx;  
+      }
+      else if(!this.weightFlag){
+        this.index = "grData" + (rowIndex + 1) + "-" + 0 + "" + idx;
+
+      }
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
         let item = this.stockDataValues[idx].batchMW[rowIndex];
         if (colName == "mtr") {

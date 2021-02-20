@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
+import {
+  DyeingChemicalData,
+  DyeingProcessData,
+} from "../../../@theme/model/dyeing-process";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { DyeingChemicalData } from "../../../@theme/model/dyeing-process";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
@@ -16,6 +19,14 @@ import { AddShadeComponent } from "../../production-planning/add-shade/add-shade
   providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
+  count: any;
+  supplierSelected = [];
+  itemIndex: number;
+  public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash", "Addition"];
+
+  addNewFlag: boolean = false;
+  dyeingProcessStepNew: any;
+  dyeingChemicalData = [];
   public currentSlipId: any;
   public loading: boolean = false;
   public formSubmitted: boolean = false;
@@ -33,6 +44,8 @@ export class PlanningSlipComponent implements OnInit {
   @Input() editAdditionFlag: boolean;
   @Input() additionSlipData;
   public itemListArray: any = [];
+  public itemListArray1: any = [];
+  public colorFlag = false;
   public printFlag = false;
   public saveFlag = false;
   public slipData: any;
@@ -40,6 +53,7 @@ export class PlanningSlipComponent implements OnInit {
   public holdTime;
   public isColor;
   public liquorRatio;
+  public list = [];
   public itemList = [
     {
       itemName: String,
@@ -85,9 +99,7 @@ export class PlanningSlipComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItemData();
-    // if (!this.additionSlipFlag) {
-      if (this.batchId && this.stockId) this.getSlipDataFromBatch();
-    // }
+    if (this.batchId && this.stockId) this.getSlipDataFromBatch();
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
@@ -106,6 +118,7 @@ export class PlanningSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
+          this.itemListArray1 = this.itemListArray;
         } else {
         }
       },
@@ -114,13 +127,22 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   getSlipDataFromBatch() {
-
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
+            console.log(this.slipData);
+            let quantity;
+            this.slipData.dyeingSlipDataList.forEach((element) => {
+              element.dyeingSlipItemData.forEach((element1) => {
+                if (element1.qty) {
+                  quantity = element1.qty.toFixed(3);
+                }
+                element1.qty = quantity;
+              });
+            });
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -230,20 +252,46 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  itemSelected(rowIndex, parentIndex) {
-    this.itemListArray.forEach((e) => {
-      if (
-        e.itemId ==
-        this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
-      ) {
-        this.slipData.dyeingSlipDataList[
-          parentIndex
-        ].dyeingSlipItemData.supplierName = e.supplierName;
-        this.slipData.dyeingSlipDataList[
-          parentIndex
-        ].dyeingSlipItemData.itemName = e.itemName;
-      }
-    });
+  itemSelected(event, parentIndex) {
+    console.log("Event:", event);
+    console.log("Index:", parentIndex);
+
+    this.supplierSelected.push(event);
+    this.itemIndex = parentIndex;
+    // this.itemListArray.forEach((e) => {
+    //   if (
+    //     e.itemId ==
+    //     this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData.itemId
+    //   ) {
+    //     this.slipData.dyeingSlipDataList[
+    //       parentIndex
+    //     ].dyeingSlipItemData.supplierName = e.supplierName;
+    //     this.slipData.dyeingSlipDataList[
+    //       parentIndex
+    //     ].dyeingSlipItemData.itemName = e.itemName;
+    //   }
+    // });
+  }
+
+  colorSelected(event, i) {
+    this.list = [];
+    let colorItemList = [];
+    if (event) {
+      this.colorFlag = true;
+      this.slipData.dyeingSlipDataList[i].dyeingSlipItemData.forEach(
+        (element) => {
+          if (element.isColor) {
+            colorItemList.push(element);
+          }
+        }
+      );
+      this.list = colorItemList;
+    } else {
+      this.colorFlag = false;
+      console.log(this.slipData.dyeingSlipDataList[i].dyeingSlipItemData);
+      this.list = this.slipData.dyeingSlipDataList[i].dyeingSlipItemData;
+      this.itemListArray = this.itemListArray1;
+    }
   }
 
   itemSelected1(event, index) {
@@ -269,6 +317,7 @@ export class PlanningSlipComponent implements OnInit {
   saveSlipData(myForm) {
     this.formSubmitted = true;
     this.disableButton = true;
+
     if (myForm.valid) {
       if (this.additionSlipFlag) {
         this.slipObj = {
@@ -305,19 +354,26 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    this.approveByFlag = true;
     const modalRef = this.modalService.open(AddShadeComponent);
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
+        this.approveByFlag = true;
         this.slipData.approvedId = result;
+      } else {
+        this.approveByFlag = false;
       }
     });
   }
 
+  removeProcess(processIndex) {
+    this.slipData.dyeingSlipDataList.splice(processIndex,1);
+  }
   printSlip(myForm?) {
     this.isPrinting = false;
     if (!this.isPrintDirect) {
+      this.approveByFlag = true;
+      // this.slipData.approvedId = 0;
       this.saveSlipData(myForm);
     } else {
       this.isSaved = true;
@@ -344,10 +400,11 @@ export class PlanningSlipComponent implements OnInit {
         let tempFlag = false;
         let inter = setInterval(() => {
           let element = <HTMLElement>document.getElementById("print-slip");
+          console.log("ELEMENT:", element);
           if (element) {
             doc.append(element);
             doc.print();
-           // this.printFlag = true;
+            // this.printFlag = true;
             this.activeModal.close(this.slipObj);
             tempFlag = true;
             clearInterval(inter);
@@ -358,5 +415,66 @@ export class PlanningSlipComponent implements OnInit {
     }, 10);
   }
 
-  addNew(event) {}
+  addNew() {
+    if (this.approveByFlag) {
+      this.dyeingChemicalData = [];
+      this.supplierSelected = [];
+      this.liquorRatio = null;
+      this.isColor = false;
+      this.count = this.count + 1;
+      this.addNewFlag = true;
+      this.dyeingProcessStepNew = new DyeingProcessData();
+      this.dyeingChemicalData.push(new DyeingChemicalData());
+    } else {
+      this.toastr.warning("You do not have permission to edit slip data");
+    }
+  }
+
+  onCreate(innerForm) {
+    this.formSubmitted = true;
+    if (innerForm.valid) {
+      this.count = this.slipData.dyeingSlipDataList.length;
+      this.slipData.dyeingSlipDataList.push(this.dyeingProcessStepNew);
+      this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData = [];
+      this.slipData.dyeingSlipDataList[
+        this.count
+      ].liquerRation = this.liquorRatio;
+      this.slipData.dyeingSlipDataList[this.count].isColor = this.isColor;
+
+      for (let i = 0; i < this.supplierSelected.length; i++) {
+        this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData.push(
+          this.dyeingChemicalData[i]
+        );
+
+        this.itemListArray.forEach((ele) => {
+          if (ele.itemId == this.supplierSelected[i]) {
+            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
+              i
+            ].supplierId = ele.supplierId;
+            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
+              i
+            ].supplierName = ele.supplierName;
+            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
+              i
+            ].itemName = ele.itemName;
+          }
+        });
+      }
+      this.formSubmitted = false;
+      this.addNewFlag = false;
+    }else{
+      this.toastr.error('Please fill all fields.')
+    }
+  }
+
+  onEnter(e) {
+    let keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      this.dyeingChemicalData.push(new DyeingChemicalData());
+    }
+  }
+
+  removeChemicalData(index: any) {
+    this.dyeingChemicalData.splice(index, 1);
+  }
 }
