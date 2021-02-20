@@ -1662,7 +1662,7 @@ input[type="number"]::-webkit-outer-spin-button {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 15px;
+        font-size: 20px;
     }
     .mr-top-5 {
         margin-top: 5px;
@@ -1672,6 +1672,9 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .font-25 {
         font-size: 25px;
+    }
+    .mb-1 {
+        margin-bottom: 50px;
     }
 }
 
