@@ -15,6 +15,7 @@ export class DyeingProcess {
     holdTime: number;
     id: number;
     processType: string;
+    liquerRation: number;
     sequence: number;
     temp: number;
   }
