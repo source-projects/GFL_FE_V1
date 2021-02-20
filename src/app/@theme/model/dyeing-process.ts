@@ -28,13 +28,14 @@ export class DyeingProcess {
     itemId: number;
     itemName: string;
     supplierName: string;
+    supplierId: number;
     qty: number;
     _id: string;
     constructor() {
       this._id = uuidv4();
     }
   }
-  
+
   function uuidv4() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r = (Math.random() * 16) | 0,

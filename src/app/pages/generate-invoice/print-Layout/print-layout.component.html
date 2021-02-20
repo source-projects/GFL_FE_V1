@@ -1,333 +1,333 @@
 <!-- <ngx-loading [show]="true"></ngx-loading> -->
 <div>
-  <div *ngFor="let invoice of printInvoiceData;let i = index;">
-    <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
-      <div style="border: 2px solid #000000 !important;">
-        <div class="text-center">
-          <div class="col-sm-12">
-            <div class="content-header" style="font-size: 8px;">
-              TAX INVOICE CUM DELIVERY CHALLAN</div>
-          </div>
-        </div>
-        <!-- <hr> -->
-        <div class="border-dark row" style="padding:1%;">
-          <div class="col-sm-9">
-            <div class="card border-zero">
-              <div class="card-body" style="display: flex;
+    <div *ngFor="let invoice of printInvoiceData;let i = index;">
+        <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
+            <div style="border: 2px solid #000000 !important;">
+                <div class="text-center">
+                    <div class="col-sm-12">
+                        <div class="content-header" style="font-size: 8px;">
+                            TAX INVOICE CUM DELIVERY CHALLAN</div>
+                    </div>
+                </div>
+                <!-- <hr> -->
+                <div class="border-dark row" style="padding:1%;">
+                    <div class="col-sm-9">
+                        <div class="card border-zero">
+                            <div class="card-body" style="display: flex;
             justify-content: flex-end;">
-                <div class="card-block">
-                  <div class="row">
-                    <p class="col-sm-12 text-center" style="font-size: 20px;"><b> MUKESH PROCESSORS PVT. LTD.</b></p>
-                  </div>
-                  <div class="row">
-                    <p class="text-center col-sm-12" style="font-size: 10px;"><b>A-31, Eco Textile Park, (Kala Ghoda),
+                                <div class="card-block">
+                                    <div class="row">
+                                        <p class="col-sm-12 text-center" style="font-size: 20px;"><b> MUKESH PROCESSORS PVT. LTD.</b></p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-center col-sm-12" style="font-size: 10px;"><b>A-31, Eco Textile Park, (Kala Ghoda),
                         Palsana, Surat E-Mail :
                         varun@gloryfab.com</b></p>
-                  </div>
-                  <div class="row">
-                    <p class="text-center col-sm-12" style="font-size: 10px;"><b>GSTIN :- 24AAFCM5028A1Z1 Place Of
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-center col-sm-12" style="font-size: 10px;"><b>GSTIN :- 24AAFCM5028A1Z1 Place Of
                         Supply : Surat</b></p>
-                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="invoice-logo" style="display: flex;justify-content: center;align-items: center;">
+                            <!-- <img src="../../../../assets/GloryIcon.png" style="width: 152px;"> -->
+                            <img src="../../../../assets/GloryIcon.png" style="width: 152px; height: 150px;">
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="invoice-logo" style="display: flex;justify-content: center;align-items: center;">
-              <!-- <img src="../../../../assets/GloryIcon.png" style="width: 152px;"> -->
-              <img src="../../../../assets/GloryIcon.png" style="width: 152px; height: 150px;">
-            </div>
-          </div>
-        </div>
-        <!-- <hr> 
+                <!-- <hr> 
         Main info party quality batches -->
-        <div class="content">
-          <div class="invoice">
-            <div class="row col-sm-12" style="margin: 0;padding: 0%;">
-              <div class="col-sm-6 border-dark">
-                <div class="row">
-                  <div class="col-md-4" style="width: 50%;">
-                    <b style="font-size: 20px;">Party Name :</b>
-                  </div>
-                  <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
-                    {{invoice.partyName}}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" style="width: 50%;">
-                    <b style="font-size: 20px;">Address :</b>
-                  </div>
-                  <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
-                    {{invoice.address}}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" style="width: 50%;">
-                    <b style="font-size: 20px;">GSTIN :</b>
-                  </div>
-                  <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
-                    {{invoice.gst}}
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 border-dark">
-                <div class="row">
-                  <div class="col-md-4" style="width: 50%;">
-                    <b style="font-size: 20px;">Invoice :</b>
-                  </div>
-                  <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
-                    {{invoice.invoiceNo}}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" style="width: 50%;">
-                    <b style="font-size: 20px;">Date :</b>
-                  </div>
-                  <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
-                    {{myDate}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="border-dark" style="font-size: 15px; ">
-              <table class="table responsive spacing-low">
-                <tr>
-                  <th>
-                    Sr.
-                  </th>
-                  <th>
-                    Quality
-                  </th>
-                  <th>
-                    HSN
-                  </th>
-                  <th>
-                    P. Chl No
-                  </th>
-                  <th>
-                    Lot No
-                  </th>
-                  <th>
-                    Grey Mtr
-                  </th>
-                  <th>
-                    PCs
-                  </th>
-                  <th>
-                    Finish Mtr
-                  </th>
-                  <th>
-                    Rate
-                  </th>
-                  <th>
-                    Amt
-                  </th>
-                </tr>
+                <div class="content">
+                    <div class="invoice">
+                        <div class="row col-sm-12" style="margin: 0;padding: 0%;">
+                            <div class="col-sm-6 border-dark">
+                                <div class="row">
+                                    <div class="col-md-4" style="width: 50%;">
+                                        <b style="font-size: 20px;">Party Name :</b>
+                                    </div>
+                                    <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
+                                        {{invoice.partyName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="width: 50%;">
+                                        <b style="font-size: 20px;">Address :</b>
+                                    </div>
+                                    <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
+                                        {{invoice.address}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="width: 50%;">
+                                        <b style="font-size: 20px;">GSTIN :</b>
+                                    </div>
+                                    <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
+                                        {{invoice.gst}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 border-dark">
+                                <div class="row">
+                                    <div class="col-md-4" style="width: 50%;">
+                                        <b style="font-size: 20px;">Invoice :</b>
+                                    </div>
+                                    <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
+                                        {{invoice.invoiceNo}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="width: 50%;">
+                                        <b style="font-size: 20px;">Date :</b>
+                                    </div>
+                                    <div class="col-md-8 border" style="width: 50%;font-size: 20px;">
+                                        {{myDate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <tr *ngFor="let quality of invoice.qualityList;let i=index;">
-                  <td>
-                    {{i+1}}
-                  </td>
-                  <td *ngIf="quality.qualityName">
-                    {{quality.qualityName}} - {{quality.qualityId}}
-                  </td>
-                  <td *ngIf="!quality.qualityName">          
-                  </td>
-                  <td>
-                    {{quality.hsn}}
-                  </td>
-                  <td>
-                    {{quality.pchalNo}}
-                  </td>
-                  <td>
-                    {{quality.batchId}}
-                  </td>
-                  <td>
-                    {{quality.totalMtr}}
-                  </td>
-                  <td>
-                    {{quality.pcs}}
-                  </td>
-                  <td>
-                    {{quality.finishMtr}}
-                  </td>
-                  <td>
-                    {{quality.rate}}
-                  </td>
-                  <td>
-                    {{quality.amt}}
-                  </td>
+                        <div class="border-dark" style="font-size: 15px; ">
+                            <table class="table responsive spacing-low">
+                                <tr>
+                                    <th>
+                                        Sr.
+                                    </th>
+                                    <th>
+                                        Quality
+                                    </th>
+                                    <th>
+                                        HSN
+                                    </th>
+                                    <th>
+                                        P. Chl No
+                                    </th>
+                                    <th>
+                                        Lot No
+                                    </th>
+                                    <th>
+                                        Grey Mtr
+                                    </th>
+                                    <th>
+                                        PCs
+                                    </th>
+                                    <th>
+                                        Finish Mtr
+                                    </th>
+                                    <th>
+                                        Rate
+                                    </th>
+                                    <th>
+                                        Amt
+                                    </th>
+                                </tr>
 
-                </tr>
+                                <tr *ngFor="let quality of invoice.qualityList;let i=index;">
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td *ngIf="quality.qualityName">
+                                        {{quality.qualityName}} - {{quality.qualityId}}
+                                    </td>
+                                    <td *ngIf="!quality.qualityName">
+                                    </td>
+                                    <td>
+                                        {{quality.hsn}}
+                                    </td>
+                                    <td>
+                                        {{quality.pchalNo}}
+                                    </td>
+                                    <td>
+                                        {{quality.batchId}}
+                                    </td>
+                                    <td>
+                                        {{quality.totalMtr}}
+                                    </td>
+                                    <td>
+                                        {{quality.pcs}}
+                                    </td>
+                                    <td>
+                                        {{quality.finishMtr}}
+                                    </td>
+                                    <td>
+                                        {{quality.rate}}
+                                    </td>
+                                    <td>
+                                        {{quality.amt}}
+                                    </td>
 
-                <tr style="font-weight: bold;">
-                  <td>
-                  </td>
-                  <td >          
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                    TOTAL
-                  </td>
-                  <td>
-                    {{invoice.totalMtr}}
-                  </td>
-                  <td>
-                    {{invoice.totalPcs}}
-                  </td>
-                  <td>
-                    {{invoice.totalFinishMtr}}
-                  </td>
-                  <td>
-                    
-                  </td>
-                  <td>
-                    {{invoice.totalAmt}}
-                  </td>
-                </tr>
-              </table>
-            </div>
+                                </tr>
 
-            
-            <div class="row border-dark" style="font-size: 15px;">
-              <div class="col-sm-4"></div>
-              <div class="col-sm-4"></div>
-              <div class="col-sm-4">
-                <div class="row">
-                  <div class="col-sm-5 border">
-                    <b>Discount @3%</b>
-                  </div>
-                  <div class="col-sm-7 border">
-                    <b>{{ invoice.discount | number : '1.2-2'}}</b>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-5 border">
-                    <b>
+                                <tr style="font-weight: bold;">
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        TOTAL
+                                    </td>
+                                    <td>
+                                        {{invoice.totalMtr}}
+                                    </td>
+                                    <td>
+                                        {{invoice.totalPcs}}
+                                    </td>
+                                    <td>
+                                        {{invoice.totalFinishMtr}}
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {{invoice.totalAmt}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div class="row border-dark" style="font-size: 15px;">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-5 border">
+                                        <b>Discount @3%</b>
+                                    </div>
+                                    <div class="col-sm-7 border">
+                                        <b>{{ invoice.discount | number : '1.2-2'}}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 border">
+                                        <b>
                       Taxable Amt</b>
-                  </div>
-                  <div class="col-sm-7 border">
-                    <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-5 border">
-                    <b>CGST: @2.5%</b>
-                  </div>
-                  <div class="col-sm-7 border">
-                    <b>{{ invoice.cgst | number : '1.2-2'}}</b>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-5 border">
-                    <b>SGST: @2.5%</b>
-                  </div>
-                  <div class="col-sm-7 border">
-                    <b>{{ invoice.sgst | number : '1.2-2'}}</b>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-5 border">
-                    <b>Net Amt</b>
-                  </div>
-                  <div class="col-sm-7 border">
-                    <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
+                                    </div>
+                                    <div class="col-sm-7 border">
+                                        <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 border">
+                                        <b>CGST: @2.5%</b>
+                                    </div>
+                                    <div class="col-sm-7 border">
+                                        <b>{{ invoice.cgst | number : '1.2-2'}}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 border">
+                                        <b>SGST: @2.5%</b>
+                                    </div>
+                                    <div class="col-sm-7 border">
+                                        <b>{{ invoice.sgst | number : '1.2-2'}}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 border">
+                                        <b>Net Amt</b>
+                                    </div>
+                                    <div class="col-sm-7 border">
+                                        <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-            <!-- batch Grey mtr data list -->
-            <div class="row" style="margin-top: 10px;margin-left: 2px;margin-right: 1px;">
-              <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
-                <div style="border: 3px solid black;height: 700px;">
-                  <table class="table table-left-right">
-                    <tr style="height: 10px;text-align: center;">
-                      <th colspan=3>LOT NO: {{lots.batchId}}</th>
-                    </tr>
-                    <tr style="height: 10px;">
-                      <td scope="col">Cops</td>
-                      <td scope="col">GryMtr</td>
-                      <td scope="col">FinMtr</td>
-                    </tr>
-                    <tr *ngFor="let grs of lots.batchDataList;let i = index;">
-                      <td scope="col">
-                        {{i}}
-                      </td>
-                      <td>
-                        {{grs.mtr}}
-                      </td>
-                      <td>
-                        {{grs.finishMtr}}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+                        <!-- batch Grey mtr data list -->
+                        <div class="row" style="margin-top: 10px;margin-left: 2px;margin-right: 1px;">
+                            <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
+                                <div style="border: 3px solid black;height: 700px;">
+                                    <table class="table table-left-right">
+                                        <tr style="height: 10px;text-align: center;">
+                                            <th colspan=3>LOT NO: {{lots.batchId}}</th>
+                                        </tr>
+                                        <tr style="height: 10px;">
+                                            <td scope="col">Cops</td>
+                                            <td scope="col">GryMtr</td>
+                                            <td scope="col">FinMtr</td>
+                                        </tr>
+                                        <tr *ngFor="let grs of lots.batchDataList;let i = index;">
+                                            <td scope="col">
+                                                {{i}}
+                                            </td>
+                                            <td>
+                                                {{grs.mtr}}
+                                            </td>
+                                            <td>
+                                                {{grs.finishMtr}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-          <!-- Footer -->
-          <div class="row footer-bottom">
-            <div class="col-sm-7">
-              <div class="row border">
-                <div class="col-sm-12 row">
-                  <div class="col-sm-4">
-                    BANK NAME
-                  </div>
-                  <div class="col-sm-8">
-                    : TAMILNAD MERCHANTILE BANK LTD.
-                  </div>
+                    <!-- Footer -->
+                    <div class="row footer-bottom">
+                        <div class="col-sm-7">
+                            <div class="row border">
+                                <div class="col-sm-12 row">
+                                    <div class="col-sm-4">
+                                        BANK NAME
+                                    </div>
+                                    <div class="col-sm-8">
+                                        : TAMILNAD MERCHANTILE BANK LTD.
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 row">
+                                    <div class="col-sm-4">
+                                        A/c No.
+                                    </div>
+                                    <div class="col-sm-8">
+                                        : 192700150950474
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 row">
+                                    <div class="col-sm-4">
+                                        Branch IFS Code
+                                    </div>
+                                    <div class="col-sm-8">
+                                        : TMBL0000192 RING ROAD , SURAT
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row border">
+                                <div class="col-sm-12">
+                                    <b>TERMS CONDITION :</b>
+                                </div>
+                                <div class="col-sm-12">
+                                    1 . Goods once sold will not be taken back .
+                                </div>
+                                <div class="col-sm-12">
+                                    2 . Our responsibility ceases once the goods is delivered to the carrier.
+                                </div>
+                                <div class="col-sm-12">
+                                    3. GST Payable on Reverse Charge : No
+                                </div>
+                                <div class="col-sm-12 row"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <div style="padding:5% 0% 15% 0%;"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
+                            <div style="padding:10% 0% 15% 0%">Authorised Signatory</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-12 row">
-                  <div class="col-sm-4">
-                    A/c No.
-                  </div>
-                  <div class="col-sm-8">
-                    : 192700150950474
-                  </div>
-                </div>
-                <div class="col-sm-12 row">
-                  <div class="col-sm-4">
-                    Branch IFS Code
-                  </div>
-                  <div class="col-sm-8">
-                    : TMBL0000192 RING ROAD , SURAT
-                  </div>
-                </div>
-              </div>
-              <div class="row border">
-                <div class="col-sm-12">
-                  <b>TERMS CONDITION :</b>
-                </div>
-                <div class="col-sm-12">
-                  1 . Goods once sold will not be taken back .
-                </div>
-                <div class="col-sm-12">
-                  2 . Our responsibility ceases once the goods is delivered to the carrier.
-                </div>
-                <div class="col-sm-12">
-                  3. GST Payable on Reverse Charge : No
-                </div>
-                <div class="col-sm-12 row"></div>
-              </div>
-            </div>
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-4" style="text-align: center;">
-              <div style="padding:5% 0% 15% 0%;"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
-              <div style="padding:10% 0% 15% 0%">Authorised Signatory</div>
-            </div>
-          </div>
-        </div>
 
-      </div>
-    </section>
-  </div>
+            </div>
+        </section>
+    </div>
 </div>

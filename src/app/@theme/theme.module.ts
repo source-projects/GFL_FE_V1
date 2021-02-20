@@ -42,6 +42,7 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import { FilterSelectedShadePipe } from './pipes/filter-selected-shade.pipe';
+import { FilterByIsColorPipe } from './pipes/filter-by-isColor-slip.pipe';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -75,7 +76,8 @@ const PIPES = [
   FilterSelectedProcessPipe,
   FilterSelectedShadePipe,
   FilterProcessNamePipe,
-  FilterItemPipe
+  FilterItemPipe,
+  FilterByIsColorPipe
 ];
 
 @NgModule({
