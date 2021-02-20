@@ -283,11 +283,10 @@ export class ProductionPlanningComponent implements OnInit {
     modalRef.componentInstance.shadeId = shadeId;
     modalRef.componentInstance.colorTone = colorTone;
     modalRef.result.then((result) => {
-      this.getAllBatchData();
-      this.plannedProductionListForDataTable();
-      //this.route.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-      //this.route.navigate(['/pages/production-planning']);
-      // });
+      if (result) {
+        this.getAllBatchData();
+        this.plannedProductionListForDataTable();
+      }
     });
     this.editProductionPlanFlag = false;
   }
