@@ -58,12 +58,6 @@ export class AdvancePaymentComponent implements OnInit {
     this.getPaymentType();
   }
 
-  ngAfterViewInit() {
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
-  }
-
 
   public getUserId() {
     this.currentAdvancePaymentId = this._route.snapshot.paramMap.get("id");
@@ -122,7 +116,7 @@ export class AdvancePaymentComponent implements OnInit {
 
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "advancePaymentList" + (rowIndex + 1) + "-" + 0;
+      this.index = "advancePaymentList" + (rowIndex + 1) + "-" + colName;
       if (rowIndex === this.advancePaymentArray.length - 1) {
         let item = this.advancePaymentArray[rowIndex];
         if (colName == "payTypeId") {
@@ -153,13 +147,13 @@ export class AdvancePaymentComponent implements OnInit {
         list.push(obj);
         this.advancePaymentArray = [...list];
         console.log(this.advancePaymentArray);
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 50);
+        
+        
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+      
+      
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -167,7 +161,7 @@ export class AdvancePaymentComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50); alert("go to any last row input to add new row");
+        }, 50);
       }
     }
   }
