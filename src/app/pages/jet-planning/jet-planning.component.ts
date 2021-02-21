@@ -219,7 +219,7 @@ export class JetPlanningComponent implements OnInit {
             }
           );
       }
-    });
+    }).catch((err)=> {});
   }
 
   getCurrentId() {
@@ -451,7 +451,7 @@ export class JetPlanningComponent implements OnInit {
         arr.push(jetData2);
         this.addJetData(arr);
       }
-    });
+    }).catch((err)=> {});
   }
 
   addJetData(arr) {
@@ -553,6 +553,6 @@ export class JetPlanningComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
       }
-    });
+    }).catch((err)=> {});
   }
 }

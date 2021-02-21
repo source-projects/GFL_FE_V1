@@ -23,6 +23,7 @@ export class BatchData {
   totalWt: number;
   totalMt: number;
   batchId: number;
+  isProductionPlanned:boolean;
 }
 
 export class BatchMrtWt {
@@ -40,6 +41,8 @@ export class BatchCard {
   totalWt: number;
   totalMt: number;
   batchMW: BatchMrtWt[];
+  isProductionPlanned:boolean;
+
   constructor(batchId?) {
     batchId ? (this.batchId = batchId) : (this.batchId = null);
     this.batchMW = [];

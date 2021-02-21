@@ -287,6 +287,7 @@ export class ProductionPlanningComponent implements OnInit {
         this.getAllBatchData();
         this.plannedProductionListForDataTable();
       }
+    }).catch((err)=> {
     });
     this.editProductionPlanFlag = false;
   }
