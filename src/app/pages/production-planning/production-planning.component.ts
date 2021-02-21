@@ -17,7 +17,7 @@ import { ProductionPlanningService } from "../../@theme/services/production-plan
 @Component({
   selector: "ngx-production-planning",
   templateUrl: "./production-planning.component.html",
-  styleUrls: ["./production-planning.component.scss"],
+  styleUrls: ["./production-planning.component.scss"]
 })
 export class ProductionPlanningComponent implements OnInit {
   public errorData: any = (errorData as any).default;
@@ -29,11 +29,10 @@ export class ProductionPlanningComponent implements OnInit {
   p_id: any;
   partyList: any[];
   qualityList: any[];
-  batchListByParty: any[];
-  batchListParty: any[];
-  allBatchList: any[];
+  batchList: any[];
+  batchListCopy = [];
+
   productionPlanning: ProductionPlanning = new ProductionPlanning();
-  batchList = [];
   programValues: any;
   qualityList1: any;
   plannedProductionList: any[];
@@ -71,7 +70,7 @@ export class ProductionPlanningComponent implements OnInit {
   getPartyList() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.partyList = data["data"];
           this.loading = false;
@@ -79,7 +78,7 @@ export class ProductionPlanningComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         this.loading = false;
       }
     );
@@ -88,24 +87,15 @@ export class ProductionPlanningComponent implements OnInit {
   public getQualityList() {
     this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.qualityList = data["data"];
-          this.batchListByParty = data["data"];
-          if (this.allBatchList != null || this.allBatchList != undefined) {
-            this.allBatchList.forEach((element) => {
-              if (element.productionPlanned == false) {
-                this.batchListParty.push(element);
-              }
-            });
-          }
-          this.batchListByParty = this.batchListParty;
           this.loading = false;
         } else {
           this.loading = false;
         }
       },
-      (error) => {
+      error => {
         this.loading = false;
       }
     );
@@ -113,12 +103,13 @@ export class ProductionPlanningComponent implements OnInit {
 
   public getAllBatchData() {
     this.stockBatchService.getAllBatch().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
-          this.allBatchList = data["data"];
+          this.batchList = data["data"];
+          this.batchListCopy = data["data"];
         }
       },
-      (error) => {
+      error => {
         this.toastr.error(errorData.Serever_Error);
       }
     );
@@ -127,12 +118,12 @@ export class ProductionPlanningComponent implements OnInit {
   public partySelected(event) {
     this.loading = true;
     this.productionPlanning.qualityId = null;
-    if (event != undefined) {
+    if (event) {
       if (this.productionPlanning.partyId) {
         this.programService
           .getQualityByParty(this.productionPlanning.partyId)
           .subscribe(
-            (data) => {
+            data => {
               if (data["success"]) {
                 this.qualityList = data["data"].qualityDataList;
               } else {
@@ -141,43 +132,42 @@ export class ProductionPlanningComponent implements OnInit {
               }
               this.loading = false;
             },
-            (error) => {
+            error => {
               this.qualityList = [];
               this.loading = false;
             }
           );
       }
     }
-    if (event != undefined) {
+    if (event) {
       this.batchList = [];
+      this.batchListCopy = [];
       if (this.productionPlanning.partyId) {
         this.programService
           .getBatchByParty(this.productionPlanning.partyId)
           .subscribe(
-            (data) => {
+            data => {
               if (data["success"]) {
-                this.allBatchList = data["data"];
-                this.allBatchList.forEach((element) => {
-                  if (element.productionPlanned == false) {
-                    this.batchList.push(element);
-                  }
-                });
-                this.allBatchList = this.batchList;
-
+                this.batchList = data["data"];
+                this.batchListCopy = data["data"];
+                if (this.batchList) {
+                  this.batchList = this.batchList.filter(
+                    v => !v.productionPlanned
+                  );
+                }
                 this.loading = false;
               } else {
-                this.allBatchList = [];
                 this.loading = false;
               }
-              this.loading = false;
             },
-            (error) => {
+            error => {
               this.loading = false;
             }
           );
       }
     } else {
-      this.allBatchList = [];
+      this.batchList = [];
+      this.batchListCopy = [];
       this.productionPlanning.partyId = null;
       this.productionPlanning.qualityId = null;
 
@@ -192,7 +182,7 @@ export class ProductionPlanningComponent implements OnInit {
     this.loading = true;
     if (event != undefined) {
       if (this.productionPlanning.qualityId) {
-        this.qualityList.forEach((e) => {
+        this.qualityList.forEach(e => {
           if (e.qualityId == this.productionPlanning.qualityId) {
             this.p_id = e.partyId;
             this.productionPlanning.partyId = e.partyName;
@@ -202,27 +192,23 @@ export class ProductionPlanningComponent implements OnInit {
       }
       if (this.productionPlanning.qualityEntryId) {
         this.batchList = [];
+        this.batchListCopy = [];
         this.programService
           .getBatchByQuality(this.productionPlanning.qualityEntryId)
           .subscribe(
-            (data) => {
+            data => {
               if (data["success"]) {
-                this.allBatchList = data["data"];
-                this.allBatchList.forEach((element) => {
-                  if (element.productionPlanned == false) {
-                    this.batchList.push(element);
-                  }
-                });
-                this.allBatchList = this.batchList;
-
+                this.batchList = data["data"];
+                this.batchListCopy = data['data'];
+                if (this.batchList) {
+                  this.batchList = this.batchList.filter(v=> !v.productionPlanned);
+                }
                 this.loading = false;
               } else {
-                this.allBatchList = [];
                 this.loading = false;
               }
-              this.loading = false;
             },
-            (error) => {
+            error => {
               this.loading = false;
             }
           );
@@ -233,14 +219,14 @@ export class ProductionPlanningComponent implements OnInit {
   filter(event: any) {
     let filterNumber = event.target.value;
     if (filterNumber == "") {
-      this.getAllBatchData();
+      this.batchList = [...this.batchListCopy];
     } else {
-      let displayArray = this.allBatchList.filter((item) => {
+      let displayArray = this.batchListCopy.filter(item => {
         if (item.batchId.indexOf(filterNumber) !== -1 || !filterNumber) {
           return true;
         }
       });
-      this.allBatchList = displayArray;
+      this.batchList = displayArray;
     }
   }
 
@@ -248,7 +234,7 @@ export class ProductionPlanningComponent implements OnInit {
     let b_controlId;
     let party, quality, shadeId, colorTone;
     if (this.editProductionPlanFlag) {
-      this.plannedProductionList.forEach((e) => {
+      this.plannedProductionList.forEach(e => {
         if (e.batchId == batch_id) {
           b_controlId = e.stockId;
           party = e.partyId;
@@ -258,7 +244,7 @@ export class ProductionPlanningComponent implements OnInit {
         }
       });
     }
-    this.allBatchList.forEach((e) => {
+    this.batchList.forEach(e => {
       if (e.batchId == batch_id) {
         b_controlId = e.controlId;
         party = e.partyId;
@@ -282,23 +268,25 @@ export class ProductionPlanningComponent implements OnInit {
     modalRef.componentInstance.batchControl = b_controlId;
     modalRef.componentInstance.shadeId = shadeId;
     modalRef.componentInstance.colorTone = colorTone;
-    modalRef.result.then((result) => {
-      if (result) {
-        this.getAllBatchData();
-        this.plannedProductionListForDataTable();
-      }
-    });
+    modalRef.result
+      .then(result => {
+        if (result) {
+          this.getAllBatchData();
+          this.plannedProductionListForDataTable();
+        }
+      })
+      .catch(err => {});
     this.editProductionPlanFlag = false;
   }
 
   public plannedProductionListForDataTable(): any {
     this.productionPlanningService.getAllPlannedProductionList().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.plannedProductionList = data["data"];
         }
       },
-      (error) => {}
+      error => {}
     );
   }
   editProductionPlan(id): any {

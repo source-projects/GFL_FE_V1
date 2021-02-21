@@ -15,17 +15,11 @@
                     <!-- Party name -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required">Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
-                                #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
+                            <label>Party</label>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' placeholder="Party Name"
+                                class="required-error-dropdown" (change)=partySelected($event)>
                                 <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
                             </ng-select>
-                            <div class="required-class"
-                                *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
-                                <span>Party Id is required</span>
-                            </div>
                         </div>
                     </div>
 
@@ -33,12 +27,9 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="required">Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' required
-                                #qualityId1="ngModel"
-                                [ngClass]="{'is-invalid': (qualityId1.invalid)&& (formSubmitted || qualityId1.touched)}"
-                                placeholder="Quality ID" class="required-error-dropdown"
-                                (change)=qualitySelected($event)>
+                            <label>Quality</label>
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
+                                placeholder="Quality ID" (change)=qualitySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -62,10 +53,6 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class"
-                                *ngIf="(qualityId1.invalid)&& (formSubmitted || qualityId1.touched)">
-                                <span>Quality id is required</span>
-                            </div>
                         </div>
                     </div>
 
@@ -99,8 +86,9 @@
                 <td>
                     <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
                         class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone"
-                            (click)="setIndexForSlip(index)" cdkDrag><!--[style.background]="index.colorTone"-->
+                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList"
+                            [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
+                            <!--[style.background]="index.colorTone"-->
                             <button style="color:white;border: none;background: none;"
                                 nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click"
                                 class="jet-btn-changes">

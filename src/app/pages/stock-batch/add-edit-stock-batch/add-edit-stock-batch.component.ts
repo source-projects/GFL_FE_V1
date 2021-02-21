@@ -56,6 +56,7 @@ export class AddEditStockBatchComponent implements OnInit {
       batchId: null,
       totalWt: null,
       totalMt: null,
+      isProductionPlanned:false,
       batchMW: [
         {
           mtr: null,
@@ -290,6 +291,7 @@ export class AddEditStockBatchComponent implements OnInit {
           this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
           batch.totalMt = this.totalMtr;
           batch.totalWt = this.totalWt;
+          batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
     });
@@ -531,12 +533,13 @@ export class AddEditStockBatchComponent implements OnInit {
         if (ele.batchMW && ele.batchMW.length) {
           ele.batchMW.forEach((subele) => {
             if (!!subele.mtr && !!subele.wt) {
-              let obj = { batchId: 0, mtr: 0, wt: 0, totalMt: 0, totalWt: 0 };
+              let obj = { batchId: 0, mtr: 0, wt: 0, totalMt: 0, totalWt: 0,isProductionPlanned:false };
               obj.batchId = ele.batchId;
               obj.mtr = subele.mtr;
               obj.wt = subele.wt;
               obj.totalMt = ele.totalMt;
               obj.totalWt = ele.totalWt;
+              obj.isProductionPlanned = ele.isProductionPlanned;
               this.stockBatchArray.push(obj);
             }
           });
