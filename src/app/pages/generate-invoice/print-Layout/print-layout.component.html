@@ -170,6 +170,7 @@
                                     </td>
                                     <td>
                                     </td>
+
                                     <td>
                                         TOTAL
                                     </td>
@@ -246,12 +247,15 @@
                         <!-- batch Grey mtr data list -->
                         <div class="row" style="margin-top: 10px;margin-left: 2px;margin-right: 1px;">
                             <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
-                                <div style="border: 3px solid black;height: 700px;">
-                                    <table class="table table-left-right">
-                                        <tr style="height: 10px;text-align: center;">
-                                            <th colspan=3>LOT NO: {{lots.batchId}}</th>
+                                <div style="height: 700px;">
+                                    <table class="table lot-border">
+                                        <tr style="text-align: left;">
+                                            <th>LOT NO: {{lots.batchId}}</th>
                                         </tr>
-                                        <tr style="height: 10px;">
+                                    </table>
+                                    <table class="table table-left-right" frame="hsides" rules="groups">
+
+                                        <tr>
                                             <td scope="col">Cops</td>
                                             <td scope="col">GryMtr</td>
                                             <td scope="col">FinMtr</td>
@@ -274,55 +278,73 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="row footer-bottom">
-                        <div class="col-sm-7">
-                            <div class="row border">
-                                <div class="col-sm-12 row">
-                                    <div class="col-sm-4">
-                                        BANK NAME
+                    <div class="footer-border">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="footer-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-12 row">
+                                            <div class="col-sm-4">
+                                                BANK NAME
+                                            </div>
+                                            <div class="col-sm-8">
+                                                : TAMILNAD MERCHANTILE BANK LTD.
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 row">
+                                            <div class="col-sm-4">
+                                                A/c No.
+                                            </div>
+                                            <div class="col-sm-8">
+                                                : 192700150950474
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 row">
+                                            <div class="col-sm-4">
+                                                Branch IFS Code
+                                            </div>
+                                            <div class="col-sm-8">
+                                                : TMBL0000192 RING ROAD , SURAT
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        : TAMILNAD MERCHANTILE BANK LTD.
-                                    </div>
+
                                 </div>
-                                <div class="col-sm-12 row">
-                                    <div class="col-sm-4">
-                                        A/c No.
-                                    </div>
-                                    <div class="col-sm-8">
-                                        : 192700150950474
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 row">
-                                    <div class="col-sm-4">
-                                        Branch IFS Code
-                                    </div>
-                                    <div class="col-sm-8">
-                                        : TMBL0000192 RING ROAD , SURAT
+                            </div>
+
+                            <div class="col-sm-4 height-100">
+                                <div class="footer-style">
+                                    <div class="display-flex-end">
+                                        <div class="company-ltd"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
+
                                     </div>
                                 </div>
                             </div>
-                            <div class="row border">
-                                <div class="col-sm-12">
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="border-top-none">
+
                                     <b>TERMS CONDITION :</b>
+                                    <ul class="terms-cond">
+                                        <li> 1 . Goods once sold will not be taken back .</li>
+                                        <li> 2 . Our responsibility ceases once the goods is delivered to the carrier.</li>
+                                        <li> 3. GST Payable on Reverse Charge : No</li>
+                                    </ul>
+
                                 </div>
-                                <div class="col-sm-12">
-                                    1 . Goods once sold will not be taken back .
-                                </div>
-                                <div class="col-sm-12">
-                                    2 . Our responsibility ceases once the goods is delivered to the carrier.
-                                </div>
-                                <div class="col-sm-12">
-                                    3. GST Payable on Reverse Charge : No
-                                </div>
-                                <div class="col-sm-12 row"></div>
                             </div>
-                        </div>
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-4" style="text-align: center;">
-                            <div style="padding:5% 0% 15% 0%;"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
-                            <div style="padding:10% 0% 15% 0%">Authorised Signatory</div>
+                            <div class="col-sm-4 height-100">
+                                <div class="footer-style">
+                                    <div class="display-flex">
+                                        <div class="company-ltd"><strong>Authorised Signatory</strong></div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
