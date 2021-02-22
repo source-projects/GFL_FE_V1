@@ -461,11 +461,10 @@ export class AdminComponent implements OnInit {
     });
   }
   getapproveByEdit(id) {
-    console.log(this.approveByList);
-    console.log(id);
     this.approveByEditFlag = true;
     this.approveByList.forEach((element) => {
       if (element.id == id) {
+        this.approveBy.id = element.id;
         this.approveBy.name = element.name;
         this.approveBy.email = element.email;
         this.approveBy.contact = element.contact;

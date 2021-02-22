@@ -111,25 +111,25 @@ export class AdminService {
 
   updateApproveByData(data) {
     return this.httpClient.put(
-      this.commonService.envUrl() + "api/admin/update/approvedBy",
+      this.commonService.envUrl() + "api/admin/update/approvedBy/",
       data
     );
   }
   updateCompanyData(data) {
     return this.httpClient.put(
-      this.commonService.envUrl() + "api/admin/update/company",
+      this.commonService.envUrl() + "api/admin/update/company/",
       data
     );
   }
   updateDepartmentData(data) {
     return this.httpClient.put(
-      this.commonService.envUrl() + "api/admin/update/department",
+      this.commonService.envUrl() + "api/admin/update/department/",
       data
     );
   }
   updateDesigntationData(data) {
     return this.httpClient.put(
-      this.commonService.envUrl() + "api/user/update/designation",
+      this.commonService.envUrl() + "api/user/update/designation/",
       data
     );
   }

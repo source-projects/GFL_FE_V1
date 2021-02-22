@@ -2,10 +2,11 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from "app/@theme/json/error.json";
-import { CommonService } from "app/@theme/services/common.service";
-import { PartyService } from "app/@theme/services/party.service";
+import * as errorData from "../../../@theme/json/error.json";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
 import { ToastrService } from "ngx-toastr";
+import { UserService } from "../../../@theme/services/user.service";
 
 @Component({
   selector: "ngx-add-edit-party",
@@ -32,7 +33,7 @@ export class AddEditPartyComponent implements OnInit {
   //to store the id of selected party
   currentPartyId: any;
 
-  master: [];
+  master: any[] = [];
   partyCodeArray: [];
   stateList = [
     { id: "37", name: "Andhra Pradesh" },
@@ -83,26 +84,65 @@ export class AddEditPartyComponent implements OnInit {
   operatorFlag = false;
   userHead;
   masterList = [];
+  logInUserDetail: any;
+
   constructor(
     private partyService: PartyService,
+    private userService: UserService,
     private commonService: CommonService,
     private route: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getData();
-    this.getMaster();
+    await this.getLogInUserDetail();
     this.currentPartyId = this._route.snapshot.paramMap.get("id");
     if (this.currentPartyId != null) this.getUpdateData();
   }
 
+  getLogInUserDetail() {
+    let id = Number(this.user.userId);
+    this.userService.getUserHeadDetails(id).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.logInUserDetail = data["data"];
+          this.checkUser();
+          this.getMaster();
+        }
+        console.log(this.logInUserDetail);
+      },
+      (error) => {}
+    );
+  }
+  checkUser() {
+    if (
+      this.logInUserDetail.superUserHeadId == null &&
+      this.logInUserDetail.userHeadId == null
+    ) {
+      this.adminFlag = true;
+      console.log("Admin");
+    } else if (
+      this.logInUserDetail.userHeadId &&
+      this.logInUserDetail.superUserHeadId == null
+    ) {
+      this.masterFlag = true;
+      console.log("master");
+    } else if (
+      this.logInUserDetail.superUserHeadId &&
+      this.logInUserDetail.userHeadId
+    ) {
+      this.operatorFlag = true;
+      console.log("Operator");
+    }
+  }
   public getData() {
     this.loading = true;
     this.user = this.commonService.getUser();
+    console.log(this.user);
     this.userHead = this.commonService.getUserHeadId();
-    if(this.userHead.userHeadId == 0){
+    if (this.userHead.userHeadId == 0) {
       this.adminFlag = true;
     }
     // else if(this.userHead.userHeadId)
@@ -148,28 +188,36 @@ export class AddEditPartyComponent implements OnInit {
   }
   public getMaster() {
     let masterId;
-    this.loading = true;
-    this.partyService.getAllMaster().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.master = data["data"];
+    if (this.masterFlag) {
+      console.log(this.logInUserDetail.name);
+      this.master.push(this.logInUserDetail.name);
+      console.log(this.master);
+    } else if (this.operatorFlag) {
+      this.master.push(this.logInUserDetail.userHeadName);
+    } else {
+      this.loading = true;
+      this.partyService.getAllMaster().subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.master = data["data"];
             //masterId = this.master[0].userHeadId;
             // if(this.adminFlag){
             //   this.masterList = this.master;
             // }else if(this.userHead.userHeadId == masterId){
             //   this.masterList
             // }
-         
-          this.loading = false;
-        } else {
+            console.log("other");
+            this.loading = false;
+          } else {
+            this.loading = false;
+          }
+        },
+        (error) => {
+          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
+      );
+    }
   }
 
   public getUpdateData() {

@@ -185,7 +185,7 @@ export class AddEditColorComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "colorList" + (rowIndex + 1) + "-" + 0;
+      this.index = "colorList" + (rowIndex + 1) + "-" + colName;
       if (rowIndex === this.color.colorDataList.length - 1) {
         let item = this.color.colorDataList[rowIndex];
         if (colName == "quantityPerBox") {
@@ -209,14 +209,12 @@ export class AddEditColorComponent implements OnInit {
         let list = this.color.colorDataList;
         list.push(obj);
         this.color.colorDataList = [...list];
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
 
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 10);
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+
+        
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -227,9 +225,7 @@ export class AddEditColorComponent implements OnInit {
         }, 10);
       }
     }
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
+    
   }
 
   calculateAmount(rowIndex) {

@@ -392,7 +392,7 @@ export class AddEditShadeComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + colName;
       if (rowIndex === this.shadeObj.shadeDataList.length - 1) {
         let item = this.shadeObj.shadeDataList[rowIndex];
         if (colName == "itemName") {
@@ -435,13 +435,11 @@ export class AddEditShadeComponent implements OnInit {
         let list = this.shadeObj.shadeDataList;
         list.push(obj);
         this.shadeObj.shadeDataList = [...list];
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 50);
+
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+    
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -449,12 +447,9 @@ export class AddEditShadeComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50); //alert("go to any last row input to add new row");
+        }, 50);
       }
     }
-    this.data.changes.subscribe(() => {
-      this.data.last.focus();
-    })
   }
   addShade(shadeForm) {
     this.disableButton = true;
