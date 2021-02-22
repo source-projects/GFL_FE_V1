@@ -117,7 +117,6 @@ export class JetPlanningComponent implements OnInit {
       .subscribe((title) => {
         if (title === "Print") this.generateSlip(true);
         else if (title === "Edit And Print") this.generateSlip(false);
-        else if (title === "Change Status") this.changeStatus();
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
@@ -141,6 +140,7 @@ export class JetPlanningComponent implements OnInit {
       status: this.jetStatus,
     };
     this.changeJetStatusApiCall(obj);
+    
   }
 
   changeJetStatusApiCall(data: any) {
@@ -148,6 +148,11 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
+          this.route
+          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+          .then(() => {
+          this.route.navigate(["/pages/jet-planning"]);
+    });
         } else {
           this.toastr.error(data["msg"]);
         }
@@ -161,18 +166,7 @@ export class JetPlanningComponent implements OnInit {
     this.showMenuFlag = true;
   }
 
-  changeStatus() {
-    this.changeStatusShow = true;
-    // const modalRef = this.modalService.open(ShadeWithBatchComponent);
-    // modalRef.componentInstance.statusChange = this.changeStatusShow;
-    // modalRef.componentInstance.ctrlId = this.sendControlId;
-    // modalRef.componentInstance.productionId = this.sendSotckId;
-    // modalRef.result.then((result) => {
-    //   if (result) {
-    //     this.getJetData();
-    //   }
-    // });
-  }
+  
 
   setIndexForSlip(index) {
     console.log(index);
