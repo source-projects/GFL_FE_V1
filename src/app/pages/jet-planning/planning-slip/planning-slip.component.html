@@ -68,7 +68,6 @@
                                             </div>
 
                                             <div class="form-group col-md-12">
-                                                <h5 class="nb-badges">Item List</h5>
                                                 <table class="table table-bordered table-striped table-process-fnt text-center">
                                                     <tr>
                                                         <th>Item name</th>
@@ -78,7 +77,7 @@
                                                     <ng-container>
                                                         <tr *ngFor='let dc of (process.dyeingSlipItemData | filterByIsColor : process.isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
                                                             <td>
-                                                                <select name="dcId{{dc._id}}{{i}}" [(ngModel)]="dc.itemId" #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event.target.value,i1,i)">
+                                                                <select name="dcId{{dc._id}}_{{i1}}_{{i}}" [(ngModel)]="dc.itemId" class="tableForm" required (change)="itemSelected($event.target.value,i1,i)">
 
                                                                     <option *ngFor="let item of itemListArray"
                                                                         [value]="item.itemId" placeholder="Select Item">
@@ -96,7 +95,7 @@
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <input type="number" #quantity1="ngModel" name='dcqty{{dc._id}}{{i}}' class="tableForm" [(ngModel)]="dc.qty" (keyup)="onKeyUp($event,i1,1,'quantity',i)" [id]="'itemList'+i+''+i1+'-1'" min="0">
+                                                                <input type="number" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
                                                             </td>
 
                                                             <td>
@@ -216,7 +215,7 @@
                                                     </div>
 
                                                     <div class="col-md-12">
-                                                        <h5 class="nb-badges">Add Chemical List</h5>
+                                                        <!-- <h5 class="nb-badges">Add Chemical List</h5> -->
                                                         <table class="table table-responsive table-bordered table-striped table-process-fnt">
                                                             <tr>
                                                                 <th>Item name</th>
@@ -318,7 +317,6 @@
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <h5 class="nb-badges">Item List</h5>
                                         <table class="table table-bordered table-striped table-process-fnt text-center">
                                             <tr>
                                                 <th>Item name</th>
@@ -453,7 +451,6 @@
                             </div>
 
                             <div class="form-group col-md-12 print-wth-100" style="width: 100% !important;">
-                                <!-- <h5 class="nb-badges">Item List</h5> -->
                                 <table class="table table-bordered table-process-fnt text-center print-wth-100">
                                     <tr>
                                         <th class="font-25" style="font-size: 25px;">Item name</th>

@@ -92,9 +92,11 @@ export class PlanningSlipComponent implements OnInit {
     this.itemList.push(new DyeingChemicalData());
   }
 
-  ngOnInit(): void {
-    this.getItemData();
-    if (this.batchId && this.stockId) this.getSlipDataFromBatch();
+ async ngOnInit() {
+  await this.getItemData();
+    if (this.batchId && this.stockId){
+      await this.getSlipDataFromBatch();
+    } 
     if (this.isPrintDirect) {
       //directly print slip
       this.printSlip();
@@ -128,13 +130,9 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            let quantity;
             this.slipData.dyeingSlipDataList.forEach((element) => {
               element.dyeingSlipItemData.forEach((element1) => {
-                if (element1.qty) {
-                  quantity = element1.qty.toFixed(3);
-                }
-                element1.qty = quantity;
+                element1.qty = element1.qty ? element1.qty.toFixed(3):element1.qty
               });
             });
           } else {
@@ -159,29 +157,35 @@ export class PlanningSlipComponent implements OnInit {
         let item = this.slipData.dyeingSlipDataList[parentDataIndex]
           .dyeingSlipItemData[rowIndex];
 
-        if (colName == "concentration") {
-          if (!item.concentration) {
-            // this.toastr.error("Enter concentration");
-            return;
+        if(item.itemName && item.qty){
+          if (colName == "concentration") {
+            if (!item.concentration) {
+              // this.toastr.error("Enter concentration");
+              return;
+            }
+          } else if (colName == "byChemical") {
+            if (!item.byChemical) {
+              // this.toastr.error("Enter concentration");
+              return;
+            }
           }
-        } else if (colName == "byChemical") {
-          if (!item.byChemical) {
-            // this.toastr.error("Enter concentration");
-            return;
-          }
+          let obj = new DyeingChemicalData();
+          //let list = this.dyeingChemicalData;
+          this.slipData.dyeingSlipDataList[
+            parentDataIndex
+          ].dyeingSlipItemData.push(obj);
+          let interval = setInterval(() => {
+            let field = document.getElementById(this.index);
+            if (field != null) {
+              field.focus();
+              clearInterval(interval);
+            }
+          }, 10);
+        }else{
+          this.toastr.error("Fill empty fields");
         }
-        let obj = new DyeingChemicalData();
-        //let list = this.dyeingChemicalData;
-        this.slipData.dyeingSlipDataList[
-          parentDataIndex
-        ].dyeingSlipItemData.push(obj);
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 10);
+
+       
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -316,7 +320,9 @@ export class PlanningSlipComponent implements OnInit {
             if (data["success"]) {
               this.isSaved = true;
               this.toastr.success(data["msg"]);
-              if (this.saveClicked) this.activeModal.close();
+              if (this.saveClicked){
+                this.activeModal.close(true);
+              } 
             } else {
               this.toastr.error(data["msg"]);
             }
