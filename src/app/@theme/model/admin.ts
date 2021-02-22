@@ -49,3 +49,21 @@ export class ApproveBy {
     this.email = null;
   }
 }
+
+export class AddMachine {
+  controlId: number;
+  machineName: string;
+  constructor() {
+    this.controlId = null;
+    this.machineName = null;
+  }
+}
+
+export class AddMachineCategory {
+  id: number;
+  name: string;
+  constructor() {
+    this.id = null;
+    this.name = null;
+  }
+}
