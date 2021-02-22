@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, QueryList, ViewChildren } from "@angular/core";
 import {
   DyeingChemicalData,
   DyeingProcessData,
@@ -11,6 +11,7 @@ import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
 import { AddShadeComponent } from "../../production-planning/add-shade/add-shade.component";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
   selector: "ngx-planning-slip",
@@ -19,13 +20,14 @@ import { AddShadeComponent } from "../../production-planning/add-shade/add-shade
   providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   count: any;
   supplierSelected = [];
   itemIndex: number;
   public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash", "Addition"];
 
   addNewFlag: boolean = false;
-  public refreshPipe:number = 0;
+  public refreshPipe: number = 0;
   dyeingProcessStepNew: any;
   dyeingChemicalData: DyeingChemicalData[] = [];
   public currentSlipId: any;
@@ -56,7 +58,7 @@ export class PlanningSlipComponent implements OnInit {
   public id;
   public liquorRatio;
   public list = [];
-  public itemList : DyeingChemicalData[] = [];
+  public itemList: DyeingChemicalData[] = [];
 
   planningSlipArray = [
     {
@@ -117,7 +119,7 @@ export class PlanningSlipComponent implements OnInit {
         } else {
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -141,7 +143,7 @@ export class PlanningSlipComponent implements OnInit {
             this.toastr.error(data["msg"]);
           }
         },
-        (error) => {}
+        (error) => { }
       );
   }
 
@@ -154,7 +156,7 @@ export class PlanningSlipComponent implements OnInit {
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
           .length -
-          1
+        1
       ) {
         let item = this.slipData.dyeingSlipDataList[parentDataIndex]
           .dyeingSlipItemData[rowIndex];
@@ -197,10 +199,28 @@ export class PlanningSlipComponent implements OnInit {
   onKeyUp1(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "itemList" + (rowIndex + 1) + "-" + 1;
 
-      let obj = new DyeingChemicalData();
-      this.itemList.push(obj);
+      if (
+        rowIndex === this.itemList.length -1) {
+        let obj = new DyeingChemicalData();
+        this.itemList.push(obj);
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+      }
+      else {
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 10);
+      }
+
+
+
     }
   }
 
@@ -255,10 +275,10 @@ export class PlanningSlipComponent implements OnInit {
         itemObject = this.slipData.dyeingSlipDataList[parentIndex].dyeingSlipItemData
       }
       if (e.itemId == item) {
-        if (e.itemType == "Color"){
+        if (e.itemType == "Color") {
           itemObject.isColor = true;
         }
-          
+
         itemObject.supplierName = e.supplierName;
         itemObject.itemName = e.itemName;
       }
@@ -298,7 +318,7 @@ export class PlanningSlipComponent implements OnInit {
     if (myForm.valid) {
       if (this.additionSlipFlag) {
         this.slipObj = {
-          id:this.id,
+          id: this.id,
           temp: myForm.value.temp,
           holdTime: myForm.value.holdTime,
           liquorRatio: myForm.value.liquorRatio,
@@ -448,19 +468,37 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  onEnter(e) {
+  onEnter(e, index) {
     let keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.dyeingChemicalData.push(new DyeingChemicalData());
+
+      if (index == this.dyeingChemicalData.length - 1) {
+        this.dyeingChemicalData.push(new DyeingChemicalData());
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+      }
+      else {
+        let indexOfEnter = "addList" + (index + 1) + "-" + 1;
+        let interval = setInterval(() => {
+          let field = document.getElementById(indexOfEnter);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50);
+
+      }
     }
   }
 
+
   removeChemicalData(index: any) {
-    if(this.dyeingChemicalData.length == 1){
+    if (this.dyeingChemicalData.length == 1) {
       this.dyeingChemicalData[0] = new DyeingChemicalData();
-    }else{
+    } else {
       this.dyeingChemicalData.splice(index, 1);
     }
-    
+
   }
 }
