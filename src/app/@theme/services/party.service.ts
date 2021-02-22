@@ -1,48 +1,63 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CommonService } from './common.service';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { CommonService } from "./common.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PartyService {
+  constructor(
+    private httpClient: HttpClient,
+    private commonService: CommonService
+  ) {}
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService) {
+  getAllPartyWithNameOnly() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/party/allPartyWithName"
+    );
   }
 
-  getAllPartyWithNameOnly(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/allPartyWithName');
-  }
-  
-  getAllPartyList(id,getBy){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/all/'+getBy+'/'+id);
+  getAllPartyList(id, getBy) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/party/all/" + getBy + "/" + id
+    );
   }
 
   saveParty(partyData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/party', partyData);
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/party",
+      partyData
+    );
   }
   updateParty(partyData) {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/party', partyData);
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/party",
+      partyData
+    );
   }
   deletePartyDetailsById(id) {
-    return this.httpClient.delete(this.commonService.envUrl() + 'api/party/' + id);
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/party/" + id
+    );
   }
   getPartyDetailsById(id) {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/party/' + id);
+    return this.httpClient.get(this.commonService.envUrl() + "api/party/" + id);
   }
   getAllMaster() {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/userHead');
+    return this.httpClient.get(this.commonService.envUrl() + "api/userHead");
   }
   getAllPartyNameList() {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/party/allPartyWithName');
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/party/allPartyWithName"
+    );
   }
-  getPartyCode(id){
-    return this.httpClient.get(this.commonService.envUrl()+'api/party/partyCodeExist/'+id);
+  getPartyCode(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/party/partyCodeExist/" + id
+    );
   }
 
-  
-getRecords(){
-  return this.httpClient.get(this.commonService.envUrl()+'api/testing');
-
-}
+  getRecords() {
+    return this.httpClient.get(this.commonService.envUrl() + "api/testing");
+  }
 }

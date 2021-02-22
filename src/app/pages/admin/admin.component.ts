@@ -37,6 +37,11 @@ export class AdminComponent implements OnInit {
 
   formSubmitted: boolean = false;
   loading = false;
+  jetEditFlag = false;
+  companyEditFlag = false;
+  departmentEditFlag = false;
+  designationEditFlag = false;
+  approveByEditFlag = false;
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
@@ -130,101 +135,183 @@ export class AdminComponent implements OnInit {
 
   saveJet() {
     this.formSubmitted = true;
-
-    this.adminService.saveJetData(this.addJet).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.toastr.success(errorData.Add_Success);
-          this.getAllJetData();
-          this.addJet.name = null;
-          this.addJet.capacity = null;
-          this.addJet.liquorRatio = null;
-          // this.route.navigate(["/pages/admin"]);
-          //this.addJet
-        } else {
-          this.toastr.error(errorData.Add_Error);
+    if (this.jetEditFlag == true) {
+      this.adminService.updateJetData(this.addJet).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Update_Success);
+            this.getAllJetData();
+            this.addJet.name = null;
+            this.addJet.capacity = null;
+            this.addJet.liquorRatio = null;
+            this.jetEditFlag = false;
+          } else {
+            this.toastr.error(errorData.Update_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    );
+      );
+    } else {
+      this.adminService.saveJetData(this.addJet).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllJetData();
+            this.addJet.name = null;
+            this.addJet.capacity = null;
+            this.addJet.liquorRatio = null;
+            // this.route.navigate(["/pages/admin"]);
+            //this.addJet
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
   }
   saveApproveBy() {
     this.formSubmitted = true;
-
-    this.adminService.saveApproveByData(this.approveBy).subscribe(
-      (data) => {
-        if (data["success"]) {
-          // this.currentParty = data["data"];
-          // this.route.navigate(["pages/party"]);
-          this.toastr.success(errorData.Add_Success);
-          this.getAllApproveByData();
-          this.approveBy.name = null;
-          this.approveBy.email = null;
-          this.approveBy.contact = null;
-        } else {
-          this.toastr.error(errorData.Add_Error);
+    if (this.approveByEditFlag == true) {
+      this.adminService.updateApproveByData(this.approveBy).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Update_Success);
+            this.getAllApproveByData();
+            this.approveBy.name = null;
+            this.approveBy.email = null;
+            this.approveBy.contact = null;
+            this.approveByEditFlag = false;
+          } else {
+            this.toastr.error(errorData.Update_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    );
+      );
+    } else {
+      this.adminService.saveApproveByData(this.approveBy).subscribe(
+        (data) => {
+          if (data["success"]) {
+            // this.currentParty = data["data"];
+            // this.route.navigate(["pages/party"]);
+            this.toastr.success(errorData.Add_Success);
+            this.getAllApproveByData();
+            this.approveBy.name = null;
+            this.approveBy.email = null;
+            this.approveBy.contact = null;
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
   }
   saveDesignation() {
     this.formSubmitted = true;
-
-    this.adminService.saveDesignationData(this.addDesignation).subscribe(
-      (data) => {
-        if (data["success"]) {
-          // this.currentParty = data["data"];
-          // this.route.navigate(["pages/party"]);
-          this.toastr.success(errorData.Add_Success);
-          this.getAllDesignationData();
-          this.addDesignation.designation = null;
-        } else {
-          this.toastr.error(errorData.Add_Error);
+    if (this.designationEditFlag == true) {
+      this.adminService.updateDesigntationData(this.addDesignation).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Update_Success);
+            this.getAllDesignationData();
+            this.addDesignation.designation = null;
+          } else {
+            this.toastr.error(errorData.Update_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    );
+      );
+      this.designationEditFlag = false;
+    } else {
+      this.adminService.saveDesignationData(this.addDesignation).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllDesignationData();
+            this.addDesignation.designation = null;
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
   }
   saveCompany() {
     this.formSubmitted = true;
-
-    this.adminService.saveCompanyData(this.addCompany).subscribe(
-      (data) => {
-        if (data["success"]) {
-          // this.currentParty = data["data"];
-          // this.route.navigate(["pages/party"]);
-          this.toastr.success(errorData.Add_Success);
-          this.getAllCompanyData();
-          this.addCompany.name = null;
-        } else {
-          this.toastr.error(errorData.Add_Error);
+    if (this.companyEditFlag == true) {
+      this.adminService.updateCompanyData(this.addCompany).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Update_Success);
+            this.getAllCompanyData();
+            this.addCompany.name = null;
+            this.companyEditFlag = false;
+          } else {
+            this.toastr.error(errorData.Update_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
         }
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    );
+      );
+    } else {
+      this.adminService.saveCompanyData(this.addCompany).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllCompanyData();
+            this.addCompany.name = null;
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
   }
 
   saveDepartment() {
     this.formSubmitted = true;
-    this.adminService.addDepartment(this.addDepartment).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.toastr.success(errorData.Add_Success);
-          this.getAllDepartment();
-          this.addDepartment.name = null;
-        }
-      },
-      (error) => {}
-    );
+    if (this.departmentEditFlag == true) {
+      this.adminService.updateDepartmentData(this.addDepartment).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Update_Success);
+            this.getAllDepartment();
+            this.addDepartment.name = null;
+            this.departmentEditFlag = false;
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      this.adminService.addDepartment(this.addDepartment).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllDepartment();
+            this.addDepartment.name = null;
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 
   getAllDepartment() {
@@ -332,6 +419,55 @@ export class AdminComponent implements OnInit {
             this.toastr.error(errorData.Serever_Error);
           }
         );
+      }
+    });
+  }
+  getjetEdit(id1) {
+    this.jetEditFlag = true;
+    this.jetList.forEach((element) => {
+      if (element.id == id1) {
+        this.addJet.id = element.id;
+        this.addJet.name = element.name;
+        this.addJet.capacity = element.capacity;
+        this.addJet.liquorRatio = element.liquorRatio;
+      }
+    });
+  }
+  getcompanyEdit(id) {
+    this.companyEditFlag = true;
+    this.companyList.forEach((element) => {
+      if (element.id == id) {
+        this.addCompany.id = element.id;
+        this.addCompany.name = element.name;
+      }
+    });
+  }
+  getdepartmentEdit(id) {
+    this.departmentEditFlag = true;
+    this.departmentList.forEach((element) => {
+      if (element.id == id) {
+        this.addDepartment.id = element.id;
+        this.addDepartment.name = element.name;
+      }
+    });
+  }
+  getdesignationEdit(id) {
+    this.designationEditFlag = true;
+    this.designationList.forEach((element) => {
+      if (element.id == id) {
+        this.addDesignation.id = element.id;
+        this.addDesignation.designation = element.designation;
+      }
+    });
+  }
+  getapproveByEdit(id) {
+    this.approveByEditFlag = true;
+    this.approveByList.forEach((element) => {
+      if (element.id == id) {
+        this.approveBy.id = element.id;
+        this.approveBy.name = element.name;
+        this.approveBy.email = element.email;
+        this.approveBy.contact = element.contact;
       }
     });
   }
