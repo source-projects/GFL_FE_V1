@@ -30,7 +30,7 @@ import {
   CounterPipe,
   FilterSelectedProcessPipe,
   FilterProcessNamePipe,
-  FilterItemPipe
+  FilterItemPipe,
 } from './pipes';
 import {
   OneColumnLayoutComponent,
@@ -43,6 +43,7 @@ import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import { FilterSelectedShadePipe } from './pipes/filter-selected-shade.pipe';
 import { FilterByIsColorPipe } from './pipes/filter-by-isColor-slip.pipe';
+import { DisableStockBatchPipe } from './pipes/disable-Stock-Batch.pipe';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -77,7 +78,8 @@ const PIPES = [
   FilterSelectedShadePipe,
   FilterProcessNamePipe,
   FilterItemPipe,
-  FilterByIsColorPipe
+  FilterByIsColorPipe,
+  DisableStockBatchPipe
 ];
 
 @NgModule({

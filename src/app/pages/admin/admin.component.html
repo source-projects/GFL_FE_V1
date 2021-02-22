@@ -46,10 +46,10 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeJet(row.id)"></nb-icon>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" 
-                             (click)="editClicked(row.id)"></nb-icon>&nbsp;&nbsp;
-    
+                                (click)="removeJet(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getjetEdit(row.id)"></nb-icon>
+
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -92,7 +92,9 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeCompany(row.id)"></nb-icon>
+                                (click)="removeCompany(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getcompanyEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -134,7 +136,7 @@
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="onCancel()">CANCEL</button>
                         <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveCompany()">SAVE</button>
+                            style="margin-right:20px" (click)="saveDepartment()">SAVE</button>
                     </div>
                 </div>
                 <!-- </form> -->
@@ -145,7 +147,9 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeDepartment(row.id)"></nb-icon>
+                                (click)="removeDepartment(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getdepartmentEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -190,7 +194,9 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeDesignation(row.id)"></nb-icon>
+                                (click)="removeDesignation(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getdesignationEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -251,7 +257,9 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeApproveBy(row.id)"></nb-icon>
+                                (click)="removeApproveBy(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getapproveByEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
