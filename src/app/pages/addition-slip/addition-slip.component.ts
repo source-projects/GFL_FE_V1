@@ -123,7 +123,6 @@ export class AdditionSlipComponent implements OnInit {
     });
     this.getAdditionSlipDataById(id);
 
-    let interval = setInterval(() => {
       if (this.additionSlipData) {
         const modalRef = this.modalService.open(PlanningSlipComponent);
         modalRef.componentInstance.isPrintDirect = false;
@@ -139,9 +138,7 @@ export class AdditionSlipComponent implements OnInit {
             this.updateAdditionSlip(result);
           }
         });
-        clearInterval(interval);
       }
-    }, 10);
   }
 
   getAdditionSlipDataById(id) {

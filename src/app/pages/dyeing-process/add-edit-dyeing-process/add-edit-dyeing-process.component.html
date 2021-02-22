@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="row dis-fl">
                                             <div class="col-md-11 col-12">
-                                                <h2 class="dyn-title">Item List:</h2>
+                                                <h2 *ngIf="!updateFlag" class="dyn-title">Item List:</h2>
                                                 <table style="width: 100%;" class="table process-tb table-bordered table-striped table-process-fnt dying-table">
                                                     <tr>
                                                         <th>Item name</th>
