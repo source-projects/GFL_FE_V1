@@ -59,4 +59,11 @@ export class JetPlanningService {
         b_id
     );
   }
+
+  
+removeProductionFromJet(jetId, prodId){
+  return this.httpClient.delete(
+    this.commonService.envUrl() + "api/jet/delete/removeProductionFromJet/"+jetId+"/"+prodId
+  );
+}
 }

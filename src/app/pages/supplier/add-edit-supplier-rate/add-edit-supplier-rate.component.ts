@@ -232,7 +232,7 @@ export class AddEditSupplierRateComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
       if (rowIndex === this.formValues.supplierRates.length - 1) {
         let item = this.formValues.supplierRates[rowIndex];
         if (colName == "itemName") {

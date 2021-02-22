@@ -21,7 +21,7 @@
             <ngx-datatable-column name="Action" sortable="false" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                         [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
+                         [routerLink]="['/pages/shade/edit',row.id]" [state]=apcFlag></nb-icon>
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
                         (click)="deletePendingAPC(row.id)"></nb-icon>
                 </ng-template>

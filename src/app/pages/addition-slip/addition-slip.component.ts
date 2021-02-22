@@ -112,10 +112,13 @@ export class AdditionSlipComponent implements OnInit {
   }
 
   editSlip(id) {
-    let prodId;
+    let prodId , batchId;
     this.additionSlipList.forEach((element) => {
       if (element.id == id) {
         prodId = element.productionId;
+        batchId = element.batchId;
+        this.additionSlip.batchId = batchId;
+        this.additionSlip.productionId = prodId;
       }
     });
     this.getAdditionSlipDataById(id);
@@ -124,7 +127,7 @@ export class AdditionSlipComponent implements OnInit {
       if (this.additionSlipData) {
         const modalRef = this.modalService.open(PlanningSlipComponent);
         modalRef.componentInstance.isPrintDirect = false;
-        modalRef.componentInstance.batchId = id;
+        modalRef.componentInstance.batchId = batchId;
         modalRef.componentInstance.editAdditionFlag = true;
         modalRef.componentInstance.additionSlipFlag = true;
 
@@ -175,14 +178,17 @@ export class AdditionSlipComponent implements OnInit {
         );
       }
     });
-  }
+  } 
 
   updateAdditionSlip(result) {
+    this.dyeingSlipData = new DyeingSlipData();
+    this.additionSlip.dyeingSlipData = this.dyeingSlipData;
     this.additionSlip.dyeingSlipData.holdTime = result.holdTime;
     this.additionSlip.dyeingSlipData.temp = result.temp;
     this.additionSlip.dyeingSlipData.isColor = result.isColor;
     this.additionSlip.dyeingSlipData.liquerRation = result.liquorRatio;
     this.additionSlip.dyeingSlipData.processType = "addition";
+    this.additionSlip.dyeingSlipData.id = result.id;
     this.additionSlip.dyeingSlipData.dyeingSlipItemData = result.items;
 
     this.planningService.updateAdditionDyeingSlip(this.additionSlip).subscribe(

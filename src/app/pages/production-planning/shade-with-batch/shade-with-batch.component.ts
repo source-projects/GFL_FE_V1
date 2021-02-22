@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ProductionPlanningService } from "app/@theme/services/production-planning.service";
+import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { ShadeService } from "app/@theme/services/shade.service";
-import * as errorData from "app/@theme/json/error.json";
+import { ShadeService } from "../../../@theme/services/shade.service";
+import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
-import { JetPlanningService } from "app/@theme/services/jet-planning.service";
+import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 
 @Component({
   selector: "ngx-shade-with-batch",
@@ -19,7 +19,9 @@ export class ShadeWithBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   @Input() statusChange: boolean;
   @Input() ctrlId: any;
-  @Input() productionId:any;
+  @Input() productionId: any;
+  @Input("batchId") batchId: any;
+  @Input("stockId") stockId: any;
   public jetStatus: string;
   public status = [];
   jet: any;
@@ -27,9 +29,11 @@ export class ShadeWithBatchComponent implements OnInit {
   formSubmitted: boolean = false;
   jetSelectedFlag = false;
   selectedJetData: any[] = [];
+  jetCapacity = false;
 
   //batch:any;
   color: any;
+  weight: any;
   constructor(
     private productionPlanningService: ProductionPlanningService,
     private shadeService: ShadeService,
@@ -39,12 +43,23 @@ export class ShadeWithBatchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getWeightByStockAndBatch();
     if (this.statusChange) {
       this.getAllStatus();
     } else {
       this.getJetData();
     }
     //this.getAllBatchWithShade();
+  }
+
+  getWeightByStockAndBatch() {
+    this.productionPlanningService
+      .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
+      .subscribe((data) => {
+        if (data["success"]) {
+          this.weight = data["data"].totalwt;
+        }
+      });
   }
 
   getAllStatus() {
@@ -67,7 +82,6 @@ export class ShadeWithBatchComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
-          console.log(this.jetList);
         } else {
           this.loading = false;
         }
@@ -79,11 +93,21 @@ export class ShadeWithBatchComponent implements OnInit {
   }
 
   jetSelected(event) {
-    console.log(event);
-    this.jetSelectedFlag = true;
+    this.jetCapacity = false;
     this.jetList.forEach((element) => {
       if (element.id == event) {
-        this.selectedJetData = element.jetDataList;
+        if (element.capacity > this.weight) {
+          this.selectedJetData = element.jetDataList;
+          if(!this.selectedJetData){
+            this.jetSelectedFlag = false;
+          }else{
+            this.jetSelectedFlag = true;
+
+          }
+        } else {
+          this.jetCapacity = true;
+          this.jetSelectedFlag = false;
+        }
       }
     });
   }

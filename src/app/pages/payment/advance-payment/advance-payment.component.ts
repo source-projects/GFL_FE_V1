@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import * as errorData from 'app/@theme/json/error.json';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AdvancePayment} from 'app/@theme/model/advance-payment';
+import { AdvancePayment } from 'app/@theme/model/advance-payment';
 import { CommonService } from 'app/@theme/services/common.service';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { PartyService } from 'app/@theme/services/party.service';
 import { PaymentService } from 'app/@theme/services/payment.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'ngx-advance-payment',
@@ -15,18 +16,20 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdvancePaymentComponent implements OnInit {
 
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
+
   userId: any;
   userHeadId: any;
   currentAdvancePaymentId: string;
-  chequeAmt:Number;
-  total:Number=0;
-  index:any;
+  chequeAmt: Number;
+  total: Number = 0;
+  index: any;
   formSubmitted = false;
   loading = false;
   cashSelected = false;
 
   party: any[];
-  paymentTypeList:any[];
+  paymentTypeList: any[];
   // advancePaymentDataListArray: AdvancePayment[] = [];
 
   advancePaymentValues: AdvancePayment = new AdvancePayment();
@@ -42,10 +45,10 @@ export class AdvancePaymentComponent implements OnInit {
     private paymentService: PaymentService
   ) {
 
-     this.advancePaymentArray.push(this.advancePaymentValues);
-     console.log(this.advancePaymentArray);
+    this.advancePaymentArray.push(this.advancePaymentValues);
+    console.log(this.advancePaymentArray);
     //this.advancePaymentValues = this.advancePaymentArray;
-   }
+  }
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
@@ -54,6 +57,7 @@ export class AdvancePaymentComponent implements OnInit {
     this.getUserId();
     this.getPaymentType();
   }
+
 
   public getUserId() {
     this.currentAdvancePaymentId = this._route.snapshot.paramMap.get("id");
@@ -79,30 +83,30 @@ export class AdvancePaymentComponent implements OnInit {
     );
   }
 
-  getPaymentType(){
+  getPaymentType() {
     this.paymentService.getAllPaymentType().subscribe(
       (data) => {
-          if (data["success"]) {
-            this.paymentTypeList = data["data"];
-            console.log(this.paymentTypeList);
-            this.loading = false;
-          } else {
-            // this.toastr.error(data["msg"]);
-            this.loading = false;
-          }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
+        if (data["success"]) {
+          this.paymentTypeList = data["data"];
+          console.log(this.paymentTypeList);
+          this.loading = false;
+        } else {
+          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
+      },
+      (error) => {
+        // this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
     );
   }
 
-  paymentTypeSelected(event){
-    if(event == 14460){
+  paymentTypeSelected(event) {
+    if (event == 14460) {
       this.cashSelected = true;
       this.advancePaymentValues.amt = 0;
-    }else{
+    } else {
       this.cashSelected = false;
 
     }
@@ -112,7 +116,7 @@ export class AdvancePaymentComponent implements OnInit {
 
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "advancePaymentList" + (rowIndex + 1) + "-" + colIndex;
+      this.index = "advancePaymentList" + (rowIndex + 1) + "-" + colName;
       if (rowIndex === this.advancePaymentArray.length - 1) {
         let item = this.advancePaymentArray[rowIndex];
         if (colName == "payTypeId") {
@@ -126,23 +130,31 @@ export class AdvancePaymentComponent implements OnInit {
             return;
           }
         }
+
+        let obj = {
+          partyId: this.advancePaymentArray[rowIndex].partyId,
+          amt: null,
+          payTypeId: null,
+          paymentBunchId: null,
+          remark: null,
+          no: null,
+          bank: null,
+          createdBy: null,
+          creditId: null,
+        };
+        let list = this.advancePaymentArray;
+        console.log(list);
+        list.push(obj);
+        this.advancePaymentArray = [...list];
+        console.log(this.advancePaymentArray);
         
-       let obj = {
-        partyId:this.advancePaymentArray[rowIndex].partyId,
-        amt:null,
-        payTypeId:null,
-        paymentBunchId:null,
-        remark:null,
-        no:null,
-        bank:null,
-        createdBy:null,
-        creditId:null,
-      };
-      let list = this.advancePaymentArray;
-      console.log(list);
-      list.push(obj);
-      this.advancePaymentArray = [...list];
-      console.log(this.advancePaymentArray);
+        
+        this.data.changes.subscribe(() => {
+          this.data.last.focus();
+        })
+      
+      
+      } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -150,16 +162,8 @@ export class AdvancePaymentComponent implements OnInit {
             clearInterval(interval);
           }
         }, 50);
-       } else {
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 50); alert("go to any last row input to add new row");
       }
-      }
+    }
   }
 
   removeItem(id) {
@@ -182,7 +186,7 @@ export class AdvancePaymentComponent implements OnInit {
     }
   }
 
-  typeSelected(rowIndex, row,elementId) {
+  typeSelected(rowIndex, row, elementId) {
     let id = this.advancePaymentArray[rowIndex].payTypeId;
     let flag = false;
     let count = 0;
@@ -192,14 +196,14 @@ export class AdvancePaymentComponent implements OnInit {
         count++;
       } else count++;
     });
-    }
+  }
 
-  addAdvancePayment(event){
+  addAdvancePayment(event) {
     this.formSubmitted = true;
     //delete event.value.chequeAmt;
     // console.log(event.value);
     // console.log(this.advancePaymentArray);
-    this.advancePaymentArray.forEach(element =>{
+    this.advancePaymentArray.forEach(element => {
       element.payTypeId = Number(element.payTypeId);
       element.no = Number(element.no);
     })

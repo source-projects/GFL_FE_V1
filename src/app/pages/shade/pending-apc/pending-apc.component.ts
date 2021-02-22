@@ -18,6 +18,7 @@ export class PendingApcComponent implements OnInit {
   loading = false;
   userId:any;
   userHeadId:any;
+  apcFlag = true;
   constructor(
     private shadeService: ShadeService,
     private commonService: CommonService,
