@@ -1,9 +1,11 @@
 export class AddJet {
+  id: number;
   capacity: number;
   liquorRatio: number;
   name: string;
 
   constructor() {
+    this.id = null;
     this.capacity = null;
     this.liquorRatio = null;
     this.name = null;
