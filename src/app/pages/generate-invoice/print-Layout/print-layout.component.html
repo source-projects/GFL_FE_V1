@@ -247,20 +247,58 @@
                         <!-- batch Grey mtr data list -->
                         <div class="row" style="margin-top: 10px;margin-left: 2px;margin-right: 1px;">
                             <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
-                                <div style="height: 700px;">
+                                <div>
+
                                     <table class="table lot-border">
                                         <tr style="text-align: left;">
                                             <th>LOT NO: {{lots.batchId}}</th>
                                         </tr>
                                     </table>
-                                    <table class="table table-left-right" frame="hsides" rules="groups">
+
+                                    <table id="invoice-table">
+                                        <colgroup>
+                                            <col width="10mm" />
+                                            <col width="45mm" />
+                                            <col width="45mm" />
+                                        </colgroup>
+                                        <tr class="invoice_line">
+                                            <th>Cops</th>
+                                            <th>GryMtr</th>
+                                            <th>FinMtr</th>
+
+                                        </tr>
+                                        <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                            <td> {{i}}</td>
+                                            <td class="site">{{grs.mtr}}</td>
+                                            <td class="amount">{{grs.finishMtr}}</td>
+
+                                        </tr>
 
                                         <tr>
-                                            <td scope="col">Cops</td>
-                                            <td scope="col">GryMtr</td>
-                                            <td scope="col">FinMtr</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
                                         </tr>
-                                        <tr *ngFor="let grs of lots.batchDataList;let i = index;">
+                                    </table>
+                                    <!-- <table class="table table-left-right" id="invoice-table">
+
+                                        <colgroup>
+                                            <col width="35mm" />
+                                            <col />
+                                            <col width="20mm" />
+                                            <col width="20mm" />
+                                            <col width="20mm" />
+                                        </colgroup>
+
+                                        <tr class="invoice_line">
+                                            <th scope="col">Cops</th>
+                                            <th scope="col">GryMtr</th>
+                                            <th scope="col">FinMtr</th>
+                                        </tr>
+
+                                        <tr *ngFor="let grs of lots.batchDataList;let i = index;" class="invoice_line">
                                             <td scope="col">
                                                 {{i}}
                                             </td>
@@ -271,7 +309,7 @@
                                                 {{grs.finishMtr}}
                                             </td>
                                         </tr>
-                                    </table>
+                                    </table> -->
                                 </div>
                             </div>
                         </div>

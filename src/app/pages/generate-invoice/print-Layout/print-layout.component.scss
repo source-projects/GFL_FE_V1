@@ -131,6 +131,78 @@
     .company-ltd {
         margin-top: 30px;
     }
+    #invoice-table {
+        border: 1px solid darkblue;
+        border-spacing: 0;
+        clear: both;
+        margin: 2mm 0mm;
+        height: 100mm;
+        width: 100%;
+    }
+    #invoice-table th,
+    td {
+        border-left: 1px solid darkblue;
+    }
+    #invoice-table th:first-child,
+    td:first-child {
+        border-left: none;
+    }
+    #invoice-table th {
+        border-bottom: 1px solid darkblue;
+    }
+    #invoice-table td {
+        vertical-align: top;
+        font-size: 8pt;
+    }
+    th {
+        text-align: center;
+        font-weight: normal;
+    }
+    .invoice_line {
+        height: 6mm;
+    }
+    .invoice_line td,
+    .invoice_line th {
+        padding: 1mm;
+    }
+    // lo
+    #invoice-table {
+        border: 1px solid darkblue;
+        border-spacing: 0;
+        clear: both;
+        margin: 2mm 0mm;
+        height: 170mm;
+        width: 100%;
+    }
+    #invoice-table th,
+    td {
+        border-left: 1px solid darkblue;
+    }
+    #invoice-table th:first-child,
+    td:first-child {
+        border-left: none;
+    }
+    #invoice-table th {
+        border-bottom: 1px solid darkblue;
+    }
+    #invoice-table td {
+        vertical-align: top;
+        font-size: 8pt;
+    }
+    th {
+        text-align: center;
+        font-weight: normal;
+    }
+    .amount {
+        text-align: right;
+    }
+    .invoice_line {
+        height: 6mm;
+    }
+    .invoice_line td,
+    .invoice_line th {
+        padding: 1mm;
+    }
 }
 
 @media screen {
