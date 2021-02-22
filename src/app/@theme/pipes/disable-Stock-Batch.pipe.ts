@@ -17,16 +17,5 @@ export class DisableStockBatchPipe implements PipeTransform {
     else{
       return false;
     }
-    // if(row.batchData.forEach(element => {
-    //   if(element.isProductionPlanned){
-    //     return true;
-    //   }
-    //   else{
-
-    //     return false;
-    //   }
-    // })){
-
-    // }
   }
 }

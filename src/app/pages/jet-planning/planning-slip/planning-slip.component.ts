@@ -159,29 +159,35 @@ export class PlanningSlipComponent implements OnInit {
         let item = this.slipData.dyeingSlipDataList[parentDataIndex]
           .dyeingSlipItemData[rowIndex];
 
-        if (colName == "concentration") {
-          if (!item.concentration) {
-            // this.toastr.error("Enter concentration");
-            return;
+        if(item.itemName && item.qty){
+          if (colName == "concentration") {
+            if (!item.concentration) {
+              // this.toastr.error("Enter concentration");
+              return;
+            }
+          } else if (colName == "byChemical") {
+            if (!item.byChemical) {
+              // this.toastr.error("Enter concentration");
+              return;
+            }
           }
-        } else if (colName == "byChemical") {
-          if (!item.byChemical) {
-            // this.toastr.error("Enter concentration");
-            return;
-          }
+          let obj = new DyeingChemicalData();
+          //let list = this.dyeingChemicalData;
+          this.slipData.dyeingSlipDataList[
+            parentDataIndex
+          ].dyeingSlipItemData.push(obj);
+          let interval = setInterval(() => {
+            let field = document.getElementById(this.index);
+            if (field != null) {
+              field.focus();
+              clearInterval(interval);
+            }
+          }, 10);
+        }else{
+          this.toastr.error("Fill empty fields");
         }
-        let obj = new DyeingChemicalData();
-        //let list = this.dyeingChemicalData;
-        this.slipData.dyeingSlipDataList[
-          parentDataIndex
-        ].dyeingSlipItemData.push(obj);
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
-          if (field != null) {
-            field.focus();
-            clearInterval(interval);
-          }
-        }, 10);
+
+       
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);

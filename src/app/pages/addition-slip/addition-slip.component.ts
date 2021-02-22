@@ -121,31 +121,32 @@ export class AdditionSlipComponent implements OnInit {
         this.additionSlip.productionId = prodId;
       }
     });
-    this.getAdditionSlipDataById(id);
+    this.getAdditionSlipDataById(id ,batchId, prodId );
 
-      if (this.additionSlipData) {
-        const modalRef = this.modalService.open(PlanningSlipComponent);
-        modalRef.componentInstance.isPrintDirect = false;
-        modalRef.componentInstance.batchId = batchId;
-        modalRef.componentInstance.editAdditionFlag = true;
-        modalRef.componentInstance.additionSlipFlag = true;
-
-        modalRef.componentInstance.stockId = prodId;
-        modalRef.componentInstance.additionSlipData = this.additionSlipData;
-
-        modalRef.result.then((result) => {
-          if (result) {
-            this.updateAdditionSlip(result);
-          }
-        });
-      }
+     
   }
 
-  getAdditionSlipDataById(id) {
+  getAdditionSlipDataById(id , batchId, prodId) {
     this.planningService.getAlladditionSlipById(id).subscribe(
       (data) => {
         if (data["success"]) {
           this.additionSlipData = data["data"];
+          if (this.additionSlipData) {
+            const modalRef = this.modalService.open(PlanningSlipComponent);
+            modalRef.componentInstance.isPrintDirect = false;
+            modalRef.componentInstance.batchId = batchId;
+            modalRef.componentInstance.editAdditionFlag = true;
+            modalRef.componentInstance.additionSlipFlag = true;
+    
+            modalRef.componentInstance.stockId = prodId;
+            modalRef.componentInstance.additionSlipData = this.additionSlipData;
+    
+            modalRef.result.then((result) => {
+              if (result) {
+                this.updateAdditionSlip(result);
+              }
+            });
+          }
         } else {
           this.toastr.error(errorData.Serever_Error);
         }
