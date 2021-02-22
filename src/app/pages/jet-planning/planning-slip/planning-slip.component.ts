@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit,  QueryList, ViewChildren } from "@angular/core";
 import {
   DyeingChemicalData,
   DyeingProcessData,
@@ -11,6 +11,7 @@ import { ToastrService } from "ngx-toastr";
 import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
 import { AddShadeComponent } from "../../production-planning/add-shade/add-shade.component";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
   selector: "ngx-planning-slip",
@@ -19,6 +20,7 @@ import { AddShadeComponent } from "../../production-planning/add-shade/add-shade
   providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
+  @ViewChildren('data') data: QueryList<NgSelectComponent>;
   count: any;
   supplierSelected = [];
   itemIndex: number;
@@ -93,7 +95,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
  async ngOnInit() {
-  await this.getItemData();
+   this.getItemData();
     if (this.batchId && this.stockId){
       await this.getSlipDataFromBatch();
     } 
@@ -201,10 +203,29 @@ export class PlanningSlipComponent implements OnInit {
   onKeyUp1(e, rowIndex, colIndex, colName) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index = "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+     // this.index = "itemList" + "" + (rowIndex + 1) + "-" + colIndex;
+     this.index = "itemList" + (rowIndex + 1) + "-" + 1;
 
-      let obj = new DyeingChemicalData();
-      this.itemList.push(obj);
+     if (
+       rowIndex === this.itemList.length -1) {
+       let obj = new DyeingChemicalData();
+       this.itemList.push(obj);
+       this.data.changes.subscribe(() => {
+         this.data.last.focus();
+       })
+     }
+     else {
+       let interval = setInterval(() => {
+         let field = document.getElementById(this.index);
+         if (field != null) {
+           field.focus();
+           clearInterval(interval);
+         }
+       }, 10);
+     }
+
+      // let obj = new DyeingChemicalData();
+      // this.itemList.push(obj);
     }
   }
 
@@ -454,10 +475,32 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  onEnter(e) {
+  onEnter(e , index) {
     let keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.dyeingChemicalData.push(new DyeingChemicalData());
+      if (index == this.dyeingChemicalData.length - 1) {
+        if(this.dyeingChemicalData[index].itemId && this.dyeingChemicalData[index].qty){
+          this.dyeingChemicalData.push(new DyeingChemicalData());
+          this.data.changes.subscribe(() => {
+            this.data.last.focus();
+          })
+        }else{
+          this.toastr.error("Fill empty fields.");
+
+        }
+        
+      }
+      else {
+        let indexOfEnter = "addList" + (index + 1) + "-" + 1;
+        let interval = setInterval(() => {
+          let field = document.getElementById(indexOfEnter);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 50);
+
+      }
     }
   }
 
