@@ -95,13 +95,13 @@ export class PlanningSlipComponent implements OnInit {
   }
 
  async ngOnInit() {
-   this.getItemData();
+  await this.getItemData();
     if (this.batchId && this.stockId){
       await this.getSlipDataFromBatch();
     } 
     if (this.isPrintDirect) {
       //directly print slip
-      this.printSlip();
+      await this.printSlip();
     }
     if (this.editAdditionFlag) {
       this.getUpdateDataForAdditionSlip();
