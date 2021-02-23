@@ -274,7 +274,11 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.currentParty = data["data"];
-              this.route.navigate(["pages/party"]);
+              //this.route.navigate(["pages/party"]);
+              this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/quality"]);});
               this.toastr.success(errorData.Add_Success);
             } else {
               this.toastr.error(errorData.Add_Error);

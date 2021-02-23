@@ -149,7 +149,7 @@ export class JetPlanningComponent implements OnInit {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
           this.route
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+          .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
           .then(() => {
           this.route.navigate(["/pages/jet-planning"]);
     });

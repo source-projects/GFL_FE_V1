@@ -11,6 +11,8 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { UserService } from "../../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Md5 } from "ts-md5/dist/md5";
+import { isAwaitExpression } from 'typescript';
+import { PartyService } from 'app/@theme/services/party.service';
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -30,6 +32,8 @@ export class AddEditUserComponent implements OnInit {
   preventDuplicates = false;
   isMasterFlag = false;
   adminFlag = false;
+  masterFlag = false;
+  operatorFlag = false;
   status;
   allRightsFlag;
   user: User = new User();
@@ -95,9 +99,9 @@ export class AddEditUserComponent implements OnInit {
   checkArray: any[] = [];
 
   data: any[] = [];
-
+  master: any;
   decimal: any[] = [];
-
+  currentUserData:any;
   userData: any;
   userId: any;
   userHead;
@@ -113,20 +117,64 @@ export class AddEditUserComponent implements OnInit {
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private partyService: PartyService
   ) {}
 
-  ngOnInit(): void {
+ async ngOnInit(){
     this.getDesignation();
     this.getAllUserHrads();
     this.getAllCompany();
     this.getAllDepartment();
-    this.getUserId();
+    this.getMaster();
+  await  this.getUserId();
     if (this.currentUserId) {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
   }
+
+
+getMaster(){
+  this.partyService.getAllMaster().subscribe(
+    (data) => {
+      if (data["success"]) {
+        this.master = data["data"];
+        
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
+    },
+    (error) => {
+      // this.toastr.error(errorData.Serever_Error);
+      this.loading = false;
+    }
+  );
+}
+
+checkUser(logInUserDetail) {
+  if (
+    logInUserDetail.superUserHeadId == null &&
+    logInUserDetail.userHeadId == null
+  ) {
+    this.adminFlag = true;
+    console.log("Admin");
+  } else if (
+    logInUserDetail.userHeadId &&
+    logInUserDetail.superUserHeadId == null
+  ) {
+    this.masterFlag = true;
+    console.log("master");
+  } else if (
+    logInUserDetail.superUserHeadId &&
+    logInUserDetail.userHeadId
+  ) {
+    this.operatorFlag = true;
+    console.log("Operator");
+  }
+}
+ 
 
   getAllUserHrads() {
     this.loading = true;
@@ -153,6 +201,22 @@ export class AddEditUserComponent implements OnInit {
       this.adminFlag = true;
     }
     this.currentUserId = this._route.snapshot.paramMap.get("id");
+    this.userService.getUserHeadDetails(this.userId.userId).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.currentUserData = data["data"];
+          this.checkUser(this.currentUserData);
+        //   if(this.currentUserData.superUserHeadId == null && this.currentUserData.userHeadId != null){
+        //     this.masterFlag = true;
+        // }else if(this.currentUserData.superUserHeadId != null && this.currentUserData.userHeadId != null){
+        //   this.operatorFlag = true;
+        // }
+        }
+      },(error) => {
+
+      }
+    )
+  
   }
 
   designationSelected(event) {
@@ -416,6 +480,15 @@ export class AddEditUserComponent implements OnInit {
       case "Finished Meter": {
         let index = this.permissionArray.findIndex(
           (v) => v.module == "Finished Meter"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Water Jet": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Water Jet"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -751,7 +824,11 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/user"]);
+            //this.route.navigate(["/pages/user"]);
+            this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/user"]);});
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);

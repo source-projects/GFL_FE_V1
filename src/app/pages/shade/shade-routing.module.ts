@@ -8,6 +8,13 @@ import { PendingApcComponent } from './pending-apc/pending-apc.component';
 const routes: Routes = [
   {
     path:'',
+    component:AddEditShadeComponent,
+    canActivate:[ShadeGuard],
+    canLoad:[ShadeGuard],
+    data: { PermissionName: ['add']}
+  },
+  {
+    path:'view',
     component:ShadeComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],

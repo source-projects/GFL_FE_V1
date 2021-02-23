@@ -6,13 +6,27 @@ import { QualityService } from '../../@theme/services/quality.service';
 import { QualityGuard } from 'app/@theme/guards/quality.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: QualityComponent,
-    canActivate: [QualityGuard],
-    canLoad: [QualityGuard],
-    data: { PermissionName: ['view','view group','view all'] }
+  { 
+    path:'',
+    component:AddEditQualityComponent,
+    canActivate:[QualityGuard],
+    canLoad:[QualityGuard],
+    data: { PermissionName: ['add']}
   },
+  { 
+    path:'view',
+    component:QualityComponent,
+    canActivate:[QualityGuard],
+    canLoad:[QualityGuard],
+    data: { PermissionName: ['view','view group','view all']}
+  },
+  // {
+  //   path: '',
+  //   component: QualityComponent,
+  //   canActivate: [QualityGuard],
+  //   canLoad: [QualityGuard],
+  //   data: { PermissionName: ['view','view group','view all'] }
+  // },
   {
     path: 'add',
     component: AddEditQualityComponent,

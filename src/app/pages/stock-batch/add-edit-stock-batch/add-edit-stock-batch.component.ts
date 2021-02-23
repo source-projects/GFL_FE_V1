@@ -551,7 +551,11 @@ export class AddEditStockBatchComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.loading = false;
-              this.route.navigate(["/pages/stock-batch"]);
+              //this.route.navigate(["/pages/stock-batch"]);
+              this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/stock-batch"]);});
               this.toastr.success(errorData.Add_Success);
             } else {
               this.loading = false;

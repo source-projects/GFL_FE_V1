@@ -159,7 +159,11 @@ export class AddEditQualityComponent implements OnInit {
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
           if (data['success']) {
+            this.route
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+            .then(() => {
             this.route.navigate(["/pages/quality"]);
+          });
             this.toastr.success(errorData.Add_Success);
           }
           else {

@@ -93,7 +93,12 @@ export class AddEditSupplierComponent implements OnInit {
         data =>{
           if(data["success"]){
             this.toastr.success(errorData.Add_Success);
-            this.router.navigate(['pages/supplier']);
+           // this.router.navigate(['pages/supplier']);
+           this.router
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+            .then(() => {
+            this.router.navigate(["/pages/supplier"]);
+          });
 
           }
           else{

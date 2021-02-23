@@ -469,7 +469,11 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeService.addShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/shade"]);
+            //this.route.navigate(["/pages/shade"]);
+            this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/shade"]);});
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(data["msg"]);
