@@ -40,10 +40,9 @@ export class GenerateInvoiceComponent implements OnInit {
   
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyInvoiceList.length;
     const keys = Object.keys(this.copyInvoiceList[0]);
     this.InvoiceList = this.copyInvoiceList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]
@@ -66,8 +65,11 @@ export class GenerateInvoiceComponent implements OnInit {
        
         if (data["success"]) {
           this.InvoiceList = data["data"];
+          console.log(this.InvoiceList)
           this.copyInvoiceList = data["data"];
-          // this.Invoice=this.InvoiceList.map((element)=>({createdDate:element.createdDate, id: element.id, isSendToParty: element.isSendToParty}))
+          this.Invoice=this.InvoiceList.map((element)=>({date:element.date, id: element.id,invoiceNo:element.invoiceNo, isSendToParty: element.isSendToParty}));
+          this.copyInvoiceList=this.InvoiceList.map((element)=>({date:element.date, id: element.id,invoiceNo:element.invoiceNo, isSendToParty: element.isSendToParty}))
+
         }
         else {
           // this.toastr.error(data['msg'])

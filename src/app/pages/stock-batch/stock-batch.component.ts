@@ -136,10 +136,9 @@ export class StockBatchComponent implements OnInit {
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyStockList.length;
     const keys = Object.keys(this.copyStockList[0]);
     this.stockList = this.copyStockList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]
@@ -166,10 +165,11 @@ export class StockBatchComponent implements OnInit {
             this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
             index++;
           });
+          this.copyStockList = this.stockList;
           this.stock=this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
             billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate })) 
-          this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
-            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))        
+          // this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
+          //   billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))        
         } 
           
           this.loading = false;

@@ -12,7 +12,7 @@ import { SharedModule } from '../../@theme/shared.module';
 
 
 @NgModule({
-  declarations: [JetPlanningComponent,ShadeWithBatchComponent,PlanningSlipComponent ],
+  declarations: [JetPlanningComponent,ShadeWithBatchComponent, PlanningSlipComponent ],
   imports: [
     CommonModule,
     JetPlanningRoutingModule,
