@@ -5,6 +5,8 @@ import {
   AddDesignation,
   ApproveBy,
   AddDepartment,
+  AddMachine,
+  AddMachineCategory,
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -23,17 +25,21 @@ export class AdminComponent implements OnInit {
   addDepartment: AddDepartment = new AddDepartment();
   addDesignation: AddDesignation = new AddDesignation();
   approveBy: ApproveBy = new ApproveBy();
-
+  addMachine: AddMachine = new AddMachine();
+  addMachineCategory: AddMachineCategory = new AddMachineCategory();
   addJetArray: AddJet[] = [];
   addCompanyArray: AddCompany[] = [];
   adddesignationArray: AddDesignation[] = [];
   approveByArray: ApproveBy[] = [];
-
+  addMachineArray: AddMachine[] = [];
+  addMachineCategoryArray: AddMachineCategory[] = [];
   jetList = [];
   designationList = [];
   companyList = [];
   departmentList = [];
   approveByList = [];
+  machineList = [];
+  machineCategoryList = [];
 
   formSubmitted: boolean = false;
   loading = false;
@@ -42,6 +48,8 @@ export class AdminComponent implements OnInit {
   departmentEditFlag = false;
   designationEditFlag = false;
   approveByEditFlag = false;
+  machineEditFlag = false;
+  machineCategoryEditFlag = false;
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
@@ -51,6 +59,8 @@ export class AdminComponent implements OnInit {
     this.addCompanyArray.push(this.addCompany);
     this.adddesignationArray.push(this.addDesignation);
     this.approveByArray.push(this.approveBy);
+    this.addMachineArray.push(this.addMachine);
+    this.addMachineCategoryArray.push(this.addMachineCategory);
   }
 
   ngOnInit(): void {
@@ -59,6 +69,8 @@ export class AdminComponent implements OnInit {
     this.getAllCompanyData();
     this.getAllDepartment();
     this.getAllDesignationData();
+    this.getAllMachineData();
+    this.getAllMachineCategoryData();
   }
 
   getAllJetData() {
@@ -66,6 +78,38 @@ export class AdminComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllMachineData() {
+    this.adminService.getAllMachine().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.machineList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllMachineCategoryData() {
+    this.adminService.getAllMachineCategory().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.machineCategoryList = data["data"];
           this.loading = false;
         } else {
           this.loading = false;
@@ -131,6 +175,8 @@ export class AdminComponent implements OnInit {
     this.addDepartment = null;
     this.addCompany = null;
     this.approveBy = null;
+    this.addMachine = null;
+    this.addMachineCategory = null;
   }
 
   saveJet() {
@@ -162,8 +208,6 @@ export class AdminComponent implements OnInit {
             this.addJet.name = null;
             this.addJet.capacity = null;
             this.addJet.liquorRatio = null;
-            // this.route.navigate(["/pages/admin"]);
-            //this.addJet
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -174,6 +218,50 @@ export class AdminComponent implements OnInit {
       );
     }
   }
+
+  saveMachine() {
+    this.formSubmitted = true;
+    if (this.machineEditFlag == true) {
+    } else {
+      this.adminService.saveMachine(this.addMachine).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllMachineData();
+            this.addMachine.machineName = null;
+            this.addMachine.controlId = null;
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
+  }
+
+  saveMachineCategory() {
+    this.formSubmitted = true;
+    if (this.machineCategoryEditFlag == true) {
+    } else {
+      this.adminService.saveMachineCategory(this.addMachineCategory).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.toastr.success(errorData.Add_Success);
+            this.getAllMachineCategoryData();
+            this.addMachineCategory.name = null;
+          } else {
+            this.toastr.error(errorData.Add_Error);
+          }
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      );
+    }
+  }
+
   saveApproveBy() {
     this.formSubmitted = true;
     if (this.approveByEditFlag == true) {
@@ -343,6 +431,27 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  removeMachine(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.adminService.deleteMachine(id).subscribe(
+          (data) => {
+            //this.onChange(this.radioSelect);
+            this.toastr.success(errorData.Delete);
+            this.getAllMachineData();
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+  }
+  removeMachineCategory(id) {}
+
   removeDesignation(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -439,6 +548,24 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addCompany.id = element.id;
         this.addCompany.name = element.name;
+      }
+    });
+  }
+  getMachineEdit(id) {
+    this.machineEditFlag = true;
+    this.machineList.forEach((element) => {
+      if (element.controlId == id) {
+        this.addMachine.controlId = element.controlId;
+        this.addMachine.machineName = element.machineName;
+      }
+    });
+  }
+  getMachineCategoryEdit(id) {
+    this.machineCategoryEditFlag = true;
+    this.machineCategoryList.forEach((element) => {
+      if (element.id == id) {
+        this.addMachineCategory.id = element.id;
+        this.addMachineCategory.name = element.name;
       }
     });
   }

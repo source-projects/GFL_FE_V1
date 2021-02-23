@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from "../../../@theme/json/error.json";
 import {
   ChemicalReq,
   Dosing,
@@ -8,12 +8,11 @@ import {
   OperatorMessage,
   PumpControl,
   TempratureControl,
-  WaterControl
-} from "app/@theme/model/process";
-import { ProcessService } from 'app/@theme/services/process.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
-
+  WaterControl,
+} from "../../../@theme/model/process";
+import { ProcessService } from "../../../@theme/services/process.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-function",
@@ -42,9 +41,9 @@ export class AddFunctionComponent implements OnInit {
   chemicalSubRecord: ChemicalReq;
   rowChemicalData: any;
   itemListArray: any = [];
-  
+
   //id of foem-control to set focus
-  index:string;
+  index: string;
   functionDropdown = [
     { id: "dosing", name: "Dosing" },
     { id: "temprature", name: "Temprature Control" },
@@ -108,7 +107,7 @@ export class AddFunctionComponent implements OnInit {
           this.funcObj.funcName = ele.funcName;
           this.funcObj.funcPosition = ele.funcPosition;
           this.funcObj.funcValue = ele.funcValue;
-          this.dosing = ele.dosingFunc; 
+          this.dosing = ele.dosingFunc;
           this.waterControl = ele.waterControlFunc;
           this.tempratureControl = ele.tempratureControlFunc;
           this.pumpControl = ele.pumpControlFunc;
@@ -120,18 +119,18 @@ export class AddFunctionComponent implements OnInit {
       }
     }
     this.getItemData();
-    if(this.dosing.dosingChemical.length==0){
-    this.dosing.dosingChemical.push({
-      id: null,
-      dynamicProcessRecordId: null,
-      itemId: null,
-      itemName: null,
-      supplierId: null,
-      supplierName: null,
-      concentration: null,
-      lrOrFabricWt: null,
-    });
-  }
+    if (this.dosing.dosingChemical.length == 0) {
+      this.dosing.dosingChemical.push({
+        id: null,
+        dynamicProcessRecordId: null,
+        itemId: null,
+        itemName: null,
+        supplierId: null,
+        supplierName: null,
+        concentration: null,
+        lrOrFabricWt: null,
+      });
+    }
   }
   numberOnly(event): boolean {
     const charCode = event.which ? event.which : event.keyCode;
@@ -140,12 +139,12 @@ export class AddFunctionComponent implements OnInit {
     }
     return true;
   }
-  itemSelected(event, rowIndex  ) {
+  itemSelected(event, rowIndex) {
     this.itemListArray.forEach((e) => {
-      if (e.itemId == this.dosing.dosingChemical[rowIndex].itemId){
+      if (e.itemId == this.dosing.dosingChemical[rowIndex].itemId) {
         this.dosing.dosingChemical[rowIndex].supplierName = e.supplierName;
         this.dosing.dosingChemical[rowIndex].itemName = e.itemName;
-        this.dosing.dosingChemical[rowIndex].supplierId = e.supplierId
+        this.dosing.dosingChemical[rowIndex].supplierId = e.supplierId;
       }
     });
   }
@@ -156,7 +155,7 @@ export class AddFunctionComponent implements OnInit {
       this.index = "program" + (rowIndex + 1) + "-" + colIndex;
       if (rowIndex === this.dosing.dosingChemical.length - 1) {
         let item = this.dosing.dosingChemical[rowIndex];
-        
+
         if (colName == "concentration") {
           if (!item.concentration) {
             // this.toastr.error("Enter concentration");
@@ -167,7 +166,7 @@ export class AddFunctionComponent implements OnInit {
             // this.toastr.error("Enter LR/FabricWt");
             return;
           }
-        } 
+        }
         let obj = {
           id: null,
           dynamicProcessRecordId: null,
@@ -218,7 +217,7 @@ export class AddFunctionComponent implements OnInit {
     this.processService.getAllItemWithSupplier().subscribe(
       (data) => {
         if (data["success"]) {
-            this.itemListArray = data["data"];
+          this.itemListArray = data["data"];
         } else {
           // this.toastr.error(data["msg"]);
         }
@@ -242,20 +241,19 @@ export class AddFunctionComponent implements OnInit {
   onDoseTypeChange() {
     if (this.dosing.doseType == "color") {
       this.dosing.doseWhileHeating = false;
-    }else{
-      if(!this.itemListArray.length){
+    } else {
+      if (!this.itemListArray.length) {
         this.processService.getAllItemWithSupplier().subscribe(
-          data=>{
-            if(data['success'])
-              this.itemListArray = data['data']
-              // console.log(this.itemListArray)
+          (data) => {
+            if (data["success"]) this.itemListArray = data["data"];
+            // console.log(this.itemListArray)
             // else
             //   // this.toastr.error(data['msg'])
           },
-          error=>{
-              // this.toastr.error(errorData.Internal_Error)
+          (error) => {
+            // this.toastr.error(errorData.Internal_Error)
           }
-        )
+        );
       }
     }
   }

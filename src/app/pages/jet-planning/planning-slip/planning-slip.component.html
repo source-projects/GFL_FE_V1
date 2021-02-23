@@ -200,8 +200,12 @@
                                                                 type="number" name="holdTime"
                                                                 [(ngModel)]="dyeingProcessStepNew.holdTime"
                                                                 #holdTime1="ngModel"
+<<<<<<< HEAD
                                                                 [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
                                                                 required>
+=======
+                                                                [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}">
+>>>>>>> 7730417b17158cf05d42bd9792b2c56fb36c9550
                                                             <div class="invalid-feedback" style="color: red;"
                                                                 *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
                                                                 Hold Time is required.

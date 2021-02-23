@@ -24,7 +24,30 @@
                                 [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
                                 (change)="partySelected($event)" placeholder="Party Name"
                                 class="required-error-dropdown" [readonly]="currentPaymentId != null">
-                                <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party
+                                                Name</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">
+                                                Party Code</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let p of party" [value]="p.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
                             </ng-select>
 
                             <div class="required-class"
@@ -358,10 +381,11 @@
                                             {{type.paymentType}}</option>
                                     </select> -->
                                     <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
-                                    name='payType{{rowIndex}}' class="tableForm" id="payType"
-                                    [(ngModel)]="row.payTypeId" required
-                                    (keyup)="onKeyUp($event,rowIndex,0,'payType')"
-                                    [id]="'paymentDetailsList'+rowIndex+'-0'" appendTo="body" class="ng-select-br-none">
+                                        name='payType{{rowIndex}}' class="tableForm" id="payType"
+                                        [(ngModel)]="row.payTypeId" required
+                                        (keyup)="onKeyUp($event,rowIndex,0,'payType')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-0'" appendTo="body"
+                                        class="ng-select-br-none">
                                         <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
                                             {{type.paymentType}}</ng-option>
                                     </ng-select>
@@ -374,8 +398,8 @@
 
                             <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="payAmt">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable"
-                                        id="payAmt" [(ngModel)]="row.payAmt"
+                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}'
+                                        class="tableForm line-height-subtable" id="payAmt" [(ngModel)]="row.payAmt"
                                         (keyup)="onKeyUp($event,rowIndex,1,'payAmt')"
                                         [id]="'paymentDetailsList'+rowIndex+'-payAmt'" min="0"
                                         (keyup)="currentPaymentAdded($event)">
@@ -406,16 +430,18 @@
 
                             <ngx-datatable-column name="Bank" prop="bank" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}'
-                                        [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')"
+                                    <input class="tableForm line-height-subtable" type="text" #bank1="ngModel"
+                                        name='bank{{rowIndex}}' [(ngModel)]="row.bank"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'bank')"
                                         [id]="'paymentDetailsList'+rowIndex+'-bank'">
                                 </ng-template>
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #remark1="ngModel" name='remark{{rowIndex}}'
-                                        [(ngModel)]="row.remark" (keyup)="onKeyUp($event,rowIndex,3,'remark')"
+                                    <input class="tableForm line-height-subtable" type="text" #remark1="ngModel"
+                                        name='remark{{rowIndex}}' [(ngModel)]="row.remark"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'remark')"
                                         [id]="'paymentDetailsList'+rowIndex+'-remark'">
                                 </ng-template>
                             </ngx-datatable-column>
