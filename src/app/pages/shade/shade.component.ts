@@ -171,7 +171,7 @@ export class ShadeComponent implements OnInit {
             }))
             this.copyShadeList = this.shadeList.map((element) => ({
               id:element.id,
-              partyShadeNo: element.partyShadeNo, processId: element.processId,
+              partyShadeNo: element.partyShadeNo, processName: element.processName,
               qualityId: element.qualityId, qualityName: element.qualityName, partyId: element.partyId, colorTone: element.colorTone
             }))
        
@@ -187,10 +187,9 @@ export class ShadeComponent implements OnInit {
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyShadeList.length;
     const keys = Object.keys(this.copyShadeList[0]);
     this.shadeList = this.copyShadeList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]

@@ -246,10 +246,9 @@ export class PartyComponent implements OnInit {
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyPartyList.length;
     const keys = Object.keys(this.copyPartyList[0]);
     this.partyList = this.copyPartyList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]

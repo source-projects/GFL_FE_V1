@@ -72,4 +72,9 @@ export class UserService {
       this.commonService.envUrl() + "api/admin/get/department"
     );
   }
+  getUserHeadDetails(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/user/getUserHeadDetailById/" + id
+    );
+  }
 }
