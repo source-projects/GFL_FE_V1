@@ -139,10 +139,9 @@ export class ProgramComponent implements OnInit {
 
   filter(value: any) {
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyProgramList.length;
     const keys = Object.keys(this.copyProgramList[0]);
     this.programList = this.copyProgramList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]
