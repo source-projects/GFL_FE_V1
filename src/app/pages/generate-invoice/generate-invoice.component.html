@@ -1,11 +1,11 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <div class="col-md-3 col-5 mobile-btn desktop-btn">
+            <div class="col-md-2 col-3 mobile-btn desktop-btn">
                 <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list txt-ov-elips">Generate
                     Invoice</button>
             </div>
-            <div class="col-md-7 col-4">
+            <div class="col-md-8 col-3">
                 <h2 class="nb-text txt-ov-elips">Generate Invoice</h2>
             </div>
             <div class="col-md-1 col-3 mobile-btn desktop-btn dek-jus">
@@ -19,16 +19,13 @@
     <nb-card-body>
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search"
-                aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
-        <ngx-datatable [rows]="InvoiceList" class="material"    [headerHeight]="31" [footerHeight]="31"
-            [selectionType]="'checkbox'" (select)="onSelect($event)">
-            <ngx-datatable-column name="Action"  sortable="false"  [headerCheckboxable]="true" [checkboxable]="true">
+        <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)">
+            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                        [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
                     <!-- <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
                         (click)="deleteUser(row.id)"></nb-icon> -->
                 </ng-template>

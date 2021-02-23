@@ -80,15 +80,15 @@
     .col-md-3 {
         width: 25%;
     }
-    .lot-border {
-        border: 1px solid rgb(226, 226, 226);
+    .lot-border tr {
+        border: 2px solid rgb(143, 143, 143);
     }
     .footer-border {
-        border: 1px solid #000;
+        border: 1px solid rgb(143, 143, 143);
     }
     .footer-bottom,
     .border-top-none {
-        padding: 20px 15px;
+        padding: 5px 15px;
     }
     .border-top {
         border-top: 1px solid;
@@ -104,10 +104,10 @@
     }
     .footer-bottom {
         padding-left: 15px;
-        border: 1px solid #000;
+        border: 1px solid rgb(143, 143, 143);
     }
     .border-top-none {
-        border: 1px solid #000;
+        border: 1px solid rgb(143, 143, 143);
         border-top: none;
     }
     .footer-border {
@@ -131,24 +131,25 @@
     .company-ltd {
         margin-top: 30px;
     }
+    // lot table
     #invoice-table {
-        border: 1px solid darkblue;
+        border: 1px solid rgb(143, 143, 143);
         border-spacing: 0;
         clear: both;
         margin: 2mm 0mm;
-        height: 100mm;
+        height: 204mm;
         width: 100%;
     }
     #invoice-table th,
     td {
-        border-left: 1px solid darkblue;
+        border-left: 1px solid rgb(143, 143, 143);
     }
     #invoice-table th:first-child,
     td:first-child {
         border-left: none;
     }
     #invoice-table th {
-        border-bottom: 1px solid darkblue;
+        border-bottom: 1px solid rgb(143, 143, 143);
     }
     #invoice-table td {
         vertical-align: top;
@@ -157,51 +158,49 @@
     th {
         text-align: center;
         font-weight: normal;
+    }
+    .amount,
+    .spacing-low td {
+        text-align: center;
     }
     .invoice_line {
         height: 6mm;
     }
-    .invoice_line td,
     .invoice_line th {
-        padding: 1mm;
+        font-size: 18px;
     }
-    // lo
-    #invoice-table {
-        border: 1px solid darkblue;
-        border-spacing: 0;
-        clear: both;
-        margin: 2mm 0mm;
-        height: 170mm;
-        width: 100%;
+    .font-big b,
+    .font-big,
+    .font-big .terms-cond li,
+    .auth-font {
+        font-size: 15px;
     }
-    #invoice-table th,
-    td {
-        border-left: 1px solid darkblue;
+    .company-ltd {
+        font-size: 20px;
     }
-    #invoice-table th:first-child,
-    td:first-child {
-        border-left: none;
-    }
-    #invoice-table th {
-        border-bottom: 1px solid darkblue;
-    }
-    #invoice-table td {
-        vertical-align: top;
-        font-size: 8pt;
-    }
-    th {
-        text-align: center;
-        font-weight: normal;
-    }
+    .invoice_line td,
+    .site,
     .amount {
-        text-align: right;
-    }
-    .invoice_line {
-        height: 6mm;
+        font-size: 40px;
+        font-weight: 600;
     }
     .invoice_line td,
     .invoice_line th {
         padding: 1mm;
+        text-align: center;
+    }
+    .lot-border tr td {
+        padding: 5px 0;
+        font-size: 40px;
+    }
+    .card-block p {
+        margin-bottom: 2px;
+    }
+    .card-block p:nth-child(1) {
+        margin-bottom: 1px;
+    }
+    .border-margin {
+        padding: 1rem;
     }
 }
 
@@ -219,6 +218,29 @@
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     // width: 31cm;
     /* height: 29.7cm; */
+}
+
+.print-in-border {
+    border: 3px solid rgb(143, 143, 143);
+}
+
+.border-margin {
+    margin: 5rem;
+}
+
+.spacing-low tr td:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.spacing-low tr th,
+.spacing-low tr td {
+    border-left: 2px solid rgb(143, 143, 143) !important;
+    border-right: 2px solid rgb(143, 143, 143) !important;
+}
+
+.spacing-low tr th {
+    border-top: 2px solid rgb(143, 143, 143) !important;
+    border-bottom: 2px solid rgb(143, 143, 143) !important;
 }
 
 .t-table {
@@ -265,11 +287,11 @@
 }
 
 .border-dark {
-    border: 1px solid #000000 !important;
+    border: 1px solid rgb(143, 143, 143) !important;
 }
 
 .border-top {
-    border: 0px 1px 1px 1px solid #000000 !important;
+    border: 0px 1px 1px 1px solid rgb(143, 143, 143) !important;
 }
 
 .border-zero {
