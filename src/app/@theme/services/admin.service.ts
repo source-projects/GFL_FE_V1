@@ -60,7 +60,7 @@ export class AdminService {
 
   saveMachineCategory(data) {
     return this.httpClient.post(
-      this.commonService.envUrl() + "api/machine/allCategory",
+      this.commonService.envUrl() + "api/machine/addCategory",
       data
     );
   }
