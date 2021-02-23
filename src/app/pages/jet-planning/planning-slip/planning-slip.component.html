@@ -133,7 +133,7 @@
                                         </div>
                                     </div>
                                 </nb-card>
-                                <div class="row"  *ngIf="approveByFlag">
+                                <div class="row" *ngIf="approveByFlag">
                                     <div class="col-md-3">
                                         <div class="nb-icon-add">
                                             <nb-icon icon="plus-circle" style="width: 40px;" status="primary"
@@ -148,7 +148,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Process Type</label>
+                                                            <label class="required">Process Type</label>
                                                             <ng-select [(ngModel)]="dyeingProcessStepNew.processType"
                                                                 placeholder="Select Process-type" name="processType"
                                                                 #processType1="ngModel"
@@ -170,7 +170,7 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Temprature</label>
+                                                            <label class="required">Temprature</label>
                                                             <input class="form-control input-group" type="number"
                                                                 min="0" name="temp"
                                                                 [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel"
@@ -185,13 +185,12 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Hold Time</label>
+                                                            <label class="required">Hold Time</label>
                                                             <input class="form-control input-group" min="0"
                                                                 type="number" name="holdTime"
                                                                 [(ngModel)]="dyeingProcessStepNew.holdTime"
                                                                 #holdTime1="ngModel"
-                                                                [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
-                                                                >
+                                                                [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}">
                                                             <div class="invalid-feedback" style="color: red;"
                                                                 *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
                                                                 Hold Time is required.

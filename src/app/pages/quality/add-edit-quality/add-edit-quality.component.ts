@@ -1,15 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from "app/@theme/services/common.service";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { ToastRef, ToastrService } from 'ngx-toastr';
+import * as errorData from "../../../@theme/json/error.json";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import { ToastRef, ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-edit-quality",
@@ -35,9 +31,9 @@ export class AddEditQualityComponent implements OnInit {
   //to store party info
   party: any[];
   userHead;
-  qulityIdExist:boolean=false;
-  unit=[{name:'meter'},{name:'weight'}];
-  
+  qulityIdExist: boolean = false;
+  unit = [{ name: "meter" }, { name: "weight" }];
+
   //to store selected QualityId
   currentQualityId: any;
   constructor(
@@ -47,29 +43,33 @@ export class AddEditQualityComponent implements OnInit {
     private qualityService: QualityService,
     private route: Router,
     private toastr: ToastrService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.getData();
     this.getPartyList();
     await this.getUpdateData();
-    
   }
 
-  resetFlag($event){
-    this.qulityIdExist=false;
+  resetFlag($event) {
+    this.qulityIdExist = false;
   }
-  
+
   checkQulityId() {
-    this.qualityService.getQulityIdExist(this.addEditQualityForm.get("qualityId").value).subscribe(
-      data=>{
-        this.qulityIdExist=data['data'];
-      },
-      error=>{
-      }
-    )
+    this.qualityService
+      .getQulityIdExist(this.addEditQualityForm.get("qualityId").value)
+      .subscribe(
+        (data) => {
+          this.qulityIdExist = data["data"];
+        },
+        (error) => {}
+      );
   }
-
+  numberOnly(event) {
+    return event.charCode == 8 || event.charCode == 0 || event.charCode == 13
+      ? null
+      : (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46;
+  }
   public getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -86,7 +86,7 @@ export class AddEditQualityComponent implements OnInit {
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null),
-      id: new FormControl(null)
+      id: new FormControl(null),
     });
   }
 
@@ -100,17 +100,17 @@ export class AddEditQualityComponent implements OnInit {
           this.addEditQualityForm.patchValue({
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
-            rate:this.qualityList.rate,
+            rate: this.qualityList.rate,
             qualityType: this.qualityList.qualityType,
             unit: this.qualityList.unit,
             wtPer100m: this.qualityList.wtPer100m,
             partyId: this.qualityList.partyId,
             remark: this.qualityList.remark,
             createdBy: this.qualityList.createdBy,
-            id: this.qualityList.id
+            id: this.qualityList.id,
           });
-          this.setPartyCode();          
-      
+          this.setPartyCode();
+
           this.loading = false;
         },
         (error) => {
@@ -123,13 +123,12 @@ export class AddEditQualityComponent implements OnInit {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyList(0,"all").subscribe(
+    this.partyService.getAllPartyList(0, "all").subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
           this.loading = false;
-        }
-        else {
+        } else {
           // this.toastr.error(data['msg'])
           this.loading = false;
         }
@@ -140,17 +139,18 @@ export class AddEditQualityComponent implements OnInit {
       }
     );
   }
-  setPartyCode(){
+  setPartyCode() {
     //setPartyCode...
-    let p = this.party.filter(party1 => party1.id === this.addEditQualityForm.get('partyId').value);
+    let p = this.party.filter(
+      (party1) => party1.id === this.addEditQualityForm.get("partyId").value
+    );
     this.addEditQualityForm.patchValue({
-      partyCode:  p[0].partyCode
-    })
-    
+      partyCode: p[0].partyCode,
+    });
   }
 
   addQuality() {
-    this.disableButton=true;
+    this.disableButton = true;
 
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
@@ -158,58 +158,51 @@ export class AddEditQualityComponent implements OnInit {
       this.addEditQualityForm.value.userHeadId = this.userHead.userHeadId;
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
-          if (data['success']) {
+          if (data["success"]) {
             this.route.navigate(["/pages/quality"]);
             this.toastr.success(errorData.Add_Success);
+          } else {
+            this.toastr.error(errorData.Add_Error);
           }
-          else {
-            this.toastr.error(errorData.Add_Error)
-            
-          }
-          this.disableButton=false;
-
+          this.disableButton = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error)
-          this.disableButton=false;
-
+          this.toastr.error(errorData.Serever_Error);
+          this.disableButton = false;
         }
       );
-    }
-    else 
-    {
-      this.disableButton=false;
+    } else {
+      this.disableButton = false;
       return;
     }
   }
 
   updateQuality() {
-    this.disableButton=true;
+    this.disableButton = true;
 
     this.loading = true;
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid) {
       this.addEditQualityForm.value.updatedBy = this.user.userId;
-      this.qualityService.updateQualityById(this.addEditQualityForm.value).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/quality"]);
-            this.toastr.success(errorData.Update_Success)
+      this.qualityService
+        .updateQualityById(this.addEditQualityForm.value)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.route.navigate(["/pages/quality"]);
+              this.toastr.success(errorData.Update_Success);
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+            this.loading = false;
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+            this.loading = false;
+            this.disableButton = false;
           }
-          else {
-            this.toastr.error(errorData.Update_Error)
-            
-          }
-          this.loading = false;
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error)
-          this.loading = false;
-          this.disableButton=false;
-        }
-      );
+        );
     }
-    this.disableButton=false;
-
+    this.disableButton = false;
   }
 }

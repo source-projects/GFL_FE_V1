@@ -35,6 +35,42 @@ export class AdminService {
     );
   }
 
+  getAllMachine() {
+    return this.httpClient.get(this.commonService.envUrl() + "api/machine/all");
+  }
+
+  getAllMachineCategory() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/machine/allCategory"
+    );
+  }
+
+  getMachineDateById(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/machine/" + id
+    );
+  }
+
+  saveMachine(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/machine",
+      data
+    );
+  }
+
+  saveMachineCategory(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/machine/addCategory",
+      data
+    );
+  }
+
+  deleteMachine(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/machine/" + id
+    );
+  }
+
   saveJetData(jetData) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/admin/jet/addJet",
