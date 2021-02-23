@@ -28,7 +28,29 @@
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
                                 (change)="setQualityByParty($event)" required class="required-error-dropdown">
-                                <ng-option *ngFor="let party of partyList" [value]="party.id">{{party.partyName}}
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party
+                                                Name</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">
+                                                Party Code</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let party of partyList" [value]="party.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{party.partyName}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{party.partyCode}}</div>
+                                        </div>
+                                    </div>
                                 </ng-option>
                             </ng-select>
                             <div class="required-class" *ngIf="(partyId1.invalid)&&(formSubmitted || partyId1.touched)">
