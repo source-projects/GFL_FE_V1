@@ -3,11 +3,11 @@ import {
   Input,
   OnInit,
   QueryList,
-  ViewChildren
+  ViewChildren,
 } from "@angular/core";
 import {
   DyeingChemicalData,
-  DyeingProcessData
+  DyeingProcessData,
 } from "../../../@theme/model/dyeing-process";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
@@ -23,7 +23,7 @@ import { NgSelectComponent } from "@ng-select/ng-select";
   selector: "ngx-planning-slip",
   templateUrl: "./planning-slip.component.html",
   styleUrls: ["./planning-slip.component.scss"],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class PlanningSlipComponent implements OnInit {
   @ViewChildren("data") data: QueryList<NgSelectComponent>;
@@ -65,6 +65,7 @@ export class PlanningSlipComponent implements OnInit {
   public liquorRatio;
   public list = [];
   public itemList: DyeingChemicalData[] = [];
+  saveAndPrintFlag = false;
 
   planningSlipArray = [
     {
@@ -77,10 +78,10 @@ export class PlanningSlipComponent implements OnInit {
           itemId: null,
           qty: null,
           supplierId: null,
-          supplierName: null
-        }
-      ]
-    }
+          supplierName: null,
+        },
+      ],
+    },
   ];
   slipObj: any;
 
@@ -120,14 +121,14 @@ export class PlanningSlipComponent implements OnInit {
 
   getItemData() {
     this.DyeingProcessService.getAllItemWithSupplier().subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
           this.itemListArrayCopy = this.itemListArray;
         } else {
         }
       },
-      error => {}
+      (error) => {}
     );
   }
 
@@ -135,21 +136,23 @@ export class PlanningSlipComponent implements OnInit {
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
       .subscribe(
-        data => {
+        (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            this.slipData.dyeingSlipDataList.forEach(element => {
-              element.dyeingSlipItemData.forEach(element1 => {
+            console.log(this.slipData);
+            this.slipData.dyeingSlipDataList.forEach((element) => {
+              element.dyeingSlipItemData.forEach((element1) => {
                 element1.qty = element1.qty
                   ? element1.qty.toFixed(3)
                   : element1.qty;
+                element.isColor = true;
               });
             });
           } else {
             this.toastr.error(data["msg"]);
           }
         },
-        error => {}
+        (error) => {}
       );
   }
 
@@ -271,7 +274,7 @@ export class PlanningSlipComponent implements OnInit {
   itemSelected(event, parentIndex, index?) {
     this.supplierSelected.push(event);
     this.itemIndex = parentIndex;
-    this.itemListArray.forEach(e => {
+    this.itemListArray.forEach((e) => {
       let item = 0;
       let itemObject = null;
       if (index || index == 0) {
@@ -305,7 +308,7 @@ export class PlanningSlipComponent implements OnInit {
 
   itemSelected1(event, index) {
     let i_id = event.target.value;
-    this.itemListArray.forEach(element => {
+    this.itemListArray.forEach((element) => {
       if (element.itemId == i_id) {
         this.itemList[index].itemName = element.itemName;
         this.itemList[index].supplierId = element.supplierId;
@@ -327,7 +330,6 @@ export class PlanningSlipComponent implements OnInit {
   saveSlipData(myForm) {
     this.formSubmitted = true;
     this.disableButton = true;
-
     if (myForm.valid) {
       if (this.additionSlipFlag) {
         this.slipObj = {
@@ -336,7 +338,7 @@ export class PlanningSlipComponent implements OnInit {
           holdTime: myForm.value.holdTime,
           liquorRatio: myForm.value.liquorRatio,
           isColor: myForm.value.isColor,
-          items: this.itemList
+          items: this.itemList,
         };
         this.isSaved = true;
 
@@ -345,7 +347,7 @@ export class PlanningSlipComponent implements OnInit {
         }
       } else {
         this.planningSlipService.updateSlipData(this.slipData).subscribe(
-          data => {
+          (data) => {
             if (data["success"]) {
               this.isSaved = true;
               this.toastr.success(data["msg"]);
@@ -357,7 +359,7 @@ export class PlanningSlipComponent implements OnInit {
             }
             this.disableButton = false;
           },
-          error => {
+          (error) => {
             this.toastr.error("Internal server error!");
             this.disableButton = false;
           }
@@ -369,7 +371,7 @@ export class PlanningSlipComponent implements OnInit {
   approveByClicked() {
     const modalRef = this.modalService.open(AddShadeComponent);
     modalRef.componentInstance.editDyeingSlipFlag = true;
-    modalRef.result.then(result => {
+    modalRef.result.then((result) => {
       if (result) {
         this.approveByFlag = true;
         this.slipData.approvedId = result;
@@ -396,7 +398,7 @@ export class PlanningSlipComponent implements OnInit {
       if (this.slipData && this.isSaved) {
         clearInterval(interval1);
         let doc = new wijmo.PrintDocument({
-          title: ""
+          title: "",
         });
         doc.append(
           '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
@@ -439,6 +441,7 @@ export class PlanningSlipComponent implements OnInit {
       this.isColor = false;
       this.count = this.count + 1;
       this.addNewFlag = true;
+      this.saveAndPrintFlag = true;
       this.dyeingProcessStepNew = new DyeingProcessData();
       this.dyeingChemicalData.push(new DyeingChemicalData());
     } else {
@@ -462,7 +465,7 @@ export class PlanningSlipComponent implements OnInit {
           this.dyeingChemicalData[i]
         );
 
-        this.itemListArray.forEach(ele => {
+        this.itemListArray.forEach((ele) => {
           if (ele.itemId == this.supplierSelected[i]) {
             this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
               i
@@ -476,6 +479,7 @@ export class PlanningSlipComponent implements OnInit {
           }
         });
       }
+      this.saveAndPrintFlag = false;
       this.formSubmitted = false;
       this.addNewFlag = false;
     } else {
@@ -509,6 +513,12 @@ export class PlanningSlipComponent implements OnInit {
         }, 50);
       }
     }
+  }
+
+  onCancel(innerForm) {
+    innerForm.reset();
+    this.addNewFlag = false;
+    this.saveAndPrintFlag = false;
   }
 
   removeChemicalData(index: any) {
