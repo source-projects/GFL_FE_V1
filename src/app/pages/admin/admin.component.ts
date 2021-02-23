@@ -208,8 +208,6 @@ export class AdminComponent implements OnInit {
             this.addJet.name = null;
             this.addJet.capacity = null;
             this.addJet.liquorRatio = null;
-            // this.route.navigate(["/pages/admin"]);
-            //this.addJet
           } else {
             this.toastr.error(errorData.Add_Error);
           }
@@ -231,6 +229,7 @@ export class AdminComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
             this.getAllMachineData();
             this.addMachine.machineName = null;
+            this.addMachine.controlId = null;
           } else {
             this.toastr.error(errorData.Add_Error);
           }

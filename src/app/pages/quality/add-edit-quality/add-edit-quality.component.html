@@ -38,8 +38,6 @@
                             </div>
                         </ng-option>
                     </ng-select>
-                    <!-- <ng-select [items]={{p.partyName}} *ngFor="let p of party" [value]="p.id" name="partyId" id="partyId" formControlName="partyId">
-                </ng-select> -->
                     <div class="required-class"
                         *ngIf="(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)">
                         <span>Party Name is required</span>

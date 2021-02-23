@@ -206,8 +206,12 @@ export class AddEditPartyComponent implements OnInit {
     this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
       (data) => {
         this.currentParty = data["data"];
+        //
+        console.log(this.currentParty);
+        console.log(this.logInUserDetail);
+
         this.partyForm.patchValue({
-          userHeadId: this.currentParty.userHeadId,
+          userHeadId: this.setUserHeadName(this.currentParty.userHeadId),
           partyName: this.currentParty.partyName,
           partyAddress1: this.currentParty.partyAddress1,
           partyAddress2: this.currentParty.partyAddress2,
@@ -224,6 +228,7 @@ export class AddEditPartyComponent implements OnInit {
           partyCode: this.currentParty.partyCode,
           id: this.currentPartyId,
         });
+        console.log(this.currentParty.userHeadId);
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
         this.loading = false;
@@ -232,6 +237,17 @@ export class AddEditPartyComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+  setUserHeadName(id) {
+    let userHeadName;
+    if (id == this.logInUserDetail.id) {
+      userHeadName = this.logInUserDetail.name;
+    } else if (id == this.logInUserDetail.userHeadId) {
+      userHeadName = this.logInUserDetail.userHeadName;
+    } else if (id == this.logInUserDetail.superUserHeadId) {
+      userHeadName = this.logInUserDetail.superUserHeadName;
+    }
+    return userHeadName;
   }
   resetFlag(event) {
     this.partyCodeExist = true;
@@ -289,7 +305,9 @@ export class AddEditPartyComponent implements OnInit {
     this.disableButton = true;
     this.loading = true;
     this.formSubmitted = true;
-
+    this.partyForm.patchValue({
+      userHeadId: this.userHead.userHeadId,
+    });
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         if (

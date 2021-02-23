@@ -176,7 +176,16 @@
                                 [(ngModel)]="addMachine.machineName">
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Machine Category</label>
+                            <ng-select placeholder="select Machine Category" [(ngModel)]="addMachine.controlId">
+                                <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
+                                    {{mc.name}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -202,8 +211,11 @@
                         </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Name" prop="machineName" [sortable]="false" [width]="300">
+                    <ngx-datatable-column name="Machine Name" prop="machineName" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
+                    <ngx-datatable-column name="Machine Category" prop="categoryName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+
                 </ngx-datatable>
             </nb-tab>
 
@@ -219,6 +231,7 @@
                                 [(ngModel)]="addMachineCategory.name">
                         </div>
                     </div>
+
 
                 </div>
 
