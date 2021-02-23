@@ -145,10 +145,9 @@ export class ColorComponent implements OnInit {
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyColorList.length;
     const keys = Object.keys(this.copyColorList[0]);
     this.colorList = this.copyColorList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]
