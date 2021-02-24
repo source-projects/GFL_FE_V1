@@ -82,13 +82,10 @@ export class AdditionSlipComponent implements OnInit {
           this.batchList = data["data"];
           this.loading = false;
         } else {
-          //this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-
         this.loading = false;
       }
     );
@@ -112,7 +109,7 @@ export class AdditionSlipComponent implements OnInit {
   }
 
   editSlip(id) {
-    let prodId , batchId;
+    let prodId, batchId;
     this.additionSlipList.forEach((element) => {
       if (element.id == id) {
         prodId = element.productionId;
@@ -121,12 +118,10 @@ export class AdditionSlipComponent implements OnInit {
         this.additionSlip.productionId = prodId;
       }
     });
-    this.getAdditionSlipDataById(id ,batchId, prodId );
-
-     
+    this.getAdditionSlipDataById(id, batchId, prodId);
   }
 
-  getAdditionSlipDataById(id , batchId, prodId) {
+  getAdditionSlipDataById(id, batchId, prodId) {
     this.planningService.getAlladditionSlipById(id).subscribe(
       (data) => {
         if (data["success"]) {
@@ -137,10 +132,10 @@ export class AdditionSlipComponent implements OnInit {
             modalRef.componentInstance.batchId = batchId;
             modalRef.componentInstance.editAdditionFlag = true;
             modalRef.componentInstance.additionSlipFlag = true;
-    
+
             modalRef.componentInstance.stockId = prodId;
             modalRef.componentInstance.additionSlipData = this.additionSlipData;
-    
+
             modalRef.result.then((result) => {
               if (result) {
                 this.updateAdditionSlip(result);
@@ -148,12 +143,10 @@ export class AdditionSlipComponent implements OnInit {
             });
           }
         } else {
-          this.toastr.error(errorData.Serever_Error);
         }
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -170,13 +163,11 @@ export class AdditionSlipComponent implements OnInit {
             this.getAllAdditionSlip();
             this.toastr.success(errorData.Delete);
           },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
+          (error) => {}
         );
       }
     });
-  } 
+  }
 
   updateAdditionSlip(result) {
     this.dyeingSlipData = new DyeingSlipData();
@@ -200,7 +191,6 @@ export class AdditionSlipComponent implements OnInit {
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -227,7 +217,6 @@ export class AdditionSlipComponent implements OnInit {
         }
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -243,7 +232,6 @@ export class AdditionSlipComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );

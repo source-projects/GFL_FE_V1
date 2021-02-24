@@ -6,16 +6,24 @@ import {
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
 } from "@angular/common/http";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
-
+import { CommonService } from "../services/common.service";
+import { JwtTokenService } from "../services/jwt-token.service";
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) {}
-
+  userId;
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private jwt: JwtTokenService
+  ) {
+    this.userId = this.jwt.getDecodeToken("userId");
+    // this.commonService.getUser();
+  }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -24,8 +32,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+          id: `${this.userId.userId}`,
+        },
       });
     }
     return next.handle(request).pipe(
