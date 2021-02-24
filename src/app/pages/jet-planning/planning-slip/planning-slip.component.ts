@@ -66,6 +66,7 @@ export class PlanningSlipComponent implements OnInit {
   public itemList: DyeingChemicalData[] = [];
   saveAndPrintFlag = false;
   quantityNullFlag = false;
+  saveSetFlag = false;
 
   planningSlipArray = [
     {
@@ -342,7 +343,7 @@ export class PlanningSlipComponent implements OnInit {
   saveSlipData(myForm) {
     this.checkItemListAndValue();
     this.formSubmitted = true;
-    if (myForm.valid && !this.quantityNullFlag) {
+    if (myForm.valid && !this.quantityNullFlag && !this.saveSetFlag) {
       this.disableButton = true;
       if (this.additionSlipFlag) {
         this.slipObj = {
@@ -479,6 +480,7 @@ export class PlanningSlipComponent implements OnInit {
       this.count = this.count + 1;
       this.addNewFlag = true;
       this.saveAndPrintFlag = true;
+      this.saveSetFlag = true;
       this.dyeingProcessStepNew = new DyeingProcessData();
       this.dyeingChemicalData.push(new DyeingChemicalData());
     } else {
@@ -516,6 +518,7 @@ export class PlanningSlipComponent implements OnInit {
           }
         });
       }
+      this.saveSetFlag = false;
       this.saveAndPrintFlag = false;
       this.formSubmitted = false;
       this.addNewFlag = false;
@@ -556,6 +559,7 @@ export class PlanningSlipComponent implements OnInit {
     innerForm.reset();
     this.addNewFlag = false;
     this.saveAndPrintFlag = false;
+    this.saveSetFlag = false;
   }
 
   removeChemicalData(index: any) {
