@@ -123,7 +123,7 @@ export class AddEditQualityComponent implements OnInit {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyList(0, "all").subscribe(
+    this.partyService.getAllPartyNameList().subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
