@@ -118,7 +118,7 @@
     .display-flex {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
     }
     .display-flex-end {
         display: flex;
@@ -137,7 +137,7 @@
         border-spacing: 0;
         clear: both;
         margin: 0;
-        height: 179mm;
+        height: 200mm;
         width: 100%;
     }
     .lot-border tr th {
@@ -218,12 +218,14 @@
         background-color: Lightgreen !important;
     }
     .spacing-low tr th,
-    .spacing-low tr td {
+    .spacing-low tr td,
+    .spacing-low tfoot tr td {
         border-left: 2px solid rgb(143, 143, 143) !important;
         border-right: 2px solid rgb(143, 143, 143) !important;
     }
     .spacing-low tr th,
-    .spacing-low tr:last-child {
+    .spacing-low tr:last-child,
+    .spacing-low tfoot tr td {
         border-top: 2px solid rgb(143, 143, 143) !important;
         border-bottom: 2px solid rgb(143, 143, 143) !important;
     }
@@ -240,7 +242,8 @@
     table.spacing-low {
         margin-bottom: 1px!important;
     }
-    .border-dark {
+    .border-dark,
+    .border {
         border: 1px solid rgb(143, 143, 143) !important;
     }
     .border-top {
@@ -259,6 +262,17 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    .spacing-low tfoot {
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 0;
+    }
+    tfoot.spacing-low tr td {
+        border: 1px solid rgb(143, 143, 143) !important;
+    }
+    tfoot.spacing-low tr:last-child {
+        text-align: left!important;
     }
 }
 
@@ -283,7 +297,7 @@
 }
 
 .border-margin {
-    margin: 2rem 4rem;
+    margin: 2rem 4rem 5rem 4rem;
 }
 
 .t-table {
