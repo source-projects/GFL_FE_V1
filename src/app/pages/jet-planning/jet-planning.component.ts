@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
   CdkDragDrop,
   CdkDropList,
@@ -24,14 +24,16 @@ import { ShadeService } from "../../@theme/services/shade.service";
 
 import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
-import { filter, map } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { Subject } from "rxjs";
 @Component({
   selector: "ngx-jet-planning",
   templateUrl: "./jet-planning.component.html",
   styleUrls: ["./jet-planning.component.scss"],
 })
-export class JetPlanningComponent implements OnInit {
+export class JetPlanningComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
   public sendBatchId: string;
   public sendSotckId: number;
   public sendControlId: number;
@@ -111,13 +113,13 @@ export class JetPlanningComponent implements OnInit {
     this.menuService
       .onItemClick()
       .pipe(
+        takeUntil(this.destroy$),
         filter(({ tag }) => tag === "my-context-menu"),
         map(({ item: { title } }) => title)
       )
       .subscribe((title) => {
         if (title === "Print") this.generateSlip(true);
         else if (title === "Edit And Print") this.generateSlip(false);
-        else if (title === "Change Status") this.changeStatus();
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
@@ -148,6 +150,11 @@ export class JetPlanningComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
+          this.route
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+            .then(() => {
+              this.route.navigate(["/pages/jet-planning"]);
+            });
         } else {
           this.toastr.error(data["msg"]);
         }
@@ -159,19 +166,6 @@ export class JetPlanningComponent implements OnInit {
   }
   showMenu() {
     this.showMenuFlag = true;
-  }
-
-  changeStatus() {
-    this.changeStatusShow = true;
-    // const modalRef = this.modalService.open(ShadeWithBatchComponent);
-    // modalRef.componentInstance.statusChange = this.changeStatusShow;
-    // modalRef.componentInstance.ctrlId = this.sendControlId;
-    // modalRef.componentInstance.productionId = this.sendSotckId;
-    // modalRef.result.then((result) => {
-    //   if (result) {
-    //     this.getJetData();
-    //   }
-    // });
   }
 
   setIndexForSlip(index) {
@@ -204,22 +198,24 @@ export class JetPlanningComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
     });
-    modalRef.result.then((result) => {
-      if (result) {
-        this.jetService
-          .removeProductionFromJet(this.sendControlId, this.sendSotckId)
-          .subscribe(
-            (data) => {
-              this.toastr.success(errorData.Delete);
-              this.getJetData();
-              this.getAllBatchWithShade();
-            },
-            (error) => {
-              this.toastr.error(errorData.Serever_Error);
-            }
-          );
-      }
-    }).catch((err)=> {});
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          this.jetService
+            .removeProductionFromJet(this.sendControlId, this.sendSotckId)
+            .subscribe(
+              (data) => {
+                this.toastr.success(errorData.Delete);
+                this.getJetData();
+                this.getAllBatchWithShade();
+              },
+              (error) => {
+                this.toastr.error(errorData.Serever_Error);
+              }
+            );
+        }
+      })
+      .catch((err) => {});
   }
 
   getCurrentId() {
@@ -439,19 +435,21 @@ export class JetPlanningComponent implements OnInit {
     const modalRef = this.modalService.open(ShadeWithBatchComponent);
     modalRef.componentInstance.batchId = selectedBatchID;
     modalRef.componentInstance.stockId = selectedStockId;
-    modalRef.result.then((result) => {
-      this.currentProductionId = null;
-      if (result) {
-        this.jetData1.controlId = result.jet;
-        this.jetData1.productionId = p_id;
-        this.jetData1.sequence = 1;
-        let jetData2 = this.jetData1;
-        let arr = [];
-        //  jetData2.productionId = Number(jetData2.productionId);
-        arr.push(jetData2);
-        this.addJetData(arr);
-      }
-    }).catch((err)=> {});
+    modalRef.result
+      .then((result) => {
+        this.currentProductionId = null;
+        if (result) {
+          this.jetData1.controlId = result.jet;
+          this.jetData1.productionId = p_id;
+          this.jetData1.sequence = 1;
+          let jetData2 = this.jetData1;
+          let arr = [];
+          //  jetData2.productionId = Number(jetData2.productionId);
+          arr.push(jetData2);
+          this.addJetData(arr);
+        }
+      })
+      .catch((err) => {});
   }
 
   addJetData(arr) {
@@ -550,9 +548,16 @@ export class JetPlanningComponent implements OnInit {
     modalRef.componentInstance.stockId = this.sendSotckId;
     modalRef.componentInstance.additionSlipFlag = false;
 
-    modalRef.result.then((result) => {
-      if (result) {
-      }
-    }).catch((err)=> {});
+    modalRef.result
+      .then((result) => {
+        if (result) {
+        }
+      })
+      .catch((err) => {});
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

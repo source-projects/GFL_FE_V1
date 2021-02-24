@@ -164,6 +164,107 @@
 
             </nb-tab>
 
+
+            <!--Machine-->
+            <nb-tab tabTitle="Machine">
+                <!-- <form #advancePaymentForm="ngForm"> -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Machine Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Machine Name"
+                                [(ngModel)]="addMachine.machineName">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Machine Category</label>
+                            <ng-select placeholder="select Machine Category" [(ngModel)]="addMachine.controlId">
+                                <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
+                                    {{mc.name}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            (click)="onCancel()">CANCEL</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                            style="margin-right:20px" (click)="saveMachine()">SAVE</button>
+                    </div>
+                </div>
+                <!-- </form> -->
+
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList"
+                    [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                            let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                (click)="removeMachine(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getMachineEdit(row.id)"></nb-icon>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Machine Name" prop="machineName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Machine Category" prop="categoryName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+            </nb-tab>
+
+
+            <!--Machine Category-->
+            <nb-tab tabTitle="Machine Category">
+                <!-- <form #advancePaymentForm="ngForm"> -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Machine Category</label>
+                            <input type="text" class="form-control" placeholder="Enter Machine Category"
+                                [(ngModel)]="addMachineCategory.name">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            (click)="onCancel()">CANCEL</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                            style="margin-right:20px" (click)="saveMachineCategory()">SAVE</button>
+                    </div>
+                </div>
+                <!-- </form> -->
+
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList"
+                    [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                            let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                (click)="removeMachineCategory(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getMachineCategoryEdit(row.id)"></nb-icon>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-tab>
+
+
+
             <nb-tab tabTitle="Designation">
                 <!-- <form #advancePaymentForm="ngForm"> -->
                 <div class="row">
