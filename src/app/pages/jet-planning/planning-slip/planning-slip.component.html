@@ -146,9 +146,9 @@
                                 <div class="row" *ngIf="approveByFlag">
                                     <div class="col-md-3">
                                         <div class="nb-icon-add">
-                                            <nb-icon icon="plus-circle" style="width: 40px;" status="primary"
-                                                [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)"
-                                                class="plus-add add-modal"></nb-icon>
+                                            <nb-icon icon="plus-circle" style="width: 40px;height: 100%;"
+                                                status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                                (click)="addNew($event)" class="plus-add add-modal"></nb-icon>
                                             <div class="tooltip">Add Process</div>
                                         </div>
                                     </div>
@@ -227,7 +227,7 @@
                                                     <div class="form-group col-md-4"
                                                         *ngIf="dyeingProcessStepNew.processType == 'Dyeing' || dyeingProcessStepNew.processType == 'Addition'">
                                                         <nb-checkbox class="status-basic nb-transition" id="iscolor"
-                                                            [disabled]="false" [(ngModel)]="isColor" name="isColor">
+                                                            [(ngModel)]="isColor" name="isColor">
                                                         </nb-checkbox>
                                                         &nbsp;<label>Color</label>
                                                     </div>
@@ -299,14 +299,14 @@
 
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
                                     (click)="activeModal.close(false)">CANCEL</button>
-                                <button *ngIf="this.currentSlipId != null" type="button"
-                                    (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design"
-                                    style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
-
-                                <button *ngIf="this.currentSlipId == null" type="button"
+                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();"
                                     class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-                                    [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
-                                <button *ngIf="this.currentSlipId == null && !saveAndPrintFlag" type="button"
+                                    [disabled]="disableButton">UPDATE</button>
+
+                                <button type="button" class="btn btn-primary btn-sm btn-design"
+                                    style="margin-right:20px" [disabled]="disableButton"
+                                    (click)="saveSlipData(myForm)">SAVE</button>
+                                <button *ngIf="!saveAndPrintFlag" type="button"
                                     class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
                                     [disabled]="disableButton" (click)="printSlip(myForm)">Save And
                                     Print</button>

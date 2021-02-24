@@ -36,7 +36,6 @@ export class PlanningSlipComponent implements OnInit {
   public refreshPipe: number = 0;
   dyeingProcessStepNew: any;
   dyeingChemicalData: DyeingChemicalData[] = [];
-  public currentSlipId: any;
   public loading: boolean = false;
   public formSubmitted: boolean = false;
   public disableButton: boolean = false;
@@ -66,6 +65,7 @@ export class PlanningSlipComponent implements OnInit {
   public list = [];
   public itemList: DyeingChemicalData[] = [];
   saveAndPrintFlag = false;
+  quantityNullFlag = false;
 
   planningSlipArray = [
     {
@@ -340,9 +340,10 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   saveSlipData(myForm) {
+    this.checkItemListAndValue();
     this.formSubmitted = true;
-    this.disableButton = true;
-    if (myForm.valid) {
+    if (myForm.valid && !this.quantityNullFlag) {
+      this.disableButton = true;
       if (this.additionSlipFlag) {
         this.slipObj = {
           id: this.id,
@@ -397,52 +398,72 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
 
+  checkItemListAndValue() {
+    this.quantityNullFlag = false;
+    this.slipData.dyeingSlipDataList.forEach((element) => {
+      element.dyeingSlipItemData.forEach((element1) => {
+        if (element1.qty == null) {
+          console.log("null");
+          this.quantityNullFlag = true;
+          return;
+        }
+      });
+    });
+  }
+
   removeProcess(processIndex) {
     this.slipData.dyeingSlipDataList.splice(processIndex, 1);
   }
   printSlip(myForm?) {
-    this.isPrinting = false;
-    if (!this.isPrintDirect) {
-      this.approveByFlag = true;
-      // this.slipData.approvedId = 0;
-      this.saveSlipData(myForm);
-    } else {
-      this.isSaved = true;
-      this.getSlipDataFromBatch();
-    }
-    let interval1 = setInterval(() => {
-      if (this.slipData && this.isSaved) {
-        clearInterval(interval1);
-        let doc = new wijmo.PrintDocument({
-          title: "",
-        });
-        doc.append(
-          '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
-        );
-        doc.append(
-          '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
-        );
-        doc.append(
-          '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
-        );
-        doc.append(
-          '<link href="./planning-slip.component.scss" rel="stylesheet">'
-        );
-        let tempFlag = false;
-        let inter = setInterval(() => {
-          let element = <HTMLElement>document.getElementById("print-slip");
-          if (element) {
-            doc.append(element);
-            doc.print();
-            // this.printFlag = true;
-            this.activeModal.close(this.slipObj);
-            tempFlag = true;
-            clearInterval(inter);
-            this.activeModal.close();
-          }
-        }, 10);
+    this.checkItemListAndValue();
+    if (myForm.valid && !this.quantityNullFlag) {
+      this.isPrinting = false;
+      if (!this.isPrintDirect) {
+        this.approveByFlag = true;
+        this.saveSlipData(myForm);
+      } else {
+        this.isSaved = true;
+        this.getSlipDataFromBatch();
       }
-    }, 10);
+      let interval1 = setInterval(() => {
+        if (this.slipData && this.isSaved) {
+          clearInterval(interval1);
+          let doc = new wijmo.PrintDocument({
+            title: "",
+          });
+          doc.append(
+            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
+          );
+          doc.append(
+            '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
+          );
+          doc.append(
+            '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
+          );
+          doc.append(
+            '<link href="./planning-slip.component.scss" rel="stylesheet">'
+          );
+          let tempFlag = false;
+          let inter = setInterval(() => {
+            let element = <HTMLElement>document.getElementById("print-slip");
+            if (element) {
+              doc.append(element);
+              doc.print();
+              // this.printFlag = true;
+              this.activeModal.close(this.slipObj);
+              tempFlag = true;
+              clearInterval(inter);
+              this.activeModal.close();
+            }
+          }, 10);
+        }
+      }, 10);
+      this.quantityNullFlag = false;
+    } else {
+      this.toastr.error("Fill empty fields.");
+      this.quantityNullFlag = false;
+      return;
+    }
   }
 
   trackByFn(index: number, obj: any) {
