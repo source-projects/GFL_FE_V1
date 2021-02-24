@@ -6,20 +6,22 @@ import {
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
 } from "@angular/common/http";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
-import { CommonService } from '../services/common.service';
-
+import { CommonService } from "../services/common.service";
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
-   userId;
-  constructor(private authService: AuthService, private router: Router, private commonService: CommonService) {
+  userId;
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private commonService: CommonService
+  ) {
     this.userId = this.commonService.getUser();
   }
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -29,9 +31,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          id: `${this.userId.userId}`
-
-        }
+          id: `${this.userId.userId}`,
+        },
       });
     }
     return next.handle(request).pipe(
