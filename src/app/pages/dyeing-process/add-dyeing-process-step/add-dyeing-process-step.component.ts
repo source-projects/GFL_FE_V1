@@ -139,7 +139,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
   removeItem(rowIndex) {
     let idCount = this.dyeingChemicalData.length;
     if (idCount == 1) {
-      this.dyeingChemicalData[0].byChemical = null;
+      this.dyeingChemicalData[0].byChemical = 'L';
       this.dyeingChemicalData[0].concentration = null;
       this.dyeingChemicalData[0].controlId = null;
       this.dyeingChemicalData[0].id = null;
@@ -158,5 +158,9 @@ export class AddDyeingProcessStepComponent implements OnInit {
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
       }
     });
+  }
+
+  trackByFn(index: number, obj: any) {
+    return obj ? obj["_id"] || obj : index;
   }
 }

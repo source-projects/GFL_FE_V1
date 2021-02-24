@@ -125,8 +125,13 @@ export class AddEditDyeingProcessComponent implements OnInit {
     let i = this.dyeingProcessSteps.findIndex(
       (v) => v.sequence == step.sequence
     );
-    if(i > -1)
+    if(i > -1){
       this.dyeingProcessSteps.splice(i, 1);
+      //re-arrange Sequence no for all steps...
+      this.dyeingProcessSteps.forEach((element, i)=>{
+        element.sequence = i + 1;
+      })
+    }
   }
 
   addProcessStep() {

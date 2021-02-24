@@ -414,6 +414,10 @@ export class PlanningSlipComponent implements OnInit {
 
   removeProcess(processIndex) {
     this.slipData.dyeingSlipDataList.splice(processIndex, 1);
+    //re arrange process step sequence..
+    this.slipData.dyeingSlipDataList.forEach((element, i) => {
+      element.sequence = i + 1;
+    });
   }
   printSlip(myForm?) {
     this.checkItemListAndValue();
