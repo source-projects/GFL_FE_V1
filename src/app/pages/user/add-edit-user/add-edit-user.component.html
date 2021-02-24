@@ -148,14 +148,14 @@
                                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}"
                                 placeholder="Select Designation" required class="required-error-dropdown"
                                 (change)="designationSelected($event)">
-                                <!-- <ng-option *ngFor="let dsgn of desi_list" [value]="dsgn.id">{{dsgn.designation}}
-                                </ng-option> -->
-                                <div *ngIf="adminFlag">
+                                <ng-option *ngFor="let dsgn of desi_list" [value]="dsgn.id">{{dsgn.designation}}
+                                </ng-option>
+                                <!-- <div *ngIf="adminFlag">
                                     <ng-option *ngFor="let m of master" [value]="m.id">{{m.name}}</ng-option>
                                 </div>
                                 <div *ngIf="masterFlag || operatorFlag">
                                     <ng-option *ngFor="let m of master" [value]="m.id">{{m}}</ng-option>
-                                </div>
+                                </div> -->
                             </ng-select>
                             <div class="required-class"
                                 *ngIf="(designation1.invalid)&&(formSubmitted || department1.touched)">
@@ -173,7 +173,7 @@
                             </nb-checkbox>
                         </div>
                     </div>
-                    <div class="col-md-4" *ngIf="user.isUserHead">
+                    <div class="col-md-4" *ngIf="!operatorFlag">
                         <div class="form-group">
                             <label class="required">User Head List</label>
                             <select name="userHeadId" class="form-control" #userHeadList="ngModel"

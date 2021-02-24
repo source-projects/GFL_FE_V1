@@ -248,6 +248,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   qualityIdSelected(event) {
+    console.log(event);
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -261,6 +262,7 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.qualityName = element.qualityName;
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
+          this.shadeObj.qualityEntryId = element.id;
         }
       });
     }
@@ -548,6 +550,7 @@ export class AddEditShadeComponent implements OnInit {
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shadeObj.updatedBy = this.user.userId;
+      console.log(this.shadeObj);
       this.shadeService.updateShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {

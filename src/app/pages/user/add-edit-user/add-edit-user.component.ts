@@ -69,6 +69,8 @@ export class AddEditUserComponent implements OnInit {
   ];
 
   userHradIdList;
+  userHradIdListCopy;
+
 
   perName = [
     "View",
@@ -99,7 +101,7 @@ export class AddEditUserComponent implements OnInit {
   checkArray: any[] = [];
 
   data: any[] = [];
-  master: any;
+  master: any[] =[];
   decimal: any[] = [];
   currentUserData:any;
   userData: any;
@@ -126,7 +128,7 @@ export class AddEditUserComponent implements OnInit {
     this.getAllUserHrads();
     this.getAllCompany();
     this.getAllDepartment();
-    this.getMaster();
+    // this.getMaster();
   await  this.getUserId();
     if (this.currentUserId) {
       this.getCurrentUser();
@@ -135,23 +137,29 @@ export class AddEditUserComponent implements OnInit {
   }
 
 
-getMaster(){
-  this.partyService.getAllMaster().subscribe(
-    (data) => {
-      if (data["success"]) {
-        this.master = data["data"];
-        
-        this.loading = false;
-      } else {
-        this.loading = false;
-      }
-    },
-    (error) => {
-      // this.toastr.error(errorData.Serever_Error);
-      this.loading = false;
+  public getMaster(logInUserDetail) {
+    let masterId;
+    if (this.masterFlag) {
+      this.master.push(logInUserDetail.name);
+    } else if (this.operatorFlag) {
+      this.master.push(logInUserDetail.userHeadName);
+    } else {
+      this.loading = true;
+      this.partyService.getAllMaster().subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.master = data["data"];
+            this.loading = false;
+          } else {
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
     }
-  );
-}
+  }
 
 checkUser(logInUserDetail) {
   if (
@@ -178,10 +186,17 @@ checkUser(logInUserDetail) {
 
   getAllUserHrads() {
     this.loading = true;
+    
     this.userService.getAllHead().subscribe(
       (data) => {
         if (data["success"]) {
           this.userHradIdList = data["data"];
+          this.userHradIdListCopy = data["data"];
+          if(this.masterFlag){
+            this.userHradIdList = this.userHradIdListCopy.filter(v => v.id == this.userId);
+          }else{
+            this.userHradIdList = this.userHradIdListCopy;
+          }
           this.loading = false;
         }
         // this.toastr.error(data["msg"])
@@ -206,6 +221,8 @@ checkUser(logInUserDetail) {
         if(data["success"]){
           this.currentUserData = data["data"];
           this.checkUser(this.currentUserData);
+          //this.getMaster(this.currentUserData);
+
         //   if(this.currentUserData.superUserHeadId == null && this.currentUserData.userHeadId != null){
         //     this.masterFlag = true;
         // }else if(this.currentUserData.superUserHeadId != null && this.currentUserData.userHeadId != null){
