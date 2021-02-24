@@ -110,11 +110,11 @@
         border: 1px solid rgb(143, 143, 143);
         border-top: none;
     }
-    .footer-border {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-    }
+    // .footer-border {
+    //     position: absolute;
+    //     bottom: 0;
+    //     width: 100%;
+    // }
     .display-flex {
         display: flex;
         justify-content: center;
@@ -137,7 +137,7 @@
         border-spacing: 0;
         clear: both;
         margin: 2mm 0mm;
-        height: 204mm;
+        height: 177mm;
         width: 100%;
     }
     #invoice-table th,
@@ -176,7 +176,7 @@
         font-size: 15px;
     }
     .company-ltd {
-        font-size: 20px;
+        font-size: 18px;
     }
     .invoice_line td,
     .site,
@@ -200,7 +200,14 @@
         margin-bottom: 1px;
     }
     .border-margin {
-        padding: 1rem;
+        padding: 5px 0 15px 0;
+    }
+    .top-print-head {
+        text-align: right;
+        display: inline-block;
+        font-size: 15px;
+        padding-top: 0;
+        margin-top: 0;
     }
 }
 
@@ -228,8 +235,8 @@
     margin: 5rem;
 }
 
-.spacing-low tr td:nth-child(even) {
-    background-color: #f2f2f2;
+.spacing-low tr:nth-child(even) {
+    background-color: #ffe6e6 !important;
 }
 
 .spacing-low tr th,
@@ -238,7 +245,8 @@
     border-right: 2px solid rgb(143, 143, 143) !important;
 }
 
-.spacing-low tr th {
+.spacing-low tr th,
+.spacing-low tr:last-child {
     border-top: 2px solid rgb(143, 143, 143) !important;
     border-bottom: 2px solid rgb(143, 143, 143) !important;
 }
@@ -284,6 +292,11 @@
 .spacing-low th,
 .spacing-low td {
     padding: 1px 0.75rem !important;
+}
+
+.spacing-low>tr>td,
+.border-width {
+    border-width: 2px !important;
 }
 
 .border-dark {

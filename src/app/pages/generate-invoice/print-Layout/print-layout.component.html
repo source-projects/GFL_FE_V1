@@ -2,17 +2,33 @@
 <div>
     <div *ngFor="let invoice of printInvoiceData;let i = index;">
         <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
+
             <div class="border-margin">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="top-print-head" style="width: 63%;">
+                            <b>TAX INVOICE CUM DELIVERY CHALLAN</b>
+                        </div>
+
+
+                        <div class="top-print-head border-width" style="width: 37%;">
+                            <strong class="border">Original/Duplicate/Triplicate</strong>
+                        </div>
+
+
+                    </div>
+                </div>
                 <div class="print-in-border">
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <div class="col-sm-12">
                             <div class="content-header" style="font-size: 15px;">
                                 <b>TAX INVOICE CUM DELIVERY CHALLAN</b></div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <hr> -->
                     <div class="container">
-                        <div class="border-dark row" style="padding:0.5rem 0;">
+                        <div class="border-dark row" style="padding:0.2rem 0;">
                             <div class="col-sm-9">
                                 <div class="card border-zero">
                                     <div class="card-body" style="display: flex;justify-content: flex-end;align-items: center;">
@@ -47,44 +63,44 @@
                             <div class="row col-sm-12" style="margin: 0;padding: 0%;">
                                 <div class="col-sm-6 border-dark">
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 30%;">
+                                        <div class="col-md-4" style="width: 40%;">
                                             <b style="font-size: 20px;">Party Name :</b>
                                         </div>
-                                        <div class="col-md-8 border" style="width: 70%;font-size: 20px;">
+                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.partyName}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 30%;">
+                                        <div class="col-md-4" style="width: 40%;">
                                             <b style="font-size: 20px;">Address :</b>
                                         </div>
-                                        <div class="col-md-8 border" style="width: 70%;font-size: 20px;">
+                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.address}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 30%;">
+                                        <div class="col-md-4" style="width: 40%;">
                                             <b style="font-size: 20px;">GSTIN :</b>
                                         </div>
-                                        <div class="col-md-8 border" style="width: 70%;font-size: 20px;">
+                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.gst}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 border-dark">
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 30%;">
+                                        <div class="col-md-4" style="width: 40%;">
                                             <b style="font-size: 20px;">Invoice :</b>
                                         </div>
-                                        <div class="col-md-8 border" style="width: 70%;font-size: 20px;">
+                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.invoiceNo}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 30%;">
+                                        <div class="col-md-4" style="width: 40%;">
                                             <b style="font-size: 20px;">Date :</b>
                                         </div>
-                                        <div class="col-md-8 border" style="width: 70%;font-size: 20px;">
+                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
                                             {{myDate}}
                                         </div>
                                     </div>
@@ -202,7 +218,7 @@
                                         <div class="col-sm-4"></div>
                                         <div class="col-sm-4">
                                             <div class="row">
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     <b>Discount @3%</b>
                                                 </div>
                                                 <div class="col-sm-6 border">
@@ -210,35 +226,35 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     <b>
                                             Taxable Amt</b>
                                                 </div>
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     {{ invoice.taxAmt | number : '1.2-2'}}
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     <b>CGST: @2.5%</b>
                                                 </div>
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     {{ invoice.cgst | number : '1.2-2'}}
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     <b>SGST: @2.5%</b>
                                                 </div>
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     {{ invoice.sgst | number : '1.2-2'}}
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     <b>Net Amt</b>
                                                 </div>
-                                                <div class="col-sm-6 border">
+                                                <div class="col-sm-6 border border-width">
                                                     {{ invoice.netAmt | number : '1.2-2'}}
 
                                                 </div>
@@ -278,19 +294,6 @@
                                                 <td class="amount" style="font-size: 15px;font-weight: normal;">{{grs.finishMtr}}</td>
 
                                             </tr>
-                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                <td style="font-size: 15px;font-weight: normal;"> {{i}}</td>
-                                                <td class="site" style="font-size: 15px;font-weight: normal;">{{grs.mtr}}</td>
-                                                <td class="amount" style="font-size: 15px;font-weight: normal;">{{grs.finishMtr}}</td>
-
-                                            </tr>
-                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                <td style="font-size: 15px;font-weight: normal;"> {{i}}</td>
-                                                <td class="site" style="font-size: 15px;font-weight: normal;">{{grs.mtr}}</td>
-                                                <td class="amount" style="font-size: 15px;font-weight: normal;">{{grs.finishMtr}}</td>
-
-                                            </tr>
-
 
                                             <tr>
                                                 <td>&nbsp;</td>
@@ -308,46 +311,45 @@
                                     <div class="col-sm-7">
                                         <div class="footer-bottom">
                                             <div class="row">
-                                                <div class="col-sm-12 row">
-                                                    <div class="col-sm-4">
-                                                        <div class="font-big">
-                                                            <b>BANK NAME</b>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <div class="font-big">
-                                                            : TAMILNAD MERCHANTILE BANK LTD.
-                                                        </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="font-big">
+                                                        <b>BANK NAME</b>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12 row">
-                                                    <div class="col-sm-4">
-                                                        <div class="font-big">
-                                                            <b> A/c No.</b>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <div class="font-big">
-                                                            : 192700150950474
-                                                        </div>
+                                                <div class="col-sm-8">
+                                                    <div class="font-big">
+                                                        : TAMILNAD MERCHANTILE BANK LTD.
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12 row">
-                                                    <div class="col-sm-4">
-                                                        <div class="font-big">
-                                                            <b>Branch IFS Code</b>
-                                                        </div>
+
+
+                                                <div class="col-sm-4">
+                                                    <div class="font-big">
+                                                        <b> A/c No.</b>
                                                     </div>
-                                                    <div class="col-sm-8">
-                                                        <div class="font-big">
-                                                            : TMBL0000192 RING ROAD , SURAT
-                                                        </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="font-big">
+                                                        : 192700150950474
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="font-big">
+                                                        <b>Branch IFS Code</b>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="font-big">
+                                                        : TMBL0000192 RING ROAD , SURAT
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
+
                                     </div>
+
 
                                     <div class="col-sm-4">
                                         <div class="footer-style">
@@ -358,8 +360,8 @@
                                         </div>
                                     </div>
 
-
                                 </div>
+
 
                                 <div class="row">
                                     <div class="col-sm-7">
@@ -386,13 +388,14 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Footer -->
-
                     </div>
 
+                    <!-- Footer -->
+
                 </div>
+
             </div>
+
         </section>
     </div>
 </div>
