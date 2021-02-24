@@ -35,7 +35,7 @@
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                        [hidden]="hiddenEdit" [routerLink]="['edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                        [hidden]="hiddenEdit" [routerLink]="['/pages/color/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
                         (click)="deleteColor(row.id)"></nb-icon>
                 </ng-template>
