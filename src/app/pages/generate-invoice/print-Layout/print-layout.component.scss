@@ -136,9 +136,14 @@
         border: 1px solid rgb(143, 143, 143);
         border-spacing: 0;
         clear: both;
-        margin: 2mm 0mm;
-        height: 177mm;
+        margin: 0;
+        height: 179mm;
         width: 100%;
+    }
+    .lot-border tr th {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        font-size: 15px;
     }
     #invoice-table th,
     td {
@@ -152,8 +157,8 @@
         border-bottom: 1px solid rgb(143, 143, 143);
     }
     #invoice-table td {
-        vertical-align: top;
-        font-size: 8pt;
+        vertical-align: middle;
+        font-size: 6pt;
     }
     th {
         text-align: center;
@@ -163,11 +168,11 @@
     .spacing-low td {
         text-align: center;
     }
-    .invoice_line {
-        height: 6mm;
-    }
+    // .invoice_line {
+    //     height: 6mm;
+    // }
     .invoice_line th {
-        font-size: 18px;
+        font-size: 15px;
     }
     .font-big b,
     .font-big,
@@ -209,6 +214,52 @@
         padding-top: 0;
         margin-top: 0;
     }
+    .spacing-low tr:nth-child(even) {
+        background-color: Lightgreen !important;
+    }
+    .spacing-low tr th,
+    .spacing-low tr td {
+        border-left: 2px solid rgb(143, 143, 143) !important;
+        border-right: 2px solid rgb(143, 143, 143) !important;
+    }
+    .spacing-low tr th,
+    .spacing-low tr:last-child {
+        border-top: 2px solid rgb(143, 143, 143) !important;
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+    }
+    .spacing-low th,
+    .spacing-low td {
+        padding: 1px 0.75rem !important;
+    }
+    .spacing-low>tr>td,
+    .border-width {
+        border-width: 2px !important;
+    }
+    .lot-border tr th,
+    table.lot-border,
+    table.spacing-low {
+        margin-bottom: 1px!important;
+    }
+    .border-dark {
+        border: 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-top {
+        border: 0px 1px 1px 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-zero {
+        border: 0 !important;
+    }
+    .border-bootom-none tr:last-child {
+        border: 0 !important
+    }
+    .border-bootom-none {
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+    }
+    .display-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 @media screen {
@@ -232,23 +283,7 @@
 }
 
 .border-margin {
-    margin: 5rem;
-}
-
-.spacing-low tr:nth-child(even) {
-    background-color: #ffe6e6 !important;
-}
-
-.spacing-low tr th,
-.spacing-low tr td {
-    border-left: 2px solid rgb(143, 143, 143) !important;
-    border-right: 2px solid rgb(143, 143, 143) !important;
-}
-
-.spacing-low tr th,
-.spacing-low tr:last-child {
-    border-top: 2px solid rgb(143, 143, 143) !important;
-    border-bottom: 2px solid rgb(143, 143, 143) !important;
+    margin: 2rem 4rem;
 }
 
 .t-table {
@@ -284,31 +319,10 @@
     border-right: 1px solid #c3c3c3;
 }
 
-.table-left-right tfoot tr {
+.table-left-right tfoot tr,
+{
     border-top: 1px solid #c3c3c3;
     border-bottom: 1px solid #c3c3c3;
-}
-
-.spacing-low th,
-.spacing-low td {
-    padding: 1px 0.75rem !important;
-}
-
-.spacing-low>tr>td,
-.border-width {
-    border-width: 2px !important;
-}
-
-.border-dark {
-    border: 1px solid rgb(143, 143, 143) !important;
-}
-
-.border-top {
-    border: 0px 1px 1px 1px solid rgb(143, 143, 143) !important;
-}
-
-.border-zero {
-    border: 0 !important;
 }
 
 

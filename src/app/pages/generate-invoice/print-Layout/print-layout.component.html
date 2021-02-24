@@ -13,23 +13,17 @@
 
 
                         <div class="top-print-head border-width" style="width: 37%;">
-                            <strong class="border">Original/Duplicate/Triplicate</strong>
+                            <strong class="border" style="border-top-width: 3px !important;border-left-width: 3px !important;border-right-width: 3px !important;">Original/Duplicate/Triplicate</strong>
                         </div>
 
 
                     </div>
                 </div>
                 <div class="print-in-border">
-                    <!-- <div class="text-center">
-                        <div class="col-sm-12">
-                            <div class="content-header" style="font-size: 15px;">
-                                <b>TAX INVOICE CUM DELIVERY CHALLAN</b></div>
-                        </div>
-                    </div> -->
-                    <!-- <hr> -->
+
                     <div class="container">
-                        <div class="border-dark row" style="padding:0.2rem 0;">
-                            <div class="col-sm-9">
+                        <div class="border-dark row" style="padding: 0;">
+                            <div class="col-sm-10">
                                 <div class="card border-zero">
                                     <div class="card-body" style="display: flex;justify-content: flex-end;align-items: center;">
                                         <div class="card-block">
@@ -48,67 +42,81 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2" style="display: flex;justify-content: center;align-items: center;">
                                 <div class="invoice-logo" style="display: flex;justify-content: center;align-items: center;">
                                     <!-- <img src="../../../../assets/GloryIcon.png" style="width: 152px;"> -->
-                                    <img src="../../../../assets/GloryIcon.png" style="width: 152px; height: 150px;">
+                                    <img src="../../../../assets/GloryIcon-new.png" style="width: 130px; height: auto;">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <hr> 
-        Main info party quality batches -->
+
                     <div class="content">
                         <div class="invoice">
                             <div class="row col-sm-12" style="margin: 0;padding: 0%;">
                                 <div class="col-sm-6 border-dark">
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 40%;">
-                                            <b style="font-size: 20px;">Party Name :</b>
+                                        <div class="col-md-4" style="width: 30%;">
+                                            <b class="display-between" style="font-size: 20px;"><span>Party Name</span> </b>
                                         </div>
-                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
+                                        <div class="col-md-4" style="width: 10%;">
+                                            <b class="display-between" style="font-size: 20px;"> <span>:</span></b>
+                                        </div>
+                                        <div class="col-md-4 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.partyName}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 40%;">
-                                            <b style="font-size: 20px;">Address :</b>
+                                        <div class="col-md-4" style="width: 30%;">
+                                            <b style="font-size: 20px;" class="display-between"><span>Address</span> </b>
                                         </div>
-                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
+                                        <div class="col-md-4" style="width: 10%;">
+                                            <b class="display-between" style="font-size: 20px;"> <span>:</span></b>
+                                        </div>
+                                        <div class="col-md-4 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.address}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 40%;">
-                                            <b style="font-size: 20px;">GSTIN :</b>
+                                        <div class="col-md-4" style="width: 30%;">
+                                            <b style="font-size: 20px;" class="display-between"><span>GSTIN</span> </b>
                                         </div>
-                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
+                                        <div class="col-md-4" style="width: 10%;">
+                                            <b class="display-between" style="font-size: 20px;"> <span>:</span></b>
+                                        </div>
+                                        <div class="col-md-4 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.gst}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 border-dark">
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 40%;">
-                                            <b style="font-size: 20px;">Invoice :</b>
+                                        <div class="col-md-4" style="width: 30%;">
+                                            <b style="font-size: 20px;" class="display-between"><span>Invoice</span></b>
                                         </div>
-                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
+                                        <div class="col-md-4" style="width: 10%;">
+                                            <b class="display-between" style="font-size: 20px;"> <span>:</span></b>
+                                        </div>
+                                        <div class="col-md-4 border border-width" style="width: 60%;font-size: 20px;">
                                             {{invoice.invoiceNo}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4" style="width: 40%;">
-                                            <b style="font-size: 20px;">Date :</b>
+                                        <div class="col-md-4" style="width: 30%;">
+                                            <b style="font-size: 20px;" class="display-between"><span>Date</span></b>
                                         </div>
-                                        <div class="col-md-8 border border-width" style="width: 60%;font-size: 20px;">
+                                        <div class="col-md-4" style="width: 10%;">
+                                            <b class="display-between" style="font-size: 20px;"> <span>:</span></b>
+                                        </div>
+                                        <div class="col-md-4 border border-width" style="width: 60%;font-size: 20px;">
                                             {{myDate}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="border-dark" style="font-size: 15px; ">
-                                <table class="table responsive spacing-low table-bordered ">
+                            <div class="border-dark" style="font-size: 15px;">
+                                <table class="table  spacing-low table-bordered ">
                                     <tr>
                                         <th>
                                             <b>Sr.</b>
@@ -211,7 +219,7 @@
                             </div>
 
 
-                            <div class="border-dark" style="font-size: 15px;">
+                            <div class="border-dark" style="font-size: 15px;border-top: 0 !important;">
                                 <div class="container">
                                     <div class="row ">
                                         <div class="col-sm-4"></div>
@@ -266,7 +274,7 @@
 
 
                             <!-- batch Grey mtr data list -->
-                            <div class="row" style="margin-top: 5px;margin-left: 2px;margin-right: 2px;">
+                            <div class="row" style="margin-top: 3px;margin-left: 2px;margin-right: 2px;margin-bottom: 5px;">
                                 <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
                                     <div>
 
@@ -276,7 +284,7 @@
                                             </tr>
                                         </table>
 
-                                        <table id="invoice-table">
+                                        <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
                                             <!-- <colgroup>
                                             <col width="10mm" />
                                             <col width="45mm" />
@@ -289,18 +297,245 @@
 
                                             </tr>
                                             <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                <td style="font-size: 15px;font-weight: normal;"> {{i}}</td>
-                                                <td class="site" style="font-size: 15px;font-weight: normal;">{{grs.mtr}}</td>
-                                                <td class="amount" style="font-size: 15px;font-weight: normal;">{{grs.finishMtr}}</td>
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
 
                                             </tr>
 
+
+
+                                        </table>
+
+                                    </div>
+                                </div>
+
+
+                                <!-- 2 -->
+
+                                <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
+                                    <div>
+
+                                        <table class="table lot-border">
                                             <tr>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <th><b>LOT NO: {{lots.batchId}}</b></th>
+                                            </tr>
+                                        </table>
+
+                                        <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
+                                            <!-- <colgroup>
+                                            <col width="10mm" />
+                                            <col width="45mm" />
+                                            <col width="45mm" />
+                                        </colgroup> -->
+                                            <tr class="invoice_line">
+                                                <th><b>Cops</b></th>
+                                                <th><b>GryMtr</b></th>
+                                                <th><b>FinMtr</b></th>
 
                                             </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+
+
+
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                <!-- 3 -->
+
+                                <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
+                                    <div>
+
+                                        <table class="table lot-border">
+                                            <tr>
+                                                <th><b>LOT NO: {{lots.batchId}}</b></th>
+                                            </tr>
+                                        </table>
+
+                                        <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
+                                            <!-- <colgroup>
+                                            <col width="10mm" />
+                                            <col width="45mm" />
+                                            <col width="45mm" />
+                                        </colgroup> -->
+                                            <tr class="invoice_line">
+                                                <th><b>Cops</b></th>
+                                                <th><b>GryMtr</b></th>
+                                                <th><b>FinMtr</b></th>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+
+
+
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                <!-- 4 -->
+                                <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
+                                    <div>
+
+                                        <table class="table lot-border">
+                                            <tr>
+                                                <th><b>LOT NO: {{lots.batchId}}</b></th>
+                                            </tr>
+                                        </table>
+
+                                        <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
+                                            <!-- <colgroup>
+                                            <col width="10mm" />
+                                            <col width="45mm" />
+                                            <col width="45mm" />
+                                        </colgroup> -->
+                                            <tr class="invoice_line">
+                                                <th><b>Cops</b></th>
+                                                <th><b>GryMtr</b></th>
+                                                <th><b>FinMtr</b></th>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+                                            <tr class="invoice_line" *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                <td style="font-size: 13px;font-weight: normal;"> {{i}}</td>
+                                                <td class="site" style="font-size: 13px;font-weight: normal;">{{grs.mtr}}</td>
+                                                <td class="amount" style="font-size: 13px;font-weight: normal;">{{grs.finishMtr}}</td>
+
+                                            </tr>
+
+
+
                                         </table>
 
                                     </div>
@@ -353,10 +588,12 @@
 
                                     <div class="col-sm-4">
                                         <div class="footer-style">
-                                            <div class="display-flex-end">
-                                                <div class="company-ltd"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
 
+                                            <div class="company-ltd">
+                                                <div style="padding-bottom: 0 !important; text-align: center;"><strong>MUKESH PROCESSSSOORS PVT LTD.</strong></div>
                                             </div>
+
+
                                         </div>
                                     </div>
 
@@ -369,8 +606,8 @@
 
                                             <b>TERMS CONDITION :</b>
                                             <ul class="terms-cond">
-                                                <li> 1 . Goods once sold will not be taken back .</li>
-                                                <li> 2 . Our responsibility ceases once the goods is delivered to the carrier.
+                                                <li> 1. Goods once sold will not be taken back .</li>
+                                                <li> 2. Our responsibility ceases once the goods is delivered to the carrier.
                                                 </li>
                                                 <li> 3. GST Payable on Reverse Charge : No</li>
                                             </ul>
