@@ -244,7 +244,7 @@
                                                             <tr
                                                                 *ngFor='let dc of dyeingChemicalData;let dcIndex=index;trackBy:trackByFn'>
                                                                 <td>
-                                                                    <select name="dcId{{dc._id}}"
+                                                                    <select #data name="dcId{{dc._id}}"
                                                                         [(ngModel)]="dc.itemId" class="tableForm"
                                                                         required
                                                                         (change)="itemSelected($event.target.value,dcIndex)">
@@ -393,7 +393,7 @@
                                                     <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
                                                         [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm"
                                                         (change)="itemSelected1($event,i1)" required appendTo="body"
-                                                        class="ng-select-br-none">
+                                                        class="ng-select-br-none" required>
                                                         <ng-option *ngFor="let item of itemListArray"
                                                             [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} - {{item.supplierName}}</ng-option>
@@ -404,7 +404,7 @@
                                                         name='qty{{item._id}}{{i1}}'
                                                         class="tableForm line-height-subtable" [(ngModel)]="item.qty"
                                                         (keyup)="onKeyUp1($event,i1,1,'quantity')"
-                                                        [id]="'itemList'+i1+'-1'" min="0">
+                                                        [id]="'itemList'+i1+'-1'" min="0" required>
                                                 </td>
 
                                                 <td>

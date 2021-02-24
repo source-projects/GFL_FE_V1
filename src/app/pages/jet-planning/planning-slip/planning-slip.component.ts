@@ -187,6 +187,9 @@ export class PlanningSlipComponent implements OnInit {
           this.slipData.dyeingSlipDataList[
             parentDataIndex
           ].dyeingSlipItemData.push(obj);
+          this.data.changes.subscribe(() => {
+            this.data.last.focus();
+          });
           let interval = setInterval(() => {
             let field = document.getElementById(this.index);
             if (field != null) {
@@ -214,12 +217,19 @@ export class PlanningSlipComponent implements OnInit {
     if (keyCode == 13) {
       this.index = "itemList" + (rowIndex + 1) + "-" + 1;
 
+      console.log("item List", this.itemList);
       if (rowIndex === this.itemList.length - 1) {
-        let obj = new DyeingChemicalData();
-        this.itemList.push(obj);
-        this.data.changes.subscribe(() => {
-          this.data.last.focus();
-        });
+        let item = this.itemList[rowIndex];
+        console.log("item", item);
+        if (item.itemName && item.qty) {
+          let obj = new DyeingChemicalData();
+          this.itemList.push(obj);
+          this.data.changes.subscribe(() => {
+            this.data.last.focus();
+          });
+        } else {
+          this.toastr.error("Fill empty fields");
+        }
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -307,7 +317,9 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   itemSelected1(event, index) {
-    let i_id = event.target.value;
+    console.log(event);
+    let i_id = event;
+    console.log("id", i_id);
     this.itemListArray.forEach((element) => {
       if (element.itemId == i_id) {
         this.itemList[index].itemName = element.itemName;
@@ -365,6 +377,10 @@ export class PlanningSlipComponent implements OnInit {
           }
         );
       }
+    } else {
+      this.formSubmitted = false;
+      this.toastr.error("Fill empty fields.");
+      return;
     }
   }
 
