@@ -68,7 +68,7 @@ export class AddEditUserComponent implements OnInit {
     "Water Jet",
   ];
 
-  userHradIdList;
+  userHradIdList:any[] = [];
   userHradIdListCopy;
 
 
@@ -125,7 +125,6 @@ export class AddEditUserComponent implements OnInit {
 
  async ngOnInit(){
     this.getDesignation();
-    this.getAllUserHrads();
     this.getAllCompany();
     this.getAllDepartment();
     // this.getMaster();
@@ -134,6 +133,7 @@ export class AddEditUserComponent implements OnInit {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
+
   }
 
 
@@ -167,19 +167,16 @@ checkUser(logInUserDetail) {
     logInUserDetail.userHeadId == null
   ) {
     this.adminFlag = true;
-    console.log("Admin");
   } else if (
     logInUserDetail.userHeadId &&
     logInUserDetail.superUserHeadId == null
   ) {
     this.masterFlag = true;
-    console.log("master");
   } else if (
     logInUserDetail.superUserHeadId &&
     logInUserDetail.userHeadId
   ) {
     this.operatorFlag = true;
-    console.log("Operator");
   }
 }
  
@@ -187,16 +184,18 @@ checkUser(logInUserDetail) {
   getAllUserHrads() {
     this.loading = true;
     
+    if(this.masterFlag){
+      let obj={
+        id : this.currentUserData.id,
+        name : this.currentUserData.name
+      }
+      this.userHradIdList.push(obj);
+
+    }else{
     this.userService.getAllHead().subscribe(
       (data) => {
         if (data["success"]) {
           this.userHradIdList = data["data"];
-          this.userHradIdListCopy = data["data"];
-          if(this.masterFlag){
-            this.userHradIdList = this.userHradIdListCopy.filter(v => v.id == this.userId);
-          }else{
-            this.userHradIdList = this.userHradIdListCopy;
-          }
           this.loading = false;
         }
         // this.toastr.error(data["msg"])
@@ -206,7 +205,7 @@ checkUser(logInUserDetail) {
         // this.toastr.error(errorData.Internal_Error)
         this.loading = false;
       }
-    );
+    );}
   }
 
   public getUserId() {
@@ -221,6 +220,11 @@ checkUser(logInUserDetail) {
         if(data["success"]){
           this.currentUserData = data["data"];
           this.checkUser(this.currentUserData);
+          if(this.masterFlag){
+            this.user.isUserHead=true
+          }
+          this.getAllUserHrads();
+         
           //this.getMaster(this.currentUserData);
 
         //   if(this.currentUserData.superUserHeadId == null && this.currentUserData.userHeadId != null){
@@ -873,7 +877,6 @@ checkUser(logInUserDetail) {
             this.desiList.forEach((element) => {
               if (element.designation != "Master") this.desi_list.push(element);
             });
-            console.log(this.desi_list);
           } else {
             this.desi_list = this.desiList;
           }
