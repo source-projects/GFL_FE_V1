@@ -1,27 +1,20 @@
 import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
 import {
   HttpErrorResponse,
   HttpInterceptor,
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpEvent,
+  HttpEvent
 } from "@angular/common/http";
-import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
-import { CommonService } from "../services/common.service";
 import { JwtTokenService } from "../services/jwt-token.service";
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private jwt: JwtTokenService
-  ) {
-    this.userId = this.jwt.getDecodeToken("userId");
+  constructor(private router: Router, private injector: Injector) {
     // this.commonService.getUser();
   }
   intercept(
@@ -30,11 +23,13 @@ export class CustomHttpInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem("token");
     if (token) {
+      let service = this.injector.get(JwtTokenService);
+      this.userId = service.getDecodeToken("userId");
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          id: `${this.userId.userId}`,
-        },
+          id: `${this.userId}`
+        }
       });
     }
     return next.handle(request).pipe(
