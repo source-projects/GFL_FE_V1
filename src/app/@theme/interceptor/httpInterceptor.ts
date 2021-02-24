@@ -12,15 +12,17 @@ import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { CommonService } from "../services/common.service";
+import { JwtTokenService } from "../services/jwt-token.service";
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
   constructor(
     private authService: AuthService,
     private router: Router,
-    private commonService: CommonService
+    private jwt: JwtTokenService
   ) {
-    this.userId = this.commonService.getUser();
+    this.userId = this.jwt.getDecodeToken("userId");
+    // this.commonService.getUser();
   }
   intercept(
     request: HttpRequest<any>,
