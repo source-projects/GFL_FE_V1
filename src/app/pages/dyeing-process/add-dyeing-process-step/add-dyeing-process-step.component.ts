@@ -55,6 +55,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
       this.submitButton = "Update";
       if (this.position > 0) {
         this.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
+        this.dyeingProcessStep.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
         this.dyeingProcessStep.sequence = this.position;
         this.dyeingProcessStep.temp = this.stepList[this.position - 1].temp;
         this.dyeingProcessStep.holdTime = this.stepList[this.position - 1].holdTime;
@@ -78,7 +79,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
         temp: this.dyeingProcessStep.temp,
         holdTime: this.dyeingProcessStep.holdTime,
         liquerRation: this.dyeingProcessStep.liquerRation,
-        chemicalList: this.dyeingChemicalData,
+        chemicalList: this.dyeingChemicalData
       };
       this.activeModal.close(obj);
     }

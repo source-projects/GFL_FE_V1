@@ -112,7 +112,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.dyeingProcessSteps[step.sequence - 1].processType = result.processType;
-        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData = result.dyeingChemicalData;
+        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData = result.chemicalList;
         this.dyeingProcessSteps[step.sequence - 1].liquerRation = result.liquerRation;
         this.dyeingProcessSteps[step.sequence - 1].holdTime = result.holdTime;
         this.dyeingProcessSteps[step.sequence - 1].temp = result.temp;
@@ -123,9 +123,10 @@ export class AddEditDyeingProcessComponent implements OnInit {
 
   onDeleteStep(step) {
     let i = this.dyeingProcessSteps.findIndex(
-      (v) => v.sequence == step.stepPosition
+      (v) => v.sequence == step.sequence
     );
-    this.dyeingProcessSteps.splice(i, 1);
+    if(i > -1)
+      this.dyeingProcessSteps.splice(i, 1);
   }
 
   addProcessStep() {
