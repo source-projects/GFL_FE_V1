@@ -288,7 +288,7 @@
                                                 <th>Action</th>
                                             </tr>
 
-                                            <tr *ngFor='let item of itemList;let i1=index;trackBy:trackByFn'>
+                                            <tr *ngFor='let item of (itemList | filterByIsColor : isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
                                                 <td>
                                                     <!-- <select name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
                                                         [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm"
