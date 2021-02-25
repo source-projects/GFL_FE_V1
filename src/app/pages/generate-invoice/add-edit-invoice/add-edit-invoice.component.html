@@ -13,12 +13,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Party Name</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown"
+                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown dropdown-name"
                             [readonly]="currentInvoiceId != null">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
 
-                        <div class="required-class" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
+                        <div class="input-required" *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
                             <span>Party name is required</span>
                         </div>
                     </div>

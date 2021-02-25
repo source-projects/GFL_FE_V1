@@ -11,7 +11,7 @@
                             <label class="required">Process Name</label>
                             <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
                                 placeholder="Process Name">
-                            <div class="invalid-feedback" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
+                            <div class="input-required" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
                             </div>
                         </div>
