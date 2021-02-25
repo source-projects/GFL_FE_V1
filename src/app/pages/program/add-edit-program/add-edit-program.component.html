@@ -20,7 +20,30 @@
                                 [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
                                 (change)="enableQuality($event)" placeholder="Party Name"
                                 class="required-error-dropdown">
-                                <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party
+                                                Name</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">
+                                                Party Code</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let p of party" [value]="p.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
                             </ng-select>
                             <div class="required-class"
                                 *ngIf="(formSubmitted && partyId1.invalid) || (partyId1.invalid && partyId1.touched)">
@@ -217,9 +240,9 @@
                             <ngx-datatable-column name="Quantity" prop="quantity" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="number"
-                                        (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-quantity'"
-                                        [(ngModel)]="row.quantity" #tableQuantity1="ngModel"
-                                        name='tableQuantity{{rowIndex}}' required
+                                        (keyup)="onKeyUp($event,rowIndex,3,'quantity')"
+                                        [id]="'program'+rowIndex+'-quantity'" [(ngModel)]="row.quantity"
+                                        #tableQuantity1="ngModel" name='tableQuantity{{rowIndex}}' required
                                         [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}" min="0">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (tableQuantity1.invalid)"
                                         style="display: inline-block;">
@@ -232,8 +255,8 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <ng-select class="tableForm" (keyup)="onKeyUp($event,rowIndex,4,'batch')"
                                         (click)="selectQualityId()" (change)="setQuantity(rowIndex,4,'batch')"
-                                        [id]="'program'+rowIndex+'-batch'" [(ngModel)]="row.batchId" #tableBatch1="ngModel"
-                                        name='tableBatch{{rowIndex}}'
+                                        [id]="'program'+rowIndex+'-batch'" [(ngModel)]="row.batchId"
+                                        #tableBatch1="ngModel" name='tableBatch{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableBatch1.invalid}" appendTo="body"
                                         class="ng-select-br-none">
                                         <ng-option *ngFor="let b of batchData" [value]="b.batchId">
@@ -251,8 +274,8 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <ng-select class="tableForm" (keyup)="onKeyUp($event,rowIndex,5,'lot_no')"
                                         (click)="selectQualityId()" (change)="setQuantity(rowIndex,5,'stock')"
-                                        [id]="'program'+rowIndex+'-lot_no'" [(ngModel)]="row.stockId" #tableLotNo1="ngModel"
-                                        name='tableLotNo{{rowIndex}}'
+                                        [id]="'program'+rowIndex+'-lot_no'" [(ngModel)]="row.stockId"
+                                        #tableLotNo1="ngModel" name='tableLotNo{{rowIndex}}'
                                         [ngClass]="{'is-invalid': formSubmitted && tableLotNo1.invalid}" appendTo="body"
                                         class="ng-select-br-none">
                                         <ng-option *ngFor="let s of stockData" [value]="s.id?s.id:s.stockId">
@@ -269,8 +292,9 @@
                             <ngx-datatable-column name="Remark" prop="remark" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text"
-                                        (keyup)="onKeyUp($event,rowIndex,6,'remark')" [id]="'program'+rowIndex+'-remark'"
-                                        [(ngModel)]="row.remark" #tableRemark1="ngModel" name='tableRemark{{rowIndex}}'>
+                                        (keyup)="onKeyUp($event,rowIndex,6,'remark')"
+                                        [id]="'program'+rowIndex+'-remark'" [(ngModel)]="row.remark"
+                                        #tableRemark1="ngModel" name='tableRemark{{rowIndex}}'>
                                 </ng-template>
                             </ngx-datatable-column>
 

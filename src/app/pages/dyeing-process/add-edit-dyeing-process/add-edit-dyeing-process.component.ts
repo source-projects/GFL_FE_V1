@@ -111,8 +111,8 @@ export class AddEditDyeingProcessComponent implements OnInit {
     modalRef.componentInstance.editStep = true;
     modalRef.result.then((result) => {
       if (result) {
-        this.dyeingProcessSteps[step.sequence - 1].processType = result.name;
-        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData = result.dyeingChemicalData;
+        this.dyeingProcessSteps[step.sequence - 1].processType = result.processType;
+        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData = result.chemicalList;
         this.dyeingProcessSteps[step.sequence - 1].liquerRation = result.liquerRation;
         this.dyeingProcessSteps[step.sequence - 1].holdTime = result.holdTime;
         this.dyeingProcessSteps[step.sequence - 1].temp = result.temp;
@@ -123,9 +123,15 @@ export class AddEditDyeingProcessComponent implements OnInit {
 
   onDeleteStep(step) {
     let i = this.dyeingProcessSteps.findIndex(
-      (v) => v.sequence == step.stepPosition
+      (v) => v.sequence == step.sequence
     );
-    this.dyeingProcessSteps.splice(i, 1);
+    if(i > -1){
+      this.dyeingProcessSteps.splice(i, 1);
+      //re-arrange Sequence no for all steps...
+      this.dyeingProcessSteps.forEach((element, i)=>{
+        element.sequence = i + 1;
+      })
+    }
   }
 
   addProcessStep() {
@@ -140,7 +146,8 @@ export class AddEditDyeingProcessComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         let step = new DyeingProcessData();
-        step.processType = result.name;
+        step.processType = result.processType;
+        step.liquerRation = result.liquerRation;
         step.sequence = result.position;
         step.dyeingChemicalData = result.chemicalList;
         step.temp = result.temp;

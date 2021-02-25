@@ -11,6 +11,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { UserService } from "../../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Md5 } from "ts-md5/dist/md5";
+import { PartyService } from "../../../@theme/services/party.service";
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -30,6 +31,8 @@ export class AddEditUserComponent implements OnInit {
   preventDuplicates = false;
   isMasterFlag = false;
   adminFlag = false;
+  masterFlag = false;
+  operatorFlag = false;
   status;
   allRightsFlag;
   user: User = new User();
@@ -38,6 +41,8 @@ export class AddEditUserComponent implements OnInit {
   permissionArray: any[] = [];
   companyList = [];
   departmentList = [];
+  master: any[] = [];
+  currentUserData: any;
   desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -64,7 +69,7 @@ export class AddEditUserComponent implements OnInit {
     "Water Jet",
   ];
 
-  userHradIdList;
+  userHradIdList: any[] = [];
 
   perName = [
     "View",
@@ -113,37 +118,85 @@ export class AddEditUserComponent implements OnInit {
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private partyService: PartyService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getDesignation();
-    this.getAllUserHrads();
     this.getAllCompany();
     this.getAllDepartment();
-    this.getUserId();
+    await this.getUserId();
     if (this.currentUserId) {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
   }
 
-  getAllUserHrads() {
-    this.loading = true;
-    this.userService.getAllHead().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.userHradIdList = data["data"];
+  public getMaster(logInUserDetail) {
+    let masterId;
+    if (this.masterFlag) {
+      this.master.push(logInUserDetail.name);
+    } else if (this.operatorFlag) {
+      this.master.push(logInUserDetail.userHeadName);
+    } else {
+      this.loading = true;
+      this.partyService.getAllMaster().subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.master = data["data"];
+            this.loading = false;
+          } else {
+            this.loading = false;
+          }
+        },
+        (error) => {
           this.loading = false;
         }
-        // this.toastr.error(data["msg"])
-        else this.loading = false;
-      },
-      (error) => {
-        // this.toastr.error(errorData.Internal_Error)
-        this.loading = false;
-      }
-    );
+      );
+    }
+  }
+  checkUser(logInUserDetail) {
+    if (
+      logInUserDetail.superUserHeadId == null &&
+      logInUserDetail.userHeadId == null
+    ) {
+      this.adminFlag = true;
+    } else if (
+      logInUserDetail.userHeadId &&
+      logInUserDetail.superUserHeadId == null
+    ) {
+      this.masterFlag = true;
+    } else if (logInUserDetail.superUserHeadId && logInUserDetail.userHeadId) {
+      this.operatorFlag = true;
+    }
+  }
+
+  getAllUserHrads() {
+    this.loading = true;
+    if (this.masterFlag) {
+      let obj = {
+        id: this.currentUserData.id,
+        name: this.currentUserData.name,
+      };
+      this.userHradIdList.push(obj);
+      console.log(this.userHradIdList);
+    } else {
+      this.userService.getAllHead().subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.userHradIdList = data["data"];
+            this.loading = false;
+          }
+          // this.toastr.error(data["msg"])
+          else this.loading = false;
+        },
+        (error) => {
+          // this.toastr.error(errorData.Internal_Error)
+          this.loading = false;
+        }
+      );
+    }
   }
 
   public getUserId() {
@@ -153,6 +206,19 @@ export class AddEditUserComponent implements OnInit {
       this.adminFlag = true;
     }
     this.currentUserId = this._route.snapshot.paramMap.get("id");
+    this.userService.getUserHeadDetails(this.userId.userId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.currentUserData = data["data"];
+          this.checkUser(this.currentUserData);
+          if (this.masterFlag) {
+            this.user.isUserHead = true;
+          }
+          this.getAllUserHrads();
+        }
+      },
+      (error) => {}
+    );
   }
 
   designationSelected(event) {
@@ -416,6 +482,15 @@ export class AddEditUserComponent implements OnInit {
       case "Finished Meter": {
         let index = this.permissionArray.findIndex(
           (v) => v.module == "Finished Meter"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Water Jet": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Water Jet"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);

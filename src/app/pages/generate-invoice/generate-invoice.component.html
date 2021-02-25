@@ -23,7 +23,7 @@
             </div>
         </div>
         <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)">
-            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true">
+            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
                     <!-- <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"

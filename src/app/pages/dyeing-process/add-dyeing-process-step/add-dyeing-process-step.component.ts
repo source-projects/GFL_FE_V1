@@ -55,6 +55,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
       this.submitButton = "Update";
       if (this.position > 0) {
         this.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
+        this.dyeingProcessStep.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
         this.dyeingProcessStep.sequence = this.position;
         this.dyeingProcessStep.temp = this.stepList[this.position - 1].temp;
         this.dyeingProcessStep.holdTime = this.stepList[this.position - 1].holdTime;
@@ -78,7 +79,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
         temp: this.dyeingProcessStep.temp,
         holdTime: this.dyeingProcessStep.holdTime,
         liquerRation: this.dyeingProcessStep.liquerRation,
-        chemicalList: this.dyeingChemicalData,
+        chemicalList: this.dyeingChemicalData
       };
       this.activeModal.close(obj);
     }
@@ -138,7 +139,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
   removeItem(rowIndex) {
     let idCount = this.dyeingChemicalData.length;
     if (idCount == 1) {
-      this.dyeingChemicalData[0].byChemical = null;
+      this.dyeingChemicalData[0].byChemical = 'L';
       this.dyeingChemicalData[0].concentration = null;
       this.dyeingChemicalData[0].controlId = null;
       this.dyeingChemicalData[0].id = null;
@@ -157,5 +158,9 @@ export class AddDyeingProcessStepComponent implements OnInit {
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
       }
     });
+  }
+
+  trackByFn(index: number, obj: any) {
+    return obj ? obj["_id"] || obj : index;
   }
 }

@@ -118,10 +118,9 @@ export class QualityComponent implements OnInit {
 
   filter(value:any){
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyQualityList.length;
     const keys = Object.keys(this.copyQualityList[0]);
     this.qualityList = this.copyQualityList.filter(item => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
             item[keys[i]]

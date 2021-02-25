@@ -1,4 +1,11 @@
-import { Component, OnInit, QueryList, Renderer2, ViewChildren, ViewContainerRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  QueryList,
+  Renderer2,
+  ViewChildren,
+  ViewContainerRef,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import {
@@ -20,7 +27,7 @@ import { NgSelectComponent } from "@ng-select/ng-select";
   styleUrls: ["./add-edit-shade.component.scss"],
 })
 export class AddEditShadeComponent implements OnInit {
-  @ViewChildren('data') data: QueryList<NgSelectComponent>;
+  @ViewChildren("data") data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -67,7 +74,7 @@ export class AddEditShadeComponent implements OnInit {
     private route: Router,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private renderer: Renderer2,
+    private renderer: Renderer2
   ) {
     this.apcFlag = this.route.getCurrentNavigation().extras.state;
   }
@@ -261,6 +268,7 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.qualityName = element.qualityName;
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
+          this.shadeObj.qualityEntryId = element.id;
         }
       });
     }
@@ -320,10 +328,9 @@ export class AddEditShadeComponent implements OnInit {
       let newSupplierId;
       for (let s of this.supplierList) {
         if (row.supplierItemId == s.id) {
-
           newSupplierId = s.supplierId;
           row.itemName = s.itemName;
-          gst = (s.rate * s.gstRate)/100;
+          gst = (s.rate * s.gstRate) / 100;
           row.rate = s.rate + gst;
           break;
         }
@@ -415,8 +422,7 @@ export class AddEditShadeComponent implements OnInit {
             this.toastr.error("Enter rate", "rate is required");
             return;
           }
-        }
-         else if (colName == "amount") {
+        } else if (colName == "amount") {
           console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
@@ -438,8 +444,7 @@ export class AddEditShadeComponent implements OnInit {
 
         this.data.changes.subscribe(() => {
           this.data.last.focus();
-        })
-    
+        });
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);

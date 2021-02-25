@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
-import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { StockBatchService } from 'app/@theme/services/stock-batch.service';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
+import { StockBatchGuard } from "app/@theme/guards/stock-batch.guard";
+import * as errorData from "app/@theme/json/error.json";
+import { CommonService } from "app/@theme/services/common.service";
+import { ExportService } from "app/@theme/services/export.service";
+import { JwtTokenService } from "app/@theme/services/jwt-token.service";
+import { StockBatchService } from "app/@theme/services/stock-batch.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'ngx-stock-batch',
-  templateUrl: './stock-batch.component.html',
-  styleUrls: ['./stock-batch.component.scss']
+  selector: "ngx-stock-batch",
+  templateUrl: "./stock-batch.component.html",
+  styleUrls: ["./stock-batch.component.scss"],
 })
 export class StockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
@@ -21,8 +21,15 @@ export class StockBatchComponent implements OnInit {
   stockList;
   copyStockList = [];
   stock = [];
-  headers = ["Stock In Type", "Party Name", "Bill No", "Bill Date", "Chl No", "Chl Date"];
-  module="stock-batch";
+  headers = [
+    "Stock In Type",
+    "Party Name",
+    "Bill No",
+    "Bill Date",
+    "Chl No",
+    "Chl Date",
+  ];
+  module = "stock-batch";
 
   flag = false;
   disabled = false;
@@ -32,7 +39,7 @@ export class StockBatchComponent implements OnInit {
   radioArray = [
     { id: 1, value: "View Own", disabled: false },
     { id: 2, value: "View Group", disabled: false },
-    { id: 3, value: "View All", disabled: false }
+    { id: 3, value: "View All", disabled: false },
   ];
   userHeadId;
   userId;
@@ -56,16 +63,14 @@ export class StockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private commonService: CommonService,
     private exportService: ExportService,
-    private jwtToken: JwtTokenService,
-  ) { 
-  }
+    private jwtToken: JwtTokenService
+  ) {}
 
   ngOnInit(): void {
-
     this.userId = this.commonService.getUser();
-    this.userId = this.userId['userId'];
+    this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
-    this.userHeadId = this.userHeadId['userHeadId'];
+    this.userHeadId = this.userHeadId["userHeadId"];
     this.getAddAcess();
     // this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
@@ -73,31 +78,27 @@ export class StockBatchComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.stockBatchGuard.accessRights('view all')){
-      this.getStockBatchList(0,"all");
-      this.hidden=this.ownDelete; 
-      this.hiddenEdit=this.ownEdit;
-      this.radioSelect=3;
-    }
-     else if(this.stockBatchGuard.accessRights('view group')){
-      this.getStockBatchList(this.userId,"group");
-      this.hidden=this.groupDelete;
-      this.hiddenEdit=this.groupEdit;
-      this.radioSelect=2;
-    }
-    else if(this.stockBatchGuard.accessRights('view')){
-      this.getStockBatchList(this.userId,"own");
-      this.hidden=this.allDelete;
-      this.hiddenEdit=this.allEdit;
-      this.radioSelect=1;
-
+    if (this.stockBatchGuard.accessRights("view all")) {
+      this.getStockBatchList(0, "all");
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
+      this.radioSelect = 3;
+    } else if (this.stockBatchGuard.accessRights("view group")) {
+      this.getStockBatchList(this.userId, "group");
+      this.hidden = this.groupDelete;
+      this.hiddenEdit = this.groupEdit;
+      this.radioSelect = 2;
+    } else if (this.stockBatchGuard.accessRights("view")) {
+      this.getStockBatchList(this.userId, "own");
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
+      this.radioSelect = 1;
     }
   }
   getAddAcess() {
-    if (this.stockBatchGuard.accessRights('add')) {
+    if (this.stockBatchGuard.accessRights("add")) {
       this.disabled = false;
-    }
-    else {
+    } else {
       this.disabled = true;
     }
   }
@@ -131,21 +132,16 @@ export class StockBatchComponent implements OnInit {
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.stock;
     modalRef.componentInstance.moduleName = this.module;
-
   }
 
-  filter(value:any){
+  filter(value: any) {
     const val = value.toString().toLowerCase().trim();
-    const count = this.copyStockList.length;
     const keys = Object.keys(this.copyStockList[0]);
-    this.stockList = this.copyStockList.filter(item => {
-      for (let i = 0; i < count; i++) {
+    this.stockList = this.copyStockList.filter((item) => {
+      for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
-            item[keys[i]]
-              .toString()
-              .toLowerCase()
-              .indexOf(val) !== -1) ||
+            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
           !val
         ) {
           return true;
@@ -157,29 +153,40 @@ export class StockBatchComponent implements OnInit {
   getStockBatchList(id, getBy) {
     this.loading = true;
     this.stockBatchService.getAllStockBatchList(id, getBy).subscribe(
-      data => {
+      (data) => {
         if (data["success"]) {
           this.stockList = data["data"];
-          let index = 0
-          this.stockList.forEach(element => {
-            this.stockList[index].billDate = new Date(element.billDate).toDateString();
-            this.stockList[index].chlDate = new Date(element.chlDate).toDateString();
+          let index = 0;
+          this.stockList.forEach((element) => {
+            this.stockList[index].billDate = new Date(
+              element.billDate
+            ).toDateString();
+            this.stockList[index].chlDate = new Date(
+              element.chlDate
+            ).toDateString();
             index++;
           });
-          this.stock=this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
-            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate })) 
-          this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
-            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))        
-        } 
-          
-          this.loading = false;
+          this.copyStockList = this.stockList;
+          this.stock = this.stockList.map((element) => ({
+            id: element.id,
+            stockInType: element.stockInType,
+            partyName: element.partyName,
+            billNo: element.billNo,
+            billDate: element.billDate,
+            chlNo: element.chlNo,
+            chlDate: element.chlDate,
+          }));
+          // this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
+          //   billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
+        }
+
+        this.loading = false;
       },
-      error => {
+      (error) => {
         // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
-    )
-    
+    );
   }
 
   deleteStockBatch(id) {
@@ -189,86 +196,76 @@ export class StockBatchComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.stockBatchService.deleteStockBatchById(id).subscribe(
-          data => {
+          (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
               this.onChange(this.radioSelect);
             }
           },
-          error => {
-            this.toastr.error(errorData.Internal_Error)
+          (error) => {
+            this.toastr.error(errorData.Internal_Error);
           }
-        )
+        );
       }
     });
   }
 
   getViewAccess() {
-    if (!this.stockBatchGuard.accessRights('view')) {
+    if (!this.stockBatchGuard.accessRights("view")) {
       this.radioArray[0].disabled = true;
-    }
-    else
-      this.radioArray[0].disabled = false;
-    if (!this.stockBatchGuard.accessRights('view group')) {
+    } else this.radioArray[0].disabled = false;
+    if (!this.stockBatchGuard.accessRights("view group")) {
       this.radioArray[1].disabled = true;
-    }
-    else
-      this.radioArray[1].disabled = false;
-    if (!this.stockBatchGuard.accessRights('view all')) {
+    } else this.radioArray[1].disabled = false;
+    if (!this.stockBatchGuard.accessRights("view all")) {
       this.radioArray[2].disabled = true;
-    }
-    else
-      this.radioArray[2].disabled = false;
-
+    } else this.radioArray[2].disabled = false;
   }
 
-  getDeleteAccess(){
-    if(this.stockBatchGuard.accessRights('delete')){
-      this.ownDelete=false;
-      this.hidden=this.ownDelete; 
+  getDeleteAccess() {
+    if (this.stockBatchGuard.accessRights("delete")) {
+      this.ownDelete = false;
+      this.hidden = this.ownDelete;
     }
-     if(this.stockBatchGuard.accessRights('delete group')){
-      this.groupDelete=false;
-      this.hidden=this.groupDelete;
+    if (this.stockBatchGuard.accessRights("delete group")) {
+      this.groupDelete = false;
+      this.hidden = this.groupDelete;
     }
-     if(this.stockBatchGuard.accessRights('delete all')){
-      this.allDelete=false;
-      this.hidden=this.allDelete; 
+    if (this.stockBatchGuard.accessRights("delete all")) {
+      this.allDelete = false;
+      this.hidden = this.allDelete;
     }
   }
-  getDeleteAccess1(){
-    if(this.stockBatchGuard.accessRights('delete')){
-      this.ownDelete=false;
-      this.hidden=this.ownDelete; 
-    }
-    else{
-      this.hidden=true;
+  getDeleteAccess1() {
+    if (this.stockBatchGuard.accessRights("delete")) {
+      this.ownDelete = false;
+      this.hidden = this.ownDelete;
+    } else {
+      this.hidden = true;
     }
   }
 
-  getEditAccess(){
-    if(this.stockBatchGuard.accessRights('edit')){
-      this.ownEdit=false;
-      this.hiddenEdit=this.ownEdit;
+  getEditAccess() {
+    if (this.stockBatchGuard.accessRights("edit")) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
     }
-     if(this.stockBatchGuard.accessRights('edit group')){
-      this.groupEdit=false;
-      this.hiddenEdit=this.groupEdit;
+    if (this.stockBatchGuard.accessRights("edit group")) {
+      this.groupEdit = false;
+      this.hiddenEdit = this.groupEdit;
     }
-     if(this.stockBatchGuard.accessRights('edit all')){
-      this.allEdit=false;
-      this.hiddenEdit=this.allEdit;
-    }
-  }
-
-  getEditAccess1(){
-    if(this.stockBatchGuard.accessRights('edit')){
-      this.ownEdit=false;
-      this.hiddenEdit=this.ownEdit;
-    }
-    else{
-      this.hiddenEdit=true;
+    if (this.stockBatchGuard.accessRights("edit all")) {
+      this.allEdit = false;
+      this.hiddenEdit = this.allEdit;
     }
   }
 
+  getEditAccess1() {
+    if (this.stockBatchGuard.accessRights("edit")) {
+      this.ownEdit = false;
+      this.hiddenEdit = this.ownEdit;
+    } else {
+      this.hiddenEdit = true;
+    }
+  }
 }
