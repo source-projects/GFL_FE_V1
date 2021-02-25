@@ -285,8 +285,10 @@
                         </div>
                         <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock"
-                                routerLink="/pages/stock-batch">CANCEL</button>
+                            <!-- <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock"
+                                routerLink="/pages/stock-batch">CANCEL</button> -->
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+
                             <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple"
                                 *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                             <button *ngIf="addFlag" type="button"

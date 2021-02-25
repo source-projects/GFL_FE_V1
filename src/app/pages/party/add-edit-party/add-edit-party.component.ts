@@ -282,10 +282,21 @@ export class AddEditPartyComponent implements OnInit {
             if (data["success"]) {
               this.currentParty = data["data"];
               //this.route.navigate(["pages/party"]);
-              this.route
-              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-              .then(() => {
-              this.route.navigate(["/pages/quality"]);});
+              // this.route
+              // .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              // .then(() => {
+              // this.route.navigate(["/pages/quality"]);});
+
+              this.partyForm.reset();
+              this.formSubmitted = false;
+              Object.keys(this.partyForm.controls).forEach(field => { // {1}
+                const control = this.partyForm.get(field);            // {2}
+                control.markAsTouched({ onlySelf: true }); 
+                //control.invalid = false;       // {3}
+              });
+              console.log(this.partyForm);
+             // this.partyForm.reset();
+
               this.toastr.success(errorData.Add_Success);
             } else {
               this.toastr.error(data["msg"]);

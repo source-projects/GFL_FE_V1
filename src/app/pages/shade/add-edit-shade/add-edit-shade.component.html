@@ -340,8 +340,10 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/shade'>CANCEL</button>
+                            <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
+                                routerLink='/pages/shade'>CANCEL</button> -->
+                            <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+
                             <button *ngIf="apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade/pending-apc'>CANCEL</button>
                             <button *ngIf="this.currentShadeId != null" type="button" (click)="updateShade(shadeForm)"
