@@ -169,239 +169,6 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  onCancel() {
-    this.addJet = null;
-    this.addDesignation = null;
-    this.addDepartment = null;
-    this.addCompany = null;
-    this.approveBy = null;
-    this.addMachine = null;
-    this.addMachineCategory = null;
-  }
-
-  saveJet() {
-    this.formSubmitted = true;
-    if (this.jetEditFlag == true) {
-      this.adminService.updateJetData(this.addJet).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success);
-            this.getAllJetData();
-            this.addJet.name = null;
-            this.addJet.capacity = null;
-            this.addJet.liquorRatio = null;
-            this.jetEditFlag = false;
-          } else {
-            this.toastr.error(errorData.Update_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    } else {
-      this.adminService.saveJetData(this.addJet).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllJetData();
-            this.addJet.name = null;
-            this.addJet.capacity = null;
-            this.addJet.liquorRatio = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-
-  saveMachine() {
-    this.formSubmitted = true;
-    if (this.machineEditFlag == true) {
-    } else {
-      this.adminService.saveMachine(this.addMachine).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllMachineData();
-            this.addMachine.machineName = null;
-            this.addMachine.controlId = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-
-  saveMachineCategory() {
-    this.formSubmitted = true;
-    if (this.machineCategoryEditFlag == true) {
-    } else {
-      this.adminService.saveMachineCategory(this.addMachineCategory).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllMachineCategoryData();
-            this.addMachineCategory.name = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-
-  saveApproveBy() {
-    this.formSubmitted = true;
-    if (this.approveByEditFlag == true) {
-      this.adminService.updateApproveByData(this.approveBy).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success);
-            this.getAllApproveByData();
-            this.approveBy.name = null;
-            this.approveBy.email = null;
-            this.approveBy.contact = null;
-            this.approveByEditFlag = false;
-          } else {
-            this.toastr.error(errorData.Update_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    } else {
-      this.adminService.saveApproveByData(this.approveBy).subscribe(
-        (data) => {
-          if (data["success"]) {
-            // this.currentParty = data["data"];
-            // this.route.navigate(["pages/party"]);
-            this.toastr.success(errorData.Add_Success);
-            this.getAllApproveByData();
-            this.approveBy.name = null;
-            this.approveBy.email = null;
-            this.approveBy.contact = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-  saveDesignation() {
-    this.formSubmitted = true;
-    if (this.designationEditFlag == true) {
-      this.adminService.updateDesigntationData(this.addDesignation).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success);
-            this.getAllDesignationData();
-            this.addDesignation.designation = null;
-          } else {
-            this.toastr.error(errorData.Update_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-      this.designationEditFlag = false;
-    } else {
-      this.adminService.saveDesignationData(this.addDesignation).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllDesignationData();
-            this.addDesignation.designation = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-  saveCompany() {
-    this.formSubmitted = true;
-    if (this.companyEditFlag == true) {
-      this.adminService.updateCompanyData(this.addCompany).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success);
-            this.getAllCompanyData();
-            this.addCompany.name = null;
-            this.companyEditFlag = false;
-          } else {
-            this.toastr.error(errorData.Update_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    } else {
-      this.adminService.saveCompanyData(this.addCompany).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllCompanyData();
-            this.addCompany.name = null;
-          } else {
-            this.toastr.error(errorData.Add_Error);
-          }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
-      );
-    }
-  }
-
-  saveDepartment() {
-    this.formSubmitted = true;
-    if (this.departmentEditFlag == true) {
-      this.adminService.updateDepartmentData(this.addDepartment).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Update_Success);
-            this.getAllDepartment();
-            this.addDepartment.name = null;
-            this.departmentEditFlag = false;
-          }
-        },
-        (error) => {}
-      );
-    } else {
-      this.adminService.addDepartment(this.addDepartment).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.toastr.success(errorData.Add_Success);
-            this.getAllDepartment();
-            this.addDepartment.name = null;
-          }
-        },
-        (error) => {}
-      );
-    }
-  }
-
   getAllDepartment() {
     this.adminService.getAllDepartmentData().subscribe(
       (data) => {
@@ -412,6 +179,314 @@ export class AdminComponent implements OnInit {
       (error) => {}
     );
   }
+
+  saveJet(addJetData) {
+    this.formSubmitted = true;
+    if (addJetData.valid) {
+      if (this.jetEditFlag == true) {
+        this.adminService.updateJetData(this.addJet).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllJetData();
+              this.onCancelJet();
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      } else {
+        this.adminService.saveJetData(this.addJet).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllJetData();
+              this.onCancelJet();
+              this.formSubmitted = false;
+              Object.keys(addJetData.controls).forEach((field) => {
+                addJetData.controls[field].reset();
+              });
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+
+  saveMachine(addMachineData) {
+    this.formSubmitted = true;
+    if (addMachineData.valid) {
+      if (this.machineEditFlag == true) {
+      } else {
+        this.adminService.saveMachine(this.addMachine).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllMachineData();
+              this.resetValue(addMachineData);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+
+  saveMachineCategory(addMachineCategoryData) {
+    this.formSubmitted = true;
+    if (addMachineCategoryData.valid) {
+      if (this.machineCategoryEditFlag == true) {
+      } else {
+        this.adminService
+          .saveMachineCategory(this.addMachineCategory)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Add_Success);
+                this.getAllMachineCategoryData();
+                this.resetValue(addMachineCategoryData);
+              } else {
+                this.toastr.error(errorData.Add_Error);
+              }
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+            }
+          );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+
+  saveApproveBy(addApproveByData) {
+    this.formSubmitted = true;
+    if (addApproveByData.valid) {
+      if (this.approveByEditFlag == true) {
+        this.adminService.updateApproveByData(this.approveBy).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllApproveByData();
+              this.onCancelApproveBy();
+              this.resetValue(addApproveByData);
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+        this.approveByEditFlag = false;
+      } else {
+        this.adminService.saveApproveByData(this.approveBy).subscribe(
+          (data) => {
+            if (data["success"]) {
+              // this.currentParty = data["data"];
+              // this.route.navigate(["pages/party"]);
+              this.toastr.success(errorData.Add_Success);
+              this.getAllApproveByData();
+              this.resetValue(addApproveByData);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+  saveDesignation(addDesignationData) {
+    this.formSubmitted = true;
+    if (addDesignationData.valid) {
+      if (this.designationEditFlag == true) {
+        this.adminService.updateDesigntationData(this.addDesignation).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllDesignationData();
+              this.onCancelDesignation();
+              this.resetValue(addDesignationData);
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      } else {
+        this.adminService.saveDesignationData(this.addDesignation).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllDesignationData();
+              this.resetValue(addDesignationData);
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+  saveCompany(addCompanyData) {
+    this.formSubmitted = true;
+    if (addCompanyData.valid) {
+      if (this.companyEditFlag == true) {
+        this.adminService.updateCompanyData(this.addCompany).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllCompanyData();
+              this.onCancelCompany();
+              this.formSubmitted = false;
+              Object.keys(addCompanyData.controls).forEach((field) => {
+                addCompanyData.controls[field].reset();
+              });
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      } else {
+        this.adminService.saveCompanyData(this.addCompany).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllCompanyData();
+              this.formSubmitted = false;
+              Object.keys(addCompanyData.controls).forEach((field) => {
+                addCompanyData.controls[field].reset();
+              });
+            } else {
+              this.toastr.error(errorData.Add_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+
+  saveDepartment(addDepartmentData) {
+    this.formSubmitted = true;
+    if (addDepartmentData.valid) {
+      if (this.departmentEditFlag == true) {
+        this.adminService.updateDepartmentData(this.addDepartment).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllDepartment();
+              this.onCancelDepartment();
+              this.resetValue(addDepartmentData);
+            }
+          },
+          (error) => {}
+        );
+      } else {
+        this.adminService.addDepartment(this.addDepartment).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllDepartment();
+              this.resetValue(addDepartmentData);
+            }
+          },
+          (error) => {}
+        );
+      }
+    } else {
+      this.formSubmitted = false;
+      return;
+    }
+  }
+
+  resetValue(FormName) {
+    this.formSubmitted = false;
+    Object.keys(FormName.controls).forEach((field) => {
+      FormName.controls[field].reset();
+    });
+  }
+  onCancelJet() {
+    this.addJet.id = null;
+    this.addJet.name = null;
+    this.addJet.capacity = null;
+    this.addJet.liquorRatio = null;
+    this.jetEditFlag = false;
+  }
+  onCancelCompany() {
+    this.addCompany.id = null;
+    this.addCompany.name = null;
+    this.companyEditFlag = false;
+  }
+  onCancelDepartment() {
+    this.addDepartment.id = null;
+    this.addDepartment.name = null;
+    this.departmentEditFlag = false;
+  }
+  onCancelDesignation() {
+    this.addDesignation.id = null;
+    this.addDesignation.designation = null;
+    this.designationEditFlag = false;
+  }
+  onCancelMachine() {
+    this.addMachine.machineName = null;
+    this.addMachine.controlId = null;
+    this.machineEditFlag = false;
+  }
+  onCancelMachineCategory() {
+    this.addMachineCategory.id = null;
+    this.addMachineCategory.name = null;
+    this.machineCategoryEditFlag = false;
+  }
+  onCancelApproveBy() {
+    this.approveBy.id = null;
+    this.approveBy.name = null;
+    this.approveBy.email = null;
+    this.approveBy.contact = null;
+    this.approveByEditFlag = false;
+  }
+
   removeJet(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
