@@ -11,8 +11,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { UserService } from "../../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Md5 } from "ts-md5/dist/md5";
-import { isAwaitExpression } from 'typescript';
-import { PartyService } from 'app/@theme/services/party.service';
+import { PartyService } from "../../../@theme/services/party.service";
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -42,6 +41,8 @@ export class AddEditUserComponent implements OnInit {
   permissionArray: any[] = [];
   companyList = [];
   departmentList = [];
+  master: any[] = [];
+  currentUserData: any;
   desiList;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -68,9 +69,7 @@ export class AddEditUserComponent implements OnInit {
     "Water Jet",
   ];
 
-  userHradIdList:any[] = [];
-  userHradIdListCopy;
-
+  userHradIdList: any[] = [];
 
   perName = [
     "View",
@@ -101,9 +100,7 @@ export class AddEditUserComponent implements OnInit {
   checkArray: any[] = [];
 
   data: any[] = [];
-  master: any[] =[];
   decimal: any[] = [];
-  currentUserData:any;
   userData: any;
   userId: any;
   userHead;
@@ -123,19 +120,17 @@ export class AddEditUserComponent implements OnInit {
     private partyService: PartyService
   ) {}
 
- async ngOnInit(){
+  async ngOnInit() {
     this.getDesignation();
     this.getAllCompany();
     this.getAllDepartment();
-    // this.getMaster();
-  await  this.getUserId();
+    await this.getUserId();
     if (this.currentUserId) {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
 
   }
-
 
   public getMaster(logInUserDetail) {
     let masterId;
@@ -160,52 +155,47 @@ export class AddEditUserComponent implements OnInit {
       );
     }
   }
-
-checkUser(logInUserDetail) {
-  if (
-    logInUserDetail.superUserHeadId == null &&
-    logInUserDetail.userHeadId == null
-  ) {
-    this.adminFlag = true;
-  } else if (
-    logInUserDetail.userHeadId &&
-    logInUserDetail.superUserHeadId == null
-  ) {
-    this.masterFlag = true;
-  } else if (
-    logInUserDetail.superUserHeadId &&
-    logInUserDetail.userHeadId
-  ) {
-    this.operatorFlag = true;
+  checkUser(logInUserDetail) {
+    if (
+      logInUserDetail.superUserHeadId == null &&
+      logInUserDetail.userHeadId == null
+    ) {
+      this.adminFlag = true;
+    } else if (
+      logInUserDetail.userHeadId &&
+      logInUserDetail.superUserHeadId == null
+    ) {
+      this.masterFlag = true;
+    } else if (logInUserDetail.superUserHeadId && logInUserDetail.userHeadId) {
+      this.operatorFlag = true;
+    }
   }
-}
- 
 
   getAllUserHrads() {
     this.loading = true;
-    
-    if(this.masterFlag){
-      let obj={
-        id : this.currentUserData.id,
-        name : this.currentUserData.name
-      }
+    if (this.masterFlag) {
+      let obj = {
+        id: this.currentUserData.id,
+        name: this.currentUserData.name,
+      };
       this.userHradIdList.push(obj);
-
-    }else{
-    this.userService.getAllHead().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.userHradIdList = data["data"];
+      console.log(this.userHradIdList);
+    } else {
+      this.userService.getAllHead().subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.userHradIdList = data["data"];
+            this.loading = false;
+          }
+          // this.toastr.error(data["msg"])
+          else this.loading = false;
+        },
+        (error) => {
+          // this.toastr.error(errorData.Internal_Error)
           this.loading = false;
         }
-        // this.toastr.error(data["msg"])
-        else this.loading = false;
-      },
-      (error) => {
-        // this.toastr.error(errorData.Internal_Error)
-        this.loading = false;
-      }
-    );}
+      );
+    }
   }
 
   public getUserId() {
@@ -217,27 +207,17 @@ checkUser(logInUserDetail) {
     this.currentUserId = this._route.snapshot.paramMap.get("id");
     this.userService.getUserHeadDetails(this.userId.userId).subscribe(
       (data) => {
-        if(data["success"]){
+        if (data["success"]) {
           this.currentUserData = data["data"];
           this.checkUser(this.currentUserData);
-          if(this.masterFlag){
-            this.user.isUserHead=true
+          if (this.masterFlag) {
+            this.user.isUserHead = true;
           }
           this.getAllUserHrads();
-         
-          //this.getMaster(this.currentUserData);
-
-        //   if(this.currentUserData.superUserHeadId == null && this.currentUserData.userHeadId != null){
-        //     this.masterFlag = true;
-        // }else if(this.currentUserData.superUserHeadId != null && this.currentUserData.userHeadId != null){
-        //   this.operatorFlag = true;
-        // }
         }
-      },(error) => {
-
-      }
-    )
-  
+      },
+      (error) => {}
+    );
   }
 
   designationSelected(event) {

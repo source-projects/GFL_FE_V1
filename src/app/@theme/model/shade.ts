@@ -3,6 +3,7 @@ export class Shade {
   partyShadeNo: string;
   processName: string;
   qualityId: string;
+  qualityEntryId: number;
   qualityName: string;
   qualityType: string;
   qualityEntryId: number;

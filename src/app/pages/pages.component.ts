@@ -18,8 +18,8 @@ import { BehaviorSubject } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "app/@theme/guards/input-data.guard";
-import { CommonService } from 'app/@theme/services/common.service';
-import { UserService } from 'app/@theme/services/user.service';
+import { CommonService } from "app/@theme/services/common.service";
+import { UserService } from "../@theme/services/user.service";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -35,9 +35,9 @@ export class PagesComponent implements OnInit {
   view: Boolean = true;
   view_all: Boolean = true;
   view_group: Boolean = true;
-  user:any;
-  userHead:any;
-  userData:any;
+  user: any;
+  userHead: any;
+  userData: any;
   constructor(
     public partyGuard: PartyGuard,
     public qualityGuard: QualityGuard,
@@ -57,19 +57,14 @@ export class PagesComponent implements OnInit {
     public inputDataGuard: InputDataGuard,
     private commonService: CommonService,
     private userService: UserService
-
-  ) {
-   
-  }
+  ) {}
   ngOnInit(): void {
-
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.userService.getUserHeadDetails(this.user.userId).subscribe(
       (data) => {
-        if(data["success"]){
+        if (data["success"]) {
           this.userData = data["data"];
-
 
           this.menu.forEach((e) => {
             switch (e.title) {
@@ -85,7 +80,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Quality":
                 this.view = this.qualityGuard.accessRights("view");
                 this.view_all = this.qualityGuard.accessRights("view all");
@@ -98,11 +93,14 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "User":
-                if(this.userData.superUserHeadId != null && this.userData.userHeadId != null){
+                if (
+                  this.userData.superUserHeadId != null &&
+                  this.userData.userHeadId != null
+                ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                   this.view = this.userGuard.accessRights("view");
                   this.view_all = this.userGuard.accessRights("view all");
@@ -115,9 +113,9 @@ export class PagesComponent implements OnInit {
                     e.hidden = true;
                   }
                 }
-              
+
                 break;
-      
+
               case "Color":
                 this.view = this.colorGuard.accessRights("view");
                 this.view_all = this.colorGuard.accessRights("view all");
@@ -130,7 +128,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
               case "Program":
                 this.view = this.programGuard.accessRights("view");
                 this.view_all = this.programGuard.accessRights("view all");
@@ -143,11 +140,13 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Stock-batch":
                 this.view = this.stockBatchGuard.accessRights("view");
                 this.view_all = this.stockBatchGuard.accessRights("view all");
-                this.view_group = this.stockBatchGuard.accessRights("view group");
+                this.view_group = this.stockBatchGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -156,7 +155,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
               case "Shade":
                 this.view = this.shadeGuard.accessRights("view");
                 this.view_all = this.shadeGuard.accessRights("view all");
@@ -169,7 +167,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
               case "Supplier":
                 this.view = this.supplierGuard.accessRights("view");
                 this.view_all = this.supplierGuard.accessRights("view all");
@@ -182,7 +179,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
               case "Water-jet":
                 this.view = this.waterJetGuard.accessRights("view");
                 this.view_all = this.waterJetGuard.accessRights("view all");
@@ -197,8 +193,12 @@ export class PagesComponent implements OnInit {
                 break;
               case "DyeingProcess":
                 this.view = this.dyeingProcessGuard.accessRights("view");
-                this.view_all = this.dyeingProcessGuard.accessRights("view all");
-                this.view_group = this.dyeingProcessGuard.accessRights("view group");
+                this.view_all = this.dyeingProcessGuard.accessRights(
+                  "view all"
+                );
+                this.view_group = this.dyeingProcessGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -207,7 +207,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Issue-Color-Box":
                 this.view = this.colorGuard.accessRights("view");
                 this.view_all = this.colorGuard.accessRights("view all");
@@ -220,11 +220,13 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Batch-shuffle":
                 this.view = this.stockBatchGuard.accessRights("view");
                 this.view_all = this.stockBatchGuard.accessRights("view all");
-                this.view_group = this.stockBatchGuard.accessRights("view group");
+                this.view_group = this.stockBatchGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -233,11 +235,15 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Finished Meter":
                 this.view = this.finishedMeterGuard.accessRights("view");
-                this.view_all = this.finishedMeterGuard.accessRights("view all");
-                this.view_group = this.finishedMeterGuard.accessRights("view group");
+                this.view_all = this.finishedMeterGuard.accessRights(
+                  "view all"
+                );
+                this.view_group = this.finishedMeterGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -246,10 +252,12 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Production Planning":
                 this.view = this.productionPlanningGuard.accessRights("view");
-                this.view_all = this.productionPlanningGuard.accessRights("view all");
+                this.view_all = this.productionPlanningGuard.accessRights(
+                  "view all"
+                );
                 this.view_group = this.productionPlanningGuard.accessRights(
                   "view group"
                 );
@@ -261,11 +269,13 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Jet Planning":
                 this.view = this.jetPlanningGuard.accessRights("view");
                 this.view_all = this.jetPlanningGuard.accessRights("view all");
-                this.view_group = this.jetPlanningGuard.accessRights("view group");
+                this.view_group = this.jetPlanningGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -274,7 +284,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Generate Invoice":
                 this.view = this.invoiceGuard.accessRights("view");
                 this.view_all = this.invoiceGuard.accessRights("view all");
@@ -287,11 +297,13 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Input Data":
                 this.view = this.inputDataGuard.accessRights("view");
                 this.view_all = this.inputDataGuard.accessRights("view all");
-                this.view_group = this.inputDataGuard.accessRights("view group");
+                this.view_group = this.inputDataGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -300,7 +312,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-      
+
               case "Payment":
                 this.view = this.paymentGuard.accessRights("view");
                 this.view_all = this.paymentGuard.accessRights("view all");
@@ -315,30 +327,9 @@ export class PagesComponent implements OnInit {
                 break;
             }
           });
-        
-
         }
       },
-      (error) => {
-
-      }
-    )
-    }
-    
-
-  // public getData() {
-  //   this.user = this.commonService.getUser();
-  //   this.userHead = this.commonService.getUserHeadId();
-  //   console.log(this.user);
-  //   this.userService.getUserHeadDetails(this.user.userId).subscribe(
-  //     (data) => {
-  //       if(data["success"]){
-  //         this.userData = data["data"];
-  //       }
-  //     },
-  //     (error) => {
-
-  //     }
-  //   )
-  // }
+      (error) => {}
+    );
+  }
 }
