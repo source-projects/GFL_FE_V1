@@ -258,7 +258,12 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.addColor(this.color).subscribe(
         (data) => {
           if (data["success"]) {
+           // this.route.navigate(["/pages/color"]);
+           this.route
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+            .then(() => {
             this.route.navigate(["/pages/color"]);
+          });
             this.toastr.success(errorData.Add_Success);
             // this.disableButton=true;
           } else {

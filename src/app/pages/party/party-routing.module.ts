@@ -7,11 +7,20 @@ import { PartyGuard } from 'app/@theme/guards/party.guard';
 const routes: Routes = [
   { 
     path:'',
+    component:AddEditPartyComponent,
+    canActivate:[PartyGuard],
+    canLoad:[PartyGuard],
+    data: { PermissionName: ['add']}
+  },
+  
+  { 
+    path:'view',
     component:PartyComponent,
     canActivate:[PartyGuard],
     canLoad:[PartyGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
+  
   {
     path:'add',
     component:AddEditPartyComponent,

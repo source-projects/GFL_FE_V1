@@ -255,6 +255,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   qualityIdSelected(event) {
+    console.log(event);
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -474,7 +475,11 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeService.addShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/shade"]);
+            //this.route.navigate(["/pages/shade"]);
+            this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/shade"]);});
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(data["msg"]);
@@ -549,6 +554,7 @@ export class AddEditShadeComponent implements OnInit {
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shadeObj.updatedBy = this.user.userId;
+      console.log(this.shadeObj);
       this.shadeService.updateShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {

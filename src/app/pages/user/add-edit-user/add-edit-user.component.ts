@@ -100,9 +100,7 @@ export class AddEditUserComponent implements OnInit {
   checkArray: any[] = [];
 
   data: any[] = [];
-
   decimal: any[] = [];
-
   userData: any;
   userId: any;
   userHead;
@@ -131,6 +129,7 @@ export class AddEditUserComponent implements OnInit {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
+
   }
 
   public getMaster(logInUserDetail) {
@@ -826,7 +825,11 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/user"]);
+            //this.route.navigate(["/pages/user"]);
+            this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/user"]);});
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -854,7 +857,6 @@ export class AddEditUserComponent implements OnInit {
             this.desiList.forEach((element) => {
               if (element.designation != "Master") this.desi_list.push(element);
             });
-            console.log(this.desi_list);
           } else {
             this.desi_list = this.desiList;
           }

@@ -6,6 +6,7 @@ export class Shade {
   qualityEntryId: number;
   qualityName: string;
   qualityType: string;
+  qualityEntryId: number;
   colorTone: string;
   labColorNo: string;
   category: string;

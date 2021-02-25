@@ -37,7 +37,7 @@ export class StockBatchGuard implements CanActivate {
        if (this.permis[1] == '1')
          return true;
        else
-       {this._router.navigate(['/pages']);
+       {this._router.navigate(['/pages/stock-batch/view']);
        return false;}
 
      case 'edit':

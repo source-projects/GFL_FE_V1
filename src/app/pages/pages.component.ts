@@ -128,7 +128,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-
               case "Program":
                 this.view = this.programGuard.accessRights("view");
                 this.view_all = this.programGuard.accessRights("view all");
@@ -156,7 +155,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-
               case "Shade":
                 this.view = this.shadeGuard.accessRights("view");
                 this.view_all = this.shadeGuard.accessRights("view all");
@@ -169,7 +167,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-
               case "Supplier":
                 this.view = this.supplierGuard.accessRights("view");
                 this.view_all = this.supplierGuard.accessRights("view all");
@@ -182,7 +179,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-
               case "Water-jet":
                 this.view = this.waterJetGuard.accessRights("view");
                 this.view_all = this.waterJetGuard.accessRights("view all");

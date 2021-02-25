@@ -183,6 +183,7 @@ export class AddEditPartyComponent implements OnInit {
       this.master.push(this.logInUserDetail.name);
     } else if (this.operatorFlag) {
       this.master.push(this.logInUserDetail.userHeadName);
+      console.log(this.master);
     } else {
       this.loading = true;
       this.partyService.getAllMaster().subscribe(
@@ -263,6 +264,7 @@ export class AddEditPartyComponent implements OnInit {
     this.disableButton = true;
     this.formSubmitted = true;
     this.partyForm.value.createdBy = this.user.userId;
+   // console.log('raw',this.partyForm.getRawValue())
     this.partyForm.patchValue({
       userHeadId: this.userHead.userHeadId,
     });
@@ -279,7 +281,11 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.currentParty = data["data"];
-              this.route.navigate(["pages/party"]);
+              //this.route.navigate(["pages/party"]);
+              this.route
+              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+              .then(() => {
+              this.route.navigate(["/pages/quality"]);});
               this.toastr.success(errorData.Add_Success);
             } else {
               this.toastr.error(data["msg"]);

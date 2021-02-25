@@ -3,6 +3,9 @@
         <div *ngIf="currentQualityId == null; else updateQ">
             <h2 class="nb-text">Add Quality</h2>
         </div>
+        <div *ngIf="this.currentQualityId == null" class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+            <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/quality/view']">View Table</button>
+        </div>
         <ng-template #updateQ>
             <h2 class="nb-text">Update Quality</h2>
         </ng-template>
@@ -142,8 +145,7 @@
                                 value="UPDATE">UPDATE</button>&nbsp;&nbsp;&nbsp;
                         </ng-template>
 
-                        <button *ngIf="currentQualityId == null; else updateqty" type="submit"
-                            class="btn btn-primary btn-sm btn-design button-base ripple" value="SAVE">SAVE</button>
+                        <button *ngIf="currentQualityId == null; else updateqty" type="button"(click)="addQuality()" class="btn btn-primary btn-sm btn-design button-base ripple" value="SAVE">SAVE</button>
                     </div>
                 </div>
             </div>
