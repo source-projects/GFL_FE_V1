@@ -3,41 +3,63 @@
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
             <nb-tab tabTitle="Jet">
                 <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Jet Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Jet Name"
-                                [(ngModel)]="addJet.name">
+                <form #addJetData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Jet Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Jet Name"
+                                    [(ngModel)]="addJet.name" #jetName1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetName1.invalid) &&(formSubmitted || jetName1.touched) }"
+                                    required>
+                                <div class="invalid-feedback" style="color: red;"
+                                    *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
+                                    Jet name is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Jet Capacity</label>
+                                <input name="capacity" type="number" class="form-control"
+                                    placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity"
+                                    #jetCapacity1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetCapacity1.invalid) &&(formSubmitted || jetCapacity1.touched) }"
+                                    required>
+                                <div class="invalid-feedback" style="color: red;"
+                                    *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
+                                    Capacity is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Liquor Ratio</label>
+                                <input name="liquorRatio" type="number" class="form-control"
+                                    placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio"
+                                    #jetLiquor1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetLiquor1.invalid) &&(formSubmitted || jetLiquor1.touched) }"
+                                    required>
+                                <div class="invalid-feedback" style="color: red;"
+                                    *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
+                                    Liquor ratio is required.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)=" onCancelJet()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveJet(addJetData)">SAVE</button>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Jet Capacity</label>
-                            <input type="number" class="form-control" placeholder="Enter Jet Capacity"
-                                [(ngModel)]="addJet.capacity">
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Liquor Ratio</label>
-                            <input type="number" class="form-control" placeholder="Enter Liquor Ratio"
-                                [(ngModel)]="addJet.liquorRatio">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveJet()">SAVE</button>
-                    </div>
-                </div>
+                </form>
                 <!-- </form> -->
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="jetList"
@@ -49,42 +71,44 @@
                                 (click)="removeJet(row.id)"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
                                 (click)="getjetEdit(row.id)"></nb-icon>
-
                         </ng-template>
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
                     <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
-
                 </ngx-datatable>
-
-
-
             </nb-tab>
+
             <nb-tab tabTitle="Company">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Company Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Company Name."
-                                [(ngModel)]="addCompany.name">
+                <form #addCompanyData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Company Name."
+                                    [(ngModel)]="addCompany.name" #companyName="ngModel"
+                                    [ngClass]="{'is-invalid':(companyName.invalid) &&(formSubmitted || companyName.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(companyName.invalid) && (formSubmitted || companyName.touched)">
+                                    Company name is required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-
-
-                </div>
-                <!-- </form> -->
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelCompany()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveCompany(addCompanyData)">SAVE</button>
+                        </div>
+                    </div>
+                </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList"
                     [headerHeight]="31" [footerHeight]="31">
@@ -100,46 +124,37 @@
 
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
-
-
-
                 </ngx-datatable>
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveCompany()">SAVE</button>
-                    </div>
-                </div>
             </nb-tab>
             <!--Department-->
             <nb-tab tabTitle="Department">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Department Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Department Name."
-                                [(ngModel)]="addDepartment.name">
+                <form #addDepartmentData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Department Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Department Name."
+                                    [(ngModel)]="addDepartment.name" #DepartmentName="ngModel"
+                                    [ngClass]="{'is-invalid':(DepartmentName.invalid) &&(formSubmitted || DepartmentName.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(DepartmentName.invalid) && (formSubmitted || DepartmentName.touched)">
+                                    Department name is required.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelDepartment">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveDepartment(addDepartmentData)">SAVE</button>
                         </div>
                     </div>
-
-
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveDepartment()">SAVE</button>
-                    </div>
-                </div>
-                <!-- </form> -->
+                </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="departmentList"
                     [headerHeight]="31" [footerHeight]="31">
@@ -152,51 +167,59 @@
                                 (click)="getdepartmentEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
-
-
-
                 </ngx-datatable>
-
             </nb-tab>
 
 
             <!--Machine-->
             <nb-tab tabTitle="Machine">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Machine Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Machine Name"
-                                [(ngModel)]="addMachine.machineName">
+                <form #addMachineData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Machine Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name"
+                                    [(ngModel)]="addMachine.machineName" [(ngModel)]="addDepartment.name"
+                                    #machineName="ngModel"
+                                    [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
+                                    Machine name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Machine Category</label>
+                                <ng-select name="category" placeholder="select Machine Category"
+                                    [(ngModel)]="addMachine.controlId" [(ngModel)]="addDepartment.name"
+                                    #machineCategory1="ngModel"
+                                    [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
+                                    required>
+                                    <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
+                                        {{mc.name}}
+                                    </ng-option>
+                                </ng-select>
+                                <div class="invalid-feedback"
+                                    *ngIf="(machineCategory1.invalid) && (formSubmitted || machineCategory1.touched)">
+                                    Machine category is required.
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Machine Category</label>
-                            <ng-select placeholder="select Machine Category" [(ngModel)]="addMachine.controlId">
-                                <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
-                                    {{mc.name}}
-                                </ng-option>
-                            </ng-select>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveMachine()">SAVE</button>
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelMachine()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveMachine(addMachineData)">SAVE</button>
+                        </div>
                     </div>
-                </div>
-                <!-- </form> -->
+                </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList"
                     [headerHeight]="31" [footerHeight]="31">
@@ -222,28 +245,35 @@
 
             <!--Machine Category-->
             <nb-tab tabTitle="Machine Category">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Machine Category</label>
-                            <input type="text" class="form-control" placeholder="Enter Machine Category"
-                                [(ngModel)]="addMachineCategory.name">
+                <form #addMachineCategoryData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Machine Category</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Category"
+                                    [(ngModel)]="addMachineCategory.name" #machineCategoryName="ngModel"
+                                    [ngClass]="{'is-invalid':(machineCategoryName.invalid) &&(formSubmitted || machineCategoryName.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(machineCategoryName.invalid) && (formSubmitted || machineCategoryName.touched)">
+                                    Machine category name is required.
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelMachineCategory()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px"
+                                (click)="saveMachineCategory(addMachineCategoryData)">SAVE</button>
                         </div>
                     </div>
-
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveMachineCategory()">SAVE</button>
-                    </div>
-                </div>
-                <!-- </form> -->
+                </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList"
                     [headerHeight]="31" [footerHeight]="31">
@@ -266,28 +296,34 @@
 
 
             <nb-tab tabTitle="Designation">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-control" placeholder="Enter Designation"
-                                [(ngModel)]="addDesignation.designation">
+                <form #addDesignationData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Designation</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Designation"
+                                    [(ngModel)]="addDesignation.designation" #designationName1="ngModel"
+                                    [ngClass]="{'is-invalid':(designationName1.invalid) &&(formSubmitted || designationName1.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(designationName1.invalid) && (formSubmitted || designationName1.touched)">
+                                    Designation name is required.
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelDesignation()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveDesignation(addDesignationData)">SAVE</button>
                         </div>
                     </div>
-
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveDesignation()">SAVE</button>
-                    </div>
-                </div>
-                <!-- </form> -->
+                </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="designationList"
                     [headerHeight]="31" [footerHeight]="31">
@@ -300,58 +336,63 @@
                                 (click)="getdesignationEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Designation" prop="designation" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
-
-
-
                 </ngx-datatable>
-
             </nb-tab>
-
-
             <nb-tab tabTitle="Approve By">
-                <!-- <form #approveBy="ngForm"> -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Name"
-                                [(ngModel)]="approveBy.name">
+                <form #addApproveByData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Name"
+                                    [(ngModel)]="approveBy.name" #name1="ngModel"
+                                    [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(name1.invalid) && (formSubmitted || name1.touched)">
+                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Contact No</label>
+                                <input name="contactNo" type="number" class="form-control"
+                                    placeholder="Enter Contact No." [(ngModel)]="approveBy.contact"
+                                    #contactNo1="ngModel"
+                                    [ngClass]="{'is-invalid':(contactNo1.invalid) &&(formSubmitted || contactNo1.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(contactNo1.invalid) && (formSubmitted || contactNo1.touched)">
+                                    Conatct no is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input name="email" type="text" class="form-control" placeholder="Enter Email"
+                                    [(ngModel)]="approveBy.email" #email1="ngModel"
+                                    [ngClass]="{'is-invalid':(email1.invalid) &&(formSubmitted || email1.touched) }"
+                                    required>
+                                <div class="invalid-feedback"
+                                    *ngIf="(email1.invalid) && (formSubmitted || email1.touched)">
+                                    email is required.
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Contact No</label>
-                            <input type="number" class="form-control" placeholder="Enter Contact No."
-                                [(ngModel)]="approveBy.contact">
+                    <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelApproveBy()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
+                                style="margin-right:20px" (click)="saveApproveBy(addApproveByData)">SAVE</button>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" class="form-control" placeholder="Enter Email"
-                                [(ngModel)]="approveBy.email">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            (click)="onCancel()">CANCEL</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design button-base ripple"
-                            style="margin-right:20px" (click)="saveApproveBy()">SAVE</button>
-                    </div>
-                </div>
-                <!-- </form> -->
-
+                </form>
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveByList"
                     [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
@@ -363,23 +404,14 @@
                                 (click)="getapproveByEdit(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
                     <ngx-datatable-column name="Contact No" prop="contact" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
                     <ngx-datatable-column name="Email" prop="email" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-
-
-
                 </ngx-datatable>
-
             </nb-tab>
         </nb-tabset>
-
     </nb-card-body>
 </nb-card>
