@@ -140,15 +140,15 @@ export class PlanningSlipComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
-            console.log(this.slipData);
-            this.slipData.dyeingSlipDataList.forEach((element) => {
-              element.dyeingSlipItemData.forEach((element1) => {
-                element1.qty = element1.qty
-                  ? element1.qty.toFixed(3)
-                  : element1.qty;
-                element.isColor = true;
+            if (this.slipData) {
+              this.slipData.dyeingSlipDataList.forEach((element) => {
+                element.dyeingSlipItemData.forEach((element1) => {
+                  element1.qty = element1.qty
+                    ? element1.qty.toFixed(3)
+                    : element1.qty;
+                });
               });
-            });
+            }
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -401,15 +401,16 @@ export class PlanningSlipComponent implements OnInit {
 
   checkItemListAndValue() {
     this.quantityNullFlag = false;
-    this.slipData.dyeingSlipDataList.forEach((element) => {
-      element.dyeingSlipItemData.forEach((element1) => {
-        if (element1.qty == null) {
-          console.log("null");
-          this.quantityNullFlag = true;
-          return;
-        }
+    if (this.slipData) {
+      this.slipData.dyeingSlipDataList.forEach((element) => {
+        element.dyeingSlipItemData.forEach((element1) => {
+          if (element1.qty == null) {
+            this.quantityNullFlag = true;
+            return;
+          }
+        });
       });
-    });
+    }
   }
 
   removeProcess(processIndex) {
@@ -420,8 +421,8 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
   printSlip(myForm?) {
-    this.checkItemListAndValue();
-    if (myForm.valid && !this.quantityNullFlag) {
+    //this.checkItemListAndValue();
+    if ((myForm? myForm.valid : true) && !this.quantityNullFlag) {
       this.isPrinting = false;
       if (!this.isPrintDirect) {
         this.approveByFlag = true;
@@ -503,25 +504,21 @@ export class PlanningSlipComponent implements OnInit {
       ].liquerRation = this.liquorRatio;
       this.slipData.dyeingSlipDataList[this.count].isColor = this.isColor;
 
-      for (let i = 0; i < this.supplierSelected.length; i++) {
-        this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData.push(
-          this.dyeingChemicalData[i]
-        );
-
-        this.itemListArray.forEach((ele) => {
-          if (ele.itemId == this.supplierSelected[i]) {
-            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
-              i
-            ].supplierId = ele.supplierId;
-            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
-              i
-            ].supplierName = ele.supplierName;
-            this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData[
-              i
-            ].itemName = ele.itemName;
-          }
-        });
+      for (let i = 0; i < this.dyeingChemicalData.length; i++) {
+        if (this.itemListArray) {
+          this.itemListArray
+            .filter((f) => f.itemId == this.dyeingChemicalData[i].itemId)
+            .map((f) => {
+              this.dyeingChemicalData[i].itemName = f.itemName;
+              this.dyeingChemicalData[i].supplierId = f.supplierId;
+              this.dyeingChemicalData[i].supplierName = f.supplierName;
+            });
+        }
       }
+      this.slipData.dyeingSlipDataList[this.count].dyeingSlipItemData = [
+        ...this.dyeingChemicalData,
+      ];
+
       this.saveSetFlag = false;
       this.saveAndPrintFlag = false;
       this.formSubmitted = false;
@@ -541,7 +538,7 @@ export class PlanningSlipComponent implements OnInit {
         ) {
           this.dyeingChemicalData.push(new DyeingChemicalData());
           this.data.changes.subscribe(() => {
-            this.data.last.focus();
+            this.data.last["nativeElement"].focus();
           });
         } else {
           this.toastr.error("Fill empty fields.");
@@ -554,7 +551,7 @@ export class PlanningSlipComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50);
+        }, 10);
       }
     }
   }
