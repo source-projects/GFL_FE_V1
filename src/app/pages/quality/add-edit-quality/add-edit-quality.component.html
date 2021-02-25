@@ -121,10 +121,8 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <!-- <button class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/quality">
-                            CANCEL
-                        </button> -->
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+                      
+                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset()">CANCEL</button>
 
                         <ng-template #updateqty><button type="button" (click)="updateQuality()"
                                 class="btn btn-primary btn-sm btn-design button-base ripple"

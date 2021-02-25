@@ -249,6 +249,13 @@ export class AddEditColorComponent implements OnInit {
     this.calculateAmount(rowIndex);
   }
 
+  reset(colorForm){
+    colorForm.reset();
+    this.formSubmitted = false;
+    this.color.billDate = new Date(this.color.billDate);
+    this.color.chlDate = new Date(this.color.chlDate);
+  }
+
   addColor(colorForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -258,12 +265,8 @@ export class AddEditColorComponent implements OnInit {
       this.colorService.addColor(this.color).subscribe(
         (data) => {
           if (data["success"]) {
-           // this.route.navigate(["/pages/color"]);
-           this.route
-            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-            .then(() => {
-            this.route.navigate(["/pages/color"]);
-          });
+            this.reset(colorForm);
+            this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
             // this.disableButton=true;
           } else {

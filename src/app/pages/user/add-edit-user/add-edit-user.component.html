@@ -242,9 +242,8 @@
 
         <div class="row">
             <div class="col-md-12 mobile-btn-center text-btn-right">
-                <!-- <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px"
-                    routerLink="/pages/user">Cancel</button> -->
-                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+            
+                <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(myForm)">CANCEL</button>
 
                 <button *ngIf="this.currentUserId != null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)=updateUser(myForm)>Update</button>
 

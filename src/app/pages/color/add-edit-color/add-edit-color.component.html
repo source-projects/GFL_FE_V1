@@ -157,9 +157,8 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <!-- <button class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/color'>CANCEL</button> -->
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+                           
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(colorForm)">CANCEL</button>
 
                             <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px"

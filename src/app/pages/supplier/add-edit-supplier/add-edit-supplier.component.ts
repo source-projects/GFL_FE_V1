@@ -81,6 +81,10 @@ export class AddEditSupplierComponent implements OnInit {
       )
     }
   }
+  reset(){
+    this.addSupplier.reset();
+    this.formSubmitted = false; 
+  }
 
   public addSupplierInfo():any{
     this.disableButton=true;
@@ -93,12 +97,16 @@ export class AddEditSupplierComponent implements OnInit {
         data =>{
           if(data["success"]){
             this.toastr.success(errorData.Add_Success);
-           // this.router.navigate(['pages/supplier']);
-           this.router
-            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-            .then(() => {
-            this.router.navigate(["/pages/supplier"]);
-          });
+            this.addSupplier.reset();
+            this.formSubmitted = false;
+          //   Object.keys(this.addSupplier.controls).forEach(field => { 
+          //       this.addSupplier.controls[field].reset();   
+          //     }
+         
+          // );
+
+            this.disableButton = false;
+        
 
           }
           else{

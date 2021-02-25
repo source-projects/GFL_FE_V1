@@ -260,6 +260,12 @@ export class AddEditPartyComponent implements OnInit {
       (charCode >= 97 && charCode <= 122)
     );
   }
+
+  reset(){
+    this.partyForm.reset();
+    this.formSubmitted = false;
+  }
+  
   public addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -281,21 +287,8 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.currentParty = data["data"];
-              //this.route.navigate(["pages/party"]);
-              // this.route
-              // .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-              // .then(() => {
-              // this.route.navigate(["/pages/quality"]);});
-
-              this.partyForm.reset();
-              this.formSubmitted = false;
-              Object.keys(this.partyForm.controls).forEach(field => { // {1}
-                const control = this.partyForm.get(field);            // {2}
-                control.markAsTouched({ onlySelf: true }); 
-                //control.invalid = false;       // {3}
-              });
-              console.log(this.partyForm);
-             // this.partyForm.reset();
+              this.reset();
+              this.disableButton = false;
 
               this.toastr.success(errorData.Add_Success);
             } else {

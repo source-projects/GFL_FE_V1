@@ -150,7 +150,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Color Tone</label>
-                            <input class="form-control size-small" fieldsize="small" nbinput [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
+                            <input id="color" class="form-control size-small" fieldsize="small" nbinput [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="updateColor()" placeholder="Color Tone" />
                         </div>
                         <!--<div class="invalid-feedback"
                         *ngIf="formSubmitted && (color1.invalid || (color1.dirty || color1.untouched) )">
@@ -291,7 +291,7 @@
                         <div class="padding-bt-tp">
                             <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade'>CANCEL</button> -->
-                            <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel" type="reset">CANCEL</button>
+                            <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(shadeForm)">CANCEL</button>
 
                             <button *ngIf="apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade/pending-apc'>CANCEL</button>

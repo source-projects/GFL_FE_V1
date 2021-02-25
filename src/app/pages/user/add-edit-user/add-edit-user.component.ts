@@ -229,7 +229,6 @@ export class AddEditUserComponent implements OnInit {
       const found = this.desi_list.find(
         (element) => element.designation == "Master"
       );
-
       if (event == found.id) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -809,6 +808,63 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
+  reset(myForm){
+    myForm.reset();
+    let binArray1 = {
+      pa: "",
+      qu: "",
+      u: "",
+      sb: "",
+      prg: "",
+      sh: "",
+      su: "",
+      sr: "",
+      cs: "",
+      pr: "",
+      pp: "",
+      jp: "",
+      pt: "",
+      d: "",
+      bf: "",
+      ip: "",
+    };
+    Object.keys(binArray1).map((key, i) => {
+      if (this.permissionArray[i].view == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].add == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].edit == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].delete == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].viewGroup == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].viewAll == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].editGroup == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].editAll == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].deleteGroup == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].deleteAll == false) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+    });
+
+    this.formSubmitted = false;
+
+
+  }
 
   addUser(myForm) {
     this.getCheckedItem();
@@ -825,11 +881,10 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-            //this.route.navigate(["/pages/user"]);
-            this.route
-              .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-              .then(() => {
-              this.route.navigate(["/pages/user"]);});
+           this.reset(myForm);
+          this.allRightsFlag = false;
+
+            this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);
