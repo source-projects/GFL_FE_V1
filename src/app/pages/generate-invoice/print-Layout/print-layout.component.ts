@@ -138,6 +138,6 @@ export class PrintLayoutComponent implements OnInit {
     setTimeout(() => {
       doc.print();
       this.router.navigate(['pages/generate_invoice']);
-    }, 100);
+    }, 1000);
   }
 }
