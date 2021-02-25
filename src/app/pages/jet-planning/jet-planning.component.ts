@@ -279,14 +279,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.detailsList =
-              "Party Name : " +
-              data["data"].partyName +
-              " Batch No: " +
-              data["data"].batchId +
-              " Party Shade No: " +
-              data["data"].partyShadeNo +
-              " Batch Weight: " +
-              data["data"].totalWt;
+              "Party Name : " + data["data"].partyName +
+              "\nBatch No: " + data["data"].batchId +
+              "\nParty Shade No: " + data["data"].partyShadeNo +
+              "\nBatch Weight: " + data["data"].totalWt;
             this.items = [
               { title: "Complete" },
               { title: "Pause" },
