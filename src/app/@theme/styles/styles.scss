@@ -1808,9 +1808,6 @@ input[type="number"]::-webkit-outer-spin-button {
     .nb-theme-default nb-sidebar.collapsed {
         width: 0 !important;
     }
-    .btn-design {
-        padding: 6px 10px !important;
-    }
     .mt-50 {
         margin-top: 50px;
     }
@@ -1822,7 +1819,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .table-jet,
     .main-table-drag {
-        width: fit-content !important;
+        width: 100% !important;
     }
     .border-top-mob {
         border-top: 1px solid #a4a2a4ad;

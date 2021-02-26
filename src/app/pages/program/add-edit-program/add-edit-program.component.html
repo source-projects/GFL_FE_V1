@@ -251,9 +251,9 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/program">CANCEL</button>
-                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="this.currentProgramId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="this.currentProgramId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
                         </div>
 
                     </div>
