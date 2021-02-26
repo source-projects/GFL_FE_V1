@@ -12,7 +12,7 @@
             </div>
 
 
-            <div *ngIf="this.currentPartyId == null" class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
+            <div  class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
                 <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/party/view']">View
                     Table</button>
             </div>
@@ -193,9 +193,11 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
 
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        <button *ngIf="!this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="reset()">CANCEL</button>
-                        <button *ngIf="this.currentPartyId != null" type="button" (click)="updateParty()"
+                        <button *ngIf="this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            [routerLink]="['/pages/party/view']">CANCEL</button>
+                        <button *ngIf="this.currentPartyId" type="button" (click)="updateParty()"
                             class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px"
                             [disabled]="disableButton">UPDATE</button>
 
