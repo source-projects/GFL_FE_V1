@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -25,8 +31,7 @@ import { CommonService } from "../../..//@theme/services/common.service";
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditStockBatchComponent implements OnInit {
-
-  @ViewChild('forFocus') searchElement: ElementRef;
+  @ViewChild("forFocus") searchElement: ElementRef;
   public loading = false;
   public disableButton = false;
   public formSubmitted = false;
@@ -54,9 +59,9 @@ export class AddEditStockBatchComponent implements OnInit {
   stockDataValues = [
     {
       batchId: null,
-      totalWt: null,
-      totalMt: null,
-      isProductionPlanned:false,
+      totalWt: Number = null,
+      totalMt: Number = null,
+      isProductionPlanned: false,
       batchMW: [
         {
           mtr: null,
@@ -70,12 +75,14 @@ export class AddEditStockBatchComponent implements OnInit {
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   batchIdArray = [];
-  totalMtr: any = 0;
+  totalMtr: Number = 0;
   wtArray: any[] = [];
   mtArray: any[] = [];
-  totalWt: any = 0;
+  totalWt: Number = 0;
   dateRange: any;
   weightFlag: boolean = false;
+  weight = {};
+  MtWtIndex = 0;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -85,7 +92,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getQualityList();
@@ -198,8 +205,7 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.unit = element.unit;
             if (this.stockBatch.unit === "weight") {
               this.weightFlag = true;
-            }
-            else {
+            } else {
               this.weightFlag = false;
             }
             this.wtPer100M = element.wtPer100m;
@@ -208,16 +214,15 @@ export class AddEditStockBatchComponent implements OnInit {
 
         let reCalcMt;
         let reCalcWt;
+        this.weight = {};
         //re-calculate mtr/wt when quality changed
-        this.stockDataValues.forEach((e) => {
-          e.batchMW.forEach((e1) => {
-            if (this.stockBatch.unit == "mtr") {
-              reCalcWt = (e1.mtr / 100) * this.wtPer100M;
-              e1.wt = reCalcWt.toFixed(2);
+        this.stockDataValues.forEach((e, i) => {
+          e.batchMW.forEach((e1, j) => {
+            if (this.stockBatch.unit == "meter") {
+              this.calculateWt(e1.mtr, i, j, 1);
             } else {
-              reCalcMt = (e1.wt * 100) / this.wtPer100M;
+              this.calculateMtr(e1.wt, i, j, 1);
             }
-            e1.mtr = reCalcMt.toFixed(2);
           });
         });
       }
@@ -252,12 +257,14 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
             if (!this.stockBatch.batchData.length) {
               //this.zeroValueBatch = true;
-            }
-            else {
-              this.stockBatch.batchData = _.sortBy(data["data"].batchData, 'batchId');
+            } else {
+              this.stockBatch.batchData = _.sortBy(
+                data["data"].batchData,
+                "batchId"
+              );
               this.stockBatch.batchData.forEach((element, index) => {
-                this.production_flag[index] = element.isProductionPlanned
-              })
+                this.production_flag[index] = element.isProductionPlanned;
+              });
               this.setStockDataValues1();
             }
           } else {
@@ -287,8 +294,8 @@ export class AddEditStockBatchComponent implements OnInit {
             this.mtArray.push(element.mtr);
             this.wtArray.push(element.wt);
           });
-          this.totalWt = this.calculateTotalMtrWt(this.wtArray);
-          this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
+          // this.totalWt = this.calculateTotalMtrWt(this.wtArray);
+          // this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
           batch.totalMt = this.totalMtr;
           batch.totalWt = this.totalWt;
           batch.isProductionPlanned = x.isProductionPlanned;
@@ -308,12 +315,10 @@ export class AddEditStockBatchComponent implements OnInit {
   onKeyUp(e, rowIndex, colIndex, colName, idx) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      if(this.weightFlag){
-        this.index = "grData" + (rowIndex + 1) + "-" + 1 + "" + idx;  
-      }
-      else if(!this.weightFlag){
+      if (this.weightFlag) {
+        this.index = "grData" + (rowIndex + 1) + "-" + 1 + "" + idx;
+      } else if (!this.weightFlag) {
         this.index = "grData" + (rowIndex + 1) + "-" + 0 + "" + idx;
-
       }
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
         let item = this.stockDataValues[idx].batchMW[rowIndex];
@@ -428,35 +433,79 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  calculateWt(meter, i, j, col) {
-    let w: number;
+  calculateWt(meter: number, i, j, col) {
+    let w: Number;
     w = (meter / 100) * this.wtPer100M;
     this.stockDataValues[i].batchMW[j].wt = w.toFixed(2);
-    this.wtArray.push(w.toFixed(2));
-    this.mtArray.push(meter.toFixed(2));
-    this.totalWt = this.calculateTotalMtrWt(this.wtArray);
-    this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
-    this.stockDataValues[i].totalMt = this.totalMtr;
-    this.stockDataValues[i].totalWt = this.totalWt;
+    if (this.MtWtIndex == i) {
+      this.weight[j] = {
+        w,
+        meter,
+      };
+      this.calculateTotalMtrWt("meter");
+      this.stockDataValues[i].totalMt = Number(
+        Number(this.totalMtr).toFixed(2)
+      );
+      this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
+    } else {
+      this.weight = {};
+      this.MtWtIndex = i;
+      this.weight[j] = {
+        w,
+        meter,
+      };
+      this.calculateTotalMtrWt("meter");
+      this.stockDataValues[this.MtWtIndex].totalMt = Number(
+        Number(this.totalMtr).toFixed(2)
+      );
+      this.stockDataValues[this.MtWtIndex].totalWt = Number(
+        Number(this.totalWt).toFixed(2)
+      );
+    }
   }
-  calculateTotalMtrWt(dataArray) {
-    let total = 0;
-    dataArray.forEach((element) => {
-      total = Number(total) + Number(element);
-    });
-    return total.toFixed(2);
+  calculateTotalMtrWt(MW): any {
+    (this.totalWt = 0), (this.totalMtr = 0);
+    if (MW === "meter") {
+      Object.keys(this.weight).forEach((element: any) => {
+        this.totalWt += this.weight[element].w;
+        this.totalMtr += this.weight[element].meter;
+      });
+    } else {
+      Object.keys(this.weight).forEach((element: any) => {
+        this.totalWt += this.weight[element].weight;
+        this.totalMtr += this.weight[element].m;
+      });
+    }
   }
-  calculateMtr(weight, i, j, col) {
-    let m;
+  calculateMtr(weight: number, i, j, col) {
+    let m: Number;
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
-    this.mtArray.push(this.stockDataValues[i].batchMW[j].mtr);
-    this.wtArray.push(m.toFixed(2));
-    this.mtArray.push(weight.toFixed(2));
-    this.totalWt = this.calculateTotalMtrWt(this.wtArray);
-    this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
-    this.stockDataValues[i].totalMt = this.totalMtr;
-    this.stockDataValues[i].totalWt = this.totalWt;
+    if (this.MtWtIndex == i) {
+      this.weight[j] = {
+        m,
+        weight,
+      };
+      this.calculateTotalMtrWt("weight");
+      this.stockDataValues[i].totalMt = Number(
+        Number(this.totalMtr).toFixed(2)
+      );
+      this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
+    } else {
+      this.weight = {};
+      this.MtWtIndex = i;
+      this.weight[j] = {
+        m,
+        weight,
+      };
+      this.calculateTotalMtrWt("weight");
+      this.stockDataValues[this.MtWtIndex].totalMt = Number(
+        Number(this.totalMtr).toFixed(2)
+      );
+      this.stockDataValues[this.MtWtIndex].totalWt = Number(
+        Number(this.totalWt).toFixed(2)
+      );
+    }
   }
 
   checkValidation(myForm) {
@@ -533,7 +582,14 @@ export class AddEditStockBatchComponent implements OnInit {
         if (ele.batchMW && ele.batchMW.length) {
           ele.batchMW.forEach((subele) => {
             if (!!subele.mtr && !!subele.wt) {
-              let obj = { batchId: 0, mtr: 0, wt: 0, totalMt: 0, totalWt: 0,isProductionPlanned:false };
+              let obj = {
+                batchId: 0,
+                mtr: 0,
+                wt: 0,
+                totalMt: 0,
+                totalWt: 0,
+                isProductionPlanned: false,
+              };
               obj.batchId = ele.batchId;
               obj.mtr = subele.mtr;
               obj.wt = subele.wt;
