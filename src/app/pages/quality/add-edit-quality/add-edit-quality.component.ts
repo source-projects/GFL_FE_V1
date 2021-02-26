@@ -149,6 +149,12 @@ export class AddEditQualityComponent implements OnInit {
     });
   }
 
+  reset(){
+    this.addEditQualityForm.reset();
+    this.formSubmitted = false;
+    this.addEditQualityForm.controls["qualityType"].reset("Fabric");   
+  }
+
   addQuality() {
     this.disableButton = true;
 
@@ -158,8 +164,9 @@ export class AddEditQualityComponent implements OnInit {
       this.addEditQualityForm.value.userHeadId = this.userHead.userHeadId;
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/quality"]);
+          if (data['success']) {
+            this.reset();
+            this.disableButton = false; 
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -175,6 +182,13 @@ export class AddEditQualityComponent implements OnInit {
       this.disableButton = false;
       return;
     }
+  }
+
+  onCancel(){
+    this.addEditQualityForm.patchValue({
+      qualityType : "Fabric"}
+    )  
+    console.log(this.addEditQualityForm.value.qualityType);
   }
 
   updateQuality() {

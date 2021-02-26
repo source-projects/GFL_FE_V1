@@ -52,7 +52,7 @@ export class ProductionPlanningComponent implements OnInit {
     private modalService: NgbModal,
     private shadeService: ShadeService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCurrentId();
@@ -201,7 +201,7 @@ export class ProductionPlanningComponent implements OnInit {
                 this.batchList = data["data"];
                 this.batchListCopy = data['data'];
                 if (this.batchList) {
-                  this.batchList = this.batchList.filter(v=> !v.productionPlanned);
+                  this.batchList = this.batchList.filter(v => !v.productionPlanned);
                 }
                 this.loading = false;
               } else {
@@ -275,7 +275,7 @@ export class ProductionPlanningComponent implements OnInit {
           this.plannedProductionListForDataTable();
         }
       })
-      .catch(err => {});
+      .catch(err => { });
     this.editProductionPlanFlag = false;
   }
 
@@ -286,17 +286,18 @@ export class ProductionPlanningComponent implements OnInit {
           this.plannedProductionList = data["data"];
         }
       },
-      error => {}
+      error => { }
     );
   }
   editProductionPlan(id): any {
     this.editProductionPlanFlag = true;
     this.onBatchSelect(id.batchId);
   }
-  removeItem(id) {
+  removeItem(index) {
     //remove row
     let idCount = this.plannedProductionList.length;
     let item = this.plannedProductionList;
+    let deleteId = this.plannedProductionList[index].id;
     if (idCount == 1) {
       item[0].partyName = null;
       item[0].qualityName = null;
@@ -304,11 +305,21 @@ export class ProductionPlanningComponent implements OnInit {
       item[0].batchId = null;
       let list = item;
       this.plannedProductionList = [...list];
+
     } else {
-      let removed = item.splice(id, 1);
+      let removed = item.splice(index, 1);
       let list = item;
       this.plannedProductionList = [...list];
+
     }
+    this.productionPlanningService.deleteProduction(deleteId).subscribe(
+      data => {
+        if (data["success"]) {
+          this.toastr.success("Deleted Successfully");
+        }
+      },
+      error => { }
+    )
   }
   addToJet(data) {
     this.router.navigate(["/pages/jet-planning/" + data.id]);

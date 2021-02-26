@@ -40,9 +40,9 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onDownloadClick()">Download</button>
-    <button *ngIf="email==true" type="button" class="btn btn-primary btn-sm btn-design" (click)="emailSendClick()">Send e-mail</button>
-    <button *ngIf="email!=true" type="button" class="btn btn-primary btn-sm btn-design" (click)="emailClick()">E-Mail</button>
+    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onDownloadClick()">Download</button>
+    <button *ngIf="email==true" type="button" class="btn btn-primary btn-sm btn-design-save" (click)="emailSendClick()">Send e-mail</button>
+    <button *ngIf="email!=true" type="button" class="btn btn-primary btn-sm btn-design-save" (click)="emailClick()">E-Mail</button>
 
     <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="activeModal.close('Close click')">Close</button>
 </div>

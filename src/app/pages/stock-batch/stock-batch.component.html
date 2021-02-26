@@ -6,7 +6,7 @@
                 <div class="row">
 
                     <div class="col-md-1 col-3 mobile-btn desktop-btn">
-                        <button class="btn btn-primary btn-md btn-list" routerLink="add"
+                        <button class="btn btn-primary btn-md btn-list" [routerLink]="['/pages/stock-batch/add']"
                             [disabled]="disabled">ADD</button>
                     </div>
                     <div class="col-md-9 col-7">
@@ -39,7 +39,7 @@
                     <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                [hidden]="hiddenEdit" [routerLink]="['edit',row.id]"></nb-icon>
+                                [hidden]="hiddenEdit" [routerLink]="['/pages/stock-batch/edit',row.id]"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
                                  (click)="deleteStockBatch(row.id)" [hidden]="hidden || (row | disableStockBatchPipe)"></nb-icon>
                         </ng-template>

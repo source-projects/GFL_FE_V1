@@ -8,6 +8,13 @@ import {SupplierRateGuard} from 'app/@theme/guards/supplier-rate.guard';
 const routes: Routes = [
   {
     path:'',
+    component:AddEditSupplierComponent,
+    canActivate:[SupplierGuard],
+    canLoad:[SupplierGuard],
+    data: { PermissionName: ['add']}
+  },
+  {
+    path:'view',
     component:SupplierComponent,
     canActivate:[SupplierGuard],
     canLoad:[SupplierGuard],

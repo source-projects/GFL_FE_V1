@@ -122,7 +122,7 @@ export class AdminService {
 
   addDepartment(data) {
     return this.httpClient.post(
-      this.commonService.envUrl() + "api/admin/add/department",
+      this.commonService.envUrl() + "api/admin/add/department/",
       data
     );
   }

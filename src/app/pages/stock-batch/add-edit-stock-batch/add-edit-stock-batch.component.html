@@ -2,11 +2,22 @@
 <div id="target"></div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
-        <div *ngIf="addFlag">
-            <h2 class="nb-text">Add Stock-Batch</h2>
-        </div>
-        <div *ngIf="!addFlag">
-            <h2 class="nb-text">Update Stock-Batch</h2>
+
+        <div class="row">
+            <div class="col-md-10 col-6">
+                <div *ngIf="addFlag">
+                    <h2 class="nb-text txt-ov-elips">Add Stock-Batch</h2>
+                </div>
+                <div *ngIf="!addFlag">
+                    <h2 class="nb-text txt-ov-elips">Update Stock-Batch</h2>
+                </div>
+            </div>
+
+
+            <div  class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
+                <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/stock-batch/view']">View
+                    Table</button>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -24,13 +35,14 @@
                             <label class="required">Party Name</label>
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
-                                (change)="setQualityByParty($event)" required class="required-error-dropdown">
+                                (change)="setQualityByParty($event)" required
+                                class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
                                             <div class="text-left txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party
-                                                Name</div>
+                                                style="font-weight:bold;font-size: large;">Party Name
+                                            </div>
                                         </div>
                                         <div class="col-md-6 col-6">
                                             <div class="text-right txt-ov-elips"
@@ -50,7 +62,7 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="(partyId1.invalid)&&(formSubmitted || partyId1.touched)">
+                            <div class="input-required" *ngIf="(partyId1.invalid)&&(formSubmitted || partyId1.touched)">
                                 <span>Party name is required</span>
                             </div>
                         </div>
@@ -59,7 +71,7 @@
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
                                 #qualityId1="ngModel"
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
-                                (change)="getUnit($event)" class="required-error-dropdown">
+                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -83,7 +95,7 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="required-class"
+                            <div class="input-required"
                                 *ngIf="(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)">
                                 <span>Quality is required.</span>
                             </div>
@@ -99,7 +111,7 @@
                                 [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}"
                                 min="0">
-                            <div class="invalid-feedback" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
+                            <div class="input-required" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
                                 <span>Bill no. is required and should not contain special characters</span>
                             </div>
                         </div>
@@ -111,7 +123,7 @@
                                 [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
 
-                            <div class="required-class"
+                            <div class="input-required"
                                 *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
                                 <span>Bill date is required</span>
                             </div>
@@ -122,7 +134,7 @@
                                 #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*"
                                 [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
-                            <div class="invalid-feedback"
+                            <div class="input-required"
                                 *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
                                 <span>Challan no. is required and should not contain special characters</span>
                             </div>
@@ -140,7 +152,7 @@
                                 [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
 
-                            <div class="required-class"
+                            <div class="input-required"
                                 *ngIf="(formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)">
                                 <span>Challan date is required</span>
                             </div>
@@ -282,8 +294,13 @@
                         </div>
                         <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock"
-                                routerLink="/pages/stock-batch">CANCEL</button>
+
+                            <button *ngIf="addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="cancel(myForm)">CANCEL</button>
+                            
+                            <button *ngIf="!addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            [routerLink]="['/pages/stock-batch/view']">CANCEL</button>    
+
                             <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple"
                                 *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
                             <button *ngIf="addFlag" type="button"
