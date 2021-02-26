@@ -94,10 +94,10 @@
                         <button *ngIf="!selectedSupplierId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="reset()">CANCEL</button>
 
-                        <button #update class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        <button *ngIf="selectedSupplierId" #update class="btn btn-primary btn-sm btn-design-cancel" type="button"
                         [routerLink]="['/pages/supplier/view']">CANCEL</button>
 
-                        <ng-template #update><button type="button" (click)="updateSupplier()"
+                        <ng-template  #update><button type="button" (click)="updateSupplier()"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton"
                                 value="UPDATE">UPDATE</button></ng-template>
 
