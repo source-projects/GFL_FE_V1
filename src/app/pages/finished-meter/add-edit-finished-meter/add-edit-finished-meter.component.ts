@@ -368,6 +368,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
                   this.batchList = null;
                   this.isAddButtonClicked = false;
                   this.finishedMeterForm.batchData = null;
+                  this.getAllBatchForFinishMtr();
                 } else {
                   this.isAddButtonClicked = false;
                   this.toastr.error(data["msg"]);
