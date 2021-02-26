@@ -86,7 +86,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="billTotal" class="form-control" [(ngModel)]='paymentValues.totalBill' required placeholder="Bill Total">
+                                        <!-- <input type="number" name="billTotal" class="form-control" [(ngModel)]='paymentValues.totalBill' required placeholder="Bill Total"> -->
+                                        {{paymentValues.totalBill}}
                                     </div>
                                 </div>
                             </div>
@@ -220,91 +221,7 @@
                 </div>
             </div>
 
-            <!-- <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Gst Amount:</label>
-                        <input type="number" name="gstAmount" class="form-control" [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount" (keyup)="gstSelected($event)">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Credit Amount:</label>
-                        <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>RD Amount:</label>
-                        <input type="number" name="rdAmt" class="form-control" [(ngModel)]='paymentValues.rdAmt' required placeholder="RD Amount" (keyup)="cdSelected($event)">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Invoice Total:</label>
-                        <input type="number" name="invoiceTotal" class="form-control" [(ngModel)]='totalInvoice' required placeholder="Invoice Total">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>RD Details:</label>
-                        <input type="text" name="rdDetail" class="form-control" [(ngModel)]='paymentValues.rdDetail' required placeholder="RD Details">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>CD Amount:</label>
-                        <input type="number" name="cdAmt" class="form-control" [(ngModel)]='paymentValues.cdAmt' required placeholder="CD Amount" (keyup)="cdSelected($event)">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>CD Details:</label>
-                        <input type="text" name="cdDetail" class="form-control" [(ngModel)]='paymentValues.cdDetail' required placeholder="CD Details">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Other Diff:</label>
-                        <input type="number" name="otherDiff" class="form-control" [(ngModel)]='paymentValues.otherDiff' required placeholder="Other Diff" (keyup)="cdSelected($event)">
-                    </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Other Details:</label>
-                        <input type="text" name="diffDetail" class="form-control" [(ngModel)]='paymentValues.diffDetail' required placeholder="Other Details">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Amount to pay:</label>
-                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Amount paid:</label>
-                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Current Payment Total:</label>
-                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
-                    </div>
-                </div>
-            </div> -->
+           
             <div class="mb-3">
                 <div class="row">
                     <div class="col-md-6">
@@ -343,14 +260,7 @@
 
                             <ngx-datatable-column name="Type" prop="payType" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
-                                        name='payType{{rowIndex}}' class="tableForm" id="payType"
-                                        [(ngModel)]="row.payTypeId" required
-                                        (keyup)="onKeyUp($event,rowIndex,0,'payType')"
-                                        [id]="'paymentDetailsList'+rowIndex+'-0'">
-                                        <option *ngFor="let type of paymentTypeList" [value]="type.id">
-                                            {{type.paymentType}}</option>
-                                    </select> -->
+                                   
                                     <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel" name='payType{{rowIndex}}' class="tableForm" id="payType" [(ngModel)]="row.payTypeId" required (keyup)="onKeyUp($event,rowIndex,0,'payType')" [id]="'paymentDetailsList'+rowIndex+'-0'"
                                         appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
@@ -465,7 +375,7 @@
 
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
-                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="reset(paymentForm)">CANCEL</button>
                         <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="onAddPayment(paymentForm)">SAVE</button>
                     </div>
 
