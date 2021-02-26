@@ -521,6 +521,14 @@ export class AddEditStockBatchComponent implements OnInit {
     }
     return returnValue;
   }
+
+  cancel(myForm){
+    myForm.reset();
+    this.formSubmitted = false;
+    myForm.controls["stockInType"].reset("Fabric"); 
+    this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+    this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
+  }
   addUpdateStockBatch(myForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -551,7 +559,18 @@ export class AddEditStockBatchComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.loading = false;
-              this.route.navigate(["/pages/stock-batch"]);
+             this.cancel(myForm);
+        //     Object.keys(myForm.controls).forEach(field => { 
+        //       if(field == "billDate"){
+        //         myForm.billDate = new Date(this.stockBatch.billDate);
+
+        //       }else{
+        //         myForm.controls[field].reset();   
+
+        //       }
+        //     }
+        // );
+              this.disableButton = false;
               this.toastr.success(errorData.Add_Success);
             } else {
               this.loading = false;

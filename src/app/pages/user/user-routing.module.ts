@@ -7,6 +7,14 @@ import { UserComponent } from './user.component';
 const routes: Routes = [
   {
     path:'',
+    component:AddEditUserComponent,
+    canActivate: [UserGuard],
+    canLoad: [UserGuard],
+    data: { PermissionName: ['add']}
+    
+  },
+  {
+    path:'view',
     component:UserComponent,
     canActivate: [UserGuard],
     canLoad: [UserGuard],

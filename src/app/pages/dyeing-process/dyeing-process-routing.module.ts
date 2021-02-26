@@ -8,6 +8,13 @@ import { DyeingProcessComponent } from "./dyeing-process.component";
 const routes: Routes = [
   { 
     path: "", 
+    component: AddEditDyeingProcessComponent,
+    canActivate:[DyeingProcessGuard],
+    canLoad:[DyeingProcessGuard],
+    data: { PermissionName: ['add']}
+  },
+  { 
+    path: "view", 
     component: DyeingProcessComponent,
     canActivate:[DyeingProcessGuard],
     canLoad:[DyeingProcessGuard],
