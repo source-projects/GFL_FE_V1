@@ -1904,3 +1904,22 @@ input[type="number"]::-webkit-outer-spin-button {
         margin-right: 20px;
     }
 }
+
+// reuired class in input
+.input-required {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.form-control.is-invalid~.input-required,
+.dropdown-name.is-invalid~.input-required {
+    display: block;
+}
+
+.is-invalid .ng-select-container {
+    border: 1px solid#dc3545 !important;
+    border-radius: 5px;
+}

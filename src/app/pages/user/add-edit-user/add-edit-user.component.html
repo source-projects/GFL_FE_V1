@@ -28,7 +28,7 @@
                             <label class="required">First Name</label>
                             <input type="text" name="firstName" fieldsize="small" nbinput #firstName1="ngModel" class="form-control size-small" [(ngModel)]="user.firstName" [ngClass]="{'is-invalid': (firstName1.invalid)&&(formSubmitted  || firstName1.touched)}" required>
 
-                            <div class="invalid-feedback" *ngIf="(firstName1.invalid)&&(formSubmitted  || firstName1.touched)">
+                            <div class="input-required" *ngIf="(firstName1.invalid)&&(formSubmitted  || firstName1.touched)">
                                 <span>First name is required.</span>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             <label class="required">Last Name</label>
                             <input name="lastName" fieldsize="small" nbinput class="form-control size-small" [(ngModel)]="user.lastName" required #lastName1="ngModel" [ngClass]="{'is-invalid': (lastName1.invalid)&&(formSubmitted || lastName1.touched)}" />
 
-                            <div class="invalid-feedback" *ngIf="(lastName1.invalid)&&(formSubmitted || lastName1.touched)">
+                            <div class="input-required" *ngIf="(lastName1.invalid)&&(formSubmitted || lastName1.touched)">
                                 <span>Last name is required.</span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                             <label class="required">User Name</label>
                             <input name="userName" fieldsize="small" nbinput class="form-control size-small" [(ngModel)]="user.userName" required #userName1="ngModel" [ngClass]="{'is-invalid': (userName1.invalid)&&(formSubmitted || userName1.touched)}" />
 
-                            <div class="invalid-feedback" *ngIf="(userName1.invalid)&&(formSubmitted || userName1.touched)">
+                            <div class="input-required" *ngIf="(userName1.invalid)&&(formSubmitted || userName1.touched)">
                                 <span>User name is required.</span>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                             <input name="email" fieldsize="small" nbinput class="form-control size-small" [(ngModel)]="user.email" #email1="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{'is-invalid': (email1.invalid)&&(formSubmitted || email1.touched)}"
                             />
 
-                            <div class="invalid-feedback" *ngIf="(email1.invalid)&&(formSubmitted || email1.touched)">
+                            <div class="input-required" *ngIf="(email1.invalid)&&(formSubmitted || email1.touched)">
                                 <span>Enter valid email.</span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                             <label class="required">Mobile No.</label>
                             <input name="contact" class="form-control size-small" fieldsize="small" nbinput (keypress)="checkIsDigit($event)" [(ngModel)]="user.contact" pattern="[6-9]{1}[0-9]{9}" #contact1="ngModel" [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}"
                                 onFocusout="" required />
-                            <div class="invalid-feedback" *ngIf="(contact1.invalid)&&(formSubmitted || contact1.touched)">
+                            <div class="input-required" *ngIf="(contact1.invalid)&&(formSubmitted || contact1.touched)">
                                 <span>Mobile No of 10 digit is required.</span>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                             <label class="required">Password</label>
                             <input type="password" name="password" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="user.password" required #password1="ngModel" [ngClass]="{'is-invalid': (password1.invalid)&&(formSubmitted || password1.touched)}" />
 
-                            <div class="invalid-feedback" *ngIf="(password1.invalid)&&(formSubmitted || password1.touched)">
+                            <div class="input-required" *ngIf="(password1.invalid)&&(formSubmitted || password1.touched)">
                                 <span>Password is required.</span>
                             </div>
                         </div>
@@ -99,9 +99,9 @@
                         <div class="form-group">
                             <label class="required">Company</label>
                             <ng-select name="company" #company1="ngModel" [(ngModel)]="user.company" [items]="companyList" bindLabel="name" bindValue="name" placeholder="Select Company" required [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}"
-                                class="required-error-dropdown">
+                                class="required-error-dropdown dropdown-name">
                             </ng-select>
-                            <div class="required-class" *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
+                            <div class="input-required" *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
                                 <span>Company is required.</span>
                             </div>
                         </div>
@@ -111,9 +111,9 @@
                         <div class="form-group">
                             <label class="required">Department</label>
                             <ng-select name="departmenty" #department1="ngModel" [(ngModel)]="user.department" [items]="departmentList" bindLabel="name" bindValue="name" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
-                                class="required-error-dropdown">
+                                class="required-error-dropdown dropdown-name">
                             </ng-select>
-                            <div class="required-class" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
+                            <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
                                 <span>Department is required.</span>
                             </div>
                             <!-- <input type="text" name="department" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="user.department" required #department1="ngModel" [ngClass]="{'is-invalid':(department1.invalid)&&(formSubmitted || department1.touched)}" />
@@ -125,7 +125,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Designation</label>
-                            <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId" [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation" required class="required-error-dropdown"
+                            <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId" [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || department1.touched)}" placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
                                 (change)="designationSelected($event)">
                                 <ng-option *ngFor="let dsgn of desi_list" [value]="dsgn.id">{{dsgn.designation}}
                                 </ng-option>
@@ -136,7 +136,7 @@
                                     <ng-option *ngFor="let m of master" [value]="m.id">{{m}}</ng-option>
                                 </div> -->
                             </ng-select>
-                            <div class="required-class" *ngIf="(designation1.invalid)&&(formSubmitted || department1.touched)">
+                            <div class="input-required" *ngIf="(designation1.invalid)&&(formSubmitted || department1.touched)">
                                 <span>Designation is required.</span>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                     <div class="col-md-4" *ngIf="(masterFlag || adminFlag) && user.isUserHead">
                         <div class="form-group">
                             <label class="required">User Head List</label>
-                            <select name="userHeadId" class="form-control" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
+                            <select name="userHeadId" class="form-control dropdown-name" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
                                 <ng-container *ngIf="adminFlag">
                                     <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.firstName}}
                                         {{head.lastName}}
@@ -164,7 +164,7 @@
                                     </option>
                                 </ng-container>
                             </select>
-                            <div class="invalid-feedback" *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">
+                            <div class="input-required" *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">
                                 <span>UserHead is required.</span>
                             </div>
                         </div>

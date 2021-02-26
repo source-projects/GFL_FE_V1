@@ -129,6 +129,11 @@ export class AddEditShadeComponent implements OnInit {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
             this.supplierList = data["data"];
+            this.supplierList = this.supplierList.filter(item => {
+              if (item.itemType == "Color") {
+                return true;
+              }
+            })
             this.getAllSupplier();
             this.loading = false;
           } else {
@@ -215,7 +220,6 @@ export class AddEditShadeComponent implements OnInit {
           if (!this.shadeObj.shadeDataList.length) {
             this.shadeDataListArray.push(this.shadeDataList);
             this.shadeObj.shadeDataList = this.shadeDataListArray;
-            console.log(this.shadeObj.shadeDataList);
           } else {
             this.shadeDataListArray = this.shadeObj.shadeDataList;
           }
@@ -231,7 +235,6 @@ export class AddEditShadeComponent implements OnInit {
             this.shadeObj.qualityType = this.qualityList[
               qualityIndex
             ].qualityType;
-            console.log(this.shadeDataListArray);
             this.shadeDataListArray.forEach((element, index) => {
               this.calculateAmount(index);
             });
@@ -321,48 +324,57 @@ export class AddEditShadeComponent implements OnInit {
 
   itemSelected(rowIndex, row) {
     let gst;
-    if (this.shadeObj.qualityId != undefined) {
-      if (this.refreshFlag > 10) {
-        this.refreshFlag = 0;
-      }
-      this.refreshFlag++;
-      let newSupplierId;
-      for (let s of this.supplierList) {
-        if (row.supplierItemId == s.id) {
-          newSupplierId = s.supplierId;
-          row.itemName = s.itemName;
-          gst = (s.rate * s.gstRate) / 100;
-          row.rate = s.rate + gst;
-          break;
-        }
-      }
-      for (let s1 of this.supplierListRate) {
-        if (newSupplierId == s1.id) {
-          this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
-          this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
-          break;
-        }
-      }
-
-      this.calculateAmount(rowIndex);
-    } else {
-      this.shadeObj.shadeDataList[rowIndex].itemName = "";
-      this.shadeObj.shadeDataList[rowIndex].supplierItemId = null;
-      this.toastr.error("Select Quality");
-      return;
+    // if (this.shadeObj.qualityId != undefined) {
+    if (this.refreshFlag > 10) {
+      this.refreshFlag = 0;
     }
-  }
+    this.refreshFlag++;
+    let newSupplierId;
+    for (let s of this.supplierList) {
+      if (row.supplierItemId == s.id) {
+        newSupplierId = s.supplierId;
+        row.itemName = s.itemName;
+        gst = (s.rate * s.gstRate) / 100;
+        row.rate = s.rate + gst;
+        break;
+      }
+    }
+    for (let s1 of this.supplierListRate) {
+      if (newSupplierId == s1.id) {
+        this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
+        this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
+        break;
+      }
+    }
 
+    // this.calculateAmount(rowIndex);
+    // } else {
+    //   this.toastr.error("Select Quality");
+    //   this.shadeObj.shadeDataList[rowIndex].itemName = "";
+    //   this.shadeObj.shadeDataList[rowIndex].supplierItemId = null;
+    //   return;
+    // }
+  }
+  finalTotalAmount = {};
   calculateAmount(rowIndex) {
     if (this.shadeObj.qualityId != undefined) {
+
       let con = this.shadeObj.shadeDataList[rowIndex].concentration;
       let newRate = this.shadeObj.shadeDataList[rowIndex].rate;
+
       let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-      if (amount) {
-        this.shadeObj.shadeDataList[rowIndex].amount = amount;
-        this.amountArray.push(amount);
-        this.calculateTotalAmount();
-      }
+      this.finalTotalAmount[rowIndex] = {
+        con,
+        amount
+      };
+      this.totalAmount = 0;
+      Object.keys(this.finalTotalAmount).forEach(item => {
+        this.totalAmount += this.finalTotalAmount[item].amount;
+      })
+      this.totalAmount = this.totalAmount.toFixed(2);
+      this.shadeObj.shadeDataList[rowIndex].amount = amount;
+
+      this.calculateTotalAmount();
     } else {
       this.shadeObj.shadeDataList[rowIndex].concentration = null;
       this.toastr.error("Select Quality");
@@ -370,19 +382,19 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
   calculateTotalAmount() {
-    this.totalAmount = 0;
     let wt100m;
-    this.qualityList.forEach((element) => {
-      if (this.shadeObj.qualityId == element.qualityId) {
-        wt100m = element.wtPer100m;
-      }
-    });
-    this.amountArray.forEach((element) => {
-      this.totalAmount = this.totalAmount + element;
-    });
-    this.costKg = (this.totalAmount / 100).toFixed(2);
-    let A = wt100m / 100;
-    this.costMtr = (this.costKg / A).toFixed(2);
+    if (this.shadeObj.qualityId != undefined) {
+
+      this.qualityList.forEach((element) => {
+        if (this.shadeObj.qualityId == element.qualityId) {
+          wt100m = element.wtPer100m;
+        }
+      });
+
+      this.costKg = (this.totalAmount / 100).toFixed(2);
+      let A = wt100m / 100;
+      this.costMtr = (this.costKg / A).toFixed(2);
+    }
   }
 
   setProcessName(id) {
@@ -424,7 +436,6 @@ export class AddEditShadeComponent implements OnInit {
             return;
           }
         } else if (colName == "amount") {
-          console.log(item.amount);
           if (!item.amount) {
             this.toastr.error("Enter amount", "amount is required");
             return;
