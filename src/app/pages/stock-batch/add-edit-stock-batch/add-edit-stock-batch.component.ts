@@ -59,8 +59,8 @@ export class AddEditStockBatchComponent implements OnInit {
   stockDataValues = [
     {
       batchId: null,
-      totalWt: Number = null,
-      totalMt: Number = null,
+      totalWt: null,
+      totalMt: null,
       isProductionPlanned: false,
       batchMW: [
         {
@@ -75,10 +75,10 @@ export class AddEditStockBatchComponent implements OnInit {
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
   batchIdArray = [];
-  totalMtr: Number = 0;
+  totalMtr: number = 0;
   wtArray: any[] = [];
   mtArray: any[] = [];
-  totalWt: Number = 0;
+  totalWt: number = 0;
   dateRange: any;
   weightFlag: boolean = false;
   weight = {};
@@ -212,25 +212,26 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         });
 
-        let reCalcMt;
-        let reCalcWt;
-        this.weight = {};
         //re-calculate mtr/wt when quality changed
-        this.stockDataValues.forEach((e, i) => {
-          e.batchMW.forEach((e1, j) => {
-            if (this.stockBatch.unit == "meter") {
-              this.calculateWt(e1.mtr, i, j, 1);
-            } else {
-              this.calculateMtr(e1.wt, i, j, 1);
-            }
-          });
-        });
+        this.reCalcMTWTValue();
       }
     } else {
       this.stockBatch.partyId = null;
       this.stockBatch.unit = null;
       this.getQualityList();
     }
+  }
+  reCalcMTWTValue() {
+    this.weight = {};
+    this.stockDataValues.forEach((e, i) => {
+      e.batchMW.forEach((e1, j) => {
+        if (this.stockBatch.unit == "meter") {
+          this.calculateWt(e1.mtr, i, j, 1);
+        } else {
+          this.calculateMtr(e1.wt, i, j, 1);
+        }
+      });
+    });
   }
   getStockBatchById() {
     this.loading = true;
@@ -285,23 +286,28 @@ export class AddEditStockBatchComponent implements OnInit {
     batchIDs.forEach((x) => {
       this.stockDataValues.push(new BatchCard(x));
     });
-
-    this.stockDataValues.forEach((batch) => {
-      this.stockBatch.batchData.forEach((x) => {
+    this.qualityList.forEach((element) => {
+      element.id ? (this.stockBatch.partyId = element.partyId) : null;
+      let id = element.id ? element.id : element.qualityEntryId;
+      if (id == this.stockBatch.qualityId) {
+        this.stockBatch.unit = element.unit;
+        if (this.stockBatch.unit === "weight") {
+          this.weightFlag = true;
+        } else {
+          this.weightFlag = false;
+        }
+        this.wtPer100M = element.wtPer100m;
+      }
+    });
+    this.stockDataValues.forEach((batch, i) => {
+      this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
           batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt));
-          batch.batchMW.forEach((element) => {
-            this.mtArray.push(element.mtr);
-            this.wtArray.push(element.wt);
-          });
-          // this.totalWt = this.calculateTotalMtrWt(this.wtArray);
-          // this.totalMtr = this.calculateTotalMtrWt(this.mtArray);
-          batch.totalMt = this.totalMtr;
-          batch.totalWt = this.totalWt;
           batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
     });
+    this.reCalcMTWTValue();
   }
 
   batchInsertCheck() {
@@ -367,9 +373,11 @@ export class AddEditStockBatchComponent implements OnInit {
       item[0].wt = null;
       let list = item;
       this.stockDataValues[row].batchMW = [...list];
+      this.reCalcMTWTValue();
     } else {
       item.splice(id, 1);
       this.stockDataValues[row].batchMW = [...item];
+      this.reCalcMTWTValue();
     }
   }
 
@@ -434,7 +442,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   calculateWt(meter: number, i, j, col) {
-    let w: Number;
+    let w: number;
     w = (meter / 100) * this.wtPer100M;
     this.stockDataValues[i].batchMW[j].wt = w.toFixed(2);
     if (this.MtWtIndex == i) {
@@ -467,18 +475,18 @@ export class AddEditStockBatchComponent implements OnInit {
     (this.totalWt = 0), (this.totalMtr = 0);
     if (MW === "meter") {
       Object.keys(this.weight).forEach((element: any) => {
-        this.totalWt += this.weight[element].w;
-        this.totalMtr += this.weight[element].meter;
+        this.totalWt += +this.weight[element].w;
+        this.totalMtr += +this.weight[element].meter;
       });
     } else {
       Object.keys(this.weight).forEach((element: any) => {
-        this.totalWt += this.weight[element].weight;
-        this.totalMtr += this.weight[element].m;
+        this.totalWt += +this.weight[element].weight;
+        this.totalMtr += +this.weight[element].m;
       });
     }
   }
   calculateMtr(weight: number, i, j, col) {
-    let m: Number;
+    let m: number;
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
     if (this.MtWtIndex == i) {
@@ -570,14 +578,6 @@ export class AddEditStockBatchComponent implements OnInit {
     }
     return returnValue;
   }
-
-  cancel(myForm){
-    myForm.reset();
-    this.formSubmitted = false;
-    myForm.controls["stockInType"].reset("Fabric"); 
-    this.stockBatch.billDate = new Date(this.stockBatch.billDate);
-    this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
-  }
   addUpdateStockBatch(myForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -615,18 +615,7 @@ export class AddEditStockBatchComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.loading = false;
-             this.cancel(myForm);
-        //     Object.keys(myForm.controls).forEach(field => { 
-        //       if(field == "billDate"){
-        //         myForm.billDate = new Date(this.stockBatch.billDate);
-
-        //       }else{
-        //         myForm.controls[field].reset();   
-
-        //       }
-        //     }
-        // );
-              this.disableButton = false;
+              this.route.navigate(["/pages/stock-batch"]);
               this.toastr.success(errorData.Add_Success);
             } else {
               this.loading = false;
