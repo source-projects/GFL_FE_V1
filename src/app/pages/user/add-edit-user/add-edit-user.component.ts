@@ -808,61 +808,15 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
+  
   reset(myForm){
     myForm.reset();
-    let binArray1 = {
-      pa: "",
-      qu: "",
-      u: "",
-      sb: "",
-      prg: "",
-      sh: "",
-      su: "",
-      sr: "",
-      cs: "",
-      pr: "",
-      pp: "",
-      jp: "",
-      pt: "",
-      d: "",
-      bf: "",
-      ip: "",
-    };
-    Object.keys(binArray1).map((key, i) => {
-      if (this.permissionArray[i].view == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].add == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].edit == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].delete == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].viewGroup == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].viewAll == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].editGroup == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].editAll == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].deleteGroup == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-      if (this.permissionArray[i].deleteAll == false) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
-    });
-
+    
     this.formSubmitted = false;
-
+    for (var i = 0; i < this.permissionArray.length; i++) {
+      this.setPermissionFalse(i);
+      this.permissionArray[i].selectAll = false;
+    }
 
   }
 
