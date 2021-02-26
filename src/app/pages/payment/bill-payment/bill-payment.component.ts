@@ -364,7 +364,7 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff);
   }
 
-  onAddPayment() {
+  onAddPayment(paymentForm) {
     if (this.paymentValues.amtToPay != this.paymentValues.amtPaid) {
       this.toastr.error("amount to pay and amount paid are not equal");
     }
@@ -374,6 +374,8 @@ export class BillPaymentComponent implements OnInit {
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/payment/bill-payment"]);
+            paymentForm.reset();
+            this.formSubmitted = false;
             this.paymentValues = null;
             this.toastr.success(errorData.Add_Success);
           }
