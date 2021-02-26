@@ -49,8 +49,17 @@
     background-color: #aa3634;
     border-color: #aa3634;
     border-radius: 3px;
-    font-weight: 700;
+    font-weight: 700!important;
     margin-right: 20px;
+    color: #fff!important;
+}
+
+.btn-design-save:active,
+.btn-design-save:hover {
+    background-color: #aa3634 !important;
+    border-color: #aa3634 !important;
+    color: #fff!important;
+    font-weight: 700 !important;
 }
 
 .btn-design-cancel {
