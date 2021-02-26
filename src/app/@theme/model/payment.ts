@@ -15,6 +15,15 @@ export class Payment {
     invoices:Invoices[];
     paymentData:PaymentData[];
     advancePayList:AdvancePayList[];
+
+    constructor(){
+        this.totalBill = 0;
+        this.amtPaid = 0;
+        this.amtToPay = 0;
+        this.cdAmt = 0;
+        this.rdAmt = 0;
+        this.otherDiff = 0;
+    }
 }
 export class Invoices{
     invoiceNo:string;

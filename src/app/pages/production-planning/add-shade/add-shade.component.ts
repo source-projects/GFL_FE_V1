@@ -120,24 +120,14 @@ export class AddShadeComponent implements OnInit {
           if (data["success"]) {
             this.productionId = data["data"];
             if (this.addToJetFlag) {
-              //this.activeModal.close(true);
               this.router.navigate([
                 "/pages/jet-planning/" + this.productionId,
               ]);
+              this.activeModal.close(true);
             } else {
-              //this.activeModal.close(true);
               this.activeModal.close(true);
               this.toastr.success(errorData.Add_Success);
             }
-
-            // this.productionPlanningService.addToJetClicked.emit(this.productionId);
-            // this.activeModal.close(true);
-            // this.router.navigate(['/pages/jet-planning/'+this.productionId]);
-
-            //this.action.emit(true);
-
-            // this.modalService.close(true);
-            //this.route.navigate(["/pages/program"]);
           }
         },
         (error) => {
@@ -148,7 +138,6 @@ export class AddShadeComponent implements OnInit {
   }
 
   addToJetClick() {
-    //this.productionPlanningService.addToJetClicked.emit("abc");
     this.addToJetFlag = true;
     this.onOkClick();
   }
