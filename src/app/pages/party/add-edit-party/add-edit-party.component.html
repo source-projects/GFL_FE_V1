@@ -169,9 +169,9 @@
 
                         <button *ngIf="!this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset()">CANCEL</button>
                         <button *ngIf="this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/party/view']">CANCEL</button>
-                        <button *ngIf="this.currentPartyId" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                        <button *ngIf="this.currentPartyId" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
+                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
                     </div>
                 </div>
             </form>

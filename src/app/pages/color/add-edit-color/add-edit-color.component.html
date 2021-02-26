@@ -12,7 +12,7 @@
                     <h2 class="nb-text txt-ov-elips">Update Color Stock</h2>
                 </ng-template>
             </div>
-            <div *ngIf="this.currentColorId == null" class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
+            <div  class="col-md-2 col-2 mobile-btn desktop-btn dek-jus">
                 <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/color/view']">View
                     Table</button>
             </div>
@@ -206,14 +206,17 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
 
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            <button *ngIf="!this.currentColorId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
                                 (click)="reset(colorForm)">CANCEL</button>
+                            
+                            <button *ngIf="this.currentColorId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                            [routerLink]="['/pages/color/view']">CANCEL</button>    
 
-                            <button *ngIf="this.currentColorId != null" type="button" (click)="updateColor(colorForm)"
+                            <button *ngIf="this.currentColorId" type="button" (click)="updateColor(colorForm)"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px"
                                 [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="this.currentColorId == null" type="button"
+                            <button *ngIf="!this.currentColorId" type="button"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px"
                                 (click)="addColor(colorForm)" [disabled]="disableButton">SAVE</button>
                         </div>

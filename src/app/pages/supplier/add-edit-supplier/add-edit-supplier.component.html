@@ -9,7 +9,7 @@
                     <h2 class="nb-text">Update Supplier</h2>
                 </ng-template>
             </div>
-            <div *ngIf="selectedSupplierId == null" class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
+            <div  class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
                 <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/supplier/view']">View
                     Table</button>
             </div>
@@ -91,14 +91,17 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        <button *ngIf="!selectedSupplierId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="reset()">CANCEL</button>
 
-                        <ng-template #update><button type="button" (click)="updateSupplier()"
+                        <button *ngIf="selectedSupplierId" #update class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        [routerLink]="['/pages/supplier/view']">CANCEL</button>
+
+                        <ng-template  #update><button type="button" (click)="updateSupplier()"
                                 class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton"
                                 value="UPDATE">UPDATE</button></ng-template>
 
-                        <button *ngIf="selectedSupplierId == null; else update" type="submit"
+                        <button *ngIf="!selectedSupplierId; else update" type="submit"
                             class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton"
                             value="SAVE">SAVE</button>
                     </div>
