@@ -148,15 +148,18 @@
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
 
-                        <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        <button *ngIf="!currentQualityId class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="reset()">CANCEL</button>
+
+                        <button #updateqty class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                        [routerLink]="['/pages/quality/view']">CANCEL</button>    
 
                         <ng-template #updateqty><button type="button" (click)="updateQuality()"
                                 class="btn btn-primary btn-sm btn-design button-base ripple"
                                 value="UPDATE">UPDATE</button>&nbsp;&nbsp;&nbsp;
                         </ng-template>
 
-                        <button *ngIf="currentQualityId == null; else updateqty" type="button" (click)="addQuality()"
+                        <button *ngIf="!currentQualityId; else updateqty" type="button" (click)="addQuality()"
                             class="btn btn-primary btn-sm btn-design button-base ripple" value="SAVE">SAVE</button>
                     </div>
                 </div>
