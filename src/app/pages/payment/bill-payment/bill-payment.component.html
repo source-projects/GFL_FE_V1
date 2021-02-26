@@ -412,7 +412,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay">
+                                        {{paymentValues.amtToPay}}
+                                        <!-- <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay"> -->
                                     </div>
                                 </div>
                             </div>
@@ -428,7 +429,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid">
+                                        {{paymentValues.amtPaid}}
+                                        <!-- <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid"> -->
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +446,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment">
+                                        {{totalCurrentPayment}}
+                                        <!-- <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment"> -->
                                     </div>
                                 </div>
                             </div>
@@ -463,7 +466,7 @@
                         <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
                             class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
                         <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
-                        <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="onAddPayment()">SAVE</button>
+                        <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="onAddPayment(paymentForm)">SAVE</button>
                     </div>
 
                 </div>
