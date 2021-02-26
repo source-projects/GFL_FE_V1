@@ -2,11 +2,22 @@
 <div id="target"></div>
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
-        <div *ngIf="addFlag">
-            <h2 class="nb-text">Add Stock-Batch</h2>
-        </div>
-        <div *ngIf="!addFlag">
-            <h2 class="nb-text">Update Stock-Batch</h2>
+
+        <div class="row">
+            <div class="col-md-10 col-6">
+                <div *ngIf="addFlag">
+                    <h2 class="nb-text txt-ov-elips">Add Stock-Batch</h2>
+                </div>
+                <div *ngIf="!addFlag">
+                    <h2 class="nb-text txt-ov-elips">Update Stock-Batch</h2>
+                </div>
+            </div>
+
+
+            <div *ngIf="addFlag" class="col-md-2 col-6 mobile-btn desktop-btn dek-jus">
+                <button style="float:right;" class="btn btn-md btn-list" [routerLink]="['/pages/stock-batch/view']">View
+                    Table</button>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -16,19 +27,26 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Stock In Type</label>
-                            <input type="text" name="stockInType" #stockInType1="ngModel" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]='stockBatch.stockInType' required readonly>
+                            <input type="text" name="stockInType" #stockInType1="ngModel"
+                                class="form-control size-small" fieldsize="small" nbinput
+                                [(ngModel)]='stockBatch.stockInType' required readonly>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Party Name</label>
-                            <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel" [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }" (change)="setQualityByParty($event)" required class="required-error-dropdown dropdown-name">
+                            <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
+                                [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
+                                (change)="setQualityByParty($event)" required
+                                class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Party Name
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">
                                                 Party Code</div>
                                         </div>
                                     </div>
@@ -50,14 +68,19 @@
                         </div>
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
-                            <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required #qualityId1="ngModel" [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}" (change)="getUnit($event)" class="required-error-dropdown dropdown-name">
+                            <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
+                                #qualityId1="ngModel"
+                                [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
+                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                            <div class="text-left txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Quality Id</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Name</div>
+                                            <div class="text-right txt-ov-elips"
+                                                style="font-weight:bold;font-size: large;">Quality Name</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -72,7 +95,8 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="input-required" *ngIf="(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)">
+                            <div class="input-required"
+                                *ngIf="(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)">
                                 <span>Quality is required.</span>
                             </div>
                         </div>
@@ -83,25 +107,35 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill No</label>
-                            <input type="text" name="billNo" class="form-control" #billNo1="ngModel" [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}" min="0">
+                            <input type="text" name="billNo" class="form-control" #billNo1="ngModel"
+                                [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*"
+                                [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}"
+                                min="0">
                             <div class="input-required" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
                                 <span>Bill no. is required and should not contain special characters</span>
                             </div>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill Date:</label>
-                            <input name="billDate" class="form-control size-small" fieldsize="small" nbinput #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
+                            <input name="billDate" class="form-control size-small" fieldsize="small" nbinput
+                                #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' [owlDateTimeTrigger]="dt2"
+                                [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY"
+                                [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
 
-                            <div class="input-required" *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
+                            <div class="input-required"
+                                *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
                                 <span>Bill date is required</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
-                            <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
+                            <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput
+                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*"
+                                [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
-                            <div class="input-required" *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
+                            <div class="input-required"
+                                *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
                                 <span>Challan no. is required and should not contain special characters</span>
                             </div>
                         </div>
@@ -112,21 +146,27 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Challan Date:</label>
-                            <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
+                            <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput
+                                #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1"
+                                [owlDateTime]="dt1" required [max]="maxDate" placeholder="MM-DD-YYYY"
+                                [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
 
-                            <div class="input-required" *ngIf="(formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)">
+                            <div class="input-required"
+                                *ngIf="(formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)">
                                 <span>Challan date is required</span>
                             </div>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label>Unit:</label>
-                            <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
+                            <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput
+                                readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
 
                         </div>
                         <div class="col-md-4">
                             <label>Remark</label>
-                            <input type="text" name="remark" class="form-control" #remark1="ngModel" [(ngModel)]='stockBatch.remark'>
+                            <input type="text" name="remark" class="form-control" #remark1="ngModel"
+                                [(ngModel)]='stockBatch.remark'>
                         </div>
                     </div>
                 </div>
@@ -136,17 +176,24 @@
 
                     </header>
                     <div class="row">
-                        <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i" class="col-md-6">
+                        <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
+                            class="col-md-6">
                             <nb-card [attr.id]="'new'+i" class="padding-box">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-8">
                                             <label style="float: left;">Batch No</label>
-                                            <input [attr.id]="'batchNo'+i" required type="number" [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
+                                            <input [attr.id]="'batchNo'+i" required type="number"
+                                                [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]"
+                                                class="form-control size-small" fieldsize="small" nbinput
+                                                name="batchNo{{i}}" min="0" (click)="batchInsertCheck()"
+                                                (focusout)="checkDuplicates(i)">
 
                                         </div>
                                         <div class="col-md-6 col-4">
-                                            <nb-icon status="danger" style="float: right;margin-right: 10px;;" [hidden]="production_flag[i]" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="removeBatch(i);"></nb-icon>
+                                            <nb-icon status="danger" style="float: right;margin-right: 10px;;"
+                                                [hidden]="production_flag[i]" [options]="{animation:{type:'zoom'}}"
+                                                icon="trash" (click)="removeBatch(i);"></nb-icon>
                                         </div>
                                     </div>
                                 </div>
@@ -154,36 +201,64 @@
                                     <div class="row">
                                         <div class="col-md-12 col-12">
                                             <div>
-                                                <ngx-datatable #table class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height" [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="50" [scrollbarV]="true">
+                                                <ngx-datatable #table
+                                                    class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height"
+                                                    [rows]="block.batchMW" [headerHeight]="31" [footerHeight]="50"
+                                                    [scrollbarV]="true">
 
-                                                    <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false" [width]="300" class="table-row">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                                            <input class="tableForm" type="number" (keyup)="onKeyUp($event,rowIndex,0,'mtr',i)" [(ngModel)]="row.mtr" [id]="'grData'+rowIndex+'-0'+i" #forFocus #meter1="ngModel" name="mtr{{rowIndex}}{{i}}" required (input)="calculateWt(meter1.value,i,rowIndex,0);"
-                                                                [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}" min="0" [disabled]="flag || production_flag[i] || weightFlag">
-                                                            <div class="invalid-feedback" *ngIf="formSubmitted && (meter1.invalid)" style="display: inline-block;" min="0">
+                                                    <ngx-datatable-column name="Meter" prop="mtr" [sortable]="false"
+                                                        [width]="300" class="table-row">
+                                                        <ng-template let-row="row" ngx-datatable-cell-template
+                                                            let-rowIndex="rowIndex">
+                                                            <input class="tableForm" type="number"
+                                                                (keyup)="onKeyUp($event,rowIndex,0,'mtr',i)"
+                                                                [(ngModel)]="row.mtr" [id]="'grData'+rowIndex+'-0'+i"
+                                                                #forFocus #meter1="ngModel" name="mtr{{rowIndex}}{{i}}"
+                                                                required
+                                                                (input)="calculateWt(meter1.value,i,rowIndex,0);"
+                                                                [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}"
+                                                                min="0"
+                                                                [disabled]="flag || production_flag[i] || weightFlag">
+                                                            <div class="invalid-feedback"
+                                                                *ngIf="formSubmitted && (meter1.invalid)"
+                                                                style="display: inline-block;" min="0">
                                                                 <span>Required</span>
                                                             </div>
                                                         </ng-template>
                                                     </ngx-datatable-column>
 
-                                                    <ngx-datatable-column name="Weight" prop="wt" [sortable]="false" [width]="300">
-                                                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                                            <input class="tableForm" type="number" #weight1="ngModel" name="wt{{rowIndex}}{{i}}" [(ngModel)]="row.wt" (keyup)="onKeyUp($event,rowIndex,1,'wt',i)" required [id]="'grData'+rowIndex+'-1'+i" (input)="calculateMtr(weight1.value,i,rowIndex,1);" [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
+                                                    <ngx-datatable-column name="Weight" prop="wt" [sortable]="false"
+                                                        [width]="300">
+                                                        <ng-template let-row="row" ngx-datatable-cell-template
+                                                            let-rowIndex="rowIndex">
+                                                            <input class="tableForm" type="number" #weight1="ngModel"
+                                                                name="wt{{rowIndex}}{{i}}" [(ngModel)]="row.wt"
+                                                                (keyup)="onKeyUp($event,rowIndex,1,'wt',i)" required
+                                                                [id]="'grData'+rowIndex+'-1'+i"
+                                                                (input)="calculateMtr(weight1.value,i,rowIndex,1);"
+                                                                [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
                                                                 min="0" [disabled]="flag || production_flag[i]">
-                                                            <div class="invalid-feedback" *ngIf="formSubmitted && (weight1.invalid)" style="display: inline-block;" min="0">
+                                                            <div class="invalid-feedback"
+                                                                *ngIf="formSubmitted && (weight1.invalid)"
+                                                                style="display: inline-block;" min="0">
                                                                 <span>Required</span>
                                                             </div>
                                                         </ng-template>
                                                     </ngx-datatable-column>
 
                                                     <ngx-datatable-column name="Action" sortable="false">
-                                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                                            <nb-icon icon="trash" status="danger" [hidden]="production_flag[i]" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex,i)">
+                                                        <ng-template let-row="row" let-value="value"
+                                                            ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                                            <nb-icon icon="trash" status="danger"
+                                                                [hidden]="production_flag[i]"
+                                                                [options]="{ animation: { type: 'zoom' } }"
+                                                                (click)="removeItem(rowIndex,i)">
                                                             </nb-icon>
                                                         </ng-template>
                                                     </ngx-datatable-column>
                                                     <ngx-datatable-footer>
-                                                        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-row="row">
+                                                        <ng-template ngx-datatable-footer-template
+                                                            let-rowCount="rowCount" let-row="row">
                                                             <div class="col-md-6">
                                                                 <div class="toal-finish-mtr">
                                                                     Total mtr: {{block.totalMt}}
@@ -210,7 +285,8 @@
                             <div class="nb-icon-add">
                                 <a class="link-fab linkedin" media="Linkedin">
                                     <div class="tooltip">Add Batch</div>
-                                    <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNewBatch($event);" icon="plus" class="add-icon display-inline">
+                                    <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addNewBatch($event);"
+                                        icon="plus" class="add-icon display-inline">
                                     </nb-icon>
                                 </a>
 
@@ -218,10 +294,18 @@
                         </div>
                         <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel mob-stock" routerLink="/pages/stock-batch">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
-                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
-                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
+
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="cancel(myForm)">CANCEL</button>
+
+                            <button type="button" class="btn btn-primary btn-sm btn-design mob-stock button-base ripple"
+                                *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                            <button *ngIf="addFlag" type="button"
+                                class="btn btn-primary btn-sm btn-design mob-stock button-base ripple"
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!addFlag" type="button"
+                                class="btn btn-primary btn-sm btn-design button-base ripple"
+                                (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
 
                     </div>
