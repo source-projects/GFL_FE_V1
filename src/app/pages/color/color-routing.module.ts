@@ -8,6 +8,13 @@ import { IssueColorBoxComponent } from './issue-color-box/issue-color-box.compon
 const routes: Routes = [
   {
     path:'',
+    component:AddEditColorComponent,
+    canActivate:[ColorGuard],
+    canLoad:[ColorGuard],
+    data: { PermissionName: ['add']}
+  },
+  {
+    path:'view',
     component:ColorComponent,
     canActivate:[ColorGuard],
     canLoad:[ColorGuard],

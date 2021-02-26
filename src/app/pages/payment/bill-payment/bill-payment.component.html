@@ -364,7 +364,7 @@
 
                             <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="payAmt">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable" id="payAmt" [(ngModel)]="row.payAmt" (keyup)="onKeyUp($event,rowIndex,1,'payAmt')" [id]="'paymentDetailsList'+rowIndex+'-payAmt'" min="0" (keyup)="currentPaymentAdded($event)">
+                                    <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable" id="payAmt" [(ngModel)]="row.payAmt" (keyup)="onKeyUp($event,rowIndex,1,'payAmt')" [id]="'paymentDetailsList'+rowIndex+'-payAmt'" min="0" (input)="currentPaymentAdded($event,rowIndex)">
                                     <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)" style="display: inline-block;">
                                         <span>Required</span>
                                     </div>

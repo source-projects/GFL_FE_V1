@@ -7,6 +7,13 @@ import { StockBatchComponent } from './stock-batch.component';
 const routes: Routes = [
   {
     path: '',
+    component: AddEditStockBatchComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['add']}
+  },
+  {
+    path: 'view',
     component: StockBatchComponent,
     canActivate: [StockBatchGuard],
     canLoad: [StockBatchGuard],

@@ -258,6 +258,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   qualityIdSelected(event) {
+    console.log(event);
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -467,6 +468,17 @@ export class AddEditShadeComponent implements OnInit {
       }
     }
   }
+
+  reset(shadeForm){
+    shadeForm.reset();
+    this.formSubmitted = false;
+    this.shadeObj.colorTone = null;
+    this.color = "";
+    document.getElementById("color").style.background = "none";
+    this.totalAmount = 0;
+    this.costKg = 0;
+    this.costMtr = 0;
+  }
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -485,7 +497,19 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeService.addShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/shade"]);
+            shadeForm.reset();
+            this.formSubmitted = false;
+          //   Object.keys(shadeForm.controls).forEach(field => { 
+          //       this.shadeObj.colorTone = null;
+          //       shadeForm.controls[field].reset();   
+
+          //     }
+
+              
+            
+          // );
+
+            this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(data["msg"]);
@@ -560,6 +584,7 @@ export class AddEditShadeComponent implements OnInit {
     this.formSubmitted = true;
     if (shadeForm.valid) {
       this.shadeObj.updatedBy = this.user.userId;
+      console.log(this.shadeObj);
       this.shadeService.updateShadeData(this.shadeObj).subscribe(
         (data) => {
           if (data["success"]) {

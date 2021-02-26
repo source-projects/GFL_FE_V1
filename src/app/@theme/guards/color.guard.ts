@@ -42,7 +42,7 @@ export class ColorGuard implements CanActivate {
        if (this.permis[1] == '1')
          return true;
        else
-       {this._router.navigate(['/pages']);
+       {this._router.navigate(['/pages/color/view']);
        return false;}
 
      case 'edit':
