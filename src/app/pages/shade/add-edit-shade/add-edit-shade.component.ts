@@ -474,7 +474,6 @@ export class AddEditShadeComponent implements OnInit {
     this.formSubmitted = false;
     this.shadeObj.colorTone = null;
     this.color = "";
-    document.getElementById("color").style.background = "none";
     this.totalAmount = 0;
     this.costKg = 0;
     this.costMtr = 0;
@@ -499,16 +498,7 @@ export class AddEditShadeComponent implements OnInit {
           if (data["success"]) {
             shadeForm.reset();
             this.formSubmitted = false;
-          //   Object.keys(shadeForm.controls).forEach(field => { 
-          //       this.shadeObj.colorTone = null;
-          //       shadeForm.controls[field].reset();   
-
-          //     }
-
-              
-            
-          // );
-
+            this.reset(shadeForm);
             this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
           } else {
