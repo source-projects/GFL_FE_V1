@@ -525,7 +525,25 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-  removeMachineCategory(id) {}
+  removeMachineCategory(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.adminService.deleteMachineCategory(id).subscribe(
+          (data) => {
+            //this.onChange(this.radioSelect);
+            this.toastr.success(errorData.Delete);
+            this.getAllDesignationData();
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+  }
 
   removeDesignation(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
