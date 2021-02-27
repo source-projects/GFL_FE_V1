@@ -547,7 +547,7 @@ export class AdminComponent implements OnInit {
           (data) => {
             //this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);
-            this.getAllDesignationData();
+            this.getAllMachineCategoryData();
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);

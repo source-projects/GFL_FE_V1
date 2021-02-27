@@ -121,7 +121,7 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" routerLink='/pages/dyeing-process'>CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="resetFormValues(myForm)">CANCEL</button>
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
                             <button type="button" *ngIf="updateFlag" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">Update</button>
                         </div>
