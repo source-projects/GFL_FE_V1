@@ -271,7 +271,12 @@ export class ProductionPlanningComponent implements OnInit {
     modalRef.result
       .then(result => {
         if (result) {
-          this.getAllBatchData();
+          if(this.productionPlanning.partyId){
+            this.partySelected(this.productionPlanning.partyId);
+          }else if(this.productionPlanning.partyId && this.productionPlanning.qualityId){
+            this.qualitySelected(this.productionPlanning.qualityId);
+          }
+          //this.getAllBatchData();
           this.plannedProductionListForDataTable();
         }
       })

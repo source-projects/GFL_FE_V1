@@ -140,7 +140,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName" [(ngModel)]="addDepartment.name" #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName"  #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
                                     required>
                                 <div class="input-required" *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
                                     Machine name is required.
@@ -150,7 +150,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Category</label>
-                                <ng-select name="category" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" [(ngModel)]="addDepartment.name" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
+                                <ng-select name="category" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId"  #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
                                     required>
                                     <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
                                         {{mc.name}}

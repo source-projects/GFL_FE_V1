@@ -11,10 +11,13 @@ import {
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { JwtTokenService } from "../services/jwt-token.service";
+import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
-  constructor(private router: Router, private injector: Injector) {
+   errorMessage: string;
+  constructor(private router: Router, private injector: Injector,     private toastr: ToastrService,
+    ) {
     // this.commonService.getUser();
   }
   intercept(
@@ -41,14 +44,49 @@ export class CustomHttpInterceptor implements HttpInterceptor {
         },
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              //this.authService.logout();
-              // this.toasterService.error('Token Expired!');
-              this.router.navigate(["./auth"]);
+            // if (err.status === 401) {
+            //   //this.authService.logout();
+            //   // this.toasterService.error('Token Expired!');
+            //   this.router.navigate(["./auth"]);
+            // }
+
+            switch (err.status) {
+              case 400:
+                this.errorMessage = "Bad Request.";
+                break;
+              case 401:
+                this.errorMessage = "You need to log in to do this action.";
+                this.router.navigate(["./auth"]);
+                break;
+              case 403:
+                this.errorMessage = "You don't have permission to access the requested resource.";
+                break;
+              case 404:
+                this.errorMessage = "The requested resource does not exist.";
+                break;
+              case 412:
+                this.errorMessage = "Precondition Failed.";
+                break;
+              case 500:
+                this.errorMessage = "Internal Server Error.";
+                break;
+              case 503:
+                this.errorMessage = "The requested service is not available.";
+                break;
+              case 422:
+                this.errorMessage = "Validation Error!";
+                break;
+              default:
+                this.errorMessage = "Something went wrong!";
             }
+          }
+          if (this.errorMessage) {
+            this.toastr.error(this.errorMessage);
           }
         }
       )
     );
+
+    
   }
 }
