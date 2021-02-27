@@ -161,7 +161,7 @@ export class PlanningSlipComponent implements OnInit {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index =
-        "itemList" + parentDataIndex + "" + (rowIndex + 1) + "-" + colIndex;
+        "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
       if (
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
@@ -188,9 +188,6 @@ export class PlanningSlipComponent implements OnInit {
           this.slipData.dyeingSlipDataList[
             parentDataIndex
           ].dyeingSlipItemData.push(obj);
-          this.data.changes.subscribe(() => {
-            this.data.last.focus();
-          });
           let interval = setInterval(() => {
             let field = document.getElementById(this.index);
             if (field != null) {
@@ -225,9 +222,17 @@ export class PlanningSlipComponent implements OnInit {
         if (item.itemName && item.qty) {
           let obj = new DyeingChemicalData();
           this.itemList.push(obj);
-          this.data.changes.subscribe(() => {
-            this.data.last.focus();
-          });
+          // this.data.changes.subscribe(() => {
+          //   this.data.last.focus();
+          // });
+          let interval = setInterval(() => {
+            let field = document.getElementById(this.index);
+            if (field != null) {
+              field.focus();
+              clearInterval(interval);
+            }
+          }, 10);
+  
         } else {
           this.toastr.error("Fill empty fields");
         }
@@ -531,20 +536,28 @@ export class PlanningSlipComponent implements OnInit {
   onEnter(e, index) {
     let keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
+      let indexOfEnter = "addList" + (index + 1) + "-" + 1;
       if (index == this.dyeingChemicalData.length - 1) {
         if (
           this.dyeingChemicalData[index].itemId &&
           this.dyeingChemicalData[index].qty
         ) {
           this.dyeingChemicalData.push(new DyeingChemicalData());
-          this.data.changes.subscribe(() => {
-            this.data.last["nativeElement"].focus();
-          });
+          // this.data.changes.subscribe(() => {
+          //   this.data.last["nativeElement"].focus();
+          // });
+          let interval = setInterval(() => {
+            let field = document.getElementById(indexOfEnter);
+            if (field != null) {
+              field.focus();
+              clearInterval(interval);
+            }
+          }, 10);
+  
         } else {
           this.toastr.error("Fill empty fields.");
         }
       } else {
-        let indexOfEnter = "addList" + (index + 1) + "-" + 1;
         let interval = setInterval(() => {
           let field = document.getElementById(indexOfEnter);
           if (field != null) {
