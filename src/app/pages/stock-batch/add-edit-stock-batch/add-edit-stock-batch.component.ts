@@ -250,9 +250,10 @@ export class AddEditStockBatchComponent implements OnInit {
                 data["data"].batchData,
                 "batchId"
               );
-              this.stockBatch.batchData.forEach((element, index) => {
-                this.production_flag[index] = element.isProductionPlanned;
-              });
+              let batch1 = this.stockBatch.batchData.map(element => {
+                element.batchId
+              })
+             
               this.setStockDataValues1();
             }
           } else {
@@ -293,7 +294,10 @@ export class AddEditStockBatchComponent implements OnInit {
           batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
+      this.production_flag[i] = batch.isProductionPlanned
     });
+    // console.log(this.production_flag);
+
     this.reCalcMTWTValue();
   }
 
