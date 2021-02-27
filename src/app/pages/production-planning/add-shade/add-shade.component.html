@@ -8,9 +8,7 @@
     </div>
     <div class="modal-body mb-4">
         <label class="required">Shade</label>
-        <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
-            [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
-            placeholder="Select Shade" class="required-error-dropdown">
+        <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel" [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}" placeholder="Select Shade" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-4 col-4">
@@ -35,15 +33,13 @@
                     </div>
                     <div class="col-md-4 col-4" style="display: flex;justify-content: center;">
                         <div class="text-right txt-ov-elips" style="width: 70%;">
-                            <input [(colorPicker)]="s.colorTone" style="width: 100%;" [style.background]="s.colorTone"
-                                [value]="s.colorTone" disabled="true" />
+                            <input [(colorPicker)]="s.colorTone" style="width: 100%;" [style.background]="s.colorTone" [value]="s.colorTone" disabled="true" />
                         </div>
                     </div>
                 </div>
             </ng-option>
         </ng-select>
-        <div class="required-class"
-            *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
+        <div class="required-class" *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
             <span>Shade Id is required</span>
         </div>
     </div>
@@ -66,9 +62,7 @@
     </div>
     <div class="modal-body mb-4">
         <label class="required">Approve By</label>
-        <ng-select name="approveBy" [(ngModel)]='approveBy' required #approveBy1="ngModel"
-            [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}"
-            placeholder="Select approve by" class="required-error-dropdown">
+        <ng-select name="approveBy" [(ngModel)]='approveBy' required #approveBy1="ngModel" [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}" placeholder="Select approve by" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-4 col-4">
@@ -92,13 +86,12 @@
                 </div>
             </ng-option>
         </ng-select>
-        <div class="required-class"
-            *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
+        <div class="required-class" *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
             <span>approve by is required</span>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onApproveClick()">Ok</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onApproveClick()">Ok</button>
     </div>
 
 </div>

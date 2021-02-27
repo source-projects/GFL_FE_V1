@@ -215,7 +215,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="onCreate(innerForm)">ADD</button>
+                                                <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="onCreate(innerForm)">ADD</button>
                                                 <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="onCancel(innerForm)">Cancel</button>
                                             </div>
                                         </form>
@@ -226,10 +226,10 @@
                             <div class="col-md-12 mobile-btn-center text-btn-right">
 
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
-                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
+                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
                                     Print</button>
 
                             </div>
@@ -322,8 +322,8 @@
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
 
                                     <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And
                                         Print</button>
 
                                 </div>
@@ -398,21 +398,21 @@
                                 </div>
                                 <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 28% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
                                     <label class="mr-right" style="font-size: 25px;font-weight: bold;">Temperature:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;color: #000!important;">
+                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;">
                                         {{process.temp}}</div>
 
                                 </div>
                                 <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
                                     <label class="mr-right" style="font-size: 25px;font-weight: bold;">Hold
                                         Time:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;color: #000!important;">
+                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;">
                                         {{process.holdTime}}</div>
 
                                 </div>
                                 <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 27% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
                                     <label class="mr-right" style="font-size: 25px;font-weight: bold;">Liquor
                                         Ratio:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: 30%;color: #000!important;border-left: 1px solid;">
+                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;border-left: 1px solid;">
                                         {{process.liquerRation}}</div>
 
                                 </div>
