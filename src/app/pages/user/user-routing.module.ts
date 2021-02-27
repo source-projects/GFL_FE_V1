@@ -21,13 +21,7 @@ const routes: Routes = [
     data: { PermissionName: ['view','view group','view all']}
     
   },
-  {
-    path:'add',
-    component:AddEditUserComponent,
-    canActivate: [UserGuard],
-    canLoad: [UserGuard],
-    data: { PermissionName: ['add']}
-  },
+ 
   {
     path:'edit/:id',
     component:AddEditUserComponent,

@@ -20,20 +20,7 @@ const routes: Routes = [
     canLoad:[QualityGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
-  // {
-  //   path: '',
-  //   component: QualityComponent,
-  //   canActivate: [QualityGuard],
-  //   canLoad: [QualityGuard],
-  //   data: { PermissionName: ['view','view group','view all'] }
-  // },
   {
-    path: 'add',
-    component: AddEditQualityComponent,
-    canActivate: [QualityGuard],
-    //canLoad: [QualityGuard],
-    data: { PermissionName: ['add'] }
-  }, {
     path: 'edit/:id',
     component: AddEditQualityComponent,
     canActivate: [QualityGuard],

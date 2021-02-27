@@ -190,6 +190,8 @@ export class AdminComponent implements OnInit {
               this.toastr.success(errorData.Update_Success);
               this.getAllJetData();
               this.onCancelJet();
+              this.formSubmitted = false;
+
             } else {
               this.toastr.error(errorData.Update_Error);
             }
@@ -219,7 +221,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }
@@ -235,6 +237,8 @@ export class AdminComponent implements OnInit {
               this.toastr.success(errorData.Add_Success);
               this.getAllMachineData();
               this.resetValue(addMachineData);
+              this.formSubmitted = false;
+
             } else {
               this.toastr.error(errorData.Add_Error);
             }
@@ -245,7 +249,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }
@@ -263,6 +267,7 @@ export class AdminComponent implements OnInit {
                 this.toastr.success(errorData.Add_Success);
                 this.getAllMachineCategoryData();
                 this.resetValue(addMachineCategoryData);
+                this.formSubmitted = false;
               } else {
                 this.toastr.error(errorData.Add_Error);
               }
@@ -273,7 +278,6 @@ export class AdminComponent implements OnInit {
           );
       }
     } else {
-      this.formSubmitted = false;
       return;
     }
   }
@@ -289,6 +293,8 @@ export class AdminComponent implements OnInit {
               this.getAllApproveByData();
               this.onCancelApproveBy();
               this.resetValue(addApproveByData);
+                    this.formSubmitted = false;
+
             } else {
               this.toastr.error(errorData.Update_Error);
             }
@@ -307,6 +313,8 @@ export class AdminComponent implements OnInit {
               this.toastr.success(errorData.Add_Success);
               this.getAllApproveByData();
               this.resetValue(addApproveByData);
+                    this.formSubmitted = false;
+
             } else {
               this.toastr.error(errorData.Add_Error);
             }
@@ -317,7 +325,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }
@@ -332,6 +340,8 @@ export class AdminComponent implements OnInit {
               this.getAllDesignationData();
               this.onCancelDesignation();
               this.resetValue(addDesignationData);
+              this.formSubmitted = false;
+
             } else {
               this.toastr.error(errorData.Update_Error);
             }
@@ -357,7 +367,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }
@@ -403,7 +413,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }
@@ -419,6 +429,8 @@ export class AdminComponent implements OnInit {
               this.getAllDepartment();
               this.onCancelDepartment();
               this.resetValue(addDepartmentData);
+              this.formSubmitted = false;
+
             }
           },
           (error) => {}
@@ -436,7 +448,7 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      this.formSubmitted = false;
+      // this.formSubmitted = false;
       return;
     }
   }

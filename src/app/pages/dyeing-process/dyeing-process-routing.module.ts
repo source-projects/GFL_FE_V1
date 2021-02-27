@@ -20,13 +20,7 @@ const routes: Routes = [
     canLoad:[DyeingProcessGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
-  {
-    path: "add",
-     component: AddEditDyeingProcessComponent,
-    canActivate:[DyeingProcessGuard],
-    canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['add']}
-  },
+ 
   {
     path: "edit/:id",
      component: AddEditDyeingProcessComponent,

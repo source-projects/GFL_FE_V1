@@ -184,13 +184,6 @@ export class AddEditQualityComponent implements OnInit {
     }
   }
 
-  onCancel(){
-    this.addEditQualityForm.patchValue({
-      qualityType : "Fabric"}
-    )  
-    console.log(this.addEditQualityForm.value.qualityType);
-  }
-
   updateQuality() {
     this.disableButton = true;
 

@@ -20,13 +20,7 @@ const routes: Routes = [
     canLoad:[SupplierGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
-  {
-    path:'add',
-    component:AddEditSupplierComponent,
-    canActivate:[SupplierGuard],
-    canLoad:[SupplierGuard],
-    data: { PermissionName: ['add']}
-  },
+  
   {
     path:'addSupplierRate',
     component:AddEditSupplierRateComponent,

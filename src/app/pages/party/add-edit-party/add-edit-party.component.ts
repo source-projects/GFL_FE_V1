@@ -362,10 +362,6 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = false;
   }
 
-  public goBackToPreviousPage(): any {
-    this.route.navigate(["pages/party"]);
-  }
-
   setCheckedStatusCreditor(checked) {
     this.creditor = checked;
     this.partyForm.patchValue({
