@@ -21,13 +21,6 @@ const routes: Routes = [
     data: { PermissionName: ['view','view group','view all']}
   },
   {
-    path:'add',
-    component:AddEditShadeComponent,
-    canActivate:[ShadeGuard],
-    canLoad:[ShadeGuard],
-    data: { PermissionName: ['add']}
-  },
-  {
     path:'edit/:id',
     component:AddEditShadeComponent,
     canActivate:[ShadeGuard],

@@ -19,13 +19,7 @@ const routes: Routes = [
     canLoad: [StockBatchGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
-  {
-    path: 'add',
-    component: AddEditStockBatchComponent,
-    canActivate: [StockBatchGuard],
-    canLoad: [StockBatchGuard],
-    data: { PermissionName: ['add']}
-  },
+ 
   {
     path: 'edit/:id',
     component: AddEditStockBatchComponent,
