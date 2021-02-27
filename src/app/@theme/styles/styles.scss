@@ -598,6 +598,7 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100px;
     margin-right: 17px;
     margin-left: 6px;
+    background-color: lightgray
 }
 
 .total-shuffle,
@@ -867,6 +868,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .enter-batch-id-2 {
     margin-right: 0 !important;
     width: 100%;
+    background-color: lightgray;
 }
 
 .machine-btn-text {

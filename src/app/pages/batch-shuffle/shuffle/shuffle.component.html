@@ -23,11 +23,11 @@
                                     <ng-option disabled="true">
                                         <div class="row">
                                             <div class="col-md-6 col-6">
-                                                <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name
+                                                <div class="text-left txt-ov-elips">Party Name
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-6">
-                                                <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">
+                                                <div class="text-right txt-ov-elips">
                                                     Party Code</div>
                                             </div>
                                         </div>
@@ -55,13 +55,13 @@
                                     <ng-option disabled="true">
                                         <div class="row">
                                             <div class="col-md-4 col-4">
-                                                <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: 15px;">Party Name</div>
+                                                <div class="text-left txt-ov-elips">Party Name</div>
                                             </div>
                                             <div class="col-md-4 col-4">
-                                                <div class="text-center txt-ov-elips" style="font-weight:bold;font-size: 15px;">Quality Id</div>
+                                                <div class="text-center txt-ov-elips">Quality Id</div>
                                             </div>
                                             <div class="col-md-4 col-4">
-                                                <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: 15px;">Quality Name</div>
+                                                <div class="text-right txt-ov-elips">Quality Name</div>
                                             </div>
                                         </div>
                                     </ng-option>
@@ -172,7 +172,7 @@
                                                 <span class="t-12">Total</span>
                                             </div>
                                             <div class="col-md-5 col-5 jus-con-center">
-                                                <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName" style="background-color: lightgray;" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
+                                                <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
 
                                             </div>
 
@@ -194,18 +194,12 @@
                                 <div class="col-md-9 col-9">
                                     <div class="batch-1-input">
                                         <span class="text-batch-mtr">Mtr.</span>
-                                        <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true" style="background-color: lightgray;" class="mtr-wei">
+                                        <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true" class="mtr-wei">
                                         <span class="text-batch-mtr">Wt.</span>
-                                        <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true" style="background-color: lightgray;" class="mtr-wei">
+                                        <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true" class="mtr-wei">
                                     </div>
                                 </div>
-                                <!-- <div class="total-shuffle" style="margin-left: 6%;">
-                  <label>Total Rows</label>
-                  <input type="text" formControlName="totalrowsPart1" [readonly]="true"
-                    style="background-color: lightgray;" class="mtr-wei">
-                  <input type="text" formControlName="totalrowsPart2" [readonly]="true"
-                    style="background-color: lightgray; " class="mtr-wei">
-                </div> -->
+
 
                             </div>
                         </div>
@@ -215,9 +209,9 @@
                                 <div class="col-md-9">
                                     <div class="batch-2-input">
                                         <span class="text-batch-mtr">Mtr.</span>
-                                        <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true" style="background-color: lightgray;" class="mtr-wei">
+                                        <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true" class="mtr-wei">
                                         <span class="text-batch-mtr">Wt.</span>
-                                        <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true" style="background-color: lightgray;" class="mtr-wei">
+                                        <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true" class="mtr-wei">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -225,8 +219,7 @@
                                         <button class="btn btn-primary btn-sm btn-design-save" (click)="splitsubmit()" [hidden]="btnFlag">Split</button>
                                         <button class="btn btn-primary btn-sm btn-design-save" (click)="mergesubmit()" [hidden]="!btnFlag">Merge</button>
                                     </div>
-                                    <!-- <input type="text" placeholder="Enter New Batch Id" formControlName="newBatchName"
-                    style="background-color: lightgray;" [hidden]="btnFlag"> -->
+
 
                                 </div>
 

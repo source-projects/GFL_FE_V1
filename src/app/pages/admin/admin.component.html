@@ -9,7 +9,7 @@
                             <div class="form-group">
                                 <label>Jet Name</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Jet Name" [(ngModel)]="addJet.name" #jetName1="ngModel" [ngClass]="{'is-invalid':(jetName1.invalid) &&(formSubmitted || jetName1.touched) }" required>
-                                <div class="input-required" style="color: red;" *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
+                                <div class="input-required" *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
                                     Jet name is required.
                                 </div>
                             </div>
@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label>Jet Capacity</label>
                                 <input name="capacity" type="number" class="form-control" placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity" #jetCapacity1="ngModel" [ngClass]="{'is-invalid':(jetCapacity1.invalid) &&(formSubmitted || jetCapacity1.touched) }" required>
-                                <div class="input-required" style="color: red;" *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
+                                <div class="input-required" *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
                                     Capacity is required.
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label>Liquor Ratio</label>
                                 <input name="liquorRatio" type="number" class="form-control" placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio" #jetLiquor1="ngModel" [ngClass]="{'is-invalid':(jetLiquor1.invalid) &&(formSubmitted || jetLiquor1.touched) }" required>
-                                <div class="input-required" style="color: red;" *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
+                                <div class="input-required" *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
                                     Liquor ratio is required.
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)=" onCancelJet()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveJet(addJetData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveJet(addJetData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelCompany()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveCompany(addCompanyData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveCompany(addCompanyData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -115,7 +115,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDepartment">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveDepartment(addDepartmentData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDepartment(addDepartmentData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -140,8 +140,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName"  #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
-                                    required>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName" #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }" required>
                                 <div class="input-required" *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
                                     Machine name is required.
                                 </div>
@@ -150,8 +149,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Category</label>
-                                <ng-select name="category" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId"  #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
-                                    required>
+                                <ng-select name="category" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }" required>
                                     <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
                                         {{mc.name}}
                                     </ng-option>
@@ -166,7 +164,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachine()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveMachine(addMachineData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachine(addMachineData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -210,7 +208,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachineCategory()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveMachineCategory(addMachineCategoryData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachineCategory(addMachineCategoryData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -251,7 +249,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDesignation()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveDesignation(addDesignationData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDesignation(addDesignationData)">SAVE</button>
                         </div>
                     </div>
                 </form>
@@ -301,7 +299,7 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelApproveBy()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="saveApproveBy(addApproveByData)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveApproveBy(addApproveByData)">SAVE</button>
                         </div>
                     </div>
                 </form>

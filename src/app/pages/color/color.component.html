@@ -18,7 +18,7 @@
     <nb-card-body>
         <div class="row">
             <div class="col-md-6">
-                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
+                <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
                     <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
             </div>
