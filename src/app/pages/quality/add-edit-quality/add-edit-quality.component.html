@@ -59,15 +59,15 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Quality ID</label>
-                    <input type="text" class="form-control size-small" id="qualityId" nbinput fieldsize="small" (change)="checkQulityId()" (keypress)="resetFlag($event)" required formControlName="qualityId" placeholder="Enter Quality ID" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)}"
+                    <input type="text" class="form-control size-small" id="qualityId" nbinput fieldsize="small" (change)="checkQulityId()" required formControlName="qualityId" placeholder="Enter Quality ID" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)}"
                     />
-
-                    <div class="input-required" *ngIf="(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)">
-                        <span>Quality ID is required</span>
-                    </div>
                     <div class="input-required" *ngIf="qulityIdExist">
                         <span>Qulity Id is already Exist </span>
                     </div>
+                    <div class="input-required" *ngIf="(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched)">
+                        <span>Quality ID is required</span>
+                    </div>
+                    
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">Quality Name</label>

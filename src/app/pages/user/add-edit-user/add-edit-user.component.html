@@ -156,8 +156,7 @@
                             <label class="required">User Head List</label>
                             <select name="userHeadId" class="form-control dropdown-name" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
                                 <ng-container *ngIf="adminFlag">
-                                    <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.firstName}}
-                                        {{head.lastName}}
+                                    <option *ngFor="let head of userHradIdList" [ngValue]="head.id">{{head.userName}}
                                     </option>
                                 </ng-container>
                                 <ng-container *ngIf="masterFlag">

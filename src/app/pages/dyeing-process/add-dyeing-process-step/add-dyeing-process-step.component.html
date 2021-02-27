@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Process Type</label>
+                    <label class="required">Process Type</label>
                     <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
                         name="processType" #processType1="ngModel"
                         [ngClass]="{'is-invalid':(processType1.invalid)&&(modalSubmitted || processType1.touched)}"
@@ -26,7 +26,7 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Step Sequence</label>
+                    <label class="required">Step Sequence</label>
                     <ng-select [disabled]="editStep" placeholder="Sequence No" [(ngModel)]="dyeingProcessStep.sequence"
                         name="stepNo" #position1="ngModel"
                         [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required>
@@ -40,7 +40,7 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Temprature</label>
+                    <label class="required">Temprature</label>
                     <input class="form-control input-group" type="number" min="0" name="temp"
                         [(ngModel)]="dyeingProcessStep.temp" #temp1="ngModel"
                         [ngClass]="{'is-invalid':(temp1.invalid)&&(modalSubmitted || temp1.touched)}" required
@@ -54,7 +54,7 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Hold Time</label>
+                    <label class="required">Hold Time</label>
                     <input class="form-control input-group" min="0" type="number" name="holdTime"
                         [(ngModel)]="dyeingProcessStep.holdTime" #holdTime1="ngModel"
                         [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required
@@ -67,7 +67,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Liquor Ratio</label>
+                    <label class="required">Liquor Ratio</label>
                     <input class="form-control input-group" min="0" type="number" name="liquerRation"
                         [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"
                         [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)}" required
@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-md-12">
-                <h5 class="nb-badges">Add Chemical List</h5>
+                <div class="required"><h5 class="nb-badges mr-0">Add Chemical List</h5></div>
                 <table class="table table-responsive table-bordered table-striped table-process-fnt">
                     <tr>
                         <th>Item name</th>
@@ -103,7 +103,7 @@
                             <ng-select #data name="itemId{{dc._id}}_{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
                             #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)"
                             [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none"  >
-                                        <ng-option *ngFor="let item of itemListArray" [value]="item.itemId"
+                                        <ng-option *ngFor="let item of (itemListArray | showOnlyChemicalFilter : false)" [value]="item.itemId"
                                         placeholder="Select Item">
                                         {{item.itemName}} - {{item.supplierName}}</ng-option>
                             </ng-select>

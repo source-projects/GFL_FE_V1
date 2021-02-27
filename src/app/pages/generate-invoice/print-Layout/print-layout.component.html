@@ -284,12 +284,8 @@
                                             </tr>
                                         </table>
 
-                                        <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
-                                            <!-- <colgroup>
-                                            <col width="10mm" />
-                                            <col width="45mm" />
-                                            <col width="45mm" />
-                                        </colgroup> -->
+                                        <!-- <table id="invoice-table" class="table  spacing-low border-bootom-none table-bordered">
+                                            
                                             <tr class="invoice_line">
                                                 <th><b>Cops</b></th>
                                                 <th><b>GryMtr</b></th>
@@ -315,7 +311,44 @@
                                             </tr>
 
 
-                                        </table>
+                                        </table> -->
+
+
+
+                                        <div id="invoice-table">
+                                            <table class="table print-invoice-table border-bootom-none table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" style="padding-top: 2px !important;padding-bottom: 2px!important;"><b>Cops</b></th>
+                                                        <th scope="col" style="padding-top: 2px !important;padding-bottom: 2px!important;"><b>GryMtr</b></th>
+                                                        <th scope="col" style="padding-top: 2px !important;padding-bottom: 2px!important;"><b>FinMtr</b></th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                        <td style="font-size: 13px;padding-top: 1px !important;padding-bottom: 1px!important;"> {{i}}</td>
+                                                        <td style="font-size: 13px;padding-top: 1px !important;padding-bottom: 1px!important;">{{grs.mtr}}</td>
+                                                        <td style="font-size: 13px;padding-top: 1px !important;padding-bottom: 1px!important;">{{grs.finishMtr}}</td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot class="table-footer">
+                                                    <tr>
+                                                        <th style="padding-top: 0 !important;padding-bottom: 0!important;"><b>13</b></th>
+                                                        <th style="padding-top: 0!important;padding-bottom: 0!important;"><b>2283.00</b></th>
+                                                        <th style="padding-top: 0!important;padding-bottom: 0!important;"><b>2,293.00</b></th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="3" style="padding-top: 0 !important;padding-bottom: 0!important;"><b>Sh_% : -0.46</b></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
 
                                     </div>
                                 </div>

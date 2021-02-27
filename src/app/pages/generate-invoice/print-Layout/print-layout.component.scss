@@ -274,6 +274,38 @@
     tfoot.spacing-low tr:last-child {
         text-align: left!important;
     }
+    // codepen print css
+    .print-invoice-table tbody {
+        height: 178mm;
+        overflow: hidden;
+        overflow-x: hidden;
+        display: block;
+        width: 100%;
+    }
+    .print-invoice-table tbody tr,
+    .print-invoice-table thead tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .print-invoice-table thead,
+    .print-invoice-table tfoot {
+        display: table;
+        width: 100%;
+    }
+    .print-invoice-table thead tr th,
+    .print-invoice-table tfoot tr th,
+    .print-invoice-table {
+        border: 2px solid rgb(143, 143, 143) !important;
+    }
+    .print-invoice-table thead tr th {
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+        border-top: 0px solid rgb(143, 143, 143) !important;
+    }
+    .print-invoice-table tfoot tr {
+        border-left: 0!important;
+        border-right: 0!important;
+    }
 }
 
 @media screen {
@@ -297,7 +329,7 @@
 }
 
 .border-margin {
-    margin: 2rem 4rem 5rem 4rem;
+    padding: 1rem 4rem 1rem 4rem;
 }
 
 .t-table {

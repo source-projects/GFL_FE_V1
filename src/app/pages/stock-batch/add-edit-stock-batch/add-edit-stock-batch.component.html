@@ -209,7 +209,7 @@
                                                                     [id]="'grData'+rowIndex+'-1'+i"
                                                                     (input)="calculateMtr(weight1.value,i,rowIndex,1);"
                                                                     [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
-                                                                    min="0" [disabled]="flag || production_flag[i]">
+                                                                    min="0" [disabled]="flag || production_flag[i] || !weightFlag">
                                                                 <div class="invalid-feedback"
                                                                     *ngIf="formSubmitted && (weight1.invalid)"
                                                                     style="display: inline-block;" min="0">
