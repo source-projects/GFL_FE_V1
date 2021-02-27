@@ -136,6 +136,14 @@ export class AddDyeingProcessStepComponent implements OnInit {
 
   }
 
+  numberOnly(evt) { 
+    // Only ASCII charactar in that range allowed 
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) 
+        return false; 
+    return true; 
+} 
+
   removeItem(rowIndex) {
     let idCount = this.dyeingChemicalData.length;
     if (idCount == 1) {
