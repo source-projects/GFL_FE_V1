@@ -96,8 +96,7 @@ export class PagesComponent implements OnInit {
 
               case "User":
                 if (
-                  this.userData.superUserHeadId != null &&
-                  this.userData.userHeadId != null
+                  (this.userData.id && this.userData.userHeadId && this.userData.id != this.userData.userHeadId)
                 ) {
                   e.hidden = true;
                 } else {
