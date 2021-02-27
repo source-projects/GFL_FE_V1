@@ -45,6 +45,12 @@ export class AdminService {
     );
   }
 
+  getAllDepartmentData() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/department"
+    );
+  }
+
   getMachineDateById(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/machine/" + id
@@ -65,9 +71,10 @@ export class AdminService {
     );
   }
 
-  deleteMachine(id) {
-    return this.httpClient.delete(
-      this.commonService.envUrl() + "api/machine/" + id
+  addDepartment(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/department/",
+      data
     );
   }
 
@@ -120,24 +127,25 @@ export class AdminService {
     );
   }
 
-  addDepartment(data) {
-    return this.httpClient.post(
-      this.commonService.envUrl() + "api/admin/add/department/",
-      data
-    );
-  }
+ 
 
   deleteDepartmentById(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/admin/delete/department/" + id
     );
   }
-  getAllDepartmentData() {
-    return this.httpClient.get(
-      this.commonService.envUrl() + "api/admin/get/department"
+
+  deleteMachine(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/machine/" + id
     );
   }
-
+ 
+  deleteMachineCategory(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/machine/category" + id
+    );
+  }
   updateJetData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/jet/updateJet",
