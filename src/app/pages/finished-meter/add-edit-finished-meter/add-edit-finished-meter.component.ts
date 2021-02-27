@@ -36,7 +36,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
     private qualityService: QualityService,
     private toastr: ToastrService,
     private finishedMeterService: FinishedMeterService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getData();
@@ -143,39 +143,41 @@ export class AddEditFinishedMeterComponent implements OnInit {
 
   //get batch data from batchId...
   batchSelected(event) {
-    let controlId: string;
-    this.batchList.forEach((b) => {
-      if (this.finishedMeterForm.batchId == b.batchId) {
-        controlId = b.controlId;
-        if (this.finishedMeterForm.masterId) {
-          //set party and quality according to batch
-          this.finishedMeterForm.partyId = b.partyId;
-          this.finishedMeterForm.qualityId = b.qualityEntryId;
+    if (event) {
+      let controlId: string;
+      this.batchList.forEach((b) => {
+        if (this.finishedMeterForm.batchId == b.batchId) {
+          controlId = b.controlId;
+          if (this.finishedMeterForm.masterId) {
+            //set party and quality according to batch
+            this.finishedMeterForm.partyId = b.partyId;
+            this.finishedMeterForm.qualityId = b.qualityEntryId;
+          }
         }
-      }
-    });
+      });
 
-    this.finishedMeterService
-      .getBatchDataBybatchNo(this.finishedMeterForm.batchId, controlId)
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.finishedMeterForm.batchData = data["data"];
+      this.finishedMeterService
+        .getBatchDataBybatchNo(this.finishedMeterForm.batchId, controlId)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.finishedMeterForm.batchData = data["data"];
 
-            this.finishedMeterForm.batchData.forEach((e) => {
-              this.totalFinishMeter += Number(e.finishMtr)
-              if (e.mtr) e.sequenceId = e.id;
-            });
-            this.setSequenceNo(false);
-            this.setArrayOfSequence();
-            this.setfinishedSequenceAccordingToIdReverse();
-            this.setSequenceNo(false);
-          } //else this.toastr.error(data["msg"]);
-        },
-        (error) => {
-          // this.toastr.error(errorData.Internal_Error);
-        }
-      );
+              this.finishedMeterForm.batchData.forEach((e) => {
+                this.totalFinishMeter += Number(e.finishMtr);
+                if (e.mtr) e.sequenceId = e.id;
+              });
+              this.setSequenceNo(false);
+              this.setArrayOfSequence();
+              this.setfinishedSequenceAccordingToIdReverse();
+              this.setSequenceNo(false);
+            } //else this.toastr.error(data["msg"]);
+          },
+          (error) => {
+            // this.toastr.error(errorData.Internal_Error);
+          }
+        );
+    }
   }
 
   //Quality change event
@@ -239,7 +241,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
               this.batchList = data["data"];
             } else this.toastr.error(data["msg"]);
           },
-          (error) => { }
+          (error) => {}
         );
     } else {
       this.getAllParty();
@@ -278,8 +280,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
       obj.controlId = this.finishedMeterForm.batchData[0].controlId;
       let list = [{ ...obj }];
       this.finishedMeterForm.batchData = [...list];
-    }
-    else {
+    } else {
       let removed = item.splice(rowIndex, 1);
       let list = item;
       this.finishedMeterForm.batchData = [...list];
@@ -330,8 +331,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
       let f = false;
       this.finishedMeterForm.batchData.forEach((e) => {
         if (!e.mtr || e.mtr)
-          if ((!e.finishMtr || e.finishMtr <= '0') && e.sequenceId)
-            f = true;
+          if ((!e.finishMtr || e.finishMtr <= "0") && e.sequenceId) f = true;
       });
       if (f) {
         this.isAddButtonClicked = false;
@@ -342,7 +342,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
           if (
             e.id == 0 &&
             (e.mtr == null || e.mtr == 0) &&
-            (e.finishMtr == "0" || e.finishMtr == null || Number(e.finishMtr) <= 0)
+            (e.finishMtr == "0" ||
+              e.finishMtr == null ||
+              Number(e.finishMtr) <= 0)
           ) {
             this.finishedMeterForm.batchData.splice(count, 1);
           }
