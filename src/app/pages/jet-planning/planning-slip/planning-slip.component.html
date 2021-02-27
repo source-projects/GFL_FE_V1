@@ -96,7 +96,7 @@
                                                                 </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
+                                                                    <input type="number" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" [id]="'itemList'+i+i1+'-'+1" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
                                                                 </td>
 
                                                                 <td>
