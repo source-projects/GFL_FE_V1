@@ -98,11 +98,10 @@ export class ShadeWithBatchComponent implements OnInit {
       if (element.id == event) {
         if (element.capacity > this.weight) {
           this.selectedJetData = element.jetDataList;
-          if(!this.selectedJetData){
+          if (!this.selectedJetData) {
             this.jetSelectedFlag = false;
-          }else{
+          } else {
             this.jetSelectedFlag = true;
-
           }
         } else {
           this.jetCapacity = true;
@@ -113,7 +112,7 @@ export class ShadeWithBatchComponent implements OnInit {
   }
 
   onClick(event) {
-    this.activeModal.close(event.value);
+    if (!this.jetCapacity) this.activeModal.close(event.value);
   }
 
   changeStatus() {

@@ -43,4 +43,10 @@ export class ProductionPlanningService {
         id1
     );
   }
+
+  deleteProduction(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/productionPlan/deleteBy/" + id
+    );
+  }
 }

@@ -16,19 +16,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
-                                #partyId1="ngModel"
-                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
-                                placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Code</div>
+                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Code</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -52,17 +47,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
-                                placeholder="Quality ID" (change)=qualitySelected($event)>
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Quality Id</div>
+                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -87,10 +79,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
 
-                            <button nbButton size="small" style="margin-left: 10px; color:white; border-radius: 20px;"
-                                class="jet-popup-box production-list-popup" *ngFor="let b of allBatchList"
-                                [value]="b.id" class="jet-popup-display " [style.background]="b.colorTone"
-                                (click)="batchSelected($event)">
+                            <button nbButton size="small" style="margin-left: 10px; color:white; border-radius: 20px;" class="jet-popup-box production-list-popup" *ngFor="let b of allBatchList" [value]="b.id" class="jet-popup-display " [style.background]="b.colorTone" (click)="batchSelected($event)">
                                 {{b.batchId}} </button>
 
                         </div>
@@ -108,14 +97,10 @@
                 <td>{{j.name}}</td>
                 <td>{{j.capacity}}</td>
                 <td>
-                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
-                        class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList"
-                            [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
+                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
+                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
                             <!--[style.background]="index.colorTone"-->
-                            <button style="color:white;border: none;background: none;"
-                                nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click"
-                                class="jet-btn-changes">
+                            <button style="color:white;border: none;background: none;" nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes">
                                 {{index.batchId}}
                             </button>
 

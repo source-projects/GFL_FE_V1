@@ -37,7 +37,7 @@ export class SupplierGuard implements CanActivate {
        if (this.permis[1] == '1')
          return true;
        else
-       {this._router.navigate(['/pages']);
+       {this._router.navigate(['/pages/supplier/view']);
        return false;}
 
      case 'edit':

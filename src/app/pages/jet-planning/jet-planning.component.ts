@@ -151,10 +151,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
           this.route
-            .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-            .then(() => {
-              this.route.navigate(["/pages/jet-planning"]);
-            });
+          .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+          .then(() => {
+          this.route.navigate(["/pages/jet-planning"]);
+    });
         } else {
           this.toastr.error(data["msg"]);
         }

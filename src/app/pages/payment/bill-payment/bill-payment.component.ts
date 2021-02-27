@@ -63,9 +63,10 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
-    this.paymentValues.rdAmt = 0;
-    this.paymentValues.cdAmt = 0;
-    this.paymentValues.otherDiff = 0;
+    // this.paymentValues.rdAmt = 0;
+    // this.paymentValues.cdAmt = 0;
+    // this.paymentValues.otherDiff = 0;
+    // this.paymentValues.amtPaid = 0;
 
   }
 
@@ -178,7 +179,6 @@ export class BillPaymentComponent implements OnInit {
     selected.forEach(element => {
       inv.push(element.invoicNo);
     })
-    console.log(inv);
     this.paymentValues.invoices = inv;
     this.totalInvoice = 0;
     event.selected.forEach(element => {
@@ -194,7 +194,6 @@ export class BillPaymentComponent implements OnInit {
     selected.forEach(element => {
       advance.push(element.id);
     })
-    console.log(advance);
 
     this.paymentValues.advancePayList = advance;
 
@@ -213,10 +212,7 @@ export class BillPaymentComponent implements OnInit {
       this.paymentValues.amtToPay = this.totalInvoice;
     }
     let gst = Number(event.target.value);
-    // let a1= this.totalInvoice - gst;
-    //this.paymentValues.totalBill = this.totalInvoice - gst;
     this.paymentValues.amtToPay = this.totalInvoice - gst;
-    //console.log(event.target.value);
   }
 
   getPaymentType() {
@@ -255,7 +251,6 @@ export class BillPaymentComponent implements OnInit {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "paymentDetailsList" + (rowIndex + 1) + "-" + colName;
-      console.log("INDEX:",this.index)
       if (rowIndex === this.paymentValues.paymentData.length - 1) {
         let item = this.paymentValues.paymentData[rowIndex];
         if (colName == "payType") {
@@ -336,13 +331,16 @@ export class BillPaymentComponent implements OnInit {
     }
   }
 
-  currentPaymentAdded(event) {
-    if (event.target.value || event.target.value == "") {
-      this.totalCurrentPayment = 0;
-    }
-
+  amountObj = {};
+  currentPaymentAdded(event,index) {
     let curPay = Number(event.target.value);
-    this.totalCurrentPayment = this.totalCurrentPayment + curPay;
+    this.amountObj[index] = {
+      curPay
+    }
+    this.totalCurrentPayment = 0;
+    Object.keys(this.amountObj).forEach(ele=>{
+      this.totalCurrentPayment += this.amountObj[ele].curPay; 
+    })
     if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
       this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
     }
@@ -355,17 +353,32 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff);
   }
 
-  onAddPayment() {
+  reset(paymentForm){
+    paymentForm.reset();
+    this.formSubmitted = false;
+    this.paymentValues.rdAmt = 0;
+    this.paymentValues.cdAmt = 0;
+    this.paymentValues.otherDiff = 0;
+    this.paymentValues.amtPaid = 0;
+    this.paymentValues.amtToPay = 0;
+    this.totalCurrentPayment = 0;
+    this.paymentValues.paymentData = [];
+    this.paymentValues.invoices = [];
+    this.paymentValues.advancePayList = [];
+    this.invoiceList = [];
+    this.advancePaymentList = [];
+  }
+
+  onAddPayment(paymentForm) {
     if (this.paymentValues.amtToPay != this.paymentValues.amtPaid) {
       this.toastr.error("amount to pay and amount paid are not equal");
     }
     else {
-      console.log(this.paymentValues);
       this.paymentService.savePayment(this.paymentValues).subscribe(
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/payment/bill-payment"]);
-            this.paymentValues = null;
+            this.reset(paymentForm);
             this.toastr.success(errorData.Add_Success);
           }
           else {

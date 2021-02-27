@@ -100,9 +100,7 @@ export class AddEditUserComponent implements OnInit {
   checkArray: any[] = [];
 
   data: any[] = [];
-
   decimal: any[] = [];
-
   userData: any;
   userId: any;
   userHead;
@@ -131,6 +129,7 @@ export class AddEditUserComponent implements OnInit {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
+
   }
 
   public getMaster(logInUserDetail) {
@@ -230,7 +229,6 @@ export class AddEditUserComponent implements OnInit {
       const found = this.desi_list.find(
         (element) => element.designation == "Master"
       );
-
       if (event == found.id) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -810,6 +808,17 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
+  
+  reset(myForm){
+    myForm.reset();
+    
+    this.formSubmitted = false;
+    for (var i = 0; i < this.permissionArray.length; i++) {
+      this.setPermissionFalse(i);
+      this.permissionArray[i].selectAll = false;
+    }
+
+  }
 
   addUser(myForm) {
     this.getCheckedItem();
@@ -826,7 +835,10 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-            this.route.navigate(["/pages/user"]);
+           this.reset(myForm);
+          this.allRightsFlag = false;
+
+            this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);
@@ -854,7 +866,6 @@ export class AddEditUserComponent implements OnInit {
             this.desiList.forEach((element) => {
               if (element.designation != "Master") this.desi_list.push(element);
             });
-            console.log(this.desi_list);
           } else {
             this.desi_list = this.desiList;
           }

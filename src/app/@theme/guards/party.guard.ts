@@ -43,7 +43,7 @@ export class PartyGuard implements CanActivate {
         if (this.permis[1] == '1')
           return true;
         else
-        {this._router.navigate(['/pages']);
+        {this._router.navigate(['/pages/party/view']);
         return false;}
 
       case 'edit':

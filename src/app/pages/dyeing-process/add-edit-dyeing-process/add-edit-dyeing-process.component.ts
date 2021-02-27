@@ -179,6 +179,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
             (data) => {
               if (data["success"]) {
                 this.route.navigate(["/pages/dyeing-process"]);
+                
                 this.toastr.success(data["msg"]);
               }
               else this.toastr.error(data["msg"]);
