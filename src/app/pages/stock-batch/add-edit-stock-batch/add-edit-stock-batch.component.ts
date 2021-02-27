@@ -81,7 +81,7 @@ export class AddEditStockBatchComponent implements OnInit {
   totalWt: number = 0;
   dateRange: any;
   weightFlag: boolean = false;
-  weight = {};
+  weight = [];
   MtWtIndex = 0;
   constructor(
     private partyService: PartyService,
@@ -94,10 +94,10 @@ export class AddEditStockBatchComponent implements OnInit {
     private renderer: Renderer2
   ) {}
 
-  ngOnInit(): void {
-    this.getQualityList();
-    this.getPartyList();
-    this.getQualityList();
+  async ngOnInit() {
+    await this.getQualityList();
+    await this.getPartyList();
+    await this.getQualityList();
     this.currentStockBatchId = this._route.snapshot.paramMap.get("id");
     if (this.currentStockBatchId) {
       this.addFlag = false;
@@ -222,15 +222,13 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
   reCalcMTWTValue() {
-    this.weight = {};
     this.stockDataValues.forEach((e, i) => {
-      e.batchMW.forEach((e1, j) => {
-        if (this.stockBatch.unit == "meter") {
-          this.calculateWt(e1.mtr, i, j, 1);
-        } else {
-          this.calculateMtr(e1.wt, i, j, 1);
-        }
+      this.weight = [];
+      e.batchMW.forEach(element=>{
+
+        this.weight.push({w:element.wt, meter:element.mtr});
       });
+      this.calculateTotalMtrWt(this.stockBatch.unit, e);
     });
   }
   getStockBatchById() {
@@ -242,17 +240,6 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["success"]) {
             this.stockBatch.billDate = new Date(data["data"].billDate);
             this.stockBatch.qualityId = data["data"].qualityId;
-            //check quality list and get wtPer100Mtr
-            let inter = setInterval(() => {
-              if (this.qualityList.length != 0) {
-                this.qualityList.forEach((element) => {
-                  if (element.id == this.stockBatch.qualityId) {
-                    this.wtPer100M = element.wtPer100m;
-                  }
-                });
-                clearInterval(inter);
-              }
-            }, 10);
             this.stockBatch = data["data"];
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
@@ -286,19 +273,19 @@ export class AddEditStockBatchComponent implements OnInit {
     batchIDs.forEach((x) => {
       this.stockDataValues.push(new BatchCard(x));
     });
-    this.qualityList.forEach((element) => {
-      element.id ? (this.stockBatch.partyId = element.partyId) : null;
-      let id = element.id ? element.id : element.qualityEntryId;
-      if (id == this.stockBatch.qualityId) {
-        this.stockBatch.unit = element.unit;
-        if (this.stockBatch.unit === "weight") {
-          this.weightFlag = true;
-        } else {
-          this.weightFlag = false;
+    if (this.qualityList.length != 0) {
+      this.qualityList.forEach((element) => {
+        if (element.id == this.stockBatch.qualityId) {
+          this.wtPer100M = element.wtPer100m;
+          this.stockBatch.unit = element.unit;
+          if (this.stockBatch.unit === "weight") {
+            this.weightFlag = true;
+          } else {
+            this.weightFlag = false;
+          }
         }
-        this.wtPer100M = element.wtPer100m;
-      }
-    });
+      });
+    }
     this.stockDataValues.forEach((batch, i) => {
       this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
@@ -445,10 +432,14 @@ export class AddEditStockBatchComponent implements OnInit {
     let w: number;
     w = (meter / 100) * this.wtPer100M;
     this.stockDataValues[i].batchMW[j].wt = w.toFixed(2);
+    this.weight = [];
+    this.stockDataValues[i].batchMW.forEach(e=>{
+      this.weight.push({'meter':e.mtr,'w':e.wt});
+    })
     if (this.MtWtIndex == i) {
       this.weight[j] = {
-        w,
-        meter,
+        'meter':meter,
+        'w':w,
       };
       this.calculateTotalMtrWt("meter");
       this.stockDataValues[i].totalMt = Number(
@@ -456,11 +447,14 @@ export class AddEditStockBatchComponent implements OnInit {
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
     } else {
-      this.weight = {};
+      //this.weight = [];
       this.MtWtIndex = i;
+      // this.stockDataValues[i].batchMW.forEach(e=>{
+      //   this.weight.push({'meter':e.mtr,'w':e.wt});
+      // })
       this.weight[j] = {
-        w,
-        meter,
+        'meter':meter,
+        'w':w,
       };
       this.calculateTotalMtrWt("meter");
       this.stockDataValues[this.MtWtIndex].totalMt = Number(
@@ -471,8 +465,8 @@ export class AddEditStockBatchComponent implements OnInit {
       );
     }
   }
-  calculateTotalMtrWt(MW): any {
-    (this.totalWt = 0), (this.totalMtr = 0);
+  calculateTotalMtrWt(MW, batchCard?): any {
+    this.totalWt = 0;this.totalMtr = 0
     if (MW === "meter") {
       Object.keys(this.weight).forEach((element: any) => {
         this.totalWt += +this.weight[element].w;
@@ -480,19 +474,27 @@ export class AddEditStockBatchComponent implements OnInit {
       });
     } else {
       Object.keys(this.weight).forEach((element: any) => {
-        this.totalWt += +this.weight[element].weight;
-        this.totalMtr += +this.weight[element].m;
+        this.totalWt += +this.weight[element].w;
+        this.totalMtr += +this.weight[element].meter;
       });
+    }
+    if(batchCard){
+      batchCard.totalMt = this.totalMtr;
+      batchCard.totalWt = this.totalWt;
     }
   }
   calculateMtr(weight: number, i, j, col) {
     let m: number;
     m = (weight * 100) / this.wtPer100M;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
+    this.weight = [];
+    this.stockDataValues[i].batchMW.forEach(e=>{
+      this.weight.push({'meter':e.mtr,'w':e.wt});
+    })
     if (this.MtWtIndex == i) {
       this.weight[j] = {
-        m,
-        weight,
+        'meter':m,
+        'w':weight,
       };
       this.calculateTotalMtrWt("weight");
       this.stockDataValues[i].totalMt = Number(
@@ -500,11 +502,10 @@ export class AddEditStockBatchComponent implements OnInit {
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
     } else {
-      this.weight = {};
       this.MtWtIndex = i;
       this.weight[j] = {
-        m,
-        weight,
+        'meter':m,
+        'w':weight,
       };
       this.calculateTotalMtrWt("weight");
       this.stockDataValues[this.MtWtIndex].totalMt = Number(

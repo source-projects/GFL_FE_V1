@@ -79,6 +79,7 @@ export class AddEditPartyComponent implements OnInit {
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
+  partyNameExist: boolean  = false;
   adminFlag = false;
   masterFlag = false;
   operatorFlag = false;
@@ -138,6 +139,7 @@ export class AddEditPartyComponent implements OnInit {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
+      id:new  FormControl(null),
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
       partyAddress2: new FormControl(""),
@@ -207,11 +209,9 @@ export class AddEditPartyComponent implements OnInit {
     this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
       (data) => {
         this.currentParty = data["data"];
-        //
-        console.log(this.currentParty);
-        console.log(this.logInUserDetail);
 
         this.partyForm.patchValue({
+          id:this.currentParty.id,
           userHeadId: this.setUserHeadName(this.currentParty.userHeadId),
           partyName: this.currentParty.partyName,
           partyAddress1: this.currentParty.partyAddress1,
@@ -227,7 +227,6 @@ export class AddEditPartyComponent implements OnInit {
           createdBy: this.currentParty.createdBy,
           updatedBy: this.currentParty.updatedBy,
           partyCode: this.currentParty.partyCode,
-          id: this.currentPartyId,
         });
         console.log(this.currentParty.userHeadId);
         this.creditor = this.partyForm.get("creditor").value;
@@ -381,10 +380,26 @@ export class AddEditPartyComponent implements OnInit {
     this.partyAdressSetFlag = checked;
   }
 
+  checkPartyName(){
+    this.partyNameExist = false;
+    let id = 0;
+    if(this.partyForm.get('id').value)
+      id = this.partyForm.get('id').value
+    this.partyService.checkPartyNameExist(this.partyForm.get("partyName").value, id).subscribe(
+      (data) => {
+        this.partyNameExist = data["data"];
+      },
+      (error) => {}
+    );
+  }
+
   checkPartyCode() {
     this.partyCodeExist = true;
+    let id = 0;
+    if(this.partyForm.get('id').value)
+      id = this.partyForm.get('id').value
     this.partyService
-      .getPartyCode(this.partyForm.get("partyCode").value)
+      .getPartyCode(this.partyForm.get("partyCode").value,id)
       .subscribe(
         (data) => {
           this.partyCodeExist = data["data"];

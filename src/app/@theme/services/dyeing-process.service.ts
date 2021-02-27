@@ -17,9 +17,9 @@ export class DyeingProcessService {
     );
   }
 
-  // getAllDyeingProcessList(getBy, id){
-  //   return this.httpClient.get(this.commonService.envUrl() + "api/dyeingProcess/all/"+getBy+"/"+id);
-  // }
+  isProcessNameExist(name,id){
+    return this.httpClient.get(this.commonService.envUrl() + "api/dyeingProcess/isProcessExistWithName/"+name+'/'+id);
+  }
 
   getAllDyeingProcessList() {
     return this.httpClient.get(
