@@ -251,6 +251,8 @@ export class AddEditColorComponent implements OnInit {
 
   reset(colorForm){
     colorForm.reset();
+    this.color.colorDataList = [];
+    this.color.colorDataList.push(new ColorDataList());
     this.formSubmitted = false;
     this.color.billDate = new Date(this.color.billDate);
     this.color.chlDate = new Date(this.color.chlDate);

@@ -40,7 +40,7 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Temprarture</label>
-                                                <input type="number" class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required [disabled]="!approveByFlag">
+                                                <input type="number" (keypress)="numberOnly($event)"  class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required [disabled]="!approveByFlag">
 
                                                 <div class="invalid-feedback" style="color: red;" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                     <span>Temperarture is required</span>
@@ -48,15 +48,15 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Hold Time</label>
-                                                <input type="number" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required [disabled]="!approveByFlag">
+                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required [disabled]="!approveByFlag">
                                                 <div class="invalid-feedback" style="color: red;" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                                     <span>Hold Time is required</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Liquer Ratio</label>
-                                                <input type="number" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required [disabled]="!approveByFlag">
-                                                <div class="invalid-feedback" style="color: red;" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required [disabled]="!approveByFlag">
+                                                <div class="invalid-feedback"  style="color: red;" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
@@ -96,7 +96,7 @@
                                                                 </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" [id]="'itemList'+i+i1+'-'+1" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
+                                                                    <input type="number" (keypress)="numberOnly($event)" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" [id]="'itemList'+i+i1+'-'+1" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
                                                                 </td>
 
                                                                 <td>
@@ -141,7 +141,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Temprature</label>
-                                                            <input class="form-control input-group" type="number" min="0" name="temp" [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}" required placeholder="Temprature" required>
+                                                            <input class="form-control input-group" (keypress)="numberOnly($event)"  type="number" min="0" name="temp" [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}" required placeholder="Temprature" required>
                                                             <div class="invalid-feedback" style="color: red;" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                                 Temprature is required.
                                                             </div>
@@ -151,7 +151,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Hold Time</label>
-                                                            <input class="form-control input-group" min="0" type="number" name="holdTime" [(ngModel)]="dyeingProcessStepNew.holdTime" #holdTime1="ngModel" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}" required>
+                                                            <input class="form-control input-group" (keypress)="numberOnly($event)"  min="0" type="number" name="holdTime" [(ngModel)]="dyeingProcessStepNew.holdTime" #holdTime1="ngModel" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}" required>
                                                             <div class="invalid-feedback" style="color: red;" *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
                                                                 Hold Time is required.
                                                             </div>
@@ -160,7 +160,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Liqour Ratio</label>
-                                                            <input type="number" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" placeholder="Liqour Ratio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
+                                                            <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" placeholder="Liqour Ratio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
                                                             <div class="invalid-feedback" style="color: red;" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                                 <span>Liquor ratio is required</span>
                                                             </div>
@@ -204,7 +204,7 @@
                                                                     </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}' class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)" min="0" [id]="'addList'+dcIndex+'-1'">
+                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)"  class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)" min="0" [id]="'addList'+dcIndex+'-1'">
                                                                 </td>
                                                                 <td>
                                                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeChemicalData(dcIndex)"></nb-icon>
@@ -254,7 +254,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Temprarture</label>
-                                        <input type="number" class="form-control" min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required>
 
                                         <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                             <span>Temperarture is required</span>
@@ -262,14 +262,14 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Hold Time</label>
-                                        <input type="number" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required>
                                         <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                             <span>Hold Time is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Liqure Ratio</label>
-                                        <input type="number" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
                                         <div class="required-class" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                             <span>Liquor ratio is required</span>
                                         </div>
@@ -304,7 +304,7 @@
                                                     </ng-select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" #quantity1="ngModel" name='qty{{item._id}}{{i1}}' class="tableForm line-height-subtable" [(ngModel)]="item.qty" (keyup)="onKeyUp1($event,i1,1,'quantity')" [id]="'itemList'+i1+'-1'" min="0" required>
+                                                    <input type="number" #quantity1="ngModel" (keypress)="numberOnly($event)"  name='qty{{item._id}}{{i1}}' class="tableForm line-height-subtable" [(ngModel)]="item.qty" (keyup)="onKeyUp1($event,i1,1,'quantity')" [id]="'itemList'+i1+'-1'" min="0" required>
                                                 </td>
 
                                                 <td>
