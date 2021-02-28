@@ -158,11 +158,11 @@
                         <span class="text cr-txt">Creditors</span>
                     </nb-checkbox>
 
-                    <nb-checkbox class="status-basic nb-transition" style="margin-left: 50px;" (checkedChange)="setCheckedStatusDebtor($event)" type="checkbox" id="debtor" formControlName="debtor" [ngClass]="{'is-invalid':formSubmitted==true && creditor==false && debtor==false}">
+                    <nb-checkbox class="status-basic nb-transition mr-left-50" (checkedChange)="setCheckedStatusDebtor($event)" type="checkbox" id="debtor" formControlName="debtor" [ngClass]="{'is-invalid':formSubmitted==true && creditor==false && debtor==false}">
                         <span class="text dr-txt">Debitors</span>
                     </nb-checkbox>
-                    <div class="invalid-feedback" *ngIf="formSubmitted==true && creditor==false && debtor==false">
-                        <span style="color: red; font-size: smaller;">Select Creditor or Debitor</span>
+                    <div class="input-required" *ngIf="formSubmitted==true && creditor==false && debtor==false">
+                        <span>Select Creditor or Debitor</span>
                     </div>
                 </div>
 
@@ -172,9 +172,9 @@
 
                         <button *ngIf="!this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset()">CANCEL</button>
                         <button *ngIf="this.currentPartyId" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/party/view']">CANCEL</button>
-                        <button *ngIf="this.currentPartyId" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                        <button *ngIf="this.currentPartyId" type="button" (click)="updateParty()" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
 
-                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)="addParty()">SAVE</button>
+                        <button *ngIf="this.currentPartyId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton" (click)="addParty()">SAVE</button>
                     </div>
                 </div>
             </form>
