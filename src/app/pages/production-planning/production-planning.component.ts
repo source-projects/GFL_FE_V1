@@ -230,7 +230,7 @@ export class ProductionPlanningComponent implements OnInit {
     }
   }
 
-  public onBatchSelect(batch_id) {
+  public onBatchSelect(batch_id , id) {
     let b_controlId;
     let party, quality, shadeId, colorTone;
     if (this.editProductionPlanFlag) {
@@ -274,6 +274,7 @@ export class ProductionPlanningComponent implements OnInit {
         if (result) {
 
           if (this.editProductionPlanFlag) {
+            result.id = id;
             this.updateProduction(result);
           }
           if(this.productionPlanning.partyId){
@@ -289,12 +290,11 @@ export class ProductionPlanningComponent implements OnInit {
       })
       .catch(err => { });
   }
-  
+
   updateProduction(result){
     this.productionPlanningService.updateProductionPlan(result).subscribe(
       (data) => {
         if(data["success"]){
-          this.plannedProductionListForDataTable();
           this.toastr.success(errorData.Update_Success);
         } else {
           this.toastr.error(errorData.Update_Error);
@@ -309,6 +309,7 @@ export class ProductionPlanningComponent implements OnInit {
   }
 
   public plannedProductionListForDataTable(): any {
+    this.plannedProductionList = [];
     this.productionPlanningService.getAllPlannedProductionList().subscribe(
       data => {
         if (data["success"]) {
@@ -318,9 +319,9 @@ export class ProductionPlanningComponent implements OnInit {
       error => { }
     );
   }
-  editProductionPlan(id): any {
+  editProductionPlan(production): any {
     this.editProductionPlanFlag = true;
-    this.onBatchSelect(id.batchId);
+    this.onBatchSelect(production.batchId , production.id);
   }
   removeItem(index) {
     //remove row
