@@ -137,7 +137,7 @@ export class AdminService {
 
   deleteMachine(id) {
     return this.httpClient.delete(
-      this.commonService.envUrl() + "api/machine/" + id
+      this.commonService.envUrl() + "api/machine/delete/" + id
     );
   }
  
