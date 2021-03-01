@@ -16,7 +16,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
+                                #partyId1="ngModel"
+                                [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}"
+                                placeholder="Party Name" class="required-error-dropdown" (change)=partySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -47,7 +50,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
+                                placeholder="Quality ID" (change)=qualitySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -79,7 +83,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
 
-                            <button nbButton size="small" class="jet-popup-box production-list-popup mr-left-10 border-radius" *ngFor="let b of allBatchList" [value]="b.id" class="jet-popup-display p-badge-design" [style.background]="b.colorTone" (click)="batchSelected($event)">
+                            <button nbButton size="small"
+                                class="jet-popup-box production-list-popup mr-left-10 border-radius"
+                                *ngFor="let b of allBatchList" [value]="b.id" class="jet-popup-display p-badge-design"
+                                [style.background]="b.colorTone" (click)="batchSelected($event)">
                                 {{b.batchId}} </button>
 
                         </div>
@@ -97,10 +104,13 @@
                 <td>{{j.name}}</td>
                 <td>{{j.capacity}}</td>
                 <td>
-                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
+                    <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal"
+                        class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
+                        <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList"
+                            [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
                             <!--[style.background]="index.colorTone"-->
-                            <button nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet">
+                            <button nbContextMenuTag="my-context-menu" [nbContextMenu]="items"
+                                nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
                                 {{index.batchId}}
                             </button>
 

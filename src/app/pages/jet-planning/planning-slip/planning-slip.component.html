@@ -61,7 +61,7 @@
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-3 desktop-btn" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
+                                            <div class="form-group col-md-3 jus-con-center" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
                                                 <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}" [disabled]="false" [(ngModel)]="process.isColor" name="isColor{{i}}" (checkedChange)="colorSelected($event, i)">
                                                 </nb-checkbox>
                                                 &nbsp;<label>Color</label>
@@ -116,10 +116,11 @@
                                 <div class="row" *ngIf="approveByFlag">
                                     <div class="col-md-3">
                                         <div class="nb-icon-add">
-                                            <nb-icon icon="plus-circle width-40 height-100" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)" class="plus-add add-modal"></nb-icon>
+                                            <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)" class="plus-add add-modal  width-40 height-100"></nb-icon>
                                             <div class="tooltip">Add Process</div>
                                         </div>
                                     </div>
+
                                     <div *ngIf="addNewFlag">
                                         <form #innerForm="ngForm">
                                             <div class="modal-body">
@@ -232,7 +233,7 @@
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
                                 <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton">UPDATE</button>
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveClicked=true;saveSlipData(myForm)">SAVE</button>
                                 <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
                                     Print</button>
 
@@ -326,7 +327,7 @@
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
 
                                     <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="additionSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
                                     <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="printFlag = true; printSlip(myForm)">Save And
                                         Print</button>
 
@@ -341,18 +342,18 @@
     </div>
 
 
-    <div id="print-slip" [hidden]="isPrinting" class="jet-slip " style="size: A5;">
+    <div id="print-slip" [hidden]="isPrinting" class="jet-slip size-A5">
         <nb-card-body *ngIf="!additionSlipFlag">
             <div *ngIf="slipData != null || slipData != undefined">
                 <div *ngIf="slipData.dyeingSlipDataList != null">
-                    <div class="container print-container" style="margin-top: 30px; margin-bottom: 30px;border-style: solid;padding-top: 10px;">
+                    <div class="container print-container mr-top-30 mr-bottom-30 border-style-solid pd-top-10">
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span class="slip-value rd-color">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span class="slip-value rd-color">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -361,10 +362,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot Wt:</label> <span class="slip-value" style="width: 60%;">{{slipData.totalWt}}</span>
+                                    <label class="font-25">Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Date:</label> <span class="slip-value" style="width: 60%;">{{myDate}}</span>
+                                    <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -372,10 +373,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">QualityId:</label> <span class="slip-value" style="width: 60%;">{{slipData.qualityId}}</span>
+                                    <label class="font-25">QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Party Shade No:</label> <span class="slip-value" style="width: 60%;">{{slipData.partyShadeNo}}</span>
+                                    <label class="font-25">Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
                                 </div>
                             </div>
                         </div>
@@ -383,10 +384,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value" style="width: 60%;">{{slipData.batchCount}}</span>
+                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Color Tone:</label> <span class="slip-value" style="width: 60%;">{{slipData.colorTone}}</span>
+                                    <label class="font-25">Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
                                 </div>
                             </div>
                         </div>
@@ -394,40 +395,40 @@
 
                     </div>
 
-                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" class="container print-container mr-bt-50 " style="width: 100% !important; border-style: solid; background-color: c6daf0;margin-bottom: 20px !important;">
-                        <div class="row print-wth-100" style="width: 100% !important;">
-                            <div class="col-md-12" style="width: 100% !important;padding-top: 15px;">
-                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 20% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <h3 style="font-size: 40px;">{{process.processType}}</h3>
+                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" class="container print-container mr-bt-50 width-100 main-jet-p-changes">
+                        <div class="row print-wth-100">
+                            <div class="col-md-12 width-100 pd-15">
+                                <div class="form-group col-md-3 width-20 form-style-print">
+                                    <h3 class="font-40">{{process.processType}}</h3>
                                 </div>
-                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 28% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Temperature:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;">
+                                <div class="form-group col-md-3 width-28 form-style-print">
+                                    <label class="mr-right font-25 font-weight-bold">Temperature:</label>&nbsp;
+                                    <div class="print-data print-text-center print-color-media">
                                         {{process.temp}}</div>
 
                                 </div>
-                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Hold
+                                <div class="form-group col-md-3 width-25 form-style-print">
+                                    <label class="mr-righ font-25 font-weight-boldt">Hold
                                         Time:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;">
+                                    <div class="print-data print-text-center print-color-media">
                                         {{process.holdTime}}</div>
 
                                 </div>
-                                <div class="form-group col-md-3" style="padding: 0px; margin-top:2px;width: 27% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <label class="mr-right" style="font-size: 25px;font-weight: bold;">Liquor
+                                <div class="form-group col-md-3 width-27 form-style-print">
+                                    <label class="mr-right font-25 font-weight-bold">Liquor
                                         Ratio:</label>&nbsp;
-                                    <div class="print-data print-text-center" style="width: auto;color: #000!important;border-left: 1px solid;">
+                                    <div class="print-data print-text-center print-color-media border-left-1px">
                                         {{process.liquerRation}}</div>
 
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-12 print-wth-100" style="width: 100% !important;">
-                                <table class="table table-bordered table-process-fnt text-center print-wth-100">
+                            <div class="form-group col-md-12 wth-100">
+                                <table class="table table-bordered table-process-fnt text-center wth-100">
                                     <tr>
-                                        <th class="font-25" style="font-size: 25px;">Item name</th>
-                                        <th class="font-25" style="font-size: 25px;">Quantity</th>
-                                        <th class="font-25" style="font-size: 25px;">Supplier name</th>
+                                        <th class="font-25">Item name</th>
+                                        <th class="font-25">Quantity</th>
+                                        <th class="font-25">Supplier name</th>
                                     </tr>
 
                                     <tr *ngFor='let dc of process.dyeingSlipItemData;let i1=index;'>
@@ -458,10 +459,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50 ">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span class="slip-value rd-color">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value" style="width: 60%;color: #ff0000">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span class="slip-value rd-color">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -470,21 +471,10 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Lot Wt:</label> <span class="slip-value" style="width: 60%;">{{slipData.totalWt}}</span>
+                                    <label class="font-25">Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Date:</label> <span class="slip-value" style="width: 60%;">{{myDate}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-1 print-text-center pd-bt-25">
-                            <div class="row">
-                                <div class="col-md-6 wth-50">
-                                    <label class="font-25">QualityId:</label> <span class="slip-value" style="width: 60%;">{{slipData.qualityId}}</span>
-                                </div>
-                                <div class="col-md-6 wth-50">
-                                    <label class="font-25">Party Shade No:</label> <span class="slip-value" style="width: 60%;">{{slipData.partyShadeNo}}</span>
+                                    <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
                                 </div>
                             </div>
                         </div>
@@ -492,10 +482,21 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value" style="width: 60%;">{{slipData.batchCount}}</span>
+                                    <label class="font-25">QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Color Tone:</label> <span class="slip-value" style="width: 60%;">{{slipData.colorTone}}</span>
+                                    <label class="font-25">Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-1 print-text-center pd-bt-25">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
                                 </div>
                             </div>
                         </div>
@@ -503,32 +504,32 @@
 
                     </div>
 
-                    <div class="container print-container mr-bt-50 " style="width: 100% !important; border-style: solid; background-color: c6daf0;margin: 0 !important;">
+                    <div class="container print-container mr-bt-50 jet-print-style-changes">
 
-                        <div class="row print-wth-100 background-c6daf0" style="margin-top: 15px;margin-bottom: 15px;">
-                            <div class="col-md-12" style="width: 100% !important;">
-                                <div class="form-group col-md-4" style="padding: 0px; margin-top:2px;width: 20% !important;display: inline-flex; justify-content: flex-start; align-items: center;">
-                                    <h3 style="font-size: 30px;">Addition</h3>
+                        <div class="row print-wth-100 background-c6daf0 mr-top-bottom-15">
+                            <div class="col-md-12 width-100">
+                                <div class="form-group col-md-4 width-20 form-style-print">
+                                    <h3 class="font-30">Addition</h3>
                                 </div>
 
-                                <div class=" form-group col-md-4 " style="padding: 0px;width: 28% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Temperature:</label>&nbsp;
-                                    <div class="print-data " style="width: 30%;color: #000!important;">
+                                <div class=" form-group col-md-4 width-28 form-style-print">
+                                    <label class="mr-right font-25 font-weight-bold">Temperature:</label>&nbsp;
+                                    <div class="print-data width-30 color-000">
                                         {{temp}}</div>&nbsp;
 
                                 </div>
 
 
-                                <div class="form-group col-md-4 " style="padding: 0px;width: 25% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Hold
+                                <div class="form-group col-md-4 width-25 form-style-print">
+                                    <label class="mr-right font-25 font-weight-bold">Hold
                                         Time:</label>
-                                    <div class="print-data " style="width: 30%;color: #000!important;">
+                                    <div class="print-data width-30 color-000">
                                         {{holdTime}}</div>
                                 </div>
-                                <div class="form-group col-md-4 " style="padding: 0px;width: 27% !important;display: inline-flex; justify-content: flex-start; align-items: center; ">
-                                    <label class="mr-right font-25 " style="font-size: 25px;font-weight: bold;">Liquor
+                                <div class="form-group col-md-4 form-style-print width-27">
+                                    <label class="mr-right font-25 font-weight-bold ">Liquor
                                         Ratio:</label>
-                                    <div class="print-data " style="width: 30%;color: #000!important;border-left: 1px solid;">
+                                    <div class="print-data width-30 color-000 border-left-1px">
                                         {{liquorRatio}}</div>
 
                                 </div>
@@ -536,11 +537,11 @@
 
                             <div class="form-group col-md-12 ">
 
-                                <table class="table table-bordered table-process-fnt text-center " id="border-table " style=" background-color: transparent; ">
+                                <table class="table table-bordered table-process-fnt text-center print-bg-transperent" id="border-table ">
                                     <tr>
-                                        <th class="font-25 " style="font-size: 25px; ">Item name</th>
-                                        <th class="font-25 " style="font-size: 25px; ">Quantity</th>
-                                        <th class="font-25 " style="font-size: 25px; ">Supplier Name</th>
+                                        <th class="font-25 ">Item name</th>
+                                        <th class="font-25 ">Quantity</th>
+                                        <th class="font-25 ">Supplier Name</th>
                                     </tr>
 
                                     <tr *ngFor='let item of itemList;let i1=index;'>
