@@ -507,8 +507,13 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteJetById(id).subscribe(
           (data) => {
-            this.toastr.success(errorData.Delete);
-            this.getAllJetData();
+            if(data["success"]){
+              this.toastr.success(errorData.Delete);
+              this.getAllJetData();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
+           
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -526,9 +531,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteMachine(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllMachineData();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -545,9 +553,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteMachineCategory(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllMachineCategoryData();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -565,9 +576,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteDesignationById(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllDesignationData();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -585,9 +599,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteCompanyById(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllCompanyData();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -605,9 +622,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteDepartmentById(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllDepartment();
+            }else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -625,9 +645,13 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteApproveById(id).subscribe(
           (data) => {
-            //this.onChange(this.radioSelect);
+            if(data["success"]){
             this.toastr.success(errorData.Delete);
             this.getAllApproveByData();
+             }
+            else{
+              this.toastr.error("Can't delete this record");
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
