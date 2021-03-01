@@ -25,7 +25,8 @@ export class AddEditDyeingProcessComponent implements OnInit {
   public processNameExist: boolean = false;
   public selectedStep: any;
   public currentDyeingProcessId: any;
-  public itemList:any[];
+  public disableButton = false;
+  public itemList: any[];
 
   constructor(
     private _modalService: NgbModal,
@@ -40,49 +41,49 @@ export class AddEditDyeingProcessComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentDyeingProcessId = this.currentRoute.snapshot.paramMap.get('id');
-    if(this.currentDyeingProcessId){
+    this.currentDyeingProcessId = this.currentRoute.snapshot.paramMap.get("id");
+    if (this.currentDyeingProcessId) {
       this.getDyeingProcessById(this.currentDyeingProcessId);
       this.addFlag = false;
       this.updateFlag = true;
     }
   }
 
-  getItemList(){
+  getItemList() {
     this.dyeingProcessService.getAllItemWithSupplier().subscribe(
-      data=>{
-        if(data['success']){
-          this.itemList = data['data'];
+      (data) => {
+        if (data["success"]) {
+          this.itemList = data["data"];
         }
-      },error=>{
-
-      }
+      },
+      (error) => {}
     );
   }
 
   getDyeingProcessById(id) {
     this.dyeingProcessService.getDyeingProcessById(id).subscribe(
-      data=>{
-        if(data['success']){
-          this.dyeingProcess = data['data'];
+      (data) => {
+        if (data["success"]) {
+          this.dyeingProcess = data["data"];
           this.dyeingProcessSteps = this.dyeingProcess.dyeingProcessData;
           this.setChemicalData();
-        }else{
-          this.toastr.error(data['msg']);
+        } else {
+          this.toastr.error(data["msg"]);
         }
-      },error=>{
+      },
+      (error) => {
         this.toastr.error("Internal server error");
       }
-    )
+    );
   }
 
-  setChemicalData(){
-    let inter = setInterval(()=>{
-      if(this.itemList){
-        this.dyeingProcessSteps.forEach(step=>{
-          step.dyeingChemicalData.forEach(item=>{
-            this.itemList.forEach(element => {
-              if(item.itemId == element.itemId){
+  setChemicalData() {
+    let inter = setInterval(() => {
+      if (this.itemList) {
+        this.dyeingProcessSteps.forEach((step) => {
+          step.dyeingChemicalData.forEach((item) => {
+            this.itemList.forEach((element) => {
+              if (item.itemId == element.itemId) {
                 item.supplierName = element.supplierName;
               }
             });
@@ -90,7 +91,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
         });
         clearInterval(inter);
       }
-    },10); 
+    }, 10);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -112,9 +113,12 @@ export class AddEditDyeingProcessComponent implements OnInit {
     modalRef.componentInstance.editStep = true;
     modalRef.result.then((result) => {
       if (result) {
-        this.dyeingProcessSteps[step.sequence - 1].processType = result.processType;
-        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData = result.chemicalList;
-        this.dyeingProcessSteps[step.sequence - 1].liquerRation = result.liquerRation;
+        this.dyeingProcessSteps[step.sequence - 1].processType =
+          result.processType;
+        this.dyeingProcessSteps[step.sequence - 1].dyeingChemicalData =
+          result.chemicalList;
+        this.dyeingProcessSteps[step.sequence - 1].liquerRation =
+          result.liquerRation;
         this.dyeingProcessSteps[step.sequence - 1].holdTime = result.holdTime;
         this.dyeingProcessSteps[step.sequence - 1].temp = result.temp;
         this.dyeingProcessSteps[step.sequence - 1].sequence = result.position;
@@ -126,50 +130,48 @@ export class AddEditDyeingProcessComponent implements OnInit {
     let i = this.dyeingProcessSteps.findIndex(
       (v) => v.sequence == step.sequence
     );
-    if(i > -1){
+    if (i > -1) {
       this.dyeingProcessSteps.splice(i, 1);
       //re-arrange Sequence no for all steps...
-      this.dyeingProcessSteps.forEach((element, i)=>{
+      this.dyeingProcessSteps.forEach((element, i) => {
         element.sequence = i + 1;
-      })
+      });
     }
   }
 
   addProcessStep() {
-    if(this.dyeingProcessSteps.length == 4){
+    if (this.dyeingProcessSteps.length == 4) {
       this.toastr.warning("You are done with all the steps!");
-    }
-    else{
+    } else {
       const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
-    modalRef.componentInstance.position = this.dyeingProcessSteps.length + 1;
-    modalRef.componentInstance.stepList = this.dyeingProcessSteps;
-    modalRef.componentInstance.editStep = false;
-    modalRef.result.then((result) => {
-      if (result) {
-        let step = new DyeingProcessData();
-        step.processType = result.processType;
-        step.liquerRation = result.liquerRation;
-        step.sequence = result.position;
-        step.dyeingChemicalData = result.chemicalList;
-        step.temp = result.temp;
-        step.holdTime = result.holdTime;
-        // step.functionList = [];
-        if (
-          !this.dyeingProcessSteps.length ||
-          result.position == this.dyeingProcessSteps.length + 1
-        ) {
-          this.dyeingProcessSteps.push(step);
-        } else {
-          this.dyeingProcessSteps.splice(result.position - 1, 0, step);
+      modalRef.componentInstance.position = this.dyeingProcessSteps.length + 1;
+      modalRef.componentInstance.stepList = this.dyeingProcessSteps;
+      modalRef.componentInstance.editStep = false;
+      modalRef.result.then((result) => {
+        if (result) {
+          let step = new DyeingProcessData();
+          step.processType = result.processType;
+          step.liquerRation = result.liquerRation;
+          step.sequence = result.position;
+          step.dyeingChemicalData = result.chemicalList;
+          step.temp = result.temp;
+          step.holdTime = result.holdTime;
+          // step.functionList = [];
+          if (
+            !this.dyeingProcessSteps.length ||
+            result.position == this.dyeingProcessSteps.length + 1
+          ) {
+            this.dyeingProcessSteps.push(step);
+          } else {
+            this.dyeingProcessSteps.splice(result.position - 1, 0, step);
+          }
         }
-      }
-    });
+      });
     }
-    
   }
 
-  
   addUpdateDyeingProcess(myForm) {
+    this.disableButton = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       if (this.addFlag) {
@@ -177,22 +179,26 @@ export class AddEditDyeingProcessComponent implements OnInit {
           this.dyeingProcess.userHeadId = this.commonService.getUserHeadId().userHeadId;
           this.dyeingProcess.createdBy = this.commonService.getUser().userId;
           this.dyeingProcess.dyeingProcessData = this.dyeingProcessSteps;
-          this.dyeingProcessService.saveDyeingProcess(this.dyeingProcess).subscribe(
-            (data) => {
-              if (data["success"]) {
-                //reset form and other values
-                this.resetFormValues(myForm);
-                
-                
-                this.toastr.success(data["msg"]);
+          this.dyeingProcessService
+            .saveDyeingProcess(this.dyeingProcess)
+            .subscribe(
+              (data) => {
+                if (data["success"]) {
+                  //reset form and other values
+                  this.resetFormValues(myForm);
+                  this.toastr.success(data["msg"]);
+                } else {
+                  this.disableButton = false;
+                  this.toastr.error(data["msg"]);
+                }
+              },
+              (error) => {
+                this.disableButton = false;
+                this.toastr.error("Internal server error");
               }
-              else this.toastr.error(data["msg"]);
-            },
-            (error) => {
-              this.toastr.error("Internal server error");
-            }
-          );
+            );
         } else {
+          this.disableButton = false;
           this.toastr.error("Please enter steps");
           return;
         }
@@ -200,40 +206,52 @@ export class AddEditDyeingProcessComponent implements OnInit {
         if (this.dyeingProcessSteps.length != 0) {
           this.dyeingProcess.updatedBy = this.commonService.getUser().userId;
           this.dyeingProcess.dyeingProcessData = this.dyeingProcessSteps;
-          this.dyeingProcessService.updateDyeingProcess(this.dyeingProcess).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.route.navigate(["/pages/dyeing-process"]);
-                this.toastr.success(data["msg"]);
+          this.dyeingProcessService
+            .updateDyeingProcess(this.dyeingProcess)
+            .subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.disableButton = false;
+                  this.route.navigate(["/pages/dyeing-process"]);
+                  this.toastr.success(data["msg"]);
+                } else{ 
+                  this.disableButton = false;
+                  this.toastr.error(data["msg"]);
+                }
+              },
+              (error) => {
+                this.disableButton = false;
+                this.toastr.error("Internal server error");
               }
-              else this.toastr.error(data["msg"]);
-            },
-            (error) => {
-              this.toastr.error("Internal server error");
-            }
-          );
+            );
         } else {
+          this.disableButton = false;
           this.toastr.error("Please enter steps");
           return;
         }
       }
+    }else{
+      this.disableButton = false;
     }
   }
 
-  isProcessNameAlreadyExist(){
+  isProcessNameAlreadyExist() {
     this.processNameExist = false;
     let id = 0;
-    if(this.dyeingProcess.id) id = this.dyeingProcess.id;
-    this.dyeingProcessService.isProcessNameExist(this.dyeingProcess.processName, id).subscribe(
-      data=>{
-        if(data['success']){
-          this.processNameExist = data['data'];
-        }
-      },error=>{}
-    )
+    if (this.dyeingProcess.id) id = this.dyeingProcess.id;
+    this.dyeingProcessService
+      .isProcessNameExist(this.dyeingProcess.processName, id)
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.processNameExist = data["data"];
+          }
+        },
+        (error) => {}
+      );
   }
 
-  resetFormValues(myForm){
+  resetFormValues(myForm) {
     this.formSubmitted = false;
     myForm.reset();
     this.dyeingProcessSteps = [];

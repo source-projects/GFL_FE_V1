@@ -261,7 +261,6 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   qualityIdSelected(event) {
-    console.log(event);
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
@@ -481,6 +480,7 @@ export class AddEditShadeComponent implements OnInit {
     this.costKg = 0;
     this.costMtr = 0;
   }
+
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -503,10 +503,10 @@ export class AddEditShadeComponent implements OnInit {
             this.formSubmitted = false;
             this.reset(shadeForm);
             this.disableButton = false;
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
           } else {
             this.toastr.error(data["msg"]);
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data['msg']);
           }
           this.disableButton = false;
         },
@@ -534,14 +534,14 @@ export class AddEditShadeComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.route.navigate(["/pages/shade"]);
-              this.toastr.success(errorData.Add_Success);
+              this.toastr.success(data['msg']);
             } else {
-              this.toastr.error(errorData.Add_Error);
+              this.toastr.error(data['msg']);
             }
             this.disableButton = false;
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error);
+            //this.toastr.error(errorData.Serever_Error);
             this.disableButton = false;
           }
         );
@@ -582,9 +582,11 @@ export class AddEditShadeComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
-            this.toastr.success(errorData.Update_Success);
+            this.toastr.success(data['msg']);
+            this.disableButton = false;
           } else {
-            this.toastr.error(errorData.Update_Error);
+            this.toastr.error(data['msg']);
+            this.disableButton = false;
           }
           this.loading = false;
         },

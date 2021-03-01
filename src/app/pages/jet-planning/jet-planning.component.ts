@@ -151,10 +151,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
           this.route
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-          .then(() => {
-          this.route.navigate(["/pages/jet-planning"]);
-    });
+            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
+            .then(() => {
+              this.route.navigate(["/pages/jet-planning"]);
+            });
         } else {
           this.toastr.error(data["msg"]);
         }
@@ -279,10 +279,14 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.detailsList =
-              "Party Name : " + data["data"].partyName +
-              "\nBatch No: " + data["data"].batchId +
-              "\nParty Shade No: " + data["data"].partyShadeNo +
-              "\nBatch Weight: " + data["data"].totalWt;
+              "Party Name : " +
+              data["data"].partyName +
+              "\nBatch No: " +
+              data["data"].batchId +
+              "\nParty Shade No: " +
+              data["data"].partyShadeNo +
+              "\nBatch Weight: " +
+              data["data"].totalWt;
             this.items = [
               { title: "Complete" },
               { title: "Pause" },

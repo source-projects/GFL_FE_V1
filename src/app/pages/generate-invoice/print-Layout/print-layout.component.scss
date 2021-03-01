@@ -306,6 +306,97 @@
         border-left: 0!important;
         border-right: 0!important;
     }
+    // inline css remove
+    .width-63 {
+        width: 63%;
+    }
+    .width-60 {
+        width: 60%;
+    }
+    .width-37 {
+        width: 37%;
+    }
+    .width-10 {
+        width: 10%;
+    }
+    .width-30 {
+        width: 30%;
+    }
+    .width-4px {
+        width: 4px;
+    }
+    .width-4 {
+        width: 4%;
+    }
+    .width-15 {
+        width: 15%;
+    }
+    .width-9 {
+        width: 9%;
+    }
+    .duplicate-border {
+        border-top-width: 3px !important;
+        border-left-width: 3px !important;
+        border-right-width: 3px !important;
+    }
+    .pd-0 {
+        padding: 0;
+    }
+    .mr-0 {
+        margin: 0;
+    }
+    .display-flex-end {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .font-20 {
+        font-size: 20px;
+    }
+    .font-30 {
+        font-size: 30px;
+    }
+    .font-15 {
+        font-size: 15px;
+    }
+    .jus-con-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .print-logo-style {
+        width: 130px;
+        height: auto;
+    }
+    .font-bold {
+        font-weight: bold;
+    }
+    .disc-style {
+        font-size: 15px;
+        border-top: 0 !important;
+    }
+    .main-invoice-row {
+        margin-top: 3px;
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 5px;
+    }
+    .pd-top-bottom-2 {
+        padding-top: 2px !important;
+        padding-bottom: 2px!important;
+    }
+    .pd-top-bottom-1 {
+        font-size: 13px !important;
+        padding-top: 1px !important;
+        padding-bottom: 1px!important;
+    }
+    .pd-top-bottom-0 {
+        padding-top: 0 !important;
+        padding-bottom: 0!important;
+    }
+    .pd-top-60 {
+        padding-top: 60px !important;
+    }
 }
 
 @media screen {

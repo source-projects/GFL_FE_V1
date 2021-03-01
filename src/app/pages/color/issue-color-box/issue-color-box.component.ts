@@ -120,7 +120,7 @@ export class IssueColorBoxComponent implements OnInit {
       this.colorService.issueBox(form.value.boxNo).subscribe(data => {
         if (data["success"]) {
           this.formSubmitted = false;
-          this.toastr.success(errorData.Add_Success);
+          this.toastr.success(data['msg']);
           this.route
             .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
             .then(() => {

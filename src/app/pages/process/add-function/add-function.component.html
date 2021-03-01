@@ -4,14 +4,13 @@
         <span aria-hidden="true" class="close-icon">&times;</span>
     </button>
 </div>
-<form #functionForm="ngForm" >
+<form #functionForm="ngForm">
     <div class="modal-body">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Function Name</label>
-                    <select class="form-control" name="function" [(ngModel)]="funcObj.funcValue" #funcName="ngModel"
-                        [ngClass]="{'is-invalid':(funcName.invalid)&&(modalSubmitted || funcName.touched)}" required>
+                    <select class="form-control" name="function" [(ngModel)]="funcObj.funcValue" #funcName="ngModel" [ngClass]="{'is-invalid':(funcName.invalid)&&(modalSubmitted || funcName.touched)}" required>
                         <option *ngFor="let function of functionDropdown" [value]="function.id"
                             placeholder="Function Name">
                             {{function.name}}
@@ -26,10 +25,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Function Position</label>
-                    <select [disabled]="editFunction" class="form-control " [(ngModel)]="funcObj.funcPosition"
-                        name="stepNo" #position1="ngModel"
-                        [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required
-                        placeholder="Function Position">
+                    <select [disabled]="editFunction" class="form-control " [(ngModel)]="funcObj.funcPosition" name="stepNo" #position1="ngModel" [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required placeholder="Function Position">
                         <option *ngFor="let p of positionValues" [value]="p">{{p}}</option>
                     </select>
                     <div class="invalid-feedback" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
@@ -78,9 +74,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <nb-checkbox name="dose" [(ngModel)]="dosing.haveDose">
-                            dose at Temp(C) 
-                            <input type="number" class="col-md-5 input-add-num" fieldSize="small"
-                                name="tempDosing" (keypress)="numberOnly($event)" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
+                            dose at Temp(C)
+                            <input type="number" class="col-md-5 input-add-num" fieldSize="small" name="tempDosing" (keypress)="numberOnly($event)" [(ngModel)]="dosing.doseAtTemp"></nb-checkbox>
                     </div>
                 </div>
                 <div class="col-md-5" *ngIf="dosing.doseType === 'chemical'">
@@ -93,9 +88,7 @@
             <div class="row">
                 <div class="form-group">&nbsp;&nbsp;&nbsp;
                     <label>Dose Type</label>
-                    <nb-radio-group fieldSize="large" class="form-control inline-flex"
-                        style="display: inline-flex !important; width: 100% !important; margin-left: 15px ;"
-                        name="dosetype" [(ngModel)]="dosing.doseType" (valueChange)="onDoseTypeChange()">
+                    <nb-radio-group fieldSize="large" class="form-control inline-flex mr-left-15 width-100" name="dosetype" [(ngModel)]="dosing.doseType" (valueChange)="onDoseTypeChange()">
                         <nb-radio value="chemical">Chemical</nb-radio>
                         <nb-radio value="color">Color</nb-radio>
                     </nb-radio-group>
@@ -114,8 +107,7 @@
 
                         <tr *ngFor='let dc of dosing.dosingChemical;let i=index;'>
                             <td>
-                                <select name="itemId{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
-                                    #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)">
+                                <select name="itemId{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId" #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)">
                                     <option *ngFor="let item of itemListArray" [value]="item.itemId"
                                         placeholder="Select Item">
                                         {{item.itemName}} - {{item.supplierName}}
@@ -123,25 +115,16 @@
                                 </select>
                             </td>
                             <td>
-                                <input class="tableForm" type="text" #supplierName1="ngModel"
-                                    name='supplierName{{i}}' [(ngModel)]="dc.supplierName"
-                                    (keyup)="onKeyUp($event,i,1,'supplierName')"
-                                    [id]="'supplierList'+i+'-1'" readonly>
+                                <input class="tableForm" type="text" #supplierName1="ngModel" name='supplierName{{i}}' [(ngModel)]="dc.supplierName" (keyup)="onKeyUp($event,i,1,'supplierName')" [id]="'supplierList'+i+'-1'" readonly>
                             </td>
                             <td>
-                                <input type="number" #concentration1="ngModel" name='concentration{{i}}'
-                                    class="tableForm" [(ngModel)]="dc.concentration"
-                                    (keyup)="onKeyUp($event,i,2,'concentration')"
-                                    [id]="'supplierList'+i+'-2'" min="0">
+                                <input type="number" #concentration1="ngModel" name='concentration{{i}}' class="tableForm" [(ngModel)]="dc.concentration" (keyup)="onKeyUp($event,i,2,'concentration')" [id]="'supplierList'+i+'-2'" min="0">
                             </td>
                             <td>
-                                <input class="tableForm" type="text" #rate1="ngModel" name='lrOrFabricWt{{i}}'
-                                    [(ngModel)]="dc.lrOrFabricWt" (keyup)="onKeyUp($event,i,3,'lrOrFabricWt')"
-                                    [id]="'itemList'+i+'-3'">
+                                <input class="tableForm" type="text" #rate1="ngModel" name='lrOrFabricWt{{i}}' [(ngModel)]="dc.lrOrFabricWt" (keyup)="onKeyUp($event,i,3,'lrOrFabricWt')" [id]="'itemList'+i+'-3'">
                             </td>
                             <td>
-                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                    (click)="removeItem(i)"></nb-icon>
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(i)"></nb-icon>
                             </td>
                         </tr>
                     </table>
@@ -155,21 +138,17 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>S V (Set Value)(C)</label>
-                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.setValue"
-                            name="setValue" #setValueC="ngModel" (keypress)="numberOnly($event)"
-                            [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required >
-                            <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
-                                Required
-                            </div>
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.setValue" name="setValue" #setValueC="ngModel" (keypress)="numberOnly($event)" [ngClass]="{'is-invalid':(setValueC.invalid)&&(modalSubmitted || setValueC.touched)}" required>
+                        <div class="invalid-feedback" *ngIf="(setValueC.invalid)&&(modalSubmitted || setValueC.touched)">
+                            Required
+                        </div>
                     </div>
-                 
+
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
                         <label>Rate of Rise (C/minute)</label>
-                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.rateOfRise"
-                            name="rateOfRise" #rateOfRiseCM="ngModel" (keypress)="numberOnly($event)"
-                            [ngClass]="{'is-invalid':(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)}" required>
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.rateOfRise" name="rateOfRise" #rateOfRiseCM="ngModel" (keypress)="numberOnly($event)" [ngClass]="{'is-invalid':(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)}" required>
                         <div class="invalid-feedback" *ngIf="(rateOfRiseCM.invalid)&&(modalSubmitted || rateOfRiseCM.touched)">
                             Required
                         </div>
@@ -178,9 +157,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Hold Time</label>
-                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.holdTime"
-                            name="holdTime" #holdTime1="ngModel" min="0" (keypress)="numberOnly($event)"
-                            [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required>
+                        <input type="text" class="form-control" [(ngModel)]="tempratureControl.holdTime" name="holdTime" #holdTime1="ngModel" min="0" (keypress)="numberOnly($event)" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required>
                         <div class="invalid-feedback" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
                             Required
                         </div>
@@ -190,9 +167,8 @@
             <div class="row">
                 <div class="form-group">
                     <div class="col-ms-12">
-                        &nbsp;&nbsp;&nbsp;<nb-checkbox name="pv" [(ngModel)]="tempratureControl.pressure"> Pressure
-                            (Above
-                            80 C)
+                        &nbsp;&nbsp;&nbsp;
+                        <nb-checkbox name="pv" [(ngModel)]="tempratureControl.pressure"> Pressure (Above 80 C)
                         </nb-checkbox>
                     </div>
                 </div>
@@ -205,9 +181,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Pump Speed(%)</label>
-                        <input type="number" class="form-control" name="pumpSpeed" [(ngModel)]="pumpControl.pumpSpeed"
-                            #pumpSpeed1="ngModel" required (keypress)="numberOnly($event)"
-                            [ngClass]="{'is-invalid':(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)}">
+                        <input type="number" class="form-control" name="pumpSpeed" [(ngModel)]="pumpControl.pumpSpeed" #pumpSpeed1="ngModel" required (keypress)="numberOnly($event)" [ngClass]="{'is-invalid':(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)}">
                         <div class="invalid-feedback" *ngIf="(pumpSpeed1.invalid)&&(modalSubmitted || pumpSpeed1.touched)">
                             Required
                         </div>
@@ -222,8 +196,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Control Type</label>
-                        <nb-radio-group (valueChange)="onWaterTypeChange()" fieldSize="small" class=" inline-block"
-                            style="display: inline-flex !important;" name="watertype" [(ngModel)]="waterControl.type">
+                        <nb-radio-group (valueChange)="onWaterTypeChange()" fieldSize="small" class=" inline-block" name="watertype" [(ngModel)]="waterControl.type">
                             <nb-radio value="water">Water</nb-radio>
                             <nb-radio value="drain">Drain</nb-radio>
                         </nb-radio-group>
@@ -234,8 +207,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Water Type</label>
-                        <nb-radio-group fieldSize="small" class="form-control inline-block" name="water"
-                            [(ngModel)]="waterControl.waterType" style="display: inline-flex !important;">
+                        <nb-radio-group fieldSize="small" class="form-control inline-block" name="water" [(ngModel)]="waterControl.waterType">
                             <nb-radio *ngFor="let w of waterList" [value]="w.id">{{w.name}}</nb-radio>
                         </nb-radio-group>
                     </div>
@@ -243,16 +215,15 @@
 
                 <div *ngIf="waterControl.type === 'water'" class="row">
                     <div class="col-md-8">
-                        <div class="form-group" style="margin-left: 15px;">
+                        <div class="form-group mr-left-15">
                             <label>Fill By Fabric Ratio</label>
-                            <input type="number" fieldSize="small" class="form-control input-group input-group-sm"
-                                max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
+                            <input type="number" fieldSize="small" class="form-control input-group input-group-sm" max='10' [(ngModel)]="waterControl.fabricRatio" name="fabricRatio" />
                         </div>
                     </div>
                     <div class="col-md-4 nb-dis-flx">
                         <div class="form-group nb-mr-0">
-                            <nb-checkbox style="margin-top:13px" name="jet" [(ngModel)]="waterControl.jetLevel">Jet
-                                Level</nb-checkbox>
+                            <nb-checkbox name="jet" [(ngModel)]="waterControl.jetLevel" class="mr-top-13">Jet Level
+                            </nb-checkbox>
                         </div>
                     </div>
                 </div>
@@ -262,8 +233,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Drain Type</label>
-                        <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block"
-                            [(ngModel)]="waterControl.drainType">
+                        <nb-radio-group fieldSize="small" name="waterDrain" class="form-control inline-block" [(ngModel)]="waterControl.drainType">
                             <nb-radio *ngFor="let d of drainTypeList" [value]="d.id">{{d.name}}</nb-radio>
                         </nb-radio-group>
                     </div>
@@ -278,9 +248,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label>Operator Message </label>
-                        <select class="form-control" name="fill" [(ngModel)]="operatorMessage.operatorCode"
-                            #fillOperatorCode="ngModel"
-                            [ngClass]="{'is-invalid':(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)}" required>
+                        <select class="form-control" name="fill" [(ngModel)]="operatorMessage.operatorCode" #fillOperatorCode="ngModel" [ngClass]="{'is-invalid':(fillOperatorCode.invalid)&&(modalSubmitted || fillOperatorCode.touched)}" required>
                             <option *ngFor="let message of operatorMessageList" [value]="message.id">{{message.name}}
                             </option>
                         </select>
@@ -292,9 +260,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Start at Temp</label>
-                        <input type="number" name="startat" class="form-control input-group input-group-sm"
-                            [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel" (keypress)="numberOnly($event)"
-                            [ngClass]="{'is-invalid':(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)}" />
+                        <input type="number" name="startat" class="form-control input-group input-group-sm" [(ngModel)]="operatorMessage.startAtTemp" #startAtTemp="ngModel" (keypress)="numberOnly($event)" [ngClass]="{'is-invalid':(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)}"
+                        />
                         <div class="invalid-feedback" *ngIf="(startAtTemp.invalid)&&(modalSubmitted ||  startAtTemp.touched)">
                             Required
                         </div>
@@ -304,9 +271,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-            (click)="onSubmit(functionForm)">{{submitButton}}</button>
-        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
-            (click)="activeModal.close(false)">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onSubmit(functionForm)">{{submitButton}}</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="activeModal.close(false)">Cancel</button>
     </div>
 </form>

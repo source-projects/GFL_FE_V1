@@ -23,6 +23,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
   partyList;
   batchList;
   qualityList;
+  public 
   index: string;
   indexOfBatchData: number = 1;
   sequenceArray: Array<number> = [];
