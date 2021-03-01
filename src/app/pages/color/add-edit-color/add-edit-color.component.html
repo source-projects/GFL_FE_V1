@@ -3,6 +3,10 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
+            <div class="col-md-2 col-6 display-flex-start ">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/color/view']">View
+                    Table</button>
+            </div>
             <div class="col-md-10 col-6">
 
                 <div *ngIf="this.currentColorId == null; else updateC">
@@ -12,10 +16,7 @@
                     <h2 class="nb-text txt-ov-elips">Update Color Stock</h2>
                 </ng-template>
             </div>
-            <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/color/view']">View
-                    Table</button>
-            </div>
+
         </div>
 
     </nb-card-header>
