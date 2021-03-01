@@ -64,6 +64,7 @@ export class AddEditShadeComponent implements OnInit {
   costMtr: any = 0;
   amountArray: any[] = [];
   apcFlag: any = false;
+  public wt100m: any = 0;
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -129,11 +130,11 @@ export class AddEditShadeComponent implements OnInit {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
             this.supplierList = data["data"];
-            this.supplierList = this.supplierList.filter(item => {
+            this.supplierList = this.supplierList.filter((item) => {
               if (item.itemType == "Color") {
                 return true;
               }
-            })
+            });
             this.getAllSupplier();
             this.loading = false;
           } else {
@@ -217,9 +218,9 @@ export class AddEditShadeComponent implements OnInit {
           let res = data["data"];
           this.shadeObj = res;
           this.color = this.shadeObj.colorTone;
-          this.shadeObj.shadeDataList.forEach((item,i)=>{
-            this.shadeObj.shadeDataList[i].rate =  Number(item.rate.toFixed(2));
-          })
+          this.shadeObj.shadeDataList.forEach((item, i) => {
+            this.shadeObj.shadeDataList[i].rate = Number(item.rate.toFixed(2));
+          });
           if (!this.shadeObj.shadeDataList.length) {
             this.shadeDataListArray.push(this.shadeDataList);
             this.shadeObj.shadeDataList = this.shadeDataListArray;
@@ -260,6 +261,12 @@ export class AddEditShadeComponent implements OnInit {
     this.disableButton = false;
   }
 
+  resetAmount() {
+    this.totalAmount = 0;
+    this.costKg = 0;
+    this.costMtr = 0;
+  }
+
   qualityIdSelected(event) {
     if (event == undefined) {
       this.getPartyList();
@@ -267,6 +274,9 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.partyId = null;
       this.shadeObj.qualityName = null;
       this.shadeObj.qualityType = null;
+      this.shadeObj.shadeDataList = [];
+      this.shadeObj.shadeDataList.push(new ShadeDataList());
+      this.resetAmount();
     } else {
       this.qualityList.forEach((element) => {
         if (this.shadeObj.qualityId == element.qualityId) {
@@ -275,8 +285,10 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
           this.shadeObj.qualityEntryId = element.id;
+          this.wt100m = element.wtPer100m;
         }
       });
+      this.calculateTotalAmount(true);
     }
   }
 
@@ -291,6 +303,9 @@ export class AddEditShadeComponent implements OnInit {
       this.shadeObj.qualityId = null;
       this.shadeObj.qualityName = null;
       this.shadeObj.qualityType = null;
+      this.shadeObj.shadeDataList = [];
+      this.shadeObj.shadeDataList.push(new ShadeDataList());
+      this.resetAmount();
       this.loading = false;
     } else {
       this.shadeService.getQualityFromParty(this.shadeObj.partyId).subscribe(
@@ -305,6 +320,17 @@ export class AddEditShadeComponent implements OnInit {
               this.loading = false;
             });
             this.loading = false;
+            this.qualityList.forEach((element) => {
+              if (this.shadeObj.qualityId == element.qualityId) {
+                this.shadeObj.qualityId = element.qualityId;
+                this.shadeObj.qualityName = element.qualityName;
+                this.shadeObj.qualityType = element.qualityType;
+                this.shadeObj.partyId = element.partyId;
+                this.shadeObj.qualityEntryId = element.id;
+                this.wt100m = element.wtPer100m;
+              }
+            });
+            this.calculateTotalAmount(true);
           } else {
             // this.toastr.error(data["msg"]);
             this.qualityList = null;
@@ -324,78 +350,87 @@ export class AddEditShadeComponent implements OnInit {
   //   this.shadeObj.pending = event;
   // }
 
-  itemSelected(rowIndex, row) {
-    let gst;
-    // if (this.shadeObj.qualityId != undefined) {
-    if (this.refreshFlag > 10) {
-      this.refreshFlag = 0;
-    }
-    this.refreshFlag++;
-    let newSupplierId;
-    for (let s of this.supplierList) {
-      if (row.supplierItemId == s.id) {
-        newSupplierId = s.supplierId;
-        row.itemName = s.itemName;
-        gst = (s.rate * s.gstRate) / 100;
-        row.rate = (s.rate + gst).toFixed(2);
-        break;
+  itemSelected(rowIndex, row, event) {
+    if (event) {
+      let gst;
+      // if (this.shadeObj.qualityId != undefined) {
+      if (this.refreshFlag > 10) {
+        this.refreshFlag = 0;
       }
-    }
-    for (let s1 of this.supplierListRate) {
-      if (newSupplierId == s1.id) {
-        this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
-        this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
-        break;
+      this.refreshFlag++;
+      let newSupplierId;
+      for (let s of this.supplierList) {
+        if (row.supplierItemId == s.id) {
+          newSupplierId = s.supplierId;
+          row.itemName = s.itemName;
+          row.rate = s.gstRate.toFixed(2);
+          break;
+        }
       }
+      for (let s1 of this.supplierListRate) {
+        if (newSupplierId == s1.id) {
+          this.shadeObj.shadeDataList[rowIndex].supplierName = s1.supplierName;
+          this.shadeObj.shadeDataList[rowIndex].supplierId = s1.id;
+          break;
+        }
+      }
+      this.calculateAmount(rowIndex);
+    } else {
+      this.shadeObj.shadeDataList[rowIndex].supplierName = null;
+      this.shadeObj.shadeDataList[rowIndex].supplierId = null;
+      this.shadeObj.shadeDataList[rowIndex].rate = null;
+      this.shadeObj.shadeDataList[rowIndex].amount = null;
+      this.shadeObj.shadeDataList[rowIndex].concentration = null;
     }
-
-    // this.calculateAmount(rowIndex);
-    // } else {
-    //   this.toastr.error("Select Quality");
-    //   this.shadeObj.shadeDataList[rowIndex].itemName = "";
-    //   this.shadeObj.shadeDataList[rowIndex].supplierItemId = null;
-    //   return;
-    // }
+    this.calculateTotalAmount(false);
   }
-  finalTotalAmount = {};
+
+  checkQualitySelected() {
+    if (!this.shadeObj.qualityId) {
+      this.toastr.warning("Select Quality first");
+      return false;
+    }
+  }
+
   calculateAmount(rowIndex) {
-    if (this.shadeObj.qualityId != undefined) {
+    if (this.shadeObj.qualityId) {
+      if (this.shadeObj.shadeDataList[rowIndex].concentration) {
+        let con = Number(this.shadeObj.shadeDataList[rowIndex].concentration);
+        let newRate = Number(this.shadeObj.shadeDataList[rowIndex].rate);
 
-      let con = this.shadeObj.shadeDataList[rowIndex].concentration;
-      let newRate = this.shadeObj.shadeDataList[rowIndex].rate;
+        let amount = Number((Number(con) * Number(newRate)).toFixed(2));
+        this.shadeObj.shadeDataList[rowIndex].amount = Number(
+          amount.toFixed(2)
+        );
 
-      let amount = Number((Number(con) * Number(newRate)).toFixed(2));
-      this.finalTotalAmount[rowIndex] = {
-        con,
-        amount
-      };
-      this.totalAmount = 0;
-      Object.keys(this.finalTotalAmount).forEach(item => {
-        this.totalAmount += this.finalTotalAmount[item].amount;
-      })
-      this.totalAmount = this.totalAmount.toFixed(2);
-      this.shadeObj.shadeDataList[rowIndex].amount = Number(amount.toFixed(2));
-
-      this.calculateTotalAmount();
+        this.calculateTotalAmount(false);
+      }
     } else {
       this.shadeObj.shadeDataList[rowIndex].concentration = null;
-      this.toastr.error("Select Quality");
+      //this.toastr.error("Select Quality");
       return;
     }
   }
-  calculateTotalAmount() {
-    let wt100m;
-    if (this.shadeObj.qualityId != undefined) {
 
-      this.qualityList.forEach((element) => {
-        if (this.shadeObj.qualityId == element.qualityId) {
-          wt100m = element.wtPer100m;
-        }
+  calculateTotalAmount(isQualityChanged) {
+    if (isQualityChanged) {
+      this.shadeObj.shadeDataList.forEach((element, i) => {
+        this.calculateAmount(i);
       });
+    }
 
-      this.costKg = (this.totalAmount / 100).toFixed(2);
-      let A = wt100m / 100;
-      this.costMtr = (this.costKg / A).toFixed(2);
+    this.totalAmount = 0;
+    this.shadeObj.shadeDataList.forEach((e) => {
+      if (e.amount) this.totalAmount += e.amount;
+    });
+
+    this.totalAmount = this.totalAmount.toFixed(2);
+    if (this.wt100m) {
+      if (this.shadeObj.qualityId) {
+        this.costKg = (this.totalAmount / 100).toFixed(2);
+        let A = 100 / this.wt100m;
+        this.costMtr = (this.costKg / A).toFixed(2);
+      }
     }
   }
 
@@ -471,7 +506,7 @@ export class AddEditShadeComponent implements OnInit {
     }
   }
 
-  reset(shadeForm){
+  reset(shadeForm) {
     shadeForm.reset();
     this.formSubmitted = false;
     this.shadeObj.colorTone = null;
@@ -503,10 +538,10 @@ export class AddEditShadeComponent implements OnInit {
             this.formSubmitted = false;
             this.reset(shadeForm);
             this.disableButton = false;
-            this.toastr.success(data['msg']);
+            this.toastr.success(data["msg"]);
           } else {
             this.toastr.error(data["msg"]);
-            this.toastr.error(data['msg']);
+            this.toastr.error(data["msg"]);
           }
           this.disableButton = false;
         },
@@ -534,9 +569,9 @@ export class AddEditShadeComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.route.navigate(["/pages/shade"]);
-              this.toastr.success(data['msg']);
+              this.toastr.success(data["msg"]);
             } else {
-              this.toastr.error(data['msg']);
+              this.toastr.error(data["msg"]);
             }
             this.disableButton = false;
           },
@@ -562,14 +597,15 @@ export class AddEditShadeComponent implements OnInit {
       item[0].supplierName = null;
       item[0].rate = null;
       item[0].amount = null;
-      let list = item;
-      this.shadeObj.shadeDataList = [...list];
+      item[0].supplierItemId = null;
+      this.shadeObj.shadeDataList = [...item];
     } else {
       let removed = item.splice(id, 1);
-      let list = item;
-      this.shadeObj.shadeDataList = [...list];
+      this.shadeObj.shadeDataList = [...item];
     }
+    this.calculateTotalAmount(false);
   }
+
   updateShade(shadeForm) {
     this.disableButton = true;
 
@@ -582,10 +618,10 @@ export class AddEditShadeComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/shade"]);
-            this.toastr.success(data['msg']);
+            this.toastr.success(data["msg"]);
             this.disableButton = false;
           } else {
-            this.toastr.error(data['msg']);
+            this.toastr.error(data["msg"]);
             this.disableButton = false;
           }
           this.loading = false;

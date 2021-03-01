@@ -137,10 +137,10 @@
                                 routerLink='/pages/dyeing-process'>CANCEL</button>
                             <button *ngIf="addFlag" type="button"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton" (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
+                                (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
                             <button type="button" *ngIf="updateFlag"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton" (click)="addUpdateDyeingProcess(myForm)">Update</button>
+                                (click)="addUpdateDyeingProcess(myForm)">Update</button>
                         </div>
                     </div>
                 </div>
