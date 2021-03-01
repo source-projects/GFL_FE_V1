@@ -129,7 +129,6 @@ export class AddEditUserComponent implements OnInit {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
-
   }
 
   public getMaster(logInUserDetail) {
@@ -226,9 +225,7 @@ export class AddEditUserComponent implements OnInit {
 
       this.user.isUserHead = false;
     } else {
-      const found = this.desi_list.find(
-        (element) => element.id == event
-      );
+      const found = this.desi_list.find((element) => element.id == event);
       if ("Master" == found.designation) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -506,26 +503,6 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  // checkUncheckSelectAll(value, i) {
-  //   if (value == false) {
-  //     this.permissionArray[i].selectAll = false;
-  //     this.allRightsFlag = false;
-
-  //   }
-
-  //   this.checkIfAllSelected(i);
-
-  //   for (let j = 0; j < 12; j++) {
-  //     if (!this.permissionArray[j].selectAll) {
-  //       this.allRightsFlag = false;
-  //       break;
-  //     }
-  //     else {
-  //       this.allRightsFlag = true;
-  //     }
-  //   }
-  // }
-
   checkUncheckSelectAll(value, i, accessName) {
     switch (accessName) {
       case "view": {
@@ -612,7 +589,7 @@ export class AddEditUserComponent implements OnInit {
       d: "",
       bf: "",
       ip: "",
-      wt: ""
+      wt: "",
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
@@ -792,8 +769,8 @@ export class AddEditUserComponent implements OnInit {
           }
           // else {
           //   this.toastr.error(data["msg"]);
-
           // }
+          this.disableButton = false;
           this.loading = false;
         },
         (error) => {
@@ -809,16 +786,15 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
-  
-  reset(myForm){
+
+  reset(myForm) {
     myForm.reset();
-    
+
     this.formSubmitted = false;
     for (var i = 0; i < this.permissionArray.length; i++) {
       this.setPermissionFalse(i);
       this.permissionArray[i].selectAll = false;
     }
-
   }
 
   addUser(myForm) {
@@ -836,14 +812,14 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-           this.reset(myForm);
-          this.allRightsFlag = false;
-
+            this.reset(myForm);
+            this.allRightsFlag = false;
             this.disableButton = false;
             this.toastr.success(errorData.Add_Success);
           } else {
             this.toastr.error(errorData.Add_Error);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.disableButton = false;

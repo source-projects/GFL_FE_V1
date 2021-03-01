@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent } from "../../@theme/components/confirmatio
 // import { AdditionSlip } from 'src/app/@theme/model/additon-slip';
 
 export class AdditionSlip {
+  id: number;
   batchId: string;
   dyeingSlipData: DyeingSlipData;
   productionId: number;
@@ -138,7 +139,7 @@ export class AdditionSlipComponent implements OnInit {
 
             modalRef.result.then((result) => {
               if (result) {
-                this.updateAdditionSlip(result);
+                this.updateAdditionSlip(result,id);
               }
             });
           }
@@ -169,8 +170,9 @@ export class AdditionSlipComponent implements OnInit {
     });
   }
 
-  updateAdditionSlip(result) {
+  updateAdditionSlip(result,id) {
     this.dyeingSlipData = new DyeingSlipData();
+    this.additionSlip.id = id;
     this.additionSlip.dyeingSlipData = this.dyeingSlipData;
     this.additionSlip.dyeingSlipData.holdTime = result.holdTime;
     this.additionSlip.dyeingSlipData.temp = result.temp;
@@ -183,7 +185,7 @@ export class AdditionSlipComponent implements OnInit {
     this.planningService.updateAdditionDyeingSlip(this.additionSlip).subscribe(
       (data) => {
         if (data["success"]) {
-          this.route.navigate(["/pages/addition-slip"]);
+          this.getAllAdditionSlip();
           this.toastr.success(errorData.Add_Success);
           // this.disableButton=true;
         } else {
@@ -222,6 +224,7 @@ export class AdditionSlipComponent implements OnInit {
   }
 
   getAllAdditionSlip() {
+    this.additionSlipList = []
     this.planningService.getAlladditionSlip().subscribe(
       (data) => {
         if (data["success"]) {

@@ -95,11 +95,11 @@
 
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
-                    <input *ngIf="mySupplierRateId == null; else updateadd" type="button" class="btn btn-primary btn-sm btn-design" value="SAVE" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
+                    <input *ngIf="mySupplierRateId == null; else updateadd" [disabled]="disableButton" type="button" class="btn btn-primary btn-sm btn-design" value="SAVE" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
 
                     <button type="button" class="btn btn-primary btn-sm btn-design" (click)="goBackToPreviousPage();$event.preventDefault()">CANCEL</button>
                     <ng-template #updateadd>
-                        <input type="button" class="btn btn-primary btn-sm btn-design" value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">
+                        <input type="button" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">
                     </ng-template>
                 </div>
             </div>
