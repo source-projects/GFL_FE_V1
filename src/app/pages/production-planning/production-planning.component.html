@@ -13,17 +13,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
-                                placeholder="Party Name" (change)=partySelected($event)>
+                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-left txt-ov-elips">Party Name</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Code</div>
+                                            <div class="text-right txt-ov-elips">Party Code</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -46,17 +43,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
-                                placeholder="Quality ID" (change)=qualitySelected($event)>
+                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Quality Id</div>
+                                            <div class="text-left txt-ov-elips">Quality Id</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"
-                                                style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-right txt-ov-elips">Party Name</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -78,9 +72,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Batch Filter</label>
-                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small"
-                                nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required
-                                placeholder="Enter Batch">
+                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
                         </div>
                     </div>
 
@@ -88,8 +80,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button nbButton size="small" style="margin-left: 10px;" *ngFor="let b of batchList"
-                                (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                            <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                 {{b.batchId}} </button>
 
                         </div>
@@ -100,20 +91,15 @@
         <!--Ngx Data table to show production that are planned-->
         <div class="row">
             <div class="col-md-12">
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="plannedProductionList"
-                    [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="plannedProductionList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <div *ngIf="!row.status">
-                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="addToJet(row)"
-                                    icon="plus"></nb-icon>
+                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="addToJet(row)" icon="plus"></nb-icon>
                                 &nbsp;&nbsp;&nbsp;
-                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
-                                    (click)="editProductionPlan(row)" icon="edit"></nb-icon>
+                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="editProductionPlan(row)" icon="edit"></nb-icon>
                                 &nbsp;&nbsp;&nbsp;
-                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                    (click)="removeItem(rowIndex)"></nb-icon>
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
                             </div>
                             <div *ngIf="row.status">
                                 <b>Jet Planned</b>

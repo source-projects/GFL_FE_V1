@@ -19,7 +19,7 @@
             </div>
         </div>
     </nb-card-header>
-    <nb-card-body style="overflow: revert;">
+    <nb-card-body>
         <div>
             <form #myForm="ngForm">
                 <div class="row">
@@ -147,7 +147,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead" (change)="getUserHrads($event)" class="form-control nb-check-user" style="border: none;">Assign Under Group Head
+                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead" (change)="getUserHrads($event)" class="form-control nb-check-user border-none">Assign Under Group Head
                             </nb-checkbox>
                         </div>
                     </div>
@@ -247,9 +247,9 @@
 
                 <button *ngIf="this.currentUserId" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/user/view']">CANCEL</button>
 
-                <button *ngIf="this.currentUserId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton" (click)=updateUser(myForm)>Update</button>
+                <button *ngIf="this.currentUserId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton" (click)=updateUser(myForm)>Update</button>
 
-                <button *ngIf="!this.currentUserId" type="submit" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" (click)="addUser(myForm)" [disabled]="disableButton">SAVE</button>
+                <button *ngIf="!this.currentUserId" type="submit" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUser(myForm)" [disabled]="disableButton">SAVE</button>
 
             </div>
         </div>

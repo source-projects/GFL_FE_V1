@@ -36,7 +36,7 @@
                         <div cdkDropList (cdkDropListDropped)="drop($event)" class="acc-under-css">
                             <nb-accordion multi *ngFor="let step of stepList" cdkDrag class="acc-start">
                                 <nb-accordion-item class="item accordian-process" #item (click)="onStepClick(step)">
-                                    <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian" style="display: flex-end; justify-content: space-between;">
+                                    <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between">
                                         <div class="">
                                             {{step.stepName}}
                                         </div>
@@ -53,7 +53,7 @@
                                                     <div class="acc-process border-acc">
                                                         <div class="row">
                                                             <div class="col-md-9 col-7">
-                                                                <h6 style="text-transform:uppercase !important;" class="acc-text">
+                                                                <h6 class="acc-text text-transform-uppercase">
                                                                     {{func.funcName}}</h6>
 
                                                             </div>
@@ -527,8 +527,8 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" routerLink='/pages/process'>CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="addProcess(myForm)">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink='/pages/process'>CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="addProcess(myForm)">SAVE</button>
                         </div>
                     </div>
                 </div>
