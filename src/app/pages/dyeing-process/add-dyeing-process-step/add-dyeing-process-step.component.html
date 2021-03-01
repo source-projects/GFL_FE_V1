@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="required">Temprature</label>
                     <input class="form-control input-group" type="number" min="0" name="temp"
-                        [(ngModel)]="dyeingProcessStep.temp" #temp1="ngModel"
+                        [(ngModel)]="dyeingProcessStep.temp" #temp1="ngModel"(keypress)="numberOnly($event)" 
                         [ngClass]="{'is-invalid':(temp1.invalid)&&(modalSubmitted || temp1.touched)}" required
                         placeholder="Temprature">
                     <div class="invalid-feedback" style="color: red;"
@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label class="required">Hold Time</label>
                     <input class="form-control input-group" min="0" type="number" name="holdTime"
-                        [(ngModel)]="dyeingProcessStep.holdTime" #holdTime1="ngModel"
+                        [(ngModel)]="dyeingProcessStep.holdTime" #holdTime1="ngModel"(keypress)="numberOnly($event)" 
                         [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required
                         placeholder="Hold Time">
                     <div class="invalid-feedback" style="color: red;"
@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label class="required">Liquor Ratio</label>
                     <input class="form-control input-group" min="0" type="number" name="liquerRation"
-                        [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"
+                        [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"(keypress)="numberOnly($event)" 
                         [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)}" required
                         placeholder="Liquor ratio">
                     <div class="invalid-feedback" style="color: red;"
@@ -115,7 +115,7 @@
                         </td>
                         <td>
                             <input type="number" #concentration1="ngModel" name='concentration{{dc._id}}_{{i}}' class="tableForm line-height-subtable"
-                                [(ngModel)]="dc.concentration" (keyup)="onKeyUp($event,i,2,'concentration')"
+                                [(ngModel)]="dc.concentration"(keypress)="numberOnly($event)" (keyup)="onKeyUp($event,i,2,'concentration')"
                                 [id]="'supplierList'+i+'-concentration'" min="0">
                         </td>
                         <td>
