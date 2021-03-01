@@ -17,7 +17,7 @@
     <nb-card-body>
         <div class="row">
             <div class="col-md-6">
-                <nb-radio-group style="display: flex;" [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
+                <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
                     <nb-radio *ngFor="let radio of radioArray" [value]="radio.id" [disabled]="radio.disabled" [checked]="radio.checked" (valueChange)="onChange($event)">
                         {{radio.value}}</nb-radio>
                 </nb-radio-group>
@@ -31,8 +31,7 @@
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}" [hidden]="hiddenEdit" [routerLink]="['/pages/supplier/edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
                     <button nbTooltip="Update Supplier Rate" class="btn primary-status nb-supplier-icon" [routerLink]="['/pages/supplier/editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton>
-                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="menu"
-                            style="color: burlywood;"></nb-icon>
+                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="menu"></nb-icon>
                     </button>
                 </ng-template>
             </ngx-datatable-column>

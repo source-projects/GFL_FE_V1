@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label>Step Name</label>
                     <input class="form-control input-group" type="text" name="stepName" [(ngModel)]="stepName" #name1="ngModel" [ngClass]="{'is-invalid':(name1.invalid)&&(modalSubmitted || name1.touched)}" required placeholder="Step Name">
-                    <div class="invalid-feedback" style="color: red;" *ngIf="(name1.invalid)&&(modalSubmitted || name1.touched)">
+                    <div class="input-required" *ngIf="(name1.invalid)&&(modalSubmitted || name1.touched)">
                         Step Name is required.
                     </div>
                 </div>
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px" (click)="onCreate(stepForm)">{{submitButton}}</button>
-        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="activeModal.close(false)">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onCreate(stepForm)">{{submitButton}}</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="activeModal.close(false)">Cancel</button>
     </div>
 </form>
