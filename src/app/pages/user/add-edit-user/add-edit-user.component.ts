@@ -108,7 +108,7 @@ export class AddEditUserComponent implements OnInit {
   disableViewDependentPermission: boolean = false;
   disableViewGroupDependentPermission: boolean = false;
   disableViewAllDependentPermission: boolean = false;
-
+  userNameExist = false;
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -153,6 +153,17 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
+  }
+  checkUserName() {
+    this.userNameExist = false;
+    let id: Number = 0;
+    if (this.user.id) id = this.user.id;
+    this.userService.checkUserNameExist(this.user.userName, id).subscribe(
+      (data) => {
+        this.userNameExist = data["data"];
+      },
+      (error) => {}
+    );
   }
   checkUser(logInUserDetail) {
     if (
@@ -815,9 +826,9 @@ export class AddEditUserComponent implements OnInit {
             this.reset(myForm);
             this.allRightsFlag = false;
             this.disableButton = false;
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data["msg"]);
           } else {
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data["msg"]);
           }
           this.disableButton = false;
         },
