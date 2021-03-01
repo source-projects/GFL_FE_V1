@@ -228,6 +228,23 @@ export class AdminComponent implements OnInit {
     this.formSubmitted = true;
     if (addMachineData.valid) {
       if (this.machineEditFlag == true) {
+        this.adminService.updateMachine(this.addMachine).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllMachineData();
+              this.resetValue(addMachineData);
+              this.formSubmitted = false;
+
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+        this.machineEditFlag = false;
       } else {
         this.adminService.saveMachine(this.addMachine).subscribe(
           (data) => {
@@ -254,6 +271,23 @@ export class AdminComponent implements OnInit {
     this.formSubmitted = true;
     if (addMachineCategoryData.valid) {
       if (this.machineCategoryEditFlag == true) {
+        this.adminService.updateMachineCategory(this.addMachineCategory).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllMachineCategoryData();
+              this.resetValue(addMachineCategoryData);
+              this.formSubmitted = false;
+
+            } else {
+              this.toastr.error(errorData.Update_Error);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+        this.machineCategoryEditFlag = false;
       } else {
         this.adminService
           .saveMachineCategory(this.addMachineCategory)
@@ -676,6 +710,7 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addMachine.controlId = element.controlId;
         this.addMachine.machineName = element.machineName;
+        this.addMachine.id = element.id;
       }
     });
   }

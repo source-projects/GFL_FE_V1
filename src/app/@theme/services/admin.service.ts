@@ -146,6 +146,22 @@ export class AdminService {
       this.commonService.envUrl() + "api/machine/delete/category/" + id
     );
   }
+
+  updateMachine(data){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/machine/update/",
+      data
+    );
+  }
+
+  
+updateMachineCategory(data){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/machine/update/category/",
+      data
+    );
+  }
+
   updateJetData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/jet/updateJet",

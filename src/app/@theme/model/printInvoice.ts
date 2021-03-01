@@ -20,6 +20,10 @@ export class PrintInvoiceData {
     batchDataList: BatchDataList[]
     batchId: string
     controlId: number
+    totalMtr:any = 0
+    totalFMtr:any = 0
+    shrinkage:any = 0
+    lotDataLength:any = 0
   }
   
   export class BatchDataList {
