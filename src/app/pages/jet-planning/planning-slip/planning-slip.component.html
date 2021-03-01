@@ -61,7 +61,7 @@
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-3 desktop-btn" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
+                                            <div class="form-group col-md-3 jus-con-center" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
                                                 <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}" [disabled]="false" [(ngModel)]="process.isColor" name="isColor{{i}}" (checkedChange)="colorSelected($event, i)">
                                                 </nb-checkbox>
                                                 &nbsp;<label>Color</label>

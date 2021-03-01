@@ -44,9 +44,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="onOkClick()">Ok</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onOkClick()">Ok</button>
 
-        <button type="button" class="btn btn-primary btn-sm btn-design" (click)="addToJetClick()">Add to jet</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="addToJetClick()">Add to jet</button>
     </div>
 
 </div>
@@ -86,7 +86,7 @@
                 </div>
             </ng-option>
         </ng-select>
-        <div class="required-class" *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
+        <div class="input-required" *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
             <span>approve by is required</span>
         </div>
     </div>
