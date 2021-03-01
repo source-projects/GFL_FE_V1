@@ -253,7 +253,7 @@
 
                             <ngx-datatable-column name="Item Name" prop="shadeObj.supplierItemId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <ng-select #data (change)="itemSelected(rowIndex, row)" #itemName1="ngModel" name="itemName{{ rowIndex }}" class="tableForm" id="itemName" [(ngModel)]="row.supplierItemId" required (keyup)="onKeyUp($event, rowIndex, 0,
+                                    <ng-select #data (change)="itemSelected(rowIndex, row, $event)" #itemName1="ngModel" name="itemName{{ rowIndex }}" class="tableForm" id="itemName" [(ngModel)]="row.supplierItemId" required (keyup)="onKeyUp($event, rowIndex, 0,
                                         'itemName')" [id]="'supplierList' + rowIndex + '-0'" appendTo="body" class="ng-select-br-none dropdown-name" [disabled]="shadeObj.pending">
                                         <ng-option *ngFor="let s of supplierList
                                             | filterOutSelectedShade
@@ -273,7 +273,7 @@
 
                             <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300" prop="shadeObj.concentration">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input type="number" #concentration1="ngModel" name="concentration{{ rowIndex }}" class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event, rowIndex, 1,
+                                    <input type="number" #concentration1="ngModel" name="concentration{{ rowIndex }}" class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration" (keypress)="checkQualitySelected()" (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event, rowIndex, 1,
                                         'concentration')" [id]="'supplierList' + rowIndex +
                                         '-concentration'" min="0" [disabled]="shadeObj.pending" />
 
