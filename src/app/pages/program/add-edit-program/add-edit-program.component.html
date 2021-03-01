@@ -20,11 +20,11 @@
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name
+                                            <div class="text-left txt-ov-elips">Party Name
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">
+                                            <div class="text-right txt-ov-elips">
                                                 Party Code</div>
                                         </div>
                                     </div>
@@ -55,10 +55,10 @@
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Quality Id</div>
+                                            <div class="text-left txt-ov-elips">Quality Id</div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name</div>
+                                            <div class="text-right txt-ov-elips">Party Name</div>
                                         </div>
                                     </div>
                                 </ng-option>
@@ -171,7 +171,7 @@
                                             {{p.partyShadeNo}}</ng-option>
                                     </ng-select>
 
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tablePSN1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tablePSN1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -184,7 +184,7 @@
                                         <ng-option *ngFor="let p of partyShade" [value]="p.id">{{p.id}}</ng-option>
                                     </ng-select>
 
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableShadeNo1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableShadeNo1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -200,7 +200,7 @@
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="number" (keyup)="onKeyUp($event,rowIndex,3,'quantity')" [id]="'program'+rowIndex+'-quantity'" [(ngModel)]="row.quantity" #tableQuantity1="ngModel" name='tableQuantity{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableQuantity1.invalid}"
                                         min="0">
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableQuantity1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableQuantity1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -214,7 +214,7 @@
                                             {{b.batchId}} - {{b.qualityName}}
                                         </ng-option>
                                     </ng-select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableBatch1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableBatch1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -228,7 +228,7 @@
                                             {{s.id?s.id:s.stockId}}
                                         </ng-option>
                                     </ng-select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (tableLotNo1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableLotNo1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -251,7 +251,7 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/program">CANCEL</button>
-                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
 
                             <button *ngIf="this.currentProgramId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addProgram(myForm)" [disabled]="disableButton">SAVE</button>
                         </div>

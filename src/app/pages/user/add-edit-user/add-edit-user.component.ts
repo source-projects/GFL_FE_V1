@@ -108,7 +108,7 @@ export class AddEditUserComponent implements OnInit {
   disableViewDependentPermission: boolean = false;
   disableViewGroupDependentPermission: boolean = false;
   disableViewAllDependentPermission: boolean = false;
-
+  userNameExist = false;
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -129,7 +129,6 @@ export class AddEditUserComponent implements OnInit {
       this.getCurrentUser();
     } else this.user.isUserHead = false;
     this.createPermission();
-
   }
 
   public getMaster(logInUserDetail) {
@@ -154,6 +153,17 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
+  }
+  checkUserName() {
+    this.userNameExist = false;
+    let id: Number = 0;
+    if (this.user.id) id = this.user.id;
+    this.userService.checkUserNameExist(this.user.userName, id).subscribe(
+      (data) => {
+        this.userNameExist = data["data"];
+      },
+      (error) => {}
+    );
   }
   checkUser(logInUserDetail) {
     if (
@@ -226,9 +236,7 @@ export class AddEditUserComponent implements OnInit {
 
       this.user.isUserHead = false;
     } else {
-      const found = this.desi_list.find(
-        (element) => element.id == event
-      );
+      const found = this.desi_list.find((element) => element.id == event);
       if ("Master" == found.designation) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -612,7 +620,7 @@ export class AddEditUserComponent implements OnInit {
       d: "",
       bf: "",
       ip: "",
-      wt: ""
+      wt: "",
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
@@ -809,16 +817,15 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
-  
-  reset(myForm){
+
+  reset(myForm) {
     myForm.reset();
-    
+
     this.formSubmitted = false;
     for (var i = 0; i < this.permissionArray.length; i++) {
       this.setPermissionFalse(i);
       this.permissionArray[i].selectAll = false;
     }
-
   }
 
   addUser(myForm) {
@@ -836,8 +843,8 @@ export class AddEditUserComponent implements OnInit {
       this.userService.createUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
-           this.reset(myForm);
-          this.allRightsFlag = false;
+            this.reset(myForm);
+            this.allRightsFlag = false;
 
             this.disableButton = false;
             this.toastr.success(errorData.Add_Success);

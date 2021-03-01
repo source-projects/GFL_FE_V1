@@ -25,11 +25,11 @@
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips" style="font-weight:bold;font-size: large;">Party Name
+                                            <div class="text-left txt-ov-elips">Party Name
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips" style="font-weight:bold;font-size: large;">
+                                            <div class="text-right txt-ov-elips">
                                                 Party Code</div>
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                     </div>
                     <div class="col-md-6 desktop-btn">
                         <div class="form-group center-txt-title user-per-check-display">
-                            <label style="width: 87%;">Credit Amount:</label>
+                            <label class="width-87">Credit Amount:</label>
                             <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
                         </div>
                     </div>
@@ -266,7 +266,7 @@
                                         <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
                                             {{type.paymentType}}</ng-option>
                                     </ng-select>
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payType1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (payType1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>
@@ -275,7 +275,7 @@
                             <ngx-datatable-column name="Amount" [sortable]="false" [width]="300" prop="payAmt">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input type="number" #payAmt1="ngModel" name='payAmt{{rowIndex}}' class="tableForm line-height-subtable" id="payAmt" [(ngModel)]="row.payAmt" (keyup)="onKeyUp($event,rowIndex,1,'payAmt')" [id]="'paymentDetailsList'+rowIndex+'-payAmt'" min="0" (input)="currentPaymentAdded($event,rowIndex)">
-                                    <div class="invalid-feedback" *ngIf="formSubmitted && (payAmt1.invalid)" style="display: inline-block;">
+                                    <div class="input-required display-inlineblock" *ngIf="formSubmitted && (payAmt1.invalid)">
                                         <span>Required</span>
                                     </div>
                                 </ng-template>

@@ -9,7 +9,7 @@
 
             </div>
             <div class="col-md-5 display-flex-end" *ngIf="!additionSlipFlag">
-                <button type="button" (click)="approveByClicked();" class="btn btn-primary btn-sm btn-edit" style="margin-right:20px">Edit</button>
+                <button type="button" (click)="approveByClicked();" class="btn btn-primary btn-sm btn-edit">Edit</button>
             </div>
             <div class="col-md-1 user-per-check-display">
                 <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
@@ -40,23 +40,24 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Temprarture</label>
-                                                <input type="number" (keypress)="numberOnly($event)"  class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required [disabled]="!approveByFlag">
+                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required [disabled]="!approveByFlag">
 
-                                                <div class="invalid-feedback" style="color: red;" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                                <div class="input-required" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                     <span>Temperarture is required</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Hold Time</label>
                                                 <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required [disabled]="!approveByFlag">
-                                                <div class="invalid-feedback" style="color: red;" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
+                                                <div class="input-required" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                                     <span>Hold Time is required</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Liquer Ratio</label>
-                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required [disabled]="!approveByFlag">
-                                                <div class="invalid-feedback"  style="color: red;" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required
+                                                    [disabled]="!approveByFlag">
+                                                <div class="input-required" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
@@ -115,7 +116,7 @@
                                 <div class="row" *ngIf="approveByFlag">
                                     <div class="col-md-3">
                                         <div class="nb-icon-add">
-                                            <nb-icon icon="plus-circle" style="width: 40px;height: 100%;" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)" class="plus-add add-modal"></nb-icon>
+                                            <nb-icon icon="plus-circle width-40 height-100" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)" class="plus-add add-modal"></nb-icon>
                                             <div class="tooltip">Add Process</div>
                                         </div>
                                     </div>
@@ -131,7 +132,7 @@
                                                                     {{p}}
                                                                 </ng-option>
                                                             </ng-select>
-                                                            <div class="invalid-feedback" style="color: red;" *ngIf="(processType1.invalid)&&(formSubmitted || processType1.touched)">
+                                                            <div class="input-required" *ngIf="(processType1.invalid)&&(formSubmitted || processType1.touched)">
                                                                 Process Type is required.
                                                             </div>
                                                         </div>
@@ -141,8 +142,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Temprature</label>
-                                                            <input class="form-control input-group" (keypress)="numberOnly($event)"  type="number" min="0" name="temp" [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}" required placeholder="Temprature" required>
-                                                            <div class="invalid-feedback" style="color: red;" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                                            <input class="form-control input-group" (keypress)="numberOnly($event)" type="number" min="0" name="temp" [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}" required placeholder="Temprature"
+                                                                required>
+                                                            <div class="input-required" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                                 Temprature is required.
                                                             </div>
                                                         </div>
@@ -151,8 +153,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Hold Time</label>
-                                                            <input class="form-control input-group" (keypress)="numberOnly($event)"  min="0" type="number" name="holdTime" [(ngModel)]="dyeingProcessStepNew.holdTime" #holdTime1="ngModel" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}" required>
-                                                            <div class="invalid-feedback" style="color: red;" *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
+                                                            <input class="form-control input-group" (keypress)="numberOnly($event)" min="0" type="number" name="holdTime" [(ngModel)]="dyeingProcessStepNew.holdTime" #holdTime1="ngModel" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
+                                                                required>
+                                                            <div class="input-required" *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
                                                                 Hold Time is required.
                                                             </div>
                                                         </div>
@@ -160,8 +163,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Liqour Ratio</label>
-                                                            <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" placeholder="Liqour Ratio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
-                                                            <div class="invalid-feedback" style="color: red;" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                            <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" placeholder="Liqour Ratio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }"
+                                                                required>
+                                                            <div class="input-required" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                                 <span>Liquor ratio is required</span>
                                                             </div>
                                                         </div>
@@ -204,7 +208,7 @@
                                                                     </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)"  class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)" min="0" [id]="'addList'+dcIndex+'-1'">
+                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)" class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)" min="0" [id]="'addList'+dcIndex+'-1'">
                                                                 </td>
                                                                 <td>
                                                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeChemicalData(dcIndex)"></nb-icon>
@@ -215,8 +219,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="onCreate(innerForm)">ADD</button>
-                                                <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="onCancel(innerForm)">Cancel</button>
+                                                <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onCreate(innerForm)">ADD</button>
+                                                <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel(innerForm)">Cancel</button>
                                             </div>
                                         </form>
 
@@ -226,10 +230,10 @@
                             <div class="col-md-12 mobile-btn-center text-btn-right">
 
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton">UPDATE</button>
+                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton">UPDATE</button>
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
-                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveSlipData(myForm)">SAVE</button>
+                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
                                     Print</button>
 
                             </div>
@@ -254,7 +258,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Temprarture</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required>
 
                                         <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                             <span>Temperarture is required</span>
@@ -262,14 +266,14 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Hold Time</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required>
                                         <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                             <span>Hold Time is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Liqure Ratio</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"  min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
                                         <div class="required-class" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                             <span>Liquor ratio is required</span>
                                         </div>
@@ -304,7 +308,7 @@
                                                     </ng-select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" #quantity1="ngModel" (keypress)="numberOnly($event)"  name='qty{{item._id}}{{i1}}' class="tableForm line-height-subtable" [(ngModel)]="item.qty" (keyup)="onKeyUp1($event,i1,1,'quantity')" [id]="'itemList'+i1+'-1'" min="0" required>
+                                                    <input type="number" #quantity1="ngModel" (keypress)="numberOnly($event)" name='qty{{item._id}}{{i1}}' class="tableForm line-height-subtable" [(ngModel)]="item.qty" (keyup)="onKeyUp1($event,i1,1,'quantity')" [id]="'itemList'+i1+'-1'" min="0" required>
                                                 </td>
 
                                                 <td>
@@ -322,8 +326,8 @@
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
 
                                     <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" style="margin-right:20px" (click)="printFlag = true; printSlip(myForm)">Save And
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="saveFlag = true;saveSlipData(myForm)">SAVE</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="printFlag = true; printSlip(myForm)">Save And
                                         Print</button>
 
                                 </div>
