@@ -143,7 +143,7 @@ export class AdminService {
  
   deleteMachineCategory(id) {
     return this.httpClient.delete(
-      this.commonService.envUrl() + "api/machine/category" + id
+      this.commonService.envUrl() + "api/machine/delete/category/" + id
     );
   }
   updateJetData(data) {

@@ -10,18 +10,18 @@ import { PrintLayoutComponent } from './print-Layout/print-layout.component';
 const routes: Routes = [
   { 
     path: '', 
-    component: GenerateInvoiceComponent,
-    canActivate:[InvoiceGuard],
-    canLoad:[InvoiceGuard],
-    data: { PermissionName: ['view','view group','view all']} 
-  },
-  {
-    path:'add',
-    component:AddEditInvoiceComponent,
+    component: AddEditInvoiceComponent,
     canActivate:[InvoiceGuard],
     canLoad:[InvoiceGuard],
     data: { PermissionName: ['add']} 
   },
+  {
+      path:'view',
+      component:GenerateInvoiceComponent,
+      canActivate:[InvoiceGuard],
+      canLoad:[InvoiceGuard],
+      data: { PermissionName: ['view','view group','view all']} 
+    },
   {
     path:'edit/:id',
     component:AddEditInvoiceComponent,

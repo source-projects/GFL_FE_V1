@@ -583,6 +583,27 @@ export class AddEditStockBatchComponent implements OnInit {
     }
     return returnValue;
   }
+
+  reset(myForm){
+    myForm.reset();
+    this.formSubmitted = false;
+    this.stockDataValues = [
+      {
+        batchId: null,
+        totalWt: null,
+        totalMt: null,
+        isProductionPlanned: false,
+        batchMW: [
+          {
+            mtr: null,
+  
+            wt: null,
+          },
+        ],
+      },
+    ];    this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
+    this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+  }
   addUpdateStockBatch(myForm) {
     this.disableButton = true;
     this.formSubmitted = true;
@@ -620,10 +641,13 @@ export class AddEditStockBatchComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.loading = false;
-              this.route.navigate(["/pages/stock-batch"]);
+              this.reset(myForm);
+              //this.route.navigate(["/pages/stock-batch"]);
+              this.disableButton = false;
               this.toastr.success(errorData.Add_Success);
             } else {
               this.loading = false;
+              this.disableButton = false;
               this.stockBatchArray = [];
             }
           },
@@ -642,6 +666,7 @@ export class AddEditStockBatchComponent implements OnInit {
               this.route.navigate(["/pages/stock-batch"]);
               this.toastr.success(errorData.Update_Success);
             } else {
+              this.disableButton = false;
               this.stockBatchArray = [];
               this.toastr.error(data["msg"]);
             }

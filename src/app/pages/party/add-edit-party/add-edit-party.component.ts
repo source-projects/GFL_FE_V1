@@ -79,7 +79,7 @@ export class AddEditPartyComponent implements OnInit {
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
   partyCodeExist: boolean = true;
-  partyNameExist: boolean  = false;
+  partyNameExist: boolean = false;
   adminFlag = false;
   masterFlag = false;
   operatorFlag = false;
@@ -139,7 +139,7 @@ export class AddEditPartyComponent implements OnInit {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
-      id:new  FormControl(null),
+      id: new FormControl(null),
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
       partyAddress2: new FormControl(""),
@@ -211,7 +211,7 @@ export class AddEditPartyComponent implements OnInit {
         this.currentParty = data["data"];
 
         this.partyForm.patchValue({
-          id:this.currentParty.id,
+          id: this.currentParty.id,
           userHeadId: this.setUserHeadName(this.currentParty.userHeadId),
           partyName: this.currentParty.partyName,
           partyAddress1: this.currentParty.partyAddress1,
@@ -260,16 +260,16 @@ export class AddEditPartyComponent implements OnInit {
     );
   }
 
-  reset(){
+  reset() {
     this.partyForm.reset();
     this.formSubmitted = false;
   }
-  
+
   public addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
     this.partyForm.value.createdBy = this.user.userId;
-   // console.log('raw',this.partyForm.getRawValue())
+    // console.log('raw',this.partyForm.getRawValue())
     this.partyForm.patchValue({
       userHeadId: this.userHead.userHeadId,
     });
@@ -282,24 +282,32 @@ export class AddEditPartyComponent implements OnInit {
             gstin: "",
           });
         }
-        this.partyService.saveParty(this.partyForm.value).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.currentParty = data["data"];
-              this.reset();
-              this.disableButton = false;
+        if (
+          (this.debtor && this.partyForm.get("partyAddress1").value) ||
+          !this.debtor
+        ) {
+          this.partyService.saveParty(this.partyForm.value).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.currentParty = data["data"];
+                this.reset();
+                this.disableButton = false;
 
-              this.toastr.success(errorData.Add_Success);
-            } else {
-              this.toastr.error(data["msg"]);
+                this.toastr.success(errorData.Add_Success);
+              } else {
+                this.toastr.error(data["msg"]);
+              }
+              this.disableButton = false;
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+              this.disableButton = false;
             }
-            this.disableButton = false;
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-            this.disableButton = false;
-          }
-        );
+          );
+        }else{
+          this.disableButton = false;
+        return;  
+        }
       } else {
         this.disableButton = false;
         return;
@@ -361,10 +369,6 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = false;
   }
 
-  public goBackToPreviousPage(): any {
-    this.route.navigate(["pages/party"]);
-  }
-
   setCheckedStatusCreditor(checked) {
     this.creditor = checked;
     this.partyForm.patchValue({
@@ -380,26 +384,26 @@ export class AddEditPartyComponent implements OnInit {
     this.partyAdressSetFlag = checked;
   }
 
-  checkPartyName(){
+  checkPartyName() {
     this.partyNameExist = false;
     let id = 0;
-    if(this.partyForm.get('id').value)
-      id = this.partyForm.get('id').value
-    this.partyService.checkPartyNameExist(this.partyForm.get("partyName").value, id).subscribe(
-      (data) => {
-        this.partyNameExist = data["data"];
-      },
-      (error) => {}
-    );
+    if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
+    this.partyService
+      .checkPartyNameExist(this.partyForm.get("partyName").value, id)
+      .subscribe(
+        (data) => {
+          this.partyNameExist = data["data"];
+        },
+        (error) => {}
+      );
   }
 
   checkPartyCode() {
     this.partyCodeExist = true;
     let id = 0;
-    if(this.partyForm.get('id').value)
-      id = this.partyForm.get('id').value
+    if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
     this.partyService
-      .getPartyCode(this.partyForm.get("partyCode").value,id)
+      .getPartyCode(this.partyForm.get("partyCode").value, id)
       .subscribe(
         (data) => {
           this.partyCodeExist = data["data"];
