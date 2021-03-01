@@ -7,7 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './not-found.component.html',
 })
 export class NotFoundComponent {
+  selectedCar: number;
 
+  cars = [
+      { id: 1, name: 'Volvo' },
+      { id: 2, name: 'Saab' },
+      { id: 3, name: 'Opel' },
+      { id: 4, name: 'Audi' },
+  ];
   constructor(private menuService: NbMenuService) {
   }
 

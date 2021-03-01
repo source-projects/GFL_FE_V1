@@ -1,18 +1,165 @@
-<div class="row">
-  <div class="col-md-12">
-    <nb-card>
-      <nb-card-body>
-        <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
-          <h2 class="title">404 Page Not Found</h2>
-          <small class="sub-title">The page you were looking for doesn't exist</small>
-          <button nbButton fullWidth (click)="goToHome()" type="button" class="home-button">
-            Take me home
-          </button>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-1 col-3">
+                <h1 class="nb-text">Report</h1>
+            </div>
+            <div class="col-md-7 jus-con-center col-6">
+
+                <div class="width-100">
+
+                    <ng-select [items]=" cars " bindLabel="name " bindValue="id " [(ngModel)]="selectedCar " placeholder="select report">
+                    </ng-select>
+
+                </div>
+            </div>
+            <div class="col-md-4 display-flex-end report-text-white txt-ov-elips col-3">
+                <nb-icon icon="settings-2-outline" class="report-icon"></nb-icon><span>configure</span>
+            </div>
         </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
-<div class="example-box" cdkDrag>
-  Drag me around
-</div>
+    </nb-card-header>
+
+
+    <nb-card-body>
+        <div class="container mobile-container-0">
+            <div class="main-report-design">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <div class="report-head">
+                            <nb-icon icon="shopping-cart-outline" class="report-icon-style"></nb-icon>
+                            <h6 class="report-text-style">Sales</h6>
+                            <div class="report-list-style">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Sales by Customer</h6>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Sales by Item</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Sales by Sales Person</h6>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="report-head">
+                            <nb-icon icon="person-done-outline" class="report-icon-style"></nb-icon>
+                            <h6 class="report-text-style">Receivables</h6>
+                            <div class="report-list-style">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Customer Balances</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Aging Summery</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Aging Details</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Estimate Details</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Bad Dabts</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Bank Charges</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Customer Balance Summary</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Receivables Summary</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Receivables Details</h6>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="report-head">
+                            <nb-icon icon="credit-card-outline" class="report-icon-style"></nb-icon>
+                            <h6 class="report-text-style">Payments Recevied</h6>
+                            <div class="report-list-style">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Payments Recevied</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Time to Get paid</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Credit Note Details</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Refund History</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <nb-icon icon="star-outline" class="star-outline-icon"></nb-icon>
+                                            <h6 class="detail-report-text-style">Withholding Tax</h6>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

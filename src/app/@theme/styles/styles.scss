@@ -1768,6 +1768,72 @@
         margin-top: 13px;
     }
     
+    // report page design
+    .report-icon {
+        color: #fff !important;
+        margin-right: 5px;
+    }
+    
+    .report-text-white span {
+        color: #fff;
+    }
+    
+    .report-icon-style,
+    .report-text-style,
+    .detail-report-text-style,
+    .detail-icon-report {
+        display: inline-block;
+    }
+    
+    .report-icon-style {
+        padding-right: 5px;
+        width: 30px !important;
+    }
+    
+    .detail-report-text-style {
+        color: #5e5b5e !important;
+    }
+    
+    .star-outline-icon {
+        color: #b1b1b1;
+        margin-right: 5px;
+    }
+    
+    .report-list-style ul {
+        padding-left: 0;
+        list-style: none;
+        margin: 0;
+    }
+    
+    .report-list-style ul li {
+        padding: 10px 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-bottom: 1px dashed #c3c3c3;
+    }
+    
+    .report-list-style ul li a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .report-list-style ul li h6 {
+        margin: 0;
+        font-size: 13px;
+    }
+    
+    .report-list-style ul li h6:hover {
+        color: blueviolet !important;
+        text-decoration: underline !important;
+    }
+    
+    .main-report-design {
+        margin-top: 10px;
+    }
+    
     @media print {
         .row-print,
         .print-wth-100 {
@@ -2003,6 +2069,16 @@
         }
         .mobile-pr-0 nb-radio label {
             padding-right: 0 !important;
+        }
+        // report page design
+        .main-report-design {
+            margin-top: 0 !important;
+        }
+        .mobile-container-0 {
+            padding: 0;
+        }
+        .report-head {
+            padding-bottom: 30px;
         }
     }
     
