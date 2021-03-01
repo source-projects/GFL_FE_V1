@@ -315,7 +315,9 @@
     
     .menu-title {
         color: #5e5b5e;
-        width: 100%;
+        width: 80%;
+        content: "\a";
+        white-space: pre;
     }
     
     .nb-theme-default nb-menu .menu-item a:hover .menu-title {

@@ -27,6 +27,8 @@ export class AddEditSupplierRateComponent implements OnInit {
   discount: number;
   gst: number;
   userHead;
+  disableButton = false;
+
   //form field values
   formValues = {
     id: null,
@@ -140,6 +142,7 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   public addSupplierRateInfo(myForm) {
+    this.disableButton = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.formValues.id = this.formValues.supplierRates[0].supplierId;
@@ -160,21 +163,25 @@ export class AddEditSupplierRateComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.router.navigate(["pages/supplier"]);
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
           } else {
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data['msg']);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
+          this.disableButton = false;
         }
       );
     } else {
+      this.disableButton = false;
       return;
     }
   }
 
   public updateSupplierRateInfo(myForm) {
+    this.disableButton = true;
     this.formSubmitted = true;
     if (myForm.valid) {
       this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
@@ -199,16 +206,19 @@ export class AddEditSupplierRateComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.router.navigate(["pages/supplier"]);
-              this.toastr.success(errorData.Update_Success);
+              this.toastr.success(data['msg']);
             } else {
-              this.toastr.error(errorData.Update_Error);
+              this.toastr.error(data['msg']);
             }
+            this.disableButton = false;
           },
           (error) => {
+            this.disableButton = false;
             this.toastr.error(errorData.Serever_Error);
           }
         );
     } else {
+      this.disableButton = false;
       return;
     }
   }

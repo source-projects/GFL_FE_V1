@@ -149,7 +149,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Category</label>
-                                <ng-select name="category" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }" required>
+                                <ng-select name="category" class="dropdown-name" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"  required>
                                     <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
                                         {{mc.name}}
                                     </ng-option>

@@ -230,7 +230,7 @@ export class ProductionPlanningComponent implements OnInit {
     }
   }
 
-  public onBatchSelect(batch_id) {
+  public onBatchSelect(batch_id , id) {
     let b_controlId;
     let party, quality, shadeId, colorTone;
     if (this.editProductionPlanFlag) {
@@ -268,23 +268,48 @@ export class ProductionPlanningComponent implements OnInit {
     modalRef.componentInstance.batchControl = b_controlId;
     modalRef.componentInstance.shadeId = shadeId;
     modalRef.componentInstance.colorTone = colorTone;
+    modalRef.componentInstance.editProductionPlanFlag = this.editProductionPlanFlag;
     modalRef.result
       .then(result => {
         if (result) {
+
+          if (this.editProductionPlanFlag) {
+            result.id = id;
+            this.updateProduction(result);
+          }
           if(this.productionPlanning.partyId){
             this.partySelected(this.productionPlanning.partyId);
           }else if(this.productionPlanning.partyId && this.productionPlanning.qualityId){
             this.qualitySelected(this.productionPlanning.qualityId);
-          }
+          }         
           //this.getAllBatchData();
           this.plannedProductionListForDataTable();
+          this.editProductionPlanFlag = false;
+
         }
       })
       .catch(err => { });
-    this.editProductionPlanFlag = false;
+  }
+
+  updateProduction(result){
+    this.productionPlanningService.updateProductionPlan(result).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toastr.success(errorData.Update_Success);
+        } else {
+          this.toastr.error(errorData.Update_Error);
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+        this.loading = false;
+      }
+    )
   }
 
   public plannedProductionListForDataTable(): any {
+    this.plannedProductionList = [];
     this.productionPlanningService.getAllPlannedProductionList().subscribe(
       data => {
         if (data["success"]) {
@@ -294,9 +319,9 @@ export class ProductionPlanningComponent implements OnInit {
       error => { }
     );
   }
-  editProductionPlan(id): any {
+  editProductionPlan(production): any {
     this.editProductionPlanFlag = true;
-    this.onBatchSelect(id.batchId);
+    this.onBatchSelect(production.batchId , production.id);
   }
   removeItem(index) {
     //remove row

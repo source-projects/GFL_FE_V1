@@ -39,7 +39,7 @@ export class PlanningSlipComponent implements OnInit {
   public loading: boolean = false;
   public formSubmitted: boolean = false;
   public disableButton: boolean = false;
-  public isSaved: boolean = false;
+  public isSavedForPrint: boolean = false;
   public isPrinting: boolean = true;
   public saveClicked: boolean = false;
   public approveByFlag: boolean = false;
@@ -55,7 +55,7 @@ export class PlanningSlipComponent implements OnInit {
   public itemListArrayCopy: any = [];
   public colorFlag = false;
   public printFlag = false;
-  public saveFlag = false;
+  public additionSlipSaveFlag = false;
   public slipData: any;
   public temp;
   public holdTime;
@@ -368,16 +368,16 @@ export class PlanningSlipComponent implements OnInit {
           isColor: myForm.value.isColor,
           items: this.itemList,
         };
-        this.isSaved = true;
+        this.isSavedForPrint = true;
 
-        if (this.saveFlag) {
+        if (this.additionSlipSaveFlag) {
           this.activeModal.close(this.slipObj);
         }
       } else {
         this.planningSlipService.updateSlipData(this.slipData).subscribe(
           (data) => {
             if (data["success"]) {
-              this.isSaved = true;
+              this.isSavedForPrint = true;
               this.toastr.success(data["msg"]);
               if (this.saveClicked) {
                 this.activeModal.close(true);
@@ -442,11 +442,11 @@ export class PlanningSlipComponent implements OnInit {
         this.approveByFlag = true;
         this.saveSlipData(myForm);
       } else {
-        this.isSaved = true;
+        this.isSavedForPrint = true;
         this.getSlipDataFromBatch();
       }
       let interval1 = setInterval(() => {
-        if (this.slipData && this.isSaved) {
+        if (this.slipData && this.isSavedForPrint) {
           clearInterval(interval1);
           let doc = new wijmo.PrintDocument({
             title: "",

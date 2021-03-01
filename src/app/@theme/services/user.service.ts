@@ -77,4 +77,9 @@ export class UserService {
       this.commonService.envUrl() + "api/user/getUserHeadDetailById/" + id
     );
   }
+  checkUserNameExist(name, id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/user/" + name + "/" + id
+    );
+  }
 }

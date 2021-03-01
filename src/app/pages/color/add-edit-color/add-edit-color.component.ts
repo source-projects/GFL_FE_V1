@@ -269,11 +269,12 @@ export class AddEditColorComponent implements OnInit {
           if (data["success"]) {
             this.reset(colorForm);
             this.disableButton = false;
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
             // this.disableButton=true;
           } else {
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data['msg']);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.toastr.error(errorData.Serever_Error);
@@ -307,7 +308,9 @@ export class AddEditColorComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/color"]);
-            this.toastr.success(errorData.Update_Success);
+            this.toastr.success(data['msg']);
+          }else{
+            this.toastr.error(data['msg']);
           }
           this.loading = false;
         },
