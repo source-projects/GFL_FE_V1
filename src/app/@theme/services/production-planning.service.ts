@@ -49,4 +49,10 @@ export class ProductionPlanningService {
       this.commonService.envUrl() + "api/productionPlan/deleteBy/" + id
     );
   }
+
+  updateProductionPlan(productionData){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/updateProductionPlan/", productionData
+    );
+  }
 }
