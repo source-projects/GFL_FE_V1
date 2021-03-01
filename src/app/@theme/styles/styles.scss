@@ -1063,6 +1063,12 @@
         margin-right: 9px;
     }
     
+    .jet-bg-none {
+        color: white;
+        border: none;
+        background: none;
+    }
+    
     // jet table
     .table-jet,
     .main-table-drag {
@@ -1576,7 +1582,7 @@
     
     .tb-name {
         border: 1px solid rgb(185, 185, 185);
-        padding: 5px 15px;
+        padding: 3px 15px;
     }
     
     .name-print {
@@ -1645,6 +1651,10 @@
     
     .amount-weight-mtr {
         margin-right: 30px;
+    }
+    
+    .mr-top-50 {
+        margin-top: 50px;
     }
     
     // reuired class in input
@@ -1836,6 +1846,45 @@
         }
         .pd-bt-25 {
             padding-bottom: 10px;
+        }
+        .print-layout-report {
+            margin: 0 25px;
+            text-align: center;
+        }
+        .font-25 {
+            font-size: 25px;
+        }
+        .width-100 {
+            width: 100%;
+        }
+        .mr-bottom-55 {
+            margin-bottom: 55px;
+        }
+        .width-90 {
+            width: 90%;
+        }
+        .mr-top-left-50 {
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+        .display-inlineblock {
+            display: inline-block;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+        .font-25 {
+            font-size: 25px;
+        }
+        .width-30 {
+            width: 30%;
+        }
+        .width-32 {
+            width: 32%;
+        }
+        .table-text-display {
+            font-size: 23px;
+            display: inline-block;
         }
     }
     
