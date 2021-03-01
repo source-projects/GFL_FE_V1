@@ -227,9 +227,9 @@ export class AddEditUserComponent implements OnInit {
       this.user.isUserHead = false;
     } else {
       const found = this.desi_list.find(
-        (element) => element.designation == "Master"
+        (element) => element.id == event
       );
-      if (event == found.id) {
+      if ("Master" == found.designation) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
         this.user.isUserHead = false;
@@ -612,6 +612,7 @@ export class AddEditUserComponent implements OnInit {
       d: "",
       bf: "",
       ip: "",
+      wt: ""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {

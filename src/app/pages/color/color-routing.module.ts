@@ -20,13 +20,7 @@ const routes: Routes = [
     canLoad:[ColorGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
-  {
-    path:'add',
-    component:AddEditColorComponent,
-    canActivate:[ColorGuard],
-    canLoad:[ColorGuard],
-    data: { PermissionName: ['add']}
-  },
+ 
   {
     path:'edit/:id',
     component:AddEditColorComponent,

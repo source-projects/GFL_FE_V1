@@ -303,23 +303,24 @@ export class ProductionPlanningComponent implements OnInit {
     let idCount = this.plannedProductionList.length;
     let item = this.plannedProductionList;
     let deleteId = this.plannedProductionList[index].id;
-    if (idCount == 1) {
-      item[0].partyName = null;
-      item[0].qualityName = null;
-      item[0].colorTone = null;
-      item[0].batchId = null;
-      let list = item;
-      this.plannedProductionList = [...list];
+    // if (idCount == 1) {
+    //   item[0].partyName = null;
+    //   item[0].qualityName = null;
+    //   item[0].colorTone = null;
+    //   item[0].batchId = null;
+    //   let list = item;
+    //   this.plannedProductionList = [...list];
 
-    } else {
-      let removed = item.splice(index, 1);
-      let list = item;
-      this.plannedProductionList = [...list];
+    // } else {
+    //   let removed = item.splice(index, 1);
+    //   let list = item;
+    //   this.plannedProductionList = [...list];
 
-    }
+    // }
     this.productionPlanningService.deleteProduction(deleteId).subscribe(
       data => {
         if (data["success"]) {
+          this.ngOnInit();
           this.toastr.success("Deleted Successfully");
         }
       },

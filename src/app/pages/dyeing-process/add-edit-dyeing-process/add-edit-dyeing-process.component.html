@@ -20,9 +20,12 @@
                         <div class="form-group">
                             <label class="required">Process Name</label>
                             <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
-                                placeholder="Process Name">
+                                placeholder="Process Name" (change)="isProcessNameAlreadyExist()">
                             <div class="input-required" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
+                            </div>
+                            <div class="text-danger" *ngIf="processNameExist">
+                                <span>Process Name is already Exist </span>
                             </div>
                         </div>
                     </div>
@@ -118,7 +121,7 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" routerLink='/pages/dyeing-process'>CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" style="margin-right:20px" (click)="resetFormValues(myForm)">CANCEL</button>
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
                             <button type="button" *ngIf="updateFlag" class="btn btn-primary btn-sm btn-design button-base ripple" style="margin-right:20px" (click)="addUpdateDyeingProcess(myForm)">Update</button>
                         </div>

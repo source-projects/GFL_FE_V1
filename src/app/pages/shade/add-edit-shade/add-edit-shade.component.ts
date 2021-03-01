@@ -217,6 +217,9 @@ export class AddEditShadeComponent implements OnInit {
           let res = data["data"];
           this.shadeObj = res;
           this.color = this.shadeObj.colorTone;
+          this.shadeObj.shadeDataList.forEach((item,i)=>{
+            this.shadeObj.shadeDataList[i].rate =  Number(item.rate.toFixed(2));
+          })
           if (!this.shadeObj.shadeDataList.length) {
             this.shadeDataListArray.push(this.shadeDataList);
             this.shadeObj.shadeDataList = this.shadeDataListArray;
@@ -335,7 +338,7 @@ export class AddEditShadeComponent implements OnInit {
         newSupplierId = s.supplierId;
         row.itemName = s.itemName;
         gst = (s.rate * s.gstRate) / 100;
-        row.rate = s.rate + gst;
+        row.rate = (s.rate + gst).toFixed(2);
         break;
       }
     }
@@ -372,7 +375,7 @@ export class AddEditShadeComponent implements OnInit {
         this.totalAmount += this.finalTotalAmount[item].amount;
       })
       this.totalAmount = this.totalAmount.toFixed(2);
-      this.shadeObj.shadeDataList[rowIndex].amount = amount;
+      this.shadeObj.shadeDataList[rowIndex].amount = Number(amount.toFixed(2));
 
       this.calculateTotalAmount();
     } else {

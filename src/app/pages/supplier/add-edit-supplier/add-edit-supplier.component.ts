@@ -99,15 +99,7 @@ export class AddEditSupplierComponent implements OnInit {
             this.toastr.success(errorData.Add_Success);
             this.addSupplier.reset();
             this.formSubmitted = false;
-          //   Object.keys(this.addSupplier.controls).forEach(field => { 
-          //       this.addSupplier.controls[field].reset();   
-          //     }
-         
-          // );
-
             this.disableButton = false;
-        
-
           }
           else{
             this.toastr.error(errorData.Add_Error);
@@ -160,10 +152,6 @@ export class AddEditSupplierComponent implements OnInit {
     }
     this.disableButton = false;
 
-  }
-
-  public goBackToPreviousPage():any{
-    this.router.navigate(['pages/supplier']);
   }
 
 }

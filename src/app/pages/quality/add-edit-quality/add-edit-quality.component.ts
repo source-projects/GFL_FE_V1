@@ -51,13 +51,13 @@ export class AddEditQualityComponent implements OnInit {
     await this.getUpdateData();
   }
 
-  resetFlag($event) {
-    this.qulityIdExist = false;
-  }
+  
 
   checkQulityId() {
+    let id = 0;
+    if(this.addEditQualityForm.get('id').value)  id = this.addEditQualityForm.get('id').value;
     this.qualityService
-      .getQulityIdExist(this.addEditQualityForm.get("qualityId").value)
+      .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
       .subscribe(
         (data) => {
           this.qulityIdExist = data["data"];
@@ -182,13 +182,6 @@ export class AddEditQualityComponent implements OnInit {
       this.disableButton = false;
       return;
     }
-  }
-
-  onCancel(){
-    this.addEditQualityForm.patchValue({
-      qualityType : "Fabric"}
-    )  
-    console.log(this.addEditQualityForm.value.qualityType);
   }
 
   updateQuality() {

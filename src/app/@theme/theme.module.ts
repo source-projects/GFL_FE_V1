@@ -44,6 +44,7 @@ import { DARK_THEME } from './styles/theme.dark';
 import { FilterSelectedShadePipe } from './pipes/filter-selected-shade.pipe';
 import { FilterByIsColorPipe } from './pipes/filter-by-isColor-slip.pipe';
 import { DisableStockBatchPipe } from './pipes/disable-Stock-Batch.pipe';
+import { ShowOnlyChemicalPipe } from './pipes/showOnlyChemicalList.pipe';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -79,6 +80,7 @@ const PIPES = [
   FilterProcessNamePipe,
   FilterItemPipe,
   FilterByIsColorPipe,
+  ShowOnlyChemicalPipe,
   DisableStockBatchPipe
 ];
 

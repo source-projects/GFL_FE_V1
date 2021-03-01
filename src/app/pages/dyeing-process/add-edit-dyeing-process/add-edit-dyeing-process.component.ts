@@ -22,6 +22,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
   public formSubmitted: boolean = false;
   public addFlag: boolean = true;
   public updateFlag: boolean = false;
+  public processNameExist: boolean = false;
   public selectedStep: any;
   public currentDyeingProcessId: any;
   public itemList:any[];
@@ -167,6 +168,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
     
   }
 
+  
   addUpdateDyeingProcess(myForm) {
     this.formSubmitted = true;
     if (myForm.valid) {
@@ -178,7 +180,9 @@ export class AddEditDyeingProcessComponent implements OnInit {
           this.dyeingProcessService.saveDyeingProcess(this.dyeingProcess).subscribe(
             (data) => {
               if (data["success"]) {
-                this.route.navigate(["/pages/dyeing-process"]);
+                //reset form and other values
+                this.resetFormValues(myForm);
+                
                 
                 this.toastr.success(data["msg"]);
               }
@@ -214,5 +218,26 @@ export class AddEditDyeingProcessComponent implements OnInit {
         }
       }
     }
+  }
+
+  isProcessNameAlreadyExist(){
+    this.processNameExist = false;
+    let id = 0;
+    if(this.dyeingProcess.id) id = this.dyeingProcess.id;
+    this.dyeingProcessService.isProcessNameExist(this.dyeingProcess.processName, id).subscribe(
+      data=>{
+        if(data['success']){
+          this.processNameExist = data['data'];
+        }
+      },error=>{}
+    )
+  }
+
+  resetFormValues(myForm){
+    this.formSubmitted = false;
+    myForm.reset();
+    this.dyeingProcessSteps = [];
+    this.addFlag = true;
+    this.updateFlag = false;
   }
 }
