@@ -37,7 +37,7 @@ export class CommonService {
     let url = "";
     let location = window.location;
     if (location["hostname"] == "192.168.1.103") {
-      url = "http://192.168.1.1030:8080/";
+      url = "http://192.168.1.103:8080/";
     } else if (
       location["hostname"] == "15.206.179.225" ||
       location["hostname"] == "localhost"
