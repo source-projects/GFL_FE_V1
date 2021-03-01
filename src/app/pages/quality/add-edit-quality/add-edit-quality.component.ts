@@ -167,9 +167,9 @@ export class AddEditQualityComponent implements OnInit {
           if (data['success']) {
             this.reset();
             this.disableButton = false; 
-            this.toastr.success(errorData.Add_Success);
+            //this.toastr.success(errorData.Add_Success);
           } else {
-            this.toastr.error(errorData.Add_Error);
+            //this.toastr.error(errorData.Add_Error);
           }
           this.disableButton = false;
         },
@@ -196,11 +196,13 @@ export class AddEditQualityComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data["success"]) {
+              this.toastr.success(data['msg']);
               this.route.navigate(["/pages/quality"]);
-              this.toastr.success(errorData.Update_Success);
+              
             } else {
-              this.toastr.error(errorData.Update_Error);
+              this.toastr.error(data['msg']);
             }
+            this.disableButton = false; 
             this.loading = false;
           },
           (error) => {

@@ -205,11 +205,12 @@ export class AddEditInvoiceComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error)
         }
       )
+    }else{
+      this.disableButton = false;
     }
   }
 
   updateInvoice(invoiceForm) {
-
     console.log("FORM:",invoiceForm);
     this.disableButton = true;
     this.formSubmitted = true;
@@ -246,6 +247,8 @@ export class AddEditInvoiceComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error)
         }
       )
+    }else{
+      this.disableButton = false;
     }
   }
 
