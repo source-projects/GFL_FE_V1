@@ -268,11 +268,7 @@ export class AddEditPartyComponent implements OnInit {
   public addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
-    this.partyForm.value.createdBy = this.user.userId;
-    // console.log('raw',this.partyForm.getRawValue())
-    this.partyForm.patchValue({
-      userHeadId: this.userHead.userHeadId,
-    });
+
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         this.partyForm.value.createdBy = this.user.userId;
@@ -286,18 +282,22 @@ export class AddEditPartyComponent implements OnInit {
           (this.debtor && this.partyForm.get("partyAddress1").value) ||
           !this.debtor
         ) {
+          this.partyForm.value.createdBy = this.user.userId;
+          // console.log('raw',this.partyForm.getRawValue())
+          this.partyForm.patchValue({
+            userHeadId: this.userHead.userHeadId,
+          });
           this.partyService.saveParty(this.partyForm.value).subscribe(
             (data) => {
               if (data["success"]) {
                 this.currentParty = data["data"];
+                this.toastr.success(data['msg']);
                 this.reset();
                 this.disableButton = false;
-
-                this.toastr.success(errorData.Add_Success);
               } else {
+                this.disableButton = false;
                 this.toastr.error(data["msg"]);
               }
-              this.disableButton = false;
             },
             (error) => {
               this.toastr.error(errorData.Serever_Error);
@@ -322,9 +322,7 @@ export class AddEditPartyComponent implements OnInit {
     this.disableButton = true;
     this.loading = true;
     this.formSubmitted = true;
-    this.partyForm.patchValue({
-      userHeadId: this.userHead.userHeadId,
-    });
+
     if (this.partyForm.valid) {
       if (this.creditor || this.debtor) {
         if (
@@ -343,17 +341,21 @@ export class AddEditPartyComponent implements OnInit {
             ...this.partyForm.value,
             id: this.currentPartyId,
           };
+          this.partyForm.patchValue({
+            userHeadId: this.userHead.userHeadId,
+          });
           this.partyService.updateParty(body).subscribe(
             (data) => {
               if (data["success"]) {
-                this.toastr.success(errorData.Update_Success);
+                this.toastr.success(data['msg']);
+                this.disableButton = false;
                 this.route.navigate(["/pages/party"]);
               } else {
                 this.partyCodeExist = false;
+                this.disableButton = false;
                 this.toastr.error(data["msg"]);
               }
               this.loading = false;
-              this.disableButton = false;
             },
             (error) => {
               this.toastr.error(errorData.Update_Error);
@@ -361,6 +363,8 @@ export class AddEditPartyComponent implements OnInit {
               this.disableButton = false;
             }
           );
+        }else{
+          this.disableButton = false;
         }
       }
       this.disableButton = false;

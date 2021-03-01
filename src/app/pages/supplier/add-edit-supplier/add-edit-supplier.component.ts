@@ -96,14 +96,14 @@ export class AddEditSupplierComponent implements OnInit {
       this.supplierService.addSupplierInSystem(this.addSupplier.value).subscribe(
         data =>{
           if(data["success"]){
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
             this.addSupplier.reset();
             this.formSubmitted = false;
-            this.disableButton = false;
           }
           else{
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data['msg']);
           }
+          this.disableButton = false;
         },
         error=>{
           //toaster
@@ -133,13 +133,13 @@ export class AddEditSupplierComponent implements OnInit {
       this.supplierService.updateSupplierById(body).subscribe(
         data=>{
           if(data["success"]){
-            this.toastr.success(errorData.Update_Success);
+            this.toastr.success(data['msg']);
             this.router.navigate(['pages/supplier']);
-
           }
           else{
-            this.toastr.error(errorData.Update_Error);
+            this.toastr.error(data['msg']);
           }
+          this.disableButton = false;
           this.loading = false;
         },
         error=>{

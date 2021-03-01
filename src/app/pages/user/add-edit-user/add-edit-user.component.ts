@@ -514,26 +514,6 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  // checkUncheckSelectAll(value, i) {
-  //   if (value == false) {
-  //     this.permissionArray[i].selectAll = false;
-  //     this.allRightsFlag = false;
-
-  //   }
-
-  //   this.checkIfAllSelected(i);
-
-  //   for (let j = 0; j < 12; j++) {
-  //     if (!this.permissionArray[j].selectAll) {
-  //       this.allRightsFlag = false;
-  //       break;
-  //     }
-  //     else {
-  //       this.allRightsFlag = true;
-  //     }
-  //   }
-  // }
-
   checkUncheckSelectAll(value, i, accessName) {
     switch (accessName) {
       case "view": {
@@ -800,8 +780,8 @@ export class AddEditUserComponent implements OnInit {
           }
           // else {
           //   this.toastr.error(data["msg"]);
-
           // }
+          this.disableButton = false;
           this.loading = false;
         },
         (error) => {
@@ -845,12 +825,12 @@ export class AddEditUserComponent implements OnInit {
           if (data["success"]) {
             this.reset(myForm);
             this.allRightsFlag = false;
-
             this.disableButton = false;
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data["msg"]);
           } else {
-            this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data["msg"]);
           }
+          this.disableButton = false;
         },
         (error) => {
           this.disableButton = false;

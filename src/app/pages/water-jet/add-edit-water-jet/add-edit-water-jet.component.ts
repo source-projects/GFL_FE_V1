@@ -39,7 +39,7 @@ export class AddEditWaterJetComponent implements OnInit {
       this.waterjetService.addWaterJet(this.waterjet).subscribe(
         data=>{
           if(data['success']){
-            this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
             this.formSubmitted=false;
             myForm.reset();
             this.waterjet = new WaterJet();
@@ -47,8 +47,6 @@ export class AddEditWaterJetComponent implements OnInit {
         },
         error=>{
           this.disableButton = false;
-
-          // this.toastr.error(errorData.Add_Success);
         }
       )
     }
