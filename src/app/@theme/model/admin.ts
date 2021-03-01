@@ -53,9 +53,11 @@ export class ApproveBy {
 export class AddMachine {
   controlId: number;
   machineName: string;
+  id: number;
   constructor() {
     this.controlId = null;
     this.machineName = null;
+    this.id = null;
   }
 }
 
