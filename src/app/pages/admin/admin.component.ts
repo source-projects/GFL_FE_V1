@@ -681,9 +681,10 @@ export class AdminComponent implements OnInit {
     });
   }
   getMachineEdit(id) {
+    debugger
     this.machineEditFlag = true;
     this.machineList.forEach((element) => {
-      if (element.controlId == id) {
+      if (element.id == id) {
         this.addMachine.controlId = element.controlId;
         this.addMachine.machineName = element.machineName;
       }
