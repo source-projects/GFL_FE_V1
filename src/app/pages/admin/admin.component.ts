@@ -191,7 +191,6 @@ export class AdminComponent implements OnInit {
               this.getAllJetData();
               this.onCancelJet();
               this.formSubmitted = false;
-
             } else {
               this.toastr.error(errorData.Update_Error);
             }
@@ -221,7 +220,6 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      // this.formSubmitted = false;
       return;
     }
   }
@@ -255,9 +253,8 @@ export class AdminComponent implements OnInit {
               this.getAllMachineData();
               this.resetValue(addMachineData);
               this.formSubmitted = false;
-
             } else {
-              this.toastr.error(errorData.Add_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -266,7 +263,6 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      // this.formSubmitted = false;
       return;
     }
   }
@@ -303,7 +299,7 @@ export class AdminComponent implements OnInit {
                 this.resetValue(addMachineCategoryData);
                 this.formSubmitted = false;
               } else {
-                this.toastr.error(errorData.Add_Error);
+                this.toastr.error(data["msg"]);
               }
             },
             (error) => {
@@ -327,10 +323,9 @@ export class AdminComponent implements OnInit {
               this.getAllApproveByData();
               this.onCancelApproveBy();
               this.resetValue(addApproveByData);
-                    this.formSubmitted = false;
-
+              this.formSubmitted = false;
             } else {
-              this.toastr.error(errorData.Update_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -342,15 +337,12 @@ export class AdminComponent implements OnInit {
         this.adminService.saveApproveByData(this.approveBy).subscribe(
           (data) => {
             if (data["success"]) {
-              // this.currentParty = data["data"];
-              // this.route.navigate(["pages/party"]);
               this.toastr.success(errorData.Add_Success);
               this.getAllApproveByData();
               this.resetValue(addApproveByData);
-                    this.formSubmitted = false;
-
+              this.formSubmitted = false;
             } else {
-              this.toastr.error(errorData.Add_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -359,7 +351,6 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      // this.formSubmitted = false;
       return;
     }
   }
@@ -375,9 +366,8 @@ export class AdminComponent implements OnInit {
               this.onCancelDesignation();
               this.resetValue(addDesignationData);
               this.formSubmitted = false;
-
             } else {
-              this.toastr.error(errorData.Update_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -392,7 +382,7 @@ export class AdminComponent implements OnInit {
               this.getAllDesignationData();
               this.resetValue(addDesignationData);
             } else {
-              this.toastr.error(errorData.Add_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -401,7 +391,6 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      // this.formSubmitted = false;
       return;
     }
   }
@@ -420,7 +409,7 @@ export class AdminComponent implements OnInit {
                 addCompanyData.controls[field].reset();
               });
             } else {
-              this.toastr.error(errorData.Update_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -438,7 +427,7 @@ export class AdminComponent implements OnInit {
                 addCompanyData.controls[field].reset();
               });
             } else {
-              this.toastr.error(errorData.Add_Error);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -447,7 +436,6 @@ export class AdminComponent implements OnInit {
         );
       }
     } else {
-      // this.formSubmitted = false;
       return;
     }
   }
@@ -464,7 +452,8 @@ export class AdminComponent implements OnInit {
               this.onCancelDepartment();
               this.resetValue(addDepartmentData);
               this.formSubmitted = false;
-
+            } else {
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {}
@@ -476,6 +465,8 @@ export class AdminComponent implements OnInit {
               this.toastr.success(errorData.Add_Success);
               this.getAllDepartment();
               this.resetValue(addDepartmentData);
+            } else {
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {}
@@ -541,13 +532,12 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteJetById(id).subscribe(
           (data) => {
-            if(data["success"]){
+            if (data["success"]) {
               this.toastr.success(errorData.Delete);
               this.getAllJetData();
-            }else{
+            } else {
               this.toastr.error("Can't delete this record");
             }
-           
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);
@@ -565,10 +555,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteMachine(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllMachineData();
-            }else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllMachineData();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -587,10 +577,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteMachineCategory(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllMachineCategoryData();
-            }else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllMachineCategoryData();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -610,10 +600,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteDesignationById(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllDesignationData();
-            }else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllDesignationData();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -633,10 +623,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteCompanyById(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllCompanyData();
-            }else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllCompanyData();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -656,10 +646,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteDepartmentById(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllDepartment();
-            }else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllDepartment();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -679,11 +669,10 @@ export class AdminComponent implements OnInit {
       if (result) {
         this.adminService.deleteApproveById(id).subscribe(
           (data) => {
-            if(data["success"]){
-            this.toastr.success(errorData.Delete);
-            this.getAllApproveByData();
-             }
-            else{
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllApproveByData();
+            } else {
               this.toastr.error("Can't delete this record");
             }
           },
@@ -715,7 +704,7 @@ export class AdminComponent implements OnInit {
     });
   }
   getMachineEdit(id) {
-    debugger
+    debugger;
     this.machineEditFlag = true;
     this.machineList.forEach((element) => {
       if (element.id == id) {
