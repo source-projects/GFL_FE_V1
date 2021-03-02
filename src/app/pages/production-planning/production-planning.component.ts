@@ -27,31 +27,13 @@ import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
 import { filter, map, takeUntil } from "rxjs/operators";
 import { ShadeWithBatchComponent } from "./shade-with-batch/shade-with-batch.component";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ProductionBatchDetail } from "../../@theme/model/production-planning";
 
 @Component({
   selector: "ngx-production-planning",
   templateUrl: "./production-planning.component.html",
   styleUrls: ["./production-planning.component.scss"],
 })
-export class ProductionBatchDetail {
-  partyName: string;
-  qualityName: string;
-  qualityId: string;
-  processName: string;
-  partyShadeNo: string;
-  totalWt: string;
-  totalMtr: string;
-
-  constructor() {
-    this.partyName = "-";
-    this.qualityName = "-";
-    this.qualityId = "-";
-    this.processName = "-";
-    this.partyShadeNo = "-";
-    this.totalWt = "-";
-    this.totalMtr = "-";
-  }
-}
 
 export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
@@ -357,20 +339,21 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
         if (result) {
-          if (this.editProductionPlanFlag) {
-            result.id = id;
-            this.updateProduction(result);
-          }
-          if (this.productionPlanning.partyId) {
-            this.partySelected(this.productionPlanning.partyId);
-          } else if (
-            this.productionPlanning.partyId &&
-            this.productionPlanning.qualityId
-          ) {
-            this.qualitySelected(this.productionPlanning.qualityId);
-          }
-          this.getAllBatchData();
-          this.plannedProductionListForDataTable();
+          // if (this.editProductionPlanFlag) {
+          //   result.id = id;
+          //   this.updateProduction(result);
+          // }
+          // if (this.productionPlanning.partyId) {
+          //   this.partySelected(this.productionPlanning.partyId);
+          // } else if (
+          //   this.productionPlanning.partyId &&
+          //   this.productionPlanning.qualityId
+          // ) {
+          //   this.qualitySelected(this.productionPlanning.qualityId);
+          // }
+          // this.getAllBatchData();
+          // this.plannedProductionListForDataTable();
+          this.ngOnInit();
           this.editProductionPlanFlag = false;
         }
       })
@@ -424,9 +407,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       (error) => {}
     );
   }
-  addToJet(data) {
-    this.router.navigate(["/pages/jet-planning/" + data.id]);
-  }
+  // addToJet(data) {
+  //   this.router.navigate(["/pages/jet-planning/" + data.id]);
+  // }
 
   flipped = false;
 
