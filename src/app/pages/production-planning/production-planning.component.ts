@@ -314,7 +314,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     });
 
     const modalRef = this.modalService.open(AddShadeComponent);
-
     if (
       (this.productionPlanning.partyId && this.productionPlanning.qualityId) ==
       undefined

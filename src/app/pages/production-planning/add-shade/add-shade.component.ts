@@ -143,6 +143,10 @@ export class AddShadeComponent implements OnInit {
    
   }
 
+  showJetList(){
+    
+  }
+
   addToJetClick() {
     this.addToJetFlag = true;
     this.onOkClick();
