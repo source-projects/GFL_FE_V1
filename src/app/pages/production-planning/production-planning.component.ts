@@ -33,6 +33,26 @@ import { ConfirmationDialogComponent } from "../../@theme/components/confirmatio
   templateUrl: "./production-planning.component.html",
   styleUrls: ["./production-planning.component.scss"],
 })
+export class ProductionBatchDetail {
+  partyName: string;
+  qualityName: string;
+  qualityId: string;
+  processName: string;
+  partyShadeNo: string;
+  totalWt: string;
+  totalMtr: string;
+
+  constructor() {
+    this.partyName = "-";
+    this.qualityName = "-";
+    this.qualityId = "-";
+    this.processName = "-";
+    this.partyShadeNo = "-";
+    this.totalWt = "-";
+    this.totalMtr = "-";
+  }
+}
+
 export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   user: any;
@@ -52,6 +72,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   plannedProductionList: any[];
   index: any;
   editProductionPlanFlag: boolean = false;
+
+    public productionBatchDetail: ProductionBatchDetail;
+
 
   public isJetDiv: boolean = false;
   //jet variables..
@@ -95,7 +118,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     private router: Router,
     private jetService: JetPlanningService,
     private menuService: NbMenuService
-  ) {}
+  ) {
+    this.productionBatchDetail = new ProductionBatchDetail();
+  }
 
   ngOnInit(): void {
     this.getCurrentId();
@@ -108,8 +133,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .onItemClick()
       .pipe(
         takeUntil(this.destroy$),
-        filter(({ tag }) => tag === 'my-context-menu'),
-        map(({ item: { title } }) => title),
+        filter(({ tag }) => tag === "my-context-menu"),
+        map(({ item: { title } }) => title)
       )
       .subscribe((title) => {
         if (title === "Print") this.generateSlip(true);
@@ -597,9 +622,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           this.batchList = data["data"];
           this.allBatchList = data["data"];
-          if (this.currentProductionId != null) {
-            this.batchSelected(this.currentProductionId);
-          }
         } else {
           // this.toastr.error(data["msg"]);
           this.loading = false;
@@ -612,53 +634,57 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     );
   }
 
-  batchSelected(event) {
+  batchSelectedFromProductionList(event) {
     let p_id, selectedBatchID, selectedStockId;
     if (event.target) {
       p_id = Number(event.target.value);
     } else {
       p_id = event;
     }
-    this.batchList.forEach((element) => {
-      if (p_id == element.id) {
-        selectedBatchID = element.batchId;
-        selectedStockId = element.stockId;
+    let production = this.plannedProductionList.filter(
+      (f) => f.id == Number(event.target.value)
+    );
+    if (production.length) {
+      const modalRef = this.modalService.open(AddShadeComponent);
+      modalRef.componentInstance.party = production[0].partyId;
+      modalRef.componentInstance.quality = production[0].qualityEntryId;
+      modalRef.componentInstance.batch = production[0].batchId;
+      modalRef.componentInstance.batchControl = production[0].stockId;
+      modalRef.componentInstance.shadeId = production[0].shadeId;
+      modalRef.componentInstance.colorTone = production[0].colorTone;
+      if (production[0].jetId) {
+        modalRef.componentInstance.jetid = production[0].jetId;
       }
-    });
-    const modalRef = this.modalService.open(ShadeWithBatchComponent);
-    modalRef.componentInstance.batchId = selectedBatchID;
-    modalRef.componentInstance.stockId = selectedStockId;
-    modalRef.result
-      .then((result) => {
-        this.currentProductionId = null;
-        if (result) {
-          this.jetData1.controlId = result.jet;
-          this.jetData1.productionId = p_id;
-          this.jetData1.sequence = 1;
-          let jetData2 = this.jetData1;
-          let arr = [];
-          //  jetData2.productionId = Number(jetData2.productionId);
-          arr.push(jetData2);
-          this.addJetData(arr);
-        }
-      })
-      .catch((err) => {});
+      modalRef.componentInstance.editProductionPlanFlag = true;
+      modalRef.result
+        .then((result) => {
+          if (result) {
+            this.ngOnInit();
+            this.editProductionPlanFlag = false;
+          }
+        })
+        .catch((err) => {});
+    }
   }
 
-  addJetData(arr) {
-    let index;
-    this.jetService.saveJetData(arr).subscribe((data) => {
-      if (data["success"]) {
-        this.toastr.success(errorData.Add_Success);
-        this.route.navigate(["/pages/production-planning"]);
-        this.getJetData();
-        this.allBatchList = [];
-        this.getAllBatchWithShade();
-      } else {
-        this.toastr.error(data["msg"]);
-        this.getJetData();
-        //this.getshade();
-      }
-    });
+  getAllDetailsOfBatch(event, batch) {
+    if(batch.partyName)
+    this.productionBatchDetail.partyName = batch.partyName;
+    if(batch.qualityName)
+    this.productionBatchDetail.qualityName = batch.qualityName;
+    if(batch.qualityId)
+    this.productionBatchDetail.qualityId = batch.qualityId;
+    if(batch.partyShadeNo)
+    this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
+    if(batch.totalWt)
+    this.productionBatchDetail.totalWt = batch.totalWt;
+    if(batch.totalMtr)
+    this.productionBatchDetail.totalMtr = batch.totalMtr;
+    if(batch.processName)
+    this.productionBatchDetail.processName = batch.processName;
+  }
+
+  resetDetailsOfBatch($event){
+    this.productionBatchDetail = new ProductionBatchDetail();
   }
 }
