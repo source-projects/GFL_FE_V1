@@ -568,7 +568,10 @@ export class AddEditShadeComponent implements OnInit {
         this.shadeService.addShadeData(this.shadeObj).subscribe(
           (data) => {
             if (data["success"]) {
-              this.route.navigate(["/pages/shade"]);
+              shadeForm.reset();
+              this.formSubmitted = false;
+              this.reset(shadeForm);
+              this.disableButton = false;
               this.toastr.success(data["msg"]);
             } else {
               this.toastr.error(data["msg"]);
@@ -633,10 +636,41 @@ export class AddEditShadeComponent implements OnInit {
         }
       );
     } else {
+      if (
+        this.shadeObj.partyId &&
+        this.shadeObj.processId &&
+        this.shadeObj.qualityId
+      ) {
+        if (
+          this.shadeObj.shadeDataList.length &&
+          !Object.keys(this.shadeObj.shadeDataList[0]).length
+        ) {
+          this.shadeObj.shadeDataList = [];
+        }
+        this.shadeService.updateShadeData(this.shadeObj).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.route.navigate(["/pages/shade/pending-apc"]);
+              this.toastr.success(data["msg"]);
+              this.disableButton = false;
+            } else {
+              this.toastr.error(data["msg"]);
+              this.disableButton = false;
+            }
+            this.loading = false;
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+            this.loading = false;
+            this.disableButton = false;
+          }
+        );
+
       this.disableButton = false;
       this.loading = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }
   }
+}
 }
