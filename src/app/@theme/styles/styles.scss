@@ -2127,6 +2127,9 @@
         .batch-list-production .nb-text {
             font-size: 13px !important;
         }
+        .jet-btn-production button {
+            font-size: 11px!important;
+        }
     }
     
     @media (min-width: 767px) {
@@ -2266,4 +2269,8 @@
         height: 100%;
         top: 0;
         right: 18px;
+    }
+    
+    .pd-left-15 {
+        padding-left: 15px;
     }

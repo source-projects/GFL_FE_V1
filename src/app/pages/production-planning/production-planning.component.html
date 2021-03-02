@@ -19,8 +19,7 @@
                                             <label>Party</label>
                                         </div>
                                         <div class="col-md-8 col-12">
-                                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
-                                                placeholder="Party Name" (change)=partySelected($event)>
+                                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
                                                 <ng-option disabled="true">
                                                     <div class="row">
                                                         <div class="col-md-6 col-6">
@@ -53,8 +52,7 @@
                                             <label>Quality</label>
                                         </div>
                                         <div class="col-md-8 col-12">
-                                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
-                                                placeholder="Quality ID" (change)=qualitySelected($event)>
+                                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                                 <ng-option disabled="true">
                                                     <div class="row">
                                                         <div class="col-md-6 col-6">
@@ -87,9 +85,7 @@
                                             <label>Batch</label>
                                         </div>
                                         <div class="col-md-8 col-12">
-                                            <input type="text" #batchFilter1="ngModel" class="form-control size-small"
-                                                fieldsize="small" nbinput name="batch" [(ngModel)]='batch'
-                                                (keyup)="filter($event)" required placeholder="Enter Batch">
+                                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
                                         </div>
                                     </div>
 
@@ -250,11 +246,11 @@
                         </div>
 
                     </div>
-                    <hr>
+
 
                     <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
                         <nb-card-front>
-                            <nb-card>
+                            <nb-card class="pd-left-15">
                                 <div class="title-with-btn">
                                     <div class="row">
                                         <div class="col-md-9 col-5">
@@ -264,8 +260,7 @@
                                         </div>
                                         <div class="col-md-3 col-7 display-flex-end">
                                             <div class="jet-btn-production">
-                                                <button class="btn btn-md btn-design-save font-14 btn-plan"
-                                                    type="button" (click)="toggleView()">Jet planning</button>
+                                                <button class="btn btn-md btn-design-save font-14 btn-plan" type="button" (click)="toggleView()">Jet planning</button>
                                             </div>
                                         </div>
                                     </div>
@@ -276,8 +271,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="batch-list-3line">
-                                                <button nbButton size="small" *ngFor="let b of batchList"
-                                                    (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                                <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
 
                                             </div>
@@ -302,11 +296,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group batch-list-3line">
-                                                <button nbButton size="small"
-                                                    class="jet-popup-box production-list-popup mr-left-10 border-radius"
-                                                    *ngFor="let b of plannedProductionList" [value]="b.id"
-                                                    class="jet-popup-display p-badge-design"
-                                                    [style.background]="b.colorTone" (click)="batchSelected($event)">
+                                                <button nbButton size="small" class="jet-popup-box production-list-popup mr-left-10 border-radius" *ngFor="let b of plannedProductionList" [value]="b.id" class="jet-popup-display p-badge-design" [style.background]="b.colorTone" (click)="batchSelected($event)">
                                                     {{b.batchId}} </button>
                                             </div>
                                         </div>
@@ -315,11 +305,25 @@
                             </nb-card>
                         </nb-card-front>
                         <nb-card-back>
-                            <nb-card>
+                            <nb-card class="pd-left-15">
                                 <div id="jetList">
-                                    <div class="jet-btn-production">
-                                        <button class="btn btn-md btn-design font-14" (click)="toggleView()"
-                                            type="button">Production Plan</button>
+                                    <div class="title-with-btn">
+                                        <div class="row">
+                                            <div class="col-md-9 col-5">
+                                                <div class="batch-list-production">
+                                                    <h2 class="nb-text font-14 batch-mr-0">Jet List:</h2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-7 display-flex-end">
+                                                <div class="jet-btn-production">
+                                                    <div class="jet-btn-production text-right">
+                                                        <button class="btn btn-md btn-design-save font-14 btn-plan" (click)="toggleView()" type="button">Production Plan</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <table class="user-per-table table-responsive table-jet">
@@ -332,18 +336,10 @@
                                             <td>{{j.name}}</td>
                                             <td>{{j.capacity}}</td>
                                             <td>
-                                                <div cdkDropList [cdkDropListData]="j.jetDataList"
-                                                    cdkDropListOrientation="horizontal"
-                                                    class="example-list main-table-drag"
-                                                    (cdkDropListDropped)="drop($event,i)">
-                                                    <div class="example-box trans-box-drop-1"
-                                                        *ngFor="let index of j.jetDataList"
-                                                        [style.background]="index.colorTone"
-                                                        (click)="setIndexForSlip(index)" cdkDrag>
+                                                <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
+                                                    <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
                                                         <!--[style.background]="index.colorTone"-->
-                                                        <button nbContextMenuTag="my-context-menu"
-                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
-                                                            class="jet-btn-changes btn-changes-jet ">
+                                                        <button nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
                                                             {{index.batchId}}
                                                         </button>
 
