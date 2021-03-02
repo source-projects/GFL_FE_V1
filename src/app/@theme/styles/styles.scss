@@ -240,6 +240,13 @@
         padding: 1px 9px !important;
         font-size: 15px !important;
         font-weight: 700;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        margin-left: 14px;
+    }
+    
+    .nb-text {
+        margin-left: 10px!important;
     }
     
     .btn-design:active,
@@ -2160,4 +2167,9 @@
             color: black;
             margin-right: 20px;
         }
+    }
+    
+    // view-btn-width
+    .max-width-device {
+        display: contents;
     }
