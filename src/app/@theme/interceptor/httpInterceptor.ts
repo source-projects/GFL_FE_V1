@@ -12,11 +12,16 @@ import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { JwtTokenService } from "../services/jwt-token.service";
 import { ToastrService } from 'ngx-toastr';
+import { StoreTokenService } from '../services/store-token.service';
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
    errorMessage: string;
-  constructor(private router: Router, private injector: Injector,     private toastr: ToastrService,
+  constructor(private router: Router, 
+    private injector: Injector,     
+    private toastr: ToastrService,
+    private tokenService: StoreTokenService,
+
     ) {
     // this.commonService.getUser();
   }
@@ -56,7 +61,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
                 break;
               case 401:
                 this.errorMessage = "You need to log in to do this action.";
-                this.router.navigate(["./auth"]);
+                this.tokenService.remove('token');
+                this.tokenService.remove('refreshToken');
+                this.router.navigate(['auth']);                
                 break;
               case 403:
                 this.errorMessage = "You don't have permission to access the requested resource.";

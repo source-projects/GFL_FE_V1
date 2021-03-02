@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body mb-4">
         <label class="required">Shade</label>
-        <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel" [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}" placeholder="Select Shade" class="required-error-dropdown">
+        <ng-select name="shadeId" [(ngModel)]='shadeId' (change)="showJetList()" required #shadeId1="ngModel" [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}" placeholder="Select Shade" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-4 col-4">

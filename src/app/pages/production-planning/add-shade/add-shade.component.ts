@@ -24,6 +24,7 @@ export class AddShadeComponent implements OnInit {
   @Input("colorTone") colorToneReceviced: any;
   @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
   @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
+  @Input() jetid: number;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
