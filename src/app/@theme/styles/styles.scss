@@ -1843,6 +1843,24 @@
         margin-top: 10px;
     }
     
+    .label-0 label {
+        margin: 0;
+    }
+    
+    .batch-mr-0 {
+        margin: 0;
+    }
+    
+    .batch-list-3line {
+        min-height: 90px;
+        height: 90px;
+        overflow-x: auto;
+    }
+    
+    .font-14 {
+        font-size: 14px !important;
+    }
+    
     @media print {
         .row-print,
         .print-wth-100 {
@@ -2172,4 +2190,22 @@
     // view-btn-width
     .max-width-device {
         display: contents;
+    }
+    
+    .production-plan-text {
+        font-size: 14px !important;
+        text-align: center;
+        color: #292929 !important;
+        margin: 0;
+    }
+    
+    // .batch-mb {
+    //     margin-bottom: 15px;
+    // }
+    .batch-pd-top-16 {
+        padding: 16px 1.5rem !important;
+    }
+    
+    .batch-p-color label {
+        color: #5e5b5e;
     }
