@@ -252,12 +252,12 @@
                     <hr>
                     <div class="title-with-btn">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-9 col-5">
                                 <div class="batch-list-production">
                                     <h2 class="nb-text font-14 batch-mr-0">Batch List:</h2>
                                 </div>
                             </div>
-                            <div class="col-md-3  display-flex-end">
+                            <div class="col-md-3 col-7 display-flex-end">
                                 <div class="jet-btn-production">
                                     <button class="btn btn-md btn-design-save font-14 btn-plan" type="button">Jet planning</button>
                                 </div>
@@ -269,7 +269,7 @@
                     <div class="production-btn-list">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group batch-list-3line">
+                                <div class="batch-list-3line">
                                     <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                             {{b.batchId}} </button>
 
@@ -277,7 +277,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <hr>
 
                     <div class="title-with-btn">
                         <div class="row">
