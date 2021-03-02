@@ -18,7 +18,8 @@
                                         <label>Party</label>
                                     </div>
                                     <div class="col-md-7 col-12">
-                                        <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                        <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required
+                                            placeholder="Party Name" (change)=partySelected($event)>
                                             <ng-option disabled="true">
                                                 <div class="row">
                                                     <div class="col-md-6 col-6">
@@ -51,7 +52,8 @@
                                         <label>Quality</label>
                                     </div>
                                     <div class="col-md-7 col-12">
-                                        <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                        <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId'
+                                            placeholder="Quality ID" (change)=qualitySelected($event)>
                                             <ng-option disabled="true">
                                                 <div class="row">
                                                     <div class="col-md-6 col-6">
@@ -84,7 +86,9 @@
                                         <label>Batch Filter</label>
                                     </div>
                                     <div class="col-md-7 col-12">
-                                        <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
+                                        <input type="text" #batchFilter1="ngModel" class="form-control size-small"
+                                            fieldsize="small" nbinput name="batch" [(ngModel)]='batch'
+                                            (keyup)="filter($event)" required placeholder="Enter Batch">
                                     </div>
                                 </div>
 
@@ -240,69 +244,12 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="nb-header">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="batch-list-production">
-                                    <h2 class="nb-text font-14 batch-mr-0">Batch List</h2>
-                                </div>
-                            </div>
-                            <div class="col-md-2 display-flex-start ">
-                                <div class="jet-btn-production">
-                                    <button class="btn btn-md btn-design font-14" type="button">Jet
-                                            Production</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="production-btn-list">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group batch-list-3line">
-                                    <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
-                                            {{b.batchId}} </button>
-
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
-                    <div class="nb-header">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="batch-list-production">
-                                    <h2 class="nb-text batch-mr-0">Production Plan List</h2>
-                                </div>
-                            </div>
 
-                        </div>
-
-                    </div>
-
-                    <div class="production-btn-list">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group batch-list-3line">
-                                    <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
-                                            {{b.batchId}} </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </form>
-
-
-            <!--Ngx Data table to show production that are planned-->
-            <div class="row">
+                    <!--Ngx Data table to show production that are planned-->
+                    <!-- <div class="row">
                 <div class="col-md-12">
                     <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="plannedProductionList" [headerHeight]="31" [footerHeight]="31">
                         <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
@@ -334,7 +281,120 @@
                         </ngx-datatable-column>
                     </ngx-datatable>
                 </div>
-            </div>
+            </div> -->
+
+
+
+                    <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+                        <nb-card-front>
+                            <nb-card >
+                                <div id="production">
+                                    <div class="nb-header">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="batch-list-production">
+                                                    <h2 class="nb-text font-14 batch-mr-0">Batch List</h2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 display-flex-start ">
+                                                <div class="jet-btn-production">
+                                                    <button class="btn btn-md btn-design font-14" (click)="toggleView()"
+                                                        type="button">Jet
+                                                        Production</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="production-btn-list">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group batch-list-3line">
+                                                    <button nbButton size="small" *ngFor="let b of batchList"
+                                                        (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                                        {{b.batchId}} </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="nb-header">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="batch-list-production">
+                                                    <h2 class="nb-text batch-mr-0">Production Plan List</h2>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="production-btn-list">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group batch-list-3line">
+                                                    <button nbButton size="small" *ngFor="let b of batchList"
+                                                        (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                                        {{b.batchId}} </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </nb-card>
+                        </nb-card-front>
+                        <nb-card-back>
+                            <nb-card >
+                                <div id="jetList">
+                                    <div class="jet-btn-production">
+                                        <button class="btn btn-md btn-design font-14" (click)="toggleView()"
+                                            type="button">Production Plan</button>
+                                    </div>
+
+                                    <table class="user-per-table table-responsive table-jet">
+                                        <tr width="100%">
+                                            <th width="5%">Jet</th>
+                                            <th width="8%">Capacity</th>
+                                            <th width="82%">Sequence</th>
+                                        </tr>
+                                        <tr *ngFor="let j of jet;let i=index">
+                                            <td>{{j.name}}</td>
+                                            <td>{{j.capacity}}</td>
+                                            <td>
+                                                <div cdkDropList [cdkDropListData]="j.jetDataList"
+                                                    cdkDropListOrientation="horizontal"
+                                                    class="example-list main-table-drag"
+                                                    (cdkDropListDropped)="drop($event,i)">
+                                                    <div class="example-box trans-box-drop-1"
+                                                        *ngFor="let index of j.jetDataList"
+                                                        [style.background]="index.colorTone"
+                                                        (click)="setIndexForSlip(index)" cdkDrag>
+                                                        <!--[style.background]="index.colorTone"-->
+                                                        <button nbContextMenuTag="my-context-menu"
+                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                                            class="jet-btn-changes btn-changes-jet ">
+                                                            {{index.batchId}}
+                                                        </button>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+                            </nb-card>
+                        </nb-card-back>
+                    </nb-flip-card>
+                </div>
+            </form>
         </div>
     </nb-card-body>
 </nb-card>

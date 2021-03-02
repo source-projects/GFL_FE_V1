@@ -13,6 +13,7 @@ import { AddShadeComponent } from "./add-shade/add-shade.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
+import { JetPlanningService } from "../../@theme/services/jet-planning.service";
 
 @Component({
   selector: "ngx-production-planning",
@@ -39,6 +40,10 @@ export class ProductionPlanningComponent implements OnInit {
   index: any;
   editProductionPlanFlag: boolean = false;
 
+  public isJetDiv:boolean = false;
+  //jet variables..
+  public jet:any;
+
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -51,7 +56,8 @@ export class ProductionPlanningComponent implements OnInit {
     private programService: ProgramService,
     private modalService: NgbModal,
     private shadeService: ShadeService,
-    private router: Router
+    private router: Router,
+    private jetService: JetPlanningService
   ) { }
 
   ngOnInit(): void {
@@ -354,5 +360,37 @@ export class ProductionPlanningComponent implements OnInit {
   }
   addToJet(data) {
     this.router.navigate(["/pages/jet-planning/" + data.id]);
+  }
+
+  flipped = false;
+
+  toggleView() {
+    this.flipped = !this.flipped;
+    if(this.flipped){
+      this.getJetData();
+    }else{
+      this.getAllBatchData();
+      this.plannedProductionListForDataTable();
+    }
+  }
+
+  //jet functions......
+  
+
+  getJetData() {
+    this.jet = [];
+    this.loading = true;
+    this.jetService.getAllJetData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.jet = data["data"];
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 }
