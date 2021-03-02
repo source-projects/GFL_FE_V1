@@ -12,8 +12,12 @@
                     <h2 class="nb-text">Update Shade</h2>
                 </ng-template>
             </div>
-            <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
+            <div *ngIf = "!apcFlag" class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/shade/view']">View
+                    Table</button>
+            </div>
+            <div  #updateS *ngIf = "apcFlag" class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/shade/pending-apc']">View
                     Table</button>
             </div>
         </div>
