@@ -282,7 +282,7 @@ export class ProductionPlanningComponent implements OnInit {
           }else if(this.productionPlanning.partyId && this.productionPlanning.qualityId){
             this.qualitySelected(this.productionPlanning.qualityId);
           }         
-          //this.getAllBatchData();
+          this.getAllBatchData();
           this.plannedProductionListForDataTable();
           this.editProductionPlanFlag = false;
 
