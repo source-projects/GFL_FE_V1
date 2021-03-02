@@ -240,6 +240,13 @@
         padding: 1px 9px !important;
         font-size: 15px !important;
         font-weight: 700;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        margin-left: 14px;
+    }
+    
+    .nb-text {
+        margin-left: 10px!important;
     }
     
     .btn-design:active,
@@ -1061,7 +1068,7 @@
         color: #ffffff !important;
         border-radius: 68px !important;
         padding: 5px 18px !important;
-        margin-top: 15px;
+        margin-top: 5px;
         margin-right: 9px;
     }
     
@@ -1836,6 +1843,29 @@
         margin-top: 10px;
     }
     
+    .label-0 label {
+        margin: 0;
+    }
+    
+    .batch-mr-0 {
+        margin: 0;
+    }
+    
+    .batch-list-3line {
+        min-height: 70px;
+        height: 69px;
+        overflow-x: auto;
+    }
+    
+    .btn-plan {
+        padding: 3px 10px !important;
+        font-size: 12px !important;
+    }
+    
+    .font-14 {
+        font-size: 14px !important;
+    }
+    
     @media print {
         .row-print,
         .print-wth-100 {
@@ -2082,6 +2112,20 @@
         .report-head {
             padding-bottom: 30px;
         }
+        .label-0 {
+            margin-bottom: 7px !important;
+        }
+        .batch-pd-top-16 {
+            padding: 15px !important;
+        }
+        .jus-con-flex-start {
+            display: block !important;
+            padding: 10px!important;
+            margin-top: 15px
+        }
+        .batch-list-production .nb-text {
+            font-size: 13px !important;
+        }
     }
     
     @media (min-width: 767px) {
@@ -2160,4 +2204,65 @@
             color: black;
             margin-right: 20px;
         }
+    }
+    
+    // view-btn-width
+    .max-width-device {
+        display: contents;
+    }
+    
+    .production-plan-text {
+        font-size: 13px !important;
+        text-align: center;
+        color: #292929 !important;
+        margin: 0;
+    }
+    
+    // .batch-mb {
+    //     margin-bottom: 15px;
+    // }
+    .batch-pd-top-16 {
+        padding: 16px 1.5rem !important;
+    }
+    
+    .batch-p-color label {
+        color: #5e5b5e;
+        font-weight: 600;
+        font-size: 13px;
+    }
+    
+    .batch-list-production .nb-text {
+        color: #aa3634 !important;
+        margin-left: 0!important
+    }
+    
+    // .border-right-batch::after {
+    //     content: " ";
+    //     border-right: 1px solid #afafaf;
+    //     position: absolute;
+    //     height: 100%;
+    //     top: 0;
+    //     right: 18px;
+    // }
+    .display-flex {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .jus-con-flex-start {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        background: #e6e5e4;
+        padding: 2px 0;
+        border-radius: 21px;
+    }
+    
+    .border-right-card-batch ::after {
+        content: " ";
+        border-right: 1px solid #afafaf;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        right: 18px;
     }

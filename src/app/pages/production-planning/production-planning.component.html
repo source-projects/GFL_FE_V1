@@ -5,123 +5,343 @@
         <h2 class="nb-text">Production Planning</h2>
 
     </nb-card-header>
-    <nb-card-body>
+    <nb-card-body class="batch-pd-top-16">
         <div>
             <form #myForm="ngForm">
-                <div class="row">
-                    <!-- Party name -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Party</label>
-                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
-                                <ng-option disabled="true">
+                <div class="batch-mb">
+                    <div class="row">
+                        <!-- Party name -->
+                        <div class="col-md-6">
+                            <div class="border-right-batch">
+                                <div class="form-group mb-1">
                                     <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">Party Name</div>
+                                        <div class="col-md-3 col-12 display-flex-start label-0">
+                                            <label>Party</label>
                                         </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips">Party Code</div>
+                                        <div class="col-md-8 col-12">
+                                            <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-option disabled="true">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-left txt-ov-elips">Party Name</div>
+                                                        </div>
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-right txt-ov-elips">Party Code</div>
+                                                        </div>
+                                                    </div>
+                                                </ng-option>
+                                                <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                                        </div>
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                                        </div>
+                                                    </div>
+                                                </ng-option>
+                                            </ng-select>
                                         </div>
                                     </div>
-                                </ng-option>
-                                <ng-option *ngFor="let p of partyList" [value]="p.id">
+
+
+                                </div>
+                                <div class="form-group mb-1">
                                     <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                        <div class="col-md-3 col-12 display-flex-start label-0">
+                                            <label>Quality</label>
                                         </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                        <div class="col-md-8 col-12">
+                                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-option disabled="true">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-left txt-ov-elips">Quality Id</div>
+                                                        </div>
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-right txt-ov-elips">Party Name</div>
+                                                        </div>
+                                                    </div>
+                                                </ng-option>
+                                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                                        </div>
+                                                        <div class="col-md-6 col-6">
+                                                            <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
+                                                        </div>
+                                                    </div>
+                                                </ng-option>
+                                            </ng-select>
                                         </div>
                                     </div>
-                                </ng-option>
-                            </ng-select>
+
+
+                                </div>
+                                <div class="form-group mb-1">
+                                    <div class="row">
+                                        <div class="col-md-3 col-12 display-flex-start label-0">
+                                            <label>Batch</label>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="jus-con-flex-start">
+                                <div class="col-md-5 col-12 pd-0">
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0">
+                                            <label>Party Name</label>
+                                        </div>
+                                        <!-- 
+
+                                        <div class="batch-col text-center">
+                                            <span>:</span>
+                                        </div>
+ -->
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">Bhautik Mehta</h6>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0 text-Left">
+                                            <label>Quality Name</label>
+                                        </div>
+
+                                        <!-- <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div> -->
+
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">Quality name</h6>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class=" batch-p-color label-0 text-Left">
+                                            <label>Quality Id</label>
+                                        </div>
+
+                                        <!-- <div class="col-md-2">
+                                                <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div>
+                                            </div> -->
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">250</h6>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0 text-Left">
+                                            <label>Process Name</label>
+                                        </div>
+
+
+
+                                        <!-- <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div> -->
+
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">Process Name</h6>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                                <!-- <div class="col-md-1 col-12 border-right-card-batch"></div> -->
+                                <div class="col-md-4 col-12 pd-0">
+
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0 text-Left">
+                                            <label>Party Shade No.</label>
+                                        </div>
+
+
+                                        <!-- <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div> -->
+
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">250</h6>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0 text-Left">
+                                            <label>Lot Weight</label>
+                                        </div>
+
+
+                                        <!-- <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div> -->
+
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">25%</h6>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="display-flex mr-0">
+
+
+                                        <div class="batch-p-color label-0 text-Left">
+                                            <label>Lot Meter</label>
+                                        </div>
+
+
+                                        <!-- <div class="batch-col text-center">
+                                                    <span>:</span>
+                                                </div> -->
+
+
+                                        <div class="party-name-text text-center">
+                                            <h6 class="production-plan-text">25%</h6>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="title-with-btn">
+                        <div class="row">
+                            <div class="col-md-9 col-5">
+                                <div class="batch-list-production">
+                                    <h2 class="nb-text font-14 batch-mr-0">Batch List:</h2>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-7 display-flex-end">
+                                <div class="jet-btn-production">
+                                    <button class="btn btn-md btn-design-save font-14 btn-plan" type="button">Jet planning</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="production-btn-list">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="batch-list-3line">
+                                    <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                            {{b.batchId}} </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="title-with-btn">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="batch-list-production">
+                                    <h2 class="nb-text font-14 batch-mr-0">Production Plan List:</h2>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="production-btn-list">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group batch-list-3line">
+                                    <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                            {{b.batchId}} </button>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!--Quality Name-->
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Quality</label>
-                            <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
-                                <ng-option disabled="true">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">Quality Id</div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips">Party Name</div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                            </ng-select>
-                        </div>
-                    </div>
-
-                    <!--Batch List-->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Batch Filter</label>
-                            <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button nbButton size="small" *ngFor="let b of batchList" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
-                                {{b.batchId}} </button>
-
-                        </div>
-                    </div>
                 </div>
             </form>
+
+
+            <!--Ngx Data table to show production that are planned-->
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="plannedProductionList" [headerHeight]="31" [footerHeight]="31">
+                        <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <div *ngIf="!row.status">
+                                    <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="addToJet(row)" icon="plus"></nb-icon>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="editProductionPlan(row)" icon="edit"></nb-icon>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                                </div>
+                                <div *ngIf="row.status">
+                                    <b>Jet Planned</b>
+                                </div>
+                            </ng-template>
+
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Party Name" prop="partyName" [sortable]="false" [width]="300">
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Quality Name" prop="qualityName" [sortable]="false" [width]="300">
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Color Tone" prop="colorTone" [sortable]="false" [width]="300">
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Batch Id" prop="batchId" [sortable]="false" [width]="300">
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div> -->
         </div>
-        <!--Ngx Data table to show production that are planned-->
-        <div class="row">
-            <div class="col-md-12">
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="plannedProductionList" [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                            <div *ngIf="!row.status">
-                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="addToJet(row)" icon="plus"></nb-icon>
-                                &nbsp;&nbsp;&nbsp;
-                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" (click)="editProductionPlan(row)" icon="edit"></nb-icon>
-                                &nbsp;&nbsp;&nbsp;
-                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
-                            </div>
-                            <div *ngIf="row.status">
-                                <b>Jet Planned</b>
-                            </div>
-                        </ng-template>
-
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Party Name" prop="partyName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Quality Name" prop="qualityName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Color Tone" prop="colorTone" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Batch Id" prop="batchId" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </div>
-        </div>
-
     </nb-card-body>
 </nb-card>
