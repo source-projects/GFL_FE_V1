@@ -1676,7 +1676,8 @@
     }
     
     .form-control.is-invalid~.input-required,
-    .dropdown-name.is-invalid~.input-required {
+    .dropdown-name.is-invalid~.input-required,
+    .status-basic.is-invalid~.input-required {
         display: block;
     }
     
