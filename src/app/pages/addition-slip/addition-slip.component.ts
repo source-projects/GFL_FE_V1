@@ -105,6 +105,7 @@ export class AdditionSlipComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.saveAdditionSlip(result);
+
       }
     });
   }
@@ -213,6 +214,7 @@ export class AdditionSlipComponent implements OnInit {
           this.route.navigate(["/pages/addition-slip"]);
           this.toastr.success(errorData.Add_Success);
           this.getAllAdditionSlip();
+          this.getAllBatch();
           // this.disableButton=true;
         } else {
           this.toastr.error(errorData.Add_Error);

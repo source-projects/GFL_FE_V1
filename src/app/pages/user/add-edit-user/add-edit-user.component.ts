@@ -62,10 +62,10 @@ export class AddEditUserComponent implements OnInit {
     "Dyeing Process",
     "Production Planning",
     "Jet Planning",
-    "Input Data",
     "Payment",
     "Invoice",
     "Finished Meter",
+    "Input Data",
     "Water Jet",
   ];
 

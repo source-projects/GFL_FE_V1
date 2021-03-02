@@ -514,7 +514,7 @@ export class AddEditShadeComponent implements OnInit {
     this.totalAmount = 0;
     this.costKg = 0;
     this.costMtr = 0;
-  }
+}
 
   addShade(shadeForm) {
     this.disableButton = true;
