@@ -348,12 +348,12 @@
                 <div *ngIf="slipData.dyeingSlipDataList != null">
                     <div class="container print-container mr-top-30 mr-bottom-30 border-style-solid pd-top-10">
                         <div class="mb-1 print-text-center pd-bt-25">
-                            <div class="row">
+                            <div class="row" >
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value rd-color">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span style="color: red !important;" class="slip-value rd-color">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value rd-color">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span style="color: red !important;" class="slip-value rd-color">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -395,7 +395,7 @@
 
                     </div>
 
-                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" class="container print-container mr-bt-50 width-100 main-jet-p-changes">
+                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" style="background-color: rgb(144, 179, 212) !important;" class="container print-container mr-bt-50 width-100 main-jet-p-changes">
                         <div class="row print-wth-100">
                             <div class="col-md-12 width-100 pd-15">
                                 <div class="form-group col-md-3 width-20 form-style-print">
@@ -424,8 +424,8 @@
                             </div>
 
                             <div class="form-group col-md-12 wth-100">
-                                <table class="table table-bordered table-process-fnt text-center wth-100">
-                                    <tr>
+                                <table class="table table-bordered table-process-fnt text-center wth-100" style="border-radius: 5px;">
+                                    <tr >
                                         <th class="font-25">Item name</th>
                                         <th class="font-25">Quantity</th>
                                         <th class="font-25">Supplier name</th>

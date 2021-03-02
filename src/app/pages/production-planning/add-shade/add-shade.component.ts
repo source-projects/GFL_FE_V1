@@ -23,6 +23,7 @@ export class AddShadeComponent implements OnInit {
   @Input("shadeId") shadeIdReceived: any;
   @Input("colorTone") colorToneReceviced: any;
   @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
+  @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
@@ -112,8 +113,10 @@ export class AddShadeComponent implements OnInit {
     this.productionData.qualityEntryId = this.quality;
     this.productionData.shadeId = this.shadeId;
     this.productionData.stockId = this.batchControl;
-
-    this.productionPlanningService
+    if(this.editProductionPlanFlag){
+      this.activeModal.close(this.productionData);
+    }else{
+      this.productionPlanningService
       .saveProductionPlan(this.productionData)
       .subscribe(
         (data) => {
@@ -135,6 +138,8 @@ export class AddShadeComponent implements OnInit {
           this.loading = false;
         }
       );
+    }
+   
   }
 
   addToJetClick() {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { SharedModule } from '../../@theme/shared.module';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { MiscellaneousRoutingModule } from './miscellaneous-routing.module';
@@ -11,6 +12,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ThemeModule,
     NbCardModule,
     NbButtonModule,
+    SharedModule,
     MiscellaneousRoutingModule,
   ],
   declarations: [
