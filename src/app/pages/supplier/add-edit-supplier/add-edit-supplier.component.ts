@@ -48,8 +48,8 @@ export class AddEditSupplierComponent implements OnInit {
     this.userHead = this.commonService.getUserHeadId();
     this.addSupplier = new FormGroup({
       "supplierName": new FormControl(null,Validators.required),
-      "discountPercentage": new FormControl(null,[Validators.max(100),Validators.min(0)]), 
-      "gstPercentage": new FormControl(null,[Validators.max(100),Validators.min(0)]),
+      "discountPercentage": new FormControl(null,[Validators.required,Validators.max(100),Validators.min(0)]), 
+      "gstPercentage": new FormControl(null,[Validators.required,Validators.max(100),Validators.min(0)]),
       "paymentTerms": new FormControl(null,Validators.required),
       "remark": new FormControl(null),
       "userHeadId": new FormControl(null),
