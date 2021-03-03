@@ -187,10 +187,10 @@ export class AdditionSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.getAllAdditionSlip();
-          this.toastr.success(errorData.Add_Success);
+          this.toastr.success(errorData.Update_Success);
           // this.disableButton=true;
         } else {
-          this.toastr.error(errorData.Add_Error);
+          this.toastr.error(errorData.Update_Error);
         }
       },
       (error) => {

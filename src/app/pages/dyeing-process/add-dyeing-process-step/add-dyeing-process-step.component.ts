@@ -6,6 +6,7 @@ import {
   DyeingProcessData,
 } from "app/@theme/model/dyeing-process";
 import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "ngx-add-dyeing-process-step",
@@ -35,7 +36,8 @@ export class AddDyeingProcessStepComponent implements OnInit {
   ];
   constructor(
     public activeModal: NgbActiveModal,
-    private DyeingProcessService: DyeingProcessService
+    private DyeingProcessService: DyeingProcessService,
+    private toastr: ToastrService
   ) {
     this.dyeingProcessStep = new DyeingProcessData();
     this.positionValues = [];
@@ -82,6 +84,9 @@ export class AddDyeingProcessStepComponent implements OnInit {
         chemicalList: this.dyeingChemicalData
       };
       this.activeModal.close(obj);
+    }else{
+      this.toastr.error("Fill empty fields");
+
     }
   }
 
@@ -139,9 +144,15 @@ export class AddDyeingProcessStepComponent implements OnInit {
   numberOnly(evt) { 
     // Only ASCII charactar in that range allowed 
     var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) 
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) {
+      if(ASCIICode == 46){
+        return true; 
+      }else{
         return false; 
-    return true; 
+      }
+    }else{
+      return true; 
+    }
 } 
 
   removeItem(rowIndex) {
