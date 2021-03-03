@@ -60,12 +60,12 @@ export class CustomHttpInterceptor implements HttpInterceptor {
                 this.errorMessage = "Bad Request.";
                 break;
               case 401:
-                this.errorMessage = "You need to log in to do this action.";
+                this.errorMessage = "token expired";
                 this.tokenService.remove('token');
                 this.tokenService.remove('refreshToken');
                 this.router.navigate(['auth']);                
-                break;
-              case 403:
+                break; 
+              case 402:
                 this.errorMessage = "You don't have permission to access the requested resource.";
                 break;
               case 404:

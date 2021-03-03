@@ -227,7 +227,6 @@ export class AddEditPartyComponent implements OnInit {
           updatedBy: this.currentParty.updatedBy,
           partyCode: this.currentParty.partyCode,
         });
-        console.log(this.currentParty.userHeadId);
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
         this.loading = false;
