@@ -1013,7 +1013,6 @@
         align-items: center;
     }
     
-    .txt-ov-elips,
     .datatable-body-cell-label {
         white-space: nowrap;
         overflow: hidden;
@@ -1071,7 +1070,7 @@
         margin-top: 5px;
         margin-right: 9px;
     }
-
+    
     .p-badge-design-production {
         color: #ffffff !important;
         border-radius: 68px !important;
@@ -2137,6 +2136,14 @@
         }
         .jet-btn-production button {
             font-size: 11px!important;
+        }
+        .pd-left-15 {
+            padding: 0!important;
+        }
+        .txt-ov-elips {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
     
