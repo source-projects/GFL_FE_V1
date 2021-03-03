@@ -15,12 +15,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' required #batchNo1="ngModel" [ngClass]="{'is-invalid': (batchNo1.invalid)&&(formSubmitted || batchNo1.touched)}" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo'  #batchNo1="ngModel"  placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
                                 <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
                             </ng-select>
-                            <div class="required-class" *ngIf="(formSubmitted && batchNo1.invalid) || (batchNo1.invalid && batchNo1.touched)">
-                                <span>Batch no is required </span>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -404,11 +404,13 @@ export class ShuffleComponent implements OnInit {
             this.qualityParty2 = [];
             this.qualityParty2.push(this.qualityParty);
             this.qualityParty2[0].splice(this.index, 1);
-
-
           }
-
-
+          if (this.shuffleForm.controls['batchName2'].valid) {
+            this.index = this.qualityParty2.findIndex(x => x.batchId === this.bId2['batchId']);
+            this.qualityParty = [];
+            this.qualityParty.push(this.qualityParty);
+            this.qualityParty[0].splice(this.index, 1);
+          }
         }
         // else {
         //   this.toastr.error(data['msg'])

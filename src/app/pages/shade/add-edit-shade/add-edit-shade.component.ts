@@ -269,9 +269,6 @@ export class AddEditShadeComponent implements OnInit {
 
   qualityIdSelected(event) {
     if (event == undefined) {
-      this.getPartyList();
-      this.getQualityList();
-      this.shadeObj.partyId = null;
       this.shadeObj.qualityName = null;
       this.shadeObj.qualityType = null;
       this.shadeObj.shadeDataList = [];
@@ -403,6 +400,9 @@ export class AddEditShadeComponent implements OnInit {
           amount.toFixed(2)
         );
 
+        this.calculateTotalAmount(false);
+      }else{
+        this.shadeObj.shadeDataList[rowIndex].amount = 0;
         this.calculateTotalAmount(false);
       }
     } else {

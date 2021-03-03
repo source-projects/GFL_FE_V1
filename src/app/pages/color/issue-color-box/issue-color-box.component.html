@@ -17,7 +17,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Supplier Name</label>
-                            <ng-select appendTo="body" name="supplierName" [(ngModel)]='item' required #supplierName1="ngModel" [ngClass]="{'is-invalid': (supplierName1.invalid)&& formSubmitted}" placeholder="Supplier Name" class="required-error-dropdown dropdown-name" (change)=itemSelected($event)>
+                            <ng-select appendTo="body" name="supplierName" [(ngModel)]='item' required
+                                #supplierName1="ngModel"
+                                [ngClass]="{'is-invalid': (supplierName1.invalid)&& formSubmitted}"
+                                placeholder="Supplier Name" class="required-error-dropdown dropdown-name"
+                                (change)=itemSelected($event)>
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-4 col-4">
@@ -45,7 +49,8 @@
                                     </div>
                                 </ng-option>
                             </ng-select>
-                            <div class="input-required" *ngIf="supplierName1.invalid && formSubmitted">
+                            <div class="input-required"
+                                *ngIf="(supplierName1.invalid) && (formSubmitted || supplierName1.touched)">
                                 <span>Supplier name is required</span>
                             </div>
                         </div>
@@ -54,7 +59,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Box No</label>
-                            <ng-select appendTo="body" name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel" [ngClass]="{'is-invalid': boxNo1.invalid && formSubmitted }" placeholder="Box No." class="required-error-dropdown dropdown-name">
+                            <ng-select appendTo="body" name="boxNo" [(ngModel)]='box' required #boxNo1="ngModel"
+                                [ngClass]="{'is-invalid': boxNo1.invalid && formSubmitted }" placeholder="Box No."
+                                class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -77,7 +84,7 @@
                                 </ng-option>
                                 <!-- <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option> -->
                             </ng-select>
-                            <div class="input-required" *ngIf="(formSubmitted && boxNo1.invalid)">
+                            <div class="input-required" *ngIf="(boxNo1.invalid)&&(formSubmitted || boxNo1.touched)">
                                 <span>Box no is required</span>
                             </div>
                         </div>
@@ -89,10 +96,12 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
+                                (click)="onCancel()">CANCEL</button>
                             <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton">UPDATE</button> -->
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="issueBox(myForm)">Issue</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="issueBox(myForm)">Issue</button>
                         </div>
 
                     </div>
@@ -100,19 +109,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <nb-checkbox class="status-basic nb-transition" id="notIssued" name="Not Issued" (checkedChange)="issuedSelected($event)">
+                            <nb-checkbox class="status-basic nb-transition" id="notIssued" name="Not Issued"
+                                (checkedChange)="issuedSelected($event)">
                             </nb-checkbox> &nbsp;<label>Not Issued</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <nb-checkbox class="status-basic nb-transition" id="consolidated" name="Consolidated" [checked]="consolidated" (checkedChange)="consolidated = !consolidated">
+                            <nb-checkbox class="status-basic nb-transition" id="consolidated" name="Consolidated"
+                                [checked]="consolidated" (checkedChange)="consolidated = !consolidated">
                             </nb-checkbox> &nbsp;<label>Consolidated</label>
                         </div>
                     </div>
                 </div>
 
-                <ngx-datatable *ngIf="!consolidated || notIssued" [rows]="allBoxList" class="material" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable *ngIf="!consolidated || notIssued" [rows]="allBoxList" class="material"
+                    [headerHeight]="31" [footerHeight]="31">
 
                     <ngx-datatable-column name="Box No" prop="boxNo"></ngx-datatable-column>
                     <ngx-datatable-column name="Supplier Name" prop="name"></ngx-datatable-column>
@@ -122,7 +134,8 @@
 
                 </ngx-datatable>
 
-                <ngx-datatable *ngIf="consolidated" [rows]="itemList" class="material" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable *ngIf="consolidated" [rows]="itemList" class="material" [headerHeight]="31"
+                    [footerHeight]="31">
 
                     <ngx-datatable-column name="Item Name" prop="itemName"></ngx-datatable-column>
                     <ngx-datatable-column name="Left Quantity" prop="leftQty"></ngx-datatable-column>
