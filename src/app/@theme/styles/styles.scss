@@ -1086,26 +1086,21 @@
     }
     
     // jet table
-    .table-jet,
-    .main-table-drag {
-        width: 100% !important;
-        // overflow-x: scroll !important;
-    }
-    
-    .table-jet {
-        display: table !important;
-    }
-    
-    .table-jet tr th,
-    .table-jet tr td {
-        text-align: center !important;
-    }
-    
-    .table-jet tr th {
-        background-color: #5e5b5e !important;
-        color: #fff !important;
-    }
-    
+    // .table-jet,
+    // .main-table-drag {
+    //     width: 100% !important;
+    // }
+    // .table-jet {
+    //     display: table !important;
+    // }
+    // .table-jet tr th,
+    // .table-jet tr td {
+    //     text-align: center !important;
+    // }
+    // .table-jet tr th {
+    //     background-color: #5e5b5e !important;
+    //     color: #fff !important;
+    // }
     .jet-tooltip {
         left: 86px !important;
     }
@@ -1166,10 +1161,6 @@
     .prouction-jet-number {
         position: absolute;
         color: #fff;
-    }
-    
-    .table-jet tr td:nth-child(3) {
-        display: grid;
     }
     
     .input-jet {
@@ -2086,7 +2077,6 @@
         .trans-box-drop {
             padding: 2px 9px !important;
         }
-        .table-jet,
         .main-table-drag {
             width: 100% !important;
         }
@@ -2144,6 +2134,29 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        // .table-jet {
+        //     display: none;
+        // }
+    }
+    
+    @media (min-width: 992px) {
+        .table-jet {
+            width: 100% !important;
+            // overflow-x: scroll !important;
+        }
+        .table-jet {
+            display: table !important;
+        }
+        .table-jet {
+            width: 100% !important;
+        }
+        .table-jet tr td:nth-child(3) {
+            display: grid;
+        }
+        .table-jet tr th {
+            background-color: #5e5b5e !important;
+            color: #fff !important;
         }
     }
     
@@ -2302,4 +2315,18 @@
     
     .mr-bt-5 {
         margin-bottom: 20px;
+    }
+    
+    .back-container {
+        width: 100%;
+    }
+    
+    .table-jet tr th {
+        background-color: #5e5b5e !important;
+        color: #fff !important;
+    }
+    
+    .table-jet tr th,
+    .table-jet tr td {
+        text-align: center !important;
     }
