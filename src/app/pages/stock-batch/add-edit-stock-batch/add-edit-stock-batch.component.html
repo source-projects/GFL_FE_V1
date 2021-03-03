@@ -131,9 +131,14 @@
                                 <span>Challan date is required</span>
                             </div>
                         </div>
-                        <div class="col-md-4 mobile-mr-bt">
+                        <div class="col-md-2 mobile-mr-bt">
                             <label>Unit:</label>
                             <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
+
+                        </div>
+                        <div class="col-md-2 mobile-mr-bt">
+                            <label>Wt / 100 mtrs:</label>
+                            <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small" nbinput readonly #wtPer100M1="ngModel" [(ngModel)]='wtPer100M'>
 
                         </div>
                         <div class="col-md-4">
