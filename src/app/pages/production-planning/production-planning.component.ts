@@ -635,9 +635,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.batchControl = production[0].stockId;
       modalRef.componentInstance.shadeId = production[0].shadeId;
       modalRef.componentInstance.colorTone = production[0].colorTone;
-      if (production[0].jetId) {
-        modalRef.componentInstance.jetid = production[0].jetId;
-      }
+      // if (production[0].jetId) {
+      //   modalRef.componentInstance.jetid = production[0].jetId;
+      // }
       modalRef.componentInstance.editProductionPlanFlag = true;
       modalRef.result
         .then((result) => {
