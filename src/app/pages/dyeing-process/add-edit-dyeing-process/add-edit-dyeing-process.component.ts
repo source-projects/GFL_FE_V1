@@ -107,7 +107,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
   }
 
   onEditStep(step) {
-    const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
+    const modalRef = this._modalService.open(AddDyeingProcessStepComponent,{ size: 'lg' });
     modalRef.componentInstance.position = step.sequence;
     modalRef.componentInstance.stepList = this.dyeingProcessSteps;
     modalRef.componentInstance.editStep = true;
@@ -143,7 +143,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
     if (this.dyeingProcessSteps.length == 4) {
       this.toastr.warning("You are done with all the steps!");
     } else {
-      const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
+      const modalRef = this._modalService.open(AddDyeingProcessStepComponent, { size: 'lg' });
       modalRef.componentInstance.position = this.dyeingProcessSteps.length + 1;
       modalRef.componentInstance.stepList = this.dyeingProcessSteps;
       modalRef.componentInstance.editStep = false;
