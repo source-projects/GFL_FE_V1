@@ -341,6 +341,7 @@ export class BillPaymentComponent implements OnInit {
     Object.keys(this.amountObj).forEach(ele=>{
       this.totalCurrentPayment += this.amountObj[ele].curPay; 
     })
+    this.paymentValues.amtPaid = 0;
     if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
       this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
     }
@@ -365,6 +366,7 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.paymentData = [];
     this.paymentValues.invoices = [];
     this.paymentValues.advancePayList = [];
+    this.paymentValues.totalBill = 0;
     this.invoiceList = [];
     this.advancePaymentList = [];
   }

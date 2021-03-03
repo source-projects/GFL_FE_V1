@@ -146,6 +146,10 @@ export class AddEditInvoiceComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.finalbatch = data["data"];
+              console.log(this.finalbatch)
+              this.finalbatch.forEach(ele=>{
+                ele.wt = ele.wt.toFixed(2);
+              })
               this.merge = this.finalbatch;
               this.loading = false;
             } else {

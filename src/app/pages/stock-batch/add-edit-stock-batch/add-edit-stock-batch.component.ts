@@ -601,8 +601,8 @@ export class AddEditStockBatchComponent implements OnInit {
           },
         ],
       },
-    ];    this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
-    this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+    ];    this.stockBatch.chlDate = new Date();
+    this.stockBatch.billDate = new Date();
   }
   addUpdateStockBatch(myForm) {
     this.disableButton = true;
