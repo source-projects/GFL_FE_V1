@@ -185,7 +185,6 @@ export class AddEditPartyComponent implements OnInit {
       this.master.push(this.logInUserDetail.name);
     } else if (this.operatorFlag) {
       this.master.push(this.logInUserDetail.userHeadName);
-      console.log(this.master);
     } else {
       this.loading = true;
       this.partyService.getAllMaster().subscribe(
@@ -228,7 +227,6 @@ export class AddEditPartyComponent implements OnInit {
           updatedBy: this.currentParty.updatedBy,
           partyCode: this.currentParty.partyCode,
         });
-        console.log(this.currentParty.userHeadId);
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
         this.loading = false;
@@ -282,10 +280,11 @@ export class AddEditPartyComponent implements OnInit {
           (this.debtor && this.partyForm.get("partyAddress1").value) ||
           !this.debtor
         ) {
-          this.partyForm.value.createdBy = this.user.userId;
+        //  this.partyForm.value.createdBy = this.user.userId;
           // console.log('raw',this.partyForm.getRawValue())
           this.partyForm.patchValue({
             userHeadId: this.userHead.userHeadId,
+            createdBy :  this.user.userId
           });
           this.partyService.saveParty(this.partyForm.value).subscribe(
             (data) => {
