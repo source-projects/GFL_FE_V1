@@ -2303,13 +2303,9 @@
         padding-left: 15px;
     }
     
-    .border-bt-after::after {
-        content: "";
+    .border-bt-after {
         border-bottom: 1px solid #d4d4d4;
-        position: absolute;
         height: 100%;
-        top: 0;
-        right: 0;
         width: 100%;
     }
     

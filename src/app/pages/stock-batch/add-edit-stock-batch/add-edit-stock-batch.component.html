@@ -158,7 +158,7 @@
                                                 <input [attr.id]="'batchNo'+i" required type="number" [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
 
                                             </div>
-                                            <div class="col-md-6 col-4">
+                                            <div class="col-md-6 col-4 display-flex-end">
                                                 <nb-icon status="danger" [hidden]="production_flag[i]" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="removeBatch(i);"></nb-icon>
                                             </div>
                                         </div>

@@ -261,7 +261,7 @@
                                         </div>
                                         <div class="col-md-3 col-7 display-flex-end">
                                             <div class="jet-btn-production">
-                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-0" type="button" (click)="toggleView()">Jet planning</button>
+                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" type="button" (click)="toggleView()">Jet planning</button>
                                             </div>
                                         </div>
                                     </div>
@@ -271,16 +271,16 @@
                                 <div class="production-btn-list">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="batch-list-3line border-bt-after">
+                                            <div class="batch-list-3line">
                                                 <button nbButton size="small" *ngFor="let b of batchList" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
 
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
-
+                                <div class="border-bt-after"></div>
                                 <div class="title-with-btn">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -319,7 +319,7 @@
                                             <div class="col-md-3 col-7 display-flex-end">
                                                 <div class="jet-btn-production">
                                                     <div class="jet-btn-production text-right">
-                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-0" (click)="toggleView()" type="button">Production Plan</button>
+                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" (click)="toggleView()" type="button">Production Plan</button>
                                                     </div>
 
                                                 </div>
