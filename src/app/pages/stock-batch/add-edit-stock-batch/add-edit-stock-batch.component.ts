@@ -212,6 +212,21 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         });
 
+        this.stockDataValues = [
+          {
+            batchId: null,
+            totalWt: null,
+            totalMt: null,
+            isProductionPlanned: false,
+            batchMW: [
+              {
+                mtr: null,
+                wt: null,
+              },
+            ],
+          },
+        ];
+
         //re-calculate mtr/wt when quality changed
         this.reCalcMTWTValue();
       }
@@ -596,13 +611,14 @@ export class AddEditStockBatchComponent implements OnInit {
         batchMW: [
           {
             mtr: null,
-  
             wt: null,
           },
         ],
       },
-    ];    this.stockBatch.chlDate = new Date();
+    ];    
+    this.stockBatch.chlDate = new Date();
     this.stockBatch.billDate = new Date();
+    this.stockBatch.stockInType = "Fabric";
   }
   addUpdateStockBatch(myForm) {
     this.disableButton = true;
