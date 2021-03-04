@@ -76,14 +76,14 @@ export const routes: Routes = [
         canLoad: [ColorGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
-      {
-        path: 'program',
-        loadChildren: () => import('./pages/program/program.module')
-          .then(m => m.ProgramModule),
-        canActivate: [ProgramGuard],
-        canLoad: [ProgramGuard],
-        data: { PermissionName: ['view','view group','view all']}
-      },
+      // {
+      //   path: 'program',
+      //   loadChildren: () => import('./pages/program/program.module')
+      //     .then(m => m.ProgramModule),
+      //   canActivate: [ProgramGuard],
+      //   canLoad: [ProgramGuard],
+      //   data: { PermissionName: ['view','view group','view all']}
+      // },
       {
         path: 'dyeing-process',
         loadChildren: () => import('./pages/dyeing-process/dyeing-process.module')
@@ -117,16 +117,16 @@ export const routes: Routes = [
       data: { PermissionName: ['view','view group','view all']}
 
     },
-      {
-        path: 'waterJet',
-        loadChildren: () => import('./pages/water-jet/water-jet.module')
-          .then(m => m.WaterJetModule),
-          canActivate: [WaterJetGuard],
-          canLoad: [WaterJetGuard],
-          data: { PermissionName: ['view','view group','view all']}
+      // {
+      //   path: 'waterJet',
+      //   loadChildren: () => import('./pages/water-jet/water-jet.module')
+      //     .then(m => m.WaterJetModule),
+      //     canActivate: [WaterJetGuard],
+      //     canLoad: [WaterJetGuard],
+      //     data: { PermissionName: ['view','view group','view all']}
 
         
-      },
+      // },
       {
         path: 'supplier',
         loadChildren: () => import('./pages/supplier/supplier.module')
@@ -202,13 +202,13 @@ export const routes: Routes = [
           canLoad: [JetPlanningGuard],
           data: { PermissionName: ['view','view group','view all']}
       },
-      {
-        path: 'input-data',
-        component: InputDataComponent,
-        canActivate: [InputDataGuard],
-        canLoad: [InputDataGuard],
-        data: { PermissionName: ['view','view group','view all']}
-      },
+      // {
+      //   path: 'input-data',
+      //   component: InputDataComponent,
+      //   canActivate: [InputDataGuard],
+      //   canLoad: [InputDataGuard],
+      //   data: { PermissionName: ['view','view group','view all']}
+      // },
       {
         path: 'payment',
         loadChildren: () => import('./pages/payment/payment.module')

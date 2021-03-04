@@ -54,7 +54,7 @@ export class AddEditUserComponent implements OnInit {
     "Quality",
     "User",
     "Stock-Batch",
-    "Program",
+    "Database",
     "Shade",
     "Supplier",
     "Supplier Rate",
@@ -65,8 +65,6 @@ export class AddEditUserComponent implements OnInit {
     "Payment",
     "Invoice",
     "Finished Meter",
-    "Input Data",
-    "Water Jet",
   ];
 
   userHradIdList: any[] = [];
@@ -395,9 +393,9 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Program": {
+      case "DataBase": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Program"
+          (v) => v.module == "DataBase"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -458,14 +456,6 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Input Data": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Input Data"
-        );
-        if (e.target.checked == true) this.setPermissionTrue(index);
-        else this.setPermissionFalse(index);
-        break;
-      }
 
       case "Payment": {
         let index = this.permissionArray.findIndex(
@@ -494,14 +484,7 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
 
-      case "Water Jet": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Water Jet"
-        );
-        if (e.target.checked == true) this.setPermissionTrue(index);
-        else this.setPermissionFalse(index);
-        break;
-      }
+      
     }
 
     for (let j = 0; j < this.forms.length; j++) {
@@ -588,7 +571,7 @@ export class AddEditUserComponent implements OnInit {
       qu: "",
       u: "",
       sb: "",
-      prg: "",
+      ad: "",
       sh: "",
       su: "",
       sr: "",
@@ -599,8 +582,6 @@ export class AddEditUserComponent implements OnInit {
       pt: "",
       d: "",
       bf: "",
-      ip: "",
-      wt: "",
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {

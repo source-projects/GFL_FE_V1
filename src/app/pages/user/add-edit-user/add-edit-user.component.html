@@ -149,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="masterFlag || adminFlag">
+                <div class="row" *ngIf="!isMasterFlag && adminFlag">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
@@ -157,7 +157,7 @@
                             </nb-checkbox>
                         </div>
                     </div>
-                    <div class="col-md-4" *ngIf="(masterFlag || adminFlag) && user.isUserHead">
+                    <div class="col-md-4" *ngIf="(!isMasterFlag && adminFlag) && user.isUserHead">
                         <div class="form-group">
                             <label class="required">User Head List</label>
                             <select name="userHeadId" class="form-control dropdown-name" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
