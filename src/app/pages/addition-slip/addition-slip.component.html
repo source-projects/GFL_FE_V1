@@ -15,16 +15,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo'  #batchNo1="ngModel"  placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
                                 <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
                             </ng-select>
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-                    <ngx-datatable-column name="Action" sortable="false">
+                    <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
                             <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>

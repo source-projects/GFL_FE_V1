@@ -17,7 +17,7 @@
             </nb-card-header>
             <nb-card-body>
                 <ngx-datatable [rows]="dyeingProcessList" [ngClass]="'bootstrap'" [rowHeight]="'auto'" [headerHeight]="31" class="material">
-                    <ngx-datatable-column name="Actions" sortable="false">
+                    <ngx-datatable-column name="Actions" sortable="false" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/dyeing-process/edit',row.id]" [hidden]="false"></nb-icon>
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteDyeingProcess(row.id)" icon="trash" [hidden]="false"></nb-icon>

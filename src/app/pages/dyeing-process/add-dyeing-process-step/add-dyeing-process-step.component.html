@@ -76,14 +76,14 @@
                     </tr>
 
                     <tr *ngFor='let dc of dyeingChemicalData;let i=index;trackBy:trackByFn'>
-                        <td class="width-50">
+                        <td class="width-70">
 
                             <ng-select #data name="itemId{{dc._id}}_{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId" #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)" [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none">
                                 <ng-option *ngFor="let item of (itemListArray | showOnlyChemicalFilter : false)" [value]="item.itemId" placeholder="Select Item">
                                     {{item.itemName}} - {{item.supplierName}}</ng-option>
                             </ng-select>
                         </td>
-                        <td class="width-50">
+                        <td class="width-20">
                             <input class="tableForm line-height-subtable" type="text" #supplierName1="ngModel" name='supplierName{{dc._id}}_{{i}}' [(ngModel)]="dc.supplierName" (keyup)="onKeyUp($event,i,1,'supplierName')" [id]="'supplierList'+i+'-supplierName'" readonly>
                         </td>
                         <td class="width-5">

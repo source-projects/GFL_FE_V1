@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="color.colorDataList" [headerHeight]="31" [footerHeight]="31">
-                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200">
+                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200" [maxWidth]="90">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
                                 </ng-template>
