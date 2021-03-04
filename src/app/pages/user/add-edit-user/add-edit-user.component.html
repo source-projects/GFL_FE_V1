@@ -89,7 +89,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" *ngIf="!this.currentUserId">
+                    
+                    <div class="col-md-4" *ngIf="!this.currentUserId || isChangePass">
                         <div class="form-group">
                             <label class="required">Password</label>
                             <input type="password" name="password" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="user.password" required #password1="ngModel" [ngClass]="{'is-invalid': (password1.invalid)&&(formSubmitted || password1.touched)}" />
@@ -99,6 +100,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
 
                 <div class="row">
@@ -123,10 +125,6 @@
                             <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
                                 <span>Department is required.</span>
                             </div>
-                            <!-- <input type="text" name="department" class="form-control size-small" fieldsize="small" nbinput [(ngModel)]="user.department" required #department1="ngModel" [ngClass]="{'is-invalid':(department1.invalid)&&(formSubmitted || department1.touched)}" />
-                            <div class="invalid-feedback" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
-                                <span>Department is required.</span>
-                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -136,12 +134,6 @@
                                 (change)="designationSelected($event)">
                                 <ng-option *ngFor="let dsgn of desi_list" [value]="dsgn.id">{{dsgn.designation}}
                                 </ng-option>
-                                <!-- <div *ngIf="adminFlag">
-                                    <ng-option *ngFor="let m of master" [value]="m.id">{{m.name}}</ng-option>
-                                </div>
-                                <div *ngIf="masterFlag || operatorFlag">
-                                    <ng-option *ngFor="let m of master" [value]="m.id">{{m}}</ng-option>
-                                </div> -->
                             </ng-select>
                             <div class="input-required" *ngIf="(designation1.invalid)&&(formSubmitted || designation1.touched)">
                                 <span>Designation is required.</span>
@@ -149,8 +141,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="masterFlag || adminFlag">
-                    <div class="col-md-4">
+                <div class="row" >
+                    <div class="col-md-4" *ngIf="(masterFlag || adminFlag) && !isMasterFlag">
                         <div class="form-group">
                             <label></label>
                             <nb-checkbox name="assign" [(ngModel)]="user.isUserHead" (change)="getUserHrads($event)" class="form-control nb-check-user border-none">Assign Under Group Head
@@ -173,6 +165,12 @@
                             <div class="input-required" *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">
                                 <span>UserHead is required.</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="this.currentUserId">
+                        <div class="form-group">
+                            <nb-checkbox name="assign" [checked]="false" [(ngModel)]="isChangePass" class="form-control nb-check-user border-none">Change Password
+                            </nb-checkbox>
                         </div>
                     </div>
                 </div>
