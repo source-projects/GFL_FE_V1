@@ -30,8 +30,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Party Name</label>
-                        <input type="text" id="partyName" (change)="checkPartyName()" nbinput fieldsize="small" class="form-control size-small" formControlName="partyName" placeholder="Party Name" [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched)}"
-                        />
+                        <input type="text" id="partyName" (change)="checkPartyName()" nbinput fieldsize="small" class="form-control size-small" formControlName="partyName" placeholder="Party Name" [ngClass]="{'is-invalid':(partyForm.get('partyName').invalid)&&(formSubmitted || partyForm.get('partyName').touched) || partyNameExist}" />
                         <div class="input-required" *ngIf="partyNameExist">
                             <span>Party Name is already Exist </span>
                         </div>
@@ -46,7 +45,7 @@
 
                     <div class="form-group col-md-4">
                         <label class="required">Party Code</label>
-                        <input type="text" id="partyCode" nbinput fieldsize="small" class="form-control size-small" formControlName="partyCode" placeholder="Party Code" (change)="checkPartyCode()" (keypress)="resetFlag($event)" required [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched)}"
+                        <input type="text" id="partyCode" nbinput fieldsize="small" class="form-control size-small" formControlName="partyCode" placeholder="Party Code" (change)="checkPartyCode()" (keypress)="resetFlag($event)" required [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched) || !partyCodeExist}"
                         />
                         <div class="input-required" *ngIf="!partyCodeExist">
                             <span>Party Code is already Exist </span>
