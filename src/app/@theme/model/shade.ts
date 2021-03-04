@@ -17,10 +17,14 @@ export class Shade {
   processId: number;
   userHeadId: number;
   shadeDataList: ShadeDataList[];
+  isExtraRate: boolean;
+  extraRate: number;
 
   constructor() {
     this.pending = false;
     this.partyShadeNo = null;
+    this.isExtraRate = false;
+    this.extraRate = 0;
   }
 }
 
