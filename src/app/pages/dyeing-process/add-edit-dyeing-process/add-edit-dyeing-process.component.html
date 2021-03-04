@@ -21,7 +21,7 @@
                     <div class="col-md-5 col-12">
                         <div class="form-group">
                             <label class="required">Process Name</label>
-                            <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
+                            <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched) || processNameExist}"
                                 placeholder="Process Name" (change)="isProcessNameAlreadyExist()">
                             <div class="input-required" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
