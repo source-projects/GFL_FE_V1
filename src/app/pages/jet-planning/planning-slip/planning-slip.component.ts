@@ -401,7 +401,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    const modalRef = this.modalService.open(AddShadeComponent);
+    const modalRef = this.modalService.open(AddShadeComponent,{ size: 'lg' });
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {

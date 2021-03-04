@@ -2269,8 +2269,14 @@
     }
     
     // dyeing process dropdown
-    .ng-dropdown-panel.ng-select-bottom {
+    .dropdown-name .ng-dropdown-panel.ng-select-bottom,
+    .dropdown-name .ng-dropdown-panel.ng-select-top {
         width: 100%;
+    }
+    
+    .ng-select-br-none.ng-select-bottom,
+    .ng-select-br-none.ng-select-top {
+        width: auto !important;
     }
     
     .table-process-fnt tr th {
@@ -2291,4 +2297,16 @@
     
     .width-1 {
         width: 1%
+    }
+    
+    .width-30 {
+        width: 30%;
+    }
+    
+    .width-70 {
+        width: 70%;
+    }
+    
+    .width-20 {
+        width: 20%;
     }

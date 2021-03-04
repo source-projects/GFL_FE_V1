@@ -1,15 +1,18 @@
-
-  .tableForm{
+.tableForm {
     border-bottom: 1px solid black;
     border-top: none;
     border-left: none;
     border-right: none;
-  }
+}
 
-  .required-class{
+.required-class {
     display: contents !important;
     width: 100%;
     margin-top: 0.25rem;
     font-size: 80%;
     color: #dc3545
+}
+
+.ng-select-br-none {
+    width: auto !important;
 }
