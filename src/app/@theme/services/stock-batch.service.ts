@@ -9,6 +9,10 @@ export class StockBatchService {
 
   constructor(private httpClient:HttpClient,private commonService:CommonService) { }
 
+  isBatchIdExists(name, id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/isBatchExists/'+name+'/'+id);
+  }
+
    deleteStockBatchById(id): any{
      return this.httpClient.delete(this.commonService.envUrl()+'api/stockBatch/'+id);
    }

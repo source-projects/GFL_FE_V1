@@ -1,11 +1,20 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
+        <div class="row">
+
+        <div class="col-md-5 col-6 display-flex-start max-width-device">
+            <button class="btn btn-md btn-design" [routerLink]="['/pages/supplier/view']">View
+                Table</button>
+        </div>
+        <div class="col-md-7 col-6">
         <div *ngIf="mySupplierRateId == null; else updateS">
             <h2 class="nb-text">ADD SUPPLIER RATE</h2>
         </div>
         <ng-template #updateS>
             <h2 class="nb-text">UPDATE SUPPLIER RATE</h2>
         </ng-template>
+        </div>
+        </div>
     </nb-card-header>
 
     <nb-card-body>
@@ -95,9 +104,10 @@
 
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
-                    <input *ngIf="mySupplierRateId == null; else updateadd" [disabled]="disableButton" type="button" class="btn btn-primary btn-sm btn-design" value="SAVE" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
+                    <input *ngIf="!mySupplierRateId; else updateadd" [disabled]="disableButton" type="button" class="btn btn-primary btn-sm btn-design" value="SAVE" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
+                    <button *ngIf="!mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design" (click)="reset(myForm)">CANCEL</button>
 
-                    <button type="button" class="btn btn-primary btn-sm btn-design" (click)="goBackToPreviousPage();$event.preventDefault()">CANCEL</button>
+                    <button *ngIf="mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design" [routerLink]="['/pages/supplier/view']">CANCEL</button>
                     <ng-template #updateadd>
                         <input type="button" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">
                     </ng-template>

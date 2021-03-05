@@ -112,7 +112,7 @@
                     (gridReady)="onGridReady($event)"
                     ></ag-grid-angular> -->
                 <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;

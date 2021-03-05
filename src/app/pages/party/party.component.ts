@@ -409,8 +409,12 @@ open(){
       if (result) {
         this.partyService.deletePartyDetailsById(id).subscribe(
           (data) => {
-            this.onChange(this.radioSelect);
-            this.toastr.success(errorData.Delete);
+            if(data["success"]){
+              this.onChange(this.radioSelect);
+              this.toastr.success(errorData.Delete);
+            }else{
+              this.toastr.error(data["msg"]);
+            }
           },
           (error) => {
             this.toastr.error(errorData.Serever_Error);

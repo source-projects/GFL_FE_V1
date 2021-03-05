@@ -44,6 +44,7 @@ export class AddEditUserComponent implements OnInit {
   master: any[] = [];
   currentUserData: any;
   desiList;
+  public isChangePass: boolean = false;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
@@ -62,10 +63,10 @@ export class AddEditUserComponent implements OnInit {
     "Dyeing Process",
     "Production Planning",
     "Jet Planning",
-    "Input Data",
     "Payment",
     "Invoice",
     "Finished Meter",
+    "Input Data",
     "Water Jet",
   ];
 
@@ -242,7 +243,8 @@ export class AddEditUserComponent implements OnInit {
         this.isMasterFlag = true;
         this.user.isUserHead = false;
         this.user.userHeadId = Number(this.commonService.getUser().userId);
-      } else {
+      } else { 
+        this.user.isUserHead = true
         this.isMasterFlag = false;
       }
     }
@@ -763,15 +765,21 @@ export class AddEditUserComponent implements OnInit {
 
   updateUser(userForm) {
     this.disableButton = true;
-
     this.loading = true;
     this.formSubmitted = true;
     if (userForm.valid) {
       this.user.updatedBy = this.userId.userId;
       this.getCheckedItem();
+      if (this.user.password) {
+        let md5 = new Md5();
+        this.user.password = String(md5.appendStr(this.user.password).end());
+      }else{
+        this.user.password = "";  
+      }
+
       //this.user.designationId = this.user.designationId.id;
-      if (!this.user.isUserHead)
-        this.user.userHeadId = this.commonService.getUser().userId;
+      // if (!this.user.isUserHead)
+      //   delete this.user.userHeadId
       this.userService.updateUser(this.user).subscribe(
         (data) => {
           if (data["success"]) {
@@ -870,4 +878,5 @@ export class AddEditUserComponent implements OnInit {
       }
     );
   }
+
 }

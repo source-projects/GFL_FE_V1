@@ -26,7 +26,7 @@
         </div>
         <!--  ngx- DataTable  -->
         <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false">
+            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false" [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="deleteShade(row.id)"></nb-icon>

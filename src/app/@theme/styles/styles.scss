@@ -2157,6 +2157,8 @@
         .table-jet tr th {
             background-color: #5e5b5e !important;
             color: #fff !important;
+        .mobile-pad-top-15 {
+            padding-top: 15px;
         }
     }
     
@@ -2325,4 +2327,45 @@
     .table-jet tr th,
     .table-jet tr td {
         text-align: center !important;
+    // dyeing process dropdown
+    .dropdown-name .ng-dropdown-panel.ng-select-bottom,
+    .dropdown-name .ng-dropdown-panel.ng-select-top {
+        width: 100%;
+    }
+    
+    .ng-select-br-none.ng-select-bottom,
+    .ng-select-br-none.ng-select-top {
+        width: auto !important;
+    }
+    
+    .table-process-fnt tr th {
+        text-align: center;
+    }
+    
+    .ng-value {
+        width: 100%;
+    }
+    
+    .width-5 {
+        width: 5%;
+    }
+    
+    .width-50 {
+        width: 50%;
+    }
+    
+    .width-1 {
+        width: 1%
+    }
+    
+    .width-30 {
+        width: 30%;
+    }
+    
+    .width-70 {
+        width: 70%;
+    }
+    
+    .width-20 {
+        width: 20%;
     }

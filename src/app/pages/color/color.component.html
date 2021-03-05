@@ -28,14 +28,14 @@
         </div>
         <!--  ngx- DataTable -->
         <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
-            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
+            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id" [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/color/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="deleteColor(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
-            <ngx-datatable-column name="Bill No" prop="billNo"></ngx-datatable-column>
+            <ngx-datatable-column name="Bill No" prop="billNo" [maxWidth]="110"></ngx-datatable-column>
             <ngx-datatable-column name="Bill Date" prop="billDate"></ngx-datatable-column>
             <ngx-datatable-column name="Challan No" prop="chlNo"></ngx-datatable-column>
             <ngx-datatable-column name="Challan Date" prop="chlDate"></ngx-datatable-column>

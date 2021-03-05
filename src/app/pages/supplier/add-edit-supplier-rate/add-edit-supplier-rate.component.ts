@@ -218,13 +218,16 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
         );
     } else {
+      this.toastr.error("Fill empty fields");
+
       this.disableButton = false;
       return;
     }
   }
 
-  public goBackToPreviousPage(): any {
-    this.router.navigate(["pages/supplier"]);
+  reset(myForm){
+    myForm.reset();
+    this.formSubmitted = false;
   }
 
   getDetail(id) {
