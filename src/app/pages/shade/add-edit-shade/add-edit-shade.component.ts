@@ -541,8 +541,7 @@ export class AddEditShadeComponent implements OnInit {
         this.shadeObj.userHeadId = this.userHead.userHeadId;
 
         if (
-          this.shadeObj.shadeDataList.length &&
-          !Object.keys(this.shadeObj.shadeDataList[0]).length
+          (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
         ) {
           this.shadeObj.shadeDataList = [];
         }
@@ -573,8 +572,7 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.qualityId
         ) {
           if (
-            this.shadeObj.shadeDataList.length &&
-            !Object.keys(this.shadeObj.shadeDataList[0]).length
+            (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
           ) {
             this.shadeObj.shadeDataList = [];
           }
