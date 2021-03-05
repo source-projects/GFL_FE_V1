@@ -1,5 +1,5 @@
 <div *ngIf="!editDyeingSlipFlag">
-
+    
     <div class="modal-header nb-header">
         <h4 class="modal-title nb-text">Choose Shade</h4>
         <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
@@ -7,8 +7,162 @@
         </button>
     </div>
     <div class="modal-body mb-4">
-        <label class="required">Shade</label>
-        <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel" [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}" placeholder="Select Shade" class="required-error-dropdown">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="jus-con-flex-start">
+                    <div class="col-md-5 col-12 pd-0">
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0">
+                                <label>Party Name</label>
+                            </div>
+                            <!-- 
+    
+                        <div class="batch-col text-center">
+                            <span>:</span>
+                        </div>
+    -->
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.partyName}}</h6>
+                            </div>
+    
+    
+    
+    
+                        </div>
+    
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0 text-Left">
+                                <label>Quality Name</label>
+                            </div>
+    
+                            <!-- <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div> -->
+    
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}</h6>
+                            </div>
+    
+    
+    
+                        </div>
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class=" batch-p-color label-0 text-Left">
+                                <label>Quality Id</label>
+                            </div>
+    
+                            <!-- <div class="col-md-2">
+                                <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div>
+                            </div> -->
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}</h6>
+                            </div>
+    
+    
+    
+                        </div>
+    
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0 text-Left">
+                                <label>Process Name</label>
+                            </div>
+    
+    
+    
+                            <!-- <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div> -->
+    
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.processName}}</h6>
+                            </div>
+    
+    
+    
+                        </div>
+    
+                    </div>
+                    <!-- <div class="col-md-1 col-12 border-right-card-batch"></div> -->
+                    <div class="col-md-4 col-12 pd-0">
+    
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0 text-Left">
+                                <label>Party Shade No.</label>
+                            </div>
+    
+    
+                            <!-- <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div> -->
+    
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}</h6>
+                            </div>
+    
+    
+    
+                        </div>
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0 text-Left">
+                                <label>Lot Weight</label>
+                            </div>
+    
+    
+                            <!-- <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div> -->
+    
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.totalWt}}</h6>
+                            </div>
+    
+    
+                        </div>
+                        <div class="display-flex mr-0">
+    
+    
+                            <div class="batch-p-color label-0 text-Left">
+                                <label>Lot Meter</label>
+                            </div>
+    
+    
+                            <!-- <div class="batch-col text-center">
+                                    <span>:</span>
+                                </div> -->
+    
+    
+                            <div class="party-name-text text-center">
+                                <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="required mt-3" >Shade</label>
+        <ng-select name="shadeId" [(ngModel)]='shadeId' (change)="showJetList($event)" required #shadeId1="ngModel"
+            [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
+            placeholder="Select Shade" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-4 col-4">
@@ -33,20 +187,52 @@
                     </div>
                     <div class="col-md-4 col-4 jus-con-center">
                         <div class="text-right txt-ov-elips width-70">
-                            <input [(colorPicker)]="s.colorTone" [style.background]="s.colorTone" [value]="s.colorTone" disabled="true" class="width-100" />
+                            <input [(colorPicker)]="s.colorTone" [style.background]="s.colorTone" [value]="s.colorTone"
+                                disabled="true" class="width-100" />
                         </div>
                     </div>
                 </div>
             </ng-option>
         </ng-select>
-        <div class="required-class" *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
+        <div class="required-class"
+            *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
             <span>Shade Id is required</span>
+        </div>
+    </div>
+    <div *ngIf="showJetListFlag" class="modal-body mb-4">
+        <div class="form-group">
+            <label class="required">Select Jet: </label>
+            <ng-select name="jet" [(ngModel)]='jetid' required #jet1="ngModel" (change)="jetSelected($event)"
+                placeholder="Jet Number">
+                <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
+                </ng-option>
+            </ng-select>
+            <div class="required-class" *ngIf="jetCapacity && jetId">
+                <span>Weight is greater than selected jet capacity</span>
+            </div>
+        </div>
+        <div class="row" *ngIf="jetSelectedFlag">
+            <div class="col-md-12">
+                <div class="form-group mb-0">
+                    <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                        class="example-list main-table-drag jet-plan">
+                        <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
+                            <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
+                                class="btn-bg-color">
+                                {{jetData.batchId}}
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onOkClick()">Ok</button>
 
-        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="addToJetClick()">Add to jet</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="activeModal.close(false);">Cancel</button>
     </div>
 
 </div>
@@ -62,7 +248,9 @@
     </div>
     <div class="modal-body mb-4">
         <label class="required">Approve By</label>
-        <ng-select name="approveBy" [(ngModel)]='approveBy' required #approveBy1="ngModel" [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}" placeholder="Select approve by" class="required-error-dropdown">
+        <ng-select name="approveBy" [(ngModel)]='approveBy' required #approveBy1="ngModel"
+            [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}"
+            placeholder="Select approve by" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-4 col-4">
@@ -86,7 +274,8 @@
                 </div>
             </ng-option>
         </ng-select>
-        <div class="input-required" *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
+        <div class="input-required"
+            *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
             <span>approve by is required</span>
         </div>
     </div>

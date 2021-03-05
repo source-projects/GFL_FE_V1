@@ -523,6 +523,12 @@ export class AddEditShadeComponent implements OnInit {
     this.ngOnInit();
   }
 
+  isExtraChanged(event){
+    if(!event){
+      this.shadeObj.extraRate = 0;
+    }
+  }
+
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;

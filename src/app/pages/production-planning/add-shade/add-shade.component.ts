@@ -5,6 +5,7 @@ import { ProductionPlanningService } from "../../../@theme/services/production-p
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { ShadeWithBatchComponent } from "../shade-with-batch/shade-with-batch.component";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { Router } from "@angular/router";
 import { AdminService } from "../../../@theme/services/admin.service";
@@ -16,6 +17,7 @@ import { AdminService } from "../../../@theme/services/admin.service";
   styleUrls: ["./add-shade.component.scss"],
 })
 export class AddShadeComponent implements OnInit {
+  @Input("productionBatchDetail") productionBatchDetail: any;
   @Input("party") party: any;
   @Input("quality") quality: any;
   @Input("batch") batch: any;
@@ -24,6 +26,7 @@ export class AddShadeComponent implements OnInit {
   @Input("colorTone") colorToneReceviced: any;
   @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
   @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
+  @Input("jetid") jetid: number;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
@@ -37,6 +40,11 @@ export class AddShadeComponent implements OnInit {
   productionId: any;
   addToJetFlag: boolean = false;
   public errorData: any = (errorData as any).default;
+  public showJetListFlag: boolean = false;
+  public weight: number = 0;
+  public jetCapacity: boolean = false;
+  public jetSelectedFlag: boolean = false;
+  public selectedJetData: any = [];
 
   productionData = {
     batchId: null,
@@ -44,7 +52,7 @@ export class AddShadeComponent implements OnInit {
     qualityEntryId: null,
     shadeId: null,
     stockId: null,
-    // id:null
+    jetId: 0,
   };
   constructor(
     private _NgbActiveModal: NgbActiveModal,
@@ -62,6 +70,10 @@ export class AddShadeComponent implements OnInit {
       this.getApproveBy();
     } else {
       this.getShadeList();
+      this.getAllJets();
+      if(this.editProductionPlanFlag){
+        this.showJetListFlag = true;
+      }
     }
   }
 
@@ -113,37 +125,77 @@ export class AddShadeComponent implements OnInit {
     this.productionData.qualityEntryId = this.quality;
     this.productionData.shadeId = this.shadeId;
     this.productionData.stockId = this.batchControl;
-    if(this.editProductionPlanFlag){
-      this.activeModal.close(this.productionData);
-    }else{
+    if (this.jetid) this.productionData.jetId = this.jetid;
+    if (this.shadeId) {
       this.productionPlanningService
-      .saveProductionPlan(this.productionData)
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.productionId = data["data"];
-            if (this.addToJetFlag) {
-              this.router.navigate([
-                "/pages/jet-planning/" + this.productionId,
-              ]);
+        .saveProductionPlan(this.productionData)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.productionId = data["data"];
+              this.toastr.success(data["msg"]);
               this.activeModal.close(true);
             } else {
-              this.activeModal.close(true);
-              this.toastr.success(errorData.Add_Success);
+              this.toastr.error(data["msg"]);
             }
+          },
+          (error) => {
+            // this.toastr.error(errorData.Serever_Error);
+            this.loading = false;
           }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
-          this.loading = false;
-        }
-      );
+        );
     }
-   
   }
 
-  addToJetClick() {
-    this.addToJetFlag = true;
-    this.onOkClick();
+  showJetList(event) {
+    if (event) {
+      this.getWeightByStockAndBatch();
+      this.showJetListFlag = true;
+    } else {
+      this.showJetListFlag = false;
+      this.jetid = 0;
+    }
+  }
+
+  getAllJets() {
+    this.jetList = [];
+    this.jetPlanningService.getAllJetData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.jetList = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  getWeightByStockAndBatch() {
+    if (this.batch && this.batchControl) {
+      this.productionPlanningService
+        .getWeightByStockIdAndBatchId(this.batch, this.batchControl)
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.weight = data["data"].totalwt;
+          }
+        });
+    }
+  }
+
+  jetSelected(event) {
+    this.jetCapacity = false;
+    let jet = this.jetList.filter((f) => f.id == event);
+    if (jet.length) {
+      if (jet[0].capacity > this.weight) {
+        this.selectedJetData = jet[0].jetDataList;
+        if (!this.selectedJetData) {
+          this.jetSelectedFlag = false;
+        } else {
+          this.jetSelectedFlag = true;
+        }
+      } else {
+        this.jetCapacity = true;
+        this.jetSelectedFlag = false;
+      }
+    }
   }
 }

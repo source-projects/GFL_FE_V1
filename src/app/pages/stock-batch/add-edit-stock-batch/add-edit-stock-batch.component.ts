@@ -449,34 +449,38 @@ export class AddEditStockBatchComponent implements OnInit {
         (data) => {
           if (data["success"])
             this.stockDataValues[index].isNotUnique = data["data"];
+            if(!this.stockDataValues[index].isNotUnique){
+              if (this.stockDataValues && this.stockDataValues.length) {
+                let i = this.stockDataValues.findIndex(
+                  (v) => v.batchId == this.stockDataValues[index].batchId
+                );
+                if (i > -1 && i != index) {
+                  this.toastr.error("Cannot add duplicate batch No.");
+                  this.stockDataValues[index].isNotUnique = true;
+                  this.stockDataValues[index].batchId = null;
+                }
+              }
+            }
         },
         (error) => {}
       );
     }
-    // if (this.stockDataValues && this.stockDataValues.length) {
-    //   let i = this.stockDataValues.findIndex(
-    //     (v) => v.batchId == this.stockDataValues[index].batchId
-    //   );
-    //   if (i > -1 && i != index) {
-    //     this.toastr.error("Cannot add duplicate batch No.");
-    //     this.stockDataValues[index].batchId = null;
-    //   }
-    // }
+    
   }
 
-  rearrangeBatchNo() {
-    if (this.stockDataValues) {
-      this.stockDataValues = _.sortBy(this.stockDataValues, "batchId", "asc");
-      let initialStockBatchNo = 0;
-      this.stockDataValues.forEach((ele, index) => {
-        if (!index) {
-          initialStockBatchNo = ele.batchId;
-        } else {
-          ele.batchId = ++initialStockBatchNo;
-        }
-      });
-    }
-  }
+  // rearrangeBatchNo() {
+  //   if (this.stockDataValues) {
+  //     this.stockDataValues = _.sortBy(this.stockDataValues, "batchId", "asc");
+  //     let initialStockBatchNo = 0;
+  //     this.stockDataValues.forEach((ele, index) => {
+  //       if (!index) {
+  //         initialStockBatchNo = ele.batchId;
+  //       } else {
+  //         ele.batchId = ++initialStockBatchNo;
+  //       }
+  //     });
+  //   }
+  // }
 
   calculateWt(meter: number, i, j, col) {
     let w: number;

@@ -1013,7 +1013,6 @@
         align-items: center;
     }
     
-    .txt-ov-elips,
     .datatable-body-cell-label {
         white-space: nowrap;
         overflow: hidden;
@@ -1072,6 +1071,14 @@
         margin-right: 9px;
     }
     
+    .p-badge-design-production {
+        color: #ffffff !important;
+        border-radius: 68px !important;
+        padding: 5px 18px !important;
+        margin-top: 5px;
+        margin-right: 9px;
+    }
+    
     .jet-bg-none {
         color: white;
         border: none;
@@ -1079,26 +1086,21 @@
     }
     
     // jet table
-    .table-jet,
-    .main-table-drag {
-        width: 100% !important;
-        // overflow-x: scroll !important;
-    }
-    
-    .table-jet {
-        display: table !important;
-    }
-    
-    .table-jet tr th,
-    .table-jet tr td {
-        text-align: center !important;
-    }
-    
-    .table-jet tr th {
-        background-color: #5e5b5e !important;
-        color: #fff !important;
-    }
-    
+    // .table-jet,
+    // .main-table-drag {
+    //     width: 100% !important;
+    // }
+    // .table-jet {
+    //     display: table !important;
+    // }
+    // .table-jet tr th,
+    // .table-jet tr td {
+    //     text-align: center !important;
+    // }
+    // .table-jet tr th {
+    //     background-color: #5e5b5e !important;
+    //     color: #fff !important;
+    // }
     .jet-tooltip {
         left: 86px !important;
     }
@@ -1159,10 +1161,6 @@
     .prouction-jet-number {
         position: absolute;
         color: #fff;
-    }
-    
-    .table-jet tr td:nth-child(3) {
-        display: grid;
     }
     
     .input-jet {
@@ -2079,7 +2077,6 @@
         .trans-box-drop {
             padding: 2px 9px !important;
         }
-        .table-jet,
         .main-table-drag {
             width: 100% !important;
         }
@@ -2126,6 +2123,40 @@
         }
         .batch-list-production .nb-text {
             font-size: 13px !important;
+        }
+        .jet-btn-production button {
+            font-size: 11px!important;
+        }
+        .pd-left-15 {
+            padding: 0!important;
+        }
+        .txt-ov-elips {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        // .table-jet {
+        //     display: none;
+        // }
+    }
+    
+    @media (min-width: 992px) {
+        .table-jet {
+            width: 100% !important;
+            // overflow-x: scroll !important;
+        }
+        .table-jet {
+            display: table !important;
+        }
+        .table-jet {
+            width: 100% !important;
+        }
+        .table-jet tr td:nth-child(3) {
+            display: grid;
+        }
+        .table-jet tr th {
+            background-color: #5e5b5e !important;
+            color: #fff !important;
         }
         .mobile-pad-top-15 {
             padding-top: 15px;
@@ -2271,6 +2302,33 @@
         right: 18px;
     }
     
+    .pd-left-15 {
+        padding-left: 15px;
+    }
+    
+    .border-bt-after {
+        border-bottom: 1px solid #d4d4d4;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .mr-bt-5 {
+        margin-bottom: 20px;
+    }
+    
+    .back-container {
+        width: 100%;
+    }
+    
+    .table-jet tr th {
+        background-color: #5e5b5e !important;
+        color: #fff !important;
+    }
+    
+    .table-jet tr th,
+    .table-jet tr td {
+        text-align: center !important;
+    }
     // dyeing process dropdown
     .dropdown-name .ng-dropdown-panel.ng-select-bottom,
     .dropdown-name .ng-dropdown-panel.ng-select-top {

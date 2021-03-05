@@ -230,13 +230,13 @@
                         <div class="form-group">
                             <!-- <label class="required">Pending</label> -->
                             <div>
-                                <nb-checkbox class="status-basic nb-transition" id="pending" name="pending" [(ngModel)]="shadeObj.isExtraRate" [checked]="shadeObj.isExtraRate">
+                                <nb-checkbox class="status-basic nb-transition" id="pending" name="isExtraRate" [(ngModel)]="shadeObj.isExtraRate" (checkedChange)="isExtraChanged($event)" [checked]="shadeObj.isExtraRate">
                                     <span class="text cr-txt">Add extra rate</span>
                                 </nb-checkbox>
                             </div>
                             <div *ngIf="shadeObj.isExtraRate">
                                 <label class="required">Extra rate</label>
-                                <input class="form-control size-small" fieldsize="small" nbinput placeholder="Extra rate" [(ngModel)]="shadeObj.extraRate" #extraRate [ngClass]="{'is-invalid': formSubmitted && shadeObj.isExtraRate && !shadeObj.extraRate}">
+                                <input class="form-control size-small" fieldsize="small" name="extraRate" nbinput placeholder="Extra rate" [(ngModel)]="shadeObj.extraRate" #extraRate [ngClass]="{'is-invalid': formSubmitted && shadeObj.isExtraRate && !shadeObj.extraRate}">
                                 <div class="invalid-feedback" *ngIf="formSubmitted && shadeObj.isExtraRate && !shadeObj.extraRate">
                                     <span>Extra rate is required if checked</span>
                                 </div>
