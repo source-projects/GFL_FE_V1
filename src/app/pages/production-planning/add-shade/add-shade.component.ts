@@ -27,6 +27,7 @@ export class AddShadeComponent implements OnInit {
   @Input("editDyeingSlipFlag") editDyeingSlipFlag: boolean;
   @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
   @Input("jetid") jetid: number;
+  @Input("productionId1") productionId1: number;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
@@ -47,6 +48,7 @@ export class AddShadeComponent implements OnInit {
   public selectedJetData: any = [];
 
   productionData = {
+    productionId:null,
     batchId: null,
     partyId: null,
     qualityEntryId: null,
@@ -120,6 +122,8 @@ export class AddShadeComponent implements OnInit {
     this.activeModal.close(this.approveBy);
   }
   onOkClick() {
+    if(this.productionId1)
+    this.productionData.productionId = this.productionId1;  
     this.productionData.batchId = this.batch;
     this.productionData.partyId = this.party;
     this.productionData.qualityEntryId = this.quality;
