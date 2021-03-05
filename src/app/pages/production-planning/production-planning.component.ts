@@ -630,6 +630,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     );
     if (production.length) {
       const modalRef = this.modalService.open(AddShadeComponent);
+      modalRef.componentInstance.productionId1 = production[0].id;
       modalRef.componentInstance.productionBatchDetail = this.productionBatchDetail;
       modalRef.componentInstance.party = production[0].partyId;
       modalRef.componentInstance.quality = production[0].qualityEntryId;
