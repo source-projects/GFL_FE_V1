@@ -3,7 +3,11 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
-            <div class="col-md-10 col-6">
+            <div class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/color/view']">View
+                    Table</button>
+            </div>
+            <div class="col-md-7 col-6">
 
                 <div *ngIf="this.currentColorId == null; else updateC">
                     <h2 class="nb-text txt-ov-elips">Add Color Stock</h2>
@@ -12,10 +16,7 @@
                     <h2 class="nb-text txt-ov-elips">Update Color Stock</h2>
                 </ng-template>
             </div>
-            <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/color/view']">View
-                    Table</button>
-            </div>
+
         </div>
 
     </nb-card-header>
@@ -25,7 +26,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="required">Supplier Name</label>
-                        <ng-select placeholder="Select supplier name" [(ngModel)]="color.supplierId" class="required-error-dropdown dropdown-name" #supplierName1="ngModel" name="supplierName" (keyup)="getAllSupplierRate($event)" (change)="getAllSupplierRate($event)" required>
+                        <ng-select placeholder="Select supplier name" [disabled]="currentColorId" [(ngModel)]="color.supplierId" class="required-error-dropdown dropdown-name" #supplierName1="ngModel" name="supplierName" (keyup)="getAllSupplierRate($event)" (change)="getAllSupplierRate($event)" required>
                             <ng-option *ngFor="let s of supplierList" [value]="s.id">
                                 {{s.supplierName}}
                             </ng-option>
@@ -91,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="color.colorDataList" [headerHeight]="31" [footerHeight]="31">
-                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200">
+                            <ngx-datatable-column name="Action" [sortable]="false" [width]="200" [maxWidth]="90">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
                                 </ng-template>

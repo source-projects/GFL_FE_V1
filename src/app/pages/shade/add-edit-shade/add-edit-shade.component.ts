@@ -217,6 +217,11 @@ export class AddEditShadeComponent implements OnInit {
         if (data["success"]) {
           let res = data["data"];
           this.shadeObj = res;
+          if(this.shadeObj.extraRate){
+            this.shadeObj.isExtraRate = true;
+          }else{
+            this.shadeObj.isExtraRate = false;
+          }
           this.color = this.shadeObj.colorTone;
           this.shadeObj.shadeDataList.forEach((item, i) => {
             this.shadeObj.shadeDataList[i].rate = Number(item.rate.toFixed(2));
@@ -269,9 +274,6 @@ export class AddEditShadeComponent implements OnInit {
 
   qualityIdSelected(event) {
     if (event == undefined) {
-      this.getPartyList();
-      this.getQualityList();
-      this.shadeObj.partyId = null;
       this.shadeObj.qualityName = null;
       this.shadeObj.qualityType = null;
       this.shadeObj.shadeDataList = [];
@@ -404,6 +406,9 @@ export class AddEditShadeComponent implements OnInit {
         );
 
         this.calculateTotalAmount(false);
+      } else {
+        this.shadeObj.shadeDataList[rowIndex].amount = 0;
+        this.calculateTotalAmount(false);
       }
     } else {
       this.shadeObj.shadeDataList[rowIndex].concentration = null;
@@ -514,57 +519,33 @@ export class AddEditShadeComponent implements OnInit {
     this.totalAmount = 0;
     this.costKg = 0;
     this.costMtr = 0;
+    this.shadeDataListArray = [];
+    this.ngOnInit();
+  }
+
+  isExtraChanged(event){
+    if(!event){
+      this.shadeObj.extraRate = 0;
+    }
   }
 
   addShade(shadeForm) {
     this.disableButton = true;
     this.formSubmitted = true;
+    if (
+      (this.shadeObj.isExtraRate && this.shadeObj.extraRate) ||
+      !this.shadeObj.isExtraRate
+    ) {
+      if (shadeForm.valid) {
+        this.shadeObj.createdBy = this.user.userId;
+        this.shadeObj.userHeadId = this.userHead.userHeadId;
 
-    if (shadeForm.valid) {
-      this.shadeObj.createdBy = this.user.userId;
-      this.shadeObj.userHeadId = this.userHead.userHeadId;
-
-      if (
-        this.shadeObj.shadeDataList.length &&
-        !Object.keys(this.shadeObj.shadeDataList[0]).length
-      ) {
-        this.shadeObj.shadeDataList = [];
-      }
-
-      this.shadeService.addShadeData(this.shadeObj).subscribe(
-        (data) => {
-          if (data["success"]) {
-            shadeForm.reset();
-            this.formSubmitted = false;
-            this.reset(shadeForm);
-            this.disableButton = false;
-            this.toastr.success(data["msg"]);
-          } else {
-            this.toastr.error(data["msg"]);
-            this.toastr.error(data["msg"]);
-          }
-          this.disableButton = false;
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-          this.disableButton = false;
-        }
-      );
-    } else {
-      if (
-        this.shadeObj.partyId &&
-        this.shadeObj.processId &&
-        this.shadeObj.qualityId
-      ) {
         if (
-          this.shadeObj.shadeDataList.length &&
-          !Object.keys(this.shadeObj.shadeDataList[0]).length
+          (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
         ) {
           this.shadeObj.shadeDataList = [];
         }
 
-        this.shadeObj.createdBy = this.user.userId;
-        this.shadeObj.userHeadId = this.userHead.userHeadId;
         this.shadeService.addShadeData(this.shadeObj).subscribe(
           (data) => {
             if (data["success"]) {
@@ -575,19 +556,54 @@ export class AddEditShadeComponent implements OnInit {
               this.toastr.success(data["msg"]);
             } else {
               this.toastr.error(data["msg"]);
+              this.toastr.error(data["msg"]);
             }
             this.disableButton = false;
           },
           (error) => {
-            //this.toastr.error(errorData.Serever_Error);
+            this.toastr.error(errorData.Serever_Error);
             this.disableButton = false;
           }
         );
+      } else {
+        if (
+          this.shadeObj.partyId &&
+          this.shadeObj.processId &&
+          this.shadeObj.qualityId
+        ) {
+          if (
+            (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
+          ) {
+            this.shadeObj.shadeDataList = [];
+          }
+
+          this.shadeObj.createdBy = this.user.userId;
+          this.shadeObj.userHeadId = this.userHead.userHeadId;
+          this.shadeService.addShadeData(this.shadeObj).subscribe(
+            (data) => {
+              if (data["success"]) {
+                shadeForm.reset();
+                this.formSubmitted = false;
+                this.reset(shadeForm);
+                this.disableButton = false;
+                this.toastr.success(data["msg"]);
+              } else {
+                this.toastr.error(data["msg"]);
+              }
+              this.disableButton = false;
+            },
+            (error) => {
+              //this.toastr.error(errorData.Serever_Error);
+              this.disableButton = false;
+            }
+          );
+        }
+        this.disableButton = false;
+        const errorField = this.renderer.selectRootElement("#target");
+        errorField.scrollIntoView();
       }
-      this.disableButton = false;
-      const errorField = this.renderer.selectRootElement("#target");
-      errorField.scrollIntoView();
     }
+    this.disableButton = false;
   }
 
   removeItem(id) {
@@ -614,43 +630,17 @@ export class AddEditShadeComponent implements OnInit {
 
     this.loading = true;
     this.formSubmitted = true;
-    if (shadeForm.valid) {
-      this.shadeObj.updatedBy = this.user.userId;
-      console.log(this.shadeObj);
-      this.shadeService.updateShadeData(this.shadeObj).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.route.navigate(["/pages/shade"]);
-            this.toastr.success(data["msg"]);
-            this.disableButton = false;
-          } else {
-            this.toastr.error(data["msg"]);
-            this.disableButton = false;
-          }
-          this.loading = false;
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-          this.loading = false;
-          this.disableButton = false;
-        }
-      );
-    } else {
-      if (
-        this.shadeObj.partyId &&
-        this.shadeObj.processId &&
-        this.shadeObj.qualityId
-      ) {
-        if (
-          this.shadeObj.shadeDataList.length &&
-          !Object.keys(this.shadeObj.shadeDataList[0]).length
-        ) {
-          this.shadeObj.shadeDataList = [];
-        }
+    if (
+      !this.shadeObj.isExtraRate ||
+      (this.shadeObj.isExtraRate && this.shadeObj.extraRate)
+    ) {
+      if (shadeForm.valid) {
+        this.shadeObj.updatedBy = this.user.userId;
+        console.log(this.shadeObj);
         this.shadeService.updateShadeData(this.shadeObj).subscribe(
           (data) => {
             if (data["success"]) {
-              this.route.navigate(["/pages/shade/pending-apc"]);
+              this.route.navigate(["/pages/shade"]);
               this.toastr.success(data["msg"]);
               this.disableButton = false;
             } else {
@@ -665,12 +655,45 @@ export class AddEditShadeComponent implements OnInit {
             this.disableButton = false;
           }
         );
+      } else {
+        if (
+          this.shadeObj.partyId &&
+          this.shadeObj.processId &&
+          this.shadeObj.qualityId
+        ) {
+          if (
+            this.shadeObj.shadeDataList.length &&
+            !Object.keys(this.shadeObj.shadeDataList[0]).length
+          ) {
+            this.shadeObj.shadeDataList = [];
+          }
+          this.shadeService.updateShadeData(this.shadeObj).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.route.navigate(["/pages/shade/pending-apc"]);
+                this.toastr.success(data["msg"]);
+                this.disableButton = false;
+              } else {
+                this.toastr.error(data["msg"]);
+                this.disableButton = false;
+              }
+              this.loading = false;
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+              this.loading = false;
+              this.disableButton = false;
+            }
+          );
 
+          this.disableButton = false;
+          this.loading = false;
+          const errorField = this.renderer.selectRootElement("#target");
+          errorField.scrollIntoView();
+        }
+      }
+    }else{
       this.disableButton = false;
-      this.loading = false;
-      const errorField = this.renderer.selectRootElement("#target");
-      errorField.scrollIntoView();
     }
   }
-}
 }

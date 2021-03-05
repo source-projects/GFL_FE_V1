@@ -54,16 +54,19 @@ export class AddEditQualityComponent implements OnInit {
   
 
   checkQulityId() {
-    let id = 0;
-    if(this.addEditQualityForm.get('id').value)  id = this.addEditQualityForm.get('id').value;
-    this.qualityService
-      .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
-      .subscribe(
-        (data) => {
-          this.qulityIdExist = data["data"];
-        },
-        (error) => {}
-      );
+    this.qulityIdExist = false;
+    if(this.addEditQualityForm.get("qualityId").value){
+      let id = 0;
+      if(this.addEditQualityForm.get('id').value)  id = this.addEditQualityForm.get('id').value;
+      this.qualityService
+        .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
+        .subscribe(
+          (data) => {
+            this.qulityIdExist = data["data"];
+          },
+          (error) => {}
+        );
+    }
   }
   numberOnly(event) {
     return event.charCode == 8 || event.charCode == 0 || event.charCode == 13
@@ -159,7 +162,7 @@ export class AddEditQualityComponent implements OnInit {
     this.disableButton = true;
 
     this.formSubmitted = true;
-    if (this.addEditQualityForm.valid) {
+    if (this.addEditQualityForm.valid && !this.qulityIdExist) {
       this.addEditQualityForm.value.createdBy = this.user.userId;
       this.addEditQualityForm.value.userHeadId = this.userHead.userHeadId;
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
@@ -167,9 +170,9 @@ export class AddEditQualityComponent implements OnInit {
           if (data['success']) {
             this.reset();
             this.disableButton = false; 
-            //this.toastr.success(errorData.Add_Success);
+            this.toastr.success(data['msg']);
           } else {
-            //this.toastr.error(errorData.Add_Error);
+            this.toastr.error(data['msg']);
           }
           this.disableButton = false;
         },
@@ -189,7 +192,7 @@ export class AddEditQualityComponent implements OnInit {
 
     this.loading = true;
     this.formSubmitted = true;
-    if (this.addEditQualityForm.valid) {
+    if (this.addEditQualityForm.valid && !this.qulityIdExist) {
       this.addEditQualityForm.value.updatedBy = this.user.userId;
       this.qualityService
         .updateQualityById(this.addEditQualityForm.value)

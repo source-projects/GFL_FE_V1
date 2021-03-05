@@ -233,8 +233,8 @@
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
                                 <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton">UPDATE</button>
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveClicked=true;saveSlipData(myForm)">SAVE</button>
-                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="printSlip(myForm)">Save And
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveClicked=true;saveSlipData(myForm)">CONFIRM & SAVE</button>
+                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="printSlip(myForm)">Confirm, Save And
                                     Print</button>
 
                             </div>

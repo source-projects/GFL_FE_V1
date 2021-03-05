@@ -3,15 +3,16 @@
         <nb-card-header class="nb-header">
 
             <div class="row">
-                <div class="col-md-10 col-6">
+                <div class="col-md-5 col-6 display-flex-start max-width-device">
+                    <button class="btn btn-md btn-design" [routerLink]="['/pages/dyeing-process/view']">View
+                        Table</button>
+                </div>
+                <div class="col-md-7 col-6">
                     <h2 class="nb-text txt-ov-elips">Dyeing Process</h2>
                 </div>
 
 
-                <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
-                    <button class="btn btn-md btn-design" [routerLink]="['/pages/dyeing-process/view']">View
-                        Table</button>
-                </div>
+
             </div>
         </nb-card-header>
         <nb-card-body>
@@ -20,12 +21,9 @@
                     <div class="col-md-5 col-12">
                         <div class="form-group">
                             <label class="required">Process Name</label>
-                            <input type="text" name="processName" class="form-control size-small" fieldsize="small"
-                                nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required
-                                [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched)}"
+                            <input type="text" name="processName" class="form-control size-small" fieldsize="small" nbinput #processName1="ngModel" [(ngModel)]='dyeingProcess.processName' required [ngClass]="{'is-invalid':(processName1.invalid)&&(formSubmitted || processName1.touched) || processNameExist}"
                                 placeholder="Process Name" (change)="isProcessNameAlreadyExist()">
-                            <div class="input-required"
-                                *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
+                            <div class="input-required" *ngIf="(processName1.invalid)&&(formSubmitted || processName1.touched)">
                                 <span>Process name is required.</span>
                             </div>
                             <div class="input-required" *ngIf="processNameExist">
@@ -37,30 +35,23 @@
 
                     <div class="col-md-7 col-12">
                         <div class="form-group text-right align-dis">
-                            <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="addProcessStep()" class="plus-add add-modal width-40"></nb-icon>
+                            <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addProcessStep()" class="plus-add add-modal width-40"></nb-icon>
                         </div>
                     </div>
 
                     <!-- Process list -->
-                    <div class="col-md-12 mr-top-10"
-                        *ngIf="dyeingProcessSteps? dyeingProcessSteps.length:dyeingProcessSteps;">
+                    <div class="col-md-12 mr-top-10" *ngIf="dyeingProcessSteps? dyeingProcessSteps.length:dyeingProcessSteps;">
 
                         <div cdkDropList (cdkDropListDropped)="drop($event)" class="acc-under-css">
                             <nb-accordion multi *ngFor="let step of dyeingProcessSteps" cdkDrag class="acc-start">
                                 <nb-accordion-item class="item accordian-process" #item (click)="onStepClick(step)">
-                                    <nb-accordion-item-header
-                                        class="item-header nb-accordian-fn-size nb-accordian display-flex-between">
+                                    <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between">
                                         <div class="">
                                             {{step.processType}}
                                         </div>
                                         <div class="nb-action">
-                                            <nb-icon icon="trash" status="danger"
-                                                [options]="{ animation: { type: 'zoom' } }" (click)="onDeleteStep(step)"
-                                                class="trash"></nb-icon>
-                                            <nb-icon icon="edit" status="primary"
-                                                [options]="{ animation: { type: 'zoom' } }" (click)="onEditStep(step)"
-                                                class="edit"></nb-icon>
+                                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="onDeleteStep(step)" class="trash"></nb-icon>
+                                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="onEditStep(step)" class="edit"></nb-icon>
                                         </div>
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
@@ -98,8 +89,7 @@
                                         </div>
                                         <div class="row dis-fl">
                                             <div class="col-md-11 col-12">
-                                                <table
-                                                    class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
+                                                <table class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
                                                     <tr>
                                                         <th>Item name</th>
                                                         <th>Supplier name</th>
@@ -133,14 +123,9 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/dyeing-process'>CANCEL</button>
-                            <button *ngIf="addFlag" type="button"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
-                            <button type="button" *ngIf="updateFlag"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addUpdateDyeingProcess(myForm)">Update</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="resetFormValues(myForm)">CANCEL</button>
+                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateDyeingProcess(myForm)">SAVE</button>
+                            <button type="button" *ngIf="updateFlag" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateDyeingProcess(myForm)">Update</button>
                         </div>
                     </div>
                 </div>

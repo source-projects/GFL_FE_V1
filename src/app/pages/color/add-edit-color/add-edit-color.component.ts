@@ -281,6 +281,10 @@ export class AddEditColorComponent implements OnInit {
         }
       );
     }
+    else{
+      this.toastr.error("Fill empty fields");
+ 
+    }
     this.disableButton = false;
   }
 

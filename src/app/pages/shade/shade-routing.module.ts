@@ -32,7 +32,7 @@ const routes: Routes = [
     component:PendingApcComponent,
     canActivate:[ShadeGuard],
     canLoad:[ShadeGuard],
-    data: { PermissionName: ['edit','edit group','edit all']}
+    data: { PermissionName: ['view','view group','view all']}
   }
 ];
 

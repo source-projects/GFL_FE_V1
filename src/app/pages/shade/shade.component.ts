@@ -212,11 +212,16 @@ export class ShadeComponent implements OnInit {
       if (result) {
         this.shadeService.deleteShadeData(id).subscribe(
           (data) => {
-            this.onChange(this.radioSelect);
-            this.toastr.success(errorData.Delete);
+            if(data['success']){
+              this.onChange(this.radioSelect);
+              this.toastr.success(data['msg']);
+            }else{
+              this.toastr.error(data['msg']);
+            }
+            
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error);
+            //this.toastr.error(errorData.Serever_Error);
           }
         );
       }

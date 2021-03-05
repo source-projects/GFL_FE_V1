@@ -34,6 +34,7 @@ export class AddEditSupplierComponent implements OnInit {
   formSubmitted:boolean=false;
   public loading = false;
   public disableButton = false;
+  public isSupplierNameExists: boolean = false;
 
 
   constructor(private location:Location, private commonService:CommonService, private supplierService:SupplierService, private router:Router, private _route:ActivatedRoute,private toastr: ToastrService) { }
@@ -48,8 +49,8 @@ export class AddEditSupplierComponent implements OnInit {
     this.userHead = this.commonService.getUserHeadId();
     this.addSupplier = new FormGroup({
       "supplierName": new FormControl(null,Validators.required),
-      "discountPercentage": new FormControl(null,[Validators.max(100),Validators.min(0)]), 
-      "gstPercentage": new FormControl(null,[Validators.max(100),Validators.min(0)]),
+      "discountPercentage": new FormControl(null,[Validators.required,Validators.max(100),Validators.min(0)]), 
+      "gstPercentage": new FormControl(null,[Validators.required,Validators.max(100),Validators.min(0)]),
       "paymentTerms": new FormControl(null,Validators.required),
       "remark": new FormControl(null),
       "userHeadId": new FormControl(null),
@@ -90,7 +91,7 @@ export class AddEditSupplierComponent implements OnInit {
     this.disableButton=true;
 
     this.formSubmitted=true;
-    if(this.addSupplier.valid){
+    if(this.addSupplier.valid && !this.isSupplierNameExists){
       this.addSupplier.value.createdBy = this.user.userId;
       this.addSupplier.value.userHeadId = this.userHead.userHeadId;
       this.supplierService.addSupplierInSystem(this.addSupplier.value).subscribe(
@@ -124,7 +125,7 @@ export class AddEditSupplierComponent implements OnInit {
     this.disableButton=true;
 
     this.formSubmitted=true;
-    if(this.addSupplier.valid){
+    if(this.addSupplier.valid && !this.isSupplierNameExists ){
       this.addSupplier.value.updatedBy = this.user.userId;
       let body = {
         ...this.addSupplier.value,
@@ -152,6 +153,21 @@ export class AddEditSupplierComponent implements OnInit {
     }
     this.disableButton = false;
 
+  }
+
+  isUniqueSupplierName(){
+    this.isSupplierNameExists = false;
+    if(this.addSupplier.value.supplierName){
+      let id = 0;
+      if(this.addSupplier.value.id) id = this.addSupplier.value.id;
+      this.supplierService.isSupplierExists(this.addSupplier.value.supplierName, id).subscribe(
+        data=>{
+          if(data['success']){
+            this.isSupplierNameExists = data['data'];
+          }
+        },error=>{}
+      )
+    }
   }
 
 }

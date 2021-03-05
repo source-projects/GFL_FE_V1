@@ -4,7 +4,11 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
-            <div class="col-md-10 col-6">
+            <div class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
+                    Table</button>
+            </div>
+            <div class="col-md-7 col-6">
                 <div *ngIf="addFlag">
                     <h2 class="nb-text txt-ov-elips">Add Stock-Batch</h2>
                 </div>
@@ -14,10 +18,7 @@
             </div>
 
 
-            <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
-                    Table</button>
-            </div>
+
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -130,9 +131,14 @@
                                 <span>Challan date is required</span>
                             </div>
                         </div>
-                        <div class="col-md-4 mobile-mr-bt">
+                        <div class="col-md-2 mobile-mr-bt">
                             <label>Unit:</label>
                             <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
+
+                        </div>
+                        <div class="col-md-2 mobile-mr-bt">
+                            <label>Wt / 100 mtrs:</label>
+                            <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small" nbinput readonly #wtPer100M1="ngModel" [(ngModel)]='wtPer100M'>
 
                         </div>
                         <div class="col-md-4">
@@ -154,10 +160,12 @@
                                         <div class="row">
                                             <div class="col-md-6 col-8">
                                                 <label>Batch No</label>
-                                                <input [attr.id]="'batchNo'+i" required type="number" [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i)">
-
+                                                <input [attr.id]="'batchNo'+i"  required type="number" [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i, $event)">
+                                                <div class="input-required" style="display: block !important;" *ngIf="block.isNotUnique">
+                                                    <span>Batch id already exists</span>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6 col-4">
+                                            <div class="col-md-6 col-4 display-flex-end">
                                                 <nb-icon status="danger" [hidden]="production_flag[i]" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="removeBatch(i);"></nb-icon>
                                             </div>
                                         </div>
@@ -237,7 +245,7 @@
 
                             <button *ngIf="!addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/stock-batch/view']">CANCEL</button>
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                            <!-- <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button> -->
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>

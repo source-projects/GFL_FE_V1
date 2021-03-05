@@ -5,8 +5,8 @@ export class User{
  email:string;
  contact:string;
  password:string;
- company:string;
- department:string;
+ companyId:number;
+ departmentId:number;
  designationId:number;
  createdBy:Number;
  updatedBy:Number;

@@ -50,7 +50,7 @@ export class DyeingProcessComponent implements OnInit {
               this.toastr.success(data["msg"]);
               this.dyeingProcessList = [];
               this.getAllDyeingProcesses();
-            } else this.toastr.success(data["msg"]);
+            } else this.toastr.error(data["msg"]);
           },
           (error) => {
             this.toastr.error("Internal server error");

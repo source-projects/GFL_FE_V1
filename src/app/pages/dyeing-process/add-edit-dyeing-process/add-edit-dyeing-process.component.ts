@@ -107,7 +107,9 @@ export class AddEditDyeingProcessComponent implements OnInit {
   }
 
   onEditStep(step) {
-    const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
+    const modalRef = this._modalService.open(AddDyeingProcessStepComponent, {
+      size: "lg",
+    });
     modalRef.componentInstance.position = step.sequence;
     modalRef.componentInstance.stepList = this.dyeingProcessSteps;
     modalRef.componentInstance.editStep = true;
@@ -143,7 +145,9 @@ export class AddEditDyeingProcessComponent implements OnInit {
     if (this.dyeingProcessSteps.length == 4) {
       this.toastr.warning("You are done with all the steps!");
     } else {
-      const modalRef = this._modalService.open(AddDyeingProcessStepComponent);
+      const modalRef = this._modalService.open(AddDyeingProcessStepComponent, {
+        size: "lg",
+      });
       modalRef.componentInstance.position = this.dyeingProcessSteps.length + 1;
       modalRef.componentInstance.stepList = this.dyeingProcessSteps;
       modalRef.componentInstance.editStep = false;
@@ -173,7 +177,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
   addUpdateDyeingProcess(myForm) {
     this.disableButton = true;
     this.formSubmitted = true;
-    if (myForm.valid) {
+    if (myForm.valid && !this.processNameExist) {
       if (this.addFlag) {
         if (this.dyeingProcessSteps.length != 0) {
           this.dyeingProcess.userHeadId = this.commonService.getUserHeadId().userHeadId;
@@ -214,7 +218,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
                   this.disableButton = false;
                   this.route.navigate(["/pages/dyeing-process"]);
                   this.toastr.success(data["msg"]);
-                } else{ 
+                } else {
                   this.disableButton = false;
                   this.toastr.error(data["msg"]);
                 }
@@ -230,25 +234,27 @@ export class AddEditDyeingProcessComponent implements OnInit {
           return;
         }
       }
-    }else{
+    } else {
       this.disableButton = false;
     }
   }
 
   isProcessNameAlreadyExist() {
     this.processNameExist = false;
-    let id = 0;
-    if (this.dyeingProcess.id) id = this.dyeingProcess.id;
-    this.dyeingProcessService
-      .isProcessNameExist(this.dyeingProcess.processName, id)
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.processNameExist = data["data"];
-          }
-        },
-        (error) => {}
-      );
+    if (this.dyeingProcess.processName) {
+      let id = 0;
+      if (this.dyeingProcess.id) id = this.dyeingProcess.id;
+      this.dyeingProcessService
+        .isProcessNameExist(this.dyeingProcess.processName, id)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.processNameExist = data["data"];
+            }
+          },
+          (error) => {}
+        );
+    }
   }
 
   resetFormValues(myForm) {

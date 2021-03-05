@@ -157,6 +157,8 @@ export class PlanningSlipComponent implements OnInit {
                     : element1.qty;
                 });
               });
+              if(this.isPrintDirect)
+                this.printNOW();
             }
           } else {
             this.toastr.error(data["msg"]);
@@ -401,7 +403,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    const modalRef = this.modalService.open(AddShadeComponent);
+    const modalRef = this.modalService.open(AddShadeComponent,{ size: 'lg' });
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
@@ -445,45 +447,53 @@ export class PlanningSlipComponent implements OnInit {
         this.isSavedForPrint = true;
         this.getSlipDataFromBatch();
       }
-      let interval1 = setInterval(() => {
-        if (this.slipData && this.isSavedForPrint) {
-          clearInterval(interval1);
-          let doc = new wijmo.PrintDocument({
-            title: "",
-          });
-          doc.append(
-            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
-          );
-          doc.append(
-            '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
-          );
-          doc.append(
-            '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
-          );
-          doc.append(
-            '<link href="./planning-slip.component.scss" rel="stylesheet">'
-          );
-          let tempFlag = false;
-          let inter = setInterval(() => {
-            let element = <HTMLElement>document.getElementById("print-slip");
-            if (element) {
-              doc.append(element);
-              doc.print();
-              // this.printFlag = true;
-              this.activeModal.close(this.slipObj);
-              tempFlag = true;
-              clearInterval(inter);
-              this.activeModal.close();
-            }
-          }, 10);
-        }
-      }, 10);
-      this.quantityNullFlag = false;
+
+      if(!this.isPrintDirect){
+        let interval1 = setInterval(() => {
+          if (this.slipData && this.isSavedForPrint) {
+            clearInterval(interval1);
+            this.printNOW();
+          }
+        }, 10);
+        this.quantityNullFlag = false;
+      }
+      
     } else {
       this.toastr.error("Fill empty fields.");
       this.quantityNullFlag = false;
       return;
     }
+  }
+
+  printNOW(){
+    let doc = new wijmo.PrintDocument({
+      title: "",
+    });
+    doc.append(
+      '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">'
+    );
+    doc.append(
+      '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">'
+    );
+    doc.append(
+      '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
+    );
+    doc.append(
+      '<link href="./planning-slip.component.scss" rel="stylesheet">'
+    );
+    let tempFlag = false;
+    let inter = setInterval(() => {
+      let element = <HTMLElement>document.getElementById("print-slip");
+      if (element) {
+        doc.append(element);
+        doc.print();
+        // this.printFlag = true;
+        this.activeModal.close(this.slipObj);
+        tempFlag = true;
+        clearInterval(inter);
+        this.activeModal.close();
+      }
+    }, 10);
   }
 
   trackByFn(index: number, obj: any) {

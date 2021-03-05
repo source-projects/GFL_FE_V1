@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ProductionPlanningComponent } from './production-planning.component';
 import { AddShadeComponent } from './add-shade/add-shade.component';
+import { JetPlanningModule } from '../jet-planning/jet-planning.module';
 
 
 
@@ -15,8 +16,8 @@ import { AddShadeComponent } from './add-shade/add-shade.component';
     CommonModule,
     ProductionPlanningRoutingModule,
     SharedModule,
-    FormsModule
-
+    FormsModule,
+    JetPlanningModule
   ]
 })
 export class ProductionPlanningModule { }
