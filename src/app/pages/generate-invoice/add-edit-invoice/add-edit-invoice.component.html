@@ -53,7 +53,7 @@
                          </div>
                          </div> -->
             <ngx-datatable [rows]="merge" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
-                <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true">
+                <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" [maxWidth]="130">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                 <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>

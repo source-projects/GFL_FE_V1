@@ -8,7 +8,86 @@
         <div>
             <form #myForm="ngForm">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <div class="form-group mb-1">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Party</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <ng-select name="partyId" [(ngModel)]='finishedMeterForm.partyId' #partyId1="ngModel" (change)="enableQuality($event)" placeholder="Select Party">
+                                        <ng-option disabled="true">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">Party Name
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right txt-ov-elips">
+                                                        Party Code</div>
+                                                </div>
+                                            </div>
+                                        </ng-option>
+                                        <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                                </div>
+                                            </div>
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-1">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Quality</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <ng-select name="qualityId" [(ngModel)]='finishedMeterForm.qualityId' #qualityId1="ngModel" placeholder="Select Quality" (change)="qualitySelected($event)">
+                                        <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
+                                            {{q.qualityId}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-1">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Batch</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <ng-select name="batchId" [(ngModel)]='finishedMeterForm.batchId' #batchId1="ngModel" placeholder="Select Batch" (change)="batchSelected($event)">
+                                        <ng-option *ngFor="let b of batchList" [disabled]="!b.productionPlanned" [value]="b.batchId">{{b.batchId}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-1">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Master</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel" [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="masterSelected($event)" placeholder="Select Master" class="required-error-dropdown">
+                                        <ng-option *ngFor="let master of masterList" [value]="master.id">{{master.userName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4">
                         <div class="form-group">
                             <label>Master</label>
                             <ng-select name="masterId" [(ngModel)]='finishedMeterForm.masterId' required #partyId1="ngModel" [ngClass]="{'is-invalid': formSubmitted && partyId1.invalid}" (change)="masterSelected($event)" placeholder="Select Master" class="required-error-dropdown">
@@ -55,10 +134,10 @@
                                 </ng-option>
                             </ng-select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Batch</label>
@@ -70,7 +149,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br> -->
                 <div class="row" *ngIf="finishedMeterForm.batchId">
                     <div class="col-md-12">
                         <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="finishedMeterForm.batchData" [headerHeight]="31" [footerHeight]="30">
@@ -124,7 +203,7 @@
 
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <div class="padding-bt-tp">
+                        <div class="mobile-pad-top-15">
                             <button class="btn btn-primary btn-sm btn-design-cancel" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="isAddButtonClicked" (click)="addFinishedMeter(myForm)">SAVE</button>
                         </div>
