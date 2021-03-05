@@ -331,6 +331,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.party = this.p_id;
       modalRef.componentInstance.quality = this.productionPlanning.qualityEntryId;
     }
+    modalRef.componentInstance.productionBatchDetail = this.productionBatchDetail;
     modalRef.componentInstance.batch = batch_id;
     modalRef.componentInstance.batchControl = b_controlId;
     modalRef.componentInstance.shadeId = shadeId;
@@ -379,7 +380,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public plannedProductionListForDataTable(): any {
     this.plannedProductionList = [];
-    this.productionPlanningService.getAllPlannedProductionList().subscribe(
+    this.jetService.getAllProductionWithoutJetPlan().subscribe(
       (data) => {
         if (data["success"]) {
           this.plannedProductionList = data["data"];
@@ -629,6 +630,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     );
     if (production.length) {
       const modalRef = this.modalService.open(AddShadeComponent);
+      modalRef.componentInstance.productionBatchDetail = this.productionBatchDetail;
       modalRef.componentInstance.party = production[0].partyId;
       modalRef.componentInstance.quality = production[0].qualityEntryId;
       modalRef.componentInstance.batch = production[0].batchId;

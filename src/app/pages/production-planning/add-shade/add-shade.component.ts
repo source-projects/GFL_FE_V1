@@ -17,6 +17,7 @@ import { AdminService } from "../../../@theme/services/admin.service";
   styleUrls: ["./add-shade.component.scss"],
 })
 export class AddShadeComponent implements OnInit {
+  @Input("productionBatchDetail") productionBatchDetail: any;
   @Input("party") party: any;
   @Input("quality") quality: any;
   @Input("batch") batch: any;
