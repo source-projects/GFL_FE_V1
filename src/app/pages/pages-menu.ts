@@ -123,13 +123,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/production-planning',
     hidden:false
   },
+  // {
+  //   title: 'Jet Planning',
+  //   icon: 'options-outline',
+  //   link: '/pages/jet-planning',
+  //   hidden:false
+  // },
   {
-    title: 'Jet Planning',
-    icon: 'options-outline',
-    link: '/pages/jet-planning',
-    hidden:false
-  }
-  ,{
     title: 'Generate Invoice',
     icon: 'file-text-outline',
     link: '/pages/generate_invoice',
