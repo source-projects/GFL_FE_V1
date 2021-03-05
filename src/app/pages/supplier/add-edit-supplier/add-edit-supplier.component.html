@@ -24,11 +24,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Supplier Name</label>
-                        <input type="text" class="form-control size-small" nbinput fieldsize="small" name="supplierName" placeholder="Supplier Name" formControlName="supplierName" [ngClass]="{'is-invalid':(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched) }">
+                        <input type="text" class="form-control size-small" (change)="isUniqueSupplierName()" nbinput fieldsize="small" name="supplierName" placeholder="Supplier Name" formControlName="supplierName" [ngClass]="{'is-invalid':(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched) || isSupplierNameExists}">
                         <div class="input-required" *ngIf="(addSupplier.controls.supplierName.invalid )&& (formSubmitted || addSupplier.controls.supplierName.touched)">
                             <span>Supplier Name is Required</span>
                         </div>
-                       
+                       <div class="input-required" *ngIf="isSupplierNameExists">
+                           <span>Supplier name already exists</span>
+                       </div>
                     </div>
                 </div>
                 <div class="col-md-4">

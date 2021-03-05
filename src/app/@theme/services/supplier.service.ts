@@ -13,6 +13,11 @@ export class SupplierService {
     console.log("Handle Error Http call");
     console.log(err.message);
   }
+
+  isSupplierExists(name, id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/isSupplierNameExists/'+name+'/'+id);
+  }
+
   addSupplierInSystem(supplierData) {
     return this.httpClient.post(this.commonService.envUrl() + 'api/supplier', supplierData);
   }
