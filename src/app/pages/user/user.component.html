@@ -33,7 +33,8 @@
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id" [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/user/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="deleteUser(row.id)"></nb-icon>
+                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"  [hidden]="hidden" ></nb-icon>
+                    <!-- (click)="deleteUser(row.id)" -->
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="User Name" prop="userName"></ngx-datatable-column>
