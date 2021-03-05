@@ -168,7 +168,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   public getAllBatchData() {
-    this.batchList = [];
     this.stockBatchService.getAllBatch().subscribe(
       (data) => {
         if (data["success"]) {
