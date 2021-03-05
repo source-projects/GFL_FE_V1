@@ -19,7 +19,7 @@ export class ProductionPlanningService {
 
   saveProductionPlan(productionData): any {
     return this.httpClient.post(
-      this.commonService.envUrl() + "api/productionPlanWithJet/",
+      this.commonService.envUrl() + "api/productionPlan/productionPlanWithJet/",
       productionData
     );
   }
