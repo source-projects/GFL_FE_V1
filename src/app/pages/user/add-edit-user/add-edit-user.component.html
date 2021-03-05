@@ -107,7 +107,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Company</label>
-                            <ng-select name="company" #company1="ngModel" [(ngModel)]="user.company" [items]="companyList" bindLabel="name" bindValue="name" placeholder="Select Company" required [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}"
+                            <ng-select name="company" #company1="ngModel" [(ngModel)]="user.companyId" [items]="companyList" bindLabel="name" bindValue="id" placeholder="Select Company" required [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
                             <div class="input-required" *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
@@ -119,7 +119,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="departmenty" #department1="ngModel" [(ngModel)]="user.department" [items]="departmentList" bindLabel="name" bindValue="name" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
+                            <ng-select name="departmenty" #department1="ngModel" [(ngModel)]="user.departmentId" [items]="departmentList" bindLabel="name" bindValue="id" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
                             <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">

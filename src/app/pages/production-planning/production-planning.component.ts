@@ -556,11 +556,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
-          this.route
-            .navigateByUrl("/RefreshComponent", { skipLocationChange: false })
-            .then(() => {
-              this.route.navigate(["/pages/production-planning"]);
-            });
+          this.getJetData();
         } else {
           this.toastr.error(data["msg"]);
         }
