@@ -7,6 +7,7 @@ import {
   AddDepartment,
   AddMachine,
   AddMachineCategory,
+  AddQuality,
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -23,6 +24,7 @@ export class AdminComponent implements OnInit {
   addJet: AddJet = new AddJet();
   addCompany: AddCompany = new AddCompany();
   addDepartment: AddDepartment = new AddDepartment();
+  addQuality: AddQuality = new AddQuality();
   addDesignation: AddDesignation = new AddDesignation();
   approveBy: ApproveBy = new ApproveBy();
   addMachine: AddMachine = new AddMachine();
@@ -33,6 +35,7 @@ export class AdminComponent implements OnInit {
   approveByArray: ApproveBy[] = [];
   addMachineArray: AddMachine[] = [];
   addMachineCategoryArray: AddMachineCategory[] = [];
+  addQualityArray: AddQuality[] = [];
   jetList = [];
   designationList = [];
   companyList = [];
@@ -40,6 +43,7 @@ export class AdminComponent implements OnInit {
   approveByList = [];
   machineList = [];
   machineCategoryList = [];
+  qualityList = [];
 
   formSubmitted: boolean = false;
   loading = false;
@@ -49,6 +53,7 @@ export class AdminComponent implements OnInit {
   designationEditFlag = false;
   approveByEditFlag = false;
   machineEditFlag = false;
+  qualityEditFlag = false;
   machineCategoryEditFlag = false;
   constructor(
     private adminService: AdminService,
@@ -61,6 +66,7 @@ export class AdminComponent implements OnInit {
     this.approveByArray.push(this.approveBy);
     this.addMachineArray.push(this.addMachine);
     this.addMachineCategoryArray.push(this.addMachineCategory);
+    this.addQualityArray.push(this.addQuality);
   }
 
   ngOnInit(): void {
@@ -68,6 +74,7 @@ export class AdminComponent implements OnInit {
     this.getAllApproveByData();
     this.getAllCompanyData();
     this.getAllDepartment();
+    this.getAllQuality();
     this.getAllDesignationData();
     this.getAllMachineData();
     this.getAllMachineCategoryData();
@@ -180,6 +187,17 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  getAllQuality() {
+    this.adminService.getAllQualityData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.addQuality = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
+
   saveJet(addJetData) {
     this.formSubmitted = true;
     if (addJetData.valid) {
@@ -235,7 +253,6 @@ export class AdminComponent implements OnInit {
               this.getAllMachineData();
               this.resetValue(addMachineData);
               this.formSubmitted = false;
-
             } else {
               this.toastr.error(errorData.Update_Error);
             }
@@ -271,22 +288,23 @@ export class AdminComponent implements OnInit {
     this.formSubmitted = true;
     if (addMachineCategoryData.valid) {
       if (this.machineCategoryEditFlag == true) {
-        this.adminService.updateMachineCategory(this.addMachineCategory).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Update_Success);
-              this.getAllMachineCategoryData();
-              this.resetValue(addMachineCategoryData);
-              this.formSubmitted = false;
-
-            } else {
-              this.toastr.error(errorData.Update_Error);
+        this.adminService
+          .updateMachineCategory(this.addMachineCategory)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Update_Success);
+                this.getAllMachineCategoryData();
+                this.resetValue(addMachineCategoryData);
+                this.formSubmitted = false;
+              } else {
+                this.toastr.error(errorData.Update_Error);
+              }
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
             }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
+          );
         this.machineCategoryEditFlag = false;
       } else {
         this.adminService
@@ -478,6 +496,44 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  saveQuality(addQualityData) {
+    this.formSubmitted = true;
+    if (addQualityData.valid) {
+      if (this.departmentEditFlag == true) {
+        this.adminService.updateQuality(this.addQuality).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllQuality();
+              this.onCancelQuality();
+              this.resetValue(addQualityData);
+              this.formSubmitted = false;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      } else {
+        this.adminService.saveQuality(this.addQuality).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllQuality();
+              this.resetValue(addQualityData);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }
+    } else {
+      // this.formSubmitted = false;
+      return;
+    }
+  }
+
   resetValue(FormName) {
     this.formSubmitted = false;
     Object.keys(FormName.controls).forEach((field) => {
@@ -500,6 +556,11 @@ export class AdminComponent implements OnInit {
     this.addDepartment.id = null;
     this.addDepartment.name = null;
     this.departmentEditFlag = false;
+  }
+  onCancelQuality() {
+    this.addQuality.id = null;
+    this.addQuality.name = null;
+    this.qualityEditFlag = false;
   }
   onCancelDesignation() {
     this.addDesignation.id = null;
@@ -661,6 +722,29 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  removeQuality(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.adminService.deleteQualityById(id).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllQuality();
+            } else {
+              this.toastr.error("Can't delete this record");
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+  }
+
   removeApproveBy(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -729,6 +813,15 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addDepartment.id = element.id;
         this.addDepartment.name = element.name;
+      }
+    });
+  }
+  getQualityEdit(id) {
+    this.qualityEditFlag = true;
+    this.qualityList.forEach((element) => {
+      if (element.id == id) {
+        this.addQuality.id = element.id;
+        this.addQuality.name = element.name;
       }
     });
   }

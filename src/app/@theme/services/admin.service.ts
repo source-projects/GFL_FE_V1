@@ -28,6 +28,9 @@ export class AdminService {
       this.commonService.envUrl() + "api/admin/get/allCompany"
     );
   }
+  getAllQualityData() {
+    return this.httpClient.get(this.commonService.envUrl() + "api/admin/");
+  }
 
   getAllApproveByData() {
     return this.httpClient.get(
@@ -78,6 +81,12 @@ export class AdminService {
     );
   }
 
+  saveQuality(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/",
+      data
+    );
+  }
   saveJetData(jetData) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/admin/jet/addJet",
@@ -111,6 +120,11 @@ export class AdminService {
       this.commonService.envUrl() + "api/admin/delete/jet/" + id
     );
   }
+  deleteQualityById(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/admin/" + id
+    );
+  }
   deleteDesignationById(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/user/designation/" + id
@@ -127,8 +141,6 @@ export class AdminService {
     );
   }
 
- 
-
   deleteDepartmentById(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/admin/delete/department/" + id
@@ -140,22 +152,21 @@ export class AdminService {
       this.commonService.envUrl() + "api/machine/delete/" + id
     );
   }
- 
+
   deleteMachineCategory(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/machine/delete/category/" + id
     );
   }
 
-  updateMachine(data){
+  updateMachine(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/machine/update/",
       data
     );
   }
 
-  
-updateMachineCategory(data){
+  updateMachineCategory(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/machine/update/category/",
       data
@@ -168,7 +179,12 @@ updateMachineCategory(data){
       data
     );
   }
-
+  updateQuality(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/",
+      data
+    );
+  }
   updateApproveByData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/update/approvedBy/",
