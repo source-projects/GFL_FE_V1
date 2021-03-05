@@ -245,7 +245,7 @@
 
                             <button *ngIf="!addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/stock-batch/view']">CANCEL</button>
 
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button>
+                            <!-- <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button> -->
                             <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
                             <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
                         </div>
