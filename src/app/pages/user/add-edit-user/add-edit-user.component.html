@@ -152,11 +152,11 @@
                     <div class="col-md-4" *ngIf="user.isUserHead">
                         <div class="form-group">
                             <label class="required">User Head List</label>
-                            <select name="userHeadId" class="form-control dropdown-name" #userHeadList="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadList.invalid)&&(formSubmitted || userHeadList.touched)}">
-                                <option *ngFor="let head of userHeadList" [ngValue]="head.id">{{head.name}}
+                            <select name="userHeadId" class="form-control dropdown-name" #userHeadListValue="ngModel" [(ngModel)]="user.userHeadId" required [ngClass]="{'is-invalid': (userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)}">
+                                <option *ngFor="let head of userHeadList" [ngValue]="head.id">{{head.userName}}
                                 </option>
                             </select>
-                            <div class="input-required" *ngIf="(userHeadList.invalid)&&(formSubmitted || userHeadList.touched)">
+                            <div class="input-required" *ngIf="(userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)">
                                 <span>UserHead is required.</span>
                             </div>
                         </div>
