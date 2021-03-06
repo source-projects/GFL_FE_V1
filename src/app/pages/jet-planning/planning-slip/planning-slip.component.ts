@@ -172,7 +172,7 @@ export class PlanningSlipComponent implements OnInit {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index =
-        "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
+        "itemList" + parentDataIndex + (rowIndex + 1) + "-" + 1;
       if (
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
@@ -210,6 +210,7 @@ export class PlanningSlipComponent implements OnInit {
           this.toastr.error("Fill empty fields");
         }
       } else {
+        this.index = "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -225,17 +226,11 @@ export class PlanningSlipComponent implements OnInit {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "itemList" + (rowIndex + 1) + "-" + 1;
-
-      console.log("item List", this.itemList);
       if (rowIndex === this.itemList.length - 1) {
         let item = this.itemList[rowIndex];
-        console.log("item", item);
         if (item.itemName && item.qty) {
           let obj = new DyeingChemicalData();
           this.itemList.push(obj);
-          // this.data.changes.subscribe(() => {
-          //   this.data.last.focus();
-          // });
           let interval = setInterval(() => {
             let field = document.getElementById(this.index);
             if (field != null) {
@@ -248,6 +243,7 @@ export class PlanningSlipComponent implements OnInit {
           this.toastr.error("Fill empty fields");
         }
       } else {
+        this.index = "itemList" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -552,7 +548,7 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  onEnter(e, index) {
+  onEnter(e, index, colIndex) {
     let keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       let indexOfEnter = "addList" + (index + 1) + "-" + 1;
@@ -577,6 +573,7 @@ export class PlanningSlipComponent implements OnInit {
           this.toastr.error("Fill empty fields.");
         }
       } else {
+        let indexOfEnter = "addList" + (index + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(indexOfEnter);
           if (field != null) {
