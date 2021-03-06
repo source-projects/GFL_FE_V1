@@ -39,7 +39,7 @@ export class UserService {
     );
   }
   getAllHead(): any {
-    return this.httpClient.get(this.commonService.envUrl() + "api/userHead/");
+    return this.httpClient.get(this.commonService.envUrl() + "api/userHead");
   }
   getAllUser(id, getBy): any {
     return this.httpClient.get(

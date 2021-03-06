@@ -17,16 +17,31 @@ export class User{
 }
 
 export class Permissions{
-    module:string = null;
-   view:boolean = false;
-   add:boolean = false;
-   edit:boolean = false;
-   delete:boolean = false;
-   viewGroup:boolean = false;
-   viewAll:boolean = false;
-   editGroup:boolean = false;
-   editAll:boolean = false;
-   deleteGroup:boolean = false;
-   deleteAll:boolean = false;
-   selectAll:boolean = false;
+    module:string;
+   view:boolean;
+   add:boolean;
+   edit:boolean;
+   delete:boolean;
+   viewGroup:boolean;
+   viewAll:boolean;
+   editGroup:boolean;
+   editAll:boolean;
+   deleteGroup:boolean;
+   deleteAll:boolean;
+   selectAll:boolean;
+
+   constructor(){
+    this.module = null;
+    this.view = false;
+    this.add = false;
+    this.edit = false;
+    this.delete = false;
+    this.viewGroup = false;
+    this.viewAll = false;
+   this.editGroup = false;
+    this.editAll = false;
+    this.deleteGroup = false;
+    this.deleteAll = false;
+    this.selectAll = false;
+   }
 }

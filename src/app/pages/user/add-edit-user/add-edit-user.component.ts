@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
-  NbToastrConfig,
+  NbToastrConfig
 } from "@nebular/theme";
 import * as errorData from "../../../@theme/json/error.json";
 import { Permissions, User } from "../../../@theme/model/user";
@@ -16,7 +16,7 @@ import { PartyService } from "../../../@theme/services/party.service";
 @Component({
   selector: "ngx-add-edit-user",
   templateUrl: "./add-edit-user.component.html",
-  styleUrls: ["./add-edit-user.component.scss"],
+  styleUrls: ["./add-edit-user.component.scss"]
 })
 export class AddEditUserComponent implements OnInit {
   public errorData: any = (errorData as any).default;
@@ -43,7 +43,7 @@ export class AddEditUserComponent implements OnInit {
   departmentList = [];
   master: any[] = [];
   currentUserData: any;
-  desiList;
+  designationList;
   public isChangePass: boolean = false;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
@@ -67,10 +67,10 @@ export class AddEditUserComponent implements OnInit {
     "Invoice",
     "Finished Meter",
     "Input Data",
-    "Water Jet",
+    "Water Jet"
   ];
 
-  userHradIdList: any[] = [];
+  userHeadList: any[] = [];
 
   perName = [
     "View",
@@ -82,7 +82,7 @@ export class AddEditUserComponent implements OnInit {
     "Edit Group",
     "Edit All",
     "Delete Group",
-    "Delete All",
+    "Delete All"
   ];
 
   perName1 = [
@@ -95,7 +95,7 @@ export class AddEditUserComponent implements OnInit {
     "editGroup",
     "editAll",
     "deleteGroup",
-    "deleteAll",
+    "deleteAll"
   ];
 
   checkArray: any[] = [];
@@ -122,210 +122,127 @@ export class AddEditUserComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.currentUserId = this._route.snapshot.paramMap.get("id");
+    this.userId = this.commonService.getUser();
+    this.userHead = this.commonService.getUserHeadId();
     this.getDesignation();
     this.getAllCompany();
     this.getAllDepartment();
-    await this.getUserId();
+    this.getUserHeadList();
+    this.createPermission();
     if (this.currentUserId) {
       this.getCurrentUser();
-    } else this.user.isUserHead = false;
-    this.createPermission();
-  }
-
-  public getMaster(logInUserDetail) {
-    let masterId;
-    if (this.masterFlag) {
-      this.master.push(logInUserDetail.name);
-    } else if (this.operatorFlag) {
-      this.master.push(logInUserDetail.userHeadName);
     } else {
-      this.loading = true;
-      this.partyService.getAllMaster().subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.master = data["data"];
-            this.loading = false;
-          } else {
-            this.loading = false;
-          }
-        },
-        (error) => {
-          this.loading = false;
-        }
-      );
-    }
-  }
-  checkUserName() {
-    this.userNameExist = false;
-    let id: Number = 0;
-    if (this.user.id) id = this.user.id;
-    this.userService.checkUserNameExist(this.user.userName, id).subscribe(
-      (data) => {
-        this.userNameExist = data["data"];
-      },
-      (error) => {}
-    );
-  }
-  checkUser(logInUserDetail) {
-    if (
-      logInUserDetail.superUserHeadId == null &&
-      logInUserDetail.userHeadId == null
-    ) {
-      this.adminFlag = true;
-    } else if (
-      logInUserDetail.userHeadId &&
-      logInUserDetail.superUserHeadId == null
-    ) {
-      this.masterFlag = true;
-    } else if (logInUserDetail.superUserHeadId && logInUserDetail.userHeadId) {
-      this.operatorFlag = true;
-    }
-  }
-
-  getAllUserHrads() {
-    this.loading = true;
-    if (this.masterFlag) {
-      let obj = {
-        id: this.currentUserData.id,
-        name: this.currentUserData.name,
-      };
-      this.userHradIdList.push(obj);
-      console.log(this.userHradIdList);
-    } else {
-      this.userService.getAllHead().subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.userHradIdList = data["data"];
-            this.loading = false;
-          }
-          // this.toastr.error(data["msg"])
-          else this.loading = false;
-        },
-        (error) => {
-          // this.toastr.error(errorData.Internal_Error)
-          this.loading = false;
-        }
-      );
-    }
-  }
-
-  public getUserId() {
-    this.userId = this.commonService.getUser();
-    this.userHead = this.commonService.getUserHeadId();
-    if (this.userHead.userHeadId == 0) {
-      this.adminFlag = true;
-    }
-    this.currentUserId = this._route.snapshot.paramMap.get("id");
-    this.userService.getUserHeadDetails(this.userId.userId).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.currentUserData = data["data"];
-          this.checkUser(this.currentUserData);
-          if (this.masterFlag) {
-            this.user.isUserHead = true;
-          }
-          this.getAllUserHrads();
-        }
-      },
-      (error) => {}
-    );
-  }
-
-  designationSelected(event) {
-    if (event == undefined) {
-      this.isMasterFlag = false;
-
       this.user.isUserHead = false;
-    } else {
-      const found = this.desi_list.find((element) => element.id == event);
-      if ("Master" == found.designation) {
-        //hide userHeadId fields.
-        this.isMasterFlag = true;
-        this.user.isUserHead = false;
-        this.user.userHeadId = Number(this.commonService.getUser().userId);
-      } else { 
-        this.user.isUserHead = true
-        this.isMasterFlag = false;
+    }  
+  }
+
+  getDesignation() {
+    this.loading = true;
+    this.userService.getDesignation().subscribe(
+      data => {
+        if (data["success"]) {
+          this.designationList = data["data"];
+          if (this.userHead.userHeadId) {
+            this.designationList = this.designationList.filter(
+              v => v.designation && v.designation.toLowerCase() != "master"
+            );
+          }
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      error => {
+        this.loading = false;
       }
-    }
+    );
   }
 
   getAllCompany() {
     this.userService.getAllCompanyData().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.companyList = data["data"];
         }
       },
-      (error) => {}
+      error => {}
     );
   }
 
   getAllDepartment() {
     this.userService.getAllDepartmentData().subscribe(
-      (data) => {
+      data => {
         if (data["success"]) {
           this.departmentList = data["data"];
         }
       },
-      (error) => {}
+      error => {}
     );
   }
 
-  getUserHrads(event) {
-    this.loading = true;
-    if (this.user.isUserHead) {
-      if (!this.userHradIdList) {
-        this.userService.getAllHead().subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.userHradIdList = data["data"];
-              this.user.isUserHead = true;
-            }
-            // else
-            //   this.toastr.error(data["msg"])
-            this.loading = false;
-          },
-          (error) => {
-            // this.toastr.error(errorData.Internal_Error)
-            this.loading = false;
-          }
-        );
+  getUserHeadList() {
+    this.userHeadList = [];
+    this.userService.getAllHead().subscribe(
+      data => {
+        if (data["success"]) {
+          this.userHeadList = data["data"] ? data["data"] : [];
+          this.loading = false;
+        } else this.loading = false;
+      },
+      error => {
         this.loading = false;
       }
+    );
+  }
+
+  checkUserName() {
+    this.userNameExist = false;
+    let id: Number = 0;
+    if (this.user.id) id = this.user.id;
+    this.userService.checkUserNameExist(this.user.userName, id).subscribe(
+      data => {
+        this.userNameExist = data["data"];
+      },
+      error => {}
+    );
+  }
+
+  designationSelected(event) {
+    if (!event) {
+      this.isMasterFlag = false;
+      this.user.isUserHead = false;
     } else {
-      this.user.userHeadId = null;
+      const found = this.designationList.find(element => element.id == event);
+      if (found && found.designation && found.designation.toLowerCase() == "master") {
+        //hide userHeadId fields.
+        this.isMasterFlag = true;
+        this.user.isUserHead = false;
+        this.user.userHeadId = Number(this.commonService.getUser().userId);
+      } else {
+        this.user.isUserHead = true;
+        this.isMasterFlag = false;
+      }
     }
   }
 
   createPermission() {
     for (let i = 0; i < this.forms.length; i++) {
       this.permissionArray.push(new Permissions());
+
       this.permissionArray[i].module = this.forms[i];
-      this.permissionArray[i].add = false;
-      this.permissionArray[i].edit = false;
-      this.permissionArray[i].delete = false;
-      this.permissionArray[i].view = false;
-      this.permissionArray[i].editAll = false;
-      this.permissionArray[i].editGroup = false;
-      this.permissionArray[i].deleteAll = false;
-      this.permissionArray[i].deleteGroup = false;
-      this.permissionArray[i].viewAll = false;
-      this.permissionArray[i].viewGroup = false;
     }
   }
 
   setPermissionTrue(i) {
-    this.permissionArray[i].add = true;
-    this.permissionArray[i].edit = true;
-    this.permissionArray[i].delete = true;
-    this.permissionArray[i].view = true;
-    this.permissionArray[i].editAll = true;
-    this.permissionArray[i].editGroup = true;
-    this.permissionArray[i].deleteAll = true;
-    this.permissionArray[i].deleteGroup = true;
-    this.permissionArray[i].viewAll = true;
-    this.permissionArray[i].viewGroup = true;
+    let keys = Object.keys(this.permissionArray[i])
+    if(keys && keys.length){
+      keys.forEach(e=>{
+        if(e != "module"){
+          this.permissionArray[i][e] = true;
+        }
+      })
+    }
 
     for (let j = 0; j < this.forms.length; j++) {
       this.checkIfAllSelected(j);
@@ -339,16 +256,14 @@ export class AddEditUserComponent implements OnInit {
   }
 
   setPermissionFalse(i) {
-    this.permissionArray[i].add = false;
-    this.permissionArray[i].edit = false;
-    this.permissionArray[i].delete = false;
-    this.permissionArray[i].view = false;
-    this.permissionArray[i].editAll = false;
-    this.permissionArray[i].editGroup = false;
-    this.permissionArray[i].deleteAll = false;
-    this.permissionArray[i].deleteGroup = false;
-    this.permissionArray[i].viewAll = false;
-    this.permissionArray[i].viewGroup = false;
+    let keys = Object.keys(this.permissionArray[i])
+    if(keys && keys.length){
+      keys.forEach(e=>{
+        if(e != "module"){
+          this.permissionArray[i][e] = false;
+        }
+      })
+    }
     this.allRightsFlag = false;
   }
 
@@ -369,21 +284,19 @@ export class AddEditUserComponent implements OnInit {
   checkUncheckAll(module, e) {
     switch (module) {
       case "Party": {
-        let index = this.permissionArray.findIndex((v) => v.module == "Party");
+        let index = this.permissionArray.findIndex(v => v.module == "Party");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "Quality": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Quality"
-        );
+        let index = this.permissionArray.findIndex(v => v.module == "Quality");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "User": {
-        let index = this.permissionArray.findIndex((v) => v.module == "User");
+        let index = this.permissionArray.findIndex(v => v.module == "User");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
 
@@ -391,37 +304,33 @@ export class AddEditUserComponent implements OnInit {
       }
       case "Stock-Batch": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Stock-Batch"
+          v => v.module == "Stock-Batch"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "Program": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Program"
-        );
+        let index = this.permissionArray.findIndex(v => v.module == "Program");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "Shade": {
-        let index = this.permissionArray.findIndex((v) => v.module == "Shade");
+        let index = this.permissionArray.findIndex(v => v.module == "Shade");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "Supplier": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Supplier"
-        );
+        let index = this.permissionArray.findIndex(v => v.module == "Supplier");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
       case "Supplier Rate": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Supplier Rate"
+          v => v.module == "Supplier Rate"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -430,7 +339,7 @@ export class AddEditUserComponent implements OnInit {
 
       case "Color Stock": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Color Stock"
+          v => v.module == "Color Stock"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -438,7 +347,7 @@ export class AddEditUserComponent implements OnInit {
       }
       case "Dyeing Process": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Dyeing Process"
+          v => v.module == "Dyeing Process"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -446,7 +355,7 @@ export class AddEditUserComponent implements OnInit {
       }
       case "Production Planning": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Production Planning"
+          v => v.module == "Production Planning"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -454,7 +363,7 @@ export class AddEditUserComponent implements OnInit {
       }
       case "Jet Planning": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Jet Planning"
+          v => v.module == "Jet Planning"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -462,7 +371,7 @@ export class AddEditUserComponent implements OnInit {
       }
       case "Input Data": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Input Data"
+          v => v.module == "Input Data"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -470,18 +379,14 @@ export class AddEditUserComponent implements OnInit {
       }
 
       case "Payment": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Payment"
-        );
+        let index = this.permissionArray.findIndex(v => v.module == "Payment");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
 
       case "Invoice": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Invoice"
-        );
+        let index = this.permissionArray.findIndex(v => v.module == "Invoice");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
@@ -489,7 +394,7 @@ export class AddEditUserComponent implements OnInit {
 
       case "Finished Meter": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Finished Meter"
+          v => v.module == "Finished Meter"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -498,7 +403,7 @@ export class AddEditUserComponent implements OnInit {
 
       case "Water Jet": {
         let index = this.permissionArray.findIndex(
-          (v) => v.module == "Water Jet"
+          v => v.module == "Water Jet"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
@@ -602,7 +507,7 @@ export class AddEditUserComponent implements OnInit {
       d: "",
       bf: "",
       ip: "",
-      wt: "",
+      wt: ""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
@@ -640,7 +545,7 @@ export class AddEditUserComponent implements OnInit {
     // get decimal
     let val;
 
-    let temp = Object.keys(binArray1).map((key) => {
+    let temp = Object.keys(binArray1).map(key => {
       val = binArray1[key];
 
       return { [key]: parseInt(this.bin2dec(val)) };
@@ -664,7 +569,7 @@ export class AddEditUserComponent implements OnInit {
     let arr = [];
     let array1 = [];
     let sliceArray = [];
-    let temp = Object.keys(user.userPermissionData).map((key) => {
+    let temp = Object.keys(user.userPermissionData).map(key => {
       val = user.userPermissionData[key];
       arr[i] = val;
       i++;
@@ -680,7 +585,7 @@ export class AddEditUserComponent implements OnInit {
     let perString = "";
     for (let i1 = 0; i1 < this.forms.length; i1++) {
       let j = 0;
-      this.perName1.forEach((element) => {
+      this.perName1.forEach(element => {
         if (element != "module") {
           if (array1[i1][j] == "1") {
             this.permissionArray[i1][element] = true;
@@ -737,10 +642,11 @@ export class AddEditUserComponent implements OnInit {
     this.loading = true;
     if (this.currentUserId != null) {
       this.userService.getUserById(this.currentUserId).subscribe(
-        (data) => {
+        data => {
           if (data["success"]) {
             this.user = data["data"];
-            if (data["data"].designationId.designation != "Master") {
+            let designationObj: any = (this.user &&  this.user.designationId && this.user.designationId) ? this.user.designationId: ''; 
+            if ( designationObj.designation.toLowerCase() != 'master') {
               this.user.isUserHead = true;
               this.isMasterFlag = false;
             } else {
@@ -748,15 +654,11 @@ export class AddEditUserComponent implements OnInit {
               this.isMasterFlag = true;
             }
             this.user.designationId = data["data"].designationId.id;
-
             this.getCurrentCheckValue(this.user);
-          } else {
-            // this.toastr.error(errorData.Internal_Error);
           }
           this.loading = false;
         },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
+        error => {
           this.loading = false;
         }
       );
@@ -773,26 +675,19 @@ export class AddEditUserComponent implements OnInit {
       if (this.user.password) {
         let md5 = new Md5();
         this.user.password = String(md5.appendStr(this.user.password).end());
-      }else{
-        this.user.password = "";  
+      } else {
+        this.user.password = "";
       }
-
-      //this.user.designationId = this.user.designationId.id;
-      // if (!this.user.isUserHead)
-      //   delete this.user.userHeadId
       this.userService.updateUser(this.user).subscribe(
-        (data) => {
+        data => {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
             this.toastr.success(errorData.Update_Success);
           }
-          // else {
-          //   this.toastr.error(data["msg"]);
-          // }
           this.disableButton = false;
           this.loading = false;
         },
-        (error) => {
+        error => {
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;
           this.disableButton = false;
@@ -800,7 +695,6 @@ export class AddEditUserComponent implements OnInit {
       );
     } else {
       this.disableButton = false;
-
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
     }
@@ -808,7 +702,6 @@ export class AddEditUserComponent implements OnInit {
 
   reset(myForm) {
     myForm.reset();
-
     this.formSubmitted = false;
     for (var i = 0; i < this.permissionArray.length; i++) {
       this.setPermissionFalse(i);
@@ -818,18 +711,19 @@ export class AddEditUserComponent implements OnInit {
 
   addUser(myForm) {
     this.getCheckedItem();
-    //this.user.userPermissionData=this.userPermissionData;
-    this.disableButton = true;
 
+    this.disableButton = true;
     this.formSubmitted = true;
+
     if (myForm.valid) {
       let md5 = new Md5();
       this.user.password = String(md5.appendStr(this.user.password).end());
       this.user.createdBy = this.userId.userId;
-      if (!this.user.isUserHead)
+      if (!this.user.isUserHead){
         this.user.userHeadId = this.commonService.getUser().userId;
+      }
       this.userService.createUser(this.user).subscribe(
-        (data) => {
+        data => {
           if (data["success"]) {
             this.reset(myForm);
             this.allRightsFlag = false;
@@ -840,7 +734,7 @@ export class AddEditUserComponent implements OnInit {
           }
           this.disableButton = false;
         },
-        (error) => {
+        error => {
           this.disableButton = false;
           this.toastr.error(errorData.Serever_Error);
         }
@@ -851,32 +745,4 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
-
-  getDesignation() {
-    this.loading = true;
-    this.userService.getDesignation().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.desiList = data["data"];
-          if (this.userHead.userHeadId > 0) {
-            this.desiList.forEach((element) => {
-              if (element.designation != "Master") this.desi_list.push(element);
-            });
-          } else {
-            this.desi_list = this.desiList;
-          }
-
-          this.loading = false;
-        } else {
-          // this.toastr.error(errorData.Internal_Error);
-          this.loading = false;
-        }
-      },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-        this.loading = false;
-      }
-    );
-  }
-
 }
