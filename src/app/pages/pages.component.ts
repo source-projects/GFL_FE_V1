@@ -14,12 +14,13 @@ import { WaterJetGuard } from "app/@theme/guards/water-jet.guard";
 import { InvoiceGuard } from "app/@theme/guards/invoice.guard";
 import { PaymentGuard } from "app/@theme/guards/payment.guard";
 import { AnyAaaaRecord } from "dns";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, from } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "app/@theme/guards/input-data.guard";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "../@theme/services/user.service";
+import { AdminGuard } from "../@theme/guards/admin.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -55,6 +56,7 @@ export class PagesComponent implements OnInit {
     public paymentGuard: PaymentGuard,
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
+    public adminGuard: AdminGuard,
     private commonService: CommonService,
     private userService: UserService
   ) {}
@@ -298,9 +300,9 @@ export class PagesComponent implements OnInit {
                 break;
 
                 case "Database":
-                this.view = this.invoiceGuard.accessRights("view");
-                this.view_all = this.invoiceGuard.accessRights("view all");
-                this.view_group = this.invoiceGuard.accessRights("view group");
+                this.view = this.adminGuard.accessRights("view");
+                this.view_all = this.adminGuard.accessRights("view all");
+                this.view_group = this.adminGuard.accessRights("view group");
                 if (
                   this.view == false &&
                   this.view_all == false &&
