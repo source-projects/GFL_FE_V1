@@ -301,31 +301,20 @@ export class AddEditUserComponent implements OnInit {
   createPermission() {
     for (let i = 0; i < this.forms.length; i++) {
       this.permissionArray.push(new Permissions());
+
       this.permissionArray[i].module = this.forms[i];
-      this.permissionArray[i].add = false;
-      this.permissionArray[i].edit = false;
-      this.permissionArray[i].delete = false;
-      this.permissionArray[i].view = false;
-      this.permissionArray[i].editAll = false;
-      this.permissionArray[i].editGroup = false;
-      this.permissionArray[i].deleteAll = false;
-      this.permissionArray[i].deleteGroup = false;
-      this.permissionArray[i].viewAll = false;
-      this.permissionArray[i].viewGroup = false;
     }
   }
 
   setPermissionTrue(i) {
-    this.permissionArray[i].add = true;
-    this.permissionArray[i].edit = true;
-    this.permissionArray[i].delete = true;
-    this.permissionArray[i].view = true;
-    this.permissionArray[i].editAll = true;
-    this.permissionArray[i].editGroup = true;
-    this.permissionArray[i].deleteAll = true;
-    this.permissionArray[i].deleteGroup = true;
-    this.permissionArray[i].viewAll = true;
-    this.permissionArray[i].viewGroup = true;
+    let keys = Object.keys(this.permissionArray[i])
+    if(keys && keys.length){
+      keys.forEach(e=>{
+        if(e != "module"){
+          this.permissionArray[i][e] = true;
+        }
+      })
+    }
 
     for (let j = 0; j < this.forms.length; j++) {
       this.checkIfAllSelected(j);
@@ -339,16 +328,14 @@ export class AddEditUserComponent implements OnInit {
   }
 
   setPermissionFalse(i) {
-    this.permissionArray[i].add = false;
-    this.permissionArray[i].edit = false;
-    this.permissionArray[i].delete = false;
-    this.permissionArray[i].view = false;
-    this.permissionArray[i].editAll = false;
-    this.permissionArray[i].editGroup = false;
-    this.permissionArray[i].deleteAll = false;
-    this.permissionArray[i].deleteGroup = false;
-    this.permissionArray[i].viewAll = false;
-    this.permissionArray[i].viewGroup = false;
+    let keys = Object.keys(this.permissionArray[i])
+    if(keys && keys.length){
+      keys.forEach(e=>{
+        if(e != "module"){
+          this.permissionArray[i][e] = false;
+        }
+      })
+    }
     this.allRightsFlag = false;
   }
 
