@@ -209,7 +209,7 @@
                                                                     </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)" class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex)" min="0" [id]="'addList'+dcIndex+'-1'">
+                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)" class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex,1)" min="0" [id]="'addList'+dcIndex+'-1'">
                                                                 </td>
                                                                 <td>
                                                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeChemicalData(dcIndex)"></nb-icon>
