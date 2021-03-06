@@ -98,42 +98,11 @@ export class AddEditPartyComponent implements OnInit {
 
   async ngOnInit() {
     this.getData();
-    await this.getLogInUserDetail();
+    await this.getMaster();
     this.currentPartyId = this._route.snapshot.paramMap.get("id");
     if (this.currentPartyId != null) this.getUpdateData();
   }
-
-  getLogInUserDetail() {
-    let id = Number(this.user.userId);
-    this.userService.getUserHeadDetails(id).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.logInUserDetail = data["data"];
-          this.checkUser();
-          this.getMaster();
-        }
-      },
-      (error) => {}
-    );
-  }
-  checkUser() {
-    if (
-      this.logInUserDetail.superUserHeadId == null &&
-      this.logInUserDetail.userHeadId == null
-    ) {
-      this.adminFlag = true;
-    } else if (
-      this.logInUserDetail.userHeadId &&
-      this.logInUserDetail.superUserHeadId == null
-    ) {
-      this.masterFlag = true;
-    } else if (
-      this.logInUserDetail.superUserHeadId &&
-      this.logInUserDetail.userHeadId
-    ) {
-      this.operatorFlag = true;
-    }
-  }
+  
   public getData() {
     this.loading = true;
     this.user = this.commonService.getUser();
@@ -180,27 +149,21 @@ export class AddEditPartyComponent implements OnInit {
     this.loading = false;
   }
   public getMaster() {
-    let masterId;
-    if (this.masterFlag) {
-      this.master.push(this.logInUserDetail.name);
-    } else if (this.operatorFlag) {
-      this.master.push(this.logInUserDetail.userHeadName);
-    } else {
-      this.loading = true;
-      this.partyService.getAllMaster().subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.master = data["data"];
-            this.loading = false;
-          } else {
-            this.loading = false;
-          }
-        },
-        (error) => {
+    this.loading = true;
+    this.master = [];
+    this.partyService.getAllMaster().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.master = data["data"];
+          this.loading = false;
+        } else {
           this.loading = false;
         }
-      );
-    }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   public getUpdateData() {
@@ -236,17 +199,7 @@ export class AddEditPartyComponent implements OnInit {
       }
     );
   }
-  // setUserHeadName(id) {
-  //   let userHeadName;
-  //   if (id == this.logInUserDetail.id) {
-  //     userHeadName = this.logInUserDetail.name;
-  //   } else if (id == this.logInUserDetail.userHeadId) {
-  //     userHeadName = this.logInUserDetail.userHeadName;
-  //   } else if (id == this.logInUserDetail.superUserHeadId) {
-  //     userHeadName = this.logInUserDetail.superUserHeadName;
-  //   }
-  //   return userHeadName;
-  // }
+
   resetFlag(event) {
     this.partyCodeExist = true;
     const charCode = event.which ? event.which : event.keyCode;
@@ -265,51 +218,55 @@ export class AddEditPartyComponent implements OnInit {
     this.partyNameExist = false;
   }
 
-  public addParty() {
+  async addParty() {
     this.disableButton = true;
     this.formSubmitted = true;
 
     if (this.partyForm.valid) {
-      if ((this.creditor || this.debtor) && !this.partyNameExist && this.partyCodeExist) {
-          this.partyForm.value.createdBy = this.user.userId;
+      if (
+        (this.creditor || this.debtor) &&
+        !this.partyNameExist &&
+        this.partyCodeExist
+      ) {
+        this.partyForm.value.createdBy = this.user.userId;
 
-          if (this.partyForm.get("gstin") == null) {
-            this.partyForm.patchValue({
-              gstin: "",
-            });
-          }
-          if (
-            (this.debtor && this.partyForm.get("partyAddress1").value) ||
-            !this.debtor
-          ) {
-            //  this.partyForm.value.createdBy = this.user.userId;
-            // console.log('raw',this.partyForm.getRawValue())
-            this.partyForm.patchValue({
-              //userHeadId: this.userHead.userHeadId,
-              createdBy: this.user.userId,
-            });
-            this.partyService.saveParty(this.partyForm.value).subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.currentParty = data["data"];
-                  this.toastr.success(data["msg"]);
-                  this.reset();
-                  this.disableButton = false;
-                } else {
-                  this.disableButton = false;
-                  this.toastr.error(data["msg"]);
-                }
-              },
-              (error) => {
-                this.toastr.error(errorData.Serever_Error);
+        if (this.partyForm.get("gstin") == null) {
+          this.partyForm.patchValue({
+            gstin: "",
+          });
+        }
+        if (
+          (this.debtor && this.partyForm.get("partyAddress1").value) ||
+          !this.debtor
+        ) {
+          //  this.partyForm.value.createdBy = this.user.userId;
+          // console.log('raw',this.partyForm.getRawValue())
+          this.partyForm.patchValue({
+            //userHeadId: this.userHead.userHeadId,
+            createdBy: this.user.userId,
+          });
+          this.partyService.saveParty(this.partyForm.value).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.currentParty = data["data"];
+                this.toastr.success(data["msg"]);
+                this.reset();
                 this.disableButton = false;
+              } else {
+                this.disableButton = false;
+                this.toastr.error(data["msg"]);
               }
-            );
-          } else {
-            this.disableButton = false;
-            return;
-          }
-        }else {
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+              this.disableButton = false;
+            }
+          );
+        } else {
+          this.disableButton = false;
+          return;
+        }
+      } else {
         this.disableButton = false;
         return;
       }
@@ -319,13 +276,17 @@ export class AddEditPartyComponent implements OnInit {
     }
   }
 
-  public updateParty() {
+  async updateParty() {
     this.disableButton = true;
     this.loading = true;
     this.formSubmitted = true;
 
     if (this.partyForm.valid) {
-      if ((this.creditor || this.debtor) && !this.partyNameExist && this.partyCodeExist) {
+      if (
+        (this.creditor || this.debtor) &&
+        !this.partyNameExist &&
+        this.partyCodeExist
+      ) {
         if (
           (this.debtor == true &&
             this.partyForm.get("partyAddress1").value != "") ||
@@ -345,7 +306,7 @@ export class AddEditPartyComponent implements OnInit {
           // this.partyForm.patchValue({
           //   userHeadId: this.userHead.userHeadId,
           // });
-          this.partyService.updateParty(body).subscribe(
+          let obj = await this.partyService.updateParty(body).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(data["msg"]);
@@ -388,7 +349,7 @@ export class AddEditPartyComponent implements OnInit {
     this.partyAdressSetFlag = checked;
   }
 
-  checkPartyName() {
+  async checkPartyName() {
     this.partyNameExist = false;
     if (this.partyForm.get("partyName").value) {
       let id = 0;
