@@ -97,7 +97,7 @@ export class ReportComponent implements OnInit {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
     this.getMachineCategory();
     this.getPurchaseRequestList();
-    this.getWaterJetList();
+    //this.getWaterJetList();
   }
 
   change(value: any) {
