@@ -127,18 +127,18 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              case "Program":
-                this.view = this.programGuard.accessRights("view");
-                this.view_all = this.programGuard.accessRights("view all");
-                this.view_group = this.programGuard.accessRights("view group");
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Program":
+              //   this.view = this.programGuard.accessRights("view");
+              //   this.view_all = this.programGuard.accessRights("view all");
+              //   this.view_group = this.programGuard.accessRights("view group");
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
 
               case "Stock-batch":
                 this.view = this.stockBatchGuard.accessRights("view");
@@ -178,18 +178,18 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              case "Water-jet":
-                this.view = this.waterJetGuard.accessRights("view");
-                this.view_all = this.waterJetGuard.accessRights("view all");
-                this.view_group = this.waterJetGuard.accessRights("view group");
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Water-jet":
+              //   this.view = this.waterJetGuard.accessRights("view");
+              //   this.view_all = this.waterJetGuard.accessRights("view all");
+              //   this.view_group = this.waterJetGuard.accessRights("view group");
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
               case "DyeingProcess":
                 this.view = this.dyeingProcessGuard.accessRights("view");
                 this.view_all = this.dyeingProcessGuard.accessRights(
@@ -297,12 +297,10 @@ export class PagesComponent implements OnInit {
                 }
                 break;
 
-              case "Input Data":
-                this.view = this.inputDataGuard.accessRights("view");
-                this.view_all = this.inputDataGuard.accessRights("view all");
-                this.view_group = this.inputDataGuard.accessRights(
-                  "view group"
-                );
+                case "Database":
+                this.view = this.invoiceGuard.accessRights("view");
+                this.view_all = this.invoiceGuard.accessRights("view all");
+                this.view_group = this.invoiceGuard.accessRights("view group");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -310,7 +308,22 @@ export class PagesComponent implements OnInit {
                 ) {
                   e.hidden = true;
                 }
-                break;
+                break; 
+
+              // case "Input Data":
+              //   this.view = this.inputDataGuard.accessRights("view");
+              //   this.view_all = this.inputDataGuard.accessRights("view all");
+              //   this.view_group = this.inputDataGuard.accessRights(
+              //     "view group"
+              //   );
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
 
               case "Payment":
                 this.view = this.paymentGuard.accessRights("view");

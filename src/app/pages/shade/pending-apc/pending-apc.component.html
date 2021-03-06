@@ -11,15 +11,19 @@
     <nb-card-body>
 
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" 
+                aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
         </div>
 
         <!--  ngx- DataTable  -->
-        <ngx-datatable [rows]="apcList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-            <ngx-datatable-column name="Action" sortable="false" prop="id" [maxWidth]="90">
-                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/shade/edit',row.id]" [state]=apcFlag></nb-icon>
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deletePendingAPC(row.id)"></nb-icon>
+        <ngx-datatable [rows]="apcList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
+            [footerHeight]="40">
+            <ngx-datatable-column name="Action" sortable="false" prop="id">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>{{hiddenDelete}} - {{hiddenEdit}}
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                        [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]" [state]=apcFlag></nb-icon>
+                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
+                        [hidden]="hiddenDelete" (click)="deletePendingAPC(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <!-- <ngx-datatable-column name="APC No" prop="apcNo"></ngx-datatable-column> -->
