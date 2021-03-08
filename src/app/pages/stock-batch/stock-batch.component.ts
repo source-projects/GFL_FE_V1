@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
-import { StockBatchGuard } from "app/@theme/guards/stock-batch.guard";
-import * as errorData from "app/@theme/json/error.json";
-import { CommonService } from "app/@theme/services/common.service";
-import { ExportService } from "app/@theme/services/export.service";
-import { JwtTokenService } from "app/@theme/services/jwt-token.service";
-import { StockBatchService } from "app/@theme/services/stock-batch.service";
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
+import { StockBatchGuard } from "../../@theme/guards/stock-batch.guard";
+import * as errorData from "../../@theme/json/error.json";
+import { CommonService } from "../../@theme/services/common.service";
+import { ExportService } from "../../@theme/services/export.service";
+import { JwtTokenService } from "../../@theme/services/jwt-token.service";
+import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -172,9 +172,9 @@ export class StockBatchComponent implements OnInit {
             stockInType: element.stockInType,
             partyName: element.partyName,
             billNo: element.billNo,
-            billDate: element.billDate,
             chlNo: element.chlNo,
-            chlDate: element.chlDate,
+            batchData: element.batchData,
+            qualityName: element.qualityName,
           }));
           // this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
           //   billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
