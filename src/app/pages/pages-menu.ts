@@ -156,12 +156,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   link: '/pages/issue-color-box',
   //   hidden:false
   // },
-  // {
-  //   title: 'Input Data',
-  //   icon: 'edit-2-outline',
-  //   link: '/pages/input-data',
-  //   hidden: false,
-  // },
+  {
+    title: 'Input Data',
+    icon: 'edit-2-outline',
+    link: '/pages/input-data',
+    hidden: false,
+  },
   {
     title: 'Payment',
     icon: 'credit-card-outline',

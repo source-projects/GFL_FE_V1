@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from "../../@theme/components/confirmatio
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AdminGuard } from "../../@theme/guards/admin.guard";
 
 @Component({
   selector: "ngx-admin",
@@ -50,10 +51,15 @@ export class AdminComponent implements OnInit {
   approveByEditFlag = false;
   machineEditFlag = false;
   machineCategoryEditFlag = false;
+
+  disabled = false;
+  hiddenEdit = false;
+  hiddenDelete = false;
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private adminGuard : AdminGuard
   ) {
     this.addJetArray.push(this.addJet);
     this.addCompanyArray.push(this.addCompany);
@@ -71,6 +77,40 @@ export class AdminComponent implements OnInit {
     this.getAllDesignationData();
     this.getAllMachineData();
     this.getAllMachineCategoryData();
+    this.getAddAcess();
+    this.getDeleteAccess();
+    this.getEditAccess();
+    
+  }
+
+  getAddAcess() {
+    if (this.adminGuard.accessRights('add')) {
+      this.disabled = false;
+    }
+    else {
+      this.disabled = true;
+    }
+  }
+
+  getDeleteAccess() {
+    if (this.adminGuard.accessRights('delete')) {
+      this.hiddenDelete = false;
+    }
+    else
+    {
+      this.hiddenDelete = true;
+    }
+  }
+
+
+  getEditAccess() {
+    if (this.adminGuard.accessRights('edit')) {
+      this.hiddenEdit = false;
+    }
+    else
+    {
+      this.hiddenEdit = true;
+    }
   }
 
   getAllJetData() {

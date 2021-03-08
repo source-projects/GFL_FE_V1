@@ -290,16 +290,16 @@ export class AddEditSupplierRateComponent implements OnInit {
             field.focus();
             clearInterval(interval);
           }
-        }, 50);
+        }, 10);
       } else {
+        this.index = "supplierList" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
-        }, 50);
-        // alert("Go to any last row input to add new row");
+        }, 10);
       }
     }
   }

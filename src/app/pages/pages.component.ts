@@ -271,20 +271,20 @@ export class PagesComponent implements OnInit {
                 }
                 break;
 
-              case "Jet Planning":
-                this.view = this.jetPlanningGuard.accessRights("view");
-                this.view_all = this.jetPlanningGuard.accessRights("view all");
-                this.view_group = this.jetPlanningGuard.accessRights(
-                  "view group"
-                );
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Jet Planning":
+              //   this.view = this.jetPlanningGuard.accessRights("view");
+              //   this.view_all = this.jetPlanningGuard.accessRights("view all");
+              //   this.view_group = this.jetPlanningGuard.accessRights(
+              //     "view group"
+              //   );
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
 
               case "Generate Invoice":
                 this.view = this.invoiceGuard.accessRights("view");
@@ -300,9 +300,24 @@ export class PagesComponent implements OnInit {
                 break;
 
                 case "Database":
-                this.view = this.adminGuard.accessRights("view");
-                this.view_all = this.adminGuard.accessRights("view all");
-                this.view_group = this.adminGuard.accessRights("view group");
+                  this.view = this.adminGuard.accessRights("view");
+                  this.view_all = this.adminGuard.accessRights("view all");
+                  this.view_group = this.adminGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
+
+              case "Input Data":
+                this.view = this.inputDataGuard.accessRights("view");
+                this.view_all = this.inputDataGuard.accessRights("view all");
+                this.view_group = this.inputDataGuard.accessRights(
+                  "view group"
+                );
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -310,22 +325,7 @@ export class PagesComponent implements OnInit {
                 ) {
                   e.hidden = true;
                 }
-                break; 
-
-              // case "Input Data":
-              //   this.view = this.inputDataGuard.accessRights("view");
-              //   this.view_all = this.inputDataGuard.accessRights("view all");
-              //   this.view_group = this.inputDataGuard.accessRights(
-              //     "view group"
-              //   );
-              //   if (
-              //     this.view == false &&
-              //     this.view_all == false &&
-              //     this.view_group == false
-              //   ) {
-              //     e.hidden = true;
-              //   }
-              //   break;
+                break;
 
               case "Payment":
                 this.view = this.paymentGuard.accessRights("view");
@@ -339,6 +339,19 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
+
+                case "Addition Slip":
+                  this.view = this.paymentGuard.accessRights("view");
+                  this.view_all = this.paymentGuard.accessRights("view all");
+                  this.view_group = this.paymentGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
             }
           });
         }
