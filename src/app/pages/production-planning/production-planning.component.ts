@@ -34,7 +34,6 @@ import { ProductionBatchDetail } from "../../@theme/model/production-planning";
   templateUrl: "./production-planning.component.html",
   styleUrls: ["./production-planning.component.scss"],
 })
-
 export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   user: any;
@@ -55,11 +54,11 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   index: any;
   editProductionPlanFlag: boolean = false;
 
-    public productionBatchDetail: ProductionBatchDetail;
-
+  public productionBatchDetail: ProductionBatchDetail;
 
   public isJetDiv: boolean = false;
   //jet variables..
+  public connectedTo: CdkDropList[] = [];
   public jet: any;
   public detailsList: any = [];
   private destroy$: Subject<void> = new Subject<void>();
@@ -124,7 +123,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
-        else if (title === "Details") this.getBatchDetails();
+        //else if (title === "Details") this.getBatchDetails();
       });
   }
 
@@ -449,7 +448,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
-    var detail = this.getBatchDetails();
+    //var detail = this.getBatchDetails();
     this.items = [
       { title: "Complete" },
       { title: "Pause" },
@@ -458,14 +457,14 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       },
       { title: "Print" },
       { title: "Edit And Print" },
-      {
-        title: "Details",
-        children: [
-          {
-            title: detail,
-          },
-        ],
-      },
+      // {
+      //   title: "Details",
+      //   children: [
+      //     {
+      //       title: detail,
+      //     },
+      //   ],
+      // },
     ];
   }
 
@@ -475,32 +474,32 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.detailsList =
-              "Party Name : " +
-              data["data"].partyName +
-              "\nBatch No: " +
-              data["data"].batchId +
-              "\nParty Shade No: " +
-              data["data"].partyShadeNo +
-              "\nBatch Weight: " +
-              data["data"].totalWt;
-            this.items = [
-              { title: "Complete" },
-              { title: "Pause" },
-              {
-                title: "Remove",
-              },
-              { title: "Print" },
-              { title: "Edit And Print" },
-              {
-                title: "Details",
-                children: [
-                  {
-                    title: this.detailsList,
-                  },
-                ],
-              },
-            ];
+            this.detailsList = data['data'];
+            //   "Party Name : " +
+            //   data["data"].partyName +
+            //   "\nBatch No: " +
+            //   data["data"].batchId +
+            //   "\nParty Shade No: " +
+            //   data["data"].partyShadeNo +
+            //   "\nBatch Weight: " +
+            //   data["data"].totalWt;
+            // this.items = [
+            //   { title: "Complete" },
+            //   { title: "Pause" },
+            //   {
+            //     title: "Remove",
+            //   },
+            //   { title: "Print" },
+            //   { title: "Edit And Print" },
+            //   {
+            //     title: "Details",
+            //     children: [
+            //       {
+            //         title: this.detailsList,
+            //       },
+            //     ],
+            //   },
+            // ];
 
             this.loading = false;
           } else {
@@ -651,23 +650,85 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   getAllDetailsOfBatch(event, batch) {
-    if(batch.partyName)
-    this.productionBatchDetail.partyName = batch.partyName;
-    if(batch.qualityName)
-    this.productionBatchDetail.qualityName = batch.qualityName;
-    if(batch.qualityId)
-    this.productionBatchDetail.qualityId = batch.qualityId;
-    if(batch.partyShadeNo)
-    this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
-    if(batch.totalWt)
-    this.productionBatchDetail.totalWt = batch.totalWt;
-    if(batch.totalMtr)
-    this.productionBatchDetail.totalMtr = batch.totalMtr;
-    if(batch.processName)
-    this.productionBatchDetail.processName = batch.processName;
+    if (!this.flipped) {
+      if (batch.partyName)
+        this.productionBatchDetail.partyName = batch.partyName;
+      if (batch.qualityName)
+        this.productionBatchDetail.qualityName = batch.qualityName;
+      if (batch.qualityId)
+        this.productionBatchDetail.qualityId = batch.qualityId;
+      if (batch.partyShadeNo)
+        this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
+      if (batch.totalWt) this.productionBatchDetail.totalWt = batch.totalWt;
+      if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
+      if (batch.processName)
+        this.productionBatchDetail.processName = batch.processName;
+    }else{
+    this.setIndexForSlip(batch)
+     this.getBatchDetails();
+    }
   }
 
-  resetDetailsOfBatch($event){
-    this.productionBatchDetail = new ProductionBatchDetail();
+  resetDetailsOfBatch($event) {
+    if(!this.flipped)
+      this.productionBatchDetail = new ProductionBatchDetail();
+    else{
+      this.detailsList = [];
+    }
+  }
+
+  drop(event: CdkDragDrop<any[]>, i) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        this.jet[i].jetDataList,
+        event.previousIndex,
+        event.currentIndex
+      );
+      let fromobj = {
+        jetId: this.jet[i].id,
+        productionId: event.container.data[event.currentIndex].productionId,
+        sequence: event.previousIndex + 1,
+      };
+      let toobj = {
+        jetId: this.jet[i].id,
+        productionId: event.container.data[event.currentIndex].productionId,
+        sequence: event.currentIndex + 1,
+      };
+      let obj = {
+        from: fromobj,
+        to: toobj,
+      };
+      this.jetService.updateJetData(obj).subscribe((data) => {
+        if (data["success"]) {
+          this.toastr.success(errorData.Add_Success);
+        }
+      });
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      let fromobj = {
+        jetId: this.jet[i].id,
+        productionId: event.container.data[event.currentIndex].productionId,
+        sequence: event.previousIndex + 1,
+      };
+      let toobj = {
+        jetId: this.jet[i].id,
+        productionId: event.container.data[event.currentIndex].productionId,
+        sequence: event.currentIndex + 1,
+      };
+      let obj = {
+        from: fromobj,
+        to: toobj,
+      };
+      this.jetService.updateJetData(obj).subscribe((data) => {
+        if (data["success"]) {
+          this.toastr.success(errorData.Add_Success);
+        }
+      });
+    }
   }
 }
