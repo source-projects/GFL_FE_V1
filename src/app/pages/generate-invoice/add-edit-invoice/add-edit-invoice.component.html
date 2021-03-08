@@ -24,7 +24,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required">Party Name</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown dropdown-name"
+                        <ng-select name="partyId" appendTo="body" [(ngModel)]='invoiceValues.partyId' required #partyId1="ngModel" [ngClass]="{'is-invalid': (partyId1.invalid)&&(formSubmitted || partyId1.touched)}" (change)="getBatchList($event)" placeholder="Party Name" class="required-error-dropdown dropdown-name"
                             [readonly]="currentInvoiceId != null">
                             <ng-option *ngFor="let p of party" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
