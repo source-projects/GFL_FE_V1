@@ -6,7 +6,8 @@
                 <div class="row">
 
                     <div class="col-md-1 col-3 display-flex-start">
-                        <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/stock-batch']" [disabled]="disabled">ADD</button>
+                        <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/stock-batch']"
+                            [disabled]="disabled">ADD</button>
                     </div>
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">Stock-Batch</h2>
@@ -22,19 +23,26 @@
                 <div class="row">
                     <div class="col-md-6">
                         <nb-radio-group [(ngModel)]="radioSelect" class="nb-radio">
-                            <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">
+                            <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
+                                (valueChange)="onChange($event)">
                                 {{radio.value}}</nb-radio>
                         </nb-radio-group>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                            aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
                     </div>
                 </div>
-                <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40">
-                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id" [maxWidth]="90">
+                <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="31"
+                    class="material  table-responsive" [footerHeight]="40">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id"
+                        [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/stock-batch/edit',row.id]"></nb-icon>
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" (click)="deleteStockBatch(row.id)" [hidden]="hidden || (row | disableStockBatchPipe)"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                [hidden]="hiddenEdit" [routerLink]="['/pages/stock-batch/edit',row.id]"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                                (click)="deleteStockBatch(row.id)" [hidden]="hidden || (row | disableStockBatchPipe)">
+                            </nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>
@@ -43,7 +51,13 @@
                     <ngx-datatable-column name="Bill Date" props="billDate"></ngx-datatable-column>
                     <ngx-datatable-column name="Chl No" props="chlNo"></ngx-datatable-column>
                     <ngx-datatable-column name="Chl Date" props="chlDate"></ngx-datatable-column>
-
+                    <ngx-datatable-column name="Batch" prop="batchData">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <ng-container *ngFor="let batch of row.batchData">
+                                <span class="invpice-batch-style">{{batch.batchId}} </span>
+                            </ng-container>
+                        </ng-template>
+                    </ngx-datatable-column>
                 </ngx-datatable>
             </nb-card-body>
         </nb-card>

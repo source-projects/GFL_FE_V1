@@ -181,8 +181,9 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Quality Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Quality Name."
-                                    [(ngModel)]="addQuality.name" #qualityName="ngModel"
+                                <input name="qualityName" type="text" class="form-control"
+                                    placeholder="Enter Quality Name." [(ngModel)]="addQuality.qualityName"
+                                    #qualityName="ngModel"
                                     [ngClass]="{'is-invalid':(qualityName.invalid) &&(formSubmitted || qualityName.touched) }"
                                     required>
                                 <div class="input-required"
@@ -215,7 +216,7 @@
                         </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
+                    <ngx-datatable-column name="Name" prop="qualityName" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
                 </ngx-datatable>
             </nb-tab>

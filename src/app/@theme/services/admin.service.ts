@@ -29,7 +29,9 @@ export class AdminService {
     );
   }
   getAllQualityData() {
-    return this.httpClient.get(this.commonService.envUrl() + "api/admin/");
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/quality/qualityName/get/all"
+    );
   }
 
   getAllApproveByData() {
@@ -83,7 +85,7 @@ export class AdminService {
 
   saveQuality(data) {
     return this.httpClient.post(
-      this.commonService.envUrl() + "api/admin/",
+      this.commonService.envUrl() + "api/admin/quality/add/qualityName/",
       data
     );
   }
@@ -122,7 +124,7 @@ export class AdminService {
   }
   deleteQualityById(id) {
     return this.httpClient.delete(
-      this.commonService.envUrl() + "api/admin/" + id
+      this.commonService.envUrl() + "api/admin/quality/delete/qualityName/" + id
     );
   }
   deleteDesignationById(id) {
@@ -181,7 +183,7 @@ export class AdminService {
   }
   updateQuality(data) {
     return this.httpClient.put(
-      this.commonService.envUrl() + "api/admin/",
+      this.commonService.envUrl() + "api/admin/quality/update/qualityName/",
       data
     );
   }

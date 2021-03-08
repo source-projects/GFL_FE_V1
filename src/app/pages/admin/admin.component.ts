@@ -191,7 +191,7 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllQualityData().subscribe(
       (data) => {
         if (data["success"]) {
-          this.addQuality = data["data"];
+          this.qualityList = data["data"];
         }
       },
       (error) => {}
@@ -559,7 +559,7 @@ export class AdminComponent implements OnInit {
   }
   onCancelQuality() {
     this.addQuality.id = null;
-    this.addQuality.name = null;
+    this.addQuality.qualityName = null;
     this.qualityEditFlag = false;
   }
   onCancelDesignation() {
@@ -821,7 +821,7 @@ export class AdminComponent implements OnInit {
     this.qualityList.forEach((element) => {
       if (element.id == id) {
         this.addQuality.id = element.id;
-        this.addQuality.name = element.name;
+        this.addQuality.qualityName = element.qualityName;
       }
     });
   }

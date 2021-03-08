@@ -30,10 +30,10 @@ export class AddDepartment {
 }
 export class AddQuality {
   id: number;
-  name: string;
+  qualityName: string;
   constructor() {
     this.id = 0;
-    this.name = null;
+    this.qualityName = null;
   }
 }
 export class AddDesignation {
