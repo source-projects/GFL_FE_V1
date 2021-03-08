@@ -254,6 +254,7 @@ export class PartyComponent implements OnInit {
             contactNo: element.contactNo,
             city: element.city,
             partyCode: element.partyCode,
+            masterName: element.masterName,
           }));
           this.copyPartyList = this.partyList.map((element) => ({
             id: element.id,
@@ -262,6 +263,7 @@ export class PartyComponent implements OnInit {
             contactNo: element.contactNo,
             city: element.city,
             partyCode: element.partyCode,
+            masterName: element.masterName,
           }));
         } else {
           // this.toastr.error(data['msg'])

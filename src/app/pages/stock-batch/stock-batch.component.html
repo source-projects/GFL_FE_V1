@@ -45,12 +45,10 @@
                             </nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Stock In Type" props="stockInType"></ngx-datatable-column>
+                    <ngx-datatable-column name="Stock In Type" props="stockInType" [maxWidth]="130">
+                    </ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
-                    <ngx-datatable-column name="Bill No" props="billNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="Bill Date" props="billDate"></ngx-datatable-column>
-                    <ngx-datatable-column name="Chl No" props="chlNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="Chl Date" props="chlDate"></ngx-datatable-column>
+                    <ngx-datatable-column name="Quality Name" props="qualityName"></ngx-datatable-column>
                     <ngx-datatable-column name="Batch" prop="batchData">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <ng-container *ngFor="let batch of row.batchData">
@@ -58,6 +56,9 @@
                             </ng-container>
                         </ng-template>
                     </ngx-datatable-column>
+                    <ngx-datatable-column name="Bill No" props="billNo" [maxWidth]="90"></ngx-datatable-column>
+                    <ngx-datatable-column name="Chl No" props="chlNo" [maxWidth]="130"></ngx-datatable-column>
+
                 </ngx-datatable>
             </nb-card-body>
         </nb-card>

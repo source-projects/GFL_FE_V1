@@ -169,6 +169,7 @@ export class QualityComponent implements OnInit {
             partyName: element.partyName,
             wtPer100m: element.wtPer100m,
             rate: element.rate,
+            partyCode: element.partyCode,
           }));
           this.copyQualityList = this.qualityList.map((element) => ({
             id: element.id,
@@ -177,6 +178,7 @@ export class QualityComponent implements OnInit {
             partyName: element.partyName,
             wtPer100m: element.wtPer100m,
             rate: element.rate,
+            partyCode: element.partyCode,
           }));
           this.loading = false;
           if (this.qualityList.length > 0) this.updateDatatableFooterPage();

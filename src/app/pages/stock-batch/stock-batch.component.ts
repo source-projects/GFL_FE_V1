@@ -172,10 +172,9 @@ export class StockBatchComponent implements OnInit {
             stockInType: element.stockInType,
             partyName: element.partyName,
             billNo: element.billNo,
-            billDate: element.billDate,
             chlNo: element.chlNo,
-            chlDate: element.chlDate,
             batchData: element.batchData,
+            qualityName: element.qualityName,
           }));
           // this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
           //   billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))

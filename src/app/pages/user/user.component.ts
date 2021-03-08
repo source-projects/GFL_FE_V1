@@ -163,6 +163,7 @@ export class UserComponent implements OnInit {
             lastName: element.lastName,
             company: element.company,
             designation: element.designation,
+            department: element.department,
           }));
           this.copyUserList = this.userList.map((element) => ({
             id: element.id,
@@ -171,6 +172,7 @@ export class UserComponent implements OnInit {
             lastName: element.lastName,
             company: element.company,
             designation: element.designation,
+            department: element.department,
           }));
         }
         this.loading = false;
