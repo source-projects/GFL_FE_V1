@@ -6,6 +6,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { ToastRef, ToastrService } from "ngx-toastr";
+import { AdminService } from "../../../@theme/services/admin.service";
 
 @Component({
   selector: "ngx-add-edit-quality",
@@ -25,7 +26,7 @@ export class AddEditQualityComponent implements OnInit {
 
   //to store Quality Data
   qualityList: any;
-
+  qualityNameList: any[];
   addEditQualityForm: FormGroup;
 
   //to store party info
@@ -41,6 +42,7 @@ export class AddEditQualityComponent implements OnInit {
     private partyService: PartyService,
     private commonService: CommonService,
     private qualityService: QualityService,
+    private adminService: AdminService,
     private route: Router,
     private toastr: ToastrService
   ) {}
@@ -48,16 +50,26 @@ export class AddEditQualityComponent implements OnInit {
   async ngOnInit() {
     this.getData();
     this.getPartyList();
+    this.getQualityNameList();
     await this.getUpdateData();
   }
 
-  
-
+  getQualityNameList() {
+    this.adminService.getAllQualityData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.qualityNameList = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
   checkQulityId() {
     this.qulityIdExist = false;
-    if(this.addEditQualityForm.get("qualityId").value){
+    if (this.addEditQualityForm.get("qualityId").value) {
       let id = 0;
-      if(this.addEditQualityForm.get('id').value)  id = this.addEditQualityForm.get('id').value;
+      if (this.addEditQualityForm.get("id").value)
+        id = this.addEditQualityForm.get("id").value;
       this.qualityService
         .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
         .subscribe(
@@ -78,7 +90,8 @@ export class AddEditQualityComponent implements OnInit {
     this.userHead = this.commonService.getUserHeadId();
     this.addEditQualityForm = new FormGroup({
       qualityId: new FormControl(null, Validators.required),
-      qualityName: new FormControl(null, Validators.required),
+      qualityName: new FormControl(null),
+      qualityNameId: new FormControl(null, Validators.required),
       qualityType: new FormControl("Fabric", Validators.required),
       unit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
@@ -103,6 +116,7 @@ export class AddEditQualityComponent implements OnInit {
           this.addEditQualityForm.patchValue({
             qualityId: this.qualityList.qualityId,
             qualityName: this.qualityList.qualityName,
+            qualityNameId: this.qualityList.qualityNameId,
             rate: this.qualityList.rate,
             qualityType: this.qualityList.qualityType,
             unit: this.qualityList.unit,
@@ -152,12 +166,19 @@ export class AddEditQualityComponent implements OnInit {
     });
   }
 
-  reset(){
+  reset() {
     this.addEditQualityForm.reset();
     this.formSubmitted = false;
-    this.addEditQualityForm.controls["qualityType"].reset("Fabric");   
+    this.addEditQualityForm.controls["qualityType"].reset("Fabric");
   }
-
+  setQualityName(id) {
+    console.log(id);
+    this.qualityNameList.forEach((element) => {
+      if (element.id == id) {
+        this.addEditQualityForm.value.qualityName = element.qualityName;
+      }
+    });
+  }
   addQuality() {
     this.disableButton = true;
 
@@ -165,14 +186,18 @@ export class AddEditQualityComponent implements OnInit {
     if (this.addEditQualityForm.valid && !this.qulityIdExist) {
       this.addEditQualityForm.value.createdBy = this.user.userId;
       this.addEditQualityForm.value.userHeadId = this.userHead.userHeadId;
+      this.addEditQualityForm.value.rate = Number(
+        this.addEditQualityForm.value.rate
+      );
+      this.setQualityName(this.addEditQualityForm.value.qualityNameId);
       this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
         (data) => {
-          if (data['success']) {
+          if (data["success"]) {
             this.reset();
-            this.disableButton = false; 
-            this.toastr.success(data['msg']);
+            this.disableButton = false;
+            this.toastr.success(data["msg"]);
           } else {
-            this.toastr.error(data['msg']);
+            this.toastr.error(data["msg"]);
           }
           this.disableButton = false;
         },
@@ -194,18 +219,18 @@ export class AddEditQualityComponent implements OnInit {
     this.formSubmitted = true;
     if (this.addEditQualityForm.valid && !this.qulityIdExist) {
       this.addEditQualityForm.value.updatedBy = this.user.userId;
+      this.setQualityName(this.addEditQualityForm.value.qualityNameId);
       this.qualityService
         .updateQualityById(this.addEditQualityForm.value)
         .subscribe(
           (data) => {
             if (data["success"]) {
-              this.toastr.success(data['msg']);
+              this.toastr.success(data["msg"]);
               this.route.navigate(["/pages/quality"]);
-              
             } else {
-              this.toastr.error(data['msg']);
+              this.toastr.error(data["msg"]);
             }
-            this.disableButton = false; 
+            this.disableButton = false;
             this.loading = false;
           },
           (error) => {

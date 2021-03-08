@@ -8,8 +8,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Jet Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Jet Name" [(ngModel)]="addJet.name" #jetName1="ngModel" [ngClass]="{'is-invalid':(jetName1.invalid) &&(formSubmitted || jetName1.touched) }" required>
-                                <div class="input-required" *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
+                                <input name="name" type="text" class="form-control" placeholder="Enter Jet Name"
+                                    [(ngModel)]="addJet.name" #jetName1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetName1.invalid) &&(formSubmitted || jetName1.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
                                     Jet name is required.
                                 </div>
                             </div>
@@ -18,8 +22,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Jet Capacity</label>
-                                <input name="capacity" type="number" class="form-control" placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity" #jetCapacity1="ngModel" [ngClass]="{'is-invalid':(jetCapacity1.invalid) &&(formSubmitted || jetCapacity1.touched) }" required>
-                                <div class="input-required" *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
+                                <input name="capacity" type="number" class="form-control"
+                                    placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity"
+                                    #jetCapacity1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetCapacity1.invalid) &&(formSubmitted || jetCapacity1.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
                                     Capacity is required.
                                 </div>
                             </div>
@@ -28,8 +37,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Liquor Ratio</label>
-                                <input name="liquorRatio" type="number" class="form-control" placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio" #jetLiquor1="ngModel" [ngClass]="{'is-invalid':(jetLiquor1.invalid) &&(formSubmitted || jetLiquor1.touched) }" required>
-                                <div class="input-required" *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
+                                <input name="liquorRatio" type="number" class="form-control"
+                                    placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio"
+                                    #jetLiquor1="ngModel"
+                                    [ngClass]="{'is-invalid':(jetLiquor1.invalid) &&(formSubmitted || jetLiquor1.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
                                     Liquor ratio is required.
                                 </div>
                             </div>
@@ -55,9 +69,11 @@
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300" [maxWidth]="100">
+                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300"
+                        [maxWidth]="100">
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300" [maxWidth]="120">
+                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300"
+                        [maxWidth]="120">
                     </ngx-datatable-column>
                 </ngx-datatable>
             </nb-tab>
@@ -68,8 +84,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Company Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Company Name." [(ngModel)]="addCompany.name" #companyName="ngModel" [ngClass]="{'is-invalid':(companyName.invalid) &&(formSubmitted || companyName.touched) }" required>
-                                <div class="input-required" *ngIf="(companyName.invalid) && (formSubmitted || companyName.touched)">
+                                <input name="name" type="text" class="form-control" placeholder="Enter Company Name."
+                                    [(ngModel)]="addCompany.name" #companyName="ngModel"
+                                    [ngClass]="{'is-invalid':(companyName.invalid) &&(formSubmitted || companyName.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(companyName.invalid) && (formSubmitted || companyName.touched)">
                                     Company name is required.
                                 </div>
                             </div>
@@ -103,8 +123,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Department Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Department Name." [(ngModel)]="addDepartment.name" #DepartmentName="ngModel" [ngClass]="{'is-invalid':(DepartmentName.invalid) &&(formSubmitted || DepartmentName.touched) }" required>
-                                <div class="input-required" *ngIf="(DepartmentName.invalid) && (formSubmitted || DepartmentName.touched)">
+                                <input name="name" type="text" class="form-control" placeholder="Enter Department Name."
+                                    [(ngModel)]="addDepartment.name" #DepartmentName="ngModel"
+                                    [ngClass]="{'is-invalid':(DepartmentName.invalid) &&(formSubmitted || DepartmentName.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(DepartmentName.invalid) && (formSubmitted || DepartmentName.touched)">
                                     Department name is required.
                                 </div>
                             </div>
@@ -132,6 +156,52 @@
                 </ngx-datatable>
             </nb-tab>
 
+            <!--Quality-->
+            <nb-tab tabTitle="Quality">
+                <form #addQualityData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Quality Name</label>
+                                <input name="qualityName" type="text" class="form-control"
+                                    placeholder="Enter Quality Name." [(ngModel)]="addQuality.qualityName"
+                                    #qualityName="ngModel"
+                                    [ngClass]="{'is-invalid':(qualityName.invalid) &&(formSubmitted || qualityName.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(qualityName.invalid) && (formSubmitted || qualityName.touched)">
+                                    Company name is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                (click)="onCancelQuality()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="saveQuality(addQualityData)">SAVE</button>
+                        </div>
+                    </div>
+                </form>
+
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="qualityList"
+                    [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                            let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                (click)="removeQuality(row.id)"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                (click)="getQualityEdit(row.id)"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Name" prop="qualityName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-tab>
 
             <!--Machine-->
             <nb-tab tabTitle="Machine">
@@ -140,8 +210,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName" #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }" required>
-                                <div class="input-required" *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name"
+                                    [(ngModel)]="addMachine.machineName" #machineName="ngModel"
+                                    [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
                                     Machine name is required.
                                 </div>
                             </div>
@@ -149,13 +223,16 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Category</label>
-                                <ng-select name="category" class="dropdown-name" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
+                                <ng-select name="category" class="dropdown-name" placeholder="select Machine Category"
+                                    [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel"
+                                    [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
                                     required>
                                     <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
                                         {{mc.name}}
                                     </ng-option>
                                 </ng-select>
-                                <div class="input-required" *ngIf="(machineCategory1.invalid) && (formSubmitted || machineCategory1.touched)">
+                                <div class="input-required"
+                                    *ngIf="(machineCategory1.invalid) && (formSubmitted || machineCategory1.touched)">
                                     Machine category is required.
                                 </div>
                             </div>
@@ -195,9 +272,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Machine Category</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Category" [(ngModel)]="addMachineCategory.name" #machineCategoryName="ngModel" [ngClass]="{'is-invalid':(machineCategoryName.invalid) &&(formSubmitted || machineCategoryName.touched) }"
+                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Category"
+                                    [(ngModel)]="addMachineCategory.name" #machineCategoryName="ngModel"
+                                    [ngClass]="{'is-invalid':(machineCategoryName.invalid) &&(formSubmitted || machineCategoryName.touched) }"
                                     required>
-                                <div class="input-required" *ngIf="(machineCategoryName.invalid) && (formSubmitted || machineCategoryName.touched)">
+                                <div class="input-required"
+                                    *ngIf="(machineCategoryName.invalid) && (formSubmitted || machineCategoryName.touched)">
                                     Machine category name is required.
                                 </div>
                             </div>
@@ -236,9 +316,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Designation</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Designation" [(ngModel)]="addDesignation.designation" #designationName1="ngModel" [ngClass]="{'is-invalid':(designationName1.invalid) &&(formSubmitted || designationName1.touched) }"
+                                <input name="name" type="text" class="form-control" placeholder="Enter Designation"
+                                    [(ngModel)]="addDesignation.designation" #designationName1="ngModel"
+                                    [ngClass]="{'is-invalid':(designationName1.invalid) &&(formSubmitted || designationName1.touched) }"
                                     required>
-                                <div class="input-required" *ngIf="(designationName1.invalid) && (formSubmitted || designationName1.touched)">
+                                <div class="input-required"
+                                    *ngIf="(designationName1.invalid) && (formSubmitted || designationName1.touched)">
                                     Designation name is required.
                                 </div>
                             </div>
@@ -272,7 +355,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="approveBy.name" #name1="ngModel" [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched) }" required>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Name"
+                                    [(ngModel)]="approveBy.name" #name1="ngModel"
+                                    [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched) }"
+                                    required>
                                 <div class="input-required" *ngIf="(name1.invalid) && (formSubmitted || name1.touched)">
                                     Name is required.
                                 </div>
@@ -281,9 +367,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Contact No</label>
-                                <input name="contactNo" type="number" class="form-control" placeholder="Enter Contact No." [(ngModel)]="approveBy.contact" #contactNo1="ngModel" pattern="[6-9]{1}[0-9]{9}" [ngClass]="{'is-invalid':(contactNo1.invalid) &&(formSubmitted || contactNo1.touched) }"
+                                <input name="contactNo" type="number" class="form-control"
+                                    placeholder="Enter Contact No." [(ngModel)]="approveBy.contact"
+                                    #contactNo1="ngModel" pattern="[6-9]{1}[0-9]{9}"
+                                    [ngClass]="{'is-invalid':(contactNo1.invalid) &&(formSubmitted || contactNo1.touched) }"
                                     required>
-                                <div class="input-required" *ngIf="(contactNo1.invalid) && (formSubmitted || contactNo1.touched)">
+                                <div class="input-required"
+                                    *ngIf="(contactNo1.invalid) && (formSubmitted || contactNo1.touched)">
                                     Valid 10 digit Contact no is required.
                                 </div>
                             </div>
@@ -291,9 +381,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input name="email" type="text" class="form-control" placeholder="Enter Email" [(ngModel)]="approveBy.email" #email1="ngModel" [ngClass]="{'is-invalid':(email1.invalid) &&(formSubmitted || email1.touched) }" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}"
-                                    required>
-                                <div class="input-required" *ngIf="(email1.invalid) && (formSubmitted || email1.touched)">
+                                <input name="email" type="text" class="form-control" placeholder="Enter Email"
+                                    [(ngModel)]="approveBy.email" #email1="ngModel"
+                                    [ngClass]="{'is-invalid':(email1.invalid) &&(formSubmitted || email1.touched) }"
+                                    pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}" required>
+                                <div class="input-required"
+                                    *ngIf="(email1.invalid) && (formSubmitted || email1.touched)">
                                     Valid email is required.
                                 </div>
                             </div>

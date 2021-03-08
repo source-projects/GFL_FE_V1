@@ -107,6 +107,7 @@ export class PendingApcComponent implements OnInit {
               qualityId: element.qualityId,
               qualityName: element.qualityName,
               partyId: element.partyId,
+              partyName: element.partyName,
               colorTone: element.colorTone,
             }));
           }

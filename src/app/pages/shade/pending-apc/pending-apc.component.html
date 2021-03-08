@@ -11,7 +11,7 @@
     <nb-card-body>
 
         <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" 
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                 aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
         </div>
 
@@ -30,10 +30,13 @@
             <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
             <ngx-datatable-column name="Process Name" prop="processName"></ngx-datatable-column>
             <ngx-datatable-column name="Quality ID" prop="qualityId" [maxWidth]="110"></ngx-datatable-column>
-            <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
             <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
-            <ngx-datatable-column name="Color Tone " prop="colorTone"></ngx-datatable-column>
-
+            <ngx-datatable-column name="Color Tone " prop="colorTone">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <input [(colorPicker)]="row.colorTone" [style.background]="row.colorTone" [value]="row.colorTone"
+                        disabled="true" class="width-100" />
+                </ng-template>
+            </ngx-datatable-column>
         </ngx-datatable>
 
     </nb-card-body>
