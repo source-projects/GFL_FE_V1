@@ -449,6 +449,7 @@ export class PlanningSlipComponent implements OnInit {
           if (this.slipData && this.isSavedForPrint) {
             clearInterval(interval1);
             this.printNOW();
+            clearInterval(interval1);
           }
         }, 10);
         this.quantityNullFlag = false;
