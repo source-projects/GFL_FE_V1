@@ -189,7 +189,7 @@
     }
     
     .datatable-header-cell-template-wrap {
-        text-align: center;
+        text-align: left;
     }
     
     .box-shadow-none {
@@ -221,7 +221,7 @@
     }
     
     .datatable-body-cell-label {
-        text-align: center;
+        text-align: left;
     }
     
     .ngx-datatable .datatable-footer {
@@ -1865,6 +1865,17 @@
         font-size: 14px !important;
     }
     
+    .invpice-batch-style {
+        border: 1px solid #5b585d;
+        padding: 0px 4px;
+        margin-right: 12px;
+        box-shadow: 0px 0px 0px 1px #d2d2d2;
+    }
+    
+    .text-body-left .new-n-left .datatable-body-cell-label {
+        text-align: left;
+    }
+    
     @media print {
         .row-print,
         .print-wth-100 {
@@ -2329,6 +2340,7 @@
     .table-jet tr td {
         text-align: center !important;
     }
+    
     // dyeing process dropdown
     .dropdown-name .ng-dropdown-panel.ng-select-bottom,
     .dropdown-name .ng-dropdown-panel.ng-select-top {
