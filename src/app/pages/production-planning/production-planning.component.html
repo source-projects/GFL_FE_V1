@@ -20,7 +20,7 @@
                                                 <label>Party</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -53,7 +53,7 @@
                                                 <label>Quality</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
