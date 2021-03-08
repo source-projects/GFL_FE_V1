@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                            <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
                                 <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
                             </ng-select>
 

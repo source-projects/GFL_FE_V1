@@ -441,7 +441,7 @@ export class PlanningSlipComponent implements OnInit {
         this.saveSlipData(myForm);
       } else {
         this.isSavedForPrint = true;
-        this.getSlipDataFromBatch();
+        //this.getSlipDataFromBatch();
       }
 
       if(!this.isPrintDirect){
@@ -449,6 +449,7 @@ export class PlanningSlipComponent implements OnInit {
           if (this.slipData && this.isSavedForPrint) {
             clearInterval(interval1);
             this.printNOW();
+            clearInterval(interval1);
           }
         }, 10);
         this.quantityNullFlag = false;
@@ -484,10 +485,10 @@ export class PlanningSlipComponent implements OnInit {
         doc.append(element);
         doc.print();
         // this.printFlag = true;
-        this.activeModal.close(this.slipObj);
         tempFlag = true;
         clearInterval(inter);
-        this.activeModal.close();
+        this.activeModal.close(this.slipObj);
+        //this.activeModal.close();
       }
     }, 10);
   }

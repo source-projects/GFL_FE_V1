@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4" *ngIf="!this.currentUserId || isChangePass">
                         <div class="form-group">
                             <label class="required">Password</label>
@@ -100,14 +100,14 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Company</label>
-                            <ng-select name="company" #company1="ngModel" [(ngModel)]="user.companyId" [items]="companyList" bindLabel="name" bindValue="id" placeholder="Select Company" required [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}"
+                            <ng-select name="company" appendTo="body" #company1="ngModel" [(ngModel)]="user.companyId" [items]="companyList" bindLabel="name" bindValue="id" placeholder="Select Company" required [ngClass]="{'is-invalid': (company1.invalid)&&(formSubmitted || company1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
                             <div class="input-required" *ngIf="(company1.invalid)&&(formSubmitted || company1.touched)">
@@ -119,7 +119,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="departmenty" #department1="ngModel" [(ngModel)]="user.departmentId" [items]="departmentList" bindLabel="name" bindValue="id" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
+                            <ng-select name="departmenty" appendTo="body" #department1="ngModel" [(ngModel)]="user.departmentId" [items]="departmentList" bindLabel="name" bindValue="id" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
                             <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
@@ -130,7 +130,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Designation</label>
-                            <ng-select name="designation" #designation1="ngModel" [(ngModel)]="user.designationId" [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || designation1.touched)}" placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
+                            <ng-select name="designation" appendTo="body" #designation1="ngModel" [(ngModel)]="user.designationId" [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || designation1.touched)}" placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
                                 (change)="designationSelected($event)">
                                 <ng-option *ngFor="let dsgn of designationList" [value]="dsgn.id">{{dsgn.designation}}
                                 </ng-option>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" >
+                <div class="row">
                     <div class="col-md-4" *ngIf="!isMasterFlag">
                         <div class="form-group">
                             <label></label>

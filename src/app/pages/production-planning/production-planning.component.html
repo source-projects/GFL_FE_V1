@@ -20,7 +20,7 @@
                                                 <label>Party</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="partyId" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -34,10 +34,12 @@
                                                     <ng-option *ngFor="let p of partyList" [value]="p.id">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips"> {{p.partyName}}</div>
+                                                                <div class="text-left txt-ov-elips"> {{p.partyName}}
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips"> {{p.partyCode}}</div>
+                                                                <div class="text-right txt-ov-elips"> {{p.partyCode}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </ng-option>
@@ -53,7 +55,7 @@
                                                 <label>Quality</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="qualityId" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -67,10 +69,12 @@
                                                     <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                                                <div class="text-left txt-ov-elips"> {{q.qualityId}}
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips"> {{q.partyName}}</div>
+                                                                <div class="text-right txt-ov-elips"> {{q.partyName}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </ng-option>
@@ -86,7 +90,10 @@
                                                 <label>Batch</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
+                                                <input type="text" #batchFilter1="ngModel"
+                                                    class="form-control size-small" fieldsize="small" nbinput
+                                                    name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required
+                                                    placeholder="Enter Batch">
                                             </div>
                                         </div>
 
@@ -95,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf="!flipped">
                                 <div class="jus-con-flex-start">
                                     <div class="col-md-5 col-12 pd-0">
                                         <div class="display-flex mr-0">
@@ -112,7 +119,8 @@
  -->
 
                                             <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.partyName}}</h6>
+                                                <h6 class="production-plan-text">{{productionBatchDetail.partyName}}
+                                                </h6>
                                             </div>
 
 
@@ -133,7 +141,8 @@
 
 
                                             <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}</h6>
+                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}
+                                                </h6>
                                             </div>
 
 
@@ -153,7 +162,8 @@
                                             </div> -->
 
                                             <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}</h6>
+                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}
+                                                </h6>
                                             </div>
 
 
@@ -175,7 +185,8 @@
 
 
                                             <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.processName}}</h6>
+                                                <h6 class="production-plan-text">{{productionBatchDetail.processName}}
+                                                </h6>
                                             </div>
 
 
@@ -200,7 +211,8 @@
 
 
                                             <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}</h6>
+                                                <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}
+                                                </h6>
                                             </div>
 
 
@@ -245,6 +257,70 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6" *ngIf="flipped">
+                                <div class="jus-con-flex-start">
+                                    <div class="col-md-5 col-12 pd-0">
+                                        <div class="display-flex mr-0">
+
+
+                                            <div class="batch-p-color label-0">
+                                                <label>Party Name</label>
+                                            </div>
+                                            <div class="party-name-text text-center">
+                                                <h6 class="production-plan-text">{{detailsList.partyName}}
+                                                </h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="display-flex mr-0">
+
+
+                                            <div class="batch-p-color label-0 text-Left">
+                                                <label>Batch No</label>
+                                            </div>
+                                            <div class="party-name-text text-center">
+                                                <h6 class="production-plan-text">{{detailsList.batchId}}
+                                                </h6>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="display-flex mr-0">
+
+
+                                            <div class=" batch-p-color label-0 text-Left">
+                                                <label>Party Shade No</label>
+                                            </div>
+
+                                            <div class="party-name-text text-center">
+                                                <h6 class="production-plan-text">{{detailsList.partyShadeNo}}
+                                                </h6>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="display-flex mr-0">
+
+
+                                            <div class="batch-p-color label-0 text-Left">
+                                                <label>Batch Weight</label>
+                                            </div>
+
+                                            <div class="party-name-text text-center">
+                                                <h6 class="production-plan-text">{{detailsList.totalWt | number }}
+                                                </h6>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -261,7 +337,8 @@
                                         </div>
                                         <div class="col-md-3 col-7 display-flex-end">
                                             <div class="jet-btn-production">
-                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" type="button" (click)="toggleView()">Jet planning</button>
+                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                    type="button" (click)="toggleView()">Jet planning</button>
                                             </div>
                                         </div>
                                     </div>
@@ -272,7 +349,10 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="batch-list-3line">
-                                                <button nbButton size="small" *ngFor="let b of batchList" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                                <button nbButton size="small" *ngFor="let b of batchList"
+                                                    (mouseenter)="getAllDetailsOfBatch($event,b)"
+                                                    (mouseout)="resetDetailsOfBatch($event)"
+                                                    (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
 
                                             </div>
@@ -297,8 +377,14 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group batch-list-3line">
-                                                <button nbButton size="small" class="jet-popup-box production-list-popup mr-left-10 border-radius" *ngFor="let b of plannedProductionList" [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" [style.background]="b.colorTone"
-                                                    class="p-badge-design-production jet-popup-display" (click)="batchSelectedFromProductionList($event)">
+                                                <button nbButton size="small"
+                                                    class="jet-popup-box production-list-popup mr-left-10 border-radius"
+                                                    *ngFor="let b of plannedProductionList" [value]="b.id"
+                                                    (mouseenter)="getAllDetailsOfBatch($event,b)"
+                                                    (mouseout)="resetDetailsOfBatch($event)"
+                                                    [style.background]="b.colorTone"
+                                                    class="p-badge-design-production jet-popup-display"
+                                                    (click)="batchSelectedFromProductionList($event)">
                                                     {{b.batchId}} </button>
                                             </div>
                                         </div>
@@ -319,7 +405,9 @@
                                             <div class="col-md-3 col-7 display-flex-end">
                                                 <div class="jet-btn-production">
                                                     <div class="jet-btn-production text-right">
-                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" (click)="toggleView()" type="button">Production Plan</button>
+                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                            (click)="toggleView()" type="button">Production
+                                                            Plan</button>
                                                     </div>
 
                                                 </div>
@@ -334,20 +422,28 @@
                                             <th width="8%">Capacity</th>
                                             <th width="82%">Sequence</th>
                                         </tr>
+
                                         <tr *ngFor="let j of jet;let i=index">
                                             <td>{{j.name}}</td>
                                             <td>{{j.capacity}}</td>
                                             <td>
-                                                <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                                                    <div class="example-box trans-box-drop-1" *ngFor="let index of j.jetDataList" [style.background]="index.colorTone" (click)="setIndexForSlip(index)" cdkDrag>
-                                                        <button nbContextMenuTag="my-context-menu" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
+                                                <div cdkDropList [cdkDropListData]="j.jetDataList"
+                                                    cdkDropListOrientation="horizontal"
+                                                    class="example-list main-table-drag"
+                                                    (cdkDropListDropped)="drop($event,i)">
+                                                    <div class="example-box trans-box-drop-1"
+                                                        *ngFor="let index of j.jetDataList;let idx = index;"
+                                                        [style.background]="index.colorTone"
+                                                        (click)="setIndexForSlip(index)" cdkDrag>
+                                                        <button nbContextMenuTag="my-context-menu"
+                                                            (mouseenter)="getAllDetailsOfBatch($event,index)"
+                                                            (mouseout)="resetDetailsOfBatch($event)"
+                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                                            class="jet-btn-changes btn-changes-jet ">
                                                             {{index.batchId}}
                                                         </button>
-
                                                     </div>
-
                                                 </div>
-
                                             </td>
 
                                         </tr>
