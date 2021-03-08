@@ -24,7 +24,8 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label class="required">Party Name</label>
-                    <ng-select name="partyId" id="partyId" formControlName="partyId" (change)="setPartyCode()" class="dropdown-name" [ngClass]="{'is-invalid':(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)}" placeholder="Party Name">
+                    <ng-select name="partyId" appendTo="body" id="partyId" formControlName="partyId" (change)="setPartyCode()" class="dropdown-name" [ngClass]="{'is-invalid':(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)}"
+                        placeholder="Party Name">
                         <ng-option disabled="true">
                             <div class="row">
                                 <div class="col-md-6 col-6">
@@ -104,7 +105,8 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Unit</label>
-                    <ng-select id="unit" formControlName="unit" [ngClass]="{'is-invalid':(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)}" [items]="unit" bindValue="name" bindLabel="name" placeholder="Unit" class="dropdown-name">
+                    <ng-select id="unit" appendTo="body" formControlName="unit" [ngClass]="{'is-invalid':(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)}" [items]="unit" bindValue="name" bindLabel="name" placeholder="Unit"
+                        class="dropdown-name">
                     </ng-select>
                     <div class="input-required" *ngIf="(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)">
                         <span>Unit is required.</span>
