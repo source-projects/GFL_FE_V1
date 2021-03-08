@@ -2,8 +2,7 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-2 col-3 display-flex-start">
-                <button [routerLink]="['/pages/generate_invoice']"
-                    class="btn btn-primary btn-md btn-design txt-ov-elips">Generate
+                <button [routerLink]="['/pages/generate_invoice']" class="btn btn-primary btn-md btn-design txt-ov-elips">Generate
                     Invoice</button>
             </div>
             <div class="col-md-8 col-3">
@@ -20,30 +19,30 @@
     <nb-card-body>
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
-        <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31"
-            [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
-            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true"
-                prop="id">
+        <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
+            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" prop="id" [maxWidth]="110">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                        [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
                     <!-- <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
                         (click)="deleteUser(row.id)"></nb-icon> -->
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Created Date" prop="date">
-            </ngx-datatable-column>
+
             <ngx-datatable-column name="Invoice No" prop="invoiceNo"></ngx-datatable-column>
-            <ngx-datatable-column name="SendToParty" prop="isSendToParty"></ngx-datatable-column>
+            <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
             <ngx-datatable-column name="Batch" prop="batchList">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <ng-container *ngFor="let batch of row.batchList">
-                        {{batch.batchId}} &nbsp;&nbsp;
+                        <span class="invpice-batch-style">{{batch.batchId}} </span>
                     </ng-container>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Created Date" prop="date">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{row.date | date:'fullDate'}}
                 </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>

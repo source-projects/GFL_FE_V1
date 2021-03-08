@@ -1865,6 +1865,12 @@
         font-size: 14px !important;
     }
     
+    .invpice-batch-style {
+        border: 1px solid #5b585d;
+        padding: 0px 4px;
+        margin-right: 12px;
+    }
+    
     @media print {
         .row-print,
         .print-wth-100 {
@@ -2329,6 +2335,7 @@
     .table-jet tr td {
         text-align: center !important;
     }
+    
     // dyeing process dropdown
     .dropdown-name .ng-dropdown-panel.ng-select-bottom,
     .dropdown-name .ng-dropdown-panel.ng-select-top {
