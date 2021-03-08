@@ -1,0 +1,236 @@
+<p>shade-child works!</p>
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="required">Party Name</label>
+                <ng-select placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+                    [(ngModel)]="shadeData.partyId" #partyName1="ngModel" required
+                    (change)="getQualityFromParty($event)" [ngClass]="{
+                    'is-invalid':
+                    partyName1.invalid &&
+                    (formSubmitted || partyName1.touched) &&
+                    !shadeData.pending
+                    }" class="required-error-dropdown dropdown-name">
+                    <ng-option disabled="true">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                    Party Name
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                    Party Code
+                                </div>
+                            </div>
+                        </div>
+                    </ng-option>
+                    <ng-option *ngFor="let p of partyList" [value]="p.id">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                    {{ p.partyName }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="text-right
+                                    txt-ov-elips">
+                                    {{ p.partyCode }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-option>
+                </ng-select>
+
+                <div class="input-required" *ngIf="partyName1.invalid
+                    &&
+                    !shadeData.pending &&
+                    (formSubmitted || partyName1.touched)">
+                    <span>Party Name is required</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="required">Party Shade No</label>
+                <input type="text" class="form-control size-small" fieldsize="small" nbinput name="partyShadeNo"
+                    [(ngModel)]="shadeData.partyShadeNo" #partyShadeNo1="ngModel" required [ngClass]="{
+                    'is-invalid':
+                    partyShadeNo1.invalid &&
+                    (formSubmitted || partyShadeNo1.touched) &&
+                    !shadeData.pending
+                    }" placeholder="Party Shade No" />
+
+                <div class="input-required" *ngIf="partyShadeNo1.invalid
+                    &&
+                    !shadeData.pending &&
+                    (formSubmitted || partyShadeNo1.touched)">
+                    <span>Party Shade No is required</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="required">Process Name</label>
+                <ng-select aria-placeholder="Select process name" name="process_name" [(ngModel)]="shadeData.processId"
+                    (change)="setProcessName(shadeData.processId)" #processName1="ngModel" name="processName" required
+                    [ngClass]="{
+                    'is-invalid':
+                    processName1.invalid &&
+                    (formSubmitted || processName1.touched)
+                    }" placeholder="Process Name" class="required-error-dropdown dropdown-name">
+                    <ng-option *ngFor="let p of processList" [value]="p.id">
+                        {{ p.dyeingProcessName }}
+                    </ng-option>
+                </ng-select>
+
+                <div class="input-required" *ngIf="processName1.invalid
+                    &&
+                    (formSubmitted || processName1.touched)">
+                    <span>Process Name is required</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label [ngClass]="{ required: !shadeData.pending }">Quality
+                    Id</label>
+                <ng-select placeholder="Select Quality Id" name="qualityId" [(ngModel)]="shadeData.qualityId"
+                    #qualityId1="ngModel" (change)="qualityIdSelected($event)" required [ngClass]="{
+                        'is-invalid':
+                        qualityId1.invalid &&
+                        (formSubmitted || qualityId1.touched) &&
+                        !shadeData.pending
+                        }" class="required-error-dropdown dropdown-name">
+                    <ng-option disabled="true">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                    Quality Id
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                    Party Name
+                                </div>
+                            </div>
+                        </div>
+                    </ng-option>
+                    <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                    {{ q.qualityId }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="text-right
+                                        txt-ov-elips">
+                                    {{ q.partyName }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-option>
+                </ng-select>
+
+                <div class="input-required" *ngIf="qualityId1.invalid
+                        &&
+                        !shadeData.pending &&
+                        (formSubmitted || qualityId1.touched)">
+                    <span>Quality id is required</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Quality Name</label>
+                <input type="text" name="qualityName" #qualityName1="ngModel" [(ngModel)]="shadeData.qualityName"
+                    readonly class="form-control size-small" fieldsize="small" nbinput placeholder="Quality Name" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Quality Type</label>
+                <input type="text" name="qualityType" readonly #qualityType1="ngModel"
+                    [(ngModel)]="shadeData.qualityType" class="form-control size-small" fieldsize="small" nbinput
+                    placeholder="Quality Type" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="required">Color Tone</label>
+                <input class="form-control size-small" fieldsize="small" nbinput [(colorPicker)]="color"
+                    [style.background]="color" [value]="color" (colorPickerChange)="updateColor()"
+                    placeholder="Color Tone" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Lab Color No</label>
+                <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shadeData.labColorNo"
+                    class="form-control size-small" fieldsize="small" nbinput placeholder="Lab Color No" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Category</label>
+                <ng-select name="category" category1="ngModel" [(ngModel)]="shadeData.category"
+                    placeholder="Select Category" class="required-error-dropdown">
+                    <ng-option *ngFor="let c of categoryList" [value]="c.name">
+                        {{ c.name }}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Remark</label>
+                <textarea name="remark" remark1="ngModel" [(ngModel)]="shadeData.remark"
+                    class="form-control remark-resize"></textarea>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <!-- <label class="required">Pending</label> -->
+                <nb-checkbox class="status-basic nb-transition" id="pending" name="pending"
+                    [(ngModel)]="shadeData.pending" [checked]="shadeData.pending" (checkedChange)="shadeData.pending=
+                    !shadeData.pending">
+                    <span class="text cr-txt">Pending</span>
+                </nb-checkbox>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <!-- <label class="required">Pending</label> -->
+                <div>
+                    <nb-checkbox class="status-basic nb-transition" id="pending" name="isExtraRate"
+                        [(ngModel)]="shadeData.isExtraRate" (checkedChange)="isExtraChanged($event)"
+                        [checked]="shadeData.isExtraRate">
+                        <span class="text cr-txt">Add extra rate</span>
+                    </nb-checkbox>
+                </div>
+                <div *ngIf="shadeData.isExtraRate">
+                    <label class="required">Extra rate</label>
+                    <input class="form-control size-small" fieldsize="small" name="extraRate" nbinput
+                        placeholder="Extra rate" [(ngModel)]="shadeData.extraRate" #extraRate
+                        [ngClass]="{'is-invalid': formSubmitted && shadeData.isExtraRate && !shadeData.extraRate}">
+                    <div class="invalid-feedback"
+                        *ngIf="formSubmitted && shadeData.isExtraRate && !shadeData.extraRate">
+                        <span>Extra rate is required if checked</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
