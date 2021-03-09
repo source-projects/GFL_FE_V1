@@ -23,6 +23,8 @@ import { NotFoundComponent } from "./pages/miscellaneous/not-found/not-found.com
 import { PagesComponent } from "./pages/pages.component";
 import { FinishedMeterGuard } from "./@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "./@theme/guards/input-data.guard";
+import { DyeingSlipGuard } from "./@theme/guards/dyeing-slip.guard";
+import { AdminGuard } from "./@theme/guards/admin.guard";
 
 export const routes: Routes = [
   {
@@ -80,14 +82,14 @@ export const routes: Routes = [
         canLoad: [ColorGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
-      {
-        path: "program",
-        loadChildren: () =>
-          import("./pages/program/program.module").then((m) => m.ProgramModule),
-        canActivate: [ProgramGuard],
-        canLoad: [ProgramGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
-      },
+      // {
+      //   path: 'program',
+      //   loadChildren: () => import('./pages/program/program.module')
+      //     .then(m => m.ProgramModule),
+      //   canActivate: [ProgramGuard],
+      //   canLoad: [ProgramGuard],
+      //   data: { PermissionName: ['view','view group','view all']}
+      // },
       {
         path: "dyeing-process",
         loadChildren: () =>
@@ -125,6 +127,15 @@ export const routes: Routes = [
         canLoad: [InvoiceGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+      // {
+      //   path: 'waterJet',
+      //   loadChildren: () => import('./pages/water-jet/water-jet.module')
+      //     .then(m => m.WaterJetModule),
+      //     canActivate: [WaterJetGuard],
+      //     canLoad: [WaterJetGuard],
+      //     data: { PermissionName: ['view','view group','view all']}
+
+      // },
       {
         path: "waterJet",
         loadChildren: () =>
@@ -242,18 +253,19 @@ export const routes: Routes = [
         path: "admin",
         loadChildren: () =>
           import("./pages/admin/admin.module").then((m) => m.AdminModule),
-        canActivate: [PaymentGuard],
-        canLoad: [PaymentGuard],
+        canActivate: [AdminGuard],
+        canLoad: [AdminGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+
       {
         path: "addition-slip",
         loadChildren: () =>
           import("./pages/addition-slip/addition-slip.module").then(
             (m) => m.AdditionSlipModule
           ),
-        canActivate: [PaymentGuard],
-        canLoad: [PaymentGuard],
+        canActivate: [DyeingSlipGuard],
+        canLoad: [DyeingSlipGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {

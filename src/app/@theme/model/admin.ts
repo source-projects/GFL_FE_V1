@@ -28,6 +28,14 @@ export class AddDepartment {
     this.name = null;
   }
 }
+export class AddQuality {
+  id: number;
+  qualityName: string;
+  constructor() {
+    this.id = 0;
+    this.qualityName = null;
+  }
+}
 export class AddDesignation {
   id: number;
   designation: string;

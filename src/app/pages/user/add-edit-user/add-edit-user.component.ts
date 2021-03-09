@@ -55,7 +55,6 @@ export class AddEditUserComponent implements OnInit {
     "Quality",
     "User",
     "Stock-Batch",
-    "Program",
     "Shade",
     "Supplier",
     "Supplier Rate",
@@ -67,7 +66,9 @@ export class AddEditUserComponent implements OnInit {
     "Invoice",
     "Finished Meter",
     "Input Data",
-    "Water Jet"
+    "Database",
+    "Dyeing Slip",
+
   ];
 
   userHeadList: any[] = [];
@@ -310,8 +311,10 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Program": {
-        let index = this.permissionArray.findIndex(v => v.module == "Program");
+      case "Database": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Database"
+        );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
@@ -369,14 +372,6 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Input Data": {
-        let index = this.permissionArray.findIndex(
-          v => v.module == "Input Data"
-        );
-        if (e.target.checked == true) this.setPermissionTrue(index);
-        else this.setPermissionFalse(index);
-        break;
-      }
 
       case "Payment": {
         let index = this.permissionArray.findIndex(v => v.module == "Payment");
@@ -401,14 +396,24 @@ export class AddEditUserComponent implements OnInit {
         break;
       }
 
-      case "Water Jet": {
+      case "Input Data": {
         let index = this.permissionArray.findIndex(
-          v => v.module == "Water Jet"
+          v => v.module == "Input Data"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Dyeing Slip": {
+        let index = this.permissionArray.findIndex(
+          v => v.module == "Dyeing Slip"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+      
     }
 
     for (let j = 0; j < this.forms.length; j++) {
@@ -495,7 +500,6 @@ export class AddEditUserComponent implements OnInit {
       qu: "",
       u: "",
       sb: "",
-      prg: "",
       sh: "",
       su: "",
       sr: "",
@@ -506,8 +510,9 @@ export class AddEditUserComponent implements OnInit {
       pt: "",
       d: "",
       bf: "",
-      ip: "",
-      wt: ""
+      ip:"",
+      ad: "",
+      ds: ""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {

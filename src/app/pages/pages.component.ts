@@ -14,12 +14,13 @@ import { WaterJetGuard } from "app/@theme/guards/water-jet.guard";
 import { InvoiceGuard } from "app/@theme/guards/invoice.guard";
 import { PaymentGuard } from "app/@theme/guards/payment.guard";
 import { AnyAaaaRecord } from "dns";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, from } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "app/@theme/guards/input-data.guard";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "../@theme/services/user.service";
+import { AdminGuard } from "../@theme/guards/admin.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -55,6 +56,7 @@ export class PagesComponent implements OnInit {
     public paymentGuard: PaymentGuard,
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
+    public adminGuard: AdminGuard,
     private commonService: CommonService,
     private userService: UserService
   ) {}
@@ -127,18 +129,18 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              case "Program":
-                this.view = this.programGuard.accessRights("view");
-                this.view_all = this.programGuard.accessRights("view all");
-                this.view_group = this.programGuard.accessRights("view group");
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Program":
+              //   this.view = this.programGuard.accessRights("view");
+              //   this.view_all = this.programGuard.accessRights("view all");
+              //   this.view_group = this.programGuard.accessRights("view group");
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
 
               case "Stock-batch":
                 this.view = this.stockBatchGuard.accessRights("view");
@@ -178,18 +180,18 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              case "Water-jet":
-                this.view = this.waterJetGuard.accessRights("view");
-                this.view_all = this.waterJetGuard.accessRights("view all");
-                this.view_group = this.waterJetGuard.accessRights("view group");
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Water-jet":
+              //   this.view = this.waterJetGuard.accessRights("view");
+              //   this.view_all = this.waterJetGuard.accessRights("view all");
+              //   this.view_group = this.waterJetGuard.accessRights("view group");
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
               case "DyeingProcess":
                 this.view = this.dyeingProcessGuard.accessRights("view");
                 this.view_all = this.dyeingProcessGuard.accessRights(
@@ -269,20 +271,20 @@ export class PagesComponent implements OnInit {
                 }
                 break;
 
-              case "Jet Planning":
-                this.view = this.jetPlanningGuard.accessRights("view");
-                this.view_all = this.jetPlanningGuard.accessRights("view all");
-                this.view_group = this.jetPlanningGuard.accessRights(
-                  "view group"
-                );
-                if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
-                ) {
-                  e.hidden = true;
-                }
-                break;
+              // case "Jet Planning":
+              //   this.view = this.jetPlanningGuard.accessRights("view");
+              //   this.view_all = this.jetPlanningGuard.accessRights("view all");
+              //   this.view_group = this.jetPlanningGuard.accessRights(
+              //     "view group"
+              //   );
+              //   if (
+              //     this.view == false &&
+              //     this.view_all == false &&
+              //     this.view_group == false
+              //   ) {
+              //     e.hidden = true;
+              //   }
+              //   break;
 
               case "Generate Invoice":
                 this.view = this.invoiceGuard.accessRights("view");
@@ -296,6 +298,19 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
+
+                case "Database":
+                  this.view = this.adminGuard.accessRights("view");
+                  this.view_all = this.adminGuard.accessRights("view all");
+                  this.view_group = this.adminGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
 
               case "Input Data":
                 this.view = this.inputDataGuard.accessRights("view");
@@ -324,6 +339,19 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
+
+                case "Addition Slip":
+                  this.view = this.paymentGuard.accessRights("view");
+                  this.view_all = this.paymentGuard.accessRights("view all");
+                  this.view_group = this.paymentGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
             }
           });
         }

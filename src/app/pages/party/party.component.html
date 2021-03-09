@@ -5,7 +5,8 @@
             <nb-card-header class="nb-header">
                 <div class="row">
                     <div class="col-md-1 col-3 display-flex-start">
-                        <button [routerLink]="['/pages/party']" class="btn btn-md btn-design" [disabled]="disabled">ADD</button>
+                        <button [routerLink]="['/pages/party']" class="btn btn-md btn-design"
+                            [disabled]="disabled">ADD</button>
                     </div>
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">Party</h2>
@@ -21,11 +22,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
-                            <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                            <nb-radio *ngFor="let radio of radioArray" [disabled]="radio.disabled" [value]=radio.id
+                                (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                         </nb-radio-group>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                            aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
                     </div>
                 </div>
                 <div class="ng-filter-main-popup display-none">
@@ -49,10 +52,12 @@
                                 </div>
                                 <div class="radio-popup">
                                     <div class="rd-1">
-                                        <input type="radio" id="and" name="select" class="radio-btn"><label for="and">AND</label>
+                                        <input type="radio" id="and" name="select" class="radio-btn"><label
+                                            for="and">AND</label>
                                     </div>
                                     <div class="rd-2">
-                                        <input type="radio" id="or" name="select" class="radio-btn"><label for="or">OR</label>
+                                        <input type="radio" id="or" name="select" class="radio-btn"><label
+                                            for="or">OR</label>
                                     </div>
 
                                 </div>
@@ -79,13 +84,20 @@
                             </div>
                             <div class="list-popup">
                                 <ul class="list-type-none">
-                                    <li><input type="checkbox" class="in-checkbox" id="in1"><label for="in1">(select All)</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in2"><label for="in2"> (Blanks)</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in3"><label for="in3"> A. J. Mleczko</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in4"><label for="in4"> Aaron Armstrong</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in5"><label for="in5"> Aaron Egbele</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in6"><label for="in6"> Aaron Gate</label></li>
-                                    <li><input type="checkbox" class="in-checkbox" id="in7"><label for="in7"> Aaron Gate</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in1"><label for="in1">(select
+                                            All)</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in2"><label for="in2">
+                                            (Blanks)</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in3"><label for="in3"> A. J.
+                                            Mleczko</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in4"><label for="in4"> Aaron
+                                            Armstrong</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in5"><label for="in5"> Aaron
+                                            Egbele</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in6"><label for="in6"> Aaron
+                                            Gate</label></li>
+                                    <li><input type="checkbox" class="in-checkbox" id="in7"><label for="in7"> Aaron
+                                            Gate</label></li>
                                     <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
                                     <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
                                     <li><input type="checkbox" class="in-checkbox"><span>Aaron Gate</span></li>
@@ -111,12 +123,16 @@
                     [paginationPageSize]="paginationPageSize"
                     (gridReady)="onGridReady($event)"
                     ></ag-grid-angular> -->
-                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id" [maxWidth]="90">
+                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31"
+                    [footerHeight]="31">
+                    <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id"
+                        [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                [hidden]="hiddenEdit" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                                [hidden]="hidden" (click)="deleteParty(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Party Name" props="partyName">
@@ -128,10 +144,11 @@
 
                         </ng-template>
                     </ngx-datatable-column>
+                    <ngx-datatable-column name="Party Code" props="partyCode"></ngx-datatable-column>
                     <ngx-datatable-column name="Party Address1" props="partyAddress1"></ngx-datatable-column>
                     <ngx-datatable-column name="Contact No" props="contactNo"></ngx-datatable-column>
                     <ngx-datatable-column name="City" props="city"></ngx-datatable-column>
-                    <ngx-datatable-column name="State" props="state"></ngx-datatable-column>
+                    <ngx-datatable-column name="Master Name" props="masterName"></ngx-datatable-column>
                 </ngx-datatable>
             </nb-card-body>
 
