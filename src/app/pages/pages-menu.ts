@@ -126,12 +126,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   hidden:false
   // },
   {
-    title: 'Jet Planning',
-    icon: 'options-outline',
-    link: '/pages/jet-planning',
-    hidden:false
-  },
-  {
     title: 'Addition Slip',
     icon: 'file-text-outline',
     link: '/pages/addition-slip',
