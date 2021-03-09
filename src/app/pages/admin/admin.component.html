@@ -53,24 +53,18 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)=" onCancelJet()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveJet(addJetData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)=" onCancelJet()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveJet(addJetData)" [disabled]="disabled" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
                 <!-- </form> -->
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="jetList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeJet(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getjetEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="jetList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeJet(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getjetEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
@@ -104,23 +98,17 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelCompany()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveCompany(addCompanyData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelCompany()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveCompany(addCompanyData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeCompany(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getcompanyEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeCompany(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getcompanyEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -150,23 +138,17 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelDepartment()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveDepartment(addDepartmentData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDepartment()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDepartment(addDepartmentData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="departmentList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeDepartment(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getdepartmentEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="departmentList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeDepartment(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getdepartmentEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
@@ -206,13 +188,13 @@
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="qualityList"
                     [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeQuality(row.id)"></nb-icon>&nbsp;&nbsp;
+                                (click)="removeQuality(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getQualityEdit(row.id)"></nb-icon>
+                                (click)="getQualityEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
@@ -259,23 +241,17 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend text-btn-right">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelMachine()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveMachine(addMachineData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachine()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachine(addMachineData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeMachine(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getMachineEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeMachine(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getMachineEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
 
                         </ng-template>
                     </ngx-datatable-column>
@@ -312,23 +288,17 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelMachineCategory()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveMachineCategory(addMachineCategoryData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachineCategory()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachineCategory(addMachineCategoryData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeMachineCategory(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getMachineCategoryEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeMachineCategory(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getMachineCategoryEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
 
                         </ng-template>
                     </ngx-datatable-column>
@@ -362,23 +332,17 @@
 
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelDesignation()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveDesignation(addDesignationData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDesignation()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDesignation(addDesignationData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="designationList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeDesignation(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getdesignationEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="designationList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeDesignation(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getdesignationEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Designation" prop="designation" [sortable]="false" [width]="300">
@@ -430,22 +394,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelApproveBy()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveApproveBy(addApproveByData)">SAVE</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelApproveBy()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveApproveBy(addApproveByData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
                 </form>
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveByList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeApproveBy(row.id)"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getapproveByEdit(row.id)"></nb-icon>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveByList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeApproveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getapproveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">

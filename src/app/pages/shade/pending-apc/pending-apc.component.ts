@@ -5,6 +5,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
+import { ShadeGuard } from '../../../@theme/guards/shade.guard';
 
 @Component({
   selector: "ngx-pending-apc",
@@ -19,11 +20,16 @@ export class PendingApcComponent implements OnInit {
   userId: any;
   userHeadId: any;
   apcFlag = true;
+  disabled = false;
+  hiddenEdit = false;
+  hiddenDelete = false;
   constructor(
     private shadeService: ShadeService,
     private commonService: CommonService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public shadeGuard: ShadeGuard,
+
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +38,39 @@ export class PendingApcComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getallShades(this.userId, "all");
+    this.getAddAcess();
+    this.getDeleteAccess();
+    this.getEditAccess();
+  }
+
+  getAddAcess() {
+    if (this.shadeGuard.accessRights('add')) {
+      this.disabled = false;
+    }
+    else {
+      this.disabled = true;
+    }
+  }
+
+  getDeleteAccess() {
+    if (this.shadeGuard.accessRights('delete')) {
+      this.hiddenDelete = false;
+    }
+    else
+    {
+      this.hiddenDelete = true;
+    }
+  }
+
+
+  getEditAccess() {
+    if (this.shadeGuard.accessRights('edit')) {
+      this.hiddenEdit = false;
+    }
+    else
+    {
+      this.hiddenEdit = true;
+    }
   }
 
   filter(value: any) {
