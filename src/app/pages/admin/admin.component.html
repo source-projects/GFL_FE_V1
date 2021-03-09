@@ -188,13 +188,13 @@
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="qualityList"
                     [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                             let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeQuality(row.id)"></nb-icon>&nbsp;&nbsp;
+                                (click)="removeQuality(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getQualityEdit(row.id)"></nb-icon>
+                                (click)="getQualityEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
 
