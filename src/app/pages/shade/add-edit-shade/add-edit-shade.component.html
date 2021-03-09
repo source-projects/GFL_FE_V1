@@ -305,10 +305,10 @@
                                         [(ngModel)]="row.supplierItemId" required
                                         [id]="'supplierList' + rowIndex + '-0'" appendTo="body"
                                         class="ng-select-br-none dropdown-name" [disabled]="shadeObj.pending">
-                                        <ng-option *ngFor="let s of supplierList
+                                        <ng-option *ngFor="let s of (supplierList
                                             | filterOutSelectedShade
                                             : shadeObj.shadeDataList
-                                            : refreshFlag" [value]="s.id">{{ s.itemName }} - {{ s.supplierName }}
+                                            : refreshFlag: (this.currentShadeId?true:false))   " [value]="s.id">{{ s.itemName }} - {{ s.supplierName }}
                                         </ng-option>
                                     </ng-select>
                                     <div [ngClass]="{ required:
