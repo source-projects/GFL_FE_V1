@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { ProductionPlanningComponent } from './production-planning.component';
 import { AddShadeComponent } from './add-shade/add-shade.component';
 import { JetPlanningModule } from '../jet-planning/jet-planning.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ThemeModule } from 'app/@theme/theme.module';
 
 
 
@@ -17,7 +19,9 @@ import { JetPlanningModule } from '../jet-planning/jet-planning.module';
     ProductionPlanningRoutingModule,
     SharedModule,
     FormsModule,
-    JetPlanningModule
+    DragDropModule,
+    JetPlanningModule,
+    ThemeModule
   ]
 })
 export class ProductionPlanningModule { }

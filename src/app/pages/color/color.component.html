@@ -3,7 +3,8 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-1 col-3 display-flex-start">
-                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/color']" [disabled]="disabled">ADD</button>
+                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/color']"
+                    [disabled]="disabled">ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Color Stock</h2>
@@ -19,19 +20,25 @@
         <div class="row">
             <div class="col-md-6">
                 <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
-                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
+                        (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
         <!--  ngx- DataTable -->
-        <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
-            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id" [maxWidth]="90">
+        <ngx-datatable [rows]="colorList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+            [footerHeight]="40">
+            <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id"
+                [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/color/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="deleteColor(row.id)"></nb-icon>
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                        [hidden]="hiddenEdit" [routerLink]="['/pages/color/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
+                        (click)="deleteColor(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
@@ -39,8 +46,7 @@
             <ngx-datatable-column name="Bill Date" prop="billDate"></ngx-datatable-column>
             <ngx-datatable-column name="Challan No" prop="chlNo"></ngx-datatable-column>
             <ngx-datatable-column name="Challan Date" prop="chlDate"></ngx-datatable-column>
-
-
+            <ngx-datatable-column name="Bill Amount " prop="billAmount"></ngx-datatable-column>
         </ngx-datatable>
 
     </nb-card-body>

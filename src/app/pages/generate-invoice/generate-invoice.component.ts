@@ -1,54 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonService } from 'app/@theme/services/common.service';
-import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
+import { Component, OnInit } from "@angular/core";
+import { CommonService } from "../../@theme/services/common.service";
+import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router } from "@angular/router";
 
 // import { Invoice } from "app/@theme/model/invoice";
 
 @Component({
-  selector: 'ngx-generate-invoice',
-  templateUrl: './generate-invoice.component.html',
-  styleUrls: ['./generate-invoice.component.scss']
+  selector: "ngx-generate-invoice",
+  templateUrl: "./generate-invoice.component.html",
+  styleUrls: ["./generate-invoice.component.scss"],
 })
 export class GenerateInvoiceComponent implements OnInit {
   checked = false;
+  in: number = 2;
   public loading = false;
   InvoiceList = [];
   copyInvoiceList = [];
-  Invoice=[];
+  Invoice = [];
   finalcheckedrows = [];
   // invoiceValues: Invoice = new Invoice();
 
-  hidden :boolean=true;
-  hiddenEdit:boolean=true;
-  hiddenView:boolean=true;
-  
-  constructor(    
+  hidden: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenView: boolean = true;
+
+  constructor(
     private commonService: CommonService,
     private generateInvoiceService: GenerateInvoiceService,
     private _NgbModal: NgbModal,
-    private router:Router
-
-    
-    ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllInvoice();
   }
 
-  
-  filter(value:any){
+  filter(value: any) {
     const val = value.toString().toLowerCase().trim();
     const keys = Object.keys(this.copyInvoiceList[0]);
-    this.InvoiceList = this.copyInvoiceList.filter(item => {
+    this.InvoiceList = this.copyInvoiceList.filter((item) => {
       for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
-            item[keys[i]]
-              .toString()
-              .toLowerCase()
-              .indexOf(val) !== -1) ||
+            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
           !val
         ) {
           return true;
@@ -59,19 +54,26 @@ export class GenerateInvoiceComponent implements OnInit {
 
   getAllInvoice() {
     this.loading = true;
-   
+
     this.generateInvoiceService.getAllDipatch().subscribe(
       (data) => {
-       
         if (data["success"]) {
           this.InvoiceList = data["data"];
-          console.log(this.InvoiceList)
+          console.log(this.InvoiceList);
           this.copyInvoiceList = data["data"];
-          this.Invoice=this.InvoiceList.map((element)=>({date:element.date, id: element.id,invoiceNo:element.invoiceNo, isSendToParty: element.isSendToParty}));
-          this.copyInvoiceList=this.InvoiceList.map((element)=>({date:element.date, id: element.id,invoiceNo:element.invoiceNo, isSendToParty: element.isSendToParty}))
-
-        }
-        else {
+          this.Invoice = this.InvoiceList.map((element) => ({
+            date: element.date,
+            id: element.id,
+            invoiceNo: element.invoiceNo,
+            isSendToParty: element.isSendToParty,
+          }));
+          this.copyInvoiceList = this.InvoiceList.map((element) => ({
+            date: element.date,
+            id: element.id,
+            invoiceNo: element.invoiceNo,
+            isSendToParty: element.isSendToParty,
+          }));
+        } else {
           // this.toastr.error(data['msg'])
         }
         this.loading = false;
@@ -83,33 +85,32 @@ export class GenerateInvoiceComponent implements OnInit {
     );
   }
 
-  print(){
-
+  print() {
     const queryParams: any = {};
     const arrayOfValues = this.finalcheckedrows;
-    if(arrayOfValues.length != 0){
+    if (arrayOfValues.length != 0) {
       queryParams.myArray = JSON.stringify(arrayOfValues);
-    const navigationExtras: NavigationExtras = {
-      queryParams
-    };
+      const navigationExtras: NavigationExtras = {
+        queryParams,
+      };
 
-    this.router.navigate(['/pages/generate_invoice/print/'], navigationExtras);
+      this.router.navigate(
+        ["/pages/generate_invoice/print/"],
+        navigationExtras
+      );
     }
-    
   }
 
-  goToReport(){
-    this.router.navigate(['/pages/generate_invoice/report']);
+  goToReport() {
+    this.router.navigate(["/pages/generate_invoice/report"]);
   }
 
   onSelect(value: any) {
-
     this.finalcheckedrows = [];
-    let arr:any[] = value.selected;
-    arr.forEach(ele =>{
-      this.finalcheckedrows.push(ele.invoiceNo)
-    })
+    let arr: any[] = value.selected;
+    arr.forEach((ele) => {
+      this.finalcheckedrows.push(ele.invoiceNo);
+    });
     // this.finalcheckedrows = arr;
-    
   }
 }

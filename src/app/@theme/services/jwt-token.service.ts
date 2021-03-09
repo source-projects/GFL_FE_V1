@@ -77,6 +77,12 @@ export class JwtTokenService {
       case 'waterJet':
         return this.tokens.permissions.wt;
 
+      case 'admin':
+        return this.tokens.permissions.ad;
+
+      case 'dyeingSlip':
+        return this.tokens.permissions.ds;  
+
       case 'userId':
         return this.tokens.sub;
 
