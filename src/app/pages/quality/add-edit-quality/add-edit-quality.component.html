@@ -14,8 +14,6 @@
                 </ng-template>
             </div>
 
-
-
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -78,9 +76,6 @@
 
                 </div>
                 <div class="form-group col-md-4">
-                    <!-- <label class="required">Quality Name</label>
-                    <input type="text" class="form-control size-small" id="qualityName" nbinput fieldsize="small" formControlName="qualityName" placeholder="Enter Quality Name" [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityName').invalid)&&(formSubmitted || addEditQualityForm.get('qualityName').touched) }"
-                    /> -->
                     <label class="required">Quality Name</label>
                     <ng-select name="qualityName" appendTo="body" id="qualityName" formControlName="qualityNameId"
                         class="dropdown-name" (change)="setQualityName($event)"

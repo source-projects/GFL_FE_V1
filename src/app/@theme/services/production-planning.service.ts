@@ -13,7 +13,6 @@ export class ProductionPlanningService {
     private commonService: CommonService
   ) {
     this.addToJetClicked.subscribe((ele) => {
-      console.log(ele);
     });
   }
 
@@ -28,19 +27,14 @@ export class ProductionPlanningService {
       this.commonService.envUrl() + "api/productionPlan/all"
     );
   }
-  getAllPlannedProductionList(): any {
-    return this.httpClient.get(
-      this.commonService.envUrl() +
-        "api/productionPlan/allProductionWithoutFilter"
-    );
-  }
+
   getWeightByStockIdAndBatchId(id, id1): any {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/stockBatch/getWtByStockIdAndBatchId/" +
-        id +
-        "/" +
-        id1
+      "api/stockBatch/getWtByStockIdAndBatchId/" +
+      id +
+      "/" +
+      id1
     );
   }
 
@@ -50,7 +44,7 @@ export class ProductionPlanningService {
     );
   }
 
-  updateProductionPlan(productionData){
+  updateProductionPlan(productionData) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/updateProductionPlan/", productionData
     );

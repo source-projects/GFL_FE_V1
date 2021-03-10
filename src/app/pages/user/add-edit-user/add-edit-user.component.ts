@@ -11,7 +11,6 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { UserService } from "../../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Md5 } from "ts-md5/dist/md5";
-import { PartyService } from "../../../@theme/services/party.service";
 
 @Component({
   selector: "ngx-add-edit-user",
@@ -45,8 +44,6 @@ export class AddEditUserComponent implements OnInit {
   currentUserData: any;
   designationList;
   public isChangePass: boolean = false;
-
-  //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
   formSubmitted: boolean = false;
 
@@ -119,7 +116,6 @@ export class AddEditUserComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private renderer: Renderer2,
-    private partyService: PartyService
   ) {}
 
   async ngOnInit() {
@@ -558,7 +554,6 @@ export class AddEditUserComponent implements OnInit {
 
     let t2 = temp.reduce((r, c) => Object.assign(r, c), {});
 
-    // this.userPermissionData
     Object.keys(t2).forEach((key, i) => {
       this.user.userPermissionData = t2;
     });

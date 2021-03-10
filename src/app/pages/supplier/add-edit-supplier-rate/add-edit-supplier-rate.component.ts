@@ -16,11 +16,8 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   //data fatch supplier Name
   supplier: [];
-  itemTypeData = ["Color" , ]
-  // itemTypeData = [
-  //   { id: "color", name: "Color" },
-  //   { id: "chemical", name: "Chemical" },
-  // ];
+  itemTypeData = ["Color",]
+
   selectedType = 'Color';
   //Form Validation flag
   formSubmitted: boolean = false;
@@ -59,7 +56,6 @@ export class AddEditSupplierRateComponent implements OnInit {
   user;
 
   //for fatching selected supplier id
-  //supplierId
 
   supplierList;
   index: any;
@@ -73,7 +69,7 @@ export class AddEditSupplierRateComponent implements OnInit {
     private router: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getSupplierName();
@@ -116,10 +112,9 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
           this.discount = this.formValues.discountPercentage;
           this.gst = this.formValues.gstPercentage;
-        } 
+        }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -130,13 +125,10 @@ export class AddEditSupplierRateComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
-        } 
-        // else {
-        //   this.toastr.error(data["msg"]);
-        // }
+        }
+
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -153,8 +145,6 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.remark;
       delete this.formValues.paymentTerms;
       delete this.formValues.updatedBy;
-      //delete this.formValues.supplierRates[0].discountedRate;
-      //delete this.formValues.supplierRates[0].gstRate;
       this.formValues.supplierRates.forEach((e) => {
         e.createdBy = this.user.userId;
         e.userHeadId = this.userHead.userHeadId;
@@ -194,8 +184,6 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.paymentTerms;
       delete this.formValues.createdBy;
       this.formValues.supplierRates.forEach((e) => {
-        //delete e.discountedRate;
-        //delete e.gstRate;
         e.updatedBy = this.user.userId;
         e.supplierId = this.formValues.supplierId;
       });
@@ -225,7 +213,7 @@ export class AddEditSupplierRateComponent implements OnInit {
     }
   }
 
-  reset(myForm){
+  reset(myForm) {
     myForm.reset();
     this.formSubmitted = false;
   }

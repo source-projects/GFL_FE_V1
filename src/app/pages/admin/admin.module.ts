@@ -6,15 +6,8 @@ import { SharedModule } from 'app/@theme/shared.module';
 import {
   NbButtonModule,
   NbCardModule,
-
-
-
   NbIconModule,
-
   NbListModule, NbProgressBarModule,
-
-
-
   NbSelectModule, NbTabsetModule,
   NbUserModule
 } from '@nebular/theme';

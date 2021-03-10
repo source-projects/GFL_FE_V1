@@ -7,7 +7,8 @@
                         <button class="btn btn-primary btn-md btn-design" (click)="open()">EXPORT</button>
                     </div>
                     <div class="col-md-1 col-3 display-flex-start">
-                        <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/dyeing-process']" [disabled]="false">Add</button>
+                        <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/dyeing-process']"
+                            [disabled]="false">Add</button>
                     </div>
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">Dyeing Process</h2>
@@ -16,11 +17,14 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <ngx-datatable [rows]="dyeingProcessList" [ngClass]="'bootstrap'" [rowHeight]="'auto'" [headerHeight]="31" class="material">
+                <ngx-datatable [rows]="dyeingProcessList" [ngClass]="'bootstrap'" [rowHeight]="'auto'"
+                    [headerHeight]="31" class="material">
                     <ngx-datatable-column name="Actions" sortable="false" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/dyeing-process/edit',row.id]" [hidden]="false"></nb-icon>
-                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteDyeingProcess(row.id)" icon="trash" [hidden]="false"></nb-icon>
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                                [routerLink]="['/pages/dyeing-process/edit',row.id]" [hidden]="false"></nb-icon>
+                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}"
+                                (click)="deleteDyeingProcess(row.id)" icon="trash" [hidden]="false"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Dyeing Process Name" props="dyeingProcessName"></ngx-datatable-column>

@@ -30,7 +30,6 @@ export class AdvancePaymentComponent implements OnInit {
 
   party: any[];
   paymentTypeList: any[];
-  // advancePaymentDataListArray: AdvancePayment[] = [];
 
   advancePaymentValues: AdvancePayment = new AdvancePayment();
   advancePaymentArray: AdvancePayment[] = [];
@@ -46,8 +45,6 @@ export class AdvancePaymentComponent implements OnInit {
   ) {
 
     this.advancePaymentArray.push(this.advancePaymentValues);
-    console.log(this.advancePaymentArray);
-    //this.advancePaymentValues = this.advancePaymentArray;
   }
 
   ngOnInit(): void {
@@ -72,12 +69,10 @@ export class AdvancePaymentComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -88,15 +83,12 @@ export class AdvancePaymentComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.paymentTypeList = data["data"];
-          console.log(this.paymentTypeList);
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -143,17 +135,14 @@ export class AdvancePaymentComponent implements OnInit {
           creditId: null,
         };
         let list = this.advancePaymentArray;
-        console.log(list);
         list.push(obj);
         this.advancePaymentArray = [...list];
-        console.log(this.advancePaymentArray);
-        
-        
+
         this.data.changes.subscribe(() => {
           this.data.last.focus();
         })
-      
-      
+
+
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -200,14 +189,10 @@ export class AdvancePaymentComponent implements OnInit {
 
   addAdvancePayment(event) {
     this.formSubmitted = true;
-    //delete event.value.chequeAmt;
-    // console.log(event.value);
-    // console.log(this.advancePaymentArray);
     this.advancePaymentArray.forEach(element => {
       element.payTypeId = Number(element.payTypeId);
       element.no = Number(element.no);
     })
-    console.log(this.advancePaymentArray);
 
     this.paymentService.addAdvancePayment(this.advancePaymentArray).subscribe(
       data => {

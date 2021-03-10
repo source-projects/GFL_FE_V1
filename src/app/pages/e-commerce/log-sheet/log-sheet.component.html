@@ -7,7 +7,8 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="shift">Select Shift:</label>
-                    <select class="form-control" (change)="shiftchange($event.target.value)" class="browser-default custom-select form-control">
+                    <select class="form-control" (change)="shiftchange($event.target.value)"
+                        class="browser-default custom-select form-control">
                         <option *ngFor="let sh of shift" [value]="sh.id">
                             {{sh.name}}</option>
                     </select>
@@ -18,13 +19,15 @@
         <div *ngIf="dayFlag">
 
             <form #logForm="ngForm">
-                <table border="3px" class="table-responsive table-input-width table-display-inline width-100 text-center">
+                <table border="3px"
+                    class="table-responsive table-input-width table-display-inline width-100 text-center">
                     <tr>
                         <td colspan="5">
                             <label for="master">Master</label>
                         </td>
                         <td colspan="5">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="masterchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="masterchange($event.target.value)">
                                 <option *ngFor="let mas of master" [value]="mas.id" aria-placeholder="Select Master">
                                     {{mas.userName}}</option>
                             </select>
@@ -33,8 +36,10 @@
                             <label for="date">Date</label>
                         </td>
                         <td colspan="4">
-                            <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" placeholder="Select Date" ([ngModel])="dateSelected" class="width-100 height-100">
-                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1></owl-date-time>
+                            <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" placeholder="Select Date"
+                                ([ngModel])="dateSelected" class="width-100 height-100">
+                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1>
+                            </owl-date-time>
                         </td>
                     </tr>
                     <tr>
@@ -42,7 +47,8 @@
                             <strong class="font-20">Boiler</strong>
                         </td>
                         <td colspan="4">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="boilerchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="boilerchange($event.target.value)">
                                 <option *ngFor="let boi of boiler" [value]="boi.id">
                                     {{boi.machineName}}</option>
                             </select>
@@ -81,7 +87,8 @@
                             <strong class="font-20">Thermopack</strong>
                         </td>
                         <td colspan="4">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="thermopackchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="thermopackchange($event.target.value)">
                                 <option *ngFor="let ther of thermopack" [value]="ther.id">
                                     {{ther.machineName}}</option>
                             </select>
@@ -117,7 +124,8 @@
                     </tr>
                 </table>
                 <div class="padding-bt-tp mobile-btn-center text-btn-right">
-                    <input type="button" (click)="submitday(logForm)" class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+                    <input type="button" (click)="submitday(logForm)"
+                        class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
                 </div>
 
             </form>
@@ -133,7 +141,8 @@
                             <label for="master">Master</label>
                         </td>
                         <td colspan="5">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="masterchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="masterchange($event.target.value)">
                                 <option *ngFor="let mas of master" [value]="mas.id" aria-placeholder="Select Master">
                                     {{mas.userName}}</option>
                             </select>
@@ -142,8 +151,10 @@
                             <label for="date">Date</label>
                         </td>
                         <td colspan="4">
-                            <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" placeholder="Select Date" ([ngModel])="dateSelected" class="width-100 height-100">
-                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1></owl-date-time>
+                            <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" placeholder="Select Date"
+                                ([ngModel])="dateSelected" class="width-100 height-100">
+                            <owl-date-time (afterPickerClosed)="change(dt1)" [pickerType]="'calendar'" #dt1>
+                            </owl-date-time>
                         </td>
                     </tr>
                     <tr class="height-60">
@@ -151,7 +162,8 @@
                             <strong class="font-20">Boiler</strong>
                         </td>
                         <td colspan="4">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="boilerchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="boilerchange($event.target.value)">
                                 <option *ngFor="let boi of boiler" [value]="boi.id">
                                     {{boi.machineName}}</option>
                             </select>
@@ -190,7 +202,8 @@
                             <strong class="font-20">Thermopack</strong>
                         </td>
                         <td colspan="4">
-                            <select class="browser-default custom-select sheet-dashboard" (change)="thermopackchange($event.target.value)">
+                            <select class="browser-default custom-select sheet-dashboard"
+                                (change)="thermopackchange($event.target.value)">
                                 <option *ngFor="let ther of thermopack" [value]="ther.id">
                                     {{ther.machineName}}</option>
                             </select>

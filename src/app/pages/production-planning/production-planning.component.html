@@ -20,7 +20,9 @@
                                                 <label>Party</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-select name="partyId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.partyId' required
+                                                    placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -55,7 +57,9 @@
                                                 <label>Quality</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-select name="qualityId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID"
+                                                    (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -111,41 +115,24 @@
                                             <div class="batch-p-color label-0">
                                                 <label>Party Name</label>
                                             </div>
-                                            <!-- 
-
-                                        <div class="batch-col text-center">
-                                            <span>:</span>
-                                        </div>
- -->
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.partyName}}
                                                 </h6>
                                             </div>
 
-
-
-
                                         </div>
 
                                         <div class="display-flex mr-0">
-
 
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Quality Name</label>
                                             </div>
 
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}
                                                 </h6>
                                             </div>
-
-
 
                                         </div>
                                         <div class="display-flex mr-0">
@@ -155,59 +142,34 @@
                                                 <label>Quality Id</label>
                                             </div>
 
-                                            <!-- <div class="col-md-2">
-                                                <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div>
-                                            </div> -->
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
 
                                         <div class="display-flex mr-0">
 
-
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Process Name</label>
                                             </div>
-
-
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.processName}}
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
 
                                     </div>
-                                    <!-- <div class="col-md-1 col-12 border-right-card-batch"></div> -->
                                     <div class="col-md-4 col-12 pd-0">
 
                                         <div class="display-flex mr-0">
 
-
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Party Shade No.</label>
                                             </div>
-
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
 
 
                                             <div class="party-name-text text-center">
@@ -215,40 +177,23 @@
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
                                         <div class="display-flex mr-0">
-
 
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Lot Weight</label>
                                             </div>
 
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.totalWt}}</h6>
                                             </div>
 
-
                                         </div>
                                         <div class="display-flex mr-0">
-
 
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Lot Meter</label>
                                             </div>
-
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
@@ -262,7 +207,6 @@
                                     <div class="col-md-5 col-12 pd-0">
                                         <div class="display-flex mr-0">
 
-
                                             <div class="batch-p-color label-0">
                                                 <label>Party Name</label>
                                             </div>
@@ -274,7 +218,6 @@
 
                                         <div class="display-flex mr-0">
 
-
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Batch No</label>
                                             </div>
@@ -283,11 +226,8 @@
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
                                         <div class="display-flex mr-0">
-
 
                                             <div class=" batch-p-color label-0 text-Left">
                                                 <label>Party Shade No</label>
@@ -298,12 +238,8 @@
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
-
                                         <div class="display-flex mr-0">
-
 
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Batch Weight</label>
@@ -314,14 +250,11 @@
                                                 </h6>
                                             </div>
 
-
-
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 

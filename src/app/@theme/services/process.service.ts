@@ -12,26 +12,34 @@ export class ProcessService {
   ) {}
 
   getProcessById(id){
-    return this.httpClient.get(this.commonService.envUrl() + "api/qualityprocess/"+id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/qualityprocess/"+id);
   }
 
   getAllProcessList(getBy, id){
-    return this.httpClient.get(this.commonService.envUrl() + "api/qualityprocess/all/"+getBy+"/"+id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/qualityprocess/all/"+getBy+"/"+id);
   }
 
   getAllItemWithSupplier(){
-    return this.httpClient.get(this.commonService.envUrl() + "api/supplier/getItemWithSupplierName/all");
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/supplier/getItemWithSupplierName/all");
   }
 
   saveProcess(data){
-    return this.httpClient.post(this.commonService.envUrl() + "api/qualityprocess",data);
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/qualityprocess",
+      data);
   }
 
   deleteProcess(id){
-    return this.httpClient.delete(this.commonService.envUrl() + "api/qualityProcess/"+id);
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/qualityProcess/"+id);
   }
 
   updateProcess(data){
-    return this.httpClient.put(this.commonService.envUrl() + "api/qualityprocess",data);
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/qualityprocess",
+      data);
   }
 }

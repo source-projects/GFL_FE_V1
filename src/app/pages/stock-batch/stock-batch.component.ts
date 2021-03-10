@@ -5,8 +5,6 @@ import { ExportPopupComponent } from "../../@theme/components/export-popup/expor
 import { StockBatchGuard } from "../../@theme/guards/stock-batch.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -62,8 +60,7 @@ export class StockBatchComponent implements OnInit {
     public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
     private commonService: CommonService,
-    private exportService: ExportService,
-    private jwtToken: JwtTokenService
+   
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +69,6 @@ export class StockBatchComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getAddAcess();
-    // this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
     this.getDeleteAccess();
     this.getDeleteAccess1();
@@ -176,14 +172,11 @@ export class StockBatchComponent implements OnInit {
             batchData: element.batchData,
             qualityName: element.qualityName,
           }));
-          // this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
-          //   billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
         }
 
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );

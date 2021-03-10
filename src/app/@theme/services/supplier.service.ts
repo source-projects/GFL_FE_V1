@@ -8,54 +8,64 @@ import { CommonService } from './common.service';
 export class SupplierService {
 
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
-  private handleError(err: HttpErrorResponse) {
-    console.log("Handle Error Http call");
-    console.log(err.message);
-  }
+  constructor(private httpClient: HttpClient,
+    private commonService: CommonService) { }
 
-  isSupplierExists(name, id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/isSupplierNameExists/'+name+'/'+id);
+  isSupplierExists(name, id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/isSupplierNameExists/' + name + '/' + id);
   }
 
   addSupplierInSystem(supplierData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/supplier', supplierData);
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/supplier',
+      supplierData);
   }
   getAllSupplier(id, getBy): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
   }
-  editSupplierInfo(supplierData) {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/supplier', supplierData);
-  }
+
   getAllSupplierById(id) {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/rate/' + id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/rate/' + id);
   }
 
   updateSupplierById(supplierData) {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/supplier', supplierData);
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/supplier',
+      supplierData);
   }
 
   addSupplierRateInSystem(supplierData) {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/supplier/rates', supplierData);
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/supplier/rates',
+      supplierData);
   }
 
   updateSupplierRateInSystem(supplierData) {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/supplier/rates', supplierData)
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/supplier/rates',
+      supplierData)
   }
 
   getAllSupplierRates() {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/rates/all');
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/rates/all');
   }
 
   getSupplierName(id, getBy): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
   }
 
   getSupplierItemWithRateById(id) {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/GetItemWithRateBy/' + id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/supplier/GetItemWithRateBy/' + id);
   }
 
-  getItemWithSupplier(){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/color/supplierList/getSupplierItemWithAvailableStock');
+  getItemWithSupplier() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/color/supplierList/getSupplierItemWithAvailableStock');
   }
 }

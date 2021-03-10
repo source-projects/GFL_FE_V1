@@ -9,7 +9,7 @@ export class DyeingProcessService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   getDyeingProcessById(id) {
     return this.httpClient.get(
@@ -17,8 +17,9 @@ export class DyeingProcessService {
     );
   }
 
-  isProcessNameExist(name,id){
-    return this.httpClient.get(this.commonService.envUrl() + "api/dyeingProcess/isProcessExistWithName/"+name+'/'+id);
+  isProcessNameExist(name, id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/dyeingProcess/isProcessExistWithName/" + name + '/' + id);
   }
 
   getAllDyeingProcessList() {

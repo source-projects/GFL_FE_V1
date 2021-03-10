@@ -19,9 +19,6 @@ import { AddEditSupplierRateComponent } from './add-edit-supplier-rate/add-edit-
     SupplierRoutingModule,
     ReactiveFormsModule,
   ],
-  // schemas: [
-  //   CUSTOM_ELEMENTS_SCHEMA,
-  //   NO_ERRORS_SCHEMA
-  // ]
+ 
 })
 export class SupplierModule { }

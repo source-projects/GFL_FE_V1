@@ -7,9 +7,11 @@ import { CommonService } from './common.service';
 })
 export class BatchListService {
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor(private httpClient: HttpClient, 
+    private commonService: CommonService) { }
 
-  getBatchById(cId,bId){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+ cId + '/' + bId);
+  getBatchById(cId, bId) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/stockBatch/batch/' + cId + '/' + bId);
   }
 }

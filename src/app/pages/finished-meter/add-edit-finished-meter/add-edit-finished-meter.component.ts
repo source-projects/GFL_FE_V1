@@ -65,11 +65,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
-        } //else this.toastr.error(data["msg"]);
+        }
       },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
+      (error) => {}
     );
   }
 
@@ -79,11 +77,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
-        } //else this.toastr.error(data["msg"]);
+        } 
       },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
+      (error) => {}
     );
   }
 
@@ -93,11 +89,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.masterList = data["data"];
-        } //else this.toastr.error(data["msg"]);
+        } 
       },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
+      (error) => {}
     );
   }
 
@@ -106,11 +100,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
-        } //else this.toastr.error(data["msg"]);
+        } 
       },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
+      (error) => {}
     );
   }
 
@@ -172,11 +164,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
               this.setArrayOfSequence();
               this.setfinishedSequenceAccordingToIdReverse();
               this.setSequenceNo(false);
-            } //else this.toastr.error(data["msg"]);
+            }
           },
-          (error) => {
-            // this.toastr.error(errorData.Internal_Error);
-          }
+          (error) => {}
         );
     }
   }
@@ -209,11 +199,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.batchList = data["data"];
-          } //else this.toastr.error(data["msg"]);
+          } 
         },
-        (error) => {
-          //this.toastr.error(errorData.Internal_Error);
-        }
+        (error) => {}
       );
     } else {
       this.finishedMeterForm.batchId = null;
@@ -298,7 +286,6 @@ export class AddEditFinishedMeterComponent implements OnInit {
           if (i == 0) {
             element.finishMtr = mtrs[i];
           } else {
-            //if (!element.isExtra) {
             let obj = new BatchData();
             obj.sequenceId = element.sequenceId;
             obj.batchId = element.batchId;
@@ -308,7 +295,6 @@ export class AddEditFinishedMeterComponent implements OnInit {
             let list = [...this.finishedMeterForm.batchData];
             list.push(obj);
             this.finishedMeterForm.batchData = [...list];
-            // }
           }
         }
       }

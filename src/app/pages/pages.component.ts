@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ColorGuard } from "app/@theme/guards/color.guard";
 import { PartyGuard } from "app/@theme/guards/party.guard";
-import { ProgramGuard } from "app/@theme/guards/program.guard";
 import { QualityGuard } from "app/@theme/guards/quality.guard";
 import { ShadeGuard } from "app/@theme/guards/shade.guard";
 import { StockBatchGuard } from "app/@theme/guards/stock-batch.guard";
@@ -10,11 +9,8 @@ import { UserGuard } from "app/@theme/guards/user.guard";
 import { DyeingProcessGuard } from "app/@theme/guards/dyeing-process.guard";
 import { JetPlanningGuard } from "app/@theme/guards/jet-planning.guard";
 import { ProductionPlanningGuard } from "app/@theme/guards/production-planning.guard";
-import { WaterJetGuard } from "app/@theme/guards/water-jet.guard";
 import { InvoiceGuard } from "app/@theme/guards/invoice.guard";
 import { PaymentGuard } from "app/@theme/guards/payment.guard";
-import { AnyAaaaRecord } from "dns";
-import { BehaviorSubject, from } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "app/@theme/guards/input-data.guard";
@@ -47,11 +43,9 @@ export class PagesComponent implements OnInit {
     public colorGuard: ColorGuard,
     public shadeGuard: ShadeGuard,
     public stockBatchGuard: StockBatchGuard,
-    public programGuard: ProgramGuard,
     public dyeingProcessGuard: DyeingProcessGuard,
     public jetPlanningGuard: JetPlanningGuard,
     public productionPlanningGuard: ProductionPlanningGuard,
-    public waterJetGuard: WaterJetGuard,
     public invoiceGuard: InvoiceGuard,
     public paymentGuard: PaymentGuard,
     public finishedMeterGuard: FinishedMeterGuard,
@@ -129,18 +123,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              // case "Program":
-              //   this.view = this.programGuard.accessRights("view");
-              //   this.view_all = this.programGuard.accessRights("view all");
-              //   this.view_group = this.programGuard.accessRights("view group");
-              //   if (
-              //     this.view == false &&
-              //     this.view_all == false &&
-              //     this.view_group == false
-              //   ) {
-              //     e.hidden = true;
-              //   }
-              //   break;
 
               case "Stock-batch":
                 this.view = this.stockBatchGuard.accessRights("view");
@@ -156,6 +138,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
+
               case "Shade":
                 this.view = this.shadeGuard.accessRights("view");
                 this.view_all = this.shadeGuard.accessRights("view all");
@@ -168,6 +151,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
+
               case "Supplier":
                 this.view = this.supplierGuard.accessRights("view");
                 this.view_all = this.supplierGuard.accessRights("view all");
@@ -180,18 +164,7 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-              // case "Water-jet":
-              //   this.view = this.waterJetGuard.accessRights("view");
-              //   this.view_all = this.waterJetGuard.accessRights("view all");
-              //   this.view_group = this.waterJetGuard.accessRights("view group");
-              //   if (
-              //     this.view == false &&
-              //     this.view_all == false &&
-              //     this.view_group == false
-              //   ) {
-              //     e.hidden = true;
-              //   }
-              //   break;
+             
               case "DyeingProcess":
                 this.view = this.dyeingProcessGuard.accessRights("view");
                 this.view_all = this.dyeingProcessGuard.accessRights(
@@ -270,21 +243,6 @@ export class PagesComponent implements OnInit {
                   e.hidden = true;
                 }
                 break;
-
-              // case "Jet Planning":
-              //   this.view = this.jetPlanningGuard.accessRights("view");
-              //   this.view_all = this.jetPlanningGuard.accessRights("view all");
-              //   this.view_group = this.jetPlanningGuard.accessRights(
-              //     "view group"
-              //   );
-              //   if (
-              //     this.view == false &&
-              //     this.view_all == false &&
-              //     this.view_group == false
-              //   ) {
-              //     e.hidden = true;
-              //   }
-              //   break;
 
               case "Generate Invoice":
                 this.view = this.invoiceGuard.accessRights("view");

@@ -4,15 +4,8 @@ import { InputDataComponent } from './input-data/input-data.component';
 import {
   NbButtonModule,
   NbCardModule,
-
-
-
   NbIconModule,
-
   NbListModule, NbProgressBarModule,
-
-
-
   NbSelectModule, NbTabsetModule,
   NbUserModule
 } from '@nebular/theme';

@@ -7,7 +7,7 @@
 
             <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/generate_invoice/view']">View
-                Table</button>
+                    Table</button>
             </div>
         </div>
     </nb-card-header>
@@ -17,8 +17,11 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Master</label>
-                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required #userHeadId1="ngModel" (change)=" null" placeholder="Select Master" class="required-error-dropdown" appendTo="body">
-                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.firstName}} {{head.lastName}}
+                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required
+                            #userHeadId1="ngModel" (change)=" null" placeholder="Select Master"
+                            class="required-error-dropdown" appendTo="body">
+                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.firstName}}
+                                {{head.lastName}}
                             </ng-option>
                         </ng-select>
                     </div>
@@ -26,7 +29,9 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Party</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required #partyId1="ngModel" (change)="null" placeholder="Select Party" class="required-error-dropdown" appendTo="body">
+                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required
+                            #partyId1="ngModel" (change)="null" placeholder="Select Party"
+                            class="required-error-dropdown" appendTo="body">
                             <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
                         </ng-select>
                     </div>
@@ -35,7 +40,9 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>From date:</label>
-                        <input class="form-control" name="fromDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1" placeholder="Select Date">
+                        <input class="form-control" name="fromDate" [max]="maxDate"
+                            [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1"
+                            [owlDateTime]="dtFrom1" placeholder="Select Date">
                         <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
                         </owl-date-time>
                     </div>
@@ -43,7 +50,8 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>To date:</label>
-                        <input class="form-control" name="toDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.to" [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1" placeholder="Select Date">
+                        <input class="form-control" name="toDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.to"
+                            [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1" placeholder="Select Date">
                         <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtTo1>
                         </owl-date-time>
                     </div>
@@ -54,9 +62,11 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="getShortReport()" [disabled]="disableButton">Get
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="getShortReport()" [disabled]="disableButton">Get
                             Report</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="getDetailedReport()" [disabled]="disableButton">Get
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="getDetailedReport()" [disabled]="disableButton">Get
                             Detailed
                             Report</button>
                     </div>
@@ -65,10 +75,10 @@
 
             <div *ngIf="shortReport && shortReport.length > 0" id="shortReport">
                 <div *ngFor="let invoice of shortReport">
-                    <!-- Invoice No: {{invoice.invoiceNo}} Party: {{invoice.partyName}} Master: {{invoice.headName}} Total Mtr: {{invoice.totalBatchMtr}} Total Finish Mtr: {{invoice.totalFinishMtr}} Total Amount: {{invoice.amt}} -->
                     <div class="print-layout-report">
                         <h1 class="font-25">INVOICE REPORT</h1>
-                        <table class="table process-tb table-bordered table-striped table-process-fnt dying-table  width-100">
+                        <table
+                            class="table process-tb table-bordered table-striped table-process-fnt dying-table  width-100">
                             <tr>
                                 <th>Invoice No</th>
                                 <th>Party</th>
@@ -91,22 +101,26 @@
                 </div>
             </div>
 
-            <div class="container" *ngIf="detailedReport && detailedReport.length > 0" id="detailedReport" class="mr-top-left-50">
+            <div class="container" *ngIf="detailedReport && detailedReport.length > 0" id="detailedReport"
+                class="mr-top-left-50">
                 <div *ngFor="let invoice of detailedReport">
                     <div class="row">
                         <div class="col-md-3 width-30 font-styles">
                             <div class="text-center">
-                                <h2 class="display-inlineblock mr-10 font-25"> Master:</h2> <span class="tb-name table-text-display">{{invoice.headName}}</span>
+                                <h2 class="display-inlineblock mr-10 font-25"> Master:</h2> <span
+                                    class="tb-name table-text-display">{{invoice.headName}}</span>
                             </div>
                         </div>
                         <div class="col-md-3 width-32 font-styles">
                             <div class="text-center">
-                                <h2 class="display-inlineblock mr-10 font-25"> Party:</h2> <span class="tb-name table-text-display">{{invoice.partyName}}</span>
+                                <h2 class="display-inlineblock mr-10 font-25"> Party:</h2> <span
+                                    class="tb-name table-text-display">{{invoice.partyName}}</span>
                             </div>
                         </div>
                         <div class="col-md-3 width-32 font-styles">
                             <div class="text-center">
-                                <h2 class="display-inlineblock mr-10 font-25">Invoice No:</h2> <span class="tb-name table-text-display">{{invoice.invoiceNo}}</span>
+                                <h2 class="display-inlineblock mr-10 font-25">Invoice No:</h2> <span
+                                    class="tb-name table-text-display">{{invoice.invoiceNo}}</span>
                             </div>
                         </div>
 
@@ -114,7 +128,8 @@
                         <div *ngFor="let quality of invoice.qualityList" class="col-md-12 width-100 mr-bottom-55">
                             <div class="width-90 text-center  ">
                                 <h1 class="font-25">Quality List</h1>
-                                <table class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
+                                <table
+                                    class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
                                     <tr>
                                         <th>Batch Id</th>
                                         <th>Quality ID</th>
@@ -134,7 +149,6 @@
 
                                 </table>
                             </div>
-                            <!-- BatchId: {{quality.batchId}} Quality ID: {{quality.qulityId}} Total Meter: {{quality.totalMtr}} Total Finished Meter: {{quality.totalFinishMtr}} Rate: {{quality.rate}} Total Amount: {{quality.amt}} -->
                         </div>
                     </div>
                 </div>

@@ -69,18 +69,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ]
   },
-  // {
-  //   title: 'Program',
-  //   icon: 'hard-drive-outline',
-  //   link: '/pages/program',
-  //   hidden:false
-  // },
-  // {
-  //   title: 'Water-jet',
-  //   icon: 'droplet-outline',
-  //   link: '/pages/waterJet',
-  //   hidden:false
-  // },
   {
     title: 'Stock-batch',
     icon: 'layers-outline',
@@ -99,14 +87,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dyeing-process',
     hidden:false
   },
-  
-  // {
-  //   title: 'Process',
-  //   icon: 'settings-2-outline',
-  //   link: '/pages/process',
-  //   hidden:false
-  // },
- 
   {
     title: 'Finished Meter',
     icon: 'bar-chart-outline',
@@ -119,12 +99,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/production-planning',
     hidden:false
   },
-  // {
-  //   title: 'Jet Planning',
-  //   icon: 'options-outline',
-  //   link: '/pages/jet-planning',
-  //   hidden:false
-  // },
   {
     title: 'Addition Slip',
     icon: 'file-text-outline',
@@ -143,13 +117,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/generate_invoice',
     hidden:false
   },
-  
-  // {
-  //   title: 'Issue-Color-Box',
-  //   icon: 'file-text-outline',
-  //   link: '/pages/issue-color-box',
-  //   hidden:false
-  // },
   {
     title: 'Input Data',
     icon: 'edit-2-outline',

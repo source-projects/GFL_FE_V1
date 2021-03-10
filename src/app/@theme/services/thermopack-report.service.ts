@@ -6,24 +6,18 @@ import { CommonService } from './common.service';
   providedIn: 'root'
 })
 
-export class ThermopackReportService{
+export class ThermopackReportService {
 
-    constructor(private httpClient: HttpClient, private commonService: CommonService) { }
-  private handleError(err: HttpErrorResponse) {
-    console.log("Handle Error Http call");
-    console.log(err.message);
+  constructor(private httpClient: HttpClient,
+    private commonService: CommonService) { }
+
+  getAllParameter() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "");
   }
 
-  getAllParameter(){
-
-    let response = this.httpClient.get(this.commonService.envUrl() + "");
-    return response;
-
-  }
-
-  getobjdata(data:any){
-    let response = this.httpClient.post(this.commonService.envUrl() + "api/thermopack/filter/",data);
-    return response;
-      
+  getobjdata(data: any) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/thermopack/filter/", data);
   }
 }

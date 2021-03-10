@@ -12,7 +12,9 @@ import { StoreTokenService } from './store-token.service';
 export class AuthService {
 
 
-  constructor(private httpClient: HttpClient, private commonService: CommonService, private token:StoreTokenService) { }
+  constructor(private httpClient: HttpClient, 
+    private commonService: CommonService, 
+    private token:StoreTokenService) { }
 
   public isAuthenticated(): boolean {
     const token = this.token.get('token');
@@ -20,6 +22,9 @@ export class AuthService {
   }
 
   checkUserLogin(data): any {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/login', data);
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/login', 
+      data
+    );
   }
 }

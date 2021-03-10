@@ -56,12 +56,6 @@ export class AdminService {
     );
   }
 
-  getMachineDateById(id) {
-    return this.httpClient.get(
-      this.commonService.envUrl() + "api/machine/" + id
-    );
-  }
-
   saveMachine(data) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/machine",

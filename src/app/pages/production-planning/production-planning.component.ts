@@ -25,7 +25,6 @@ import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-sl
 import { Subject } from "rxjs";
 import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
 import { filter, map, takeUntil } from "rxjs/operators";
-import { ShadeWithBatchComponent } from "./shade-with-batch/shade-with-batch.component";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ProductionBatchDetail } from "../../@theme/model/production-planning";
 
@@ -86,17 +85,13 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   constructor(
     private partyService: PartyService,
-    private _route: ActivatedRoute,
     private qualityService: QualityService,
-    private route: Router,
     private productionPlanningService: ProductionPlanningService,
     private commonService: CommonService,
     private toastr: ToastrService,
     private stockBatchService: StockBatchService,
     private programService: ProgramService,
     private modalService: NgbModal,
-    private shadeService: ShadeService,
-    private router: Router,
     private jetService: JetPlanningService,
     private menuService: NbMenuService
   ) {
@@ -123,7 +118,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
-        //else if (title === "Details") this.getBatchDetails();
       });
   }
 
@@ -340,25 +334,11 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
         if (result) {
-          // if (this.editProductionPlanFlag) {
-          //   result.id = id;
-          //   this.updateProduction(result);
-          // }
-          // if (this.productionPlanning.partyId) {
-          //   this.partySelected(this.productionPlanning.partyId);
-          // } else if (
-          //   this.productionPlanning.partyId &&
-          //   this.productionPlanning.qualityId
-          // ) {
-          //   this.qualitySelected(this.productionPlanning.qualityId);
-          // }
-          // this.getAllBatchData();
-          // this.plannedProductionListForDataTable();
           this.ngOnInit();
           this.editProductionPlanFlag = false;
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   updateProduction(result) {
@@ -386,7 +366,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           this.plannedProductionList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
   editProductionPlan(production): any {
@@ -405,12 +385,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           this.toastr.success("Deleted Successfully");
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
-  // addToJet(data) {
-  //   this.router.navigate(["/pages/jet-planning/" + data.id]);
-  // }
 
   flipped = false;
 
@@ -448,7 +425,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
-    //var detail = this.getBatchDetails();
     this.items = [
       { title: "Complete" },
       { title: "Pause" },
@@ -457,14 +433,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       },
       { title: "Print" },
       { title: "Edit And Print" },
-      // {
-      //   title: "Details",
-      //   children: [
-      //     {
-      //       title: detail,
-      //     },
-      //   ],
-      // },
+
     ];
   }
 
@@ -475,32 +444,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.detailsList = data['data'];
-            //   "Party Name : " +
-            //   data["data"].partyName +
-            //   "\nBatch No: " +
-            //   data["data"].batchId +
-            //   "\nParty Shade No: " +
-            //   data["data"].partyShadeNo +
-            //   "\nBatch Weight: " +
-            //   data["data"].totalWt;
-            // this.items = [
-            //   { title: "Complete" },
-            //   { title: "Pause" },
-            //   {
-            //     title: "Remove",
-            //   },
-            //   { title: "Print" },
-            //   { title: "Edit And Print" },
-            //   {
-            //     title: "Details",
-            //     children: [
-            //       {
-            //         title: this.detailsList,
-            //       },
-            //     ],
-            //   },
-            // ];
-
             this.loading = false;
           } else {
             this.loading = false;
@@ -524,7 +467,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (result) {
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   ngOnDestroy() {
@@ -591,7 +534,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             );
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   getAllBatchWithShade() {
@@ -603,12 +546,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           this.batchList = data["data"];
           this.allBatchList = data["data"];
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -634,9 +575,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.batchControl = production[0].stockId;
       modalRef.componentInstance.shadeId = production[0].shadeId;
       modalRef.componentInstance.colorTone = production[0].colorTone;
-      // if (production[0].jetId) {
-      //   modalRef.componentInstance.jetid = production[0].jetId;
-      // }
       modalRef.componentInstance.editProductionPlanFlag = true;
       modalRef.result
         .then((result) => {
@@ -645,7 +583,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             this.editProductionPlanFlag = false;
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   }
 
@@ -663,16 +601,16 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
       if (batch.processName)
         this.productionBatchDetail.processName = batch.processName;
-    }else{
-    this.setIndexForSlip(batch)
-     this.getBatchDetails();
+    } else {
+      this.setIndexForSlip(batch)
+      this.getBatchDetails();
     }
   }
 
   resetDetailsOfBatch($event) {
-    if(!this.flipped)
+    if (!this.flipped)
       this.productionBatchDetail = new ProductionBatchDetail();
-    else{
+    else {
       this.detailsList = [];
     }
   }

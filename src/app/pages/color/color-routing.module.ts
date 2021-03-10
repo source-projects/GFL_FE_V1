@@ -31,9 +31,6 @@ const routes: Routes = [
   {
     path:'issue-color-box',
     component:IssueColorBoxComponent,
-    // canActivate:[ColorGuard],
-    // canLoad:[ColorGuard],
-    // data: { PermissionName: ['edit','edit group','edit all']}
   },
 
 ];

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-input-data',
-  // selector: 'valu-pass',
 
   templateUrl: './input-data.component.html',
   styleUrls: ['./input-data.component.scss']
@@ -79,8 +78,8 @@ export class InputDataComponent implements OnInit {
   ThermopacknightFlag: boolean = false;
   submitBoilerFlag: boolean = true;
   updateBoilerFlag: boolean = false;
-  submitThermopackFlag:boolean = true;
-  updateThermopackFlag:boolean = false;
+  submitThermopackFlag: boolean = true;
+  updateThermopackFlag: boolean = false;
   readonlyBoilerDayFlag: boolean = false;
   readonlyBoilerNightFlag: boolean = false;
   readonlyThermopackDayFlag: boolean = false;
@@ -112,7 +111,7 @@ export class InputDataComponent implements OnInit {
   ThermopackDay18Flag: boolean = true;
   ThermopackDay20Flag: boolean = true;
   ThermopackNight22Flag: boolean = true;
-  ThermopackheaderFlag:boolean = false;
+  ThermopackheaderFlag: boolean = false;
 
   selectedShift: any;
   dateSelected: any = null;
@@ -149,7 +148,6 @@ export class InputDataComponent implements OnInit {
     this.readonlyThermopackNightFlag = false;
 
     this.masterId = this.jwt.getDecodeToken("userHeadId");
-    console.log(this.masterId)
     this.max = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
     this.getBoiler();
     this.getThermopack();
@@ -369,8 +367,7 @@ export class InputDataComponent implements OnInit {
 
   }
 
-  saveThermoData(value:any) {
-    console.log(this.finalThermoobj)
+  saveThermoData(value: any) {
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
         if (data["success"]) {
@@ -448,7 +445,7 @@ export class InputDataComponent implements OnInit {
 
   shiftBoilerchange(value: any) {
 
-    
+
 
     if (value == 1) {
       this.timeList = [
@@ -489,7 +486,7 @@ export class InputDataComponent implements OnInit {
   }
   shiftThermopackchange(value: any) {
 
-    
+
     if (value == 1) {
       this.timeList = [
         { id: 10, name: '10am or 10:00' },
@@ -638,7 +635,6 @@ export class InputDataComponent implements OnInit {
 
       this.logsheet.fetchThermoData(obj).subscribe(
         (data) => {
-          console.log(data);
           if (data["success"]) {
             this.fetchedData = data["data"]
             if (obj.shift == "night") {
@@ -651,7 +647,7 @@ export class InputDataComponent implements OnInit {
             }
 
           }
-          else{
+          else {
             this.toast.error("No data found");
           }
         },

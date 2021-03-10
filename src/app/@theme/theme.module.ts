@@ -22,15 +22,10 @@ import {
   SearchInputComponent,
 } from './components';
 import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
+ 
   CounterPipe,
   FilterSelectedProcessPipe,
   FilterProcessNamePipe,
-  FilterItemPipe,
 } from './pipes';
 import {
   OneColumnLayoutComponent,
@@ -69,16 +64,11 @@ const COMPONENTS = [
   TwoColumnsLayoutComponent,
 ];
 const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
+ 
   CounterPipe,
   FilterSelectedProcessPipe,
   FilterSelectedShadePipe,
   FilterProcessNamePipe,
-  FilterItemPipe,
   FilterByIsColorPipe,
   ShowOnlyChemicalPipe,
   DisableStockBatchPipe

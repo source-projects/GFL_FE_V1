@@ -11,38 +11,42 @@ export class LogSheetService{
     constructor(private _http:HttpClient,private commonService:CommonService) { }
 
     getAllMaster(){
-        let response = this._http.get(this.commonService.envUrl() +  "api/userHead");
-        return response;
+      return  this._http.get(
+        this.commonService.envUrl() +  "api/userHead");
       }
     
     getBoilerMachines(){
-      let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11624");
-      return response;
+      return this._http.get(
+        this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11624");
     }
 
     getThermopackMachines(){
-      let response = this._http.get(this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11625");
-      return response;
+      return this._http.get(
+        this.commonService.envUrl() +  "api/machine/getMachine/ByCategory?id=11625");
     }
 
     saveBoilerData(data){
-      let response = this._http.post(this.commonService.envUrl() +  "api/boilerRecord",data);
-      return response;
+      return this._http.post(
+        this.commonService.envUrl() +  "api/boilerRecord",
+        data);
     }
 
     saveThermoData(data){
-      let response = this._http.post(this.commonService.envUrl() +  "api/thermopack/",data);
-      return response;
+      return this._http.post(
+        this.commonService.envUrl() +  "api/thermopack/",
+        data);
     }
 
     fetchBoilerData(data){
-      let response = this._http.post(this.commonService.envUrl() +  "api/boilerRecord/basedOnFilter/",data);
-      return response;
+      return this._http.post(
+        this.commonService.envUrl() +  "api/boilerRecord/basedOnFilter/",
+        data);
     }
 
     fetchThermoData(data){
-      let response = this._http.post(this.commonService.envUrl() +  "api/thermopack/filter/basedOnShift/",data);
-      return response;
+      return this._http.post(
+        this.commonService.envUrl() +  "api/thermopack/filter/basedOnShift/",
+        data);
     }
     
 }

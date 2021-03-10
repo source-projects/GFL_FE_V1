@@ -8,40 +8,50 @@ import { CommonService } from './common.service';
 export class PlanningSlipService {
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private commonService: CommonService
   ) { }
 
-  getSlipDataByBatchStockId(bId, sId){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/'+bId+'/'+sId);
+  getSlipDataByBatchStockId(bId, sId) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/dyeingSlip/' + bId + '/' + sId);
   }
 
-  updateSlipData(obj){
-    return this.httpClient.put(this.commonService.envUrl() + 'api/dyeingSlip',obj);
+  updateSlipData(obj) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/dyeingSlip',
+      obj);
   }
 
-  saveadditionSlip(obj){
-    return this.httpClient.post(this.commonService.envUrl() + 'api/dyeingSlip/add/additionalDyeingSlip/',obj);
-
-  }
-
-  getAlladditionSlip(){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/additionalDyeingslip/all');
-
-  }
-
-  getAlladditionSlipById(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipBy/'+id);
+  saveadditionSlip(obj) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/dyeingSlip/add/additionalDyeingSlip/',
+      obj);
 
   }
 
-  updateAdditionDyeingSlip(slipData){
-    return this.httpClient.put(this.commonService.envUrl() + 'api/dyeingSlip/update/additionalDyeingSlip/',slipData);
+  getAlladditionSlip() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/dyeingSlip/additionalDyeingslip/all');
 
   }
 
-  deleteAdditionSlip(id){
-    return this.httpClient.delete(this.commonService.envUrl() + 'api/dyeingSlip/deleteAdditionalDyeingSlipBy/'+id);
+  getAlladditionSlipById(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipBy/' + id);
+
+  }
+
+  updateAdditionDyeingSlip(slipData) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/dyeingSlip/update/additionalDyeingSlip/',
+      slipData);
+
+  }
+
+  deleteAdditionSlip(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + 'api/dyeingSlip/deleteAdditionalDyeingSlipBy/' + id);
 
   }
 }

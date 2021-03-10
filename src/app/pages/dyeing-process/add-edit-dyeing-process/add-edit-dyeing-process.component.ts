@@ -56,7 +56,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
           this.itemList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -160,7 +160,6 @@ export class AddEditDyeingProcessComponent implements OnInit {
           step.dyeingChemicalData = result.chemicalList;
           step.temp = result.temp;
           step.holdTime = result.holdTime;
-          // step.functionList = [];
           if (
             !this.dyeingProcessSteps.length ||
             result.position == this.dyeingProcessSteps.length + 1
@@ -252,7 +251,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
               this.processNameExist = data["data"];
             }
           },
-          (error) => {}
+          (error) => { }
         );
     }
   }

@@ -112,12 +112,10 @@ export class AddEditShadeComponent implements OnInit {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -138,16 +136,13 @@ export class AddEditShadeComponent implements OnInit {
             this.getAllSupplier();
             this.loading = false;
           } else {
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -161,12 +156,10 @@ export class AddEditShadeComponent implements OnInit {
           this.supplierListRate = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -180,12 +173,10 @@ export class AddEditShadeComponent implements OnInit {
           this.processList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -199,12 +190,10 @@ export class AddEditShadeComponent implements OnInit {
           this.qualityList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -252,13 +241,11 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
           this.disableButton = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
           this.disableButton = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
         this.disableButton = false;
       }
@@ -334,28 +321,20 @@ export class AddEditShadeComponent implements OnInit {
             });
             this.calculateTotalAmount(true);
           } else {
-            // this.toastr.error(data["msg"]);
             this.qualityList = null;
             this.loading = false;
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
     }
   }
 
-  // toggle(event){
-  //   console.log(event);
-  //   this.shadeObj.pending = event;
-  // }
-
   itemSelected(rowIndex, row, event) {
     if (event) {
       let gst;
-      // if (this.shadeObj.qualityId != undefined) {
       if (this.refreshFlag > 1000) {
         this.refreshFlag = 0;
       }
@@ -412,7 +391,6 @@ export class AddEditShadeComponent implements OnInit {
       }
     } else {
       this.shadeObj.shadeDataList[rowIndex].concentration = null;
-      //this.toastr.error("Select Quality");
       return;
     }
   }
@@ -598,7 +576,6 @@ export class AddEditShadeComponent implements OnInit {
               this.disableButton = false;
             },
             (error) => {
-              //this.toastr.error(errorData.Serever_Error);
               this.disableButton = false;
             }
           );
@@ -641,7 +618,6 @@ export class AddEditShadeComponent implements OnInit {
     ) {
       if (shadeForm.valid) {
         this.shadeObj.updatedBy = this.user.userId;
-        console.log(this.shadeObj);
         this.shadeService.updateShadeData(this.shadeObj).subscribe(
           (data) => {
             if (data["success"]) {
@@ -672,10 +648,10 @@ export class AddEditShadeComponent implements OnInit {
             !Object.keys(this.shadeObj.shadeDataList[0]).length
           ) {
             this.shadeObj.shadeDataList = [];
-          } else if(!this.shadeObj.shadeDataList[length-1].itemName){
+          } else if (!this.shadeObj.shadeDataList[length - 1].itemName) {
             this.toastr.error('Fill all shade data')
           }
-           else {
+          else {
             this.shadeService.updateShadeData(this.shadeObj).subscribe(
               (data) => {
                 if (data["success"]) {

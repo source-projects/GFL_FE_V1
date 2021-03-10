@@ -7,8 +7,6 @@ import { ColorGuard } from "../../@theme/guards/color.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { ColorService } from "../../@theme/services/color.service";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -60,15 +58,10 @@ export class ColorComponent implements OnInit {
   disabled = false;
   constructor(
     private colorService: ColorService,
-
-    private route: Router,
     private modalService: NgbModal,
-
     public colorGuard: ColorGuard,
-    private jwtToken: JwtTokenService,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +72,6 @@ export class ColorComponent implements OnInit {
 
     this.getViewAccess();
     this.getAddAcess();
-    // this.getColor(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
@@ -194,14 +186,9 @@ export class ColorComponent implements OnInit {
             billAmount: element.billAmount,
           }));
         }
-        // else {
-        //   // this.toastr.error(data['msg']);
-
-        // }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

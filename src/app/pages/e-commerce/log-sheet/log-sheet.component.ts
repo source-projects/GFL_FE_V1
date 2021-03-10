@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from 'app/@theme/model/log-sheet';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
 import { DatePipe } from '@angular/common';
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-log-sheet',
@@ -83,7 +83,7 @@ export class LogSheetComponent implements OnInit {
   datePipeString: String;
 
 
-  constructor(private logsheet: LogSheetService, private datePipe: DatePipe,private toast:ToastrService) {
+  constructor(private logsheet: LogSheetService, private datePipe: DatePipe, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -141,12 +141,11 @@ export class LogSheetComponent implements OnInit {
 
   submitday(value: any) {
 
-    
-    if(this.datePipeString == null){
+
+    if (this.datePipeString == null) {
       this.toast.error("Select Date")
     }
-    else
-    {
+    else {
       this.valueArray.forEach(ele => {
         this.Boilertime_10Array.push(ele.time_10);
         this.Boilertime_12Array.push(ele.time_12);
@@ -154,18 +153,18 @@ export class LogSheetComponent implements OnInit {
         this.Boilertime_16Array.push(ele.time_16);
         this.Boilertime_18Array.push(ele.time_18);
         this.Boilertime_20Array.push(ele.time_20);
-  
+
       })
-  
+
       this.boilerobjadd(this.Boilertime_10Array, "10:00:00");
       this.boilerobjadd(this.Boilertime_12Array, "12:00:00");
       this.boilerobjadd(this.Boilertime_14Array, "14:00:00");
       this.boilerobjadd(this.Boilertime_16Array, "16:00:00");
       this.boilerobjadd(this.Boilertime_18Array, "18:00:00");
       this.boilerobjadd(this.Boilertime_20Array, "20:00:00");
-  
+
       this.valueArray1.forEach(ele => {
-  
+
         this.Thermo_10Array.push(ele.time_10);
         this.Thermo_12Array.push(ele.time_12);
         this.Thermo_14Array.push(ele.time_14);
@@ -173,14 +172,14 @@ export class LogSheetComponent implements OnInit {
         this.Thermo_18Array.push(ele.time_18);
         this.Thermo_20Array.push(ele.time_20);
       })
-  
+
       this.thermoobjadd(this.Thermo_10Array, "10:00:00");
       this.thermoobjadd(this.Thermo_12Array, "12:00:00");
       this.thermoobjadd(this.Thermo_14Array, "14:00:00");
       this.thermoobjadd(this.Thermo_16Array, "16:00:00");
       this.thermoobjadd(this.Thermo_18Array, "18:00:00");
       this.thermoobjadd(this.Thermo_20Array, "20:00:00");
-  
+
       this.saveBoilerData();
       this.saveThermoData();
     }
@@ -191,8 +190,7 @@ export class LogSheetComponent implements OnInit {
 
     this.logsheet.saveBoilerData(this.finalBoilerobj).subscribe(
       (data) => {
-        console.log(data)
-        if(data["success"]){
+        if (data["success"]) {
           this.toast.success("Added")
         }
       }
@@ -201,13 +199,10 @@ export class LogSheetComponent implements OnInit {
 
   submitnight(value: any) {
 
-
-    
-    if(this.datePipeString == null){
+    if (this.datePipeString == null) {
       this.toast.error("Select Date")
     }
-    else
-    {
+    else {
       this.nightvalueArray.forEach(ele => {
         this.Boilertime_22Array.push(ele.time_22);
         this.Boilertime_00Array.push(ele.time_00);
@@ -216,33 +211,33 @@ export class LogSheetComponent implements OnInit {
         this.Boilertime_06Array.push(ele.time_06);
         this.Boilertime_08Array.push(ele.time_08);
       })
-  
+
       this.boilerobjadd(this.Boilertime_22Array, "22:00:00");
       this.boilerobjadd(this.Boilertime_00Array, "00:00:00");
       this.boilerobjadd(this.Boilertime_02Array, "02:00:00");
       this.boilerobjadd(this.Boilertime_04Array, "04:00:00");
       this.boilerobjadd(this.Boilertime_06Array, "06:00:00");
       this.boilerobjadd(this.Boilertime_08Array, "08:00:00");
-  
-  
+
+
       this.nightvalueArray1.forEach(ele => {
-  
+
         this.Thermo_22Array.push(ele.time_22);
         this.Thermo_00Array.push(ele.time_00);
         this.Thermo_02Array.push(ele.time_02);
         this.Thermo_04Array.push(ele.time_04);
         this.Thermo_06Array.push(ele.time_06);
         this.Thermo_08Array.push(ele.time_08);
-  
+
       })
-  
+
       this.thermoobjadd(this.Thermo_22Array, "22:00:00");
       this.thermoobjadd(this.Thermo_00Array, "00:00:00");
       this.thermoobjadd(this.Thermo_02Array, "02:00:00");
       this.thermoobjadd(this.Thermo_04Array, "04:00:00");
       this.thermoobjadd(this.Thermo_06Array, "06:00:00");
       this.thermoobjadd(this.Thermo_08Array, "08:00:00");
-  
+
       this.saveBoilerData();
       this.saveThermoData();
     }
@@ -253,8 +248,7 @@ export class LogSheetComponent implements OnInit {
 
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
-        console.log(data)
-        if(data["success"]){
+        if (data["success"]) {
           this.toast.success("Added")
         }
       }
@@ -282,8 +276,6 @@ export class LogSheetComponent implements OnInit {
     boilerdata.dateToEnter = this.datePipeString;
     boilerdata.timeOf = time;
     this.finalBoilerobj.push(boilerdata)
-    console.log("Boiler Obj:", boilerdata)
-    console.log("Final Object:", this.finalBoilerobj)
   }
 
   thermoobjadd(array, time) {
@@ -302,13 +294,10 @@ export class LogSheetComponent implements OnInit {
     thermodata.controlId = this.thermoId;
     thermodata.timeOf = time;
     this.finalThermoobj.push(thermodata)
-    console.log("Thermo Obj:", thermodata)
-    console.log("Final Object:", this.finalThermoobj)
+ 
   }
 
   shiftchange(value: any) {
-
-    console.log("value", value)
     if (value == 1) {
       this.nightFlag = false;
       this.dayFlag = true;
@@ -320,14 +309,11 @@ export class LogSheetComponent implements OnInit {
   }
 
   change(value: any) {
-
     this.datePipeString = this.datePipe.transform(value._selected, 'yyyy-MM-dd');
 
   }
 
   masterchange(value: any) {
-
-    console.log("master", value)
     this.masterId = value;
   }
 
@@ -343,7 +329,6 @@ export class LogSheetComponent implements OnInit {
   getBoiler() {
     this.data = this.logsheet.getBoilerMachines().subscribe(
       (res) => {
-        console.log(res)
         this.boiler = res;
         this.boiler = this.boiler.data;
       }
@@ -360,14 +345,10 @@ export class LogSheetComponent implements OnInit {
   }
 
   boilerchange(value: any) {
-
-    console.log("boilerid", value)
     this.boilerId = value;
   }
 
   thermopackchange(value: any) {
-
-    console.log("ther", value)
     this.thermoId = value;
 
   }

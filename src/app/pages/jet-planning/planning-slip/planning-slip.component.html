@@ -9,7 +9,8 @@
 
             </div>
             <div class="col-md-5 display-flex-end" *ngIf="!additionSlipFlag">
-                <button type="button" (click)="approveByClicked();" class="btn btn-primary btn-sm btn-edit">Edit</button>
+                <button type="button" (click)="approveByClicked();"
+                    class="btn btn-primary btn-sm btn-edit">Edit</button>
             </div>
             <div class="col-md-1 user-per-check-display">
                 <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
@@ -33,52 +34,77 @@
                                             <div class="col-md-12">
                                                 <div class="display-flex-between">
                                                     <h3 class="name-print">{{process.processType}}</h3>
-                                                    <nb-icon icon="trash" status="danger" *ngIf="approveByFlag" [options]="{ animation: { type: 'zoom' } }" (click)="removeProcess(i)">
+                                                    <nb-icon icon="trash" status="danger" *ngIf="approveByFlag"
+                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                        (click)="removeProcess(i)">
                                                     </nb-icon>
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Temprarture</label>
-                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #temp1="ngModel" [(ngModel)]="process.temp" name="Scouring-temp{{i}}" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required [disabled]="!approveByFlag">
+                                                <input type="number" (keypress)="numberOnly($event)"
+                                                    class="form-control" min="0" #temp1="ngModel"
+                                                    [(ngModel)]="process.temp" name="Scouring-temp{{i}}"
+                                                    [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }"
+                                                    required [disabled]="!approveByFlag">
 
-                                                <div class="input-required" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                                <div class="input-required"
+                                                    *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                     <span>Temperarture is required</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Hold Time</label>
-                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #hTime1="ngModel" [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required [disabled]="!approveByFlag">
-                                                <div class="input-required" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
+                                                <input type="number" (keypress)="numberOnly($event)"
+                                                    class="form-control" min="0" #hTime1="ngModel"
+                                                    [(ngModel)]="process.holdTime" name="Scouring-holdTime{{i}}"
+                                                    [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }"
+                                                    required [disabled]="!approveByFlag">
+                                                <div class="input-required"
+                                                    *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                                     <span>Hold Time is required</span>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label class="required font-13">Liquer Ratio</label>
-                                                <input type="number" (keypress)="numberOnly($event)" class="form-control" min="0" #lRatio1="ngModel" [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required
-                                                    [disabled]="!approveByFlag">
-                                                <div class="input-required" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                <input type="number" (keypress)="numberOnly($event)"
+                                                    class="form-control" min="0" #lRatio1="ngModel"
+                                                    [(ngModel)]="process.liquerRation" name="Scouring-lRatio{{i}}"
+                                                    [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }"
+                                                    required [disabled]="!approveByFlag">
+                                                <div class="input-required"
+                                                    *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                     <span>Liqure ratio is required</span>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-3 jus-con-center" *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
-                                                <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}" [disabled]="false" [(ngModel)]="process.isColor" name="isColor{{i}}" (checkedChange)="colorSelected($event, i)">
+                                            <div class="form-group col-md-3 jus-con-center"
+                                                *ngIf=" process.processType == 'Dyeing' || process.processType == 'Addition' ">
+                                                <nb-checkbox class="status-basic nb-transition" id="iscolor{{i}}"
+                                                    [disabled]="false" [(ngModel)]="process.isColor" name="isColor{{i}}"
+                                                    (checkedChange)="colorSelected($event, i)">
                                                 </nb-checkbox>
                                                 &nbsp;<label>Color</label>
                                             </div>
 
                                             <div class="form-group col-md-12">
                                                 <fieldset [disabled]="!approveByFlag">
-                                                    <table class="table table-bordered table-striped table-process-fnt text-center">
+                                                    <table
+                                                        class="table table-bordered table-striped table-process-fnt text-center">
                                                         <tr>
                                                             <th>Item name</th>
                                                             <th>Quantity</th>
                                                             <th>Action</th>
                                                         </tr>
                                                         <ng-container>
-                                                            <tr *ngFor='let dc of (process.dyeingSlipItemData | filterByIsColor : process.isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
+                                                            <tr
+                                                                *ngFor='let dc of (process.dyeingSlipItemData | filterByIsColor : process.isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
                                                                 <td>
-                                                                    <select name="dcId{{dc._id}}_{{i1}}_{{i}}" [(ngModel)]="dc.itemId" class="tableForm" required (change)="itemSelected($event.target.value,i1,i)" [disabled]="!approveByFlag">
+                                                                    <select name="dcId{{dc._id}}_{{i1}}_{{i}}"
+                                                                        [(ngModel)]="dc.itemId" class="tableForm"
+                                                                        required
+                                                                        (change)="itemSelected($event.target.value,i1,i)"
+                                                                        [disabled]="!approveByFlag">
 
                                                                         <option *ngFor="let item of itemListArray"
                                                                             [value]="item.itemId"
@@ -97,11 +123,19 @@
                                                                 </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" (keypress)="numberOnly($event)" name='dcqty{{dc._id}}_{{i1}}_{{i}}' class="tableForm" [(ngModel)]="dc.qty" [id]="'itemList'+i+i1+'-'+1" (keyup)="onKeyUp($event,i1,1,'quantity',i)" min="0">
+                                                                    <input type="number" (keypress)="numberOnly($event)"
+                                                                        name='dcqty{{dc._id}}_{{i1}}_{{i}}'
+                                                                        class="tableForm" [(ngModel)]="dc.qty"
+                                                                        [id]="'itemList'+i+i1+'-'+1"
+                                                                        (keyup)="onKeyUp($event,i1,1,'quantity',i)"
+                                                                        min="0">
                                                                 </td>
 
                                                                 <td>
-                                                                    <nb-icon icon="trash" status="danger" *ngIf="approveByFlag" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(i1,i)">
+                                                                    <nb-icon icon="trash" status="danger"
+                                                                        *ngIf="approveByFlag"
+                                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                                        (click)="removeItem(i1,i)">
                                                                     </nb-icon>
                                                                 </td>
                                                             </tr>
@@ -116,7 +150,9 @@
                                 <div class="row" *ngIf="approveByFlag">
                                     <div class="col-md-3">
                                         <div class="nb-icon-add">
-                                            <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)" class="plus-add add-modal  width-40 height-100"></nb-icon>
+                                            <nb-icon icon="plus-circle" status="primary"
+                                                [options]="{ animation: { type: 'zoom' } }" (click)="addNew($event)"
+                                                class="plus-add add-modal  width-40 height-100"></nb-icon>
                                             <div class="tooltip">Add Process</div>
                                         </div>
                                     </div>
@@ -128,12 +164,19 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Process Type</label>
-                                                            <ng-select [(ngModel)]="dyeingProcessStepNew.processType" placeholder="Select Process-type" name="processType" #processType1="ngModel" [ngClass]="{'is-invalid':(processType1.invalid)&&(formSubmitted || processType1.touched)}" required>
-                                                                <ng-option *ngFor="let p of processTypes | processFilterPipe:slipData.dyeingSlipDataList " [value]="p">
+                                                            <ng-select [(ngModel)]="dyeingProcessStepNew.processType"
+                                                                placeholder="Select Process-type" name="processType"
+                                                                #processType1="ngModel"
+                                                                [ngClass]="{'is-invalid':(processType1.invalid)&&(formSubmitted || processType1.touched)}"
+                                                                required>
+                                                                <ng-option
+                                                                    *ngFor="let p of processTypes | processFilterPipe:slipData.dyeingSlipDataList "
+                                                                    [value]="p">
                                                                     {{p}}
                                                                 </ng-option>
                                                             </ng-select>
-                                                            <div class="input-required" *ngIf="(processType1.invalid)&&(formSubmitted || processType1.touched)">
+                                                            <div class="input-required"
+                                                                *ngIf="(processType1.invalid)&&(formSubmitted || processType1.touched)">
                                                                 Process Type is required.
                                                             </div>
                                                         </div>
@@ -143,9 +186,14 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Temprature</label>
-                                                            <input class="form-control input-group" (keypress)="numberOnly($event)" type="number" min="0" name="temp" [(ngModel)]="dyeingProcessStepNew.temp" #temp1="ngModel" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}" required placeholder="Temprature"
-                                                                required>
-                                                            <div class="input-required" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                                            <input class="form-control input-group"
+                                                                (keypress)="numberOnly($event)" type="number" min="0"
+                                                                name="temp" [(ngModel)]="dyeingProcessStepNew.temp"
+                                                                #temp1="ngModel"
+                                                                [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}"
+                                                                required placeholder="Temprature" required>
+                                                            <div class="input-required"
+                                                                *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                                                 Temprature is required.
                                                             </div>
                                                         </div>
@@ -154,9 +202,15 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Hold Time</label>
-                                                            <input class="form-control input-group" (keypress)="numberOnly($event)" min="0" type="number" name="holdTime" [(ngModel)]="dyeingProcessStepNew.holdTime" #holdTime1="ngModel" [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
+                                                            <input class="form-control input-group"
+                                                                (keypress)="numberOnly($event)" min="0" type="number"
+                                                                name="holdTime"
+                                                                [(ngModel)]="dyeingProcessStepNew.holdTime"
+                                                                #holdTime1="ngModel"
+                                                                [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
                                                                 required>
-                                                            <div class="input-required" *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
+                                                            <div class="input-required"
+                                                                *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
                                                                 Hold Time is required.
                                                             </div>
                                                         </div>
@@ -164,32 +218,44 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="required">Liqour Ratio</label>
-                                                            <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" placeholder="Liqour Ratio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }"
+                                                            <input type="number" class="form-control"
+                                                                (keypress)="numberOnly($event)" min="0"
+                                                                #lRatio1="ngModel" [(ngModel)]="liquorRatio"
+                                                                name="liquorRatio" placeholder="Liqour Ratio"
+                                                                [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }"
                                                                 required>
-                                                            <div class="input-required" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                                            <div class="input-required"
+                                                                *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                                                 <span>Liquor ratio is required</span>
                                                             </div>
                                                         </div>
                                                     </div>
 
 
-                                                    <div class="form-group col-md-4" *ngIf="dyeingProcessStepNew.processType == 'Dyeing' || dyeingProcessStepNew.processType == 'Addition'">
-                                                        <nb-checkbox class="status-basic nb-transition" id="iscolor" [(ngModel)]="isColor" name="isColor">
+                                                    <div class="form-group col-md-4"
+                                                        *ngIf="dyeingProcessStepNew.processType == 'Dyeing' || dyeingProcessStepNew.processType == 'Addition'">
+                                                        <nb-checkbox class="status-basic nb-transition" id="iscolor"
+                                                            [(ngModel)]="isColor" name="isColor">
                                                         </nb-checkbox>
                                                         &nbsp;<label>Color</label>
                                                     </div>
 
                                                     <div class="col-md-12">
-                                                        <table class="table table-responsive table-bordered table-striped table-process-fnt">
+                                                        <table
+                                                            class="table table-responsive table-bordered table-striped table-process-fnt">
                                                             <tr>
                                                                 <th>Item name</th>
                                                                 <th>Quantity</th>
                                                                 <th>Action</th>
                                                             </tr>
 
-                                                            <tr *ngFor='let dc of dyeingChemicalData;let dcIndex=index;trackBy:trackByFn'>
+                                                            <tr
+                                                                *ngFor='let dc of dyeingChemicalData;let dcIndex=index;trackBy:trackByFn'>
                                                                 <td>
-                                                                    <select #data name="dcId{{dc._id}}" [(ngModel)]="dc.itemId" class="tableForm" required (change)="itemSelected($event.target.value,dcIndex)">
+                                                                    <select #data name="dcId{{dc._id}}"
+                                                                        [(ngModel)]="dc.itemId" class="tableForm"
+                                                                        required
+                                                                        (change)="itemSelected($event.target.value,dcIndex)">
                                                                         <option *ngFor="let item of itemListArray"
                                                                             [value]="item.itemId"
                                                                             placeholder="Select Item">
@@ -209,10 +275,17 @@
                                                                     </ng-select> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name='dcqty{{dc._id}}' (keypress)="numberOnly($event)" class="tableForm line-height-subtable" required [(ngModel)]="dc.qty" (keyup)="onEnter($event,dcIndex,1)" min="0" [id]="'addList'+dcIndex+'-1'">
+                                                                    <input type="number" name='dcqty{{dc._id}}'
+                                                                        (keypress)="numberOnly($event)"
+                                                                        class="tableForm line-height-subtable" required
+                                                                        [(ngModel)]="dc.qty"
+                                                                        (keyup)="onEnter($event,dcIndex,1)" min="0"
+                                                                        [id]="'addList'+dcIndex+'-1'">
                                                                 </td>
                                                                 <td>
-                                                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeChemicalData(dcIndex)"></nb-icon>
+                                                                    <nb-icon icon="trash" status="danger"
+                                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                                        (click)="removeChemicalData(dcIndex)"></nb-icon>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -220,8 +293,10 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onCreate(innerForm)">ADD</button>
-                                                <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel(innerForm)">Cancel</button>
+                                                <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                                                    (click)="onCreate(innerForm)">ADD</button>
+                                                <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
+                                                    (click)="onCancel(innerForm)">Cancel</button>
                                             </div>
                                         </form>
 
@@ -230,11 +305,18 @@
                             </fieldset>
                             <div class="col-md-12 mobile-btn-center text-btn-right">
 
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton">UPDATE</button>
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                    (click)="activeModal.close(false)">CANCEL</button>
+                                <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();"
+                                    class="btn btn-primary btn-sm btn-design-save"
+                                    [disabled]="disableButton">UPDATE</button>
 
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="saveClicked=true;saveSlipData(myForm)">CONFIRM & SAVE</button>
-                                <button *ngIf="!saveAndPrintFlag" type="button" class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton" (click)="printSlip(myForm)">Confirm, Save And
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                                    [disabled]="disableButton" (click)="saveClicked=true;saveSlipData(myForm)">CONFIRM &
+                                    SAVE</button>
+                                <button *ngIf="!saveAndPrintFlag" type="button"
+                                    class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton"
+                                    (click)="printSlip(myForm)">Confirm, Save And
                                     Print</button>
 
                             </div>
@@ -259,28 +341,41 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Temprarture</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }" required>
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                            min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp"
+                                            [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched) }"
+                                            required>
 
-                                        <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                        <div class="required-class"
+                                            *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
                                             <span>Temperarture is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Hold Time</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }" required>
-                                        <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                            min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime"
+                                            [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted || hTime1.touched) }"
+                                            required>
+                                        <div class="required-class"
+                                            *ngIf="(hTime1.invalid)&&(formSubmitted || hTime1.touched)">
                                             <span>Hold Time is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required font-13">Liqure Ratio</label>
-                                        <input type="number" class="form-control" (keypress)="numberOnly($event)" min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio" [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }" required>
-                                        <div class="required-class" *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
+                                        <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                            min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio"
+                                            [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted || lRatio1.touched) }"
+                                            required>
+                                        <div class="required-class"
+                                            *ngIf="(lRatio1.invalid)&&(formSubmitted || lRatio1.touched)">
                                             <span>Liquor ratio is required</span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3 desktop-btn">
-                                        <nb-checkbox class="status-basic nb-transition" id="iscolor" [(ngModel)]="isColor" name="isColor">
+                                        <nb-checkbox class="status-basic nb-transition" id="iscolor"
+                                            [(ngModel)]="isColor" name="isColor">
                                         </nb-checkbox>
                                         &nbsp;<label class="font-13">Color</label>
                                     </div>
@@ -293,7 +388,8 @@
                                                 <th>Action</th>
                                             </tr>
 
-                                            <tr *ngFor='let item of (itemList | filterByIsColor : isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
+                                            <tr
+                                                *ngFor='let item of (itemList | filterByIsColor : isColor : refreshPipe);let i1=index;trackBy:trackByFn'>
                                                 <td>
                                                     <!-- <select name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
                                                         [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm"
@@ -303,17 +399,27 @@
                                                             {{item.itemName}} - {{item.supplierName}}
                                                         </option>
                                                     </select> -->
-                                                    <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel" [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm" (change)="itemSelected1($event,i1)" required appendTo="body" class="ng-select-br-none" required>
-                                                        <ng-option *ngFor="let item of itemListArray" [value]="item.itemId" placeholder="Select Item">
+                                                    <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
+                                                        [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm"
+                                                        (change)="itemSelected1($event,i1)" required appendTo="body"
+                                                        class="ng-select-br-none" required>
+                                                        <ng-option *ngFor="let item of itemListArray"
+                                                            [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} - {{item.supplierName}}</ng-option>
                                                     </ng-select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" #quantity1="ngModel" (keypress)="numberOnly($event)" name='qty{{item._id}}{{i1}}' class="tableForm line-height-subtable" [(ngModel)]="item.qty" (keyup)="onKeyUp1($event,i1,1,'quantity')" [id]="'itemList'+i1+'-1'" min="0" required>
+                                                    <input type="number" #quantity1="ngModel"
+                                                        (keypress)="numberOnly($event)" name='qty{{item._id}}{{i1}}'
+                                                        class="tableForm line-height-subtable" [(ngModel)]="item.qty"
+                                                        (keyup)="onKeyUp1($event,i1,1,'quantity')"
+                                                        [id]="'itemList'+i1+'-1'" min="0" required>
                                                 </td>
 
                                                 <td>
-                                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem1(i1)">
+                                                    <nb-icon icon="trash" status="danger"
+                                                        [options]="{ animation: { type: 'zoom' } }"
+                                                        (click)="removeItem1(i1)">
                                                     </nb-icon>
                                                 </td>
                                             </tr>
@@ -326,9 +432,12 @@
                             <div class="row">
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
 
-                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="activeModal.close(false)">CANCEL</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="additionSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="printFlag = true; printSlip(myForm)">Save And
+                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                        (click)="activeModal.close(false)">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                                        (click)="additionSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                                        (click)="printFlag = true; printSlip(myForm)">Save And
                                         Print</button>
 
                                 </div>
@@ -348,12 +457,14 @@
                 <div *ngIf="slipData.dyeingSlipDataList != null">
                     <div class="container print-container mr-top-30 mr-bottom-30 border-style-solid pd-top-10">
                         <div class="mb-1 print-text-center pd-bt-25">
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot No:</label> <span style="color: red !important;" class="slip-value rd-color">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span style="color: red !important;"
+                                        class="slip-value rd-color">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Mc No:</label> <span style="color: red !important;" class="slip-value rd-color">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span style="color: red !important;"
+                                        class="slip-value rd-color">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -362,7 +473,8 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
+                                    <label class="font-25">Lot Wt:</label> <span
+                                        class="slip-value">{{slipData.totalWt}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
                                     <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
@@ -373,10 +485,12 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
+                                    <label class="font-25">QualityId:</label> <span
+                                        class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                    <label class="font-25">Party Shade No:</label> <span
+                                        class="slip-value">{{slipData.partyShadeNo}}</span>
                                 </div>
                             </div>
                         </div>
@@ -384,10 +498,12 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-4 wth-50">
-                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
+                                    <label class="font-25">Taka/Cone:</label> <span
+                                        class="slip-value">{{slipData.batchCount}}</span>
                                 </div>
                                 <div class="col-md-8 wth-50">
-                                    <label class="font-25">Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
+                                    <label class="font-25">Color Tone:</label> <span
+                                        class="slip-value">{{slipData.colorTone}}</span>
                                 </div>
                             </div>
                         </div>
@@ -395,7 +511,9 @@
 
                     </div>
 
-                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;" style="background-color: rgb(144, 179, 212) !important;" class="container print-container mr-bt-50 width-100 main-jet-p-changes">
+                    <div *ngFor="let process of slipData.dyeingSlipDataList; let i=index;"
+                        style="background-color: rgb(144, 179, 212) !important;"
+                        class="container print-container mr-bt-50 width-100 main-jet-p-changes">
                         <div class="row print-wth-100">
                             <div class="col-md-12 width-100 pd-15">
                                 <div class="form-group col-md-3 width-20 form-style-print">
@@ -424,8 +542,9 @@
                             </div>
 
                             <div class="form-group col-md-12 wth-100">
-                                <table class="table table-bordered table-process-fnt text-center wth-100" style="border-radius: 5px;">
-                                    <tr >
+                                <table class="table table-bordered table-process-fnt text-center wth-100"
+                                    style="border-radius: 5px;">
+                                    <tr>
                                         <th class="font-25">Item name</th>
                                         <th class="font-25">Quantity</th>
                                         <th class="font-25">Supplier name</th>
@@ -459,10 +578,12 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50 ">
-                                    <label class="font-25">Lot No:</label> <span class="slip-value rd-color">{{slipData.batchId}}</span>
+                                    <label class="font-25">Lot No:</label> <span
+                                        class="slip-value rd-color">{{slipData.batchId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Mc No:</label> <span class="slip-value rd-color">{{slipData.jetId}}</span>
+                                    <label class="font-25">Mc No:</label> <span
+                                        class="slip-value rd-color">{{slipData.jetId}}</span>
                                 </div>
                             </div>
                         </div>
@@ -471,7 +592,8 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Lot Wt:</label> <span class="slip-value">{{slipData.totalWt}}</span>
+                                    <label class="font-25">Lot Wt:</label> <span
+                                        class="slip-value">{{slipData.totalWt}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
                                     <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
@@ -482,10 +604,12 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">QualityId:</label> <span class="slip-value">{{slipData.qualityId}}</span>
+                                    <label class="font-25">QualityId:</label> <span
+                                        class="slip-value">{{slipData.qualityId}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Party Shade No:</label> <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                    <label class="font-25">Party Shade No:</label> <span
+                                        class="slip-value">{{slipData.partyShadeNo}}</span>
                                 </div>
                             </div>
                         </div>
@@ -493,10 +617,12 @@
                         <div class="mb-1 print-text-center pd-bt-25">
                             <div class="row">
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Taka/Cone:</label> <span class="slip-value">{{slipData.batchCount}}</span>
+                                    <label class="font-25">Taka/Cone:</label> <span
+                                        class="slip-value">{{slipData.batchCount}}</span>
                                 </div>
                                 <div class="col-md-6 wth-50">
-                                    <label class="font-25">Color Tone:</label> <span class="slip-value">{{slipData.colorTone}}</span>
+                                    <label class="font-25">Color Tone:</label> <span
+                                        class="slip-value">{{slipData.colorTone}}</span>
                                 </div>
                             </div>
                         </div>
@@ -537,7 +663,8 @@
 
                             <div class="form-group col-md-12 ">
 
-                                <table class="table table-bordered table-process-fnt text-center print-bg-transperent" id="border-table ">
+                                <table class="table table-bordered table-process-fnt text-center print-bg-transperent"
+                                    id="border-table ">
                                     <tr>
                                         <th class="font-25 ">Item name</th>
                                         <th class="font-25 ">Quantity</th>

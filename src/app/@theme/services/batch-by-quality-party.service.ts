@@ -8,11 +8,13 @@ import { CommonService } from './common.service';
 })
 export class BatchByQualityPartyService {
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor(private httpClient: HttpClient, 
+    private commonService: CommonService) { }
 
-  getBatchById(qid,pid): any{
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndPartyWithoutProductionPlan/'+qid+'/'+pid);
-    
+  getBatchById(qid, pid): any {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/stockBatch/batch/ByQualityAndPartyWithoutProductionPlan/' + qid + '/' + pid);
+
   }
 
 

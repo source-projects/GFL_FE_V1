@@ -7,17 +7,22 @@ import { CommonService } from './common.service';
 })
 export class PurchaseService {
 
-  constructor(private httpClient:HttpClient, private commonService:CommonService){}
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
-  addPurchaseRequest(data){
-    return this.httpClient.post(this.commonService.envUrl()+'api/purchaseOrder/',data)
+  addPurchaseRequest(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/purchaseOrder/',
+      data)
   }
 
-  updateRequestStatus(data){
-    return this.httpClient.put(this.commonService.envUrl()+'api/purchaseOrder/update/',data)
+  updateRequestStatus(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/purchaseOrder/update/',
+      data)
   }
 
-  getAllRequests(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/purchaseOrder/all')
+  getAllRequests() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/purchaseOrder/all')
   }
 }

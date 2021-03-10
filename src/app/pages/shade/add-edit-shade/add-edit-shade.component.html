@@ -245,7 +245,6 @@
                     </div>
                     <div class="col-md-4 desktop-btn">
                         <div class="form-group">
-                            <!-- <label class="required">Pending</label> -->
                             <div>
                                 <nb-checkbox class="status-basic nb-transition" id="pending" name="isExtraRate"
                                     [(ngModel)]="shadeObj.isExtraRate" (checkedChange)="isExtraChanged($event)"
@@ -265,23 +264,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-md-4" *ngIf="shadeObj.pending">
-                        <div class="form-group">
-                            <label [ngClass]="{'required':shadeObj.pending }">APC No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="apc"
-                                [(ngModel)]="shadeObj.apcNo" #apcNo1="ngModel" required
-                                [ngClass]="{'is-invalid':(apcNo1.invalid)&&(formSubmitted ||  apcNo1.touched)&&(shadeObj.pending)}"
-                                placeholder="APC No">
-
-
-                            <div class="invalid-feedback"
-                                *ngIf="(apcNo1.invalid) && shadeObj.pending &&(formSubmitted ||  apcNo1.touched)">
-
-                                <span>APC No is required</span>
-                            </div>
-
-                        </div>
-                    </div> -->
+                   
                 </div>
 
                 <div class="row">
@@ -400,8 +383,6 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/shade'>CANCEL</button> -->
                             <button *ngIf="!apcFlag && !this.currentShadeId"
                                 class="btn btn-primary btn-sm btn-design-cancel" type="button"
                                 (click)="reset(shadeForm)">CANCEL</button>

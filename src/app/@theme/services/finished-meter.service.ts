@@ -21,12 +21,6 @@ export class FinishedMeterService {
     return this.httpClient.get(this.commonService.envUrl() + "api/userHead");
   }
 
-  getPartyQualityByMaster(id) {
-    return this.httpClient.get(
-      this.commonService.envUrl() + "api/QualityAndParty/ByMaster/" + id
-    );
-  }
-
   getBatchByMasterId(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/batch/ByMaster/" + id

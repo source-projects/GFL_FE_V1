@@ -19,13 +19,13 @@ export class JwtTokenService {
 
   decodeToken() {
     if (this.jwtToken) {
-    this.decodedToken = jwt_decode(this.jwtToken);
+      this.decodedToken = jwt_decode(this.jwtToken);
     }
   }
 
   getDecodeToken(moduleName) {
     this.tokens = jwt_decode(this.jwtToken);
-    switch(moduleName){
+    switch (moduleName) {
       case 'quality':
         return this.tokens.permissions.qu;
 
@@ -66,14 +66,14 @@ export class JwtTokenService {
         return this.tokens.permissions.pt;
 
       case 'dispatch':
-        return this.tokens.permissions.d;  
-      
+        return this.tokens.permissions.d;
+
       case 'batch':
         return this.tokens.permissions.bf;
 
       case 'machine':
         return this.tokens.permissions.ip;
-      
+
       case 'waterJet':
         return this.tokens.permissions.wt;
 
@@ -81,7 +81,7 @@ export class JwtTokenService {
         return this.tokens.permissions.ad;
 
       case 'dyeingSlip':
-        return this.tokens.permissions.ds;  
+        return this.tokens.permissions.ds;
 
       case 'userId':
         return this.tokens.sub;
@@ -90,8 +90,8 @@ export class JwtTokenService {
         return this.tokens.userHeadId;
 
       case 'userName':
-          return this.tokens.userName;
-      
+        return this.tokens.userName;
+
       default:
         return null;
     }
@@ -100,24 +100,5 @@ export class JwtTokenService {
   getUser() {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.displayname : null;
-  }
-
-  getEmailId() {
-    this.decodeToken();
-    return this.decodedToken ? this.decodedToken.email : null;
-  }
-
-  getExpiryTime() {
-    this.decodeToken();
-    return this.decodedToken ? this.decodedToken.exp : null;
-  }
-
-  isTokenExpired(): boolean {
-    const expiryTime: number = parseInt(this.getExpiryTime());
-    if (expiryTime) {
-      return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
-    } else {
-      return false;
-    }
   }
 }

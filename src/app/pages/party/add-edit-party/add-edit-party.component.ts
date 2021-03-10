@@ -94,7 +94,7 @@ export class AddEditPartyComponent implements OnInit {
     private route: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.getData();
@@ -102,7 +102,7 @@ export class AddEditPartyComponent implements OnInit {
     this.currentPartyId = this._route.snapshot.paramMap.get("id");
     if (this.currentPartyId != null) this.getUpdateData();
   }
-  
+
   public getData() {
     this.loading = true;
     this.user = this.commonService.getUser();
@@ -239,10 +239,7 @@ export class AddEditPartyComponent implements OnInit {
           (this.debtor && this.partyForm.get("partyAddress1").value) ||
           !this.debtor
         ) {
-          //  this.partyForm.value.createdBy = this.user.userId;
-          // console.log('raw',this.partyForm.getRawValue())
           this.partyForm.patchValue({
-            //userHeadId: this.userHead.userHeadId,
             createdBy: this.user.userId,
           });
           this.partyService.saveParty(this.partyForm.value).subscribe(
@@ -303,9 +300,6 @@ export class AddEditPartyComponent implements OnInit {
             ...this.partyForm.value,
             id: this.currentPartyId,
           };
-          // this.partyForm.patchValue({
-          //   userHeadId: this.userHead.userHeadId,
-          // });
           let obj = await this.partyService.updateParty(body).subscribe(
             (data) => {
               if (data["success"]) {
@@ -360,7 +354,7 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             this.partyNameExist = data["data"];
           },
-          (error) => {}
+          (error) => { }
         );
     }
   }
@@ -376,7 +370,7 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             this.partyCodeExist = data["data"];
           },
-          (error) => {}
+          (error) => { }
         );
     }
   }

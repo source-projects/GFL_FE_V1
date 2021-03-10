@@ -15,11 +15,11 @@ import { CommonService } from './common.service';
 export class ExportService {
   [x: string]: any;
 
-  constructor( private httpClient: HttpClient, private commonService: CommonService ) { }
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
-  fileType:string;
-  fileExtension:string;
-  templateToFile:any[];
+  fileType: string;
+  fileExtension: string;
+  templateToFile: any[];
   options: FileSaverOptions = {
     autoBom: false,
   };
@@ -28,24 +28,17 @@ export class ExportService {
 
     this.fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     this.fileExtension = '.xlsx';
-
-    console.log(jsonData);
-    console.log(Headers);
     this.templateToFile = jsonData.map(Object.values);
-    console.log(this.templateToFile)
     this.templateToFile.splice(0, 0, Headers)
-    console.log(this.templateToFile);
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.templateToFile);
 
     const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-    console.log(wb);
     const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     this.saveFile(excelBuffer, fileName);
   }
 
   public exportText(jsonData: any[], fileName: string, Headers: string[]): void {
-    console.log(jsonData);
     var options = {
       headers: Headers,
       fieldSeparator: ' , ',
@@ -58,10 +51,8 @@ export class ExportService {
   }
 
   public exportPdf(jsonData: any[], fileName: string, Headers: string[]): void {
-    console.log(jsonData);
     var outputData = [];
     outputData = jsonData.map(Object.values);
-    console.log(outputData);
     var headers = [Headers];
     var doc = new jsPDF();
 
@@ -74,14 +65,14 @@ export class ExportService {
     })
     doc.save(fileName + '.pdf');
   }
- 
+
   private saveFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: this.fileType });
     FileSaver.saveAs(data, fileName + this.fileExtension);
   }
 
-  public sendMail(documentModal){
-    return this.httpClient.post(this.commonService.envUrl()+'api/Document', documentModal);
+  public sendMail(documentModal) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/Document', documentModal);
   }
 }
 

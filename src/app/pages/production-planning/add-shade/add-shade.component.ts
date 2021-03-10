@@ -4,12 +4,9 @@ import { ShadeService } from "../../../@theme/services/shade.service";
 import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
-import { ShadeWithBatchComponent } from "../shade-with-batch/shade-with-batch.component";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { Router } from "@angular/router";
 import { AdminService } from "../../../@theme/services/admin.service";
-// import { AdminService } from '../../../@theme/services/admin.service';
 
 @Component({
   selector: "ngx-add-shade",
@@ -48,7 +45,7 @@ export class AddShadeComponent implements OnInit {
   public selectedJetData: any = [];
 
   productionData = {
-    productionId:null,
+    productionId: null,
     batchId: null,
     partyId: null,
     qualityEntryId: null,
@@ -61,11 +58,9 @@ export class AddShadeComponent implements OnInit {
     private adminService: AdminService,
     private shadeService: ShadeService,
     private productionPlanningService: ProductionPlanningService,
-    private modalService: NgbModal,
     private toastr: ToastrService,
     private jetPlanningService: JetPlanningService,
-    private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.editDyeingSlipFlag) {
@@ -73,7 +68,7 @@ export class AddShadeComponent implements OnInit {
     } else {
       this.getShadeList();
       this.getAllJets();
-      if(this.editProductionPlanFlag){
+      if (this.editProductionPlanFlag) {
         this.showJetListFlag = true;
       }
     }
@@ -94,12 +89,10 @@ export class AddShadeComponent implements OnInit {
             this.shadeList = data["data"];
             this.loading = false;
           } else {
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -113,7 +106,6 @@ export class AddShadeComponent implements OnInit {
         this.approveByList = data["data"];
         this.loading = false;
       } else {
-        // this.toastr.error(data["msg"]);
         this.loading = false;
       }
     });
@@ -122,8 +114,8 @@ export class AddShadeComponent implements OnInit {
     this.activeModal.close(this.approveBy);
   }
   onOkClick() {
-    if(this.productionId1)
-    this.productionData.productionId = this.productionId1;  
+    if (this.productionId1)
+      this.productionData.productionId = this.productionId1;
     this.productionData.batchId = this.batch;
     this.productionData.partyId = this.party;
     this.productionData.qualityEntryId = this.quality;
@@ -144,7 +136,6 @@ export class AddShadeComponent implements OnInit {
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -169,7 +160,7 @@ export class AddShadeComponent implements OnInit {
           this.jetList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 

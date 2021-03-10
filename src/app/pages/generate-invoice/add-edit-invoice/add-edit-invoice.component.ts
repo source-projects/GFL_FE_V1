@@ -1,28 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from "app/@theme/json/error.json";
 import { Invoice, invoiceobj } from "app/@theme/model/invoice";
-import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { keys } from 'lodash';
-import { ToastrService } from 'ngx-toastr';
-import { CommonService } from 'app/@theme/services/common.service';
+import { GenerateInvoiceService } from "app/@theme/services/generate-invoice.service";
+import { JwtTokenService } from "app/@theme/services/jwt-token.service";
+import { PartyService } from "app/@theme/services/party.service";
+import { ToastrService } from "ngx-toastr";
+import { CommonService } from "app/@theme/services/common.service";
 
 @Component({
-  selector: 'ngx-add-edit-invoice',
-  templateUrl: './add-edit-invoice.component.html',
-  styleUrls: ['./add-edit-invoice.component.scss']
+  selector: "ngx-add-edit-invoice",
+  templateUrl: "./add-edit-invoice.component.html",
+  styleUrls: ["./add-edit-invoice.component.scss"],
 })
 export class AddEditInvoiceComponent implements OnInit {
-
   flag: any;
   obj = {
-    "batchAndStockIdList": [],
-    "createdBy": null,
-    "invoiceNo": null,
-    "userHeadId": null
-  }
+    batchAndStockIdList: [],
+    createdBy: null,
+    invoiceNo: null,
+    userHeadId: null,
+  };
   finalcheckedrows = [];
   party: any[];
   batch: any[];
@@ -51,7 +49,7 @@ export class AddEditInvoiceComponent implements OnInit {
     private _route: ActivatedRoute,
     private toastr: ToastrService,
     private jwt: JwtTokenService,
-    private commonService: CommonService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -59,8 +57,7 @@ export class AddEditInvoiceComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId().userHeadId;
     this.getPartyList();
     this.getUserId();
-    if (this.currentInvoiceId)
-      this.getUpdateData();
+    if (this.currentInvoiceId) this.getUpdateData();
   }
   public getUserId() {
     this.currentInvoiceId = this._route.snapshot.paramMap.get("id");
@@ -69,54 +66,53 @@ export class AddEditInvoiceComponent implements OnInit {
   getUpdateData() {
     this.loading = true;
     if (this.currentInvoiceId != null) {
-      this.generateInvoiceService.getDataByInvoiceNumber(this.currentInvoiceId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.invoiceValues.partyId = data["data"].partyId;
-            this.flag = data["data"].isSendToParty;
-            this.batch = data["data"].batchWithControlIdList;
-            this.finalbatch = [...this.batch];
-            this.merge = [...this.finalbatch];
-            this.generateInvoiceService.getBatchByParty(this.invoiceValues.partyId).subscribe(
-              (data) => {
-                if (data["success"]) {
-                  data["data"].forEach(element => {
-                    this.finalbatch.push(element)
-                  });
-                  this.merge = this.finalbatch;
-                  this.loading = false;
-                } else {
-                  // this.toastr.error(data["msg"]);
-                  this.loading = false;
-                }
-              },
-              (error) => {
-                // this.toastr.error(errorData.Serever_Error);
-                this.loading = false;
-                this.merge = [];
-              }
-            );
-            this.loading = false;
-            this.disableButton = false;
-            this.selected = data["data"].batchWithControlIdList;
-            this.finalcheckedrows = [...this.selected];
-          } else {
-            // this.toastr.error(data["msg"]);
+      this.generateInvoiceService
+        .getDataByInvoiceNumber(this.currentInvoiceId)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.invoiceValues.partyId = data["data"].partyId;
+              this.flag = data["data"].isSendToParty;
+              this.batch = data["data"].batchWithControlIdList;
+              this.finalbatch = [...this.batch];
+              this.merge = [...this.finalbatch];
+              this.generateInvoiceService
+                .getBatchByParty(this.invoiceValues.partyId)
+                .subscribe(
+                  (data) => {
+                    if (data["success"]) {
+                      data["data"].forEach((element) => {
+                        this.finalbatch.push(element);
+                      });
+                      this.merge = this.finalbatch;
+                      this.loading = false;
+                    } else {
+                      this.loading = false;
+                    }
+                  },
+                  (error) => {
+                    this.loading = false;
+                    this.merge = [];
+                  }
+                );
+              this.loading = false;
+              this.disableButton = false;
+              this.selected = data["data"].batchWithControlIdList;
+              this.finalcheckedrows = [...this.selected];
+            } else {
+              this.loading = false;
+              this.disableButton = false;
+              this.merge = [];
+            }
+          },
+          (error) => {
             this.loading = false;
             this.disableButton = false;
             this.merge = [];
           }
-        },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error);
-          this.loading = false;
-          this.disableButton = false;
-          this.merge = [];
-        }
-      );
+        );
     }
     this.disableButton = false;
-
   }
 
   getPartyList() {
@@ -127,12 +123,10 @@ export class AddEditInvoiceComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -142,116 +136,111 @@ export class AddEditInvoiceComponent implements OnInit {
     this.loading = true;
     if (event != undefined) {
       if (this.invoiceValues.partyId) {
-        this.generateInvoiceService.getBatchByParty(this.invoiceValues.partyId).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.finalbatch = data["data"];
-              console.log(this.finalbatch)
-              this.finalbatch.forEach(ele=>{
-                ele.wt = ele.wt.toFixed(2);
-              })
-              this.merge = this.finalbatch;
+        this.generateInvoiceService
+          .getBatchByParty(this.invoiceValues.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.finalbatch = data["data"];
+                this.finalbatch.forEach((ele) => {
+                  ele.wt = ele.wt.toFixed(2);
+                });
+                this.merge = this.finalbatch;
+                this.loading = false;
+              } else {
+                this.loading = false;
+                this.merge = [];
+              }
+            },
+            (error) => {
               this.loading = false;
-            } else {
-              // this.toastr.error(data["msg"]);
-              this.loading = false;
-              this.merge = []
+              this.merge = [];
             }
-          },
-          (error) => {
-            // this.toastr.error(errorData.Serever_Error);
-            this.loading = false;
-            this.merge = [];
-          }
-        );
+          );
       }
-    }
-    else {
+    } else {
       this.loading = false;
     }
   }
-  
+
   final = [];
   selected = [];
   addInvoice(invoiceForm) {
     this.disableButton = true;
     this.formSubmitted = true;
 
-    this.finalcheckedrows.map(ele => {
+    this.finalcheckedrows.map((ele) => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
-    })
+    });
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
-      userHeadId: this.userHeadId
-    }
-    
+      userHeadId: this.userHeadId,
+    };
+
     if (invoiceForm.valid) {
       this.generateInvoiceService.addInvoicedata(obj).subscribe(
-        data => {
-          if (data['success']) {
+        (data) => {
+          if (data["success"]) {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Add_Success);
             this.merge = [];
             this.disableButton = false;
-          }
-          else {
+          } else {
             this.disableButton = false;
-            this.toastr.error(errorData.Add_Error)
+            this.toastr.error(errorData.Add_Error);
             this.merge = [];
           }
         },
-        error => {
+        (error) => {
           this.disableButton = false;
-          this.toastr.error(errorData.Serever_Error)
+          this.toastr.error(errorData.Serever_Error);
         }
-      )
-    }else{
+      );
+    } else {
       this.disableButton = false;
     }
   }
 
   updateInvoice(invoiceForm) {
-    console.log("FORM:",invoiceForm);
     this.disableButton = true;
     this.formSubmitted = true;
 
     this.final = [];
-    this.finalcheckedrows.map(ele => {
+    this.finalcheckedrows.map((ele) => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
-    })
+    });
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
       invoiceNo: this.currentInvoiceId,
-      updatedBy:this.userId
-    }
+      updatedBy: this.userId,
+    };
 
     if (invoiceForm.valid) {
       this.generateInvoiceService.updateInvoice(obj).subscribe(
-        data => {
-          if (data['success']) {
+        (data) => {
+          if (data["success"]) {
             this.route.navigate(["/pages/generate_invoice"]);
             this.toastr.success(errorData.Update_Success);
             this.disableButton = false;
-          }
-          else {
+          } else {
             this.disableButton = false;
-            this.toastr.error(errorData.Update_Error)
+            this.toastr.error(errorData.Update_Error);
           }
         },
-        error => {
+        (error) => {
           this.disableButton = false;
-          this.toastr.error(errorData.Serever_Error)
+          this.toastr.error(errorData.Serever_Error);
         }
-      )
-    }else{
+      );
+    } else {
       this.disableButton = false;
     }
   }
@@ -259,6 +248,5 @@ export class AddEditInvoiceComponent implements OnInit {
   onSelect(value: any) {
     let arr: any = value.selected;
     this.finalcheckedrows = arr;
-
   }
 }

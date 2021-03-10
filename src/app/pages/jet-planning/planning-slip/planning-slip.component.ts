@@ -86,9 +86,6 @@ export class PlanningSlipComponent implements OnInit {
   ];
   slipObj: any;
 
-  //dyeingData:DyeingSlipData = new DyeingSlipData();
-  //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
-
   constructor(
     public activeModal: NgbActiveModal,
     private toastr: ToastrService,
@@ -120,14 +117,14 @@ export class PlanningSlipComponent implements OnInit {
     return this.activeModal;
   }
 
-  numberOnly(evt) { 
-          
+  numberOnly(evt) {
+
     // Only ASCII charactar in that range allowed 
-    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) 
-        return false; 
-    return true; 
-} 
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69)
+      return false;
+    return true;
+  }
 
   getItemData() {
     this.DyeingProcessService.getAllItemWithSupplier().subscribe(
@@ -138,7 +135,7 @@ export class PlanningSlipComponent implements OnInit {
         } else {
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -157,14 +154,14 @@ export class PlanningSlipComponent implements OnInit {
                     : element1.qty;
                 });
               });
-              if(this.isPrintDirect)
+              if (this.isPrintDirect)
                 this.printNOW();
             }
           } else {
             this.toastr.error(data["msg"]);
           }
         },
-        (error) => {}
+        (error) => { }
       );
   }
 
@@ -177,7 +174,7 @@ export class PlanningSlipComponent implements OnInit {
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
           .length -
-          1
+        1
       ) {
         let item = this.slipData.dyeingSlipDataList[parentDataIndex]
           .dyeingSlipItemData[rowIndex];
@@ -185,17 +182,14 @@ export class PlanningSlipComponent implements OnInit {
         if (item.itemName && item.qty) {
           if (colName == "concentration") {
             if (!item.concentration) {
-              // this.toastr.error("Enter concentration");
               return;
             }
           } else if (colName == "byChemical") {
             if (!item.byChemical) {
-              // this.toastr.error("Enter concentration");
               return;
             }
           }
           let obj = new DyeingChemicalData();
-          //let list = this.dyeingChemicalData;
           this.slipData.dyeingSlipDataList[
             parentDataIndex
           ].dyeingSlipItemData.push(obj);
@@ -238,7 +232,7 @@ export class PlanningSlipComponent implements OnInit {
               clearInterval(interval);
             }
           }, 10);
-  
+
         } else {
           this.toastr.error("Fill empty fields");
         }
@@ -330,9 +324,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   itemSelected1(event, index) {
-    console.log(event);
     let i_id = event;
-    console.log("id", i_id);
     this.itemListArray.forEach((element) => {
       if (element.itemId == i_id) {
         this.itemList[index].itemName = element.itemName;
@@ -399,7 +391,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   approveByClicked() {
-    const modalRef = this.modalService.open(AddShadeComponent,{ size: 'lg' });
+    const modalRef = this.modalService.open(AddShadeComponent, { size: 'lg' });
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
@@ -433,18 +425,16 @@ export class PlanningSlipComponent implements OnInit {
     });
   }
   printSlip(myForm?) {
-    //this.checkItemListAndValue();
-    if ((myForm? myForm.valid : true) && !this.quantityNullFlag) {
+    if ((myForm ? myForm.valid : true) && !this.quantityNullFlag) {
       this.isPrinting = false;
       if (!this.isPrintDirect) {
         this.approveByFlag = true;
         this.saveSlipData(myForm);
       } else {
         this.isSavedForPrint = true;
-        //this.getSlipDataFromBatch();
       }
 
-      if(!this.isPrintDirect){
+      if (!this.isPrintDirect) {
         let interval1 = setInterval(() => {
           if (this.slipData && this.isSavedForPrint) {
             clearInterval(interval1);
@@ -454,7 +444,7 @@ export class PlanningSlipComponent implements OnInit {
         }, 10);
         this.quantityNullFlag = false;
       }
-      
+
     } else {
       this.toastr.error("Fill empty fields.");
       this.quantityNullFlag = false;
@@ -462,7 +452,7 @@ export class PlanningSlipComponent implements OnInit {
     }
   }
 
-  printNOW(){
+  printNOW() {
     let doc = new wijmo.PrintDocument({
       title: "",
     });
@@ -484,11 +474,9 @@ export class PlanningSlipComponent implements OnInit {
       if (element) {
         doc.append(element);
         doc.print();
-        // this.printFlag = true;
         tempFlag = true;
         clearInterval(inter);
         this.activeModal.close(this.slipObj);
-        //this.activeModal.close();
       }
     }, 10);
   }
@@ -559,9 +547,7 @@ export class PlanningSlipComponent implements OnInit {
           this.dyeingChemicalData[index].qty
         ) {
           this.dyeingChemicalData.push(new DyeingChemicalData());
-          // this.data.changes.subscribe(() => {
-          //   this.data.last["nativeElement"].focus();
-          // });
+
           let interval = setInterval(() => {
             let field = document.getElementById(indexOfEnter);
             if (field != null) {
@@ -569,7 +555,7 @@ export class PlanningSlipComponent implements OnInit {
               clearInterval(interval);
             }
           }, 10);
-  
+
         } else {
           this.toastr.error("Fill empty fields.");
         }

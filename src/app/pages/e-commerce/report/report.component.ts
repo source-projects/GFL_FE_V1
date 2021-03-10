@@ -8,7 +8,6 @@ import { PurchaseRequest } from '../../../@theme/model/purchaseRequest';
 import { WaterJet } from '../../../@theme/model/water-jet';
 import { PurchaseService } from '../../../@theme/services/purchase.service';
 import { ReportService } from '../../../@theme/services/report.service';
-import { WaterJetService } from '../../../@theme/services/water-jet.service';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'ngx-report',
@@ -65,8 +64,8 @@ export class ReportComponent implements OnInit {
   waterJetMachineFlag: boolean = false;
   foldingMachineFlag: boolean = false;
   MachineFlag: boolean = false;
-  boilerFlag:boolean = false;
-  thermoFlag:boolean = false;
+  boilerFlag: boolean = false;
+  thermoFlag: boolean = false;
   ChartFlag: boolean = false;
   NoDataFlag: boolean = false;
   buttonFlag: boolean = false;
@@ -89,7 +88,7 @@ export class ReportComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private reportservice: ReportService, private toastr: ToastrService, private purchaseService: PurchaseService,
-    private waterjetService: WaterJetService, private datePipe: DatePipe) {
+    private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -97,7 +96,6 @@ export class ReportComponent implements OnInit {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
     this.getMachineCategory();
     this.getPurchaseRequestList();
-    //this.getWaterJetList();
   }
 
   change(value: any) {
@@ -158,10 +156,10 @@ export class ReportComponent implements OnInit {
     else if (value.name == 'string') {
       this.waterJetMachineFlag = true;
     }
-    else if (value.name == 'Boiler'){
+    else if (value.name == 'Boiler') {
       this.boilerFlag = true;
     }
-    else if (value.name == 'Thermopack'){
+    else if (value.name == 'Thermopack') {
       this.thermoFlag = true;
     }
   }
@@ -291,12 +289,12 @@ export class ReportComponent implements OnInit {
       this.waterJetMachineFlag = false;
       this.machineReportFlag = true;
     }
-    else if (this.boilerFlag == true){
+    else if (this.boilerFlag == true) {
       this.buttonFlag = true;
       this.machineReportFlag = true;
       this.boilerFlag = false;
     }
-    else if (this.thermoFlag == true){
+    else if (this.thermoFlag == true) {
       this.buttonFlag = true;
       this.machineReportFlag = true;
       this.thermoFlag = false;
@@ -313,21 +311,7 @@ export class ReportComponent implements OnInit {
       (error) => { }
     );
   }
-  getWaterJetList() {
-    this.loading = true;
-    this.waterjetService.getWaterJetList().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.waterJetList = data["data"];
-          this.loading = false;
-        }
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
-  }
+
   updateRequest(status, index) {
     this.purchaseRequestList[index].status = status;
     this.purchaseService

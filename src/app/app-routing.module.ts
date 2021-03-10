@@ -3,7 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './@theme/guards/auth.guard';
 import { ColorGuard } from './@theme/guards/color.guard';
 import { PartyGuard } from './@theme/guards/party.guard';
-import { ProgramGuard } from './@theme/guards/program.guard';
 import { QualityGuard } from './@theme/guards/quality.guard';
 import { ShadeGuard } from './@theme/guards/shade.guard';
 import { StockBatchGuard } from './@theme/guards/stock-batch.guard';
@@ -13,11 +12,8 @@ import { UserGuard } from './@theme/guards/user.guard';
 import { DyeingProcessGuard } from './@theme/guards/dyeing-process.guard';
 import { JetPlanningGuard } from './@theme/guards/jet-planning.guard';
 import { ProductionPlanningGuard } from './@theme/guards/production-planning.guard';
-import { WaterJetGuard } from './@theme/guards/water-jet.guard';
 import { InvoiceGuard } from './@theme/guards/invoice.guard';
 import { PaymentGuard } from './@theme/guards/payment.guard';
-
-
 import { ECommerceComponent } from './pages/e-commerce/e-commerce.component';
 import { InputDataComponent } from './pages/input-data/input-data/input-data.component';
 import { NotFoundComponent } from './pages/miscellaneous/not-found/not-found.component';
@@ -38,8 +34,6 @@ export const routes: Routes = [
   {
     path: 'pages',
     component: PagesComponent,
-    // loadChildren: () => import('./pages/pages.module')
-    //   .then(m => m.PagesModule),
     canActivate: [AuthGuard],
     children: [
       {
@@ -78,28 +72,12 @@ export const routes: Routes = [
         canLoad: [ColorGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
-      // {
-      //   path: 'program',
-      //   loadChildren: () => import('./pages/program/program.module')
-      //     .then(m => m.ProgramModule),
-      //   canActivate: [ProgramGuard],
-      //   canLoad: [ProgramGuard],
-      //   data: { PermissionName: ['view','view group','view all']}
-      // },
       {
         path: 'dyeing-process',
         loadChildren: () => import('./pages/dyeing-process/dyeing-process.module')
           .then(m => m.DyeingProcessModule),
         canActivate: [DyeingProcessGuard],
          canLoad: [DyeingProcessGuard],
-        data: { PermissionName: ['view','view group','view all']}
-      },
-      {
-        path: 'process',
-        loadChildren: () => import('./pages/process/process.module')
-          .then(m => m.ProcessModule),
-        canActivate: [ProgramGuard],
-        canLoad: [ProgramGuard],
         data: { PermissionName: ['view','view group','view all']}
       },
       {
@@ -119,16 +97,6 @@ export const routes: Routes = [
       data: { PermissionName: ['view','view group','view all']}
 
     },
-      // {
-      //   path: 'waterJet',
-      //   loadChildren: () => import('./pages/water-jet/water-jet.module')
-      //     .then(m => m.WaterJetModule),
-      //     canActivate: [WaterJetGuard],
-      //     canLoad: [WaterJetGuard],
-      //     data: { PermissionName: ['view','view group','view all']}
-
-        
-      // },
       {
         path: 'supplier',
         loadChildren: () => import('./pages/supplier/supplier.module')
@@ -141,9 +109,6 @@ export const routes: Routes = [
         path: 'purchaseItem',
         loadChildren: () => import('./pages/purchase-item/purchase-item.module')
           .then(m => m.PurchaseItemModule),
-        // canActivate: [PurchaseGuard],
-        // canLoad: [PurchaseGuard],
-        // data: { PermissionName: ['view']}
       },
       {
         path: 'finishedMeter',
@@ -178,14 +143,6 @@ export const routes: Routes = [
           canLoad: [ColorGuard],
           data: { PermissionName: ['view','view group','view all']}
       },
-      // {
-      //   path: 'pending-apc',
-      //   loadChildren: () => import('./pages/shade/pending-apc/pending-apc.module')
-      //     .then(m => m.IssueColorBoxModule),
-      //     canActivate: [ColorGuard],
-      //     canLoad: [ColorGuard],
-      //     data: { PermissionName: ['view','view group','view all']}
-      // },
       {
         path: 'production-planning',
         loadChildren: () => import('./pages/production-planning/production-planning.module')
@@ -193,8 +150,6 @@ export const routes: Routes = [
           canActivate: [ProductionPlanningGuard],
           canLoad: [ProductionPlanningGuard],
           data: { PermissionName: ['view','view group','view all']}
-
-       
       },
       {
         path: 'jet-planning',
@@ -254,10 +209,7 @@ export const routes: Routes = [
 
     ],
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  
-  // { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
-    
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },    
   { path: '**', redirectTo: 'auth' },
 ];
 

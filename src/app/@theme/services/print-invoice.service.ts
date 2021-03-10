@@ -12,7 +12,9 @@ export class PrintInvoiceService {
   isExport = true;
   isPrint = false;
   pdfContent: BehaviorSubject<any> = new BehaviorSubject('');
-  constructor(private router: Router, private httpClient: HttpClient, private commonService: CommonService) { }
+  constructor(private router: Router, 
+    private httpClient: HttpClient, 
+    private commonService: CommonService) { }
 
 
   printDocument(documentName: string, documentData: string[], isPdf) {
@@ -20,7 +22,6 @@ export class PrintInvoiceService {
     let url: any;
     if (isPdf) {
       this.router.navigate(['/export/invoice']);
-      //window.open(url.toString(), '_blank');
     } else {
       this.isExport = false;
       this.isPrint = true;
@@ -30,7 +31,6 @@ export class PrintInvoiceService {
             'print': ['print', documentName, documentData.join()]
           }
         }]);
-      //this.router.navigateByUrl('./export/invoice');
     }
   }
 
@@ -42,7 +42,8 @@ export class PrintInvoiceService {
     });
   }
 
-  getInvoiceByNoToPrint(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPartyWithQualityDispatchBy/'+id);
+  getInvoiceByNoToPrint(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/dispatch/getPartyWithQualityDispatchBy/' + id);
   }
 }

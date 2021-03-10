@@ -47,7 +47,6 @@ export class AddEditColorComponent implements OnInit {
   convertedDate2: any;
 
   maxDate: any;
-  // const isDisabled = (date: NgbDate, current: {month: number}) => day.date === 13;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -94,13 +93,10 @@ export class AddEditColorComponent implements OnInit {
               (data) => {
                 if (data["success"]) {
                   this.supplierListRate = data["data"];
-                } else {
-                  // this.toastr.error(data['msg'])
                 }
                 this.loading = false;
               },
               (error) => {
-                // this.toastr.error(errorData.Serever_Error)
                 this.loading = false;
               }
             );
@@ -119,7 +115,6 @@ export class AddEditColorComponent implements OnInit {
           });
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error)
           this.loading = false;
         }
       );
@@ -132,13 +127,10 @@ export class AddEditColorComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.supplierList = data["data"];
-        } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -155,13 +147,10 @@ export class AddEditColorComponent implements OnInit {
             (data) => {
               if (data["success"]) {
                 this.supplierListRate = data["data"];
-              } else {
-                // this.toastr.error(data['msg'])
               }
               this.loading = false;
             },
             (error) => {
-              // this.toastr.error(errorData.Serever_Error)
               this.loading = false;
             }
           );
@@ -214,7 +203,7 @@ export class AddEditColorComponent implements OnInit {
           this.data.last.focus();
         })
 
-        
+
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -225,7 +214,7 @@ export class AddEditColorComponent implements OnInit {
         }, 10);
       }
     }
-    
+
   }
 
   calculateAmount(rowIndex) {
@@ -249,7 +238,7 @@ export class AddEditColorComponent implements OnInit {
     this.calculateAmount(rowIndex);
   }
 
-  reset(colorForm){
+  reset(colorForm) {
     colorForm.reset();
     this.color.colorDataList = [];
     this.color.colorDataList.push(new ColorDataList());
@@ -270,7 +259,6 @@ export class AddEditColorComponent implements OnInit {
             this.reset(colorForm);
             this.disableButton = false;
             this.toastr.success(data['msg']);
-            // this.disableButton=true;
           } else {
             this.toastr.error(data['msg']);
           }
@@ -281,9 +269,9 @@ export class AddEditColorComponent implements OnInit {
         }
       );
     }
-    else{
+    else {
       this.toastr.error("Fill empty fields");
- 
+
     }
     this.disableButton = false;
   }
@@ -313,7 +301,7 @@ export class AddEditColorComponent implements OnInit {
           if (data["success"]) {
             this.route.navigate(["/pages/color"]);
             this.toastr.success(data['msg']);
-          }else{
+          } else {
             this.toastr.error(data['msg']);
           }
           this.loading = false;

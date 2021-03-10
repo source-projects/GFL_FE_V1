@@ -2,15 +2,8 @@ import { NgModule } from '@angular/core';
 import {
   NbButtonModule,
   NbCardModule,
-
-
-
   NbIconModule,
-
   NbListModule, NbProgressBarModule,
-
-
-
   NbSelectModule, NbTabsetModule,
   NbUserModule
 } from '@nebular/theme';

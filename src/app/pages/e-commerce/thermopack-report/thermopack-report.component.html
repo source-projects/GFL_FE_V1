@@ -3,34 +3,39 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="parameter">Select Parameter:</label>
-                <select class="form-control" (change)="parameter($event.target.value)" class="browser-default custom-select form-control">
+                <select class="form-control" (change)="parameter($event.target.value)"
+                    class="browser-default custom-select form-control">
                     <option *ngFor="let para of parameters" [value]="para.name">
-                        {{para.name}}</option>
+                        {{ para.name }}
+                    </option>
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <strong><label>Select Date & Time</label></strong>
-                <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1" [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
-                <owl-date-time (afterPickerClosed)="change(dt1)" #dt1>
-                </owl-date-time>
+                <input class="form-control" [max]="max" name="dt1" [owlDateTime]="dt1" [selectMode]="'range'"
+                    [owlDateTimeTrigger]="dt1" placeholder="Date Time" />
+                <owl-date-time (afterPickerClosed)="change(dt1)" #dt1> </owl-date-time>
             </div>
         </div>
         <div class="col-md-4 dashboard-dis">
-            <div class="padding-bt-tp mobile-btn-center pt-0"> <input type="button" (click)="submit()" class="btn btn-primary btn-sm btn-design sheet-btn" value="Submit">
+            <div class="padding-bt-tp mobile-btn-center pt-0">
+                <input type="button" (click)="submit()" class="btn btn-primary btn-sm btn-design sheet-btn"
+                    value="Submit" />
             </div>
         </div>
 
         <div class="row">
             <div *ngIf="ThermopackChartFlag" class="chart-day-night">
-                <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+                <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins">
                 </canvas>
             </div>
             <div *ngIf="NoDataFlag">
                 <h1 class="color-aa3634">No data found</h1>
             </div>
-
         </div>
     </div>
 </div>

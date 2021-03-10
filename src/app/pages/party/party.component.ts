@@ -1,16 +1,11 @@
-import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-//import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PartyGuard } from "../../@theme/guards/party.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { BtnCellRenderer } from "../../@theme/renderer/button-cell-renderer.component";
 import { CommonService } from "../../@theme/services/common.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { PartyService } from "../../@theme/services/party.service";
 import { ToastrService } from "ngx-toastr";
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
@@ -70,16 +65,12 @@ export class PartyComponent implements OnInit {
   rowSelection;
   constructor(
     private partyService: PartyService,
-    private route: Router,
     private modalService: NgbModal,
     public partyGuard: PartyGuard,
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    //private exportService: ExportService,
-    private _NgbModal: NgbModal,
-    private jwtToken: JwtTokenService,
-    private http: HttpClient
+   
   ) {
     this.frameworkComponents = {
       btnCellRenderer: BtnCellRenderer,
@@ -95,7 +86,6 @@ export class PartyComponent implements OnInit {
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getViewAccess();
     this.getAddAcess();
-    // this.getAllParty(this.userId,"own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
@@ -121,8 +111,6 @@ export class PartyComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    // this.gridOptions.api.refreshView();
-    // this.gridOptions.columnApi.sizeColumnsToFit();
   }
 
   getGrid() {
@@ -185,8 +173,7 @@ export class PartyComponent implements OnInit {
     }),
       (this.paginationPageSize = 10);
     this.rowSelection = "multiple";
-    // this.rowModelType = 'serverSide';
-    // this.serverSideStoreType = 'partial';
+   
   }
 
   onBtnClick1(e) {
@@ -194,30 +181,9 @@ export class PartyComponent implements OnInit {
   }
 
   drop(event) {
-    console.log(event);
-    alert("BUTTON CLICKEFD");
   }
   getRecords() {
-    // this.partyService.getAllPartyNameList().subscribe(
-    //   (data) => {
-
-    //     if (data["success"]) {
-    //       this.testingData = data["data"];
-
     this.getGrid();
-
-    //     }
-    //     else {
-    //       // this.toastr.error(data['msg'])
-    //     }
-    //     this.loading = false;
-    //   },
-    //   (error) => {
-    //     //this.toastr.error(errorData.Serever_Error)
-    //     this.loading = false;
-    //   }
-    // )
-    // return this.testingData;
   }
 
   filter(value: any) {
@@ -246,7 +212,6 @@ export class PartyComponent implements OnInit {
           this.rowData = this.partyList;
           //this.getGrid();
           this.copyPartyList = data["data"];
-          console.log(this.copyPartyList);
           this.party = this.partyList.map((element) => ({
             id: element.id,
             partyName: element.partyName,
@@ -265,13 +230,10 @@ export class PartyComponent implements OnInit {
             partyCode: element.partyCode,
             masterName: element.masterName,
           }));
-        } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

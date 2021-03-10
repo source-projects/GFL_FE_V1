@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { ShadeService } from "../../../@theme/services/shade.service";
 import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
@@ -30,17 +28,14 @@ export class ShadeWithBatchComponent implements OnInit {
   jetSelectedFlag = false;
   selectedJetData: any[] = [];
   jetCapacity = false;
-
-  //batch:any;
   color: any;
   weight: any;
   constructor(
     private productionPlanningService: ProductionPlanningService,
-    private shadeService: ShadeService,
     private _NgbActiveModal: NgbActiveModal,
     private toastr: ToastrService,
     private jetService: JetPlanningService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getWeightByStockAndBatch();
@@ -49,7 +44,6 @@ export class ShadeWithBatchComponent implements OnInit {
     } else {
       this.getJetData();
     }
-    //this.getAllBatchWithShade();
   }
 
   getWeightByStockAndBatch() {
@@ -69,7 +63,7 @@ export class ShadeWithBatchComponent implements OnInit {
           this.status = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 

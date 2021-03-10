@@ -7,36 +7,8 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../@theme/json/error.json";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-// import { AdditionSlip } from 'src/app/@theme/model/additon-slip';
+import { AdditionSlip, DyeingSlipData } from '../../@theme/model/additon-slip';
 
-export class AdditionSlip {
-  id: number;
-  batchId: string;
-  dyeingSlipData: DyeingSlipData;
-  productionId: number;
-}
-
-export class DyeingSlipData {
-  controlId: number;
-  dyeingSlipItemData: DyeingSlipItemDatum[];
-  holdTime: number;
-  id: number;
-  isColor: boolean;
-  liquerRation: number;
-  processType: string;
-  sequence: number;
-  temp: number;
-}
-
-export class DyeingSlipItemDatum {
-  controlId: number;
-  id: number;
-  itemId: number;
-  itemName: string;
-  qty: number;
-  supplierId: number;
-  supplierName: string;
-}
 @Component({
   selector: "ngx-addition-slip",
   templateUrl: "./addition-slip.component.html",
@@ -56,11 +28,8 @@ export class AdditionSlipComponent implements OnInit {
     },
   ];
   additionSlipData: any;
-  // additionListArray:additionList[] = [] ;
-
   loading = true;
   tableStyle = "bootstrap";
-
   additionSlipArray: AdditionSlip[] = [];
   additionSlip: AdditionSlip = new AdditionSlip();
   dyeingSlipData: DyeingSlipData = new DyeingSlipData();
@@ -92,15 +61,12 @@ export class AdditionSlipComponent implements OnInit {
     );
   }
   batchSelected(event) {
-    // let batch = event.target.value;
     this.additionSlip.batchId = event.batchId;
     this.additionSlip.productionId = event.productionId;
-
     const modalRef = this.modalService.open(PlanningSlipComponent);
     modalRef.componentInstance.isPrintDirect = false;
     modalRef.componentInstance.batchId = event.batchId;
     modalRef.componentInstance.additionSlipFlag = true;
-
     modalRef.componentInstance.stockId = event.productionId;
     modalRef.result.then((result) => {
       if (result) {
@@ -134,7 +100,6 @@ export class AdditionSlipComponent implements OnInit {
             modalRef.componentInstance.batchId = batchId;
             modalRef.componentInstance.editAdditionFlag = true;
             modalRef.componentInstance.additionSlipFlag = true;
-
             modalRef.componentInstance.stockId = prodId;
             modalRef.componentInstance.additionSlipData = this.additionSlipData;
 
@@ -188,7 +153,6 @@ export class AdditionSlipComponent implements OnInit {
         if (data["success"]) {
           this.getAllAdditionSlip();
           this.toastr.success(errorData.Update_Success);
-          // this.disableButton=true;
         } else {
           this.toastr.error(errorData.Update_Error);
         }
@@ -198,14 +162,12 @@ export class AdditionSlipComponent implements OnInit {
     );
   }
   saveAdditionSlip(result) {
-    console.log(this.additionSlip);
     this.dyeingSlipData.holdTime = result.holdTime;
     this.dyeingSlipData.temp = result.temp;
     this.dyeingSlipData.isColor = result.isColor;
     this.dyeingSlipData.liquerRation = result.liquorRatio;
     this.dyeingSlipData.processType = "addition";
     this.dyeingSlipData.dyeingSlipItemData = result.items;
-
     this.additionSlip.dyeingSlipData = this.dyeingSlipData;
 
     this.planningService.saveadditionSlip(this.additionSlip).subscribe(
@@ -215,7 +177,6 @@ export class AdditionSlipComponent implements OnInit {
           this.toastr.success(errorData.Add_Success);
           this.getAllAdditionSlip();
           this.getAllBatch();
-          // this.disableButton=true;
         } else {
           this.toastr.error(errorData.Add_Error);
         }

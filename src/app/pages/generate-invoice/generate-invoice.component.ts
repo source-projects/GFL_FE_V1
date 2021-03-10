@@ -4,8 +4,6 @@ import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.s
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NavigationExtras, Router } from "@angular/router";
 
-// import { Invoice } from "app/@theme/model/invoice";
-
 @Component({
   selector: "ngx-generate-invoice",
   templateUrl: "./generate-invoice.component.html",
@@ -19,18 +17,15 @@ export class GenerateInvoiceComponent implements OnInit {
   copyInvoiceList = [];
   Invoice = [];
   finalcheckedrows = [];
-  // invoiceValues: Invoice = new Invoice();
 
   hidden: boolean = true;
   hiddenEdit: boolean = true;
   hiddenView: boolean = true;
 
   constructor(
-    private commonService: CommonService,
     private generateInvoiceService: GenerateInvoiceService,
-    private _NgbModal: NgbModal,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllInvoice();
@@ -59,7 +54,6 @@ export class GenerateInvoiceComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.InvoiceList = data["data"];
-          console.log(this.InvoiceList);
           this.copyInvoiceList = data["data"];
           this.Invoice = this.InvoiceList.map((element) => ({
             date: element.date,
@@ -74,12 +68,10 @@ export class GenerateInvoiceComponent implements OnInit {
             isSendToParty: element.isSendToParty,
           }));
         } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -111,6 +103,5 @@ export class GenerateInvoiceComponent implements OnInit {
     arr.forEach((ele) => {
       this.finalcheckedrows.push(ele.invoiceNo);
     });
-    // this.finalcheckedrows = arr;
   }
 }

@@ -93,7 +93,7 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.getQualityList();
@@ -129,7 +129,6 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -142,15 +141,12 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["data"] && data["data"].length > 0) {
             this.qualityList = data["data"];
           } else {
-            // this.toastr.error(errorData.Not_added);
           }
         } else {
-          //this.toastr.error(errorData.Internal_Error);
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -168,10 +164,7 @@ export class AddEditStockBatchComponent implements OnInit {
                 this.qualityList = data["data"].qualityDataList;
               if (this.qualityList && !this.qualityList.length)
                 this.stockBatch.qualityId = null;
-              // else
-              // {
-              //   this.stockBatch.qualityId = this.qualityList[0].qualityEntryId;
-              // }
+             
             },
             (error) => {
               this.loading = false;
@@ -260,7 +253,6 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.billDate = new Date(this.stockBatch.billDate);
             if (!this.stockBatch.batchData.length) {
-              //this.zeroValueBatch = true;
             } else {
               this.stockBatch.batchData = _.sortBy(
                 data["data"].batchData,
@@ -312,7 +304,6 @@ export class AddEditStockBatchComponent implements OnInit {
       });
       this.production_flag[i] = batch.isProductionPlanned;
     });
-    // console.log(this.production_flag);
 
     this.reCalcMTWTValue();
   }
@@ -346,7 +337,6 @@ export class AddEditStockBatchComponent implements OnInit {
             return;
           }
         }
-        //let obj:BatchMrtWt  = new BatchMrtWt();
         let obj = { mtr: null, wt: null, totalMt: null, totalWt: null };
         let list = this.stockDataValues[idx].batchMW;
         list.push({ ...obj });
@@ -408,14 +398,14 @@ export class AddEditStockBatchComponent implements OnInit {
           .isBatchIdExists(ob.batchId, id)
           .subscribe(
             (data) => {
-              if (data["success"]){
-                if(data['data']){
+              if (data["success"]) {
+                if (data['data']) {
                   ob.batchId = null;
                 }
               }
-                
+
             },
-            (error) => {}
+            (error) => { }
           );
 
         this.wtArray = [];
@@ -449,38 +439,24 @@ export class AddEditStockBatchComponent implements OnInit {
         (data) => {
           if (data["success"])
             this.stockDataValues[index].isNotUnique = data["data"];
-            if(!this.stockDataValues[index].isNotUnique){
-              if (this.stockDataValues && this.stockDataValues.length) {
-                let i = this.stockDataValues.findIndex(
-                  (v) => v.batchId == this.stockDataValues[index].batchId
-                );
-                if (i > -1 && i != index) {
-                  this.toastr.error("Cannot add duplicate batch No.");
-                  this.stockDataValues[index].isNotUnique = true;
-                  this.stockDataValues[index].batchId = null;
-                }
+          if (!this.stockDataValues[index].isNotUnique) {
+            if (this.stockDataValues && this.stockDataValues.length) {
+              let i = this.stockDataValues.findIndex(
+                (v) => v.batchId == this.stockDataValues[index].batchId
+              );
+              if (i > -1 && i != index) {
+                this.toastr.error("Cannot add duplicate batch No.");
+                this.stockDataValues[index].isNotUnique = true;
+                this.stockDataValues[index].batchId = null;
               }
             }
+          }
         },
-        (error) => {}
+        (error) => { }
       );
     }
-    
-  }
 
-  // rearrangeBatchNo() {
-  //   if (this.stockDataValues) {
-  //     this.stockDataValues = _.sortBy(this.stockDataValues, "batchId", "asc");
-  //     let initialStockBatchNo = 0;
-  //     this.stockDataValues.forEach((ele, index) => {
-  //       if (!index) {
-  //         initialStockBatchNo = ele.batchId;
-  //       } else {
-  //         ele.batchId = ++initialStockBatchNo;
-  //       }
-  //     });
-  //   }
-  // }
+  }
 
   calculateWt(meter: number, i, j, col) {
     let w: number;
@@ -501,11 +477,7 @@ export class AddEditStockBatchComponent implements OnInit {
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
     } else {
-      //this.weight = [];
       this.MtWtIndex = i;
-      // this.stockDataValues[i].batchMW.forEach(e=>{
-      //   this.weight.push({'meter':e.mtr,'w':e.wt});
-      // })
       this.weight[j] = {
         meter: meter,
         w: w,

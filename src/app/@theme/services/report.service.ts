@@ -7,25 +7,21 @@ import { CommonService } from './common.service';
 })
 export class ReportService {
 
-  constructor(private _http:HttpClient,private commonService:CommonService) { }
+  constructor(private _http: HttpClient, private commonService: CommonService) { }
 
-  getAllMachinesCategory(){
-    let response = this._http.get(this.commonService.envUrl() +  "api/machine/allCategory");
-    return response;
+  getAllMachinesCategory() {
+    return this._http.get(
+      this.commonService.envUrl() + "api/machine/allCategory");
   }
 
-  getMachineDataByCategoryId(id:any){
-    let response = this._http.get(this.commonService.envUrl() + "api/machine/getMachine/ByCategory?id=" + id);
-    return response;
+  getMachineDataByCategoryId(id: any) {
+    return this._http.get(
+      this.commonService.envUrl() + "api/machine/getMachine/ByCategory?id=" + id);
   }
 
-  getMachineDataByMachineIdAPI(id:any){
-    let response = this._http.get(this.commonService.envUrl() + "api/machine/" + id);
-    return response;
-  }
-
-  getobjdata(data:any){
-    let response = this._http.post(this.commonService.envUrl() + "api/machineWithFilter",data);
-    return response;
+  getobjdata(data: any) {
+    return this._http.post(
+      this.commonService.envUrl() + "api/machineWithFilter",
+      data);
   }
 }

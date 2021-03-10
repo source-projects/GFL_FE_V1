@@ -9,33 +9,43 @@ export class ColorService {
 
   constructor(private httpClient: HttpClient, private commonService: CommonService) { }
   getColor(id, getBy): any {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/color/all/' + getBy + '/' + id);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/color/all/' + getBy + '/' + id);
   }
   addColor(colorData): any {
-    return this.httpClient.post(this.commonService.envUrl() + 'api/color', colorData);
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/color', 
+      colorData);
   }
   updateColor(colorData) {
-    return this.httpClient.put(this.commonService.envUrl() + 'api/color', colorData);
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/color', 
+      colorData);
   }
   deleteColorById(colorId) {
-    return this.httpClient.delete(this.commonService.envUrl() + 'api/color/' + colorId);
+    return this.httpClient.delete(
+      this.commonService.envUrl() + 'api/color/' + colorId);
   }
   getColorDataById(colorId) {
-    return this.httpClient.get(this.commonService.envUrl() + 'api/color/' + colorId);
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/color/' + colorId);
   }
 
-  
-getColorBox(itemId , issued){
-  return this.httpClient.get(this.commonService.envUrl() + 'api/color/box/'+issued+'/' + itemId);
+  getColorBox(itemId, issued) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/color/box/' + issued + '/' + itemId);
 
-}
-issueBox(boxNo){
-  return this.httpClient.post(this.commonService.envUrl() + 'api/color/box/issue',boxNo);
-}
+  }
+  issueBox(boxNo) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + 'api/color/box/issue', 
+      boxNo);
+  }
 
-getAllBoxes(){
-  return this.httpClient.get(this.commonService.envUrl() + 'api/color/box/all');
+  getAllBoxes() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + 'api/color/box/all');
 
-}
+  }
 
 }

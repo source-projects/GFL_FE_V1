@@ -28,7 +28,7 @@ export class IssueColorBoxComponent implements OnInit {
     private colorService: ColorService,
     private toastr: ToastrService,
     private route: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getSupplierItemWithAvailableStock();
@@ -42,12 +42,10 @@ export class IssueColorBoxComponent implements OnInit {
           this.itemList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -61,7 +59,6 @@ export class IssueColorBoxComponent implements OnInit {
 
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
@@ -81,16 +78,14 @@ export class IssueColorBoxComponent implements OnInit {
             this.loading = false;
           } else {
             this.colorBoxList = [];
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         error => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
-      
+
     } else {
       this.allBoxList = [...this.allBoxListCopy];
     }
@@ -105,7 +100,6 @@ export class IssueColorBoxComponent implements OnInit {
   }
 
   consoSelected(event) {
-    console.log(event);
 
     if (event) {
       this.consolidated = true;
@@ -116,7 +110,7 @@ export class IssueColorBoxComponent implements OnInit {
 
   issueBox(form) {
     this.formSubmitted = true;
-    if(form.valid){
+    if (form.valid) {
       this.colorService.issueBox(form.value.boxNo).subscribe(data => {
         if (data["success"]) {
           this.formSubmitted = false;

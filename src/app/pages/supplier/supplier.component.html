@@ -4,7 +4,8 @@
         <div class="row">
 
             <div class="col-md-1 col-3 display-flex-start">
-                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/supplier']" [disabled]="disabled">ADD</button>
+                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/supplier']"
+                    [disabled]="disabled">ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Supplier</h2>
@@ -18,19 +19,26 @@
         <div class="row">
             <div class="col-md-6">
                 <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
-                    <nb-radio *ngFor="let radio of radioArray" [value]="radio.id" [disabled]="radio.disabled" [checked]="radio.checked" (valueChange)="onChange($event)">
+                    <nb-radio *ngFor="let radio of radioArray" [value]="radio.id" [disabled]="radio.disabled"
+                        [checked]="radio.checked" (valueChange)="onChange($event)">
                         {{radio.value}}</nb-radio>
                 </nb-radio-group>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
-        <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="31">
+        <ngx-datatable [rows]="supplierList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+            [footerHeight]="31">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}" [hidden]="hiddenEdit" [routerLink]="['/pages/supplier/edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
-                    <button nbTooltip="Update Supplier Rate" class="btn primary-status nb-supplier-icon" [routerLink]="['/pages/supplier/editSupplierRate',row.id]" placement="auto" nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton>
+                    <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}"
+                        [hidden]="hiddenEdit" [routerLink]="['/pages/supplier/edit',row.id]" icon="edit"></nb-icon>
+                    &nbsp;&nbsp;
+                    <button nbTooltip="Update Supplier Rate" class="btn primary-status nb-supplier-icon"
+                        [routerLink]="['/pages/supplier/editSupplierRate',row.id]" placement="auto"
+                        nbTooltipStatus="success" nbTooltipPlacement="bottom" nbButton>
                         <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="menu"></nb-icon>
                     </button>
                 </ng-template>

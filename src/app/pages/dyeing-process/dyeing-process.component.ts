@@ -12,16 +12,16 @@ import { ToastrService } from "ngx-toastr";
 })
 export class DyeingProcessComponent implements OnInit {
   public dyeingProcessList: any[];
-  flag:boolean = false;
-  process=[];
-  headers=["Name" ];
-  module="dyeing process";
+  flag: boolean = false;
+  process = [];
+  headers = ["Name"];
+  module = "dyeing process";
 
   constructor(
     private toastr: ToastrService,
     private dyeingProcessService: DyeingProcessService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllDyeingProcesses();
@@ -34,7 +34,7 @@ export class DyeingProcessComponent implements OnInit {
           this.dyeingProcessList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 

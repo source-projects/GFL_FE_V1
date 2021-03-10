@@ -1,13 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { ShadeGuard } from "../../@theme/guards/shade.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -74,13 +71,10 @@ export class ShadeComponent implements OnInit {
   disabled = false;
   constructor(
     private shadeService: ShadeService,
-    private route: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
-    private jwtToken: JwtTokenService,
     private commonService: CommonService,
-    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +84,6 @@ export class ShadeComponent implements OnInit {
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getViewAccess();
     this.getAddAcess();
-    // this.getallShades(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
@@ -219,7 +212,6 @@ export class ShadeComponent implements OnInit {
             }
           },
           (error) => {
-            //this.toastr.error(errorData.Serever_Error);
           }
         );
       }

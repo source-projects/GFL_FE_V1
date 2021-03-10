@@ -7,13 +7,18 @@ import { CommonService } from './common.service';
 })
 export class ShuffleService {
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
+  constructor(private httpClient: HttpClient,
+    private commonService: CommonService) { }
 
-  updateBatchMerge(newBatchData){
-    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/MergeBatch',newBatchData);
+  updateBatchMerge(newBatchData) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/stockBatch/MergeBatch',
+      newBatchData);
   }
 
-  updateBatchSplit(newBatchData){
-    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch/SplitBatch',newBatchData);
+  updateBatchSplit(newBatchData) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + 'api/stockBatch/SplitBatch',
+      newBatchData);
   }
 }

@@ -32,7 +32,7 @@ export class PrintLayoutComponent implements OnInit {
     private printService: PrintInvoiceService,
     private router: Router,
     private _route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
@@ -41,9 +41,6 @@ export class PrintLayoutComponent implements OnInit {
     } else {
       this.invoiceIds = JSON.parse(myArray);
     }
-    //console.log("Invoice NO:", this.invoiceIds);
-    // this.invoiceNo = this._route.snapshot.paramMap.get("id");
-
     this.start();
   }
 
@@ -77,11 +74,11 @@ export class PrintLayoutComponent implements OnInit {
               this.printInvoiceData[index].totalFinishMtr = 0;
 
               this.printInvoiceData[index].qualityList.forEach((quality) => {
-                if(quality.totalMtr){
-                this.printInvoiceData[index].totalMtr += quality.totalMtr;
-                this.printInvoiceData[index].totalAmt += quality.amt;
-                this.printInvoiceData[index].totalPcs += quality.pcs;
-                this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
+                if (quality.totalMtr) {
+                  this.printInvoiceData[index].totalMtr += quality.totalMtr;
+                  this.printInvoiceData[index].totalAmt += quality.amt;
+                  this.printInvoiceData[index].totalPcs += quality.pcs;
+                  this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
                 }
               });
 
@@ -97,20 +94,20 @@ export class PrintLayoutComponent implements OnInit {
                 });
                 element.totalMtr = (element.totalMtr).toFixed(2);
                 element.totalFMtr = (element.totalFMtr).toFixed(2);
-                element.shrinkage = ( ( (element.totalMtr-element.totalFMtr) /element.totalMtr) * 100).toFixed(2);
+                element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
               });
 
               //for making 4 blocks
               let lengthOfLots = this.printInvoiceData[index].batchWithGrList.length;
-              for(let lotIndex = 0; lotIndex < 4-lengthOfLots; lotIndex++){
+              for (let lotIndex = 0; lotIndex < 4 - lengthOfLots; lotIndex++) {
                 this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
-              }            
+              }
 
               this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
               this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
               this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
-              this.printInvoiceData[index].netAmt = 
-                this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+              this.printInvoiceData[index].netAmt =
+                this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
               index++;
               if (index == this.invoiceIds.length) {
                 this.print();
@@ -120,21 +117,18 @@ export class PrintLayoutComponent implements OnInit {
               this.toastr.error(data["msg"]);
               this.router.navigate(["pages/generate_invoice"]);
             }
-            //this.print();
           },
           (error) => {
             this.router.navigate(["pages/generate_invoice"]);
           }
         );
-        // this.getInvoiceDataToPrint();
       }
     }
   }
 
-  getInvoiceDataToPrint() {}
+  getInvoiceDataToPrint() { }
 
   print() {
-    // if(this.printInvoiceFlag){
     let doc = new wijmo.PrintDocument({
       title: "",
     });

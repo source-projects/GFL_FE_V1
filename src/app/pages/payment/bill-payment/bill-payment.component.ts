@@ -21,7 +21,6 @@ export class BillPaymentComponent implements OnInit {
   index: any;
 
   currentPaymentId: string;
-  //total:Number=0;
   totalAdvance = 0;
   temp1: any;
   temp2: any;
@@ -40,7 +39,6 @@ export class BillPaymentComponent implements OnInit {
 
   paymentValues: Payment = new Payment();
   advancePayList: AdvancePayList = new AdvancePayList();
-  // advancePaymentList: AdvancePayment = new AdvancePayment();
   paymentDataList: PaymentData = new PaymentData();
 
 
@@ -63,10 +61,6 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
-    // this.paymentValues.rdAmt = 0;
-    // this.paymentValues.cdAmt = 0;
-    // this.paymentValues.otherDiff = 0;
-    // this.paymentValues.amtPaid = 0;
 
   }
 
@@ -81,12 +75,10 @@ export class BillPaymentComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -95,7 +87,6 @@ export class BillPaymentComponent implements OnInit {
   partySelected(event) {
     this.getPendingInvoices(event);
     this.getAdvancePaymentList(event);
-    //this.getPaymentDetailsByParty(event);
   }
 
   getPendingInvoices(event) {
@@ -108,12 +99,10 @@ export class BillPaymentComponent implements OnInit {
               this.invoiceList = data["data"];
               this.loading = false;
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -131,12 +120,10 @@ export class BillPaymentComponent implements OnInit {
               this.advancePaymentList = data["data"];
               this.loading = false;
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -153,24 +140,17 @@ export class BillPaymentComponent implements OnInit {
             if (data["success"]) {
               this.paymentDetails = data["data"];
               this.loading = false;
-              //this.setPaymentDetails();
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
       }
     }
 
-  }
-
-  setPaymentDetails() {
-    //this.paymentValues.rdAmt = this.paymentDetails.rd
   }
 
   invoiceSelected(event) {
@@ -222,12 +202,10 @@ export class BillPaymentComponent implements OnInit {
           this.paymentTypeList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -291,9 +269,7 @@ export class BillPaymentComponent implements OnInit {
           id: null,
         };
         let list = this.paymentValues.paymentData;
-        // list.forEach(element=>{
-        //   this.totalCurrentPayment = this.totalCurrentPayment + element.payAmt;
-        // })
+
         list.push(obj);
         this.paymentValues.paymentData = [...list];
 
@@ -332,14 +308,14 @@ export class BillPaymentComponent implements OnInit {
   }
 
   amountObj = {};
-  currentPaymentAdded(event,index) {
+  currentPaymentAdded(event, index) {
     let curPay = Number(event.target.value);
     this.amountObj[index] = {
       curPay
     }
     this.totalCurrentPayment = 0;
-    Object.keys(this.amountObj).forEach(ele=>{
-      this.totalCurrentPayment += this.amountObj[ele].curPay; 
+    Object.keys(this.amountObj).forEach(ele => {
+      this.totalCurrentPayment += this.amountObj[ele].curPay;
     })
     this.paymentValues.amtPaid = 0;
     if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
@@ -354,7 +330,7 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff);
   }
 
-  reset(paymentForm){
+  reset(paymentForm) {
     paymentForm.reset();
     this.formSubmitted = false;
     this.paymentValues.rdAmt = 0;

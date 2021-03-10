@@ -18,7 +18,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="required">Party Name:</label>
-                                <ng-select name="partyId" formControlName="partyName" (change)="dropSelectParty($event)" placeholder="Party Name
+                                <ng-select name="partyId" formControlName="partyName" (change)="dropSelectParty($event)"
+                                    placeholder="Party Name
                 " class="dropdown-name">
                                     <ng-option disabled="true">
                                         <div class="row">
@@ -51,7 +52,9 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="required">Quality Name:</label>
-                                <ng-select name="qualityId" formControlName="qualityName" (change)="dropSelectQuality($event)" placeholder="Quality Name" class="dropdown-name">
+                                <ng-select name="qualityId" formControlName="qualityName"
+                                    (change)="dropSelectQuality($event)" placeholder="Quality Name"
+                                    class="dropdown-name">
                                     <ng-option disabled="true">
                                         <div class="row">
                                             <div class="col-md-4 col-4">
@@ -102,14 +105,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="required"><span [hidden]="flag"> First </span>Batch Name:</label>
-                                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()" (change)="temp()" placeholder="Batch Name">
-                                    <ng-option *ngFor="let b of qualityParty" [value]="b" [disabled]="b.productionPlanned">{{b.batchId}}
+                                <ng-select name="batchId" formControlName="batchName1" (click)="getVal()"
+                                    (change)="temp()" placeholder="Batch Name">
+                                    <ng-option *ngFor="let b of qualityParty" [value]="b"
+                                        [disabled]="b.productionPlanned">{{b.batchId}}
                                     </ng-option>
                                 </ng-select>
                             </div>
-                            <!-- <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
-                <span>Batch Name is required.</span>
-              </div> -->
+
                         </div>
 
                         <div class="col-md-6" [hidden]="flag">
@@ -130,7 +133,9 @@
                                 <div class="example-container">
                                     <h2 class="batch-text">Batch Part 1</h2>
 
-                                    <div cdkDropList [cdkDropListData]="batches" #part1List="cdkDropList" [cdkDropListConnectedTo]="[part2List]" class="example-list" (cdkDropListDropped)="drop($event)">
+                                    <div cdkDropList [cdkDropListData]="batches" #part1List="cdkDropList"
+                                        [cdkDropListConnectedTo]="[part2List]" class="example-list"
+                                        (cdkDropListDropped)="drop($event)">
                                         <div class="row">
                                             <div class="col-md-12 col-12">
                                                 <div *ngFor="let item of batches" cdkDrag>
@@ -147,7 +152,8 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input type="text" formControlName="totalrowsPart1" [readonly]="true" class="total-rows">
+                                                <input type="text" formControlName="totalrowsPart1" [readonly]="true"
+                                                    class="total-rows">
                                                 <span class="t-12">Total</span>
                                             </div>
                                         </div>
@@ -159,20 +165,26 @@
                                 <div class="example-container">
                                     <h2 class="batch-text">Batch Part 2</h2>
 
-                                    <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2" #part2List="cdkDropList" [cdkDropListConnectedTo]="[part1List]" (cdkDropListDropped)="drop($event)">
+                                    <div cdkDropList cdkDrop class="example-list  " [cdkDropListData]="part2"
+                                        #part2List="cdkDropList" [cdkDropListConnectedTo]="[part1List]"
+                                        (cdkDropListDropped)="drop($event)">
 
-                                        <div *ngFor="let item of part2" cdkDrag [ngClass]="item.batchId==batchId1 ? 'batch-2' : 'example-box' ">
+                                        <div *ngFor="let item of part2" cdkDrag
+                                            [ngClass]="item.batchId==batchId1 ? 'batch-2' : 'example-box' ">
                                             Meter: {{item.mtr}} Weight: {{item.wt}}
                                         </div>
                                     </div>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-7 col-7">
-                                                <input type="text" formControlName="totalrowsPart2" [readonly]="true" class="total-rows">
+                                                <input type="text" formControlName="totalrowsPart2" [readonly]="true"
+                                                    class="total-rows">
                                                 <span class="t-12">Total</span>
                                             </div>
                                             <div class="col-md-5 col-5 jus-con-center">
-                                                <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
+                                                <input type="text" placeholder="Enter Batch Id"
+                                                    formControlName="newBatchName" [hidden]="btnFlag"
+                                                    class="mtr-wei enter-batch-id-2">
 
                                             </div>
 
@@ -194,9 +206,11 @@
                                 <div class="col-md-9 col-9">
                                     <div class="batch-1-input">
                                         <span class="text-batch-mtr">Mtr.</span>
-                                        <input type="text" placeholder="Mtr." formControlName="totalmtr1" [readonly]="true" class="mtr-wei">
+                                        <input type="text" placeholder="Mtr." formControlName="totalmtr1"
+                                            [readonly]="true" class="mtr-wei">
                                         <span class="text-batch-mtr">Wt.</span>
-                                        <input type="text" placeholder="Wt." formControlName="totalwt1" [readonly]="true" class="mtr-wei">
+                                        <input type="text" placeholder="Wt." formControlName="totalwt1"
+                                            [readonly]="true" class="mtr-wei">
                                     </div>
                                 </div>
 
@@ -209,15 +223,19 @@
                                 <div class="col-md-9">
                                     <div class="batch-2-input">
                                         <span class="text-batch-mtr">Mtr.</span>
-                                        <input type="text" placeholder="Mtr." formControlName="totalmtr2" [readonly]="true" class="mtr-wei">
+                                        <input type="text" placeholder="Mtr." formControlName="totalmtr2"
+                                            [readonly]="true" class="mtr-wei">
                                         <span class="text-batch-mtr">Wt.</span>
-                                        <input type="text" placeholder="Wt." formControlName="totalwt2" [readonly]="true" class="mtr-wei">
+                                        <input type="text" placeholder="Wt." formControlName="totalwt2"
+                                            [readonly]="true" class="mtr-wei">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="btn-split-merge">
-                                        <button class="btn btn-primary btn-sm btn-design-save" (click)="splitsubmit()" [hidden]="btnFlag">Split</button>
-                                        <button class="btn btn-primary btn-sm btn-design-save" (click)="mergesubmit()" [hidden]="!btnFlag">Merge</button>
+                                        <button class="btn btn-primary btn-sm btn-design-save" (click)="splitsubmit()"
+                                            [hidden]="btnFlag">Split</button>
+                                        <button class="btn btn-primary btn-sm btn-design-save" (click)="mergesubmit()"
+                                            [hidden]="!btnFlag">Merge</button>
                                     </div>
 
 

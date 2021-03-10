@@ -41,15 +41,7 @@ export class StepsRecordData {
     doseType: any;
     dosingChemical: ChemicalReq[];
 }
-// export class DosingChemical {
-//     id: null;
-//     concentration: null;
-//     dynamicProcessRecordId: null;
-//     itemId: null;
-//     itemName: null;
-//     lrOrFabricWt: null;
-//     supplierId: null;
-// }
+
 export class Step {
     id: any;
     stepName: any;

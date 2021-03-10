@@ -9,7 +9,7 @@ export class PartyService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   getAllPartyWithNameOnly() {
     return this.httpClient.get(
@@ -17,9 +17,9 @@ export class PartyService {
     );
   }
 
-  checkPartyNameExist(name,id){
+  checkPartyNameExist(name, id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/party/isPartyNameIsExist/" + name+"/"+id
+      this.commonService.envUrl() + "api/party/isPartyNameIsExist/" + name + "/" + id
     );
   }
 
@@ -57,13 +57,19 @@ export class PartyService {
       this.commonService.envUrl() + "api/party/allPartyWithName"
     );
   }
-  getPartyCode(code,id) {
+  getPartyCode(code, id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/party/partyCodeExist/" + code + "/" + id
     );
   }
 
   getRecords() {
-    return this.httpClient.get(this.commonService.envUrl() + "api/testing");
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/testing");
   }
+
+  getPartyByQuality(id): any{
+    return this.httpClient.get(
+        this.commonService.envUrl() + 'api/party/ByQuality/' + id);
+}
 }

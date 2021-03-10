@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
     private adminService: AdminService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private adminGuard : AdminGuard
+    private adminGuard: AdminGuard
   ) {
     this.addJetArray.push(this.addJet);
     this.addCompanyArray.push(this.addCompany);
@@ -87,7 +87,7 @@ export class AdminComponent implements OnInit {
     this.getAddAcess();
     this.getDeleteAccess();
     this.getEditAccess();
-    
+
   }
 
   getAddAcess() {
@@ -103,8 +103,7 @@ export class AdminComponent implements OnInit {
     if (this.adminGuard.accessRights('delete')) {
       this.hiddenDelete = false;
     }
-    else
-    {
+    else {
       this.hiddenDelete = true;
     }
   }
@@ -114,8 +113,7 @@ export class AdminComponent implements OnInit {
     if (this.adminGuard.accessRights('edit')) {
       this.hiddenEdit = false;
     }
-    else
-    {
+    else {
       this.hiddenEdit = true;
     }
   }
@@ -223,7 +221,7 @@ export class AdminComponent implements OnInit {
           this.departmentList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -234,7 +232,7 @@ export class AdminComponent implements OnInit {
           this.qualityList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -514,7 +512,7 @@ export class AdminComponent implements OnInit {
               this.toastr.error(data["msg"]);
             }
           },
-          (error) => {}
+          (error) => { }
         );
       } else {
         this.adminService.addDepartment(this.addDepartment).subscribe(
@@ -527,7 +525,7 @@ export class AdminComponent implements OnInit {
               this.toastr.error(data["msg"]);
             }
           },
-          (error) => {}
+          (error) => { }
         );
       }
     } else {
@@ -552,7 +550,7 @@ export class AdminComponent implements OnInit {
               this.toastr.error(data["msg"]);
             }
           },
-          (error) => {}
+          (error) => { }
         );
       } else {
         this.adminService.saveQuality(this.addQuality).subscribe(
@@ -565,7 +563,7 @@ export class AdminComponent implements OnInit {
               this.toastr.error(data["msg"]);
             }
           },
-          (error) => {}
+          (error) => { }
         );
       }
     } else {

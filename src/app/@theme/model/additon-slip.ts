@@ -1,4 +1,5 @@
 export class AdditionSlip {
+  id: number;
   batchId: string;
   dyeingSlipData: DyeingSlipData;
   productionId: number;

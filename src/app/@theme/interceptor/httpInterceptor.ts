@@ -16,14 +16,12 @@ import { StoreTokenService } from '../services/store-token.service';
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
-   errorMessage: string;
-  constructor(private router: Router, 
-    private injector: Injector,     
+  errorMessage: string;
+  constructor(private router: Router,
+    private injector: Injector,
     private toastr: ToastrService,
     private tokenService: StoreTokenService,
-
-    ) {
-    // this.commonService.getUser();
+  ) {
   }
   intercept(
     request: HttpRequest<any>,
@@ -49,12 +47,6 @@ export class CustomHttpInterceptor implements HttpInterceptor {
         },
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            // if (err.status === 401) {
-            //   //this.authService.logout();
-            //   // this.toasterService.error('Token Expired!');
-            //   this.router.navigate(["./auth"]);
-            // }
-
             switch (err.status) {
               case 400:
                 this.errorMessage = "Bad Request.";
@@ -63,8 +55,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
                 this.errorMessage = "token expired";
                 this.tokenService.remove('token');
                 this.tokenService.remove('refreshToken');
-                this.router.navigate(['auth']);                
-                break; 
+                this.router.navigate(['auth']);
+                break;
               case 402:
                 this.errorMessage = "You don't have permission to access the requested resource.";
                 break;
@@ -93,7 +85,5 @@ export class CustomHttpInterceptor implements HttpInterceptor {
         }
       )
     );
-
-    
   }
 }

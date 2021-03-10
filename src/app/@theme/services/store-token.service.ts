@@ -12,11 +12,11 @@ export class StoreTokenService {
   }
 
   get(key: string) {
-      return localStorage.getItem(key);
+    return localStorage.getItem(key);
   }
 
   remove(key: string) {
-      localStorage.removeItem(key);
+    localStorage.removeItem(key);
   }
 
 }

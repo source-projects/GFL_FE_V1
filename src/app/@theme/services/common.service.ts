@@ -7,14 +7,10 @@ import { StoreTokenService } from "./store-token.service";
   providedIn: "root"
 })
 export class CommonService {
-  // private broadCastMesaage=new BehaviorSubject<string>("Demo");
-  // broadCast=this.broadCastMesaage.asObservable();
 
-  constructor(private token: StoreTokenService, private jwt: JwtTokenService) {}
+  constructor(private token: StoreTokenService, 
+    private jwt: JwtTokenService) {}
 
-  // updateBrodCast(newMassge:string){
-  //   this.broadCastMesaage.next(newMassge);
-  // }
   getUser() {
     this.jwt.setToken(this.token.get("token"));
     this.jwt.decodeToken();

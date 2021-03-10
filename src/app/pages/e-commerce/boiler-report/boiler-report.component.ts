@@ -15,19 +15,19 @@ export class BoilerReportComponent implements OnInit {
   dateForPicker = new Date();
   datePipeString: string;
   parameters = [
-    {id:1,name:"streamPressusre"},
-    {id:2,name:"drumWaterLevel"},
-    {id:3,name:"feedPump"},
-    {id:4,name:"flueGasTemp"},
-    {id:5,name:"bedTemp"},
-    {id:6,name:"draftPressure"},
-    {id:7,name:"idFan"},
-    {id:8,name:"daOne"},
-    {id:9,name:"daTwo"},
-    {id:10,name:"daThree"},
-    {id:11,name:"screwFeeder"},
-    {id:12,name:"waterMeter"},
-    {id:13,name:"loadData"}
+    { id: 1, name: "streamPressusre" },
+    { id: 2, name: "drumWaterLevel" },
+    { id: 3, name: "feedPump" },
+    { id: 4, name: "flueGasTemp" },
+    { id: 5, name: "bedTemp" },
+    { id: 6, name: "draftPressure" },
+    { id: 7, name: "idFan" },
+    { id: 8, name: "daOne" },
+    { id: 9, name: "daTwo" },
+    { id: 10, name: "daThree" },
+    { id: 11, name: "screwFeeder" },
+    { id: 12, name: "waterMeter" },
+    { id: 13, name: "loadData" }
   ];
 
   obj = {
@@ -36,11 +36,11 @@ export class BoilerReportComponent implements OnInit {
     "attribute": "streamPressusre",
     "toDate": "",
     "toTime": null,
-    "controlId":11626
+    "controlId": 11626
   }
 
 
-lineChartData: ChartDataSets[];
+  lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
   lineChartLegend = true;
   lineChartType: ChartType = 'line';
@@ -59,27 +59,17 @@ lineChartData: ChartDataSets[];
   data: any;
   jsonData: any;
 
-  constructor( private datePipe: DatePipe,private boilerrep:BoilerReportService) { }
+  constructor(private datePipe: DatePipe, private boilerrep: BoilerReportService) { }
 
   ngOnInit(): void {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
-    // this.getAllParameter();
   }
 
-  // getAllParameter(){
-  //   this.data = this.boilerrep.getAllParameter().subscribe(
-  //     (res) => {
-  //       this.parameters = res;
-  //       this.parameters = this.parameters.data;
-  //     }
-  //   )
-  // }
-
-  parameter(value:any){
+  parameter(value: any) {
     this.obj.attribute = value;
   }
 
-  change(value:any){
+  change(value: any) {
 
     this.datePipeString = this.datePipe.transform(value._selecteds[0], 'yyyy-MM-dd');
     this.obj.fromDate = this.datePipeString;
@@ -91,7 +81,7 @@ lineChartData: ChartDataSets[];
     this.obj.toTime = Number(this.datePipeString);
   }
 
-  submit(){
+  submit() {
 
     this.NoDataFlag = false;
     this.BoilerChartFlag = false;
@@ -110,11 +100,11 @@ lineChartData: ChartDataSets[];
             ];
             let lab: Label = [] = this.jsonData.data.map(e => e.time);
             let labdate = [] = this.jsonData.data.map(e => e.date);
-            for(let k=0;k<labdate.length;k++){
-              labdate[k] = this.datePipe.transform(labdate[k],'yyyy-MM-dd');
+            for (let k = 0; k < labdate.length; k++) {
+              labdate[k] = this.datePipe.transform(labdate[k], 'yyyy-MM-dd');
             }
 
-            for(let a=0;a<lab.length;a++){
+            for (let a = 0; a < lab.length; a++) {
               labdate[a] = labdate[a] + " " + lab[a] + ":00:00";
             }
             if (lab.length > 10) {
@@ -130,7 +120,7 @@ lineChartData: ChartDataSets[];
               j++;
             }
             this.BoilerChartFlag = true;
-                      }
+          }
           else {
             this.NoDataFlag = true;
           }

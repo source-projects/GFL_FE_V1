@@ -13,30 +13,32 @@ export class PaymentService {
 
   ) { }
 
-  
-getPendingBillByPartyId(partyId){
-  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPendingBillByPartyId/"+partyId);
-}
 
-getAdvancePayment(partyId){
-  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAdvancePayment/"+partyId);
-}
+  getPendingBillByPartyId(partyId) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/paymentTerm/getPendingBillByPartyId/" + partyId);
+  }
 
-addAdvancePayment(paymentData){
-  return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/addAdvancePayment",paymentData);
-}
+  getAdvancePayment(partyId) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/paymentTerm/getAdvancePayment/" + partyId);
+  }
 
-getAllPaymentType(){
-  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAllPaymentType");
-}
+  addAdvancePayment(paymentData) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/paymentTerm/addAdvancePayment",
+      paymentData);
+  }
 
+  getAllPaymentType() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/paymentTerm/getAllPaymentType");
+  }
 
-getPaymentDetailById(partyId){
-  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPaymentDetailById/"+partyId);
+  savePayment(paymentData) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/paymentTerm/",
+      paymentData);
 
-}
-savePayment(paymentData){
-  return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/",paymentData);
-
-}
+  }
 }

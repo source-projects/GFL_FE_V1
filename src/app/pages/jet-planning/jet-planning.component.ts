@@ -12,16 +12,12 @@ import { JetPlanning, JetDataList } from "../../@theme/model/jet-planning";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../@theme/json/error.json";
 import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
-import { WarningPopupComponent } from "../../@theme/components/warning-popup/warning-popup.component";
 import { ProductionPlanning } from "../../@theme/model/production-planning";
 import { PartyService } from "../../@theme/services/party.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QualityService } from "../../@theme/services/quality.service";
 import { CommonService } from "../../@theme/services/common.service";
-import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { ProgramService } from "../../@theme/services/program.service";
-import { ShadeService } from "../../@theme/services/shade.service";
-
 import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
 import { filter, map, takeUntil } from "rxjs/operators";
@@ -57,7 +53,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   batchListParty: any[];
   batchList: any[] = [];
   allBatchList: any[] = [];
-  // batchList = [];
   programValues: any;
   qualityList1: any;
   jetData1 = {
@@ -93,22 +88,17 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private route: Router,
     private commonService: CommonService,
-    private stockBatchService: StockBatchService,
     private programService: ProgramService,
-    private shadeService: ShadeService,
     private menuService: NbMenuService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.currentProductionId = this._route.snapshot.paramMap.get("id");
     this.getCurrentId();
     this.getPartyList();
     this.getQualityList();
-    //this.getAllBatchData();
     this.getJetData();
     this.getAllBatchWithShade();
-
-    //this.getBatchDetails();
 
     this.menuService
       .onItemClick()
@@ -215,7 +205,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
             );
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   getCurrentId() {
@@ -231,12 +221,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -260,13 +248,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
 
           this.loading = false;
         } else {
-          //this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
-
         this.loading = false;
       }
     );
@@ -304,25 +289,13 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
                 ],
               },
             ];
-            // this.batchListByParty = data["data"];
-            // if (this.allBatchList != null || this.allBatchList != undefined) {
-            //   this.allBatchList.forEach(element => {
-            //     if (element.productionPlanned == false) {
-            //       this.batchListParty.push(element);
-            //     }
-            //   });
-            // }
-            // this.batchListByParty = this.batchListParty;
 
             this.loading = false;
           } else {
-            //this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
-
           this.loading = false;
         }
       );
@@ -359,7 +332,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
             this.allBatchList.push(element);
           }
         });
-        //this.getAllBatchWithShade();
       }
     } else {
       this.productionPlanning.partyId = null;
@@ -374,7 +346,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         this.qualityList.forEach((e) => {
           if (e.qualityId == this.productionPlanning.qualityId) {
             this.p_id = e.partyId;
-            //this.productionPlanning.partyId = e.partyName;
             this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
           }
         });
@@ -389,7 +360,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
             this.allBatchList.push(element);
           }
         });
-        //this.getAllBatchWithShade();
       }
     } else {
       this.productionPlanning.qualityId = null;
@@ -398,7 +368,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   }
   getAllBatchWithShade() {
     this.loading = true;
-    // let p_id;
     this.productionPlanningService.getAllProductionPlan().subscribe(
       (data) => {
         if (data["success"]) {
@@ -408,12 +377,10 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
             this.batchSelected(this.currentProductionId);
           }
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -444,16 +411,14 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
           this.jetData1.sequence = 1;
           let jetData2 = this.jetData1;
           let arr = [];
-          //  jetData2.productionId = Number(jetData2.productionId);
           arr.push(jetData2);
           this.addJetData(arr);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   addJetData(arr) {
-    let index;
     this.jetService.saveJetData(arr).subscribe((data) => {
       if (data["success"]) {
         this.toastr.success(errorData.Add_Success);
@@ -464,7 +429,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
       } else {
         this.toastr.error(data["msg"]);
         this.getJetData();
-        //this.getshade();
       }
     });
   }
@@ -553,7 +517,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         if (result) {
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   ngOnDestroy() {

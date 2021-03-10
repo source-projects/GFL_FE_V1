@@ -11,11 +11,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="required">Select Jet: </label>
-                        <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel" (change)="jetSelected($event)" [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}" placeholder="Jet Number" class="required-error-dropdown">
+                        <ng-select name="jet" [(ngModel)]='jet' required #jet1="ngModel" (change)="jetSelected($event)"
+                            [ngClass]="{'is-invalid': (jet1.invalid)&&(formSubmitted || jet1.touched)}"
+                            placeholder="Jet Number" class="required-error-dropdown">
                             <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
                             </ng-option>
                         </ng-select>
-                        <div class="required-class" *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
+                        <div class="required-class"
+                            *ngIf="(formSubmitted && jet1.invalid) || (jet1.invalid && jet1.touched)">
                             <span>Jet number is required</span>
                         </div>
                         <div class="required-class" *ngIf="jetCapacity">
@@ -30,9 +33,12 @@
             <div class="row" *ngIf="jetSelectedFlag">
                 <div class="col-md-12">
                     <div class="form-group mb-0">
-                        <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal" class="example-list main-table-drag jet-plan">
-                            <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
-                                <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click" class="btn-bg-color">
+                        <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                            class="example-list main-table-drag jet-plan">
+                            <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData"
+                                cdkDrag>
+                                <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
+                                    class="btn-bg-color">
                                     {{jetData.batchId}}
                                 </button>
                             </div>
@@ -47,7 +53,8 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button type="button" (click)="onClick(myForm)" class="btn btn-primary btn-sm btn-design-save">Ok</button>
+                        <button type="button" (click)="onClick(myForm)"
+                            class="btn btn-primary btn-sm btn-design-save">Ok</button>
 
                     </div>
                 </div>
@@ -67,11 +74,15 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="required">Select Status: </label>
-                    <ng-select name="jet" [(ngModel)]='jetStatus' required #jetStatus1="ngModel" (change)="jetSelected($event)" [ngClass]="{'is-invalid': (jetStatus1.invalid)&&(formSubmitted || jetStatus1.touched)}" placeholder="Status" class="required-error-dropdown">
+                    <ng-select name="jet" [(ngModel)]='jetStatus' required #jetStatus1="ngModel"
+                        (change)="jetSelected($event)"
+                        [ngClass]="{'is-invalid': (jetStatus1.invalid)&&(formSubmitted || jetStatus1.touched)}"
+                        placeholder="Status" class="required-error-dropdown">
                         <ng-option *ngFor="let s of status" [value]="s.status">{{s.status}}
                         </ng-option>
                     </ng-select>
-                    <div class="required-class" *ngIf="(formSubmitted && jetStatus1.invalid) || (jetStatus1.invalid && jetStatus1.touched)">
+                    <div class="required-class"
+                        *ngIf="(formSubmitted && jetStatus1.invalid) || (jetStatus1.invalid && jetStatus1.touched)">
                         <span>Jet status is required</span>
                     </div>
 
@@ -82,7 +93,8 @@
         <div class="row">
             <div class="col-md-12 mobile-btn-center text-btn-right">
                 <div class="padding-bt-tp">
-                    <button type="button" (click)="changeStatus()" class="btn btn-primary btn-sm btn-design-save">Save</button>
+                    <button type="button" (click)="changeStatus()"
+                        class="btn btn-primary btn-sm btn-design-save">Save</button>
 
                 </div>
             </div>

@@ -2,18 +2,18 @@
     <nb-card-header class="nb-header">
         <div class="row">
 
-        <div class="col-md-5 col-6 display-flex-start max-width-device">
-            <button class="btn btn-md btn-design" [routerLink]="['/pages/supplier/view']">View
-                Table</button>
-        </div>
-        <div class="col-md-7 col-6">
-        <div *ngIf="mySupplierRateId == null; else updateS">
-            <h2 class="nb-text">ADD SUPPLIER RATE</h2>
-        </div>
-        <ng-template #updateS>
-            <h2 class="nb-text">UPDATE SUPPLIER RATE</h2>
-        </ng-template>
-        </div>
+            <div class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/supplier/view']">View
+                    Table</button>
+            </div>
+            <div class="col-md-7 col-6">
+                <div *ngIf="mySupplierRateId == null; else updateS">
+                    <h2 class="nb-text">ADD SUPPLIER RATE</h2>
+                </div>
+                <ng-template #updateS>
+                    <h2 class="nb-text">UPDATE SUPPLIER RATE</h2>
+                </ng-template>
+            </div>
         </div>
     </nb-card-header>
 
@@ -23,16 +23,22 @@
                 <div class="col-md-4">
                     <div *ngIf="mySupplierRateId == null; else updateName" class="form-group">
                         <label class="required">Supplier Name</label>
-                        <ng-select name="supplierId" id="supplierId" [(ngModel)]="formValues.supplierRates[0].supplierId" required (change)="getDetail(formValues.supplierRates[0].supplierId)" #tableitem3="ngModel" [ngClass]="{'is-invalid':(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)}">
-                            <ng-option *ngFor="let s of supplier" [value]="s.id">{{s.supplierName}} - {{s.id}}</ng-option>
+                        <ng-select name="supplierId" id="supplierId"
+                            [(ngModel)]="formValues.supplierRates[0].supplierId" required
+                            (change)="getDetail(formValues.supplierRates[0].supplierId)" #tableitem3="ngModel"
+                            [ngClass]="{'is-invalid':(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)}">
+                            <ng-option *ngFor="let s of supplier" [value]="s.id">{{s.supplierName}} - {{s.id}}
+                            </ng-option>
                         </ng-select>
-                        <div class="input-required display-inlineblock" *ngIf="(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)">
+                        <div class="input-required display-inlineblock"
+                            *ngIf="(tableitem3.invalid)&&(formSubmitted || tableitem3.touched)">
                             <span>Supplier Name is required</span>
                         </div>
                     </div>
                     <ng-template #updateName>
                         <label class="required">Supplier Name:</label>
-                        <select name="supplierId" [(ngModel)]="formValues.id" class="form-control" required #tableitem3="ngModel">
+                        <select name="supplierId" [(ngModel)]="formValues.id" class="form-control" required
+                            #tableitem3="ngModel">
                             <option [value]="formValues.id" selected disabled>
                                 {{formValues.supplierName}}</option>
                         </select>
@@ -45,12 +51,18 @@
             <!-- For Ngx DataTable -->
             <div class="row">
                 <div class="col-md-12">
-                    <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="formValues.supplierRates" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable #table class="material common-table datatable-auto-height"
+                        [rows]="formValues.supplierRates" [headerHeight]="31" [footerHeight]="31">
 
                         <ngx-datatable-column name="itemName" prop="itemName" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm line-height-subtable" type="text" (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" [(ngModel)]="row.itemName" #tableitem="ngModel" name='tableSupplierItemName{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableitem.invalid}">
-                                <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableitem.invalid)">
+                                <input class="tableForm line-height-subtable" type="text"
+                                    (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'"
+                                    [(ngModel)]="row.itemName" #tableitem="ngModel"
+                                    name='tableSupplierItemName{{rowIndex}}' required
+                                    [ngClass]="{'is-invalid': formSubmitted && tableitem.invalid}">
+                                <div class="input-required display-inlineblock"
+                                    *ngIf="formSubmitted && (tableitem.invalid)">
                                     <span>Required</span>
                                 </div>
                             </ng-template>
@@ -59,12 +71,15 @@
                         <ngx-datatable-column name="itemType" prop="itemType" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
 
-                                <ng-select #tableItemType="ngModel" name='tableSupplierItemType{{rowIndex}}' [(ngModel)]="row.itemType" required [id]="'supplierList'+rowIndex+'-1'" [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name" bindValue="id" appendTo="body"
-                                    class="ng-select-br-none">
+                                <ng-select #tableItemType="ngModel" name='tableSupplierItemType{{rowIndex}}'
+                                    [(ngModel)]="row.itemType" required [id]="'supplierList'+rowIndex+'-1'"
+                                    [ngClass]="{'is-invalid': formSubmitted && tableItemType.invalid}" bindLabel="name"
+                                    bindValue="id" appendTo="body" class="ng-select-br-none">
                                     <ng-option selected value="Color">Color</ng-option>
                                     <ng-option value="Chemical">Chemical</ng-option>
                                 </ng-select>
-                                <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableItemType.invalid)">
+                                <div class="input-required display-inlineblock"
+                                    *ngIf="formSubmitted && (tableItemType.invalid)">
                                     <span>Required</span>
                                 </div>
                             </ng-template>
@@ -72,29 +87,42 @@
 
                         <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm line-height-subtable" type="number" #tableRate1="ngModel" name='tableRate{{rowIndex}}' [(ngModel)]="row.rate" (keyup)="onKeyUp($event,rowIndex,2,'rate')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
-                                    (input)="calculateGstDiscountPercentage(rowIndex,1)" [id]="'supplierList'+rowIndex+'-2'" required [ngClass]="{'is-invalid': formSubmitted && tableRate1.invalid}" min="0">
-                                <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableRate1.invalid )">
+                                <input class="tableForm line-height-subtable" type="number" #tableRate1="ngModel"
+                                    name='tableRate{{rowIndex}}' [(ngModel)]="row.rate"
+                                    (keyup)="onKeyUp($event,rowIndex,2,'rate')"
+                                    onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57  || event.charCode == 46"
+                                    (input)="calculateGstDiscountPercentage(rowIndex,1)"
+                                    [id]="'supplierList'+rowIndex+'-2'" required
+                                    [ngClass]="{'is-invalid': formSubmitted && tableRate1.invalid}" min="0">
+                                <div class="input-required display-inlineblock"
+                                    *ngIf="formSubmitted && (tableRate1.invalid )">
                                     <span>Required</span>
                                 </div>
                             </ng-template>
                         </ngx-datatable-column>
 
-                        <ngx-datatable-column name="Discounted Rate" prop="discountedRate" [sortable]="false" [width]="300">
+                        <ngx-datatable-column name="Discounted Rate" prop="discountedRate" [sortable]="false"
+                            [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm line-height-subtable" type="number" #tablediscount1="ngModel" name='tableDiscount{{rowIndex}}' [(ngModel)]="row.discountedRate" [id]="'supplierList'+rowIndex+'-3'" readonly>
+                                <input class="tableForm line-height-subtable" type="number" #tablediscount1="ngModel"
+                                    name='tableDiscount{{rowIndex}}' [(ngModel)]="row.discountedRate"
+                                    [id]="'supplierList'+rowIndex+'-3'" readonly>
                             </ng-template>
                         </ngx-datatable-column>
 
                         <ngx-datatable-column name="Rate With GST" prop="gstRate" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm line-height-subtable" type="number" #tableGst1="ngModel" name='tableGst{{rowIndex}}' [(ngModel)]="row.gstRate" [id]="'supplierList'+rowIndex+'-4'" readonly>
+                                <input class="tableForm line-height-subtable" type="number" #tableGst1="ngModel"
+                                    name='tableGst{{rowIndex}}' [(ngModel)]="row.gstRate"
+                                    [id]="'supplierList'+rowIndex+'-4'" readonly>
                             </ng-template>
                         </ngx-datatable-column>
 
                         <ngx-datatable-column name="Action" sortable="false">
-                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeItem(rowIndex)"></nb-icon>
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                let-rowIndex="rowIndex">
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                    (click)="removeItem(rowIndex)"></nb-icon>
                             </ng-template>
                         </ngx-datatable-column>
 
@@ -104,12 +132,17 @@
 
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
-                    <input *ngIf="!mySupplierRateId; else updateadd" [disabled]="disableButton" type="button" class="btn btn-primary btn-sm btn-design" value="SAVE" (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
-                    <button *ngIf="!mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design" (click)="reset(myForm)">CANCEL</button>
+                    <input *ngIf="!mySupplierRateId; else updateadd" [disabled]="disableButton" type="button"
+                        class="btn btn-primary btn-sm btn-design" value="SAVE"
+                        (click)="addSupplierRateInfo(myForm); $event.preventDefault()">
+                    <button *ngIf="!mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design"
+                        (click)="reset(myForm)">CANCEL</button>
 
-                    <button *ngIf="mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design" [routerLink]="['/pages/supplier/view']">CANCEL</button>
+                    <button *ngIf="mySupplierRateId" type="button" class="btn btn-primary btn-sm btn-design"
+                        [routerLink]="['/pages/supplier/view']">CANCEL</button>
                     <ng-template #updateadd>
-                        <input type="button" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton" value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">
+                        <input type="button" class="btn btn-primary btn-sm btn-design" [disabled]="disableButton"
+                            value="UPDATE" (click)="updateSupplierRateInfo(myForm); $event.preventDefault()">
                     </ng-template>
                 </div>
             </div>

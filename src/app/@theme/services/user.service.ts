@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   checkUser(userData): any {
     return this.httpClient.post(
@@ -57,11 +57,7 @@ export class UserService {
       desiData
     );
   }
-  getDesignationById(): any {
-    return this.httpClient.get(
-      this.commonService.envUrl() + "api/user/designation/" + id
-    );
-  }
+
   getAllCompanyData() {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/admin/get/allCompany"

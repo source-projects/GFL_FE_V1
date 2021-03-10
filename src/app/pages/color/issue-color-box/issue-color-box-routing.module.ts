@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IssueColorBoxComponent } from 'app/pages/color/issue-color-box/issue-color-box.component';
+import { IssueColorBoxComponent } from './issue-color-box.component';
 
 const routes: Routes = [
   { 

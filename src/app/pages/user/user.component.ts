@@ -6,8 +6,6 @@ import { ExportPopupComponent } from "../../@theme/components/export-popup/expor
 import { UserGuard } from "../../@theme/guards/user.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { UserService } from "../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -59,10 +57,7 @@ export class UserComponent implements OnInit {
     private toastr: ToastrService,
     private userService: UserService,
     private commonService: CommonService,
-    private exportService: ExportService,
-
     public userGuard: UserGuard,
-    private jwtToken: JwtTokenService
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +68,6 @@ export class UserComponent implements OnInit {
 
     this.getViewAccess();
     this.getAddAcess();
-    // this.getAllUser(this.userId,"own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
@@ -178,7 +172,6 @@ export class UserComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

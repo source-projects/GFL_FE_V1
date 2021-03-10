@@ -30,7 +30,7 @@ export class PendingApcComponent implements OnInit {
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -56,8 +56,7 @@ export class PendingApcComponent implements OnInit {
     if (this.shadeGuard.accessRights('delete')) {
       this.hiddenDelete = false;
     }
-    else
-    {
+    else {
       this.hiddenDelete = true;
     }
   }
@@ -67,8 +66,7 @@ export class PendingApcComponent implements OnInit {
     if (this.shadeGuard.accessRights('edit')) {
       this.hiddenEdit = false;
     }
-    else
-    {
+    else {
       this.hiddenEdit = true;
     }
   }
