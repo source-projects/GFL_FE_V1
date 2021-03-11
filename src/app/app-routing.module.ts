@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./@theme/guards/auth.guard";
 import { ColorGuard } from "./@theme/guards/color.guard";
 import { PartyGuard } from "./@theme/guards/party.guard";
@@ -58,13 +58,6 @@ export const routes: Routes = [
         canActivate: [QualityGuard],
         canLoad: [QualityGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
-      },
-      {
-        path: "parent",
-        loadChildren: () =>
-          import("./pages/shade-parent/shade-parent.module").then(
-            (m) => m.ShadeParentModule
-          ),
       },
       {
         path: "user",
@@ -287,14 +280,6 @@ export const routes: Routes = [
     ],
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
-
-  {
-    path: "shade-parent",
-    loadChildren: () =>
-      import("./pages/shade-parent/shade-parent.module").then(
-        (m) => m.ShadeParentModule
-      ),
-  },
 
   // { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
 

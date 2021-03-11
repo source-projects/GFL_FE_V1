@@ -98,7 +98,7 @@
                                 #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)"
                                 [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none">
                                 <ng-option
-                                    *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) | filterItemSelected : dyeingChemicalData)"
+                                    *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) | filterItemSelected : dyeingChemicalData : i )"
                                     [value]="item.itemId" placeholder="Select Item">
                                     {{item.itemName}} - {{item.supplierName}}</ng-option>
                             </ng-select>

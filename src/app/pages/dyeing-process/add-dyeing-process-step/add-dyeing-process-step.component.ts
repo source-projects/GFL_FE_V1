@@ -184,8 +184,6 @@ export class AddDyeingProcessStepComponent implements OnInit {
       if (e.itemId == this.dyeingChemicalData[rowIndex].itemId) {
         this.dyeingChemicalData[rowIndex].supplierName = e.supplierName;
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
-        this.dyeingChemicalData[rowIndex].itemId = e.itemId;
-        this.dyeingChemicalData[rowIndex].supplierId = e.supplierId;
       }
     });
     console.log(this.dyeingChemicalData);
