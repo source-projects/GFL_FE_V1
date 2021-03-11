@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Shade, ShadeDataList } from "../../@theme/model/shade";
 
 @Component({
   selector: "ngx-shade-parent",
@@ -6,10 +7,28 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./shade-parent.component.scss"],
 })
 export class ShadeParentComponent implements OnInit {
-  disableButton = false;
-  constructor() {}
+  shadeDataListArray: ShadeDataList[] = [];
+  shadeData: Shade = new Shade();
+  shadeDataList: ShadeDataList = new ShadeDataList();
+  formSubmitted: boolean = false;
+  qualityId: any;
+  addedBy: any;
+  createdBy: any;
+  constructor() {
+    this.shadeDataListArray.push(this.shadeDataList);
+    this.shadeData.shadeDataList = this.shadeDataListArray;
+  }
 
-  ngOnInit(): void {}
-  reset() {}
-  addShade(addShade?) {}
+  ngOnInit() {}
+
+  reset(shadeForm) {
+    shadeForm.reset();
+    this.formSubmitted = false;
+    this.shadeData.colorTone = null;
+    this.shadeDataListArray = [];
+    this.ngOnInit();
+  }
+  addShade(shadeForm) {
+    console.log(this.shadeData);
+  }
 }

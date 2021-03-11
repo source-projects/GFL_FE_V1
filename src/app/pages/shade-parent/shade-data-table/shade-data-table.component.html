@@ -1,1 +1,87 @@
-<p>shade-data-table works!</p>
+<fieldset [disabled]="!disableFlag">
+    <div class="row">
+        <div class="col-md-12">
+            <ngx-datatable #table class="material common-table
+            datatable-auto-height" [rows]="shadeData.shadeDataList" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' }
+                        }" (click)="removeItem(rowIndex)"></nb-icon>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Item Name" prop="supplierItemId" [sortable]="false" [width]="300">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <ng-select #data (change)="itemSelected(rowIndex, row, $event)" #itemName1="ngModel"
+                            name="itemName{{ rowIndex }}" class="tableForm" id="itemName"
+                            [(ngModel)]="row.supplierItemId" required [id]="'supplierList' + rowIndex + '-0'"
+                            appendTo="body" class="ng-select-br-none dropdown-name"
+                            [disabled]="shadeData.pending || !disableFlag">
+                            <ng-option *ngFor="let s of supplierList
+                            | filterOutSelectedShade
+                            : shadeData.shadeDataList
+                            : refreshFlag" [value]="s.id">{{ s.itemName }} - {{ s.supplierName }}
+                            </ng-option>
+                        </ng-select>
+                        <div [ngClass]="{ required:
+                        !shadeData.pending }">
+                            <div class="input-required display-inlineblock" *ngIf="formSubmitted &&
+                            itemName1.invalid">
+                                <span>Required</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Concentration" [sortable]="false" [width]="300" prop="concentration"
+                    [maxWidth]="120">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <input type="number" #concentration1="ngModel" name="concentration{{ rowIndex }}"
+                            class="tableForm line-height-subtable" id="concentration" [(ngModel)]="row.concentration"
+                            (input)="calculateAmount(rowIndex)" (keyup)="onKeyUp($event, rowIndex, 1,
+                        'concentration')" [id]="'supplierList' + rowIndex +
+                        '-concentration'" min="0" [disabled]="shadeData.pending" />
+
+                        <div [ngClass]="{ required:
+                        !shadeData.pending }">
+                            <div class="input-required display-inlineblock" *ngIf="formSubmitted &&
+                            concentration1.invalid">
+                                <span>Required</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Supplier Name" prop="supplierId" [sortable]="false" [width]="300">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <input class="tableForm
+                        line-height-subtable" type="text" #supplierName1="ngModel" name="supplierName{{ rowIndex }}"
+                            [(ngModel)]="row.supplierName" (keyup)="onKeyUp($event, rowIndex, 2,
+                        'supplierName')" [id]="'supplierList' + rowIndex +
+                        '-supplierName'" readonly />
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300" [maxWidth]="100">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <input class="tableForm
+                        line-height-subtable" type="text" #rate1="ngModel" name="rate{{ rowIndex }}"
+                            [(ngModel)]="row.rate" (keyup)="onKeyUp($event, rowIndex, 3,
+                        'rate')" [id]="'supplierList' + rowIndex +
+                        '-rate'" readonly />
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Amount" prop="amount" [sortable]="false" [width]="300" [maxWidth]="100">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <input class="tableForm
+                        line-height-subtable" type="text" #rate1="ngModel" name="amount{{ rowIndex }}"
+                            [(ngModel)]="row.amount" (keyup)="onKeyUp($event, rowIndex, 4,
+                        'amount')" [id]="'supplierList' + rowIndex +
+                        '-amount'" readonly />
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</fieldset>

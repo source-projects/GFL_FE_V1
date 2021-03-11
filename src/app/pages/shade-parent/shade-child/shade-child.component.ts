@@ -1,67 +1,43 @@
+import { ContentObserver } from "@angular/cdk/observers";
 import {
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
-  Renderer2,
-  ViewContainerRef,
+  SimpleChanges,
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { CommonService } from "../../../@theme/services/common.service";
+import { ShadeDataList } from "../../../@theme/model/shade";
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
-import { SupplierService } from "../../../@theme/services/supplier.service";
 
 @Component({
   selector: "ngx-shade-child",
   templateUrl: "./shade-child.component.html",
   styleUrls: ["./shade-child.component.scss"],
 })
-export class ShadeChildComponent implements OnInit {
-  shadeData = {
-    pending: Boolean,
-    partyShadeNo: null,
-    processName: null,
-    qualityId: null,
-    qualityEntryId: null,
-    qualityName: null,
-    qualityType: null,
-    colorTone: null,
-    labColorNo: null,
-    category: null,
-    remark: null,
-    createdBy: null,
-    updatedBy: null,
-    cuttingId: null,
-    partyId: null,
-    processId: null,
-    userHeadId: null,
-    isExtraRate: Boolean,
-    extraRate: null,
-  };
-  @Output() addShade: EventEmitter<any> = new EventEmitter();
+export class ShadeChildComponent implements OnInit, OnChanges {
+  @Input() shadeData;
+  @Input() formSubmitted;
+  @Output() selectedQualityId: EventEmitter<any> = new EventEmitter();
+  @Input() addedBy: any;
+  @Input() createdBy: any;
   partyList: any[];
   loading: boolean;
-  formSubmitted = false;
   processList: any[];
   qualityList: any[];
   public wt100m: any = 0;
   color: any = "";
   categoryList = [{ name: "light" }, { name: "dark" }];
+  disableFlag: boolean = false;
+  qualityFlag: boolean = false;
 
   constructor(
-    private _route: ActivatedRoute,
     private partyService: PartyService,
-    private commonService: CommonService,
     private qualityService: QualityService,
-    private supplierService: SupplierService,
-    private shadeService: ShadeService,
-    private route: Router,
-    public vcRef: ViewContainerRef,
-    private toastr: ToastrService,
-    private renderer: Renderer2
+    private shadeService: ShadeService
   ) {}
 
   async ngOnInit() {
@@ -69,6 +45,30 @@ export class ShadeChildComponent implements OnInit {
     await this.getPartyList();
     await this.getProcessList();
     await this.getSupplierList();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes["addedBy"] &&
+      changes["addedBy"].previousValue != changes["addedBy"].currentValue
+    ) {
+      this.disableFlag = false;
+      if (
+        changes.addedBy.currentValue === "admin" ||
+        changes.addedBy.currentValue === "Admin"
+      ) {
+        this.disableFlag = true;
+      }
+    }
+    if (
+      changes["createdBy"] &&
+      changes["createdBy"].previousValue != changes["createdBy"].currentValue
+    ) {
+      this.qualityFlag = false;
+      if (changes.createdBy.currentValue) {
+        this.qualityFlag = true;
+      }
+    }
   }
 
   getQualityList() {
@@ -79,12 +79,10 @@ export class ShadeChildComponent implements OnInit {
           this.qualityList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -98,12 +96,10 @@ export class ShadeChildComponent implements OnInit {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -117,12 +113,10 @@ export class ShadeChildComponent implements OnInit {
           this.processList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -139,11 +133,13 @@ export class ShadeChildComponent implements OnInit {
       this.getPartyList();
       this.getQualityList();
       this.shadeData.qualityId = null;
+      console.log(this.shadeData);
+      this.shadeData.shadeDataList = [];
+      this.shadeData.shadeDataList.push(new ShadeDataList());
+      console.log(this.shadeData);
+      this.selectedQualityId.emit((this.shadeData.qualityId = null));
       this.shadeData.qualityName = null;
       this.shadeData.qualityType = null;
-      //  this.shadeData.shadeDataList = [];
-      // this.shadeData.shadeDataList.push(new ShadeDataList());
-      //this.resetAmount();
       this.loading = false;
     } else {
       this.shadeService.getQualityFromParty(this.shadeData.partyId).subscribe(
@@ -153,6 +149,7 @@ export class ShadeChildComponent implements OnInit {
             this.shadeData.qualityId = this.qualityList[0].qualityId;
             this.shadeData.qualityName = this.qualityList[0].qualityName;
             this.shadeData.qualityType = this.qualityList[0].qualityType;
+            this.selectedQualityId.emit(this.shadeData.qualityId);
             this.qualityList.forEach((e) => {
               e.partyName = data["data"].partyName;
               this.loading = false;
@@ -168,15 +165,13 @@ export class ShadeChildComponent implements OnInit {
                 this.wt100m = element.wtPer100m;
               }
             });
-            // this.calculateTotalAmount(true);
           } else {
-            // this.toastr.error(data["msg"]);
+            this.selectedQualityId.emit((this.shadeData.qualityId = null));
             this.qualityList = null;
             this.loading = false;
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -187,12 +182,13 @@ export class ShadeChildComponent implements OnInit {
     if (event == undefined) {
       this.shadeData.qualityName = null;
       this.shadeData.qualityType = null;
-      // this.shadeData.shadeDataList = [];
-      //this.shadeData.shadeDataList.push(new ShadeDataList());
-      //this.resetAmount();
+      this.shadeData.shadeDataList = [];
+      this.shadeData.shadeDataList.push(new ShadeDataList());
+      this.selectedQualityId.emit((this.shadeData.qualityId = null));
     } else {
       this.qualityList.forEach((element) => {
         if (this.shadeData.qualityId == element.qualityId) {
+          this.selectedQualityId.emit(this.shadeData.qualityId);
           this.shadeData.qualityId = element.qualityId;
           this.shadeData.qualityName = element.qualityName;
           this.shadeData.qualityType = element.qualityType;
@@ -201,7 +197,6 @@ export class ShadeChildComponent implements OnInit {
           this.wt100m = element.wtPer100m;
         }
       });
-      //  this.calculateTotalAmount(true);
     }
   }
 
