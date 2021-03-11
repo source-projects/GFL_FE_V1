@@ -1,7 +1,8 @@
 import { DatePipe } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as wijmo from "@grapecity/wijmo";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrintInvoiceData, QualityList, BatchWithGrList } from "app/@theme/model/printInvoice";
 import { PrintInvoiceService } from "app/@theme/services/print-invoice.service";
 import { ToastrService } from "ngx-toastr";
@@ -20,21 +21,38 @@ export class PrintLayoutComponent implements OnInit {
   public printInvoiceFlag: boolean = false;
   public printInvoiceData: PrintInvoiceData[];
   public myDate;
+  @Input() finalInvoice: any;
   invoiceIds: string[];
   invoiceDetails: Promise<any>[];
   rowd = [{}, {}, {}];
   lotRowd = [{}, {}, {}, {}];
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+  invoiceData =[];
 
   constructor(
     private datePipe: DatePipe,
     private toastr: ToastrService,
     private printService: PrintInvoiceService,
     private router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _NgbActiveModal: NgbActiveModal,
+
   ) {}
 
   ngOnInit() {
+    console.log(this.finalInvoice)
+    if(this.finalInvoice){
+      this.printService.getInvoiceByBatchAndStock(this.finalInvoice).subscribe(
+        (data) => {
+          if(data["success"]){
+            this.invoiceData = data["data"];
+          }
+        },
+        (error) => {
+
+        }
+      )
+    }
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
     if (myArray === null) {
       this.invoiceIds = new Array<string>();
@@ -45,8 +63,11 @@ export class PrintLayoutComponent implements OnInit {
     // this.invoiceNo = this._route.snapshot.paramMap.get("id");
 
     this.start();
+   
   }
-
+  get activeModal() {
+    return this._NgbActiveModal;
+  }
   start() {
     if (this.invoiceIds != null) {
       this.myDate = new Date();
@@ -68,8 +89,12 @@ export class PrintLayoutComponent implements OnInit {
                     new QualityList()
                   );
                 }
+                this.printInvoiceData[index].batchWithGrList.forEach(element => {
+                  element.batchDataList.sort(function(obj1 , obj2){
+                    return obj1.sequenceId - obj2.sequenceId;
+                  })
+                }); 
               }
-
               //calculate total amount, mtr, f.mtr, pcs
               this.printInvoiceData[index].totalMtr = 0;
               this.printInvoiceData[index].totalAmt = 0;

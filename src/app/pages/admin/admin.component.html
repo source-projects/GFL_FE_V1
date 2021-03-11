@@ -414,6 +414,46 @@
                     </ngx-datatable-column>
                 </ngx-datatable>
             </nb-tab>
+
+            <nb-tab tabTitle="Invoice Sequence">
+                <form #addInvoiceSequence="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Invoice Sequence</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence"
+                                    [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel"
+                                    [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
+                                    Invoice Sequence is required.
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveSequence(addInvoiceSequence)" [disabled]="disabled">SAVE</button>
+                        </div>
+                    </div>
+                </form>
+
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="sequenceList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getSequenceByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Sequence" prop="sequence" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                </ngx-datatable>
+
+            </nb-tab>
         </nb-tabset>
     </nb-card-body>
 </nb-card>

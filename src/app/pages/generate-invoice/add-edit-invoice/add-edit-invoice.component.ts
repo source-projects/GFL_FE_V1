@@ -8,6 +8,8 @@ import { PartyService } from 'app/@theme/services/party.service';
 import { keys } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrintLayoutComponent } from '../print-Layout/print-layout.component';
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -22,6 +24,10 @@ export class AddEditInvoiceComponent implements OnInit {
     "createdBy": null,
     "invoiceNo": null,
     "userHeadId": null
+  }
+
+  invoiceObj = {
+    "batchAndStockIdList" : []
   }
   finalcheckedrows = [];
   party: any[];
@@ -52,6 +58,8 @@ export class AddEditInvoiceComponent implements OnInit {
     private toastr: ToastrService,
     private jwt: JwtTokenService,
     private commonService: CommonService,
+    private modalService: NgbModal,
+
   ) { }
 
   ngOnInit(): void {
@@ -173,45 +181,67 @@ export class AddEditInvoiceComponent implements OnInit {
   
   final = [];
   selected = [];
+
   addInvoice(invoiceForm) {
     this.disableButton = true;
     this.formSubmitted = true;
-
+    let tempObj = {
+      batchId : null,
+      stockId : null
+    }
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
+      this.invoiceObj.batchAndStockIdList.push(obj);
+
     })
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
       userHeadId: this.userHeadId
     }
-    
-    if (invoiceForm.valid) {
-      this.generateInvoiceService.addInvoicedata(obj).subscribe(
-        data => {
-          if (data['success']) {
-            this.route.navigate(["/pages/generate_invoice"]);
-            this.toastr.success(errorData.Add_Success);
-            this.merge = [];
-            this.disableButton = false;
-          }
-          else {
-            this.disableButton = false;
-            this.toastr.error(errorData.Add_Error)
-            this.merge = [];
-          }
-        },
-        error => {
-          this.disableButton = false;
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
-    }else{
-      this.disableButton = false;
-    }
+     const modalRef = this.modalService.open(PrintLayoutComponent);
+    modalRef.componentInstance.finalInvoice = obj;
+    modalRef.result
+      .then((result) => {
+        // this.currentProductionId = null;
+        // if (result) {
+        //   this.jetData1.controlId = result.jet;
+        //   this.jetData1.productionId = p_id;
+        //   this.jetData1.sequence = 1;
+        //   let jetData2 = this.jetData1;
+        //   let arr = [];
+        //   //  jetData2.productionId = Number(jetData2.productionId);
+        //   arr.push(jetData2);
+        //   this.addJetData(arr);
+        // }
+      })
+      .catch((err) => {});
+    // if (invoiceForm.valid) {
+    //   this.generateInvoiceService.addInvoicedata(obj).subscribe(
+    //     data => {
+    //       if (data['success']) {
+    //         this.route.navigate(["/pages/generate_invoice"]);
+    //         this.toastr.success(errorData.Add_Success);
+    //         this.merge = [];
+    //         this.disableButton = false;
+    //       }
+    //       else {
+    //         this.disableButton = false;
+    //         this.toastr.error(errorData.Add_Error)
+    //         this.merge = [];
+    //       }
+    //     },
+    //     error => {
+    //       this.disableButton = false;
+    //       this.toastr.error(errorData.Serever_Error)
+    //     }
+    //   )
+    // }else{
+    //   this.disableButton = false;
+    // }
   }
 
   updateInvoice(invoiceForm) {
@@ -220,12 +250,15 @@ export class AddEditInvoiceComponent implements OnInit {
     this.formSubmitted = true;
 
     this.final = [];
-    this.finalcheckedrows.map(ele => {
+   
+    this.finalcheckedrows.map((ele,i) => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
-    })
+      })
+   
+   
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
@@ -257,7 +290,7 @@ export class AddEditInvoiceComponent implements OnInit {
   }
 
   onSelect(value: any) {
-    let arr: any = value.selected;
+    let arr: any =  value.selected;
     this.finalcheckedrows = arr;
 
   }
