@@ -5,9 +5,9 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   DyeingProcess,
   DyeingProcessData,
-} from "app/@theme/model/dyeing-process";
-import { CommonService } from "app/@theme/services/common.service";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
+} from "../../../@theme/model/dyeing-process";
+import { CommonService } from "../../../@theme/services/common.service";
+import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
 import { AddDyeingProcessStepComponent } from "../add-dyeing-process-step/add-dyeing-process-step.component";
 
@@ -111,7 +111,9 @@ export class AddEditDyeingProcessComponent implements OnInit {
       size: "lg",
     });
     modalRef.componentInstance.position = step.sequence;
-    modalRef.componentInstance.stepList = this.dyeingProcessSteps;
+    modalRef.componentInstance.stepList = JSON.parse(
+      JSON.stringify(this.dyeingProcessSteps)
+    );
     modalRef.componentInstance.editStep = true;
     modalRef.result.then((result) => {
       if (result) {

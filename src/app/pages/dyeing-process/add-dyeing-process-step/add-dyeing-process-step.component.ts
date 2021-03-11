@@ -1,12 +1,18 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectComponent } from "@ng-select/ng-select";
 import {
   DyeingChemicalData,
   DyeingProcessData,
-} from "app/@theme/model/dyeing-process";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
-import { ToastrService } from 'ngx-toastr';
+} from "../../../@theme/model/dyeing-process";
+import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-dyeing-process-step",
@@ -14,8 +20,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ["./add-dyeing-process-step.component.scss"],
 })
 export class AddDyeingProcessStepComponent implements OnInit {
-
-  @ViewChildren('data') data: QueryList<NgSelectComponent>;
+  @ViewChildren("data") data: QueryList<NgSelectComponent>;
 
   public dyeingProcessStep: DyeingProcessData;
   public dyeingChemicalData: DyeingChemicalData[] = [];
@@ -28,12 +33,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
   @Input() editStep;
   @Input() stepList: DyeingProcessData[] = [];
 
-  public processTypes = [
-    "Scouring",
-    "Dyeing",
-    "RC",
-    "Cold Wash"
-  ];
+  public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash"];
   constructor(
     public activeModal: NgbActiveModal,
     private DyeingProcessService: DyeingProcessService,
@@ -56,12 +56,20 @@ export class AddDyeingProcessStepComponent implements OnInit {
     } else {
       this.submitButton = "Update";
       if (this.position > 0) {
-        this.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
-        this.dyeingProcessStep.dyeingChemicalData = this.stepList[this.position - 1].dyeingChemicalData;
+        this.dyeingChemicalData = this.stepList[
+          this.position - 1
+        ].dyeingChemicalData;
+        this.dyeingProcessStep.dyeingChemicalData = this.stepList[
+          this.position - 1
+        ].dyeingChemicalData;
         this.dyeingProcessStep.sequence = this.position;
         this.dyeingProcessStep.temp = this.stepList[this.position - 1].temp;
-        this.dyeingProcessStep.holdTime = this.stepList[this.position - 1].holdTime;
-        this.dyeingProcessStep.liquerRation = this.stepList[this.position - 1].liquerRation;
+        this.dyeingProcessStep.holdTime = this.stepList[
+          this.position - 1
+        ].holdTime;
+        this.dyeingProcessStep.liquerRation = this.stepList[
+          this.position - 1
+        ].liquerRation;
         this.dyeingProcessStep.processType = this.stepList[
           this.position - 1
         ].processType;
@@ -81,12 +89,11 @@ export class AddDyeingProcessStepComponent implements OnInit {
         temp: this.dyeingProcessStep.temp,
         holdTime: this.dyeingProcessStep.holdTime,
         liquerRation: this.dyeingProcessStep.liquerRation,
-        chemicalList: this.dyeingChemicalData
+        chemicalList: this.dyeingChemicalData,
       };
       this.activeModal.close(obj);
-    }else{
+    } else {
       this.toastr.error("Fill empty fields");
-
     }
   }
 
@@ -95,10 +102,11 @@ export class AddDyeingProcessStepComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
+          console.log(this.itemListArray);
         } else {
         }
       },
-      (error) => { }
+      (error) => {}
     );
   }
 
@@ -126,8 +134,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
 
         this.data.changes.subscribe(() => {
           this.data.last.focus();
-        })
-    
+        });
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -138,27 +145,29 @@ export class AddDyeingProcessStepComponent implements OnInit {
         }, 10);
       }
     }
-
   }
 
-  numberOnly(evt) { 
-    // Only ASCII charactar in that range allowed 
-    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) {
-      if(ASCIICode == 46){
-        return true; 
-      }else{
-        return false; 
+  numberOnly(evt) {
+    // Only ASCII charactar in that range allowed
+    var ASCIICode = evt.which ? evt.which : evt.keyCode;
+    if (
+      (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) ||
+      ASCIICode == 69
+    ) {
+      if (ASCIICode == 46) {
+        return true;
+      } else {
+        return false;
       }
-    }else{
-      return true; 
+    } else {
+      return true;
     }
-} 
+  }
 
   removeItem(rowIndex) {
     let idCount = this.dyeingChemicalData.length;
     if (idCount == 1) {
-      this.dyeingChemicalData[0].byChemical = 'L';
+      this.dyeingChemicalData[0].byChemical = "L";
       this.dyeingChemicalData[0].concentration = null;
       this.dyeingChemicalData[0].controlId = null;
       this.dyeingChemicalData[0].id = null;
@@ -177,6 +186,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
       }
     });
+    console.log(this.dyeingChemicalData);
   }
 
   trackByFn(index: number, obj: any) {
