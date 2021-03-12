@@ -181,7 +181,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.dataEntry"
+                            <nb-checkbox name="assign" [(ngModel)]="user.dataEntry" (checkedChange)="check($event)"
                                 class="form-control nb-check-user border-none">Is User Data Input
                             </nb-checkbox>
                         </div>
