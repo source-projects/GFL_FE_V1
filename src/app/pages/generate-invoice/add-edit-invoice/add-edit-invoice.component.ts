@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import * as errorData from 'app/@theme/json/error.json';
 import { Invoice, invoiceobj } from "app/@theme/model/invoice";
 import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintLayoutComponent } from '../print-Layout/print-layout.component';
+import { GenerateModalComponent } from '../generate-modal/generate-modal.component';
+import * as wijmo from "@grapecity/wijmo";
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -27,7 +29,8 @@ export class AddEditInvoiceComponent implements OnInit {
   }
 
   invoiceObj = {
-    "batchAndStockIdList" : []
+    "batchAndStockIdList" : [],
+
   }
   finalcheckedrows = [];
   party: any[];
@@ -49,7 +52,7 @@ export class AddEditInvoiceComponent implements OnInit {
   Invoice: any[];
   userHeadId;
   merge = [];
-
+invoiceNo : any;
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
     private partyService: PartyService,
@@ -59,7 +62,6 @@ export class AddEditInvoiceComponent implements OnInit {
     private jwt: JwtTokenService,
     private commonService: CommonService,
     private modalService: NgbModal,
-
   ) { }
 
   ngOnInit(): void {
@@ -154,7 +156,6 @@ export class AddEditInvoiceComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.finalbatch = data["data"];
-              console.log(this.finalbatch)
               this.finalbatch.forEach(ele=>{
                 ele.wt = ele.wt.toFixed(2);
               })
@@ -183,69 +184,70 @@ export class AddEditInvoiceComponent implements OnInit {
   selected = [];
 
   addInvoice(invoiceForm) {
-    this.disableButton = true;
     this.formSubmitted = true;
-    let tempObj = {
-      batchId : null,
-      stockId : null
-    }
+    
     this.finalcheckedrows.map(ele => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
-      this.invoiceObj.batchAndStockIdList.push(obj);
-
     })
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
       userHeadId: this.userHeadId
     }
-     const modalRef = this.modalService.open(PrintLayoutComponent);
+    const modalRef = this.modalService.open(GenerateModalComponent,{size: "xl"});
     modalRef.componentInstance.finalInvoice = obj;
     modalRef.result
       .then((result) => {
-        // this.currentProductionId = null;
-        // if (result) {
-        //   this.jetData1.controlId = result.jet;
-        //   this.jetData1.productionId = p_id;
-        //   this.jetData1.sequence = 1;
-        //   let jetData2 = this.jetData1;
-        //   let arr = [];
-        //   //  jetData2.productionId = Number(jetData2.productionId);
-        //   arr.push(jetData2);
-        //   this.addJetData(arr);
-        // }
+        if(result){
+          if (invoiceForm.valid) {
+            this.generateInvoiceService.addInvoicedata(obj).subscribe(
+              async data => {
+                if (data['success']) {
+                  this.invoiceNo = data["data"];
+                  // this.route.navigate(["/pages/generate_invoice"]);
+                  this.toastr.success(errorData.Add_Success);
+                  this.merge = [];
+                  this.disableButton = false;
+                 this.print(this.invoiceNo);
+                }
+                else {
+                  this.disableButton = false;
+                  this.toastr.error(errorData.Add_Error)
+                  this.merge = [];
+                }
+              },
+              error => {
+                this.disableButton = false;
+                this.toastr.error(errorData.Serever_Error)
+              }
+            )
+          }else{
+            this.disableButton = false;
+          }
+        }else{
+          this.disableButton = false;
+        }
       })
-      .catch((err) => {});
-    // if (invoiceForm.valid) {
-    //   this.generateInvoiceService.addInvoicedata(obj).subscribe(
-    //     data => {
-    //       if (data['success']) {
-    //         this.route.navigate(["/pages/generate_invoice"]);
-    //         this.toastr.success(errorData.Add_Success);
-    //         this.merge = [];
-    //         this.disableButton = false;
-    //       }
-    //       else {
-    //         this.disableButton = false;
-    //         this.toastr.error(errorData.Add_Error)
-    //         this.merge = [];
-    //       }
-    //     },
-    //     error => {
-    //       this.disableButton = false;
-    //       this.toastr.error(errorData.Serever_Error)
-    //     }
-    //   )
-    // }else{
-    //   this.disableButton = false;
-    // }
+   
+  }
+   print(invoiceNo) {
+    const queryParams: any = {};
+   
+      // queryParams.myArray = JSON.stringify(arrayOfValues);
+      queryParams.invoice = invoiceNo;
+      const navigationExtras: NavigationExtras = {
+        queryParams,
+      };
+
+      this.route.navigate(["/pages/generate_invoice/print"],navigationExtras
+      );
+    
   }
 
   updateInvoice(invoiceForm) {
-    console.log("FORM:",invoiceForm);
     this.disableButton = true;
     this.formSubmitted = true;
 
@@ -292,6 +294,5 @@ export class AddEditInvoiceComponent implements OnInit {
   onSelect(value: any) {
     let arr: any =  value.selected;
     this.finalcheckedrows = arr;
-
   }
 }
