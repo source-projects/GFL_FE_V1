@@ -13,7 +13,7 @@ export class User {
   id: Number;
   userHeadId: Number = 0;
   isUserHead: boolean;
-  userFlag: boolean;
+  dataEntry: boolean;
   userPermissionData: {};
 }
 
