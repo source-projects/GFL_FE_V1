@@ -129,7 +129,6 @@ export class AddEditSupplierComponent implements OnInit {
     this.formSubmitted = true;
     if (this.addSupplier.valid && !this.isSupplierNameExists) {
       this.addSupplier.value.createdBy = this.user.userId;
-      this.addSupplier.value.userHeadId = this.userHead.userHeadId;
       this.supplierService
         .addSupplierInSystem(this.addSupplier.value)
         .subscribe(

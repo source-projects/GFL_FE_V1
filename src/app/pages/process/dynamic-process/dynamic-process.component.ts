@@ -45,16 +45,13 @@ export class DynamicProcessComponent implements OnInit {
   currentProcessId: number;
   public errorData: any = (errorData as any).default;
   itemListArray: any;
-  master: any[];
-  loading: boolean = false;
   constructor(
     private commonService: CommonService,
     private processService: ProcessService,
     private _modalService: NgbModal,
     private toastr: ToastrService,
     private route: Router,
-    private router: ActivatedRoute,
-    private partyService: PartyService
+    private router: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -62,24 +59,6 @@ export class DynamicProcessComponent implements OnInit {
     this.processValue.steps = [];
     this.getItemData();
     if (this.currentProcessId) this.getUpdateDataOfProcess();
-  }
-
-  public getMaster() {
-    this.loading = true;
-    this.master = [];
-    this.partyService.getAllMaster().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.master = data["data"];
-          this.loading = false;
-        } else {
-          this.loading = false;
-        }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
   }
 
   getItemData() {

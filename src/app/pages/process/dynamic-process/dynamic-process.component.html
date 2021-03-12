@@ -20,23 +20,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Master Name</label>
-                            <ng-select name="userHeadId" appendTo="body" id="userHeadId"
-                                [(ngModel)]="processValue.userHeadId" #masterName="ngModel" required
-                                [ngClass]="{'is-invalid':(masterName.invalid)&&(formSubmitted  || masterName.touched)}"
-                                placeholder="Select Master Name" class="dropdown-name required-error-dropdown">
-                                <div>
-                                    <ng-option *ngFor="let m of master" [value]="m.id">{{m.userName}}</ng-option>
-                                </div>
-                            </ng-select>
-                            <div class="input-required"
-                                *ngIf="(masterName.invalid)&&(formSubmitted  || masterName.touched)">
-                                <span>Master Name is required</span>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="col-md-4 col-8">
                         <div class="form-group">
