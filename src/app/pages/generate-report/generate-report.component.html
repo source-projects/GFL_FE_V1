@@ -3,19 +3,320 @@
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
             <nb-tab tabTitle="Lot No">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
+                    <div class="col-md-12 col-12">
+                        <div class="report-card-1 main-input-report">
+
+                            <div class="card-detail-report only-first-card mr-0">
+
+
+                                <div class="card-d-label"><label>Lot No</label></div>
+
+
+                                <div class="card-d-label"><input type="number" class="form-control input-border" placeholder="Enter Lot no"></div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <!-- <div class="form-group">
                             <label class="report-label">Lot No</label>
                             <input type="number" class="form-control input-border" placeholder="Enter Lot no">
+                        </div> -->
+
+                        <!--1st Sub Card Div-->
+                        <div class="report-card-1">
+
+
+                            <div class="bg-main-cont">
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Party Name</label></div>
+
+
+                                    <div class="card-d-label"><span>Abcdef abc</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Quality Name</label></div>
+
+
+                                    <div class="card-d-label"><span>Abcdef abc</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Stock Type</label></div>
+
+
+                                    <div class="card-d-label"><span>Fabric</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Rate</label></div>
+
+
+                                    <div class="card-d-label"><span>56</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Total Meter</label></div>
+
+
+                                    <div class="card-d-label"><span>689</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Total weight</label></div>
+
+
+                                    <div class="card-d-label"><span>2021</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Dyed Date</label></div>
+
+
+                                    <div class="card-d-label"><span>12/02/2021</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Delivery Date</label></div>
+
+
+                                    <div class="card-d-label"><span>12/03/2021</span></div>
+
+
+                                </div>
+
+
+                            </div>
+
+
                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <!--2nd Sub Card Div-->
+
+                        <div class="report-card-1">
+
+                            <div class="card-detail-report only-first-card">
+
+
+                                <div class="card-d-label"><label>SHADE APPLIED</label></div>
+                            </div>
+                            <div class="bg-main-cont">
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade No</label></div>
+
+
+                                    <div class="card-d-label"><span>25</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade Color</label></div>
+
+
+                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
+                                        <span>
+                                            <div class="text-center txt-ov-elips width-50 display-inline">
+                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone" [value]="colorTone" disabled="true"
+                                                    class="width-100 text-center" />
+                                    
+                                            </div>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / weight</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / meter</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Extra Charge</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <!--3rd Sub Card Div-->
+
+                        <div class="report-card-1">
+
+                            <div class="card-detail-report only-first-card">
+
+
+                                <div class="card-d-label"><label>Cost Evaluation</label></div>
+                            </div>
+                            <div class="bg-main-cont">
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Chemical Cost</label></div>
+
+
+                                    <div class="card-d-label"><span>25</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Steam Cost</label></div>
+
+
+                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
+                                        <span>
+                                            325
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Labour Cost</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Steam Cost</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Batch Cost</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Total Billing</label></div>
+
+
+                                    <div class="card-d-label"><span>23156</span></div>
+
+
+                                </div>
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Amount</label></div>
+
+
+                                    <div class="card-d-label"><span>3251</span></div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+
                     </div>
                 </div>
                 <!--Report Data-->
 
-                <div>
-                    <!--Main Card Div-->
+                <!-- <div>
+                    
                     <div>
-                        <!--1st Sub Card Div-->
+                        
                         <div class="report-card-1">
                             <div class="row">
                                 <div class="col-md-3">
@@ -122,7 +423,7 @@
 
                             </div>
                         </div>
-                        <!--2nd Sub Card Div-->
+                        
                         <div class="report-card-2">
                             <h6>SHADE APPLIED</h6>
 
@@ -204,7 +505,7 @@
                             </div>
 
                         </div>
-                        <!--3rd Sub Card Div-->
+                        
                         <div class="report-card-3">
                             <h6>Cost Evaluation</h6>
                             <div class="mr-top">
@@ -272,7 +573,10 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+
+
             </nb-tab>
             <nb-tab tabTitle="Party"></nb-tab>
             <nb-tab tabTitle="Quality"></nb-tab>
