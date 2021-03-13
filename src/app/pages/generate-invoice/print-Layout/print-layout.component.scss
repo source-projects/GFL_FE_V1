@@ -614,7 +614,7 @@ body,
 
 #invoice-table th,
 td {
-    border-left: 1px solid #9898980f;
+    border-left: 1px solid rgb(143, 143, 143);
 }
 
 #invoice-table th:first-child,
@@ -698,7 +698,7 @@ th {
 }
 
 .spacing-low tr:nth-child(even) {
-    background-color: Lightgreen !important;
+    background-color: whitesmoke !important;
 }
 
 .spacing-low tr th,
