@@ -411,8 +411,11 @@
 </div>
 
 <!-- <ngx-loading [show]="true"></ngx-loading> -->
-<div *ngIf="printFlag">
-    <div *ngFor="let invoice of printInvoiceData;let i = index;">
+<div *ngIf="printFlag" class="main-modal-invoice-review">
+    <div class="modal-header inovice-reiview-header">
+        <p class="text-center in-pre-text"><b>Invoice Preview</b></p>
+    </div>
+    <div *ngFor="let invoice of printInvoiceData;let i = index;" class="mr-tb-26">
         <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
 
             <div class="border-margin">
@@ -440,15 +443,15 @@
                                     <div class="card-body display-flex-end">
                                         <div class="card-block">
                                             <div class="row">
-                                                <p class="col-sm-12 text-center font-30"><b> MUKESH PROCESSORS
+                                                <p class="col-sm-12 text-center font-30 mr-bt-5"><b> MUKESH PROCESSORS
                                                 PVT. LTD.</b></p>
                                             </div>
                                             <div class="row">
-                                                <p class="text-center col-sm-12 font-20">A-31, Eco Textile Park, (Kala Ghoda), Palsana, Surat E-Mail : varun@gloryfab.com
+                                                <p class="text-center col-sm-12 font-20 mr-bt-5">A-31, Eco Textile Park, (Kala Ghoda), Palsana, Surat E-Mail : varun@gloryfab.com
                                                 </p>
                                             </div>
                                             <div class="row">
-                                                <p class="text-center col-sm-12 font-20">GSTIN :- 24AAFCM5028A1Z1 Place Of Supply : Surat</p>
+                                                <p class="text-center col-sm-12 font-20 mr-bt-5">GSTIN :- 24AAFCM5028A1Z1 Place Of Supply : Surat</p>
                                             </div>
                                         </div>
                                     </div>
@@ -820,7 +823,7 @@
 
         </section>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer inovice-reiview-footer">
         <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel()">Cancel</button>
         <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onSave()">Save</button>
         <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onPrint()">Save & Print</button>
