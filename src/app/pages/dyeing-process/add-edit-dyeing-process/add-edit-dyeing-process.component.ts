@@ -5,11 +5,12 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   DyeingProcess,
   DyeingProcessData,
-} from "app/@theme/model/dyeing-process";
-import { CommonService } from "app/@theme/services/common.service";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
+} from "../../../@theme/model/dyeing-process";
+import { CommonService } from "../../../@theme/services/common.service";
+import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
 import { AddDyeingProcessStepComponent } from "../add-dyeing-process-step/add-dyeing-process-step.component";
+import { PartyService } from "../../../@theme/services/party.service";
 
 @Component({
   selector: "ngx-add-edit-dyeing-process",
@@ -27,6 +28,8 @@ export class AddEditDyeingProcessComponent implements OnInit {
   public currentDyeingProcessId: any;
   public disableButton = false;
   public itemList: any[];
+  public master: any[];
+  public loading: boolean = false;
 
   constructor(
     private _modalService: NgbModal,
@@ -34,10 +37,12 @@ export class AddEditDyeingProcessComponent implements OnInit {
     private commonService: CommonService,
     private dyeingProcessService: DyeingProcessService,
     private route: Router,
-    private currentRoute: ActivatedRoute
+    private currentRoute: ActivatedRoute,
+    private partyService: PartyService
   ) {
     this.dyeingProcess = new DyeingProcess();
     this.getItemList();
+    this.getMaster();
   }
 
   ngOnInit(): void {
@@ -47,6 +52,24 @@ export class AddEditDyeingProcessComponent implements OnInit {
       this.addFlag = false;
       this.updateFlag = true;
     }
+  }
+
+  public getMaster() {
+    this.loading = true;
+    this.master = [];
+    this.partyService.getAllMaster().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.master = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   getItemList() {
@@ -111,7 +134,9 @@ export class AddEditDyeingProcessComponent implements OnInit {
       size: "lg",
     });
     modalRef.componentInstance.position = step.sequence;
-    modalRef.componentInstance.stepList = this.dyeingProcessSteps;
+    modalRef.componentInstance.stepList = JSON.parse(
+      JSON.stringify(this.dyeingProcessSteps)
+    );
     modalRef.componentInstance.editStep = true;
     modalRef.result.then((result) => {
       if (result) {

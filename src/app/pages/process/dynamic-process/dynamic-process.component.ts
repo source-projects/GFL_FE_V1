@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import * as errorData from "app/@theme/json/error.json";
+import * as errorData from "../../../@theme/json/error.json";
 import {
   ChemicalReq,
   Dosing,
@@ -14,10 +14,11 @@ import {
   StepsRecordData,
   TempratureControl,
   WaterControl,
-} from "app/@theme/model/process";
-import { CommonService } from "app/@theme/services/common.service";
-import { ProcessService } from "app/@theme/services/process.service";
+} from "../../../@theme/model/process";
+import { CommonService } from "../../../@theme/services/common.service";
+import { ProcessService } from "../../../@theme/services/process.service";
 import { ToastrService } from "ngx-toastr";
+import { PartyService } from "../../../@theme/services/party.service";
 import { AddFunctionComponent } from "../add-function/add-function.component";
 import { AddStepComponent } from "../add-step/add-step.component";
 
@@ -129,7 +130,7 @@ export class DynamicProcessComponent implements OnInit {
             dosingOb.dosingChemical = e.dosingChemical;
             this.chemicalOb = [...dosingOb.dosingChemical];
 
-            let inter = setInterval(()=>{
+            let inter = setInterval(() => {
               if (this.itemListArray) {
                 clearInterval(inter);
                 this.chemicalOb.forEach((element) => {
@@ -140,8 +141,7 @@ export class DynamicProcessComponent implements OnInit {
                   });
                 });
               }
-            },10);
-            
+            }, 10);
           } else if (e.isOperatorMessage) {
             operatorOb.operatorCode = e.operatorCode;
             operatorOb.operatorMessage = e.operatorMessage;

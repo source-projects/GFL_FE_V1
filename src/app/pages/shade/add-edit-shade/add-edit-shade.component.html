@@ -305,13 +305,13 @@
                                         [(ngModel)]="row.supplierItemId" required
                                         [id]="'supplierList' + rowIndex + '-0'" appendTo="body"
                                         class="ng-select-br-none dropdown-name" [disabled]="shadeObj.pending">
-                                        <ng-option *ngFor="let s of supplierList
+                                        <ng-option *ngFor="let s of (supplierList
                                             | filterOutSelectedShade
                                             : shadeObj.shadeDataList
-                                            : refreshFlag" [value]="s.id">{{ s.itemName }} - {{ s.supplierName }}
+                                            : refreshFlag: rowIndex)" [value]="s.id">{{ s.itemName }} - {{ s.supplierName }}
                                         </ng-option>
                                     </ng-select>
-                                    <div [ngClass]="{ required:
+                                    <div [ngClass]="{ 'is-invalid':
                                         !shadeObj.pending }">
                                         <div class="input-required display-inlineblock" *ngIf="formSubmitted &&
                                             itemName1.invalid">
@@ -331,7 +331,7 @@
                                         'concentration')" [id]="'supplierList' + rowIndex +
                                         '-concentration'" min="0" [disabled]="shadeObj.pending" />
 
-                                    <div [ngClass]="{ required:
+                                    <div [ngClass]="{ 'is-invalid':
                                         !shadeObj.pending }">
                                         <div class="input-required display-inlineblock" *ngIf="formSubmitted &&
                                             concentration1.invalid">

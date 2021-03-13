@@ -217,9 +217,9 @@ export class AddEditShadeComponent implements OnInit {
         if (data["success"]) {
           let res = data["data"];
           this.shadeObj = res;
-          if(this.shadeObj.extraRate){
+          if (this.shadeObj.extraRate) {
             this.shadeObj.isExtraRate = true;
-          }else{
+          } else {
             this.shadeObj.isExtraRate = false;
           }
           this.color = this.shadeObj.colorTone;
@@ -356,7 +356,7 @@ export class AddEditShadeComponent implements OnInit {
     if (event) {
       let gst;
       // if (this.shadeObj.qualityId != undefined) {
-      if (this.refreshFlag > 10) {
+      if (this.refreshFlag > 1000) {
         this.refreshFlag = 0;
       }
       this.refreshFlag++;
@@ -452,6 +452,7 @@ export class AddEditShadeComponent implements OnInit {
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
+    this.refreshFlag++;
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "supplierList" + (rowIndex + 1) + "-" + colName;
@@ -523,8 +524,8 @@ export class AddEditShadeComponent implements OnInit {
     this.ngOnInit();
   }
 
-  isExtraChanged(event){
-    if(!event){
+  isExtraChanged(event) {
+    if (!event) {
       this.shadeObj.extraRate = 0;
     }
   }
@@ -541,7 +542,9 @@ export class AddEditShadeComponent implements OnInit {
         this.shadeObj.userHeadId = this.userHead.userHeadId;
 
         if (
-          (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
+          (this.shadeObj.shadeDataList.length == 1 &&
+            !this.shadeObj.shadeDataList[0].supplierItemId) ||
+          this.shadeObj.pending
         ) {
           this.shadeObj.shadeDataList = [];
         }
@@ -572,7 +575,9 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.qualityId
         ) {
           if (
-            (this.shadeObj.shadeDataList.length == 1 && !this.shadeObj.shadeDataList[0].supplierItemId) || this.shadeObj.pending
+            (this.shadeObj.shadeDataList.length == 1 &&
+              !this.shadeObj.shadeDataList[0].supplierItemId) ||
+            this.shadeObj.pending
           ) {
             this.shadeObj.shadeDataList = [];
           }
@@ -661,30 +666,35 @@ export class AddEditShadeComponent implements OnInit {
           this.shadeObj.processId &&
           this.shadeObj.qualityId
         ) {
+          let length = this.shadeObj.shadeDataList.length;
           if (
             this.shadeObj.shadeDataList.length &&
             !Object.keys(this.shadeObj.shadeDataList[0]).length
           ) {
             this.shadeObj.shadeDataList = [];
+          } else if(!this.shadeObj.shadeDataList[length-1].itemName){
+            this.toastr.error('Fill all shade data')
           }
-          this.shadeService.updateShadeData(this.shadeObj).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.route.navigate(["/pages/shade/pending-apc"]);
-                this.toastr.success(data["msg"]);
-                this.disableButton = false;
-              } else {
-                this.toastr.error(data["msg"]);
+           else {
+            this.shadeService.updateShadeData(this.shadeObj).subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.route.navigate(["/pages/shade/pending-apc"]);
+                  this.toastr.success(data["msg"]);
+                  this.disableButton = false;
+                } else {
+                  this.toastr.error(data["msg"]);
+                  this.disableButton = false;
+                }
+                this.loading = false;
+              },
+              (error) => {
+                this.toastr.error(errorData.Serever_Error);
+                this.loading = false;
                 this.disableButton = false;
               }
-              this.loading = false;
-            },
-            (error) => {
-              this.toastr.error(errorData.Serever_Error);
-              this.loading = false;
-              this.disableButton = false;
-            }
-          );
+            );
+          }
 
           this.disableButton = false;
           this.loading = false;
@@ -692,7 +702,7 @@ export class AddEditShadeComponent implements OnInit {
           errorField.scrollIntoView();
         }
       }
-    }else{
+    } else {
       this.disableButton = false;
     }
   }
