@@ -1018,3 +1018,19 @@ tfoot.spacing-low tr:last-child {
     margin-top: 26px;
     margin-bottom: 50px;
 }
+
+.invoice-close {
+    position: absolute;
+    right: 13px;
+    top: 1px;
+    opacity: 1 !important;
+}
+
+.invoice-close-cross {
+    color: #aa3634 !important;
+}
+
+.invoice-close:focus {
+    outline: none !important;
+    border: none !important;
+}
