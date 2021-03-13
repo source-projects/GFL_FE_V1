@@ -2523,12 +2523,14 @@ ng-select.ng-select-br-none {
 .card-d-label input {
     border-radius: 50px;
     height: 31px;
+    font-size: 14px;
 }
 
 .report-card-1 .only-first-card .card-d-label label {
     font-size: 19px;
     font-weight: 800;
     color: #0a0a0a;
+    text-transform: capitalize;
 }
 
 .card-d-label label,
