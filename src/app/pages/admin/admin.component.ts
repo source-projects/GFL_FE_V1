@@ -60,6 +60,7 @@ export class AdminComponent implements OnInit {
   machineEditFlag = false;
   qualityEditFlag = false;
   machineCategoryEditFlag = false;
+  saveHidden = true;
 
   disabled = false;
   hiddenEdit = false;
@@ -225,8 +226,8 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllInvoiceSequence().subscribe(
       (data) => {
         if (data["success"]) {
-          this.sequenceList.push(data["data"]);
-          console.log(this.sequenceList);
+          this.addInvoiceSequence.sequence = data["data"]['sequence']
+          this.addInvoiceSequence.id = data["data"]['id'];
           this.loading = false;
         } else {
           this.loading = false;
@@ -599,22 +600,21 @@ export class AdminComponent implements OnInit {
   saveSequence(addSequenceData) {
     this.formSubmitted = true;
     if (addSequenceData.valid) {
-      // if (this.departmentEditFlag == true) {
-      //   this.adminService.updateQuality(this.addQuality).subscribe(
-      //     (data) => {
-      //       if (data["success"]) {
-      //         this.toastr.success(errorData.Update_Success);
-      //         this.getAllQuality();
-      //         this.onCancelQuality();
-      //         this.resetValue(addQualityData);
-      //         this.formSubmitted = false;
-      //       } else {
-      //         this.toastr.error(data["msg"]);
-      //       }
-      //     },
-      //     (error) => {}
-      //   );
-      // } else {
+      if(this.sequenceByEditFlag){
+        this.adminService.updateInvoiceSequence(this.addInvoiceSequence).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllInvoiceSequenceData();
+              this.resetValue(addSequenceData);
+              this.saveHidden = true;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }else{
         this.adminService.saveInvoiceSequence(this.addInvoiceSequence).subscribe(
           (data) => {
             if (data["success"]) {
@@ -627,6 +627,7 @@ export class AdminComponent implements OnInit {
           },
           (error) => {}
         );
+      }
       // }
     } else {
       // this.formSubmitted = false;
@@ -686,7 +687,8 @@ export class AdminComponent implements OnInit {
   }
 
   onCancelSequence(){
-    this.addInvoiceSequence.sequence = null;
+    this.saveHidden = true;
+    this.getAllInvoiceSequenceData();
   }
 
   removeJet(id) {
@@ -951,11 +953,9 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-  getSequenceByEdit(id) {
+  onEdit(){
+    this.saveHidden = false;
     this.sequenceByEditFlag = true;
-    this.sequenceList.forEach((element) => {
-      if (element.id == id) {
-        this.addInvoiceSequence.sequence = element.sequence;
-      }
-    });  }
+
+  }
 }

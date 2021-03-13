@@ -19,6 +19,12 @@ export class ReportService {
     return response;
   }
 
+  getMachineDataById(id:any){
+    let response = this._http.get(this.commonService.envUrl() + "api/machine/" + id);
+    return response;
+
+  }
+
   getMachineDataByMachineIdAPI(id:any){
     let response = this._http.get(this.commonService.envUrl() + "api/machine/" + id);
     return response;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from 'app/@theme/json/error.json';
 import { ChartDataSets, ChartType } from 'chart.js';
@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
 
   datePipeString: string;
   purchaseRequestList: PurchaseRequest[] = [];
@@ -39,11 +39,12 @@ export class ReportComponent implements OnInit {
   public startAt;
   public fromtime: any;
   public totime: any;
+  tablestyle = "bootstrap";
 
   machineCategory: any = [];
   machines: any = [];
-
-
+  machineName: any;
+  machineData = [];
   obj = {
     "fromDate": "",
     "fromTime": "",
@@ -65,12 +66,12 @@ export class ReportComponent implements OnInit {
   waterJetMachineFlag: boolean = false;
   foldingMachineFlag: boolean = false;
   MachineFlag: boolean = false;
-  boilerFlag:boolean = false;
-  thermoFlag:boolean = false;
+  boilerFlag: boolean = false;
+  thermoFlag: boolean = false;
   ChartFlag: boolean = false;
   NoDataFlag: boolean = false;
   buttonFlag: boolean = false;
-
+  inter: any;
 
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[] = [];
@@ -100,6 +101,10 @@ export class ReportComponent implements OnInit {
     //this.getWaterJetList();
   }
 
+  ngOnDestroy() {
+    clearInterval(this.inter);
+  }
+
   change(value: any) {
 
     this.datePipeString = this.datePipe.transform(value._selecteds[0], 'yyyy-MM-dd');
@@ -118,6 +123,32 @@ export class ReportComponent implements OnInit {
       (res) => {
         this.machineCategory = res;
         this.machineCategory = this.machineCategory.data;
+        this.machineCategory.forEach(element => {
+          if (element.name === "Stenter") {
+            let id = element.id;
+            this.getAllMachineByCategoryId(id);
+          }
+        });
+      }
+    )
+  }
+
+  machineSelected(event) {
+    let id = event;
+    this.getMachineDetails(id)
+    this.inter = setInterval(() => {
+      this.getMachineDetails(id);
+    }, 3000)
+
+  }
+
+  getMachineDetails(id) {
+    this.reportservice.getMachineDataById(id).subscribe(
+      (res) => {
+        this.machineData = res["data"].getAllMachineRecords;
+        this.machineData.forEach((ele) => {
+          ele.mtr = ele.mtr.toFixed(3);
+        })
       }
     )
   }
@@ -158,10 +189,10 @@ export class ReportComponent implements OnInit {
     else if (value.name == 'string') {
       this.waterJetMachineFlag = true;
     }
-    else if (value.name == 'Boiler'){
+    else if (value.name == 'Boiler') {
       this.boilerFlag = true;
     }
-    else if (value.name == 'Thermopack'){
+    else if (value.name == 'Thermopack') {
       this.thermoFlag = true;
     }
   }
@@ -291,12 +322,12 @@ export class ReportComponent implements OnInit {
       this.waterJetMachineFlag = false;
       this.machineReportFlag = true;
     }
-    else if (this.boilerFlag == true){
+    else if (this.boilerFlag == true) {
       this.buttonFlag = true;
       this.machineReportFlag = true;
       this.boilerFlag = false;
     }
-    else if (this.thermoFlag == true){
+    else if (this.thermoFlag == true) {
       this.buttonFlag = true;
       this.machineReportFlag = true;
       this.thermoFlag = false;
@@ -346,3 +377,4 @@ export class ReportComponent implements OnInit {
       );
   }
 }
+
