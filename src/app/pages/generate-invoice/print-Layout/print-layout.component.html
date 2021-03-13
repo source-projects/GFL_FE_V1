@@ -414,6 +414,9 @@
 <div *ngIf="printFlag" class="main-modal-invoice-review">
     <div class="modal-header inovice-reiview-header">
         <p class="text-center in-pre-text"><b>Invoice Preview</b></p>
+        <button class="close invoice-close" aria-label="Close" (click)="activeModal.close(false)">
+            <span aria-hidden="true" class="invoice-close-cross">&times;</span>
+        </button>
     </div>
     <div *ngFor="let invoice of printInvoiceData;let i = index;" class="mr-tb-26">
         <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
