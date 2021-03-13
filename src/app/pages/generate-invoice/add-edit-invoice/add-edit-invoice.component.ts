@@ -10,8 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintLayoutComponent } from '../print-Layout/print-layout.component';
-import { GenerateModalComponent } from '../generate-modal/generate-modal.component';
-import * as wijmo from "@grapecity/wijmo";
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -185,53 +183,60 @@ invoiceNo : any;
 
   addInvoice(invoiceForm) {
     this.formSubmitted = true;
-    
-    this.finalcheckedrows.map(ele => {
-      let obj: invoiceobj = new invoiceobj();
-      obj.batchId = ele.batchId;
-      obj.stockId = ele.controlId;
-      this.final.push(obj);
-    })
-    let obj = {
-      batchAndStockIdList: this.final,
-      createdBy: this.userId,
-      userHeadId: this.userHeadId
-    }
-    const modalRef = this.modalService.open(GenerateModalComponent,{size: "xl"});
-    modalRef.componentInstance.finalInvoice = obj;
-    modalRef.result
-      .then((result) => {
-        if(result){
-          if (invoiceForm.valid) {
-            this.generateInvoiceService.addInvoicedata(obj).subscribe(
-              async data => {
-                if (data['success']) {
-                  this.invoiceNo = data["data"];
-                  // this.route.navigate(["/pages/generate_invoice"]);
-                  this.toastr.success(errorData.Add_Success);
-                  this.merge = [];
+    console.log(this.finalcheckedrows)
+    if(this.finalcheckedrows.length > 0){
+      this.finalcheckedrows.map(ele => {
+        let obj: invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
+        obj.stockId = ele.controlId;
+        this.final.push(obj);
+      })
+      let obj = {
+        batchAndStockIdList: this.final,
+        createdBy: this.userId,
+        userHeadId: this.userHeadId
+      }
+      const modalRef = this.modalService.open(PrintLayoutComponent,{size: "xl"});
+      modalRef.componentInstance.finalInvoice = obj;
+      modalRef.componentInstance.printFlag = true;
+  
+      modalRef.result
+        .then((result) => {
+          if(result){
+            if (invoiceForm.valid) {
+              this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                async data => {
+                  if (data['success']) {
+                    this.invoiceNo = data["data"];
+                    // this.route.navigate(["/pages/generate_invoice"]);
+                    this.toastr.success(errorData.Add_Success);
+                    this.merge = [];
+                    this.disableButton = false;
+                    if(result === "print"){
+                      this.print(this.invoiceNo);
+                    }
+                  }
+                  else {
+                    this.disableButton = false;
+                    this.toastr.error(errorData.Add_Error)
+                    this.merge = [];
+                  }
+                },
+                error => {
                   this.disableButton = false;
-                 this.print(this.invoiceNo);
+                  this.toastr.error(errorData.Serever_Error)
                 }
-                else {
-                  this.disableButton = false;
-                  this.toastr.error(errorData.Add_Error)
-                  this.merge = [];
-                }
-              },
-              error => {
-                this.disableButton = false;
-                this.toastr.error(errorData.Serever_Error)
-              }
-            )
+              )
+            }else{
+              this.disableButton = false;
+            }
           }else{
             this.disableButton = false;
           }
-        }else{
-          this.disableButton = false;
-        }
-      })
-   
+        })
+  
+    }
+      
   }
    print(invoiceNo) {
     const queryParams: any = {};

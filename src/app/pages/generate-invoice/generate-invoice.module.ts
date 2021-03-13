@@ -7,11 +7,10 @@ import { SharedModule } from '../../@theme/shared.module';
 import { AddEditInvoiceComponent } from './add-edit-invoice/add-edit-invoice.component';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { PrintLayoutComponent } from './print-Layout/print-layout.component';
-import { GenerateModalComponent } from './generate-modal/generate-modal.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent, GenerateModalComponent],
+  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent],
   imports: [
     CommonModule,
     GenerateInvoiceRoutingModule,

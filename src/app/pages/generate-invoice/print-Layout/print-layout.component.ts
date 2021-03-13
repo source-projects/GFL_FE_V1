@@ -23,20 +23,22 @@ export class PrintLayoutComponent implements OnInit {
   public printInvoiceData: PrintInvoiceData[];
   public myDate;
   @Input() finalInvoice: any;
+  @Input() printFlag = false;
+
   invoiceIds: string[];
   invoiceDetails: Promise<any>[];
   rowd = [{}, {}, {}];
   lotRowd = [{}, {}, {}, {}];
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   invoiceData =[];
-  printFlag = false;
   constructor(
     private datePipe: DatePipe,
     private toastr: ToastrService,
     private printService: PrintInvoiceService,
     private router: Router,
     private _route: ActivatedRoute,
-    private _NgbActiveModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
+
   ) {}
 
    ngOnInit() {
@@ -170,17 +172,19 @@ export class PrintLayoutComponent implements OnInit {
         // this.getInvoiceDataToPrint();
       }
     }else{
+
+      this.myDate = new Date();
+      this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
+
       let arr = [];  
      arr.push(this.printInvoiceData);
       this.printInvoiceData = arr;
       let index = 0;
-      
       this.printInvoiceData[index].batchWithGrList.forEach(element => {
         element.batchDataList.sort(function(obj1 , obj2){
           return obj1.sequenceId - obj2.sequenceId;
         })
       }); 
-
       this.printInvoiceData[index].totalMtr = 0;
       this.printInvoiceData[index].totalAmt = 0;
       this.printInvoiceData[index].totalPcs = 0;
@@ -254,5 +258,18 @@ export class PrintLayoutComponent implements OnInit {
       doc.print();
       this.router.navigate(['pages/generate_invoice']);
     }, 1000);
+  }
+
+  onCancel(){
+    this.activeModal.close(false);
+  }
+
+  onPrint(){
+    this.activeModal.close("print");
+
+  }
+
+  onSave(){
+    this.activeModal.close(true);
   }
 }

@@ -1,19 +1,3 @@
-.header,
-.header-space,
-.footer,
-.footer-space {
-    height: 100px;
-}
-
-.header {
-    position: fixed;
-    top: 0;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
-}
 
 @media print {
     body,
@@ -397,92 +381,538 @@
     .pd-top-60 {
         padding-top: 60px !important;
     }
-}
 
-@media screen {
-     :host {
-        display: none;
+
+    // another css
+
+        
+    .printpage {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        // width: 31cm;
+        /* height: 29.7cm; */
     }
-}
 
-.printpage {
-    background: white;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 0.5cm;
-    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-    // width: 31cm;
-    /* height: 29.7cm; */
-}
+    .print-in-border {
+        border: 3px solid rgb(143, 143, 143);
+    }
 
-.print-in-border {
-    border: 3px solid rgb(143, 143, 143);
-}
+    .border-margin {
+        padding: 1rem 4rem 1rem 4rem;
+    }
 
-.border-margin {
-    padding: 1rem 4rem 1rem 4rem;
-}
+    .t-table {
+        height: 800px;
+    }
 
-.t-table {
-    height: 800px;
-}
+    .table-left-right {
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
 
-.table-left-right {
-    border-left: 0 !important;
-    border-right: 0 !important;
-}
+    .tr::nth-child(2) {
+        height: 100vh;
+    }
 
-.tr::nth-child(2) {
-    height: 100vh;
-}
+    .table-left-right td {
+        padding: 3px 0.75rem;
+        vertical-align: top;
+        // border: 1px solid #dee2e6;
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+        height: 100%;
+    }
 
-.table-left-right td {
-    padding: 3px 0.75rem;
-    vertical-align: top;
-    // border: 1px solid #dee2e6;
-    text-align: center;
-    width: 100%;
-    border-collapse: collapse;
-    height: 100%;
-}
+    .table-left-right thead td {
+        border-left: 1px solid #c3c3c3;
+        border-right: 1px solid #c3c3c3;
+    }
 
-.table-left-right thead td {
-    border-left: 1px solid #c3c3c3;
-    border-right: 1px solid #c3c3c3;
-}
+    .table-left-right td {
+        border-left: 1px solid #c3c3c3;
+        border-right: 1px solid #c3c3c3;
+    }
 
-.table-left-right td {
-    border-left: 1px solid #c3c3c3;
-    border-right: 1px solid #c3c3c3;
-}
-
-.table-left-right tfoot tr
-{
-    border-top: 1px solid #c3c3c3;
-    border-bottom: 1px solid #c3c3c3;
-}
+    .table-left-right tfoot tr
+    {
+        border-top: 1px solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+    }
 
 
-/* body {
-  background: rgb(204,204,204); 
+    /* body {
+    background: rgb(204,204,204); 
+    }
+    /* page[size="A4"][layout="landscape"] {
+    width: 29.7cm;
+    height: 21cm;  
+    }
+    page[size="A3"] {
+    width: 29.7cm;
+    height: 42cm;
+    }
+    page[size="A3"][layout="landscape"] {
+    width: 42cm;
+    height: 29.7cm;  
+    }
+    page[size="A5"] {
+    width: 14.8cm;
+    height: 21cm;
+    }
+    page[size="A5"][layout="landscape"] {
+    width: 21cm;
+    height: 14.8cm;  
+    } */
 }
-/* page[size="A4"][layout="landscape"] {
-  width: 29.7cm;
-  height: 21cm;  
-}
-page[size="A3"] {
-  width: 29.7cm;
-  height: 42cm;
-}
-page[size="A3"][layout="landscape"] {
-  width: 42cm;
-  height: 29.7cm;  
-}
-page[size="A5"] {
-  width: 14.8cm;
-  height: 21cm;
-}
-page[size="A5"][layout="landscape"] {
-  width: 21cm;
-  height: 14.8cm;  
-} */
+
+
+// modal print
+
+body,
+    .section {
+        margin: 0;
+        box-shadow: 0;
+    }
+    // .imp {
+    //     background-color: yellow;
+    // }
+    .img {
+        max-width: 500px;
+    }
+    .col-sm-1,
+    .col-sm-2,
+    .col-sm-3,
+    .col-sm-4,
+    .col-sm-5,
+    .col-sm-6,
+    .col-sm-7,
+    .col-sm-8,
+    .col-sm-9,
+    .col-sm-10,
+    .col-sm-11,
+    .col-sm-12 {
+        float: left;
+    }
+    .col-sm-12 {
+        width: 100%;
+    }
+    .col-sm-11 {
+        width: 91.66666666666666%;
+    }
+    .col-sm-10 {
+        width: 83.33333333333334%;
+    }
+    .col-sm-9 {
+        width: 75%;
+    }
+    .col-sm-8 {
+        width: 66.66666666666666%;
+    }
+    .col-sm-7 {
+        width: 58.333333333333336%;
+    }
+    .col-sm-6 {
+        width: 50%;
+    }
+    .col-sm-5 {
+        width: 41.66666666666667%;
+    }
+    .col-sm-4 {
+        width: 33.33333333333333%;
+    }
+    .col-sm-3 {
+        width: 25%;
+    }
+    .col-sm-2 {
+        width: 16.666666666666664%;
+    }
+    .col-sm-1 {
+        width: 8.333333333333332%;
+    }
+    .col-md-3 {
+        width: 25%;
+    }
+    .lot-border tr {
+        border: 2px solid rgb(143, 143, 143);
+    }
+    .footer-border {
+        border: 1px solid rgb(143, 143, 143);
+    }
+    .footer-bottom,
+    .border-top-none {
+        padding: 5px 15px;
+    }
+    .border-top {
+        border-top: 1px solid;
+        padding: 15px;
+    }
+    .terms-cond {
+        list-style: none;
+    }
+    .terms-cond,
+    .terms-cond li {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+    .footer-bottom {
+        padding-left: 15px;
+        border: 1px solid rgb(143, 143, 143);
+    }
+    .border-top-none {
+        border: 1px solid rgb(143, 143, 143);
+        border-top: none;
+    }
+    // .footer-border {
+    //     position: absolute;
+    //     bottom: 0;
+    //     width: 100%;
+    // }
+    .display-flex {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .display-flex-end {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .height-100 {
+        height: 100%;
+    }
+    .company-ltd {
+        margin-top: 30px;
+    }
+    // lot table
+    #invoice-table {
+        border: 1px solid rgb(143, 143, 143);
+        border-spacing: 0;
+        clear: both;
+        margin: 0;
+        height: 200mm;
+        width: 100%;
+    }
+    .lot-border tr th {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        font-size: 15px;
+    }
+    #invoice-table th,
+    td {
+        border-left: 1px solid rgb(143, 143, 143);
+    }
+    #invoice-table th:first-child,
+    td:first-child {
+        border-left: none;
+    }
+    #invoice-table th {
+        border-bottom: 1px solid rgb(143, 143, 143);
+    }
+    #invoice-table td {
+        vertical-align: middle;
+        font-size: 6pt;
+    }
+    th {
+        text-align: center;
+        font-weight: normal;
+    }
+    .amount,
+    .spacing-low td {
+        text-align: center;
+    }
+    // .invoice_line {
+    //     height: 6mm;
+    // }
+    .invoice_line th {
+        font-size: 15px;
+    }
+    .font-big b,
+    .font-big,
+    .font-big .terms-cond li,
+    .auth-font {
+        font-size: 15px;
+    }
+    .company-ltd {
+        font-size: 18px;
+    }
+    .invoice_line td,
+    .site,
+    .amount {
+        font-size: 40px;
+        font-weight: 600;
+    }
+    .invoice_line td,
+    .invoice_line th {
+        padding: 1mm;
+        text-align: center;
+    }
+    .lot-border tr td {
+        padding: 5px 0;
+        font-size: 40px;
+    }
+    .card-block p {
+        margin-bottom: 2px;
+    }
+    .card-block p:nth-child(1) {
+        margin-bottom: 1px;
+    }
+    .border-margin {
+        padding: 5px 0 15px 0;
+    }
+    .top-print-head {
+        text-align: right;
+        display: inline-block;
+        font-size: 15px;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .spacing-low tr:nth-child(even) {
+        background-color: Lightgreen !important;
+    }
+    .spacing-low tr th,
+    .spacing-low tr td,
+    .spacing-low tfoot tr td {
+        border-left: 2px solid rgb(143, 143, 143) !important;
+        border-right: 2px solid rgb(143, 143, 143) !important;
+    }
+    .spacing-low tr th,
+    .spacing-low tr:last-child,
+    .spacing-low tfoot tr td {
+        border-top: 2px solid rgb(143, 143, 143) !important;
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+    }
+    .spacing-low th,
+    .spacing-low td {
+        padding: 1px 0.75rem !important;
+    }
+    .spacing-low>tr>td,
+    .border-width {
+        border-width: 2px !important;
+    }
+    .lot-border tr th,
+    table.lot-border,
+    table.spacing-low {
+        margin-bottom: 1px!important;
+    }
+    .border-dark,
+    .border {
+        border: 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-top {
+        border: 0px 1px 1px 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-zero {
+        border: 0 !important;
+    }
+    .border-bootom-none tr:last-child {
+        border: 0 !important
+    }
+    .border-bootom-none {
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+    }
+    .display-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .spacing-low tfoot {
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 0;
+    }
+    tfoot.spacing-low tr td {
+        border: 1px solid rgb(143, 143, 143) !important;
+    }
+    tfoot.spacing-low tr:last-child {
+        text-align: left!important;
+    }
+    // codepen print css
+    .print-invoice-table tbody {
+        height: 178mm;
+        overflow: hidden;
+        overflow-x: hidden;
+        display: block;
+        width: 100%;
+    }
+    .print-invoice-table tbody tr,
+    .print-invoice-table thead tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .print-invoice-table thead,
+    .print-invoice-table tfoot {
+        display: table;
+        width: 100%;
+    }
+    .print-invoice-table thead tr th,
+    .print-invoice-table tfoot tr th,
+    .print-invoice-table {
+        border: 2px solid rgb(143, 143, 143) !important;
+    }
+    .print-invoice-table thead tr th {
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+        border-top: 0px solid rgb(143, 143, 143) !important;
+    }
+    .print-invoice-table tfoot tr {
+        border-left: 0!important;
+        border-right: 0!important;
+    }
+    // inline css remove
+    .width-63 {
+        width: 63%;
+    }
+    .width-60 {
+        width: 60%;
+    }
+    .width-37 {
+        width: 37%;
+    }
+    .width-10 {
+        width: 10%;
+    }
+    .width-30 {
+        width: 30%;
+    }
+    .width-4px {
+        width: 4px;
+    }
+    .width-4 {
+        width: 4%;
+    }
+    .width-15 {
+        width: 15%;
+    }
+    .width-9 {
+        width: 9%;
+    }
+    .duplicate-border {
+        border-top-width: 3px !important;
+        border-left-width: 3px !important;
+        border-right-width: 3px !important;
+    }
+    .pd-0 {
+        padding: 0;
+    }
+    .mr-0 {
+        margin: 0;
+    }
+    .display-flex-end {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .font-20 {
+        font-size: 20px;
+    }
+    .font-30 {
+        font-size: 30px;
+    }
+    .font-15 {
+        font-size: 15px;
+    }
+    .jus-con-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .print-logo-style {
+        width: 130px;
+        height: auto;
+    }
+    .font-bold {
+        font-weight: bold;
+    }
+    .disc-style {
+        font-size: 15px;
+        border-top: 0 !important;
+    }
+    .main-invoice-row {
+        margin-top: 3px;
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 5px;
+    }
+    .pd-top-bottom-2 {
+        padding-top: 2px !important;
+        padding-bottom: 2px!important;
+    }
+    .pd-top-bottom-1 {
+        font-size: 13px !important;
+        padding-top: 1px !important;
+        padding-bottom: 1px!important;
+    }
+    .pd-top-bottom-0 {
+        padding-top: 0 !important;
+        padding-bottom: 0!important;
+    }
+    .pd-top-60 {
+        padding-top: 60px !important;
+    }
+
+
+    // another css
+
+        
+    .printpage {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        // width: 31cm;
+        /* height: 29.7cm; */
+    }
+
+    .print-in-border {
+        border: 3px solid rgb(143, 143, 143);
+    }
+
+    .border-margin {
+        padding: 1rem 4rem 1rem 4rem;
+    }
+
+    .t-table {
+        height: 800px;
+    }
+
+    .table-left-right {
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+    .tr::nth-child(2) {
+        height: 100vh;
+    }
+
+    .table-left-right td {
+        padding: 3px 0.75rem;
+        vertical-align: top;
+        // border: 1px solid #dee2e6;
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+        height: 100%;
+    }
+
+    .table-left-right thead td {
+        border-left: 1px solid #c3c3c3;
+        border-right: 1px solid #c3c3c3;
+    }
+
+    .table-left-right td {
+        border-left: 1px solid #c3c3c3;
+        border-right: 1px solid #c3c3c3;
+    }
+
+    .table-left-right tfoot tr
+    {
+        border-top: 1px solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+    }
+
+
