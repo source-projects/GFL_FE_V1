@@ -77,3 +77,12 @@ export class AddMachineCategory {
     this.name = null;
   }
 }
+
+export class AddInvoiceSequence {
+    id: number;
+    sequence: number;
+    constructor() {
+      this.id = null;
+      this.sequence = null;
+    }  
+}

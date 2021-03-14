@@ -191,7 +191,7 @@
             <div class="">
                 <div class="small-device-res">
                     <div class="dash-style">
-                        <h2 class="nb-text">Party</h2>
+                        <h2 class="nb-text">Report</h2>
                     </div>
                 </div>
             </div>
@@ -214,10 +214,32 @@
                     </div>
 
                 </nb-tab>
-                <nb-tab tabTitle="Stenter Machine">
+                <nb-tab tabTitle="Stenter Machine" >
 
                     <div class="row">
-                        <div class="col-md-4" *ngFor="let machine of machines">
+                        <div class="col-md-4">
+                            <ng-select placeholder="Select machine name" appendTo="body"  [(ngModel)]="machineName"  
+                                 name="machineName"  (change)="machineSelected($event)">
+                                <ng-option *ngFor="let m of machines" [value]="m.id">
+                                    {{m.machineName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>  
+                    <ngx-datatable [rows]="machineData" [ngClass]="tablestyle" [headerHeight]="31" 
+                    class="material" [footerHeight]="40" [sorts]="[{prop: 'id', dir: 'desc'}]">
+                    
+                    <ngx-datatable-column name="Speed" prop="speed"></ngx-datatable-column>
+                    <ngx-datatable-column name="Meter" prop="mtr"></ngx-datatable-column>
+                    <ngx-datatable-column name="Created Date" prop="createdDate">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row.createdDate | date:'medium'}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    </ngx-datatable>  
+
+                        <!-- <div class="col-md-4" *ngFor="let machine of machines">
                             <div class="machine-main-card">
                                 <div class="date-card">
                                     <div class="date-card-header">
@@ -273,8 +295,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
 
                 </nb-tab>
                 <nb-tab tabTitle="Folding Machine">

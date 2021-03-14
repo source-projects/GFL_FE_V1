@@ -56,11 +56,19 @@ export class AdminService {
     );
   }
 
+  getAllInvoiceSequence() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/invoiceSequence/"
+    );
+  }
+
   getMachineDateById(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/machine/" + id
     );
   }
+
+
 
   saveMachine(data) {
     return this.httpClient.post(
@@ -116,6 +124,14 @@ export class AdminService {
       data
     );
   }
+
+  saveInvoiceSequence(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/invoiceSequence/",
+      data
+    );
+  }
+
 
   deleteJetById(id) {
     return this.httpClient.delete(
@@ -208,6 +224,13 @@ export class AdminService {
   updateDesigntationData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/user/update/designation/",
+      data
+    );
+  }
+
+  updateInvoiceSequence(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/update/invoiceSequence/",
       data
     );
   }

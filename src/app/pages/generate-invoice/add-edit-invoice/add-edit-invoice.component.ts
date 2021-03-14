@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import * as errorData from 'app/@theme/json/error.json';
 import { Invoice, invoiceobj } from "app/@theme/model/invoice";
 import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
@@ -8,6 +8,8 @@ import { PartyService } from 'app/@theme/services/party.service';
 import { keys } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'app/@theme/services/common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrintLayoutComponent } from '../print-Layout/print-layout.component';
 
 @Component({
   selector: 'ngx-add-edit-invoice',
@@ -22,6 +24,11 @@ export class AddEditInvoiceComponent implements OnInit {
     "createdBy": null,
     "invoiceNo": null,
     "userHeadId": null
+  }
+
+  invoiceObj = {
+    "batchAndStockIdList" : [],
+
   }
   finalcheckedrows = [];
   party: any[];
@@ -43,7 +50,7 @@ export class AddEditInvoiceComponent implements OnInit {
   Invoice: any[];
   userHeadId;
   merge = [];
-
+invoiceNo : any;
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
     private partyService: PartyService,
@@ -52,6 +59,7 @@ export class AddEditInvoiceComponent implements OnInit {
     private toastr: ToastrService,
     private jwt: JwtTokenService,
     private commonService: CommonService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -146,7 +154,6 @@ export class AddEditInvoiceComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.finalbatch = data["data"];
-              console.log(this.finalbatch)
               this.finalbatch.forEach(ele=>{
                 ele.wt = ele.wt.toFixed(2);
               })
@@ -173,59 +180,92 @@ export class AddEditInvoiceComponent implements OnInit {
   
   final = [];
   selected = [];
-  addInvoice(invoiceForm) {
-    this.disableButton = true;
-    this.formSubmitted = true;
 
-    this.finalcheckedrows.map(ele => {
-      let obj: invoiceobj = new invoiceobj();
-      obj.batchId = ele.batchId;
-      obj.stockId = ele.controlId;
-      this.final.push(obj);
-    })
-    let obj = {
-      batchAndStockIdList: this.final,
-      createdBy: this.userId,
-      userHeadId: this.userHeadId
+  addInvoice(invoiceForm) {
+    this.formSubmitted = true;
+    console.log(this.finalcheckedrows)
+    if(this.finalcheckedrows.length > 0){
+      this.finalcheckedrows.map(ele => {
+        let obj: invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
+        obj.stockId = ele.controlId;
+        this.final.push(obj);
+      })
+      let obj = {
+        batchAndStockIdList: this.final,
+        createdBy: this.userId,
+        userHeadId: this.userHeadId
+      }
+      const modalRef = this.modalService.open(PrintLayoutComponent,{size: "xl"});
+      modalRef.componentInstance.finalInvoice = obj;
+      modalRef.componentInstance.printFlag = true;
+  
+      modalRef.result
+        .then((result) => {
+          if(result){
+            if (invoiceForm.valid) {
+              this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                async data => {
+                  if (data['success']) {
+                    this.invoiceNo = data["data"];
+                    // this.route.navigate(["/pages/generate_invoice"]);
+                    this.toastr.success(errorData.Add_Success);
+                    this.merge = [];
+                    this.disableButton = false;
+                    if(result === "print"){
+                      this.print(this.invoiceNo);
+                    }
+                  }
+                  else {
+                    this.disableButton = false;
+                    this.toastr.error(errorData.Add_Error)
+                    this.merge = [];
+                  }
+                },
+                error => {
+                  this.disableButton = false;
+                  this.toastr.error(errorData.Serever_Error)
+                }
+              )
+            }else{
+              this.disableButton = false;
+            }
+          }else{
+            this.disableButton = false;
+          }
+        })
+  
     }
+      
+  }
+   print(invoiceNo) {
+    const queryParams: any = {};
+   
+      // queryParams.myArray = JSON.stringify(arrayOfValues);
+      queryParams.invoice = invoiceNo;
+      const navigationExtras: NavigationExtras = {
+        queryParams,
+      };
+
+      this.route.navigate(["/pages/generate_invoice/print"],navigationExtras
+      );
     
-    if (invoiceForm.valid) {
-      this.generateInvoiceService.addInvoicedata(obj).subscribe(
-        data => {
-          if (data['success']) {
-            this.route.navigate(["/pages/generate_invoice"]);
-            this.toastr.success(errorData.Add_Success);
-            this.merge = [];
-            this.disableButton = false;
-          }
-          else {
-            this.disableButton = false;
-            this.toastr.error(errorData.Add_Error)
-            this.merge = [];
-          }
-        },
-        error => {
-          this.disableButton = false;
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
-    }else{
-      this.disableButton = false;
-    }
   }
 
   updateInvoice(invoiceForm) {
-    console.log("FORM:",invoiceForm);
     this.disableButton = true;
     this.formSubmitted = true;
 
     this.final = [];
-    this.finalcheckedrows.map(ele => {
+   
+    this.finalcheckedrows.map((ele,i) => {
       let obj: invoiceobj = new invoiceobj();
       obj.batchId = ele.batchId;
       obj.stockId = ele.controlId;
       this.final.push(obj);
-    })
+      })
+   
+   
     let obj = {
       batchAndStockIdList: this.final,
       createdBy: this.userId,
@@ -257,8 +297,7 @@ export class AddEditInvoiceComponent implements OnInit {
   }
 
   onSelect(value: any) {
-    let arr: any = value.selected;
+    let arr: any =  value.selected;
     this.finalcheckedrows = arr;
-
   }
 }
