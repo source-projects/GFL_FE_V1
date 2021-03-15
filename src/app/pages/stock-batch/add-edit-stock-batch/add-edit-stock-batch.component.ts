@@ -12,6 +12,7 @@ import * as _ from "lodash";
 import {
   NgbDateAdapter,
   NgbDateNativeAdapter,
+  NgbModal,
 } from "@ng-bootstrap/ng-bootstrap";
 import {
   StockBatch,
@@ -23,6 +24,8 @@ import { PartyService } from "../../..//@theme/services/party.service";
 import { QualityService } from "../../..//@theme/services/quality.service";
 import { StockBatchService } from "../../..//@theme/services/stock-batch.service";
 import { CommonService } from "../../..//@theme/services/common.service";
+import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { UpdateConfirmationDialogComponent } from "../../../@theme/components/update-confirmation-dialog/update-confirmation-dialog.component";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -42,11 +45,11 @@ export class AddEditStockBatchComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   qualityList: any = [];
   partyList: any = [];
-
+  wtPer100mtrCopy: any;
   user: any;
   userHead;
   index;
-  wtPer100M;
+  wtPer100m;
   maxDate: any;
   currentStockBatchId;
   rearrangeStartIndex: any;
@@ -92,7 +95,9 @@ export class AddEditStockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private modalService: NgbModal,
+
   ) {}
 
   async ngOnInit() {
@@ -111,7 +116,7 @@ export class AddEditStockBatchComponent implements OnInit {
       23,
       59
     );
-    this.stockBatch.billDate = this.maxDate;
+    this.stockBatch.receiveDate = this.maxDate;
     this.stockBatch.chlDate = this.maxDate;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -209,7 +214,8 @@ export class AddEditStockBatchComponent implements OnInit {
             } else {
               this.weightFlag = false;
             }
-            this.wtPer100M = element.wtPer100m;
+            this.wtPer100mtrCopy = element.wtPer100m;
+            this.stockBatch.wtPer100m = element.wtPer100m;
           }
         });
 
@@ -254,11 +260,11 @@ export class AddEditStockBatchComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.stockBatch.billDate = new Date(data["data"].billDate);
+            this.stockBatch.receiveDate = new Date(data["data"].receiveDate);
             this.stockBatch.qualityId = data["data"].qualityId;
             this.stockBatch = data["data"];
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
-            this.stockBatch.billDate = new Date(this.stockBatch.billDate);
+            this.stockBatch.receiveDate = new Date(this.stockBatch.receiveDate);
             if (!this.stockBatch.batchData.length) {
               //this.zeroValueBatch = true;
             } else {
@@ -293,7 +299,8 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.qualityList.length != 0) {
       this.qualityList.forEach((element) => {
         if (element.id == this.stockBatch.qualityId) {
-          this.wtPer100M = element.wtPer100m;
+          this.wtPer100mtrCopy = element.wtPer100m;
+          this.stockBatch.wtPer100m = element.wtPer100m;
           this.stockBatch.unit = element.unit;
           if (this.stockBatch.unit === "weight") {
             this.weightFlag = true;
@@ -484,7 +491,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
   calculateWt(meter: number, i, j, col) {
     let w: number;
-    w = (meter / 100) * this.wtPer100M;
+    w = (meter / 100) * (this.stockBatch.wtPer100m);
     this.stockDataValues[i].batchMW[j].wt = w.toFixed(2);
     this.weight = [];
     this.stockDataValues[i].batchMW.forEach((e) => {
@@ -540,7 +547,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
   calculateMtr(weight: number, i, j, col) {
     let m: number;
-    m = (weight * 100) / this.wtPer100M;
+    m = (weight * 100) / this.stockBatch.wtPer100m;
     this.stockDataValues[i].batchMW[j].mtr = m.toFixed(2);
     this.weight = [];
     this.stockDataValues[i].batchMW.forEach((e) => {
@@ -582,8 +589,7 @@ export class AddEditStockBatchComponent implements OnInit {
           !this.stockDataValues[0].batchMW[0].wt
         ) {
           returnValue = false;
-          if (this.stockBatch.billDate)
-            if (this.stockBatch.billNo)
+          if (this.stockBatch.receiveDate)
               if (this.stockBatch.chlDate)
                 if (this.stockBatch.chlNo)
                   if (this.stockBatch.stockInType)
@@ -624,8 +630,7 @@ export class AddEditStockBatchComponent implements OnInit {
     }
     if (returnValue) {
       returnValue = false;
-      if (this.stockBatch.billDate)
-        if (this.stockBatch.billNo)
+      if (this.stockBatch.receiveDate)
           if (this.stockBatch.chlDate)
             if (this.stockBatch.chlNo)
               if (this.stockBatch.stockInType)
@@ -654,7 +659,7 @@ export class AddEditStockBatchComponent implements OnInit {
       },
     ];
     this.stockBatch.chlDate = new Date();
-    this.stockBatch.billDate = new Date();
+    this.stockBatch.receiveDate = new Date();
     this.stockBatch.stockInType = "Fabric";
   }
   addUpdateStockBatch(myForm) {
@@ -695,29 +700,33 @@ export class AddEditStockBatchComponent implements OnInit {
         }
       });
       this.stockBatch.batchData = this.stockBatchArray;
-
-      if (this.addFlag) {
-        this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.loading = false;
-              this.reset(myForm);
-              this.disableButton = false;
-              this.toastr.success(data["msg"]);
-            } else {
+      if(this.stockBatch.wtPer100m == this.wtPer100mtrCopy){
+        if (this.addFlag) {
+          this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.loading = false;
+                this.reset(myForm);
+                this.disableButton = false;
+                this.toastr.success(data["msg"]);
+              } else {
+                this.loading = false;
+                this.disableButton = false;
+                this.stockBatchArray = [];
+                this.toastr.error(data["msg"]);
+              }
+            },
+            (error) => {
               this.loading = false;
               this.disableButton = false;
               this.stockBatchArray = [];
-              this.toastr.error(data["msg"]);
             }
-          },
-          (error) => {
-            this.loading = false;
-            this.disableButton = false;
-            this.stockBatchArray = [];
-          }
-        );
+          );
+        
+        
+        
       } else {
+
         this.stockBatch.updatedBy = this.user.userId;
         this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
           (data) => {
@@ -742,11 +751,52 @@ export class AddEditStockBatchComponent implements OnInit {
         );
         this.loading = false;
       }
-    } else {
-      this.disableButton = false;
-      const errorField = this.renderer.selectRootElement("#target");
-      errorField.scrollIntoView();
-      this.loading = false;
+     // } else {
+      //   this.disableButton = false;
+      //   const errorField = this.renderer.selectRootElement("#target");
+      //   errorField.scrollIntoView();
+      //   this.loading = false;
+      // }
+      }
+      else{
+        this.loading = false;
+
+        const modalRef = this.modalService.open(UpdateConfirmationDialogComponent, {
+          size: "sm",
+        });
+        modalRef.result.then((result) => {
+          if (result) {
+            this.stockBatch.updatedBy = this.user.userId;
+            this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+              (data) => {
+                if (data["success"]) {
+                  this.toastr.success(data["msg"]);
+                  this.route.navigate(["/pages/stock-batch"]);
+                } else {
+                  this.disableButton = false;
+                  this.stockBatchArray = [];
+                  this.toastr.error(data["msg"]);
+                }
+                this.loading = false;
+              },
+    
+              (error) => {
+                this.stockBatchArray = [];
+                this.toastr.error(errorData.Update_Error);
+                this.loading = false;
+                this.disableButton = false;
+                this.loading = false;
+              }
+            );
+            this.loading = false;
+         
+          
+          }else{
+            this.disableButton = false;
+
+          }
+        });
+      }
     }
   }
 }

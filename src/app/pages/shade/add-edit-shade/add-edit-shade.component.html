@@ -209,9 +209,9 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Lab Color No</label>
-                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shadeObj.labColorNo"
-                                class="form-control size-small" fieldsize="small" nbinput placeholder="Lab Color No" />
+                            <label>Color Name</label>
+                            <input type="text" name="colorName" colorName1="ngModel" [(ngModel)]="shadeObj.colorName"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Color Name" />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -228,21 +228,20 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label>Lab Color No</label>
+                            <input type="text" name="labColorNo" labColorNo1="ngModel" [(ngModel)]="shadeObj.labColorNo"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Lab Color No" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
                             <label>Remark</label>
                             <textarea name="remark" remark1="ngModel" [(ngModel)]="shadeObj.remark"
                                 class="form-control remark-resize"></textarea>
                         </div>
                     </div>
-                    <div class="col-md-4 desktop-btn">
-                        <div class="form-group">
-                            <!-- <label class="required">Pending</label> -->
-                            <nb-checkbox class="status-basic nb-transition" id="pending" name="pending"
-                                [(ngModel)]="shadeObj.pending" [checked]="shadeObj.pending" (checkedChange)="shadeObj.pending=
-                                !shadeObj.pending">
-                                <span class="text cr-txt">Pending</span>
-                            </nb-checkbox>
-                        </div>
-                    </div>
+                   
                     <div class="col-md-4 desktop-btn">
                         <div class="form-group">
                             <!-- <label class="required">Pending</label> -->
@@ -263,6 +262,17 @@
                                     <span>Extra rate is required if checked</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 desktop-btn">
+                        <div class="form-group">
+                            <!-- <label class="required">Pending</label> -->
+                            <nb-checkbox class="status-basic nb-transition" id="pending" name="pending"
+                                [(ngModel)]="shadeObj.pending" [checked]="shadeObj.pending" (checkedChange)="shadeObj.pending=
+                                !shadeObj.pending">
+                                <span class="text cr-txt">Pending</span>
+                            </nb-checkbox>
                         </div>
                     </div>
                     <!-- <div class="col-md-4" *ngIf="shadeObj.pending">
