@@ -49,7 +49,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
 
   //resetForm..
   resetAll(myForm) {
-    this.batchList = null;
+    this.batchList = [];
+    this.getAllBatchForFinishMtr();
+    this.finishedMeterForm.batchId = null;
     myForm.reset();
   }
 
@@ -136,7 +138,8 @@ export class AddEditFinishedMeterComponent implements OnInit {
           }
         );
     } else {
-      this.batchList = null;
+      this.batchList = [];
+      this.getAllBatchForFinishMtr();
       this.getAllParty();
       this.getAllQuality();
     }
@@ -146,6 +149,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
   batchSelected(event) {
     if (event) {
       let controlId: string;
+      this.finishedMeterForm.batchId = event.target.value;
       this.batchList.forEach((b) => {
         if (this.finishedMeterForm.batchId == b.batchId) {
           controlId = b.controlId;
@@ -217,7 +221,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
       );
     } else {
       this.finishedMeterForm.batchId = null;
-      this.batchList = null;
+      this.batchList = [];
       this.getAllQuality();
     }
   }
