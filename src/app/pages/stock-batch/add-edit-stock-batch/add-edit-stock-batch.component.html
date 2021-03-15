@@ -93,20 +93,20 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4 mobile-mr-bt">
+                        <!-- <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Bill No</label>
                             <input type="text" name="billNo" class="form-control" #billNo1="ngModel" [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}" min="0">
                             <div class="input-required" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
                                 <span>Bill no. is required and should not contain special characters</span>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-4 mobile-mr-bt">
-                            <label class="required">Bill Date:</label>
-                            <input name="billDate" class="form-control size-small" fieldsize="small" nbinput #billDate1="ngModel" [(ngModel)]='stockBatch.billDate' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)}">
+                            <label class="required">Receive Date:</label>
+                            <input name="receiveDate" class="form-control size-small" fieldsize="small" nbinput #receiveDate1="ngModel" [(ngModel)]='stockBatch.receiveDate' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && receiveDate1.invalid) || (receiveDate1.invalid && receiveDate1.touched)}">
                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
 
-                            <div class="input-required" *ngIf="(formSubmitted && billDate1.invalid) || (billDate1.invalid && billDate1.touched)">
-                                <span>Bill date is required</span>
+                            <div class="input-required" *ngIf="(formSubmitted && receiveDate1.invalid) || (receiveDate1.invalid && receiveDate1.touched)">
+                                <span>Receive date is required</span>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -118,10 +118,6 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Challan Date:</label>
                             <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" required [max]="maxDate" placeholder="MM-DD-YYYY" [ngClass]="{'is-invalid': (formSubmitted && chlDate1.invalid) || (chlDate1.invalid && chlDate1.touched)}">
@@ -131,14 +127,20 @@
                                 <span>Challan date is required</span>
                             </div>
                         </div>
-                        <div class="col-md-2 mobile-mr-bt">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                       
+                        <div class="col-md-4 mobile-mr-bt">
                             <label>Unit:</label>
                             <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
 
                         </div>
-                        <div class="col-md-2 mobile-mr-bt">
+                        <div class="col-md-4 mobile-mr-bt">
                             <label>Wt / 100 mtrs:</label>
-                            <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small" nbinput readonly #wtPer100M1="ngModel" [(ngModel)]='wtPer100M'>
+                            <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small" nbinput  #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m'>
 
                         </div>
                         <div class="col-md-4">

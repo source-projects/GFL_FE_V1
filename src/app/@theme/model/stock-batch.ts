@@ -3,10 +3,11 @@ export class StockBatch {
   stockInType: string = "Fabric";
   partyId: number;
   qualityId: number;
-  billNo: string;
-  billDate: Date;
+  //billNo: string;
+  receiveDate: Date;
   chlNo: string;
   unit: string;
+  wtPer100m: number;
   chlDate: Date;
   remark: string;
   createdBy: Number;
