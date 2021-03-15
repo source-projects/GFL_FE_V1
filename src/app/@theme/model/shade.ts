@@ -8,6 +8,7 @@ export class Shade {
   qualityType: string;
   colorTone: string;
   labColorNo: string;
+  colorName: string;
   category: string;
   remark: string;
   createdBy: number;

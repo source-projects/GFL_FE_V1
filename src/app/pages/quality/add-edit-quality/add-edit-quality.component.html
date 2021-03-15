@@ -119,9 +119,9 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                     <label class="required">Wt / 100 mtrs</label>
-                    <input (keypress)="numberOnly($event)" name="itemConsumption" type="number" id="wtPer100m"
+                    <input (keypress)="numberOnly($event)"  (keyup)="calculateMtrPerKg($event)" name="itemConsumption" type="number" id="wtPer100m"
                         formControlName="wtPer100m" class="form-control size-small" nbinput fieldsize="small"
                         placeholder="Wt Per 100m"
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('wtPer100m').invalid)&&(formSubmitted || addEditQualityForm.get('wtPer100m').touched)}"
@@ -132,21 +132,46 @@
                     </div>
                 </div>
 
+                <div class="form-group col-md-2">
+                    <label class="required">mtr / kg</label>
+                    <input (keypress)="numberOnly($event)" name="mtrPerKg" (keyup)="calculateWtPerMtr($event)" type="number" id="mtrPerKg"
+                        formControlName="mtrPerKg" class="form-control size-small" nbinput fieldsize="small"
+                        placeholder="Mtr per kg"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('mtrPerKg').invalid)&&(formSubmitted || addEditQualityForm.get('mtrPerKg').touched)}"
+                        min="0" />
+                    <div class="input-required"
+                        *ngIf="(addEditQualityForm.get('mtrPerKg').invalid)&&(formSubmitted || addEditQualityForm.get('mtrPerKg').touched)">
+                        <span>Mtr / kg is required</span>
+                    </div>
+                </div>
+
                 <div class="form-group col-md-4">
                     <label>Remark</label>
                     <input type="text" id="remark" fieldsize="small" nbinput formControlName="remark"
                         class="form-control input-sm size-small" placeholder="Enter Remark" />
                 </div>
 
-                <div class="form-group col-md-4">
-                    <label class="required">Unit</label>
+                <div class="form-group col-md-2">
+                    <label class="required">Inward Unit</label>
                     <ng-select id="unit" appendTo="body" formControlName="unit"
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)}"
-                        [items]="unit" bindValue="name" bindLabel="name" placeholder="Unit" class="dropdown-name">
+                        [items]="unit" bindValue="name" bindLabel="name" placeholder="Inward Unit" class="dropdown-name">
                     </ng-select>
                     <div class="input-required"
                         *ngIf="(addEditQualityForm.get('unit').invalid)&&(formSubmitted || addEditQualityForm.get('unit').touched)">
-                        <span>Unit is required.</span>
+                        <span>Inward Unit is required.</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label class="required">Billing Unit</label>
+                    <ng-select id="billingUnit" appendTo="body" formControlName="billingUnit"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('billingUnit').invalid)&&(formSubmitted || addEditQualityForm.get('billingUnit').touched)}"
+                        [items]="unit" bindValue="name" bindLabel="name" placeholder="Billing Unit" class="dropdown-name">
+                    </ng-select>
+                    <div class="input-required"
+                        *ngIf="(addEditQualityForm.get('billingUnit').invalid)&&(formSubmitted || addEditQualityForm.get('billingUnit').touched)">
+                        <span>Billing Unit is required.</span>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
