@@ -35,4 +35,6 @@ export class GenerateInvoiceService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getDispatch/byInvoiceNumber/'+id);
  
   }
+
+ 
 }

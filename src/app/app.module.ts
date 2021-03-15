@@ -27,6 +27,7 @@ import {
 import { ToastrModule } from "ngx-toastr";
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
 import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
+import { ShadeModule } from "./pages/shade/shade.module";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -36,6 +37,7 @@ import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
     HttpClientModule,
     AppRoutingModule,
     OwlDateTimeModule,
+    ShadeModule,
     OwlNativeDateTimeModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),

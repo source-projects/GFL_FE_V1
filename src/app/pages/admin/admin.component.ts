@@ -8,6 +8,7 @@ import {
   AddMachine,
   AddMachineCategory,
   AddQuality,
+  AddInvoiceSequence
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -30,6 +31,7 @@ export class AdminComponent implements OnInit {
   approveBy: ApproveBy = new ApproveBy();
   addMachine: AddMachine = new AddMachine();
   addMachineCategory: AddMachineCategory = new AddMachineCategory();
+  addInvoiceSequence: AddInvoiceSequence = new AddInvoiceSequence();
   addJetArray: AddJet[] = [];
   addCompanyArray: AddCompany[] = [];
   adddesignationArray: AddDesignation[] = [];
@@ -37,6 +39,7 @@ export class AdminComponent implements OnInit {
   addMachineArray: AddMachine[] = [];
   addMachineCategoryArray: AddMachineCategory[] = [];
   addQualityArray: AddQuality[] = [];
+  addInvoiceSequenceArray: AddInvoiceSequence[] = [];
   jetList = [];
   designationList = [];
   companyList = [];
@@ -45,7 +48,7 @@ export class AdminComponent implements OnInit {
   machineList = [];
   machineCategoryList = [];
   qualityList = [];
-
+  sequenceList = [];
   formSubmitted: boolean = false;
   loading = false;
   jetEditFlag = false;
@@ -53,9 +56,11 @@ export class AdminComponent implements OnInit {
   departmentEditFlag = false;
   designationEditFlag = false;
   approveByEditFlag = false;
+  sequenceByEditFlag = false;
   machineEditFlag = false;
   qualityEditFlag = false;
   machineCategoryEditFlag = false;
+  saveHidden = true;
 
   disabled = false;
   hiddenEdit = false;
@@ -87,6 +92,7 @@ export class AdminComponent implements OnInit {
     this.getAddAcess();
     this.getDeleteAccess();
     this.getEditAccess();
+    this.getAllInvoiceSequenceData();
     
   }
 
@@ -205,6 +211,23 @@ export class AdminComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.approveByList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllInvoiceSequenceData() {
+    this.adminService.getAllInvoiceSequence().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.addInvoiceSequence.sequence = data["data"]['sequence']
+          this.addInvoiceSequence.id = data["data"]['id'];
           this.loading = false;
         } else {
           this.loading = false;
@@ -574,6 +597,44 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  saveSequence(addSequenceData) {
+    this.formSubmitted = true;
+    if (addSequenceData.valid) {
+      if(this.sequenceByEditFlag){
+        this.adminService.updateInvoiceSequence(this.addInvoiceSequence).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllInvoiceSequenceData();
+              this.resetValue(addSequenceData);
+              this.saveHidden = true;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }else{
+        this.adminService.saveInvoiceSequence(this.addInvoiceSequence).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllQuality();
+              this.resetValue(addSequenceData);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }
+      // }
+    } else {
+      // this.formSubmitted = false;
+      return;
+    }
+  }
+
   resetValue(FormName) {
     this.formSubmitted = false;
     Object.keys(FormName.controls).forEach((field) => {
@@ -625,6 +686,11 @@ export class AdminComponent implements OnInit {
     this.approveByEditFlag = false;
   }
 
+  onCancelSequence(){
+    this.saveHidden = true;
+    this.getAllInvoiceSequenceData();
+  }
+
   removeJet(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -670,6 +736,8 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+  
   removeMachineCategory(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -884,5 +952,10 @@ export class AdminComponent implements OnInit {
         this.approveBy.contact = element.contact;
       }
     });
+  }
+  onEdit(){
+    this.saveHidden = false;
+    this.sequenceByEditFlag = true;
+
   }
 }
