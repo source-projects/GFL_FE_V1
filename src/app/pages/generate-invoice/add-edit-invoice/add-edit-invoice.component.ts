@@ -198,7 +198,7 @@ invoiceNo : any;
       }
       const modalRef = this.modalService.open(PrintLayoutComponent,{size: "xl"});
       modalRef.componentInstance.finalInvoice = obj;
-      modalRef.componentInstance.printFlag = true;
+      modalRef.componentInstance.previewFlag = true;
   
       modalRef.result
         .then((result) => {

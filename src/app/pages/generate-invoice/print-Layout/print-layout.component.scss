@@ -427,6 +427,7 @@
         border-top: 1px solid #c3c3c3;
         border-bottom: 1px solid #c3c3c3;
     }
+    
     /* body {
     background: rgb(204,204,204); 
     }
@@ -450,8 +451,16 @@
     width: 21cm;
     height: 14.8cm;  
     } */
+
+    // .p-mr-bt{
+    //     margin-bottom: unset !important;
+    // }
 }
 
+
+.p-mr-bt{
+    margin-bottom: 20px !important;
+}
 // modal print
 body,
 .section {
