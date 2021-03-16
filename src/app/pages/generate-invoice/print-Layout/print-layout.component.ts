@@ -23,7 +23,7 @@ export class PrintLayoutComponent implements OnInit {
   public printInvoiceData: PrintInvoiceData[];
   public myDate;
   @Input() finalInvoice: any;
-  @Input() printFlag = false;
+  @Input() previewFlag = false;
 
   invoiceIds: string[];
   invoiceDetails: Promise<any>[];
@@ -87,7 +87,6 @@ export class PrintLayoutComponent implements OnInit {
 
   start() {
     if (this.invoiceIds.length > 0) {
-      this.printFlag = true;
       this.myDate = new Date();
       this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
 

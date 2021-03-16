@@ -230,6 +230,7 @@ export class AdminComponent implements OnInit {
           this.addInvoiceSequence.id = data["data"]['id'];
           this.loading = false;
         } else {
+          this.saveHidden = false;
           this.loading = false;
         }
       },
@@ -619,8 +620,9 @@ export class AdminComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
-              this.getAllQuality();
-              this.resetValue(addSequenceData);
+              this.getAllInvoiceSequenceData();
+              this.saveHidden = true;
+              // this.resetValue(addSequenceData);
             } else {
               this.toastr.error(data["msg"]);
             }
