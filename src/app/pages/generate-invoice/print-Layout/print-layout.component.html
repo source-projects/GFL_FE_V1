@@ -1,7 +1,9 @@
 <!-- <ngx-loading [show]="true"></ngx-loading> -->
+
 <div *ngIf="!previewFlag">
     <div *ngFor="let invoice of printInvoiceData;let i = index;">
         <section class="printpage" id="printpdf{{i}}" #printpdf{{i}}>
+            <div *ngFor="let item of copyType" class="border-margin-d-t"> 
 
             <div class="border-margin">
                 <div class="container">
@@ -13,7 +15,7 @@
 
 
                         <div class="top-print-head border-width width-37">
-                            <strong class="border duplicate-border">Original/Duplicate/Triplicate</strong>
+                            <strong class="border duplicate-border">{{item}}</strong>
                         </div>
 
 
@@ -405,7 +407,7 @@
                 </div>
 
             </div>
-
+            </div>
         </section>
     </div>
 </div>

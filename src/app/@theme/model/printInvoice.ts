@@ -35,7 +35,7 @@ export class PrintInvoiceData {
     isExtra: boolean
     isFinishMtrSave: boolean
     isProductionPlanned: boolean
-    mtr: number
+    mtr: string
     sequenceId: number
     wt: number
   }

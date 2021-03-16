@@ -121,20 +121,20 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         if (title === "Print") this.generateSlip(true);
         else if (title === "Edit And Print") this.generateSlip(false);
         else if (title === "Complete") this.completeChangeStatus();
-        else if (title === "Pause") this.pauseChangeStatus();
+        // else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
         else if (title === "Details") this.getBatchDetails();
       });
   }
-  pauseChangeStatus() {
-    this.jetStatus = "pause";
-    let obj = {
-      controlId: this.sendControlId, //control Id
-      prodcutionId: this.sendSotckId, //Production Id
-      status: this.jetStatus,
-    };
-    this.changeJetStatusApiCall(obj);
-  }
+  // pauseChangeStatus() {
+  //   this.jetStatus = "pause";
+  //   let obj = {
+  //     controlId: this.sendControlId, //control Id
+  //     prodcutionId: this.sendSotckId, //Production Id
+  //     status: this.jetStatus,
+  //   };
+  //   this.changeJetStatusApiCall(obj);
+  // }
   completeChangeStatus() {
     this.jetStatus = "success";
     let obj = {
