@@ -149,6 +149,9 @@ export class PrintLayoutComponent implements OnInit {
                   }
                   element.totalMtr += Number(lot.mtr);
                   element.totalFMtr += lot.finishMtr
+                  if(lot.mtr == "0"){
+                    lot.mtr = "-";
+                  }
                 });
                 element.totalMtr = (element.totalMtr).toFixed(2);
                 element.totalFMtr = (element.totalFMtr).toFixed(2);
@@ -196,6 +199,13 @@ export class PrintLayoutComponent implements OnInit {
         element.batchDataList.sort(function(obj1 , obj2){
           return obj1.sequenceId - obj2.sequenceId;
         })
+
+        element.batchDataList.forEach(ele => {
+          if(ele.mtr == "0"){
+            ele.mtr = "-"
+
+          }
+        })
       }); 
       this.printInvoiceData[index].totalMtr = 0;
       this.printInvoiceData[index].totalAmt = 0;
@@ -223,6 +233,9 @@ export class PrintLayoutComponent implements OnInit {
           }
           element.totalMtr += Number(lot.mtr)
           element.totalFMtr += lot.finishMtr
+          if(lot.mtr == "0"){
+            lot.mtr = "-";
+          }
         });
         element.totalMtr = (element.totalMtr).toFixed(2);
         element.totalFMtr = (element.totalFMtr).toFixed(2);
