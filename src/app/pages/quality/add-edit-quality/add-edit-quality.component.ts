@@ -85,6 +85,21 @@ export class AddEditQualityComponent implements OnInit {
       ? null
       : (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46;
   }
+
+  calculateMtrPerKg(event){
+    let value = event.target.value;
+    this.addEditQualityForm.patchValue({
+      mtrPerKg: (100/value).toFixed(3)
+    });  
+  }
+
+  calculateWtPerMtr(event){
+    let value = event.target.value;
+    this.addEditQualityForm.patchValue({
+      wtPer100m: (100/value).toFixed(3)
+    }); 
+  }
+
   public getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -94,7 +109,9 @@ export class AddEditQualityComponent implements OnInit {
       qualityNameId: new FormControl(null, Validators.required),
       qualityType: new FormControl("Fabric", Validators.required),
       unit: new FormControl(null, Validators.required),
+      billingUnit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
+      mtrPerKg: new FormControl(null, Validators.required),
       partyId: new FormControl(null, Validators.required),
       rate: new FormControl(null, Validators.required),
       remark: new FormControl(null),
@@ -120,7 +137,9 @@ export class AddEditQualityComponent implements OnInit {
             rate: this.qualityList.rate,
             qualityType: this.qualityList.qualityType,
             unit: this.qualityList.unit,
-            wtPer100m: this.qualityList.wtPer100m,
+            billingUnit: this.qualityList.billingUnit,
+            wtPer100m: (this.qualityList.wtPer100m).toFixed(3),
+            mtrPerKg: (this.qualityList.mtrPerKg).toFixed(3),
             partyId: this.qualityList.partyId,
             remark: this.qualityList.remark,
             createdBy: this.qualityList.createdBy,

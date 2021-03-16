@@ -45,4 +45,9 @@ export class PrintInvoiceService {
   getInvoiceByNoToPrint(id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPartyWithQualityDispatchBy/'+id);
   }
+
+  getInvoiceByBatchAndStock(batchStockData): any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/get/receipt/getPartyWithQualityDispatchByBatchesAndStock/' ,  batchStockData);
+
+  }
 }

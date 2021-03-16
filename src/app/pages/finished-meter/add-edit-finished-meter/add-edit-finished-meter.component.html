@@ -60,6 +60,18 @@
 
                         <div class="form-group mb-1">
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="batch-list-3line">
+                                        <button nbButton size="small" *ngFor="let b of batchList"
+                                            (click)="batchSelected($event)" class="p-badge-design"
+                                            [disabled]="!b.productionPlanned" [value]="b.batchId">
+                                            {{b.batchId}} </button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- <div class="row">
                                 <div class="col-md-2 col-12 display-flex-start label-0">
                                     <label>Batch</label>
                                 </div>
@@ -69,7 +81,7 @@
                                         </ng-option>
                                     </ng-select>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-6">

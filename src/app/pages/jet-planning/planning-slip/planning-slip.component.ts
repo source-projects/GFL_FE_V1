@@ -157,6 +157,7 @@ export class PlanningSlipComponent implements OnInit {
                     : element1.qty;
                 });
               });
+              this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
               if(this.isPrintDirect)
                 this.printNOW();
             }
