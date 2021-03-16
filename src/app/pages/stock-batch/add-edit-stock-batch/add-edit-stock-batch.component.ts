@@ -26,6 +26,7 @@ import { StockBatchService } from "../../..//@theme/services/stock-batch.service
 import { CommonService } from "../../..//@theme/services/common.service";
 import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { UpdateConfirmationDialogComponent } from "../../../@theme/components/update-confirmation-dialog/update-confirmation-dialog.component";
+import { JobCardComponent } from "../job-card/job-card.component";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -800,5 +801,13 @@ export class AddEditStockBatchComponent implements OnInit {
     }else{
       this.disableButton = false;
     }
+  }
+
+  printJobCard(form){
+    const modalRef = this.modalService.open(JobCardComponent);
+    // modalRef.componentInstance.batchId = selectedBatchID;
+    // modalRef.componentInstance.stockId = selectedStockId;
+    modalRef.result
+      .then((result) => {})
   }
 }
