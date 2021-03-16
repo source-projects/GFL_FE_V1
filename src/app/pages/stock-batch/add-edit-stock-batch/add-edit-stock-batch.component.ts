@@ -797,6 +797,8 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         });
       }
+    }else{
+      this.disableButton = false;
     }
   }
 }

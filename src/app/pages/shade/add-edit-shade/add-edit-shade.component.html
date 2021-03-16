@@ -209,9 +209,22 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Color Name</label>
-                            <input type="text" name="colorName" colorName1="ngModel" [(ngModel)]="shadeObj.colorName"
-                                class="form-control size-small" fieldsize="small" nbinput placeholder="Color Name" />
+                            <label class="required">Color Name</label>
+                            <input type="text" name="colorName" #colorName1="ngModel" [(ngModel)]="shadeObj.colorName"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Color Name"
+                                required [ngClass]="{
+                                    'is-invalid':
+                                    colorName1.invalid &&
+                                    (formSubmitted || colorName1.touched) &&
+                                    !shadeObj.colorName
+                                    }"/>
+    
+                                <div class="input-required" *ngIf="colorName1.invalid
+                                    &&
+                                    !shadeObj.colorName &&
+                                    (formSubmitted || colorName1.touched)">
+                                    <span>Color Name is required</span>
+                                </div>
                         </div>
                     </div>
                     <div class="col-md-4">
