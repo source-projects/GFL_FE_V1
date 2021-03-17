@@ -1326,6 +1326,12 @@ input[type="number"]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: flex-end;
 }
+.report-display-flexend{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+}
 
 .dis-fl-di {
   display: flex;
@@ -2518,6 +2524,7 @@ ng-select.ng-select-br-none {
   padding: 21px 25px;
   border-radius: 11px;
   background-color: #f4f7f9;
+  width: 100%;
 }
 
 .card-detail-report {
@@ -2589,4 +2596,9 @@ ng-select.ng-select-br-none {
 .quality-position {
   float: right;
   padding: 5px;
+}
+.input-border .ng-select-container{
+  border-radius: 5px;
+    height: 31px;
+    font-size: 14px;
 }

@@ -583,102 +583,432 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="required">Party Name</label>
-                            <ng-select placeholder="Select Party Name" name="partyName" partyName1="ngModel"
-                                [(ngModel)]="partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)"
-                                class="required-error-dropdown dropdown-name">
-                                <ng-option disabled="true">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">
-                                                Party Name
+
+                        <div class="report-card-1 main-input-report">
+
+                            <div class="card-detail-report only-first-card mr-0">
+
+
+                                <div class="card-d-label"><label>Party Name</label></div>
+
+
+                                <div class="card-d-label  width-70">
+                                    <ng-select placeholder="Select Party Name" appendTo="body" name="partyName"
+                                        partyName1="ngModel" [(ngModel)]="partyId" #partyName1="ngModel"
+                                        (change)="getQualityFromParty($event)"
+                                        class="required-error-dropdown dropdown-name input-border">
+                                        <ng-option disabled="true">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        Party Name
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right txt-ov-elips">
+                                                        Party Code
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips">
-                                                Party Code
+                                        </ng-option>
+                                        <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        {{ p.partyName }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right
+                                                        txt-ov-elips">
+                                                        {{ p.partyCode }}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                                <ng-option *ngFor="let p of partyList" [value]="p.id">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">
-                                                {{ p.partyName }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right
-                                                txt-ov-elips">
-                                                {{ p.partyCode }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                            </ng-select>
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+
+
+                            </div>
+
+
                         </div>
+
+
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Quality
-                                Id</label>
-                            <ng-select placeholder="Select Quality Id" name="qualityId" #qualityId1="ngModel"
-                                (change)="qualityIdSelected($event)" [(ngModel)]="qualityId"
-                                class="required-error-dropdown dropdown-name">
-                                <ng-option disabled="true">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">
-                                                Quality Id
+
+                        <div class="report-card-1 main-input-report">
+
+                            <div class="card-detail-report only-first-card mr-0">
+
+
+                                <div class="card-d-label"><label>Quality
+                                        Id</label></div>
+
+
+                                <div class="card-d-label width-70">
+                                    <ng-select placeholder="Select Quality Id" appendTo="body" name="qualityId"
+                                        #qualityId1="ngModel" (change)="qualityIdSelected($event)"
+                                        [(ngModel)]="qualityId"
+                                        class="required-error-dropdown dropdown-name input-border">
+                                        <ng-option disabled="true">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        Quality Id
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right txt-ov-elips">
+                                                        Party Name
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right txt-ov-elips">
-                                                Party Name
+                                        </ng-option>
+                                        <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        {{ q.qualityId }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right
+                                                    txt-ov-elips">
+                                                        {{ q.partyName }}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
-                                    <div class="row">
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-left txt-ov-elips">
-                                                {{ q.qualityId }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-6">
-                                            <div class="text-right
-                                                txt-ov-elips">
-                                                {{ q.partyName }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-option>
-                            </ng-select>
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+
+
+                            </div>
 
 
                         </div>
+
+
                     </div>
                 </div>
                 <div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <h5>{{partyName}}</h5>
+                        <div class="col-md-12 col-12">
+                            <!--2nd Sub Card Div-->
+                            <div class="report-card-1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-detail-report only-first-card">
+
+
+                                            <div class="card-d-label"><label>Not Production</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+
+                                        
+                                        <div class="bg-main-cont">
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Pcs</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Batch Id</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Quality Id</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Grey Mtr</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Received Date</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 report-display-flexend">
+                                        
+                                        <div class="bg-main-cont width-100 height-100">
+                                            
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+
                         </div>
 
-                        <div>
-                            <div class="row">
-                                ewewr
+                        <div class="col-md-12 col-12">
+                            <!--2nd Sub Card Div-->
+                            <div class="report-card-1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-detail-report only-first-card">
+
+
+                                            <div class="card-d-label"><label>Production Plan</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="bg-main-cont">
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Pcs</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Batch Id</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Quality Id</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Grey Mtr</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Received Date</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 report-display-flexend">
+                                        
+                                        <div class="bg-main-cont width-100 height-100">
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Shade No</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Color Tone</label></div>
+
+
+                                                <div class="card-d-label text-right txt-ov-elips display-color-input">
+                                                    <span>
+                                                        <div class="text-center txt-ov-elips width-50 display-inline">
+                                                            <input [(colorPicker)]="colorTone"
+                                                                [style.background]="colorTone" [value]="colorTone"
+                                                                disabled="true" class="width-100 text-center" />
+
+                                                        </div>
+                                                    </span>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Color Name</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
                             </div>
-                            <div class="row">
-                                ewewr
-                            </div>
-                            <div class="row">
-                                ewewr
-                            </div>
+
                         </div>
+
+
+                        <div class="col-md-12 col-12">
+                            <!--2nd Sub Card Div-->
+                            <div class="report-card-1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-detail-report only-first-card">
+
+
+                                            <div class="card-d-label"><label>Finished Mtr</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="bg-main-cont">
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Pcs</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Batch Id</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Quality Id</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Total Grey Mtr</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Received Date</label></div>
+
+
+                                                <div class="card-d-label"><span>156</span></div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 report-display-flexend">
+                                        
+                                        <div class="bg-main-cont width-100 height-100">
+                                            <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Finished Meter</label></div>
+
+
+                                                <div class="card-d-label"><span>25</span></div>
+
+
+                                            </div>
+
+                                            
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                        
                     </div>
                 </div>
 
