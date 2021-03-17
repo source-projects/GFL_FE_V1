@@ -174,10 +174,10 @@
     .col-sm-7 {
         width: 58.333333333333336%;
     }
-    .col-sm-6, .col-md-6 {
+    .col-sm-6,
+    .col-md-6 {
         width: 50%;
     }
-    
     .col-sm-5 {
         width: 41.66666666666667%;
     }
@@ -199,9 +199,12 @@
     .lot-border tr {
         border: 1px solid rgb(143, 143, 143);
     }
-    .lot-border tbody tr td{
+    .lot-border tbody tr td {
         font-size: 23px !important;
-    } 
+    }
+    .lot-border thead tr th {
+        border-bottom: 2px solid rgb(143, 143, 143) !important;
+    }
     .footer-border {
         border: 1px solid rgb(143, 143, 143);
     }
@@ -326,7 +329,7 @@
     .border-margin {
         padding: 5px 0 15px 0;
     }
-    .border-margin-d-t{
+    .border-margin-d-t {
         padding-top: 10px;
         padding-bottom: 5px;
     }
@@ -399,7 +402,7 @@
     }
     // codepen print css
     .print-invoice-table tbody {
-        height: 280mm;
+        height: 290mm;
         overflow: hidden;
         overflow-x: hidden;
         display: block;
@@ -411,9 +414,13 @@
         width: 100%;
         table-layout: fixed;
     }
+    .pd-t-b-5 {
+        padding-top: 5px !important;
+        padding-bottom: 10px !important;
+    }
     .print-invoice-table thead,
     .print-invoice-table tfoot {
-        display: table;
+        display: inline;
         width: 100%;
     }
     .print-invoice-table thead tr th,
@@ -424,7 +431,6 @@
         padding-bottom: 7px !important;
     }
     .print-invoice-table thead tr th {
-       
         border-bottom: 2px solid rgb(143, 143, 143) !important;
         border-top: 1px solid rgb(143, 143, 143) !important;
         border-left: 1px solid rgb(143, 143, 143) !important;
@@ -573,14 +579,17 @@
         border-top: 1px solid #c3c3c3;
         border-bottom: 1px solid #c3c3c3;
     }
-    .pd-lf-0{
+    .pd-lf-0 {
         padding-left: 0 !important;
     }
-    .pd-right-0{
+    .pd-right-0 {
         padding-right: 0 !important;
     }
-    .text-center{
+    .text-center {
         text-align: center;
-
+    }
+    .mr-top-0 {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
     }
 }
