@@ -39,68 +39,67 @@ export class JobCardComponent implements OnInit {
           if (data["success"]) {
             this.printBatchData.push(data["data"]);
             if (this.printBatchData.length == batchIds.length) {
-              if (this.printBatchData[i].batchDataList.length > 24) {
-                //seperating 2 lists...
-                let tempGrs = [];
-                for (
-                  let a = 24;
-                  a < this.printBatchData[i].batchDataList.length;
-                  a++
-                ) {
-                  tempGrs.push({ ...this.printBatchData[i].batchDataList[24] });
-                  let removed = this.printBatchData[i].batchDataList[24].splice(
-                    24,
-                    1
-                  );
-                }
-                this.printBatchData[i]["batchDataList2"] = [...tempGrs];
-                if (this.printBatchData[i]["batchDataList2"].length < 24) {
+              this.printBatchData.forEach(el=>{
+                if (el.batchDataList.length > 24) {
+
+                  //seperating 2 lists...
+                  let tempGrs = [];
+                  let len = el.batchDataList.length;
+                  for (let a = 24; a < len; a++) {
+                    tempGrs.push({ ...el.batchDataList[24] });
+                    let removed = el.batchDataList.splice(24,1);
+                  }
+                  el["batchDataList2"] = [...tempGrs];
+                  if (el["batchDataList2"].length < 24) {
+                    for (let a = 0; a < 24; a++) {
+                      if (!el.batchDataList2[a]) {
+                        el.batchDataList2.push({...this.tempGr});
+                      }
+                    }
+                  }
+                } else if (el.batchDataList.length < 24) {
                   for (let a = 0; a < 24; a++) {
-                    if (!this.printBatchData[i].batchDataList2[a]) {
-                      this.printBatchData[i].batchDataList2.push(this.tempGr);
+                    if (!el.batchDataList[a]) {
+                      el.batchDataList.push({...this.tempGr});
                     }
                   }
                 }
-              } else if (this.printBatchData[i].batchDataList.length < 24) {
-                for (let a = 0; a < 24; a++) {
-                  if (!this.printBatchData[i].batchDataList[a]) {
-                    this.printBatchData[i].batchDataList.push(this.tempGr);
+  
+                //set list 2 as empty;
+                if (!el.batchDataList2) {
+                  el["batchDataList2"] = [];
+                  for (let a = 0; a < 24; a++) {
+                    el["batchDataList2"].push({...this.tempGr});
                   }
                 }
-              }
-
-              //set list 2 as empty;
-              if (!this.printBatchData[i].batchDataList2) {
-                this.printBatchData[i]["batchDataList2"] = [];
-                for (let a = 0; a < 24; a++) {
-                  this.printBatchData[i]["batchDataList2"].push(this.tempGr);
+  
+                //set sequence no....
+                let i1 = 1;
+                for (let idx = 0; idx < 24; idx++){
+                  el.batchDataList[idx]['sr'] = i1;
+                  el.batchDataList2[idx]['sr'] = i1 + 24;
+                  i1 += 1;
                 }
-              }
-
-              //set sequence no....
-              let i1 = 0;
-              this.printBatchData[i].batchDataList.forEach((element) => {
-                element["sr"] = i1++;
+  
+                let totalMtrl1 = 0;
+                totalMtrl1 = el.batchDataList.map((a) => a.mtr).reduce(function (a, b) { return a + b; });
+                let totalMtrl2 = 0 
+                totalMtrl2 = el.batchDataList2.map((a) => a.mtr).reduce(function (a, b) { return a + b; });
+                let totalWtl1 = 0;
+                totalWtl1 = el.batchDataList.map((a) => a.wt).reduce(function (a, b) { return a + b; });
+                let totalWtl2 = 0;
+                totalWtl2 = el.batchDataList2.map((a) => a.wt).reduce(function (a, b) { return a + b; });
+                el["totalMtrList1"] = Number(totalMtrl1)
+                el["totalMtrList2"] = Number(totalMtrl2)
+                el["totalWtList1"] = Number(totalWtl1)
+                el["totalWtList2"] = Number(totalWtl2)
               });
-              if (this.printBatchData[i].batchDataList2) {
-                this.printBatchData[i].batchDataList2.forEach((element) => {
-                  element["sr"] = i1++;
-                });
-              }
-
-              let totalMtrl1: number = this.printBatchData[i].batchDataList.map(a => a.mtr).reduce(function(a, b){  return a + b; });
-              let totalMtrl2: number = this.printBatchData[i].batchDataList2.map(a => a.mtr).reduce(function(a, b){  return a + b; });
-              let totalWtl1: number = this.printBatchData[i].batchDataList.map(a => a.wt).reduce(function(a, b){  return a + b; });
-              let totalWtl2: number = this.printBatchData[i].batchDataList2.map(a => a.wt).reduce(function(a, b){  return a + b; });
-              this.printBatchData[i]['totalMtrList1'] = totalMtrl1? totalMtrl1 : '-';
-              this.printBatchData[i]['totalMtrList2'] = totalMtrl2? totalMtrl2 : '-';
-              this.printBatchData[i]['totalWtList1'] = totalWtl1? totalWtl1 : '-';
-              this.printBatchData[i]['totalWtList2'] = totalWtl2? totalWtl2 : '-';
               this.printNow();
             }
+            
           }
         });
-      i++;
+        i++;
     }
   }
 
@@ -119,24 +118,19 @@ export class JobCardComponent implements OnInit {
     );
     doc.append('<link href="./job-card.component.scss" rel="stylesheet">');
     let tempFlag = false;
-    // let inter = setInterval(() => {
-    //   let element = <HTMLElement>document.getElementById("print-jobCard");
-    //   if (element) {
-    //     doc.append(element);
-    //     doc.print();
-    //     // this.printFlag = true;
-    //     tempFlag = true;
-    //     clearInterval(inter);
-    //     this.activeModal.close();
-    //   }
-    // }, 10);
     this.printBatchData.forEach((batch, i) => {
-      let element = <HTMLElement>document.getElementById("print-jobCard" + i);
-      if (element) {
-        doc.append(element);
-        doc.print();
-      }
+     let inter1 = setInterval(() => {
+        let data1 = <HTMLElement>document.getElementById("print-jobCard" + i);
+        if (data1 != null) {
+          doc.append(data1);
+         clearInterval(inter1);
+        }
+      }, 10);
     });
-    this.activeModal.close();
+
+    setTimeout(() => {
+      doc.print();
+      this.activeModal.close(true);
+    }, 1000);
   }
 }

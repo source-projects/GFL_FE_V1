@@ -1,5 +1,4 @@
 <nb-card class="nb-style pr-mr-0">
-    
     <div *ngFor="let batch of printBatchData;let i = index;" id="print-jobCard{{i}}" class="jet-slip size-A5">
         <nb-card-header class="nb-header">
             <div class="row">
@@ -32,7 +31,7 @@
                             <label class="font-25">Pcs:</label> <span class="slip-value">{{batch.totalPcs}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
-                            <label class="font-25">Date:</label> <span class="slip-value">{{batch.receiveDate}}</span>
+                            <label class="font-25">Date:</label> <span class="slip-value">{{batch.receiveDate | date : 'shortDate'}}</span>
                         </div>
                     </div>
                 </div>
@@ -41,11 +40,11 @@
                     <div class="row">
                         <div class="col-md-4 wth-50">
                             <label class="font-25">Grey Mtr:</label> <span
-                                class="slip-value">{{batch.totalMtr}}</span>
+                                class="slip-value">{{batch.totalMtr | number : '1.2-2'}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
                             <label class="font-25">Grey Wt:</label> <span
-                                class="slip-value">{{batch.totalWt}}</span>
+                                class="slip-value">{{batch.totalWt | number : '1.2-2'}}</span>
                         </div>
                     </div>
                 </div>
@@ -107,8 +106,8 @@
                                 <tfoot class="table-footer">
                                     <tr>
                                         <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrl1 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtl1 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList1 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList1 | number : '1.2-2'}}</b></th>
                                         <th class="pd-top-bottom-0 width-60"><b></b></th>
                                     </tr>
                                     
@@ -146,8 +145,8 @@
                                 <tfoot class="table-footer">
                                     <tr>
                                         <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrl2 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtl2 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList2 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList2 | number : '1.2-2'}}</b></th>
                                         <th class="pd-top-bottom-0 width-60"><b></b></th>
         
                                     </tr>
