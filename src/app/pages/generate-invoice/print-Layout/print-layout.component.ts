@@ -31,6 +31,7 @@ export class PrintLayoutComponent implements OnInit {
   lotRowd = [{}, {}, {}, {}];
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   invoiceData =[];
+  copyType = ["Original","Duplicate","Triplicate"]
   constructor(
     private datePipe: DatePipe,
     private toastr: ToastrService,
@@ -110,7 +111,16 @@ export class PrintLayoutComponent implements OnInit {
                   element.batchDataList.sort(function(obj1 , obj2){
                     return obj1.sequenceId - obj2.sequenceId;
                   })
+
+                  element.batchDataList.forEach(ele => {
+                    if(ele.mtr == "0"){
+                      ele.mtr = "-"
+          
+                    }
+                  })
                 }); 
+
+                
               }
               //calculate total amount, mtr, f.mtr, pcs
               this.printInvoiceData[index].totalMtr = 0;
@@ -134,8 +144,14 @@ export class PrintLayoutComponent implements OnInit {
                 element.shrinkage = 0;
                 element.lotDataLength = element.batchDataList.length;
                 element.batchDataList.forEach(lot => {
-                  element.totalMtr += lot.mtr
+                  if(lot.mtr == "-"){
+                    lot.mtr = "0";
+                  }
+                  element.totalMtr += Number(lot.mtr);
                   element.totalFMtr += lot.finishMtr
+                  if(lot.mtr == "0"){
+                    lot.mtr = "-";
+                  }
                 });
                 element.totalMtr = (element.totalMtr).toFixed(2);
                 element.totalFMtr = (element.totalFMtr).toFixed(2);
@@ -183,6 +199,13 @@ export class PrintLayoutComponent implements OnInit {
         element.batchDataList.sort(function(obj1 , obj2){
           return obj1.sequenceId - obj2.sequenceId;
         })
+
+        element.batchDataList.forEach(ele => {
+          if(ele.mtr == "0"){
+            ele.mtr = "-"
+
+          }
+        })
       }); 
       this.printInvoiceData[index].totalMtr = 0;
       this.printInvoiceData[index].totalAmt = 0;
@@ -205,8 +228,14 @@ export class PrintLayoutComponent implements OnInit {
         element.shrinkage = 0;
         element.lotDataLength = element.batchDataList.length;
         element.batchDataList.forEach(lot => {
-          element.totalMtr += lot.mtr
+          if(lot.mtr == "-"){
+            lot.mtr = "0";
+          }
+          element.totalMtr += Number(lot.mtr)
           element.totalFMtr += lot.finishMtr
+          if(lot.mtr == "0"){
+            lot.mtr = "-";
+          }
         });
         element.totalMtr = (element.totalMtr).toFixed(2);
         element.totalFMtr = (element.totalFMtr).toFixed(2);

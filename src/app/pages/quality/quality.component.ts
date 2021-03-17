@@ -172,7 +172,7 @@ export class QualityComponent implements OnInit {
             partyCode: element.partyCode,
           }));
           this.copyQualityList = this.qualityList.map((element) => ({
-            id: element.id,
+            // id: element.id,
             qualityId: element.qualityId,
             qualityName: element.qualityName,
             partyName: element.partyName,

@@ -168,7 +168,7 @@ export class ShadeComponent implements OnInit {
               colorTone: element.colorTone,
             }));
             this.copyShadeList = this.shadeList.map((element) => ({
-              id: element.id,
+              // id: element.id,
               partyShadeNo: element.partyShadeNo,
               processName: element.processName,
               qualityId: element.qualityId,
