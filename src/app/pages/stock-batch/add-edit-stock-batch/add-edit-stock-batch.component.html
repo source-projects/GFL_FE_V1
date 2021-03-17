@@ -162,7 +162,7 @@
                                         <div class="row">
                                             <div class="col-md-6 col-8">
                                                 <label>Batch No</label>
-                                                <input [attr.id]="'batchNo'+i"  required type="number" [(ngModel)]='block.batchId' [disabled]="flag || production_flag[i]" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" (focusout)="checkDuplicates(i, $event)">
+                                                <input [attr.id]="'batchNo'+i"  required type="number" [(ngModel)]='block.batchId' [disabled]="true" class="form-control size-small" fieldsize="small" nbinput name="batchNo{{i}}" min="0" (click)="batchInsertCheck()" ><!--(focusout)="checkDuplicates(i, $event)"  [disabled]="flag || production_flag[i]"-->
                                                 <div class="input-required" style="display: block !important;" *ngIf="block.isNotUnique">
                                                     <span>Batch id already exists</span>
                                                 </div>

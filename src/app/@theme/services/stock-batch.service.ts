@@ -48,5 +48,7 @@ export class StockBatchService {
     return this.httpClient.get(`${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}&stockId=${stockId}`);
   }
   
-
+  getBatchSequence(){
+    return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/batchSequence/');
+  }
 }

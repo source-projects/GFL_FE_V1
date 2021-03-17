@@ -88,7 +88,8 @@ export class AddEditStockBatchComponent implements OnInit {
   weightFlag: boolean = false;
   weight = [];
   MtWtIndex = 0;
-  isDirectPrintFlag:boolean=false
+  isDirectPrintFlag:boolean=false;
+  currentBatchSequence:any = 0;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -103,6 +104,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    
     await this.getQualityList();
     await this.getPartyList();
     await this.getQualityList();
@@ -111,6 +113,7 @@ export class AddEditStockBatchComponent implements OnInit {
       this.addFlag = false;
       this.getStockBatchById();
     }
+    await this.getCurrentBatchSequence();
     this.maxDate = new Date(
       this.dateForPicker.getFullYear(),
       this.dateForPicker.getMonth(),
@@ -122,6 +125,19 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockBatch.chlDate = this.maxDate;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+  }
+
+  getCurrentBatchSequence(){
+    this.stockBatchService.getBatchSequence().subscribe(
+      data=>{
+        if(data['success']){
+          this.currentBatchSequence = data['data']['sequence'];
+          if(this.addFlag){
+            this.stockDataValues[0].batchId = this.currentBatchSequence
+          }
+        }
+      }
+    )
   }
 
   getPartyList() {
@@ -223,7 +239,7 @@ export class AddEditStockBatchComponent implements OnInit {
 
         this.stockDataValues = [
           {
-            batchId: null,
+            batchId: this.currentBatchSequence,
             totalWt: null,
             totalMt: null,
             isNotUnique: false,
@@ -410,22 +426,9 @@ export class AddEditStockBatchComponent implements OnInit {
         let nextBatchId = itemList[itemList.length - 1].batchId;
         ob.batchId = ++nextBatchId;
 
-        //check for unique
-        let id = 0;
-        if (this.stockBatch.id) id = this.stockBatch.id;
-        this.stockBatchService
-          .isBatchIdExists(ob.batchId, id)
-          .subscribe(
-            (data) => {
-              if (data["success"]){
-                if(data['data']){
-                  ob.batchId = null;
-                }
-              }
-                
-            },
-            (error) => {}
-          );
+        if(ob.batchId < this.currentBatchSequence){
+          ob.batchId = this.currentBatchSequence;
+        }
 
         this.wtArray = [];
         this.mtArray = [];
@@ -444,38 +447,39 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.stockDataValues.length == 1) {
       this.stockDataValues[0] = new BatchCard();
       this.stockDataValues[0].batchMW.push(new BatchMrtWt());
+      this.stockDataValues[0].batchId = this.currentBatchSequence;
     } else {
       this.stockDataValues.splice(index, 1);
     }
   }
 
-  checkDuplicates(index, event) {
-    this.stockDataValues[index].isNotUnique = false;
-    if (event.target.value) {
-      let id = 0;
-      if (this.stockBatch.id) id = this.stockBatch.id;
-      this.stockBatchService.isBatchIdExists(event.target.value, id).subscribe(
-        (data) => {
-          if (data["success"])
-            this.stockDataValues[index].isNotUnique = data["data"];
-            if(!this.stockDataValues[index].isNotUnique){
-              if (this.stockDataValues && this.stockDataValues.length) {
-                let i = this.stockDataValues.findIndex(
-                  (v) => v.batchId == this.stockDataValues[index].batchId
-                );
-                if (i > -1 && i != index) {
-                  this.toastr.error("Cannot add duplicate batch No.");
-                  this.stockDataValues[index].isNotUnique = true;
-                  this.stockDataValues[index].batchId = null;
-                }
-              }
-            }
-        },
-        (error) => {}
-      );
-    }
+  // checkDuplicates(index, event) {
+  //   this.stockDataValues[index].isNotUnique = false;
+  //   if (event.target.value) {
+  //     let id = 0;
+  //     if (this.stockBatch.id) id = this.stockBatch.id;
+  //     this.stockBatchService.isBatchIdExists(event.target.value, id).subscribe(
+  //       (data) => {
+  //         if (data["success"])
+  //           this.stockDataValues[index].isNotUnique = data["data"];
+  //           if(!this.stockDataValues[index].isNotUnique){
+  //             if (this.stockDataValues && this.stockDataValues.length) {
+  //               let i = this.stockDataValues.findIndex(
+  //                 (v) => v.batchId == this.stockDataValues[index].batchId
+  //               );
+  //               if (i > -1 && i != index) {
+  //                 this.toastr.error("Cannot add duplicate batch No.");
+  //                 this.stockDataValues[index].isNotUnique = true;
+  //                 this.stockDataValues[index].batchId = null;
+  //               }
+  //             }
+  //           }
+  //       },
+  //       (error) => {}
+  //     );
+  //   }
     
-  }
+  // }
 
   // rearrangeBatchNo() {
   //   if (this.stockDataValues) {
@@ -819,6 +823,8 @@ export class AddEditStockBatchComponent implements OnInit {
     modalRef.componentInstance.stockBatchData = this.stockBatch;
     modalRef.componentInstance.stockId = Number(data);
     modalRef.result
-      .then((result) => {})
+      .then((result) => {
+        this.disableButton = false;
+      })
   }
 }
