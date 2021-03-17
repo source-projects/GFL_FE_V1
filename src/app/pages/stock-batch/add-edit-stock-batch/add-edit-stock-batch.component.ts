@@ -812,12 +812,12 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   printJobCard(form, data){
-    data = {'stockId':9587};
+    //data = {'stockId':9587};
     this.isDirectPrintFlag=true
     const modalRef = this.modalService.open(JobCardComponent);
     modalRef.componentInstance.isDirectPrintFlag=this.isDirectPrintFlag
     modalRef.componentInstance.stockBatchData = this.stockBatch;
-    modalRef.componentInstance.stockId = data.stockId;
+    modalRef.componentInstance.stockId = Number(data);
     modalRef.result
       .then((result) => {})
   }
