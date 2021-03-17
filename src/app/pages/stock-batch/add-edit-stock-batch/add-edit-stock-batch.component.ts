@@ -648,10 +648,11 @@ export class AddEditStockBatchComponent implements OnInit {
 
   reset(myForm) {
     myForm.reset();
+    this.getCurrentBatchSequence();
     this.formSubmitted = false;
     this.stockDataValues = [
       {
-        batchId: null,
+        batchId: this.currentBatchSequence,
         totalWt: null,
         totalMt: null,
         isNotUnique: false,
