@@ -12,7 +12,8 @@
                                 <div class="card-d-label"><label>Lot No</label></div>
 
 
-                                <div class="card-d-label"><input type="number" class="form-control input-border" placeholder="Enter Lot no"></div>
+                                <div class="card-d-label"><input type="number" class="form-control input-border"
+                                        placeholder="Enter Lot no"></div>
 
 
                             </div>
@@ -157,9 +158,9 @@
                                     <div class="card-d-label text-right txt-ov-elips display-color-input">
                                         <span>
                                             <div class="text-center txt-ov-elips width-50 display-inline">
-                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone" [value]="colorTone" disabled="true"
-                                                    class="width-100 text-center" />
-                                    
+                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone"
+                                                    [value]="colorTone" disabled="true" class="width-100 text-center" />
+
                                             </div>
                                         </span>
                                     </div>
@@ -578,7 +579,110 @@
 
 
             </nb-tab>
-            <nb-tab tabTitle="Party"></nb-tab>
+            <nb-tab tabTitle="Party">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="required">Party Name</label>
+                            <ng-select placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+                                [(ngModel)]="partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)"
+                                class="required-error-dropdown dropdown-name">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">
+                                                Party Name
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips">
+                                                Party Code
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">
+                                                {{ p.partyName }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right
+                                                txt-ov-elips">
+                                                {{ p.partyCode }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Quality
+                                Id</label>
+                            <ng-select placeholder="Select Quality Id" name="qualityId" #qualityId1="ngModel"
+                                (change)="qualityIdSelected($event)" [(ngModel)]="qualityId"
+                                class="required-error-dropdown dropdown-name">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">
+                                                Quality Id
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips">
+                                                Party Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">
+                                                {{ q.qualityId }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right
+                                                txt-ov-elips">
+                                                {{ q.partyName }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                            </ng-select>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>{{partyName}}</h5>
+                        </div>
+
+                        <div>
+                            <div class="row">
+                                ewewr
+                            </div>
+                            <div class="row">
+                                ewewr
+                            </div>
+                            <div class="row">
+                                ewewr
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </nb-tab>
             <nb-tab tabTitle="Quality"></nb-tab>
         </nb-tabset>
     </nb-card-body>

@@ -190,11 +190,11 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
-        // path: "report",
-        // loadChildren: () =>
-        //   import("./pages/generate-report/generate-report.module").then(
-        //     (m) => m.GenerateReportModule
-        //   ),
+        path: "report",
+        loadChildren: () =>
+          import("./pages/generate-report/generate-report.module").then(
+            (m) => m.GenerateReportModule
+          ),
       },
       {
         path: "issue-color-box",
@@ -288,13 +288,13 @@ export const routes: Routes = [
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
 
-  {
-    // path: "generate-report",
-    // loadChildren: () =>
-    //   import("./pages/generate-report/generate-report.module").then(
-    //     (m) => m.GenerateReportModule
-    //   ),
-  },
+  // {
+  //   path: "generate-report",
+  //   loadChildren: () =>
+  //     import("./pages/generate-report/generate-report.module").then(
+  //       (m) => m.GenerateReportModule
+  //     ),
+  // },
 
   // { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
 
