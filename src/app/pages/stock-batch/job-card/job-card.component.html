@@ -8,8 +8,13 @@
     </nb-card-header>
     <div id="print-slip" class="jet-slip size-A5">
         <nb-card-body>
-
-            <div class="container print-container mr-top-30 mr-bottom-30 border-style-solid pd-top-10">
+            
+            <div class="container print-container mr-top-30 mr-bottom-30 pd-top-10">
+                <div class="row">
+                    <div class="title-job-card text-center">
+                        <h1><strong>JOB CARD</strong></h1>
+                    </div>
+                </div>
                 <div class="mb-1 print-text-center pd-bt-25">
                     <div class="row">
                         <div class="col-md-4 wth-50">
@@ -76,54 +81,93 @@
 
 
             </div>
-        </nb-card-body>
-    </div>
-    <div class="row main-invoice-row">
-        <div class="col-md-3" >
-            <div>
-
-                <table class="table lot-border">
-                    <tr>
-                        <th><b>LOT NO: </b></th>
-                    </tr>
-                </table>
-
-
-                <div id="invoice-table">
-                    <table class="table print-invoice-table border-bootom-none table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="pd-top-bottom-2"><b>Cops</b></th>
-                                <th scope="col" class="pd-top-bottom-2"><b>GryMtr</b></th>
-                                <th scope="col" class="pd-top-bottom-2"><b>FinMtr</b></th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr >
-                                <td class="pd-top-bottom-1"></td>
-                                <td class="pd-top-bottom-1"></td>
-                                <td class="pd-top-bottom-1"></td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="table-footer">
-                            <tr>
-                                <th class="pd-top-bottom-0"><b></b></th>
-                                <th class="pd-top-bottom-0"><b></b></th>
-                                <th class="pd-top-bottom-0"><b></b></th>
-
-                            </tr>
-                            
-                        </tfoot>
-                    </table>
+            <div class="container">
+                <div class="row main-invoice-row">
+                    <div class="col-md-6 pd-lf-0">
+                     
+        
+                        <div id="invoice-table">
+                            <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-30" ><b>Grey Mtr</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
+        
+                                    </tr>
+                                </thead>
+                                <tbody>
+        
+                                    <tr >
+                                        <td class="pd-top-bottom-1 width-15">1</td>
+                                        <td class="pd-top-bottom-1 width-30">150.00</td>
+                                        <td class="pd-top-bottom-1 width-30">14.70</td>
+                                        <td class="pd-top-bottom-1 width-60"></td>
+                                    </tr>
+        
+                                    
+                                    
+                                </tbody>
+                                <tfoot class="table-footer">
+                                    <tr>
+                                        <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>3,009.00</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>207.62</b></th>
+                                        <th class="pd-top-bottom-0 width-60"><b></b></th>
+                                    </tr>
+                                    
+                                </tfoot>
+                            </table>
+                        </div>
+                
+                
+                    </div>
+        
+                    <div class="col-md-6 pd-right-0">
+        
+        
+                        <div id="invoice-table">
+                            <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Mtr</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
+                                        <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
+        
+                                    </tr>
+                                </thead>
+                                <tbody>
+        
+                                    <tr>
+                                        <td class="pd-top-bottom-1 width-15">1</td>
+                                        <td class="pd-top-bottom-1 width-30">150.00</td>
+                                        <td class="pd-top-bottom-1 width-30">14.70</td>
+                                        <td class="pd-top-bottom-1 width-60"></td>
+                                    </tr>
+                                    
+                                </tbody>
+                                <tfoot class="table-footer">
+                                    <tr>
+                                        <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>3,009.00</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>207.62</b></th>
+                                        <th class="pd-top-bottom-0 width-60"><b></b></th>
+        
+                                    </tr>
+                                    
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                                       
                 </div>
-
-
             </div>
-        </div>
-
+        </nb-card-body>
+        
     </div>
+    
 
 
 </nb-card>

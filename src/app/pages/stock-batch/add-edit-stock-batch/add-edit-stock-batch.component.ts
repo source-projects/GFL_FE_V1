@@ -88,6 +88,7 @@ export class AddEditStockBatchComponent implements OnInit {
   weightFlag: boolean = false;
   weight = [];
   MtWtIndex = 0;
+  isDirectPrintFlag:boolean=false
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -804,7 +805,9 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   printJobCard(form){
+    this.isDirectPrintFlag=true
     const modalRef = this.modalService.open(JobCardComponent);
+    modalRef.componentInstance.isDirectPrintFlag=this.isDirectPrintFlag
     // modalRef.componentInstance.batchId = selectedBatchID;
     // modalRef.componentInstance.stockId = selectedStockId;
     modalRef.result
