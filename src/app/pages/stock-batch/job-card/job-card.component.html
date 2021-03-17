@@ -1,168 +1,181 @@
 <nb-card class="nb-style pr-mr-0">
-    <div *ngFor="let batch of printBatchData;let i = index;" id="print-jobCard{{i}}" class="jet-slip size-A5 mr-top-5">
-        <nb-card-header class="nb-header mr-top-0">
-            <div class="row">
-                <div class="text-center width-100 mr-top-0">
-                    <h2 class="font-30 mr-top-0"><b>JOB CARD</b></h2>
+    <div *ngFor="let batch of printBatchData;let i = index;">
+
+        <div id="print-jobCard{{i}}" class="jet-slip size-A5 mr-top-0">
+            <div class="pd-t-b">
+                <div class="border-whole">
+                    <div class="mr-top-0 nb-c-pd-b">
+                        <div class="container">
+                            <div class="row">
+                                <div class="text-center mr-top-0 nb-c-pd-b col-md-12">
+                                    <h2 class="font-30 mr-top-0 nb-c-pd-b"><b>JOB CARD</b></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="nb-c-pd-t">
+
+                        <div class="container print-container mr-top-bottom-15">
+
+                            <div class="mb-1 print-text-center pd-bt-25">
+                                <div class="row">
+                                    <div class="col-md-4 wth-50">
+                                        <label class="font-25">Party Name:</label> <span style="color: red !important;" class="slip-value rd-color">{{batch.partyName}}</span>
+                                    </div>
+                                    <div class="col-md-8 wth-50">
+                                        <label class="font-25">Master Name:</label> <span style="color: red !important;" class="slip-value rd-color">{{batch.masterName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-1 print-text-center pd-bt-25">
+                                <div class="row">
+                                    <div class="col-md-4 wth-50">
+                                        <label class="font-25">Pcs:</label> <span class="slip-value">{{batch.totalPcs}}</span>
+                                    </div>
+                                    <div class="col-md-8 wth-50">
+                                        <label class="font-25">Date:</label> <span class="slip-value">{{batch.receiveDate | date : 'shortDate'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-1 print-text-center pd-bt-25">
+                                <div class="row">
+                                    <div class="col-md-4 wth-50">
+                                        <label class="font-25">Grey Mtr:</label> <span class="slip-value">{{batch.totalMtr | number : '1.2-2'}}</span>
+                                    </div>
+                                    <div class="col-md-8 wth-50">
+                                        <label class="font-25">Grey Wt:</label> <span class="slip-value">{{batch.totalWt | number : '1.2-2'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-1 print-text-center pd-bt-25">
+                                <div class="row">
+                                    <div class="col-md-4 wth-50">
+                                        <label class="font-25">Lot No:</label> <span class="slip-value">{{batch.batchId}}</span>
+                                    </div>
+                                    <div class="col-md-8 wth-50">
+                                        <label class="font-25">P Chl No:</label> <span class="slip-value">{{batch.chalNo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-1 print-text-center pd-bt-25">
+                                <div class="row">
+                                    <div class="col-md-4 wth-50">
+                                        <label class="font-25">Quality Id:</label> <span class="slip-value">{{batch.qualityId}}</span>
+                                    </div>
+                                    <div class="col-md-8 wth-50">
+                                        <label class="font-25">Quality Name:</label> <span class="slip-value">{{batch.qualityName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="container">
+                            <div class="row main-invoice-row">
+                                <div class="col-md-6 pd-lf-0">
+
+
+                                    <div id="invoice-table">
+                                        <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Mtr</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr *ngFor="let gr of batch.batchDataList;let i1 = index;">
+                                                    <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
+                                                    <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
+                                                    <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
+                                                    <td class="pd-top-bottom-1 width-60"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pd-top-bottom-1 width-15 pd-t-b-5"><b>TTL</b></td>
+                                                    <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalMtrList1 | number : '1.2-2'}}</b></td>
+                                                    <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalWtList1 | number : '1.2-2'}}</b></td>
+                                                    <td class="pd-top-bottom-1 width-60 pd-t-b-5"><b></b></td>
+                                                </tr>
+                                            </tbody>
+                                            <!-- <tfoot class="table-footer">
+                                                <tr>
+                                                    <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
+                                                    <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList1 | number : '1.2-2'}}</b></th>
+                                                    <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList1 | number : '1.2-2'}}</b></th>
+                                                    <th class="pd-top-bottom-0 width-100"><b></b></th>
+                                                </tr>
+            
+                                            </tfoot> -->
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-md-6 pd-right-0">
+
+
+                                    <div id="invoice-table">
+                                        <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Mtr</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
+                                                    <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr *ngFor="let gr of batch.batchDataList2;let i1 = index;">
+                                                    <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
+                                                    <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
+                                                    <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
+                                                    <td class="pd-top-bottom-1 width-60"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="pd-top-bottom-1 width-15 pd-t-b-5"><b>TTL</b></td>
+                                                    <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalMtrList2 | number : '1.2-2'}}</b></td>
+                                                    <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalWtList2 | number : '1.2-2'}}</b></td>
+                                                    <td class="pd-top-bottom-1 width-60 pd-t-b-5"><b></b></td>
+                                                </tr>
+
+                                            </tbody>
+                                            <!-- <tfoot class="table-footer">
+                                                <tr>
+                                                    <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
+                                                    <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList2 | number : '1.2-2'}}</b></th>
+                                                    <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList2 | number : '1.2-2'}}</b></th>
+                                                    <th class="pd-top-bottom-0 width-100"><b></b></th>
+            
+                                                </tr>
+            
+                                            </tfoot> -->
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-        </nb-card-header>
-        <nb-card-body>
 
-            <div class="container print-container mr-top-bottom-15">
+        </div>
 
-                <div class="mb-1 print-text-center pd-bt-25">
-                    <div class="row">
-                        <div class="col-md-4 wth-50">
-                            <label class="font-25">Party Name:</label> <span style="color: red !important;" class="slip-value rd-color">{{batch.partyName}}</span>
-                        </div>
-                        <div class="col-md-8 wth-50">
-                            <label class="font-25">Master Name:</label> <span style="color: red !important;" class="slip-value rd-color">{{batch.masterName}}</span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="mb-1 print-text-center pd-bt-25">
-                    <div class="row">
-                        <div class="col-md-4 wth-50">
-                            <label class="font-25">Pcs:</label> <span class="slip-value">{{batch.totalPcs}}</span>
-                        </div>
-                        <div class="col-md-8 wth-50">
-                            <label class="font-25">Date:</label> <span class="slip-value">{{batch.receiveDate | date : 'shortDate'}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-1 print-text-center pd-bt-25">
-                    <div class="row">
-                        <div class="col-md-4 wth-50">
-                            <label class="font-25">Grey Mtr:</label> <span class="slip-value">{{batch.totalMtr | number : '1.2-2'}}</span>
-                        </div>
-                        <div class="col-md-8 wth-50">
-                            <label class="font-25">Grey Wt:</label> <span class="slip-value">{{batch.totalWt | number : '1.2-2'}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-1 print-text-center pd-bt-25">
-                    <div class="row">
-                        <div class="col-md-4 wth-50">
-                            <label class="font-25">Lot No:</label> <span class="slip-value">{{batch.batchId}}</span>
-                        </div>
-                        <div class="col-md-8 wth-50">
-                            <label class="font-25">P Chl No:</label> <span class="slip-value">{{batch.chalNo}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-1 print-text-center pd-bt-25">
-                    <div class="row">
-                        <div class="col-md-4 wth-50">
-                            <label class="font-25">Quality Id:</label> <span class="slip-value">{{batch.qualityId}}</span>
-                        </div>
-                        <div class="col-md-8 wth-50">
-                            <label class="font-25">Quality Name:</label> <span class="slip-value">{{batch.qualityName}}</span>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="container">
-                <div class="row main-invoice-row">
-                    <div class="col-md-6 pd-lf-0">
-
-
-                        <div id="invoice-table">
-                            <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Mtr</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <tr *ngFor="let gr of batch.batchDataList;let i1 = index;">
-                                        <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
-                                        <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
-                                        <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
-                                        <td class="pd-top-bottom-1 width-60"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pd-top-bottom-1 width-15 pd-t-b-5"><b>TTL</b></td>
-                                        <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalMtrList1 | number : '1.2-2'}}</b></td>
-                                        <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalWtList1 | number : '1.2-2'}}</b></td>
-                                        <td class="pd-top-bottom-1 width-60 pd-t-b-5"><b></b></td>
-                                    </tr>
-                                </tbody>
-                                <!-- <tfoot class="table-footer">
-                                    <tr>
-                                        <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList1 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList1 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-100"><b></b></th>
-                                    </tr>
-
-                                </tfoot> -->
-                            </table>
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-md-6 pd-right-0">
-
-
-                        <div id="invoice-table">
-                            <table class="table print-invoice-table border-bootom-none table-bordered lot-border">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="pd-top-bottom-2 width-15"><b>Sr</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Mtr</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-30"><b>Grey Wt</b></th>
-                                        <th scope="col" class="pd-top-bottom-2 width-60"><b>Finish Mtr</b></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <tr *ngFor="let gr of batch.batchDataList2;let i1 = index;">
-                                        <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
-                                        <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
-                                        <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
-                                        <td class="pd-top-bottom-1 width-60"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="pd-top-bottom-1 width-15 pd-t-b-5"><b>TTL</b></td>
-                                        <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalMtrList2 | number : '1.2-2'}}</b></td>
-                                        <td class="pd-top-bottom-1 width-30 pd-t-b-5"><b>{{batch.totalWtList2 | number : '1.2-2'}}</b></td>
-                                        <td class="pd-top-bottom-1 width-60 pd-t-b-5"><b></b></td>
-                                    </tr>
-
-                                </tbody>
-                                <!-- <tfoot class="table-footer">
-                                    <tr>
-                                        <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrList2 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtList2 | number : '1.2-2'}}</b></th>
-                                        <th class="pd-top-bottom-0 width-100"><b></b></th>
-
-                                    </tr>
-
-                                </tfoot> -->
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </nb-card-body>
 
     </div>
 

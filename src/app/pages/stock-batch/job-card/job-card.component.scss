@@ -106,8 +106,14 @@
         font-size: 25px !important;
     }
     .mr-top-bottom-15 {
-        margin-top: 15px;
-        margin-bottom: 15px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .nb-c-pd-t {
+        padding-top: 0 !important;
+    }
+    .nb-c-pd-b {
+        padding-bottom: 0 !important;
     }
     .font-weight-bold {
         font-weight: bold;
@@ -232,11 +238,15 @@
         border: 1px solid rgb(143, 143, 143);
         border-top: none;
     }
-    // .footer-border {
-    //     position: absolute;
-    //     bottom: 0;
-    //     width: 100%;
-    // }
+    .border-whole {
+        border-top: 2px solid rgb(143, 143, 143);
+        border-right: 2px solid rgb(143, 143, 143) !important;
+        border-left: 2px solid rgb(143, 143, 143) !important;
+    }
+    .pd-t-b {
+        padding-top: 25px !important;
+        padding-bottom: 16px !important;
+    }
     .display-flex {
         display: flex;
         justify-content: center;
@@ -348,6 +358,15 @@
     .spacing-low tfoot tr td {
         border-left: 1px solid rgb(143, 143, 143) !important;
         border-right: 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-r-l {
+        border-left: 1px solid rgb(143, 143, 143) !important;
+        border-right: 1px solid rgb(143, 143, 143) !important;
+    }
+    .border-r-l-t {
+        border-left: 1px solid rgb(143, 143, 143) !important;
+        border-right: 1px solid rgb(143, 143, 143) !important;
+        border-top: 1px solid rgb(143, 143, 143) !important;
     }
     .spacing-low tr th,
     .spacing-low tr:last-child,
@@ -511,8 +530,8 @@
     }
     .main-invoice-row {
         margin-top: 3px;
-        margin-left: 2px;
-        margin-right: 2px;
+        // margin-left: 2px;
+        // margin-right: 2px;
         margin-bottom: 5px;
     }
     .pd-top-bottom-2 {
