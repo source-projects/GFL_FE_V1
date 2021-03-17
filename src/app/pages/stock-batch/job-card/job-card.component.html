@@ -6,7 +6,7 @@
             </div>
         </div>
     </nb-card-header>
-    <div id="print-slip" class="jet-slip size-A5">
+    <div *ngFor="let batch of printBatchData;let i = index;" id="print-jobCard{{i}}" class="jet-slip size-A5">
         <nb-card-body>
             
             <div class="container print-container mr-top-30 mr-bottom-30 pd-top-10">
@@ -19,11 +19,11 @@
                     <div class="row">
                         <div class="col-md-4 wth-50">
                             <label class="font-25">Party Name:</label> <span style="color: red !important;"
-                                class="slip-value rd-color"></span>
+                                class="slip-value rd-color">{{batch.partyName}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
                             <label class="font-25">Master Name:</label> <span style="color: red !important;"
-                                class="slip-value rd-color"></span>
+                                class="slip-value rd-color">{{batch.masterName}}</span>
                         </div>
                     </div>
                 </div>
@@ -32,10 +32,10 @@
                 <div class="mb-1 print-text-center pd-bt-25">
                     <div class="row">
                         <div class="col-md-4 wth-50">
-                            <label class="font-25">Pcs:</label> <span class="slip-value"></span>
+                            <label class="font-25">Pcs:</label> <span class="slip-value">{{batch.totalPcs}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
-                            <label class="font-25">Date:</label> <span class="slip-value"></span>
+                            <label class="font-25">Date:</label> <span class="slip-value">{{batch.receiveDate}}</span>
                         </div>
                     </div>
                 </div>
@@ -43,12 +43,12 @@
                 <div class="mb-1 print-text-center pd-bt-25">
                     <div class="row">
                         <div class="col-md-4 wth-50">
-                            <label class="font-25">Greige Mtr:</label> <span
-                                class="slip-value"></span>
+                            <label class="font-25">Grey Mtr:</label> <span
+                                class="slip-value">{{batch.totalMtr}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
-                            <label class="font-25">Greige Wt:</label> <span
-                                class="slip-value"></span>
+                            <label class="font-25">Grey Wt:</label> <span
+                                class="slip-value">{{batch.totalWt}}</span>
                         </div>
                     </div>
                 </div>
@@ -57,11 +57,11 @@
                     <div class="row">
                         <div class="col-md-4 wth-50">
                             <label class="font-25">Lot No:</label> <span
-                                class="slip-value"></span>
+                                class="slip-value">{{batch.batchId}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
                             <label class="font-25">P Chl No:</label> <span
-                                class="slip-value"></span>
+                                class="slip-value">{{batch.chalNo}}</span>
                         </div>
                     </div>
                 </div>
@@ -70,11 +70,11 @@
                     <div class="row">
                         <div class="col-md-4 wth-50">
                             <label class="font-25">Quality Id:</label> <span
-                                class="slip-value"></span>
+                                class="slip-value">{{batch.qualityId}}</span>
                         </div>
                         <div class="col-md-8 wth-50">
                             <label class="font-25">Quality Name:</label> <span
-                                class="slip-value"></span>
+                                class="slip-value">{{batch.qualityName}}</span>
                         </div>
                     </div>
                 </div>
@@ -99,21 +99,19 @@
                                 </thead>
                                 <tbody>
         
-                                    <tr >
-                                        <td class="pd-top-bottom-1 width-15">1</td>
-                                        <td class="pd-top-bottom-1 width-30">150.00</td>
-                                        <td class="pd-top-bottom-1 width-30">14.70</td>
+                                    <tr *ngFor="let gr of batch.batchDataList;let i1 = index;">
+                                        <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
+                                        <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
+                                        <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
                                         <td class="pd-top-bottom-1 width-60"></td>
                                     </tr>
         
-                                    
-                                    
                                 </tbody>
                                 <tfoot class="table-footer">
                                     <tr>
                                         <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>3,009.00</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>207.62</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrl1 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtl1 | number : '1.2-2'}}</b></th>
                                         <th class="pd-top-bottom-0 width-60"><b></b></th>
                                     </tr>
                                     
@@ -140,10 +138,10 @@
                                 </thead>
                                 <tbody>
         
-                                    <tr>
-                                        <td class="pd-top-bottom-1 width-15">1</td>
-                                        <td class="pd-top-bottom-1 width-30">150.00</td>
-                                        <td class="pd-top-bottom-1 width-30">14.70</td>
+                                    <tr *ngFor="let gr of batch.batchDataList2;let i1 = index;">
+                                        <td class="pd-top-bottom-1 width-15">{{gr.sr}}</td>
+                                        <td class="pd-top-bottom-1 width-30">{{gr.mtr | number : '1.2-2'}}</td>
+                                        <td class="pd-top-bottom-1 width-30">{{gr.wt | number : '1.2-2'}}</td>
                                         <td class="pd-top-bottom-1 width-60"></td>
                                     </tr>
                                     
@@ -151,8 +149,8 @@
                                 <tfoot class="table-footer">
                                     <tr>
                                         <th class="pd-top-bottom-0 width-15"><b>TTL</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>3,009.00</b></th>
-                                        <th class="pd-top-bottom-0 width-30"><b>207.62</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalMtrl2 | number : '1.2-2'}}</b></th>
+                                        <th class="pd-top-bottom-0 width-30"><b>{{batch.totalWtl2 | number : '1.2-2'}}</b></th>
                                         <th class="pd-top-bottom-0 width-60"><b></b></th>
         
                                     </tr>

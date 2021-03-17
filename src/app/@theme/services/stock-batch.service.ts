@@ -43,6 +43,10 @@ export class StockBatchService {
   getAllBatchForAdditionSlip(){
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/getAllBatchForFinishMtr');
   }
+
+  getJobCardData(stockId, batchId){
+    return this.httpClient.get(`${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}&stockId=${stockId}`);
+  }
   
 
 }

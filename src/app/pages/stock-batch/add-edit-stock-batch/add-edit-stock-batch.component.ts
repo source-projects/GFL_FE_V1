@@ -664,7 +664,8 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockBatch.receiveDate = new Date();
     this.stockBatch.stockInType = "Fabric";
   }
-  addUpdateStockBatch(myForm) {
+
+  addUpdateStockBatch(myForm, printDirect?) {
     this.disableButton = true;
     this.formSubmitted = true;
     let uniqueError = false;
@@ -711,6 +712,9 @@ export class AddEditStockBatchComponent implements OnInit {
                 this.reset(myForm);
                 this.disableButton = false;
                 this.toastr.success(data["msg"]);
+                if(printDirect){
+                  this.printJobCard(myForm, data['data']);
+                }
               } else {
                 this.loading = false;
                 this.disableButton = false;
@@ -734,6 +738,9 @@ export class AddEditStockBatchComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);
+              if(printDirect){
+                this.printJobCard(myForm,data['data']);
+              }
               this.route.navigate(["/pages/stock-batch"]);
             } else {
               this.disableButton = false;
@@ -804,12 +811,13 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  printJobCard(form){
+  printJobCard(form, data){
+    data = {'stockId':9587};
     this.isDirectPrintFlag=true
     const modalRef = this.modalService.open(JobCardComponent);
     modalRef.componentInstance.isDirectPrintFlag=this.isDirectPrintFlag
-    // modalRef.componentInstance.batchId = selectedBatchID;
-    // modalRef.componentInstance.stockId = selectedStockId;
+    modalRef.componentInstance.stockBatchData = this.stockBatch;
+    modalRef.componentInstance.stockId = data.stockId;
     modalRef.result
       .then((result) => {})
   }

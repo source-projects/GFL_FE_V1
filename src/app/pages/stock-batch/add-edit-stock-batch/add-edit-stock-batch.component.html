@@ -208,12 +208,12 @@
                                                             <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-row="row">
                                                                 <div class="col-md-6">
                                                                     <div class="toal-finish-mtr">
-                                                                        Total mtr: {{block.totalMt}}
+                                                                        Total mtr: {{block.totalMt | number : '1.2-2'}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="toal-finish-mtr">
-                                                                        Total wt: {{block.totalWt}}
+                                                                        Total wt: {{block.totalWt | number : '1.2-2'}}
                                                                     </div>
                                                                 </div>
                                                             </ng-template>
@@ -248,9 +248,9 @@
                             <button *ngIf="!addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/stock-batch/view']">CANCEL</button>
 
                             <!-- <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button> -->
-                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">SAVE</button>
-                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateStockBatch(myForm)" [disabled]="disableButton">UPDATE</button>
-                            <button  type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="printJobCard(myForm)" [disabled]="disableButton">SAVE & PRINT</button>
+                            <button *ngIf="addFlag" type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm, false)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!addFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addUpdateStockBatch(myForm, false)" [disabled]="disableButton">UPDATE</button>
+                            <button  type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="addUpdateStockBatch(myForm, true)" [disabled]="disableButton">SAVE & PRINT</button>
 
 
                         </div>
