@@ -1,0 +1,165 @@
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+
+        <div class="row">
+            <div  class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">View
+                    Table</button>
+            </div>
+            
+            <div class="col-md-7 col-6">
+                <div *ngIf="this.currentEmpId == null; else updateS">
+                    <h2 class="nb-text">Add Employee</h2>
+                </div>
+                <ng-template #updateS>
+                    <h2 class="nb-text">Update Employee</h2>
+                </ng-template>
+            </div>
+
+        </div>
+
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #empForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Employee Name</label>
+                            <input type="text" name="name" #name1="ngModel"
+                                [(ngModel)]="registration.name"  class="form-control size-small"
+                                fieldsize="small" nbinput placeholder="Employee Name" />
+
+                            <div class="input-required" *ngIf="name1.invalid
+                                &&
+                                (formSubmitted || name1.touched)">
+                                <span>Employee Name is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Phone No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="contact" [(ngModel)]="registration.contact" #contact1="ngModel"
+                                required [ngClass]="{
+                                'is-invalid':
+                                contact1.invalid &&
+                                (formSubmitted || contact1.touched) 
+                                }" placeholder="Contact No" />
+
+                            <div class="input-required" *ngIf="contact1.invalid
+                                &&
+                                (formSubmitted || contact1.touched)">
+                                <span>Contact No is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Aadhar Card No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="aadhar" [(ngModel)]="registration.aadhar" #aadhar1="ngModel"
+                                required [ngClass]="{
+                                'is-invalid':
+                                aadhar1.invalid &&
+                                (formSubmitted || aadhar1.touched) 
+                                }" placeholder="Aadhar Card No" />
+
+                            <div class="input-required" *ngIf="aadhar1.invalid
+                                &&
+                                (formSubmitted || aadhar1.touched)">
+                                <span>Aadhar Card No is required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <!-- <div class="form-control size-small"> -->
+
+                            <label class="required">Document</label>
+                            <!-- <input class="file-name-formatting" type="file" name="uploadresume"
+                                    class="up-res" placeholder="Upload Resume"
+                                    (change)="handleFileInput($event)">
+                            </div>
+                            <div class="text-danger" *ngIf="fileSize">
+                                File should be less than 50MB
+                            </div> -->
+                        <!-- </div>    -->
+
+                        <!-- <label class="required">Document</label> -->
+
+                        <!-- <div class="form-control size-small"> -->
+                            <!-- <label class="required">Document</label> -->
+                            <input type="file" name="document" class="form-control size-small"
+                                       id="file" placeholder="Upload document"
+                                       (change)="handleFileInput($event)">
+                           
+                        <!-- </div> -->
+                    </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Remark</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="remark" [(ngModel)]="registration.remark" #remark1="ngModel"
+                                required  placeholder="Remark" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Remark2</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel"
+                                required  placeholder="Remark" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Remark3</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel"
+                                required  placeholder="Remark" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <div class="padding-bt-tp">
+                            <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
+                                routerLink='/pages/shade'>CANCEL</button> -->
+                            <button 
+                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="reset(empForm)">CANCEL</button>
+
+                           
+                           
+                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="!this.currentEmpId" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>
