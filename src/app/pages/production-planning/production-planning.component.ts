@@ -251,7 +251,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         this.qualityList.forEach((e) => {
           if (e.qualityId == this.productionPlanning.qualityId) {
             this.p_id = e.partyId;
-            this.productionPlanning.partyId = e.partyName;
+            //this.productionPlanning.partyId = this.qualityList.
             this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
           }
         });
@@ -355,6 +355,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           // this.getAllBatchData();
           // this.plannedProductionListForDataTable();
           this.ngOnInit();
+          this.productionPlanning.partyId = null;
+          this.productionPlanning.qualityId = null;
           this.editProductionPlanFlag = false;
         }
       })
