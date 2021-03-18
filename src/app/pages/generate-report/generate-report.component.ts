@@ -80,11 +80,15 @@ export class GenerateReportComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.reportData = data["data"];
+            this.reportData = data["data"].batchDetailList;
           }
         },
         (error) => {}
       );
+  }
+
+  lotNoEntered(event){
+    console.log(event)
   }
 
   getQualityFromParty(event) {
@@ -105,14 +109,21 @@ export class GenerateReportComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.qualityList = data["data"].qualityDataList;
-            this.qualityList.forEach((e) => {
-              e.partyName = data["data"].partyName;
-              if (this.partyId == e.partyId) {
-                this.partyName = e.partyName;
-              }
-              this.getReportData();
-              this.loading = false;
-            });
+            // this.qualityList.forEach((e) => {
+            //   e.partyName = data["data"].partyName;
+            //   if (this.partyId == e.partyId) {
+            //     this.partyName = e.partyName;
+            //   }
+            //   if(this.partySelected){
+            //     this.qualityControlId = null;
+            //   }
+            //   this.getReportData();
+            //   this.loading = false;
+            // });
+            if(this.partySelected){
+              this.qualityControlId = "";
+            }
+            this.getReportData();
             this.loading = false;
           } else {
             this.qualityList = null;

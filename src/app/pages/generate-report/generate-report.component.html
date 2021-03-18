@@ -12,7 +12,8 @@
                                 <div class="card-d-label"><label>Lot No</label></div>
 
 
-                                <div class="card-d-label"><input type="number" class="form-control input-border"
+                                <div class="card-d-label">
+                                    <input type="number" class="form-control input-border" (keyup)="lotNoEntered($event.target.value)"
                                         placeholder="Enter Lot no"></div>
 
 
@@ -699,30 +700,31 @@
                     </div>
                 </div>
                 <div>
-                    <div class="row">
-                        <div class="col-md-12 col-12">
+                <div class="row" *ngFor="let data of reportData">
+
+                        <div class="col-md-12 col-12" *ngIf="!data.isProductionPlanned" >
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1">
-                                <div class="row">
+                            <div class="report-card-1" >
+                                <div class="row" >
                                     <div class="col-md-12">
                                         <div class="card-detail-report only-first-card">
 
 
-                                            <div class="card-d-label"><label>Not Production</label></div>
+                                            <div class="card-d-label"><label>Not Production Planned</label></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
 
 
-                                        
-                                        <div class="bg-main-cont">
+
+                                        <div class="bg-main-cont"  >
                                             <div class="card-detail-report">
 
 
                                                 <div class="card-d-label"><label>Total Pcs</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.pcs}}</span></div>
 
 
                                             </div>
@@ -733,7 +735,7 @@
                                                 <div class="card-d-label"><label>Batch Id</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.batchId}}</span></div>
 
 
                                             </div>
@@ -744,7 +746,7 @@
                                                 <div class="card-d-label"><label>Quality Id</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.qualityId}}</span></div>
 
 
                                             </div>
@@ -755,7 +757,7 @@
                                                 <div class="card-d-label"><label>Total Grey Mtr</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
 
 
                                             </div>
@@ -766,7 +768,7 @@
                                                 <div class="card-d-label"><label>Received Date</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.receiveDate | date:'medium'}}</span></div>
 
 
                                             </div>
@@ -776,29 +778,29 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 report-display-flexend">
-                                        
+                                    <!-- <div class="col-md-6 report-display-flexend">
+
                                         <div class="bg-main-cont width-100 height-100">
-                                            
+
 
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                 </div>
-                                
+
                             </div>
 
                         </div>
 
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-12 col-12" *ngIf="data.isProductionPlanned">
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1">
-                                <div class="row">
-                                    <div class="col-md-12">
+                            <div class="report-card-1" >
+                                <div class="row" >
+                                    <div class="col-md-12" >
                                         <div class="card-detail-report only-first-card">
 
 
-                                            <div class="card-d-label"><label>Production Plan</label></div>
+                                            <div class="card-d-label"><label>Production Planned</label></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -810,7 +812,7 @@
                                                 <div class="card-d-label"><label>Total Pcs</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.pcs}}</span></div>
 
 
                                             </div>
@@ -821,7 +823,7 @@
                                                 <div class="card-d-label"><label>Batch Id</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.batchId}}</span></div>
 
 
                                             </div>
@@ -832,7 +834,7 @@
                                                 <div class="card-d-label"><label>Quality Id</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.qualityId}}</span></div>
 
 
                                             </div>
@@ -843,7 +845,7 @@
                                                 <div class="card-d-label"><label>Total Grey Mtr</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
 
 
                                             </div>
@@ -854,7 +856,7 @@
                                                 <div class="card-d-label"><label>Received Date</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.receiveDate | date: 'medium'}}</span></div>
 
 
                                             </div>
@@ -862,7 +864,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 report-display-flexend">
-                                        
+
                                         <div class="bg-main-cont width-100 height-100">
                                             <div class="card-detail-report">
 
@@ -870,7 +872,7 @@
                                                 <div class="card-d-label"><label>Shade No</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.partyShadeNo}}</span></div>
 
 
                                             </div>
@@ -884,8 +886,8 @@
                                                 <div class="card-d-label text-right txt-ov-elips display-color-input">
                                                     <span>
                                                         <div class="text-center txt-ov-elips width-50 display-inline">
-                                                            <input [(colorPicker)]="colorTone"
-                                                                [style.background]="colorTone" [value]="colorTone"
+                                                            <input [(colorPicker)]="data.colorTone"
+                                                                [style.background]="data.colorTone" [value]="data.colorTone"
                                                                 disabled="true" class="width-100 text-center" />
 
                                                         </div>
@@ -901,34 +903,34 @@
                                                 <div class="card-d-label"><label>Color Name</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.colorName}}</span></div>
 
 
                                             </div>
 
-                                        
+
                                         </div>
                                     </div>
 
                                 </div>
-                                
+
                             </div>
 
                         </div>
 
 
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-12 col-12" *ngIf="data.isFinishMtrSave" >
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1">
-                                <div class="row">
-                                    <div class="col-md-12">
+                            <div class="report-card-1" >
+                                <div class="row" >
+                                    <div class="col-md-12" >
                                         <div class="card-detail-report only-first-card">
 
 
                                             <div class="card-d-label"><label>Finished Mtr</label></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" >
 
                                         <div class="bg-main-cont">
                                             <div class="card-detail-report">
@@ -937,7 +939,7 @@
                                                 <div class="card-d-label"><label>Total Pcs</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.pcs}}</span></div>
 
 
                                             </div>
@@ -948,7 +950,7 @@
                                                 <div class="card-d-label"><label>Batch Id</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.batchId}}</span></div>
 
 
                                             </div>
@@ -959,7 +961,7 @@
                                                 <div class="card-d-label"><label>Quality Id</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.qualityId}}</span></div>
 
 
                                             </div>
@@ -970,7 +972,7 @@
                                                 <div class="card-d-label"><label>Total Grey Mtr</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
 
 
                                             </div>
@@ -981,38 +983,50 @@
                                                 <div class="card-d-label"><label>Received Date</label></div>
 
 
-                                                <div class="card-d-label"><span>156</span></div>
+                                                <div class="card-d-label"><span>{{data.receiveDate | date:'medium'}}</span></div>
 
 
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 report-display-flexend">
-                                        
-                                        <div class="bg-main-cont width-100 height-100">
                                             <div class="card-detail-report">
 
 
                                                 <div class="card-d-label"><label>Finished Meter</label></div>
 
 
-                                                <div class="card-d-label"><span>25</span></div>
+                                                <div class="card-d-label"><span>{{data.totalFinish}}</span></div>
 
 
                                             </div>
 
-                                            
-                                        
                                         </div>
                                     </div>
+                                    <!-- <div class="col-md-6 report-display-flexend">
+
+                                        <div class="bg-main-cont width-100 height-100"> -->
+                                            <!-- <div class="card-detail-report">
+
+
+                                                <div class="card-d-label"><label>Finished Meter</label></div>
+
+
+                                                <div class="card-d-label"><span>{{data.totalFinish}}</span></div>
+
+
+                                            </div> -->
+
+
+
+                                        <!-- </div>
+                                    </div> -->
 
                                 </div>
-                                
+
                             </div>
 
                         </div>
-                        
+
+
                     </div>
                 </div>
 

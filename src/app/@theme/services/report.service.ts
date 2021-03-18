@@ -50,7 +50,7 @@ export class ReportService {
   getPartyQualityReportData(id, quality) {
     return this._http.get(
       this.commonService.envUrl() +
-        "api/party/get/report?id=" +
+        "api/party/all/report?id=" +
         id +
         "&qualityId=" +
         quality
