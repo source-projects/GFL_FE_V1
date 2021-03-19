@@ -18,6 +18,8 @@ import * as wijmo from "@grapecity/wijmo";
 import { DatePipe } from "@angular/common";
 import { AddShadeComponent } from "../../production-planning/add-shade/add-shade.component";
 import { NgSelectComponent } from "@ng-select/ng-select";
+import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
 
 @Component({
   selector: "ngx-planning-slip",
@@ -48,25 +50,39 @@ export class PlanningSlipComponent implements OnInit {
   @Input() isPrintDirect: boolean;
   @Input() batchId;
   @Input() stockId;
+  @Input() partyId;
+  @Input() qualityId;
   @Input() additionSlipFlag: boolean;
   @Input() editAdditionFlag: boolean;
+  @Input() directSlipFlag: boolean;
   @Input() additionSlipData;
   public itemListArray: any = [];
   public itemListArrayCopy: any = [];
+  public shadeList = [];
   public colorFlag = false;
   public printFlag = false;
   public additionSlipSaveFlag = false;
+  public directSlipSaveFlag = false;
   public slipData: any;
   public temp;
   public holdTime;
   public isColor;
   public id;
   public liquorRatio;
+  public jetid;
+  public concentration;
   public list = [];
+  public jetList = [];
   public itemList: DyeingChemicalData[] = [];
   saveAndPrintFlag = false;
   quantityNullFlag = false;
   saveSetFlag = false;
+  public jetCapacity: boolean = false;
+  public jetSelectedFlag: boolean = false;
+  public selectedJetData: any = [];
+  public weight: number = 0;
+  public isShade;
+  public shadeId;
 
   planningSlipArray = [
     {
@@ -95,6 +111,9 @@ export class PlanningSlipComponent implements OnInit {
     private datePipe: DatePipe,
     private DyeingProcessService: DyeingProcessService,
     private planningSlipService: PlanningSlipService,
+    private jetPlanningService: JetPlanningService,
+    private productionPlanningService : ProductionPlanningService,
+    private shadeService: ShadeService,
     private modalService: NgbModal
   ) {
     this.myDate = new Date();
@@ -110,6 +129,13 @@ export class PlanningSlipComponent implements OnInit {
     if (this.isPrintDirect) {
       //directly print slip
       await this.printSlip();
+    }
+    if(this.directSlipFlag){
+
+      this.getAllJets();
+      if(this.partyId && this.qualityId){
+        await this.getShadeList();
+      }
     }
     if (this.editAdditionFlag) {
       this.getUpdateDataForAdditionSlip();
@@ -129,6 +155,52 @@ export class PlanningSlipComponent implements OnInit {
     return true; 
 } 
 
+getAllJets() {
+  this.jetList = [];
+  this.jetPlanningService.getAllJetData().subscribe(
+    (data) => {
+      if (data["success"]) {
+        this.jetList = data["data"];
+      }
+    },
+    (error) => {}
+  );
+}
+
+jetSelected(event) {
+  this.jetCapacity = false;
+  let jet = this.jetList.filter((f) => f.id == event);
+  if (jet.length) {
+    if (jet[0].capacity > this.weight) {
+      this.selectedJetData = jet[0].jetDataList;
+      if (!this.selectedJetData) {
+        this.jetSelectedFlag = false;
+      } else {
+        this.jetSelectedFlag = true;
+      }
+    } else {
+      this.jetCapacity = true;
+      this.jetSelectedFlag = false;
+    }
+  }
+}
+
+pickColor(){
+  this.isShade = true;
+}
+
+getWeightByStockAndBatch() {
+  if (this.batchId && this.stockId) {
+    this.productionPlanningService
+      .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
+      .subscribe((data) => {
+        if (data["success"]) {
+          this.weight = data["data"].totalwt;
+        }
+      });
+  }
+}
+
   getItemData() {
     this.DyeingProcessService.getAllItemWithSupplier().subscribe(
       (data) => {
@@ -141,6 +213,29 @@ export class PlanningSlipComponent implements OnInit {
       (error) => {}
     );
   }
+
+  public getShadeList() {
+    this.loading = true;
+
+    this.shadeService
+      .getShadesByQualityAndPartyId(this.partyId, this.qualityId)
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.shadeList = data["data"];
+            this.loading = false;
+          } else {
+            // this.toastr.error(data["msg"]);
+            this.loading = false;
+          }
+        },
+        (error) => {
+          // this.toastr.error(errorData.Serever_Error);
+          this.loading = false;
+        }
+      );
+  }
+
 
   getSlipDataFromBatch() {
     this.planningSlipService
@@ -372,7 +467,22 @@ export class PlanningSlipComponent implements OnInit {
         if (this.additionSlipSaveFlag) {
           this.activeModal.close(this.slipObj);
         }
-      } else {
+      } else if(this.directSlipFlag){
+        this.slipObj = {
+          id: this.id,
+          temp: myForm.value.temp,
+          holdTime: myForm.value.holdTime,
+          liquorRatio: myForm.value.liquorRatio,
+          isColor: myForm.value.isColor,
+          items: this.itemList,
+          jetId: this.jetid
+        };
+        this.isSavedForPrint = true;
+
+        if (this.directSlipSaveFlag) {
+          this.activeModal.close(this.slipObj);
+        }
+      }else{
         this.planningSlipService.updateSlipData(this.slipData).subscribe(
           (data) => {
             if (data["success"]) {
