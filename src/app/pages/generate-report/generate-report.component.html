@@ -13,8 +13,7 @@
 
 
                                 <div class="card-d-label">
-                                    <input type="number" class="form-control input-border" (keyup)="lotNoEntered($event.target.value)"
-                                        placeholder="Enter Lot no"></div>
+                                    <input type="number" class="form-control input-border" (keyup)="lotNoEntered($event.target.value)" placeholder="Enter Lot no"></div>
 
 
                             </div>
@@ -598,10 +597,7 @@
 
 
                                 <div class="card-d-label  width-70">
-                                    <ng-select placeholder="Select Party Name" appendTo="body" name="partyName"
-                                        partyName1="ngModel" [(ngModel)]="partyId" #partyName1="ngModel"
-                                        (change)="getQualityFromParty($event)"
-                                        class="required-error-dropdown dropdown-name input-border">
+                                    <ng-select placeholder="Select Party Name" appendTo="body" name="partyName" partyName1="ngModel" [(ngModel)]="partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)" class="required-error-dropdown dropdown-name input-border">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -654,10 +650,7 @@
 
 
                                 <div class="card-d-label width-70">
-                                    <ng-select placeholder="Select Quality Id" appendTo="body" name="qualityId"
-                                        #qualityId1="ngModel" (change)="qualityIdSelected($event)"
-                                        [(ngModel)]="qualityId"
-                                        class="required-error-dropdown dropdown-name input-border">
+                                    <ng-select placeholder="Select Quality Id" appendTo="body" name="qualityId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" [(ngModel)]="qualityId" class="required-error-dropdown dropdown-name input-border">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -699,13 +692,87 @@
 
                     </div>
                 </div>
-                <div>
-                <div class="row" *ngFor="let data of reportData">
+                <div class="row">
+                    <div class="col-md-6">
 
-                        <div class="col-md-12 col-12" *ngIf="!data.isProductionPlanned" >
+                        <div class="report-card-1 main-input-report">
+
+                            <div class="card-detail-report only-first-card mr-0">
+
+
+                                <div class="card-d-label"><label>Batch
+                                        Id</label></div>
+
+                                <div class="card-d-label width-70">
+                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="qualityId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" [(ngModel)]="qualityId" class="required-error-dropdown dropdown-name input-border">
+                                        <ng-option disabled="true">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        Batch Id
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right txt-ov-elips">
+                                                        Party Name
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-option>
+                                        <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">
+                                                        {{ q.qualityId }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-right
+                                                            txt-ov-elips">
+                                                        {{ q.partyName }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6 display-flex">
+                        <div class="report-card-1 main-input-report">
+
+                            <div class="check-content">
+                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                    <span class="text cr-txt">Not Production Plan</span>
+                                </nb-checkbox>
+                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                    <span class="text cr-txt">Production Plan</span>
+                                </nb-checkbox>
+                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                    <span class="text cr-txt">Finished Meter</span>
+                                </nb-checkbox>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="row" *ngFor="let data of reportData">
+
+                        <div class="col-md-12 col-12" *ngIf="!data.isProductionPlanned">
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1" >
-                                <div class="row" >
+                            <div class="report-card-1">
+                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-detail-report only-first-card">
 
@@ -717,7 +784,7 @@
 
 
 
-                                        <div class="bg-main-cont"  >
+                                        <div class="bg-main-cont">
                                             <div class="card-detail-report">
 
 
@@ -794,9 +861,9 @@
 
                         <div class="col-md-12 col-12" *ngIf="data.isProductionPlanned">
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1" >
-                                <div class="row" >
-                                    <div class="col-md-12" >
+                            <div class="report-card-1">
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="card-detail-report only-first-card">
 
 
@@ -919,18 +986,18 @@
                         </div>
 
 
-                        <div class="col-md-12 col-12" *ngIf="data.isFinishMtrSave" >
+                        <div class="col-md-12 col-12" *ngIf="data.isFinishMtrSave">
                             <!--2nd Sub Card Div-->
-                            <div class="report-card-1" >
-                                <div class="row" >
-                                    <div class="col-md-12" >
+                            <div class="report-card-1">
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="card-detail-report only-first-card">
 
 
                                             <div class="card-d-label"><label>Finished Mtr</label></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" >
+                                    <div class="col-md-6">
 
                                         <div class="bg-main-cont">
                                             <div class="card-detail-report">
@@ -1004,7 +1071,7 @@
                                     <!-- <div class="col-md-6 report-display-flexend">
 
                                         <div class="bg-main-cont width-100 height-100"> -->
-                                            <!-- <div class="card-detail-report">
+                                    <!-- <div class="card-detail-report">
 
 
                                                 <div class="card-d-label"><label>Finished Meter</label></div>
@@ -1017,7 +1084,7 @@
 
 
 
-                                        <!-- </div>
+                                    <!-- </div>
                                     </div> -->
 
                                 </div>
