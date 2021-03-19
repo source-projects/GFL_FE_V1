@@ -62,7 +62,14 @@ export class AddEditRegistrationComponent implements OnInit {
 
     this.registrationService.uploadImage(data).subscribe((response) => {
       if(response){
-        console.log(response);
+        let obj={
+          id : null,
+          name : "",
+          type : "profile",
+          url : response.secure_url,
+          controlId : null
+        }
+        this.registration.employeeDocumentList.push(obj)
       }
     })
 
@@ -72,32 +79,6 @@ export class AddEditRegistrationComponent implements OnInit {
     this.fileToUpload = files.item(0);
     console.log(this.fileToUpload)
   }
-
-    // const formData = new FormData();  
-    
-    
-    //     formData.append('file', this.fileToUpload.data);  
-    
-    
-
-    // const formData: FormData = new FormData();
-    // formData.append('fileKey', this.fileToUpload, this.fileToUpload.name);
-    // console.log(formData)
-    // this.registration.file = this.fileToUpload;
-
-// }
-
-// handleFileInput(event: any) {
-//  // this.fileSize = false;
-//   const file = event.target.files[0];
-//   const reader = new FileReader();
-//   reader.readAsDataURL(file);
-//   reader.onload = () => {
-//     this.value64 = reader.result;
-//     console.log(this.value64)
-
-//   };
-// }
 
 
   reset(form){
@@ -113,7 +94,7 @@ export class AddEditRegistrationComponent implements OnInit {
     this.formSubmitted = true;
     this.disableButton = true;
     this.registration.id=0;
-      this.fileUpload();
+    this.fileUpload();
     this.registrationService.addEmployee(this.registration).subscribe(
       (data) => {
         if (data["success"]) {
