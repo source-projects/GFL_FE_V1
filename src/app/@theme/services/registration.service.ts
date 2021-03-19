@@ -12,10 +12,23 @@ export class RegistrationService {
     private commonService: CommonService
   ) { }
 
-  // getallShade(): any {
-  //   return this.httpClient.get(this.commonService.envUrl() + 'api/shade/original/all');
-  // }
+  
+  
   addEmployee(empData): any {
     return this.httpClient.post(this.commonService.envUrl() + 'api/employee/add', empData);
+  }
+
+  getEmployeeById(id):any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/employee?id='+id);
+
+  }
+
+  getAllEmployee():any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/employee/all');
+
+  }
+
+  uploadImage(data):any{
+    return this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data);
   }
 }

@@ -18,6 +18,8 @@ export class AddEditRegistrationComponent implements OnInit {
 
   fileToUpload: File = null;
 
+  files;
+
   user: any;
   userHead;
   currentEmpId: any;
@@ -25,16 +27,7 @@ export class AddEditRegistrationComponent implements OnInit {
   disableButton = false;
   value64:any
 
-  public uploader: FileUploader = new FileUploader({
-    //url: URL,
-    disableMultipart : false,
-    autoUpload: true,
-    method: 'post',
-    itemAlias: 'attachment',
-    allowedFileType: ['image', 'pdf', 'txt']
-
-
-    });
+ 
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -50,21 +43,35 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
  
-
+  // fileSelect(event){
+  //   this.files = event.target.files[0];
+  //   console.log(this.files)
+  // }
   public getUserId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
   }
 
-  public onFileSelected(event: EventEmitter<File[]>) {
-    const file: File = event[0];
-    console.log(file);
+  fileUpload(){
+    
+    const data = new FormData();
+    data.append('file',this.fileToUpload);
+    data.append('upload_preset','gfl_upload');
+    data.append('cloud_name','dpemsdha5');
+
+    this.registrationService.uploadImage(data).subscribe((response) => {
+      if(response){
+        console.log(response);
+      }
+    })
+
 
   }
-  // handleFileInput(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  //   console.log(this.fileToUpload)
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+    console.log(this.fileToUpload)
+  }
 
     // const formData = new FormData();  
     
@@ -105,7 +112,8 @@ export class AddEditRegistrationComponent implements OnInit {
   addEmployee(form){
     this.formSubmitted = true;
     this.disableButton = true;
-
+    this.registration.id=0;
+      this.fileUpload();
     this.registrationService.addEmployee(this.registration).subscribe(
       (data) => {
         if (data["success"]) {

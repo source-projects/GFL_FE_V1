@@ -2,7 +2,7 @@ export class Registration {
     id: Number;
     name: string;
     contact: string;
-    aadhar: number;
+    aadhaar: number;
     remark: number;
     remark2: string;
     remark3: string;

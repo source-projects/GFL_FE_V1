@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label class="required">Aadhar Card No</label>
                             <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="aadhar" [(ngModel)]="registration.aadhar" #aadhar1="ngModel"
+                                name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel"
                                 required [ngClass]="{
                                 'is-invalid':
                                 aadhar1.invalid &&
@@ -85,22 +85,12 @@
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Document</label>
-                            <!-- <input class="file-name-formatting" type="file" name="uploadresume"
-                                    class="up-res" placeholder="Upload Resume"
-                                    (change)="handleFileInput($event)">
-                            </div>
-                            <div class="text-danger" *ngIf="fileSize">
-                                File should be less than 50MB
-                            </div> -->
-                        <!-- </div>    -->
-
-                        <!-- <label class="required">Document</label> -->
-
-                        <!-- <div class="form-control size-small"> -->
-                            <!-- <label class="required">Document</label> -->
+                            
+                    
                             <input type="file" name="document" class="form-control size-small"
-                                       id="file" placeholder="Upload document"
-                                       (change)="handleFileInput($event)">
+                                       id="file" placeholder="Upload document" [(ngModel)]="registration.file" 
+                                       (change)="handleFileInput($event.target.files)"
+                                      >
                            
                         <!-- </div> -->
                     </div>
