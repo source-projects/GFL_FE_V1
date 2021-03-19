@@ -1,5 +1,5 @@
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
+    <!-- <nb-card-header class="nb-header">
         <div>
             <div class="row">
                 <div class="col-md-11 col-10">
@@ -7,37 +7,51 @@
                 </div>
             </div>
         </div>
-    </nb-card-header>
+    </nb-card-header> -->
     <nb-card-body>
-        <div>
-            <form #myForm="ngForm">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
-                                <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
-                            </ng-select>
 
+        <nb-tabset fullWidth class="boiler-thermopack-tabheader">
+            <nb-tab tabTitle="Adition slip">
+                <div>
+                    <form #myForm="ngForm">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="required">Batch No:</label>
+                                    <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
+                                        <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
+                                    </ng-select>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
+
+                        <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
+                            <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
+                                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110"></ngx-datatable-column>
+                            <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime"></ngx-datatable-column>
+                            <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation" [maxWidth]="120"></ngx-datatable-column>
+                            <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp" [maxWidth]="115"></ngx-datatable-column>
+
+
+                        </ngx-datatable>
+                    </form>
                 </div>
+            </nb-tab>
 
-                <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-                    <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
-                            <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110"></ngx-datatable-column>
-                    <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime"></ngx-datatable-column>
-                    <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation" [maxWidth]="120"></ngx-datatable-column>
-                    <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp" [maxWidth]="115"></ngx-datatable-column>
+            <nb-tab tabTitle="Dyeing slip">
+                <h1>dyeing slip</h1>
+            </nb-tab>
 
+            <nb-tab tabTitle="Re-Dyeing slip">
+                <h1>re-dyeing slip</h1>
+            </nb-tab>
+        </nb-tabset>
 
-                </ngx-datatable>
-            </form>
-        </div>
     </nb-card-body>
 </nb-card>
