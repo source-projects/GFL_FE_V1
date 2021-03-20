@@ -11,12 +11,10 @@
             </div>
             
             <div class="col-md-7 col-6">
-                <div *ngIf="this.currentEmpId == null; else updateS">
-                    <h2 class="nb-text">Add Employee</h2>
+                <div >
+                    <h2 class="nb-text">Add Attendance</h2>
                 </div>
-                <ng-template #updateS>
-                    <h2 class="nb-text">Update Employee</h2>
-                </ng-template>
+                
             </div>
 
         </div>
@@ -30,7 +28,7 @@
                         <div class="form-group">
                             <label class="required">Employee Name</label>
                             <input type="text" name="name" #name1="ngModel"
-                                [(ngModel)]="registration.name"  class="form-control size-small"
+                                [(ngModel)]="currentData.name"  class="form-control size-small"
                                 fieldsize="small" nbinput placeholder="Employee Name" />
 
                             <div class="input-required" *ngIf="name1.invalid
@@ -45,7 +43,7 @@
                         <div class="form-group">
                             <label >Phone No</label>
                             <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="contact" [(ngModel)]="registration.contact" #contact1="ngModel"
+                                name="contact" [(ngModel)]="currentData.contact" #contact1="ngModel"
                                 required  placeholder="Contact No" />
 
                             
@@ -56,7 +54,7 @@
                         <div class="form-group">
                             <label class="required" >Aadhar Card No</label>
                             <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel"
+                                name="aadhar" [(ngModel)]="currentData.aadhaar" #aadhar1="ngModel"
                                  placeholder="Aadhar Card No" />
 
                             
@@ -66,20 +64,7 @@
 
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <!-- <div class="form-control size-small"> -->
-
-                            <label class="required">Document</label>
-                            
-                    
-                            <input type="file" name="document" class="form-control size-small"
-                                       id="file" placeholder="Upload document"  
-                                       (change)="handleFileInput($event.target.files,'document')"
-                                      >
-                           
-                    </div>
-                    </div>
+                   
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -87,61 +72,33 @@
 
                             <label class="required">Profile</label>
                             
-                    
-                            <input type="file" name="profile" class="form-control size-small"
-                                       id="profile" placeholder="Upload profile"
-                                       (change)="handleFileInput($event.target.files,'profile')"
-                                      >
+                            <img [src]="profileUrl" width="100" height="100">
                            
                                 </div>
                     </div>
                 </div>
 
 
-               
-
                 <div class="row">
-
-
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label >Remark</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark" [(ngModel)]="registration.remark" #remark1="ngModel"
-                                  placeholder="Remark" />
+                            <button (click) = "inClick()">In</button>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label >Remark2</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel"
-                                  placeholder="Remark" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Remark3</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel"
-                                  placeholder="Remark" />
+                            <button (click) = "outClick()">Out</button>
                         </div>
                     </div>
                 </div>
-               
-               
 
-                <ngx-qrcode
-                [elementType]="elementType"
-                 [errorCorrectionLevel]="correctionLevel"
-                 [value]="value"
-                 cssClass="bshadow"></ngx-qrcode>
 
-                 <span *ngIf="qrFlag" [(ngModel)] = "emp_id" name="emp_id">{{emp_id}}</span>
+
+                
                
 
+              
 
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
@@ -154,13 +111,13 @@
 
                            
                            
-                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
+                            <!-- <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton">UPDATE</button>
+                                [disabled]="disableButton">UPDATE</button> -->
 
                             <button *ngIf="!this.currentEmpId" type="button"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+                                (click)="addAttendance(empForm)" [disabled]="disableButton">SAVE</button>
                         </div>
                     </div>
                 </div>

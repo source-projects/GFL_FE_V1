@@ -47,6 +47,7 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -82,6 +83,7 @@ const NB_MODULES = [
   NbTabsetModule,
   //NgbModal
   NbAccordionModule,
+  
 ];
 
 @NgModule({
@@ -94,6 +96,7 @@ const NB_MODULES = [
     OwlNativeDateTimeModule,
     NgbModule,
     NgxCheckboxModule,
+    NgxQRCodeModule
   ],
 
   exports: [
@@ -102,6 +105,7 @@ const NB_MODULES = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxCheckboxModule,
+    NgxQRCodeModule
   ],
   providers: [ExportService, DatePipe],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],
