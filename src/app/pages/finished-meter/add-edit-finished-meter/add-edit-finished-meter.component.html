@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="batch-list-3line">
-                                        <button nbButton size="small" *ngFor="let b of batchList"
+                                        <button type="button" nbButton size="small" *ngFor="let b of batchList"
                                             (click)="batchSelected($event)" class="p-badge-design"
                                             [disabled]="!b.productionPlanned" [value]="b.batchId">
                                             {{b.batchId}} </button>
@@ -216,7 +216,7 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="mobile-pad-top-15">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="resetAll(myForm)" type="button" routerLink="/pages/finishedMeter">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="isAddButtonClicked" (click)="addFinishedMeter(myForm)">SAVE</button>
                         </div>
                     </div>

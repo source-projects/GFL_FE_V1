@@ -394,9 +394,8 @@ export class AdditionSlipComponent implements OnInit {
               .catch((err) => {});
           }
           this.ngOnInit();
-          // this.disableButton=true;
         } else {
-          this.toastr.error(errorData.Add_Error);
+          this.toastr.error(data['msg']);
         }
       },
       (error) => {}
