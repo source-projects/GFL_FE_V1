@@ -3,13 +3,19 @@ import {
   Input,
   OnInit,
   QueryList,
+  TemplateRef,
+  ViewChild,
   ViewChildren,
 } from "@angular/core";
 import {
   DyeingChemicalData,
   DyeingProcessData,
 } from "../../../@theme/model/dyeing-process";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {
+  ModalDismissReasons,
+  NgbActiveModal,
+  NgbModal,
+} from "@ng-bootstrap/ng-bootstrap";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
@@ -20,6 +26,8 @@ import { AddShadeComponent } from "../../production-planning/add-shade/add-shade
 import { NgSelectComponent } from "@ng-select/ng-select";
 import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import { PartyService } from "../../../@theme/services/party.service";
 
 @Component({
   selector: "ngx-planning-slip",
@@ -83,7 +91,9 @@ export class PlanningSlipComponent implements OnInit {
   public weight: number = 0;
   public isShade;
   public shadeId;
-
+  @ViewChild("selectShadeDialog") selectShadeDialog: TemplateRef<any>;
+  closeResult = "";
+  formSubmitted1 = false;
   planningSlipArray = [
     {
       temp: null,
@@ -101,6 +111,13 @@ export class PlanningSlipComponent implements OnInit {
     },
   ];
   slipObj: any;
+  directSlipShadeObj = {
+    partyId: null,
+    qualityId: null,
+    shadeId: null,
+  };
+  qualityList = [];
+  partyList = [];
 
   //dyeingData:DyeingSlipData = new DyeingSlipData();
   //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
@@ -112,9 +129,11 @@ export class PlanningSlipComponent implements OnInit {
     private DyeingProcessService: DyeingProcessService,
     private planningSlipService: PlanningSlipService,
     private jetPlanningService: JetPlanningService,
-    private productionPlanningService : ProductionPlanningService,
+    private productionPlanningService: ProductionPlanningService,
     private shadeService: ShadeService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private qualityService: QualityService,
+    private partyService: PartyService
   ) {
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
@@ -125,15 +144,16 @@ export class PlanningSlipComponent implements OnInit {
     await this.getItemData();
     if (this.batchId && this.stockId) {
       await this.getSlipDataFromBatch();
+      this.getWeightByStockAndBatch();
     }
     if (this.isPrintDirect) {
       //directly print slip
       await this.printSlip();
     }
-    if(this.directSlipFlag){
-
+    if (this.directSlipFlag) {
       this.getAllJets();
-      if(this.partyId && this.qualityId){
+      this.getAllPartyAndQuality();
+      if (this.partyId && this.qualityId) {
         await this.getShadeList();
       }
     }
@@ -146,60 +166,162 @@ export class PlanningSlipComponent implements OnInit {
     return this.activeModal;
   }
 
-  numberOnly(evt) { 
-          
-    // Only ASCII charactar in that range allowed 
-    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) || ASCIICode == 69) 
-        return false; 
-    return true; 
-} 
+  numberOnly(evt) {
+    // Only ASCII charactar in that range allowed
+    var ASCIICode = evt.which ? evt.which : evt.keyCode;
+    if (ASCIICode == 46) return true;
+    if (
+      (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) ||
+      ASCIICode == 69
+    )
+      return false;
+    return true;
+  }
 
-getAllJets() {
-  this.jetList = [];
-  this.jetPlanningService.getAllJetData().subscribe(
-    (data) => {
-      if (data["success"]) {
-        this.jetList = data["data"];
-      }
-    },
-    (error) => {}
-  );
-}
+  getAllJets() {
+    this.jetList = [];
+    this.jetPlanningService.getAllJetData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.jetList = data["data"];
+        }
+      },
+      (error) => {}
+    );
+  }
 
-jetSelected(event) {
-  this.jetCapacity = false;
-  let jet = this.jetList.filter((f) => f.id == event);
-  if (jet.length) {
-    if (jet[0].capacity > this.weight) {
-      this.selectedJetData = jet[0].jetDataList;
-      if (!this.selectedJetData) {
-        this.jetSelectedFlag = false;
+  jetSelected(event) {
+    this.jetCapacity = false;
+    let jet = this.jetList.filter((f) => f.id == event);
+    if (jet.length) {
+      if (jet[0].capacity > this.weight) {
+        this.selectedJetData = jet[0].jetDataList;
+        if (!this.selectedJetData) {
+          this.jetSelectedFlag = false;
+        } else {
+          this.jetSelectedFlag = true;
+        }
       } else {
-        this.jetSelectedFlag = true;
+        this.jetCapacity = true;
+        this.jetSelectedFlag = false;
       }
-    } else {
-      this.jetCapacity = true;
-      this.jetSelectedFlag = false;
     }
   }
-}
 
-pickColor(){
-  this.isShade = true;
-}
+  getAllPartyAndQuality() {
+    //get all party...
+    this.partyService.getAllPartyList(0, "all").subscribe((data) => {
+      if (data["success"]) {
+        this.partyList = data["data"];
+      }
+    });
 
-getWeightByStockAndBatch() {
-  if (this.batchId && this.stockId) {
-    this.productionPlanningService
-      .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
-      .subscribe((data) => {
-        if (data["success"]) {
-          this.weight = data["data"].totalwt;
-        }
-      });
+    //get all qualities...
+    this.qualityService.getallQuality(0, "all").subscribe((data) => {
+      if (data["success"]) {
+        this.qualityList = data["data"];
+      }
+    });
   }
-}
+
+  pickColor(e) {
+    if (e) {
+      var keyCode = e.keyCode ? e.keyCode : e.which;
+      if (!(keyCode == 13)) {
+        //event.preventDefault();
+        this.isShade = true;
+        this.modalService
+          .open(this.selectShadeDialog, { ariaLabelledBy: "modal-basic-title" })
+          .result.then(
+            (result) => {
+              this.closeResult = `Closed with: ${result}`;
+            },
+            (reason) => {
+              //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            }
+          );
+      }
+    }
+  }
+
+  setQualityByParty(event) {
+    this.loading = true;
+    if (event) {
+      if (this.directSlipShadeObj.partyId) {
+        this.qualityList = [];
+        this.qualityService
+          .getQualityByParty(this.directSlipShadeObj.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"])
+                this.qualityList = data["data"].qualityDataList;
+              if (this.qualityList && !this.qualityList.length)
+                this.directSlipShadeObj.qualityId = null;
+            },
+            (error) => {
+              this.loading = false;
+            }
+          );
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
+
+      //getShades from party...
+      this.shadeList = [];
+      this.shadeService
+        .getShadeFromPartyQuality(this.directSlipShadeObj.partyId, null)
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.shadeList = data["data"];
+          }
+        });
+    } else {
+      //call allshade api
+      this.getShadeList();
+      this.directSlipShadeObj.qualityId = null;
+      this.getAllPartyAndQuality();
+    }
+  }
+
+  getSHadeFromQuality(event) {
+    if (event) {
+      if (
+        this.directSlipShadeObj.partyId &&
+        this.directSlipShadeObj.qualityId
+      ) {
+        //getShades from party...
+        this.shadeList = [];
+        this.shadeService
+          .getShadeFromPartyQuality(
+            this.directSlipShadeObj.partyId,
+            this.directSlipShadeObj.qualityId
+          )
+          .subscribe((data) => {
+            if (data["success"]) {
+              this.shadeList = data["data"];
+            }
+          });
+      }
+    } else {
+      if (!this.directSlipShadeObj.partyId)
+        //getAllQuality
+        this.getAllPartyAndQuality();
+      this.getShadeList();
+    }
+  }
+
+  getWeightByStockAndBatch() {
+    if (this.batchId && this.stockId) {
+      this.productionPlanningService
+        .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.weight = data["data"].totalwt;
+          }
+        });
+    }
+  }
 
   getItemData() {
     this.DyeingProcessService.getAllItemWithSupplier().subscribe(
@@ -236,7 +358,6 @@ getWeightByStockAndBatch() {
       );
   }
 
-
   getSlipDataFromBatch() {
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
@@ -253,11 +374,10 @@ getWeightByStockAndBatch() {
                 });
               });
               this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
-              if(this.isPrintDirect)
-                this.printNOW();
+              if (this.isPrintDirect) this.printNOW();
             }
           } else {
-            this.toastr.error(data["msg"]);
+            //this.toastr.error(data["msg"]);
           }
         },
         (error) => {}
@@ -267,8 +387,7 @@ getWeightByStockAndBatch() {
   onKeyUp(e, rowIndex, colIndex, colName, parentDataIndex) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
-      this.index =
-        "itemList" + parentDataIndex + (rowIndex + 1) + "-" + 1;
+      this.index = "itemList" + parentDataIndex + (rowIndex + 1) + "-" + 1;
       if (
         rowIndex ===
         this.slipData.dyeingSlipDataList[parentDataIndex].dyeingSlipItemData
@@ -306,7 +425,8 @@ getWeightByStockAndBatch() {
           this.toastr.error("Fill empty fields");
         }
       } else {
-        this.index = "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
+        this.index =
+          "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
@@ -334,7 +454,6 @@ getWeightByStockAndBatch() {
               clearInterval(interval);
             }
           }, 10);
-  
         } else {
           this.toastr.error("Fill empty fields");
         }
@@ -467,7 +586,7 @@ getWeightByStockAndBatch() {
         if (this.additionSlipSaveFlag) {
           this.activeModal.close(this.slipObj);
         }
-      } else if(this.directSlipFlag){
+      } else if (this.directSlipFlag) {
         this.slipObj = {
           id: this.id,
           temp: myForm.value.temp,
@@ -475,14 +594,16 @@ getWeightByStockAndBatch() {
           liquorRatio: myForm.value.liquorRatio,
           isColor: myForm.value.isColor,
           items: this.itemList,
-          jetId: this.jetid
+          jetId: this.jetid,
+          shadeId: this.directSlipShadeObj.shadeId,
+          print: this.printFlag,
         };
         this.isSavedForPrint = true;
 
-        if (this.directSlipSaveFlag) {
+        if (this.directSlipFlag) {
           this.activeModal.close(this.slipObj);
         }
-      }else{
+      } else {
         this.planningSlipService.updateSlipData(this.slipData).subscribe(
           (data) => {
             if (data["success"]) {
@@ -497,7 +618,7 @@ getWeightByStockAndBatch() {
             this.disableButton = false;
           },
           (error) => {
-            this.toastr.error("Internal server error!");
+            //this.toastr.error("Internal server error!");
             this.disableButton = false;
           }
         );
@@ -510,7 +631,7 @@ getWeightByStockAndBatch() {
   }
 
   approveByClicked() {
-    const modalRef = this.modalService.open(AddShadeComponent,{ size: 'lg' });
+    const modalRef = this.modalService.open(AddShadeComponent, { size: "lg" });
     modalRef.componentInstance.editDyeingSlipFlag = true;
     modalRef.result.then((result) => {
       if (result) {
@@ -545,7 +666,7 @@ getWeightByStockAndBatch() {
   }
   printSlip(myForm?) {
     //this.checkItemListAndValue();
-    if ((myForm? myForm.valid : true) && !this.quantityNullFlag) {
+    if ((myForm ? myForm.valid : true) && !this.quantityNullFlag) {
       this.isPrinting = false;
       if (!this.isPrintDirect) {
         this.approveByFlag = true;
@@ -555,7 +676,7 @@ getWeightByStockAndBatch() {
         //this.getSlipDataFromBatch();
       }
 
-      if(!this.isPrintDirect){
+      if (!this.isPrintDirect) {
         let interval1 = setInterval(() => {
           if (this.slipData && this.isSavedForPrint) {
             clearInterval(interval1);
@@ -565,7 +686,6 @@ getWeightByStockAndBatch() {
         }, 10);
         this.quantityNullFlag = false;
       }
-      
     } else {
       this.toastr.error("Fill empty fields.");
       this.quantityNullFlag = false;
@@ -573,7 +693,7 @@ getWeightByStockAndBatch() {
     }
   }
 
-  printNOW(){
+  printNOW() {
     let doc = new wijmo.PrintDocument({
       title: "",
     });
@@ -586,9 +706,7 @@ getWeightByStockAndBatch() {
     doc.append(
       '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
     );
-    doc.append(
-      '<link href="./planning-slip.component.scss" rel="stylesheet">'
-    );
+    doc.append('<link href="./planning-slip.component.scss" rel="stylesheet">');
     let tempFlag = false;
     let inter = setInterval(() => {
       let element = <HTMLElement>document.getElementById("print-slip");
@@ -680,7 +798,6 @@ getWeightByStockAndBatch() {
               clearInterval(interval);
             }
           }, 10);
-  
         } else {
           this.toastr.error("Fill empty fields.");
         }

@@ -24,7 +24,6 @@ export class DirectSlip {
   partyId: number;
   qualityEntryId: number;
   shadeId: number;
-  colorName: string;
   batchId: string;
   stockId: number;
   jetId: number;
@@ -83,7 +82,7 @@ export class DyeingSlipItemDatum {
 export class AdditionSlipComponent implements OnInit {
   batchNo: any;
   p_id: any;
-  q_id:any;
+  q_id: any;
   directSlipFlag = false;
   formSubmitted = false;
   directBatchList = [];
@@ -110,7 +109,12 @@ export class AdditionSlipComponent implements OnInit {
   dyeingSlipData: DyeingSlipData = new DyeingSlipData();
 
   directSlip: DirectSlip = new DirectSlip();
-  dyeingSlipItemData :DyeingSlipItemDatum = new DyeingSlipItemDatum
+  dyeingSlipItemData: DyeingSlipItemDatum = new DyeingSlipItemDatum();
+  directSlipBatchId = null;
+  directSlipStockId = null;
+  directSlipPartyId = null;
+  directSlipQualityId = null;
+  printNow = false;
   // dyeingSlipData: DyeingSlipData = new DyeingSlipData();
   // dyeingChemicalData: DyeingChemicalData = new DyeingChemicalData();
 
@@ -118,7 +122,7 @@ export class AdditionSlipComponent implements OnInit {
     private modalService: NgbModal,
     private batchService: StockBatchService,
     private partyService: PartyService,
-    private qualityService : QualityService,
+    private qualityService: QualityService,
     private planningService: PlanningSlipService,
     private programService: ProgramService,
     private route: Router,
@@ -133,7 +137,7 @@ export class AdditionSlipComponent implements OnInit {
     this.getAllAdditionSlip();
   }
 
-  getAllParty(){
+  getAllParty() {
     this.loading = true;
     this.partyService.getAllPartyNameList().subscribe(
       (data) => {
@@ -150,13 +154,13 @@ export class AdditionSlipComponent implements OnInit {
     );
   }
 
-  getAllQuality(){
+  getAllQuality() {
     this.loading = true;
     this.qualityService.getQualityNameData().subscribe(
       (data) => {
         if (data["success"]) {
-            this.qualityList = data["data"];
-            this.loading = false;
+          this.qualityList = data["data"];
+          this.loading = false;
         } else {
           this.loading = false;
         }
@@ -224,26 +228,24 @@ export class AdditionSlipComponent implements OnInit {
     if (event) {
       this.directBatchList = [];
       if (this.directSlip.partyId) {
-        this.programService
-          .getBatchByParty(this.directSlip.partyId)
-          .subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.directBatchList = data["data"];
-                if (this.directBatchList) {
-                  this.directBatchList = this.directBatchList.filter(
-                    (v) => !v.productionPlanned
-                  );
-                }
-                this.loading = false;
-              } else {
-                this.loading = false;
+        this.programService.getBatchByParty(this.directSlip.partyId).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.directBatchList = data["data"];
+              if (this.directBatchList) {
+                this.directBatchList = this.directBatchList.filter(
+                  (v) => !v.productionPlanned
+                );
               }
-            },
-            (error) => {
+              this.loading = false;
+            } else {
               this.loading = false;
             }
-          );
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
       }
     } else {
       this.directBatchList = [];
@@ -296,45 +298,62 @@ export class AdditionSlipComponent implements OnInit {
     }
   }
 
-  onBatchSelect(batch){
-    if(batch){
+  onBatchSelect(batch) {
+    if (batch) {
       this.directSlipFlag = true;
     }
 
     const modalRef = this.modalService.open(PlanningSlipComponent);
-     modalRef.componentInstance.isPrintDirect = false;
-     if(this.directSlipFlag){
+    modalRef.componentInstance.isPrintDirect = false;
+    if (this.directSlipFlag) {
+      this.directSlipBatchId = batch.batchId;
+      this.directSlipStockId = batch.controlId;
+      this.directSlipPartyId = batch.partyId;
+      this.directSlipQualityId = batch.qualityEntryId;
+
       modalRef.componentInstance.partyId = batch.partyId;
       modalRef.componentInstance.qualityId = batch.qualityEntryId;
 
       modalRef.componentInstance.directSlipFlag = true;
       modalRef.componentInstance.batchId = this.directSlip.batchId;
-     }
+      modalRef.componentInstance.stockId = batch?.controlId;
+    }
 
-     modalRef.result.then((result) => {
+    modalRef.result.then((result) => {
       if (result) {
-        console.log(result);
         this.dyeingSlipData = new DyeingSlipData();
+        this.dyeingSlipData.dyeingSlipItemData = [];
+        this.dyeingSlipData.processType = "directDyeing";
         this.directSlip.jetId = result.jetId;
         this.dyeingSlipData.holdTime = result.holdTime;
-        this.dyeingSlipData.liquerRation = result.liquorRatio
+        this.dyeingSlipData.liquerRation = result.liquorRatio;
         this.dyeingSlipData.temp = result.temp;
         result.items.forEach((ele, i) => {
-          this.dyeingSlipItemData[i].itemId = ele.itemId;
-          this.dyeingSlipItemData[i].itemName = ele.itemName;
-          this.dyeingSlipItemData[i].qty = ele.qty;
-          this.dyeingSlipItemData[i].supplierId = ele.supplierId;
-          this.dyeingSlipItemData[i].supplierName = ele.supplierName;
-        })
-       
-        this.saveDirectSlip();
+          if (!this.dyeingSlipData.dyeingSlipItemData[i]) {
+            this.dyeingSlipData.dyeingSlipItemData.push(
+              new DyeingSlipItemDatum()
+            );
+          }
+          this.dyeingSlipData.dyeingSlipItemData[i].itemId = ele.itemId;
+          this.dyeingSlipData.dyeingSlipItemData[i].itemName = ele.itemName;
+          this.dyeingSlipData.dyeingSlipItemData[i].qty = ele.qty;
+          this.dyeingSlipData.dyeingSlipItemData[i].supplierId = ele.supplierId;
+          this.dyeingSlipData.dyeingSlipItemData[i].supplierName =
+            ele.supplierName;
+        });
+        this.directSlip.dyeingSlipData = this.dyeingSlipData;
+        this.directSlip.batchId = this.directSlipBatchId;
+        this.directSlip.stockId = this.directSlipStockId;
+        this.directSlip.partyId = this.directSlipPartyId;
+        this.directSlip.qualityEntryId = this.directSlipQualityId;
+        this.printNow = result.print;
+        if (result.shadeId) this.directSlip.shadeId = result.shadeId;
 
+        this.saveDirectSlip();
       }
     });
-    
   }
 
- 
   batchSelected(event) {
     // let batch = event.target.value;
     this.additionSlip.batchId = event.batchId;
@@ -342,33 +361,45 @@ export class AdditionSlipComponent implements OnInit {
 
     const modalRef = this.modalService.open(PlanningSlipComponent);
     modalRef.componentInstance.isPrintDirect = false;
-    
-      modalRef.componentInstance.additionSlipFlag = true;
-      modalRef.componentInstance.batchId = event.batchId;
 
+    modalRef.componentInstance.additionSlipFlag = true;
+    modalRef.componentInstance.batchId = event.batchId;
 
     modalRef.componentInstance.stockId = event.productionId;
     modalRef.result.then((result) => {
       if (result) {
         this.saveAdditionSlip(result);
-
       }
     });
   }
 
-  saveDirectSlip(){
+  saveDirectSlip() {
     this.planningService.saveDirectSlip(this.directSlip).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
+          if (this.printNow) {
+            //open Print slip popup...
+            const modalRef = this.modalService.open(PlanningSlipComponent);
+            modalRef.componentInstance.isPrintDirect = true;
+            modalRef.componentInstance.batchId = this.directSlipBatchId;
+            modalRef.componentInstance.stockId = data['data'];
+            modalRef.componentInstance.additionSlipFlag = false;
+
+            modalRef.result
+              .then((result) => {
+                if (result) {
+                }
+              })
+              .catch((err) => {});
+          }
           this.ngOnInit();
           // this.disableButton=true;
         } else {
           this.toastr.error(errorData.Add_Error);
         }
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
@@ -402,7 +433,7 @@ export class AdditionSlipComponent implements OnInit {
 
             modalRef.result.then((result) => {
               if (result) {
-                this.updateAdditionSlip(result,id);
+                this.updateAdditionSlip(result, id);
               }
             });
           }
@@ -433,7 +464,7 @@ export class AdditionSlipComponent implements OnInit {
     });
   }
 
-  updateAdditionSlip(result,id) {
+  updateAdditionSlip(result, id) {
     this.dyeingSlipData = new DyeingSlipData();
     this.additionSlip.id = id;
     this.additionSlip.dyeingSlipData = this.dyeingSlipData;
@@ -455,8 +486,7 @@ export class AdditionSlipComponent implements OnInit {
           this.toastr.error(errorData.Update_Error);
         }
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
   saveAdditionSlip(result) {
@@ -482,13 +512,12 @@ export class AdditionSlipComponent implements OnInit {
           this.toastr.error(errorData.Add_Error);
         }
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
   getAllAdditionSlip() {
-    this.additionSlipList = []
+    this.additionSlipList = [];
     this.planningService.getAlladditionSlip().subscribe(
       (data) => {
         if (data["success"]) {

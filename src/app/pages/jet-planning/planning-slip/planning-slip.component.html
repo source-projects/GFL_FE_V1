@@ -387,8 +387,7 @@
                                         <table class="table table-bordered table-striped table-process-fnt text-center">
                                             <tr>
                                                 <th>Item name</th>
-                                                <th *ngIf="!directSlipFlag">Quantity</th>
-                                                <th *ngIf="directSlipFlag">Concentration</th>
+                                                <th>Quantity</th>
 
                                                 <th>Action</th>
                                             </tr>
@@ -421,7 +420,7 @@
                                                         [id]="'itemList'+i1+'-1'" min="0" required>
                                                 </td>
 
-                                                
+
 
                                                 <td>
                                                     <nb-icon icon="trash" status="danger"
@@ -444,7 +443,7 @@
                                                     {{jet.capacity}}
                                                 </ng-option>
                                             </ng-select>
-                                            <div class="required-class" *ngIf="jetCapacity && jetId">
+                                            <div class="required-class" *ngIf="jetCapacity && jetid">
                                                 <span>Weight is greater than selected jet capacity</span>
                                             </div>
                                         </div>
@@ -468,55 +467,138 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row pick-color-row">
+                                    <div *ngIf="directSlipFlag"  class="row pick-color-row" >
 
                                         <div class="form-group col-md-6 desktop-btn">
-                                            <button class="btn btn-primary btn-sm btn-design-save" (click)="pickColor()">Pick color from</button>
-                                            <!-- <nb-checkbox class="status-basic nb-transition" id="isShade" [(ngModel)]="isShade" name="isShade">
-                                            </nb-checkbox>
-                                            &nbsp;<label class="font-13">is Shade</label> -->
+                                            <button class="btn btn-primary btn-sm btn-design-save" type="button"
+                                                (click)="pickColor($event)">Pick color from</button>
+                                            <!-- <div>
+                                                <ng-container *ngIf="directSlipShadeObj.shadeId">
+                                                    {{directSlipShadeObj.shadeId}}
+                                                </ng-container>
+                                            </div> -->
                                         </div>
 
-                                        <div class="form-group col-md-6 desktop-btn" *ngIf="isShade">
-                                            <label class="required mt-3">Shade</label>
-                                            <ng-select name="shadeId" [(ngModel)]='shadeId' required #shadeId1="ngModel"
-                                                [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
-                                                placeholder="Select Shade" class="required-error-dropdown">
-                                                <ng-option disabled="true">
+                                        <ng-template #selectShadeDialog let-modal>
+                                            <nb-card class="nb-header">
+                                                <nb-card-header>
+                                                    <span>Select Shade</span>
+                                                </nb-card-header>
+                                                <nb-card-body>
                                                     <div class="row">
-                                                        <div class="col-md-4 col-4">
-                                                            <div class="text-left txt-ov-elips">Party Shade No</div>
+                                                        <div class="col-md-6">
+                                                            <label class="">Party Name</label>
+                                                            <ng-select name="partyId" [(ngModel)]='directSlipShadeObj.partyId'
+                                                                #partyId1="ngModel" (change)="setQualityByParty($event)"
+                                                                class="required-error-dropdown dropdown-name">
+                                                                <ng-option disabled="true">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-left txt-ov-elips">Party
+                                                                                Name
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-right txt-ov-elips">
+                                                                                Party Code</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-option>
+                                                                <ng-option *ngFor="let party of partyList"
+                                                                    [value]="party.id">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-left txt-ov-elips">
+                                                                                {{party.partyName}}</div>
+                                                                        </div>
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-right txt-ov-elips">
+                                                                                {{party.partyCode}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-option>
+                                                            </ng-select>
                                                         </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <div class="text-center txt-ov-elips">Party Code
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <div class="text-right txt-ov-elips">Color Tone</div>
+                                                        <div class="col-md-6">
+                                                            <label class="">Quality:</label>
+                                                            <ng-select name="qualityId" [(ngModel)]='directSlipShadeObj.qualityId' #qualityId1="ngModel" (change)="getSHadeFromQuality($event)" class="required-error-dropdown dropdown-name">
+                                                                <ng-option disabled="true">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-left txt-ov-elips">Quality Id</div>
+                                                                        </div>
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-right txt-ov-elips">Quality Name</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-option>
+                                                                <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                                                        </div>
+                                                                        <div class="col-md-6 col-6">
+                                                                            <div class="text-right txt-ov-elips"> {{q.qualityName}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-option>
+                                                            </ng-select>
                                                         </div>
                                                     </div>
-                                                </ng-option>
-                                                <ng-option *ngFor="let s of shadeList" [value]="s.id">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-4">
-                                                            <div class="text-left txt-ov-elips"> {{s.partyShadeNo}}
+                                                    <label class="required mt-3">Shade</label>
+                                                    <ng-select name="shadeId" [(ngModel)]='directSlipShadeObj.shadeId' required
+                                                        #shadeId1="ngModel"
+                                                        [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted1 || shadeId1.touched)}"
+                                                        placeholder="Select Shade" class="required-error-dropdown">
+                                                        <ng-option disabled="true">
+                                                            <div class="row">
+                                                                <div class="col-md-4 col-4">
+                                                                    <div class="text-left txt-ov-elips">Party Shade
+                                                                        No</div>
+                                                                </div>
+                                                                <div class="col-md-4 col-4">
+                                                                    <div class="text-center txt-ov-elips">Party Code
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 col-4">
+                                                                    <div class="text-right txt-ov-elips">Color Tone
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-4">
-                                                            <div class="text-center txt-ov-elips"> {{s.partyCode}}</div>
-                                                        </div>
-                                                        <div class="col-md-4 col-4 jus-con-center">
-                                                            <div class="text-right txt-ov-elips width-70">
-                                                                <input [(colorPicker)]="s.colorTone"
-                                                                    [style.background]="s.colorTone"
-                                                                    [value]="s.colorTone" disabled="true"
-                                                                    class="width-100" />
+                                                        </ng-option>
+                                                        <ng-option *ngFor="let s of shadeList" [value]="s.id">
+                                                            <div class="row">
+                                                                <div class="col-md-4 col-4">
+                                                                    <div class="text-left txt-ov-elips">
+                                                                        {{s.partyShadeNo}}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 col-4">
+                                                                    <div class="text-center txt-ov-elips">
+                                                                        {{s.partyCode}}</div>
+                                                                </div>
+                                                                <div class="col-md-4 col-4 jus-con-center">
+                                                                    <div class="text-right txt-ov-elips width-70">
+                                                                        <input [(colorPicker)]="s.colorTone"
+                                                                            [style.background]="s.colorTone"
+                                                                            [value]="s.colorTone" disabled="true"
+                                                                            class="width-100" />
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </nb-card-body>
+                                                <nb-card-footer>
+                                                    <div class="row" style="float: right;">
+                                                        <div class="col-md-12">
+                                                            <button class="btn btn-primary btn-sm btn-design-save" (click)="directSlipShadeObj.shadeId?modal.close():formSubmitted1=true;">Save</button>
                                                         </div>
                                                     </div>
-                                                </ng-option>
-                                            </ng-select>
-                                        </div>
+                                                </nb-card-footer>
+                                            </nb-card>
+                                        </ng-template>
+
                                     </div>
                                 </div>
                             </div>
@@ -532,17 +614,21 @@
 
                                     <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
                                         (click)="activeModal.close(false)">CANCEL</button>
-                                    <button *ngIf="!directSlipFlag" type="button" class="btn btn-primary btn-sm btn-design-save"
+                                    <button *ngIf="!directSlipFlag" type="button"
+                                        class="btn btn-primary btn-sm btn-design-save"
                                         (click)="additionSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
-                                    <button *ngIf="!directSlipFlag" type="button" class="btn btn-primary btn-sm btn-design-save"
+                                    <button *ngIf="!directSlipFlag" type="button"
+                                        class="btn btn-primary btn-sm btn-design-save"
                                         (click)="printFlag = true; printSlip(myForm)">Save And
                                         Print</button>
 
-                                    <button *ngIf="directSlipFlag" type="button" class="btn btn-primary btn-sm btn-design-save"
+                                    <button *ngIf="directSlipFlag" type="button"
+                                        class="btn btn-primary btn-sm btn-design-save"
                                         (click)="directSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
-                                    <button *ngIf="directSlipFlag" type="button" class="btn btn-primary btn-sm btn-design-save"
-                                        (click)="printFlag = true; printSlip(myForm)">Save And
-                                        Print</button>    
+                                    <button *ngIf="directSlipFlag" type="button"
+                                        class="btn btn-primary btn-sm btn-design-save"
+                                        (click)="printFlag = true;printSlip(myForm)">Save And
+                                        Print</button>
 
                                 </div>
                             </div>
@@ -647,7 +733,8 @@
                         <div class="row print-wth-100">
                             <div class="col-md-12 width-100 pd-15">
                                 <div class="form-group col-md-3 width-20 form-style-print">
-                                    <h3 class="font-40">{{process.processType}}</h3>
+                                    <h3 class="font-40" *ngIf="process.processType != 'directDyeing'">{{process.processType}}</h3>
+                                    <h3 class="font-40" *ngIf="process.processType == 'directDyeing'">Direct</h3>
                                 </div>
                                 <div class="form-group col-md-3 width-28 form-style-print">
                                     <label class="mr-right font-25 font-weight-bold">Temperature:</label>&nbsp;
