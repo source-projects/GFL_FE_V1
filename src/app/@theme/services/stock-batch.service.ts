@@ -51,4 +51,8 @@ export class StockBatchService {
   getBatchSequence(){
     return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/batchSequence/');
   }
+
+  updateBatchSequence(data){
+    return this.httpClient.put(this.commonService.envUrl()+'api/admin/update/batchSequence/',data);
+  }
 }
