@@ -90,6 +90,7 @@ export class AddEditStockBatchComponent implements OnInit {
   MtWtIndex = 0;
   isDirectPrintFlag:boolean=false;
   currentBatchSequence:any = 0;
+  currentBatchSeqId = 0;
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -132,6 +133,7 @@ export class AddEditStockBatchComponent implements OnInit {
       data=>{
         if(data['success']){
           this.currentBatchSequence = data['data']['sequence'];
+          this.currentBatchSeqId = data['data']['id'];
           if(this.addFlag){
             this.stockDataValues[0].batchId = this.currentBatchSequence
           }
@@ -414,6 +416,10 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   addNewBatch(e) {
+    if(!this.stockBatch.qualityId){
+      this.toastr.warning('Please select quality first');
+      return;
+    }
     var ob = new BatchCard();
     ob.batchMW.push(new BatchMrtWt());
     if (this.stockDataValues.length) {
@@ -424,21 +430,27 @@ export class AddEditStockBatchComponent implements OnInit {
         let itemList = [...this.stockDataValues];
         itemList = _.sortBy(itemList, "batchId", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
-        ob.batchId = ++nextBatchId;
-
-        if(ob.batchId < this.currentBatchSequence){
-          ob.batchId = this.currentBatchSequence;
-        }
-
-        this.wtArray = [];
-        this.mtArray = [];
-        this.stockDataValues.push({ ...ob });
-        const className = "collapsible-panel--expanded";
-        if (e.target.classList.contains(className)) {
-          e.target.classList.remove(className);
-        } else {
-          e.target.classList.add(className);
-        }
+        //call update sequence api.....
+        this.stockBatchService.updateBatchSequence({id:this.currentBatchSeqId, sequence:nextBatchId+1}).subscribe(
+          data=>{
+            if(data['success']){
+              ob.batchId = data['data'].sequence;  
+              if(ob.batchId < this.currentBatchSequence){
+                ob.batchId = this.currentBatchSequence;
+              }
+              this.wtArray = [];
+              this.mtArray = [];
+              this.stockDataValues.push({ ...ob });
+              const className = "collapsible-panel--expanded";
+              if (e.target.classList.contains(className)) {
+                e.target.classList.remove(className);
+              } else {
+                e.target.classList.add(className);
+              }    
+            }
+          }
+        )
+        //ob.batchId = ++nextBatchId;
       }
     }
   }
