@@ -80,14 +80,10 @@ export class AttendanceComponent implements OnInit {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     console.log(date)
     console.log(strTime)
-
-
-
   }
 
   outClick(){
         let date = new Date();
-
   }
 
   addAttendance(form){

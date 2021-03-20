@@ -1,1 +1,56 @@
-<p>scan-qr works!</p>
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+
+        <div class="row">
+            <div  class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">View
+                    Table</button>
+            </div>
+            
+            <div class="col-md-7 col-6">
+                <div >
+                    <h2 class="nb-text">Scan</h2>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #empForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Enter employee id </label>
+                            <input type="number" name="empId" #empId1="ngModel"
+                                  class="form-control size-small"
+                                fieldsize="small" nbinput placeholder="Enter Employee Id" />
+
+                            <div class="input-required" *ngIf="empId1.invalid
+                                &&
+                                (formSubmitted || empId1.touched)">
+                                <span>Employee Id is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                <div class="row">Or</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button>Scan QR</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>
