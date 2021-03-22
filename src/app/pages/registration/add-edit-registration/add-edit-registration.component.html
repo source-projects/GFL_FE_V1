@@ -10,6 +10,11 @@
                     Table</button>
             </div>
 
+            <div  class="col-md-5 col-6 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/scan']">Scan
+            </button>
+            </div>
+            
             <div class="col-md-7 col-6">
                 <div *ngIf="this.currentEmpId == null; else updateS">
                     <h2 class="nb-text">Add Employee</h2>
@@ -29,7 +34,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Employee Name</label>
-                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name" class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name" />
+                            <input type="text" name="name" #name1="ngModel"
+                                [(ngModel)]="registration.name"  class="form-control size-small"
+                                fieldsize="small" nbinput placeholder="Employee Name"
+                                [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" />
 
                             <div class="input-required" *ngIf="name1.invalid
                                 &&
@@ -41,19 +49,33 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Phone No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="contact" [(ngModel)]="registration.contact" #contact1="ngModel" required placeholder="Contact No" />
-
-
+                            <label >Phone No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="contact" [(ngModel)]="registration.contact" #contact1="ngModel"
+                                required  ng-pattern-restrict="[A-Za-z]" pattern="[6-9]{1}[0-9]{9}" 
+                                maxlength="10" minlength="10" placeholder="Contact No" 
+                                />
+                                <span class="input-required" *ngIf="contact1.errors.pattern &&
+                                (formSubmitted || contact1.touched)">
+                                    Enter 10 digit valid contact
+                                </span>
+                            
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required">Aadhar Card No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" />
-
-
+                            <label class="required" >Aadhar Card No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
+                                name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel"
+                                 placeholder="Aadhar Card No"
+                                 [ngClass]="{'is-invalid':(aadhar1.invalid) &&(formSubmitted || aadhar1.touched)}" 
+                                 />
+                                 <div class="input-required" *ngIf="aadhar1.invalid
+                                 &&
+                                 (formSubmitted || aadhar1.touched)">
+                                 <span>Aadhar No is required</span>
+                             </div>
                         </div>
                     </div>
 
@@ -65,10 +87,17 @@
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Document</label>
-
-
-                            <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" (change)="handleFileInput($event.target.files,'document')">
-
+                            
+                    
+                            <input type="file" name="document" class="form-control size-small"
+                                       id="file" placeholder="Upload document" [(ngModel)]="document" #document1 = "ngModel"
+                                       (change)="handleFileInput($event.target.files,'document')"
+                                       [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}" >
+                                       <div class="input-required" *ngIf="document1.invalid
+                                       &&
+                                       (formSubmitted || document1.touched)">
+                                       <span>Document is required</span>
+                                   </div>
                         </div>
                     </div>
 
@@ -77,13 +106,25 @@
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Profile</label>
-
-
-                            <input type="file" name="profile" class="form-control size-small registration-document" id="profile" placeholder="Upload profile" (change)="handleFileInput($event.target.files,'profile')">
-
-                        </div>
+                            
+                    
+                            <input type="file" name="profile" class="form-control size-small"
+                                       id="profile" placeholder="Upload profile" [(ngModel)]="profile"  #profile1 = "ngModel"
+                                       (change)="handleFileInput($event.target.files,'profile')"
+                                       [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}" 
+                                       >
+                                       <div class="input-required" *ngIf="profile1.invalid
+                                       &&
+                                       (formSubmitted || profile1.touched)">
+                                       <span>Profile is required</span>
+                                   </div>
+                           
+                                </div>
                     </div>
 
+
+
+                       
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -108,6 +149,25 @@
                 </div>
 
 
+                <!-- <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id">{{emp_id}}</span>
+               
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <div class="padding-bt-tp">
+                           
+                            <button 
+                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="reset(empForm)">CANCEL</button>
+
+                           
+                           
+                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="!this.currentEmpId" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button> -->
 
                 <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
                 <div class="row">
