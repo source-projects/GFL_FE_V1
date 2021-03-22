@@ -1,5 +1,5 @@
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
+    <!-- <nb-card-header class="nb-header">
         <div>
             <div class="row">
                 <div class="col-md-11 col-10">
@@ -7,37 +7,191 @@
                 </div>
             </div>
         </div>
-    </nb-card-header>
+    </nb-card-header> -->
     <nb-card-body>
-        <div>
-            <form #myForm="ngForm">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Batch No:</label>
-                            <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)=batchSelected($event)>
-                                <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}</ng-option>
-                            </ng-select>
 
+        <nb-tabset fullWidth class="boiler-thermopack-tabheader">
+            <nb-tab tabTitle="Adition slip">
+                <div>
+                    <form #myForm="ngForm">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="required">Batch No:</label>
+                                    <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo'
+                                        #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown"
+                                        (change)=batchSelected($event)>
+                                        <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}
+                                        </ng-option>
+                                    </ng-select>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
+
+                        <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material"
+                            [headerHeight]="31" [footerHeight]="40">
+                            <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="editSlip(row.id)"></nb-icon>
+                                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"
+                                        (click)="deleteSlip(row.id)"></nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110">
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime">
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation"
+                                [maxWidth]="120"></ngx-datatable-column>
+                            <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp" [maxWidth]="115">
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
+                    </form>
                 </div>
+            </nb-tab>
 
-                <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-                    <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
-                            <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110"></ngx-datatable-column>
-                    <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime"></ngx-datatable-column>
-                    <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation" [maxWidth]="120"></ngx-datatable-column>
-                    <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp" [maxWidth]="115"></ngx-datatable-column>
+            <nb-tab tabTitle="Direct slip">
+                <div>
+                    <form #myForm="ngForm">
+                        <div class="row">
+
+                            <div class="col-md-4 mobile-mr-bt">
+                                <label class="required">Party Name</label>
+                                <ng-select  appendTo="body" name="partyId" [(ngModel)]='directSlip.partyId' #partyId1="ngModel"
+                                    [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
+                                    (change)="partySelected($event)" required
+                                    class="required-error-dropdown dropdown-name">
+                                    <ng-option disabled="true">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips">Party Name
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-right txt-ov-elips">
+                                                    Party Code</div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option *ngFor="let party of partyList" [value]="party.id">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips"> {{party.partyName}}</div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-right txt-ov-elips"> {{party.partyCode}}</div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                                <div class="input-required"
+                                    *ngIf="(partyId1.invalid)&&(formSubmitted || partyId1.touched)">
+                                    <span>Party name is required</span>
+                                </div>
+                            </div>
 
 
-                </ngx-datatable>
-            </form>
-        </div>
+                            <div class="col-md-4 mobile-mr-bt">
+                                <label class="required">Quality Name</label>
+                                <ng-select appendTo="body" name="qualityId" [(ngModel)]='directSlip.qualityEntryId'
+                                    #qualityId1="ngModel"
+                                    [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched) }"
+                                    (change)="qualitySelected($event)" required class="required-error-dropdown dropdown-name">
+                                    <ng-option disabled="true">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips">Quality Id
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-right txt-ov-elips">
+                                                    Quality Name</div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option *ngFor="let quality of qualityList" [value]="quality.qualityEntryId">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips"> {{quality.qualityId}}</div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-right txt-ov-elips"> {{quality.qualityName}}</div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                                <div class="input-required"
+                                    *ngIf="(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)">
+                                    <span>Quality name is required</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="production-btn-list">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="batch-list-3line">
+                                            <button nbButton size="small" *ngFor="let b of directBatchList"
+                                                
+                                                (click)="onBatchSelect(b)" class="p-badge-design">
+                                                {{b.batchId}} </button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        
+
+                        <!-- <div *ngIf="showJetListFlag" class="modal-body mb-4">
+                            <div class="form-group">
+                                <label class="required">Select Jet: </label>
+                                <ng-select name="jet" [(ngModel)]='jetid' required #jet1="ngModel" (change)="jetSelected($event)"
+                                    placeholder="Jet Number">
+                                    <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
+                                    </ng-option>
+                                </ng-select>
+                                <div class="required-class" *ngIf="jetCapacity && jetId">
+                                    <span>Weight is greater than selected jet capacity</span>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="jetSelectedFlag">
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
+                                            class="example-list main-table-drag jet-plan">
+                                            <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
+                                                <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
+                                                    class="btn-bg-color">
+                                                    {{jetData.batchId}}
+                                                </button>
+                                            </div>
+                                        </div>
+                    
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </form>
+                </div>
+            </nb-tab>
+
+            <nb-tab tabTitle="Re-Dyeing slip">
+                <h1>re-dyeing slip</h1>
+            </nb-tab>
+        </nb-tabset>
+
     </nb-card-body>
 </nb-card>
