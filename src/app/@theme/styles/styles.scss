@@ -2152,6 +2152,24 @@ input[type="number"]::-webkit-outer-spin-button {
         height: unset !important;
         font-size: 12px !important;
     }
+    .mobile-pdl-0 {
+        padding-left: 0 !important;
+    }
+    .view-registrations-style {
+        padding: 15px 5px !important
+    }
+    .pd-bt {
+        padding-bottom: 10px !important;
+        margin-bottom: 0 !important;
+    }
+    .view-title {
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .view-ans {
+        font-size: 14px;
+        font-weight: 600;
+    }
 }
 
 @media (min-width: 992px) {
@@ -2416,6 +2434,7 @@ ng-select.ng-select-br-none {
 
 .profile-img {
     display: block;
+    margin-bottom: 22px;
 }
 
 .profile-img img {
