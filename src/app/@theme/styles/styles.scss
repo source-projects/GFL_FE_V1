@@ -1951,7 +1951,6 @@ input[type="number"]::-webkit-outer-spin-button {
     .mb-1 {
         margin-bottom: 50px;
     }
-    
     .pd-bt-25 {
         padding-bottom: 10px;
     }
@@ -2007,7 +2006,7 @@ input[type="number"]::-webkit-outer-spin-button {
         margin-bottom: 1rem;
     }
     .nb-text {
-        font-size: 18px !important;
+        font-size: 15px !important;
     }
     .btn-design {
         color: #5e5b5e;
@@ -2149,6 +2148,10 @@ input[type="number"]::-webkit-outer-spin-button {
     // .table-jet {
     //     display: none;
     // }
+    .registration-document {
+        height: unset !important;
+        font-size: 12px !important;
+    }
 }
 
 @media (min-width: 992px) {
@@ -2171,6 +2174,11 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .mobile-pad-top-15 {
         padding-top: 15px;
+    }
+    .registration-document {
+        height: unset !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
     }
 }
 
@@ -2386,4 +2394,44 @@ input[type="number"]::-webkit-outer-spin-button {
 
 ng-select.ng-select-br-none {
     width: 100% !important;
+}
+
+.registration-document {
+    height: unset !important;
+}
+
+.scan-id-style {
+    font-size: 14px;
+    font-weight: 500;
+    background: #353535;
+    padding: 3px 13px;
+    border-radius: 6px;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.document-padding-bt-tp {
+    padding: 30px 0 0;
+}
+
+.profile-img {
+    display: block;
+}
+
+.profile-img img {
+    border-radius: 1000px;
+}
+
+.display-space-evenly {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.btn-reg-inout {
+    border: 1px solid !important;
+    margin: 12px 0 !important;
+    border-radius: 5px !important;
+    padding: 4px 15px !important;
+    font-size: 14px !important;
 }

@@ -5,11 +5,11 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
-            <div  class="col-md-5 col-6 display-flex-start max-width-device">
+            <div class="col-md-5 col-6 display-flex-start max-width-device">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">View
                     Table</button>
             </div>
-            
+
             <div class="col-md-7 col-6">
                 <div *ngIf="this.currentEmpId == null; else updateS">
                     <h2 class="nb-text">Add Employee</h2>
@@ -29,9 +29,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Employee Name</label>
-                            <input type="text" name="name" #name1="ngModel"
-                                [(ngModel)]="registration.name"  class="form-control size-small"
-                                fieldsize="small" nbinput placeholder="Employee Name" />
+                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name" class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name" />
 
                             <div class="input-required" *ngIf="name1.invalid
                                 &&
@@ -43,42 +41,35 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label >Phone No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="contact" [(ngModel)]="registration.contact" #contact1="ngModel"
-                                required  placeholder="Contact No" />
+                            <label>Phone No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="contact" [(ngModel)]="registration.contact" #contact1="ngModel" required placeholder="Contact No" />
 
-                            
+
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required" >Aadhar Card No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel"
-                                 placeholder="Aadhar Card No" />
+                            <label class="required">Aadhar Card No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" />
 
-                            
+
                         </div>
                     </div>
-                </div>
 
 
-                <div class="row">
+
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Document</label>
-                            
-                    
-                            <input type="file" name="document" class="form-control size-small"
-                                       id="file" placeholder="Upload document"  
-                                       (change)="handleFileInput($event.target.files,'document')"
-                                      >
-                           
-                    </div>
+
+
+                            <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" (change)="handleFileInput($event.target.files,'document')">
+
+                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -86,81 +77,59 @@
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Profile</label>
-                            
-                    
-                            <input type="file" name="profile" class="form-control size-small"
-                                       id="profile" placeholder="Upload profile"
-                                       (change)="handleFileInput($event.target.files,'profile')"
-                                      >
-                           
-                                </div>
+
+
+                            <input type="file" name="profile" class="form-control size-small registration-document" id="profile" placeholder="Upload profile" (change)="handleFileInput($event.target.files,'profile')">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Remark</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark" [(ngModel)]="registration.remark" #remark1="ngModel" placeholder="Remark" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Remark2</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel" placeholder="Remark" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Remark3</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel" placeholder="Remark" />
+                        </div>
                     </div>
                 </div>
 
 
-               
 
+                <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
                 <div class="row">
-
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Remark</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark" [(ngModel)]="registration.remark" #remark1="ngModel"
-                                  placeholder="Remark" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Remark2</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel"
-                                  placeholder="Remark" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Remark3</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel"
-                                  placeholder="Remark" />
+                    <div class="col-md-12 col-12">
+                        <div class="text-center">
+                            <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id" class="scan-id-style">{{emp_id}}</span>
                         </div>
                     </div>
                 </div>
-               
-               
-
-                <ngx-qrcode
-                [elementType]="elementType"
-                 [errorCorrectionLevel]="correctionLevel"
-                 [value]="value"
-                 cssClass="bshadow"></ngx-qrcode>
-
-                 <span *ngIf="qrFlag" [(ngModel)] = "emp_id" name="emp_id">{{emp_id}}</span>
-               
-
 
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <div class="padding-bt-tp">
+                        <div class="document-padding-bt-tp">
                             <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade'>CANCEL</button> -->
-                            <button 
-                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                                (click)="reset(empForm)">CANCEL</button>
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(empForm)">CANCEL</button>
 
-                           
-                           
-                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="!this.currentEmpId" type="button"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+
+                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="!this.currentEmpId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
                         </div>
                     </div>
                 </div>
