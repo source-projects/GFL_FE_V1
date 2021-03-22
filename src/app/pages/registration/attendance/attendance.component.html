@@ -11,7 +11,7 @@
             </div>
 
             <div class="col-md-7 col-7">
-                <div class="jus-con-center">
+                <div class="">
                     <h2 class="nb-text">Add Attendance</h2>
                 </div>
 
@@ -23,85 +23,82 @@
     <nb-card-body class="view-registrations-style">
         <div>
             <form #empForm="ngForm">
-
                 <div class="row">
+                    <div class="col-md-2">
+                        <div class="row">
 
 
-                    <div class="col-md-4">
-                        <div class="form-group text-center">
-                            <!-- <div class="form-control size-small"> -->
+                            <div class="col-md-12">
+                                <div class="form-group text-center">
+                                    <!-- <div class="form-control size-small"> -->
 
-                            <!-- <label class="required">Profile</label> -->
-                            <div class="profile-img">
-                                <img [src]="profileUrl" width="100" height="100">
-                            </div>
+                                    <!-- <label class="required">Profile</label> -->
+                                    <div class="profile-img">
+                                        <img [src]="profileUrl" width="100" height="100">
+                                    </div>
 
 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 col-12">
-                        <div class="form-group pd-bt">
-                            <div class="row">
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-title">Employee Name: </span>
-                                </div>
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-ans">{{currentData.name}}</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-12">
-                        <div class="form-group pd-bt">
-
-                            <div class="row">
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-title">Phone No: </span>
-                                </div>
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-ans">{{currentData.contact}}</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-12">
-                        <div class="form-group pd-bt">
-
-                            <div class="row">
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-title">Aadhar Card No: </span>
-                                </div>
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-ans">{{currentData.aadhaar}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <div class="pd-bt">
-                            <div class="row">
 
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-title">In Time: </span>
-                                </div>
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-ans">{{attendance.inTime | date : 'medium'}}</span>
+                    <div class="col-md-8 display-fl-center">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Employee Name: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.name}}</span>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="pd-bt">
-                            <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
 
-                                <div class="col-6 mobile-pdl-0">
-                                    <span class="view-title">Out Time: </span>
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Phone No: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.contact}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                               
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Aadhar Card No: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.aadhaar}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="pd-bt">
+                                    <div class="row">
+
+                                        <div class="col-6 mobile-pdl-0">
+                                            <span class="view-title">In Time: </span>
+                                        </div>
+                                        <div class="col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{attendance.inTime | date : 'medium'}}</span>
+                                    </div>
+
                                 </div>
                                 <div class="col-6 mobile-pdl-0">
                                     <span class="view-ans">{{attendance.outTime | date : 'medium'}}</span>
@@ -110,35 +107,25 @@
 
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="display-space-evenly desktop-display-block">
+                                    <div class="reg-inout">
+                                        <button (click)="inClick()" class="btn-reg-inout btn btn-success">In</button>
+                                    </div>
 
-                </div>
+                                    <div class="reg-inout">
+                                        <button (click)="outClick()" class="btn-reg-inout btn btn-danger">Out</button>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="display-space-evenly">
-                            <div class="reg-inout">
-                                <button (click)="inClick()" class="btn-reg-inout btn btn-success">In</button>
-                            </div>
-
-                            <div class="reg-inout">
-                                <button (click)="outClick()" class="btn-reg-inout btn btn-danger">Out</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                <!-- <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <div class="padding-bt-tp">
-                           
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(empForm)">CANCEL</button>
-
-
-                            <button *ngIf="!this.currentEmpId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addAttendance(empForm)" [disabled]="disableButton">SAVE</button>
-                        </div>
-                    </div>
-                </div> -->
+            </div>
+               
             </form>
         </div>
     </nb-card-body>
