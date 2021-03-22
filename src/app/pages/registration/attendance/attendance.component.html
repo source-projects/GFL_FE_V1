@@ -5,122 +5,140 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
-            <div  class="col-md-5 col-6 display-flex-start max-width-device">
+            <div class="col-md-5 col-6 display-flex-start max-width-device">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">View
                     Table</button>
             </div>
-            
-            <div class="col-md-7 col-6">
-                <div >
+
+            <div class="col-md-7 col-7">
+                <div class="jus-con-center">
                     <h2 class="nb-text">Add Attendance</h2>
                 </div>
-                
+
             </div>
 
         </div>
 
     </nb-card-header>
-    <nb-card-body>
+    <nb-card-body class="view-registrations-style">
         <div>
             <form #empForm="ngForm">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Employee Name</label>
-                            <input type="text" name="name" #name1="ngModel"
-                                [(ngModel)]="currentData.name"  class="form-control size-small"
-                                fieldsize="small" nbinput placeholder="Employee Name" />
 
-                            <div class="input-required" *ngIf="name1.invalid
-                                &&
-                                (formSubmitted || name1.touched)">
-                                <span>Employee Name is required</span>
+                <div class="row">
+
+
+                    <div class="col-md-4">
+                        <div class="form-group text-center">
+                            <!-- <div class="form-control size-small"> -->
+
+                            <!-- <label class="required">Profile</label> -->
+                            <div class="profile-img">
+                                <img [src]="profileUrl" width="100" height="100">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group pd-bt">
+                            <div class="row">
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-title">Employee Name: </span>
+                                </div>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-ans">{{currentData.name}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group pd-bt">
+
+                            <div class="row">
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-title">Phone No: </span>
+                                </div>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-ans">{{currentData.contact}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group pd-bt">
+
+                            <div class="row">
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-title">Aadhar Card No: </span>
+                                </div>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-ans">{{currentData.aadhaar}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="pd-bt">
+                            <div class="row">
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label >Phone No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="contact" [(ngModel)]="currentData.contact" #contact1="ngModel"
-                                required  placeholder="Contact No" />
-
-                            
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required" >Aadhar Card No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput
-                                name="aadhar" [(ngModel)]="currentData.aadhaar" #aadhar1="ngModel"
-                                 placeholder="Aadhar Card No" />
-
-                            
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                   
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <!-- <div class="form-control size-small"> -->
-
-                            <label class="required">Profile</label>
-                            
-                            <img [src]="profileUrl" width="100" height="100">
-                           
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-title">In Time: </span>
                                 </div>
-                    </div>
-                </div>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-ans">8:00AM</span>
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="pd-bt">
+                            <div class="row">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <button (click) = "inClick()">In</button>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-title">Out Time: </span>
+                                </div>
+                                <div class="col-6 mobile-pdl-0">
+                                    <span class="view-ans">6:45PM</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <button (click) = "outClick()">Out</button>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="display-space-evenly">
+                            <div class="reg-inout">
+                                <button (click)="inClick()" class="btn-reg-inout btn btn-success">In</button>
+                            </div>
+
+                            <div class="reg-inout">
+                                <button (click)="outClick()" class="btn-reg-inout btn btn-danger">Out</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
-
-
-                
-               
-
-              
-
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
-                            <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/shade'>CANCEL</button> -->
-                            <button 
-                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                                (click)="reset(empForm)">CANCEL</button>
-
                            
-                           
-                            <!-- <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton">UPDATE</button> -->
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(empForm)">CANCEL</button>
 
-                            <button *ngIf="!this.currentEmpId" type="button"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addAttendance(empForm)" [disabled]="disableButton">SAVE</button>
+
+                            <button *ngIf="!this.currentEmpId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addAttendance(empForm)" [disabled]="disableButton">SAVE</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </form>
         </div>
     </nb-card-body>
