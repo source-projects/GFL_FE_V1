@@ -34,6 +34,8 @@ export class AddEditRegistrationComponent implements OnInit {
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   value;
+  document;
+  profile;
  
   constructor(
     private commonService: CommonService,

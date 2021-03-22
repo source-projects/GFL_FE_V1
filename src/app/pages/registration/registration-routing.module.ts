@@ -31,10 +31,10 @@ const routes: Routes = [
     path:'attendance/:id',
     component:AttendanceComponent,
   },
-  // {
-  //   path:'',
-  //   component:ScanQRComponent,
-  // }
+  {
+    path:'scan',
+    component:ScanQRComponent,
+  }
 ];
 
 @NgModule({
