@@ -433,9 +433,10 @@
                                                     (cdkDropListDropped)="drop($event,i)">
                                                     <div class="example-box trans-box-drop-1"
                                                         *ngFor="let index of j.jetDataList;let idx = index;"
-                                                        [style.background]="index.colorTone"
+                                                        [style.background]="index.colorTone?index.colorTone:'#ffffff'"
                                                         (click)="setIndexForSlip(index)" cdkDrag>
                                                         <button nbContextMenuTag="my-context-menu"
+                                                        [style.color]="index.colorTone?'#ffffff':'#000000'"
                                                             (mouseenter)="getAllDetailsOfBatch($event,index)"
                                                             (mouseout)="resetDetailsOfBatch($event)"
                                                             [nbContextMenu]="items" nbContextMenuTrigger="click"

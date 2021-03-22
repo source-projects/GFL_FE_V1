@@ -44,4 +44,9 @@ export class PlanningSlipService {
     return this.httpClient.delete(this.commonService.envUrl() + 'api/dyeingSlip/deleteAdditionalDyeingSlipBy/'+id);
 
   }
+
+  saveDirectSlip(data){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/productionPlan/directDyeingSlip',data);
+
+  }
 }
