@@ -31,4 +31,14 @@ export class RegistrationService {
   uploadImage(data):any{
     return this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data);
   }
+
+  addAttendance(data):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/attendance', data);
+
+  }
+
+  getAttendanceByEmployeeId(id):any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/attendance/byEmployeeId?id='+id);
+  }
+ 
 }

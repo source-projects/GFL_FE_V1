@@ -27,6 +27,7 @@ export class AddEditRegistrationComponent implements OnInit {
   currentEmpId: any;
   formSubmitted = false;
   disableButton = false;
+  disableForm = false;
   value64:any
   url;
   qrFlag = false;
@@ -59,7 +60,6 @@ export class AddEditRegistrationComponent implements OnInit {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
-    //this.url = this.commonService.envUrl();
   }
 
   fileUpload(){
@@ -81,7 +81,6 @@ export class AddEditRegistrationComponent implements OnInit {
         this.employeeDocumentArray.push(obj)
         this.loading = false;
 
-        console.log(this.employeeDocumentArray)
         // this.addEmployee(form);
         
       }
@@ -119,7 +118,7 @@ export class AddEditRegistrationComponent implements OnInit {
         if (data["success"]) {
           this.emp_id = data["data"];
           this.formSubmitted = false;
-          this.reset(form);
+          //this.disableForm = true;
           this.disableButton = false;
           this.toastr.success(data["msg"]);
           this.generateQR(this.emp_id);
@@ -134,10 +133,7 @@ export class AddEditRegistrationComponent implements OnInit {
       }
     );
   }
-else{
-  this.toastr.error("Enter empty fields");
 
-}
 
   }
 

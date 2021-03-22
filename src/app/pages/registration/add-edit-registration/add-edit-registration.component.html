@@ -28,8 +28,8 @@
 
     </nb-card-header>
     <nb-card-body>
-        <div>
-            <form #empForm="ngForm">
+        <div >
+            <form #empForm="ngForm" >
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -169,7 +169,7 @@
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
                                 (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button> -->
 
-                <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
+                <ngx-qrcode *ngIf="qrFlag" [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <div class="text-center">
