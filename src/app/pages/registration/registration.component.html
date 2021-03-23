@@ -1,0 +1,49 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card class="nb-style">
+            <nb-card-header class="nb-header">
+                <div class="row">
+                    <div class="col-md-1 col-3 display-flex-start">
+                        <button [routerLink]="['/pages/registration']" class="btn btn-md btn-design"
+                            >ADD</button>
+                    </div>
+                    <div class="col-md-9 col-7">
+                        <h2 class="nb-text">Employee</h2>
+                    </div>
+
+                   
+                </div>
+            </nb-card-header>
+            <ngx-datatable [rows]="empData" [ngClass]="tablestyle" class="material" [headerHeight]="31"
+            [footerHeight]="31">
+            <ngx-datatable-column name="Actions"  sortable="false" props="id"
+                [maxWidth]="90">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+
+                    <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
+                         [routerLink]="['/pages/registration/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                    <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                        [hidden]="hidden" (click)="deleteEmp(row.id)"></nb-icon>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Employee Name" prop="name">
+                <!-- <ng-template ngx-datatable-header-template let-value="value">
+                    Employee Name
+                    <div class="filter-icon" id="onclickFilter">
+                        <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
+                    </div>
+
+                </ng-template> -->
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Contact" prop="contact"></ngx-datatable-column>
+            <ngx-datatable-column name="Aadhar No" prop="aadhaar"></ngx-datatable-column>
+            <!-- <ngx-datatable-column name="Profile" prop="employeeDocumentList"></ngx-datatable-column> -->
+
+           
+        </ngx-datatable>
+            <nb-card-body>
+                </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-5 col-7 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration']">
+         Add Employee
+        </button>
+            </div>
+
+            <div class="col-md-7 col-5 mobile-pd-lf-0 ">
+                <div>
+                    <h2 class="nb-text mobile-mr-lf-0">Scan</h2>
+                </div>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #empForm="ngForm">
+                <div class="row">
+                    <div class="col-md-4 col-8">
+                        <div class="form-group">
+                            <label class="required">Enter employee id </label>
+                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Employee Id" />
+
+                            <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
+                                <span>Employee Id is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4 mobile-disply-center">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [routerLink]="['/pages/registration/attendance/',empId]">Ok</button>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-12 jus-con-center">
+                        <span class="text-center or-style"><b><u>OR</u></b></span>
+                    </div>
+                    <div class="col-md-4 col-12 jus-con-center">
+                       
+                        <div class="form-group">
+
+                            <img src="../../../../assets/scan/qr-code.png" class="scan-status-img">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+                <div class="row">
+
+                </div>
+
+
+
+            </form>
+
+            <!-- <zxing-scanner></zxing-scanner> -->
+            <!-- <div id="container">
+        <h1>QR Code Scanner</h1>
+    
+        <a id="btn-scan-qr">
+            <img src="https://uploads.sitepoint.com/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+        </a>
+    
+        <canvas hidden="" id="qr-canvas"></canvas>
+    
+        <div id="qr-result" hidden="">
+            <b>Data:</b> <span id="outputData"></span>
+        </div>
+    </div>
+    
+    <script src="./src/qrCodeScanner.js"></script> -->
+            <!-- <div class="scanner-shell" [hidden]="!hasDevices"-->
+
+            <!-- <zxing-scanner></zxing-scanner> -->
+            <!-- <zxing-scanner #scanner start="true" [device]="currentDevice" 
+        (scanSuccess)="handleQrCodeResult($event)" 
+        [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner> -->
+
+            <!-- <section class="results" *ngIf="qrResultString">
+            <small>Result</small>
+            <strong>{{ qrResultString}}</strong>
+        </section> -->
+
+            <!-- </div>> -->
+
+            <!-- <qr-scanner
+      [debug]="false"
+      [canvasWidth]="1080"
+      [canvasHeight]="720"
+      [stopAfterScan]="true"
+      [updateTime]="500"
+    >
+    </qr-scanner> -->
+        </div>
+    </nb-card-body>
+</nb-card>

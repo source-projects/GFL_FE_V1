@@ -261,6 +261,17 @@ export const routes: Routes = [
         canLoad: [DyeingSlipGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+
+      {
+        path: "registration",
+        loadChildren: () =>
+          import("./pages/registration/registration.module").then(
+            (m) => m.RegistrationModule
+          ),
+        // canActivate: [DyeingSlipGuard],
+        // canLoad: [DyeingSlipGuard],
+        // data: { PermissionName: ["view", "view group", "view all"] },
+      },
       {
         path: "miscellaneous",
         loadChildren: () =>

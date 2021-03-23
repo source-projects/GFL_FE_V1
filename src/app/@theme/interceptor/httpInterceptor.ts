@@ -33,12 +33,15 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     if (token) {
       let service = this.injector.get(JwtTokenService);
       this.userId = service.getDecodeToken("userId");
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-          id: `${this.userId}`
-        }
-      });
+      if(!request.url.includes("cloudinary")){
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+            id: `${this.userId}`
+          }
+        });
+      }
+      
     }
     return next.handle(request).pipe(
       tap(
