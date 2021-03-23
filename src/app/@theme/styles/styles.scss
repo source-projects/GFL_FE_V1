@@ -2168,6 +2168,48 @@ input[type="number"]::-webkit-outer-spin-button {
         justify-content: space-evenly;
         align-items: center;
     }
+    .dis-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .dis-flex .re-profile-img {
+        margin-left: 9px;
+    }
+    .icon-qr-wd-height {
+        width: 23px;
+        height: 23px;
+        margin-top: 15px;
+    }
+    .download-qr {
+        padding-right: 18px;
+    }
+    .display-qr-evenly {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #b5b5b5;
+        margin-top: 15px;
+    }
+    .mobile-pd-lf-0 {
+        padding-left: 0 !important;
+    }
+    .mobile-mr-lf-0 {
+        margin-left: 0 !important;
+    }
+    .mob-font-12 {
+        font-size: 12px !important;
+    }
+    .mob-font-13 {
+        font-size: 13px !important;
+    }
+    .scan-status-img {
+        margin-top: 11px;
+        width: 150px;
+    }
+    .or-style {
+        margin: 8% 0;
+    }
 }
 
 @media (min-width: 992px) {
@@ -2195,6 +2237,10 @@ input[type="number"]::-webkit-outer-spin-button {
         height: unset !important;
         font-size: 11px !important;
         font-weight: 700 !important;
+    }
+    .mobile-disply-center {
+        display: flex;
+        align-items: center;
     }
 }
 
@@ -2472,4 +2518,8 @@ ng-select.ng-select-br-none {
 .mobile-pdl-0 {
     margin-bottom: 5px;
     text-align: center;
+}
+
+.scan-status-img {
+    width: 87px;
 }

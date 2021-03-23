@@ -5,11 +5,11 @@
     <nb-card-header class="nb-header">
 
         <div class="row">
-            <div class="col-md-5 col-6 display-flex-start max-width-device">
+            <div class="col-md-1 col-4 display-flex-start max-width-device">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/scan']">Scan</button>
             </div>
 
-            <div class="col-md-7 col-7">
+            <div class="col-md-11 col-8">
                 <div class="">
                     <h2 class="nb-text">Add Attendance</h2>
                 </div>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
 
-                               
+
                             <div class="col-md-3 col-12">
                                 <div class="form-group pd-bt">
 
@@ -114,6 +114,15 @@
                                         </div>
                                     </div>
 
+
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="pd-bt">
                                     <div class="row">
 
                                         <div class="col-6 mobile-pdl-0">
@@ -123,17 +132,19 @@
                                             <span class="view-ans">{{attendance.outTime | date : 'shortTime'}}</span>
                                         </div>
 
-                                     </div>
-                                
+                                    </div>
                                 </div>
-
                             </div>
-                            <div class="col-md-2">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="display-space-evenly desktop-display-block">
                                     <div class="reg-inout">
-            
+
                                         <button (click)="inClick()" [disabled]="disableIn" class="btn-reg-inout btn btn-success">In</button>
                                     </div>
 
@@ -144,11 +155,9 @@
 
                             </div>
                         </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-               
+
             </form>
         </div>
     </nb-card-body>
