@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { ScanQRComponent } from './scan-qr/scan-qr.component';
 // import { QRCodeModule } from 'angularx-qrcode';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ScanQRComponent } from './scan-qr/scan-qr.component';
     ThemeModule,
     SharedModule,
     FormsModule,
+    ZXingScannerModule
     // QRCodeModule
   ]
 })

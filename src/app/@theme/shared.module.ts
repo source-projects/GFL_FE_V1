@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { NgxLoadingModule } from "ngx-loading";
 import { NgxCheckboxModule } from "ngx-checkbox";
-
+import { NgQrScannerModule } from 'angular2-qrscanner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
 import {
   NbLayoutModule,
@@ -48,6 +48,9 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+// import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -96,7 +99,10 @@ const NB_MODULES = [
     OwlNativeDateTimeModule,
     NgbModule,
     NgxCheckboxModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    NgQrScannerModule,
+    // NgQRCodeReaderModule,
+    ZXingScannerModule
   ],
 
   exports: [
@@ -105,7 +111,10 @@ const NB_MODULES = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxCheckboxModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    NgQrScannerModule,
+    // NgQRCodeReaderModule,
+    ZXingScannerModule
   ],
   providers: [ExportService, DatePipe],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],

@@ -40,17 +40,18 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
+
   }
 
   public getUserId() {
     this.user = this.commonService.getUser();
+    this.attendance.createdBy = this.user.userId;
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
+    this.getTime();
   }
 
   getEmployeeById(){
-
-    
     this.registrationService.getEmployeeById(this.currentEmpId).subscribe(
       (data) => {
         if (data["success"]) {
@@ -71,23 +72,66 @@ export class AttendanceComponent implements OnInit {
     );
   }
 
+  getTime(){
+    this.registrationService.getAttendanceByEmployeeId(this.currentEmpId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.attendance = data["data"];
+          
+          
+        } else {
+          this.toastr.error(data["msg"]);
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+      }
+    );
+  }
+
   inClick(){
-    let date = new Date();
-    this.attendance.date = date;
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? 'pm' : 'am';
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    console.log(date)
-    console.log(strTime)
+    let  date = new Date();
+    //let newDate = date.toISOString();
+     this.attendance.date = date;
+     this.attendance.inTime = date;
+     this.addAttendance();
+    // let hours = date.getHours();
+    // let minutes = date.getMinutes();
+    //let ampm = hours >= 12 ? 'pm' : 'am';
+    // var strTime = hours + ':' + minutes;
+   // console.log(newDate)
+    //console.log(strTime)
   }
 
   outClick(){
-        let date = new Date();
+    let  date = new Date();
+   // let newDate = date.toISOString();
+    this.attendance.outTime = date;
+    this.addAttendance();
+
+        // let date = new Date();
+        // let hours = date.getHours();
+        // let minutes = date.getMinutes();
+        //let ampm = hours >= 12 ? 'pm' : 'am';
+      //  var strTime = hours + ':' + minutes;
+       // console.log(strTime)
+
   }
 
-  addAttendance(form){
+  addAttendance(){
+    this.registrationService.addAttendance(this.attendance).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toastr.success(data['msg']);
 
+        }
+      },
+      (error)=>{
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      }
+    )
   }
 
   reset(form){
