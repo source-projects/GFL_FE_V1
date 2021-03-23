@@ -37,7 +37,10 @@ export class AddEditRegistrationComponent implements OnInit {
   value;
   document;
   profile;
- 
+  imageUrl;
+  docUrl;
+ currentEmpData = [];
+ docList = [];
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -52,6 +55,9 @@ export class AddEditRegistrationComponent implements OnInit {
     let location = window.location;
     this.url = location["href"];
     this.getUserId();
+    if(this.currentEmpId){
+      this.getCurrentEmpData();
+    }
   }
 
  
@@ -62,13 +68,33 @@ export class AddEditRegistrationComponent implements OnInit {
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
   }
 
+  getCurrentEmpData(){
+    this.registrationService.getEmployeeById(this.currentEmpId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.registration = data["data"];
+          this.docList = this.registration.employeeDocumentList;
+          this.registration.employeeDocumentList.forEach(element => {
+            if(element.type == "profile"){
+              this.imageUrl =  element.url;
+            }
+          }) 
+
+      }
+    }
+    ),(error) => {
+      this.toastr.error(errorData.Serever_Error);
+
+    }
+  }
+
   fileUpload(){
     this.loading = true;
     const data = new FormData();
     data.append('file',this.fileToUpload);
     data.append('upload_preset','gfl_upload');
     data.append('cloud_name','dpemsdha5');
-
+   
     this.registrationService.uploadImage(data).subscribe((response) => {
       if(response){
         let obj={
@@ -89,11 +115,24 @@ export class AddEditRegistrationComponent implements OnInit {
 
   }
   handleFileInput(files: FileList , type) {
+
     this.fileToUpload = files.item(0);
     this.docType = type;
-   
+    if(this.docType == 'profile'){
+      const reader = new FileReader();
+      reader.onload = () => {
+        
+      this.imageUrl = reader.result as string;
+      }
+      reader.readAsDataURL(this.fileToUpload)
+
+    }
+
+    
     this.fileUpload();
-  }
+
+   }
+  
 
 
   reset(form){
@@ -102,6 +141,44 @@ export class AddEditRegistrationComponent implements OnInit {
     }
 
   updateEmployee(form){
+    if(form.valid){
+      this.formSubmitted = true;
+      this.disableButton = true;
+      this.registration.id=this.currentEmpId;
+      if(this.employeeDocumentArray.length>0){
+
+      this.employeeDocumentArray.forEach((ele,i) => {
+        if(ele.type == 'profile'){
+          this.docList[i] = ele;
+        }else
+        if(ele.type == 'document'){
+          this.docList[i] = ele;
+        }
+      })
+    }
+    
+      this.registration.employeeDocumentList = this.docList;
+
+     
+      this.registrationService.updateEmployee(this.registration).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.formSubmitted = false;
+            this.disableButton = false;
+            this.toastr.success(data["msg"]);
+            this.reset(form);
+          } else {
+            this.toastr.error(data["msg"]);
+          }
+          this.disableButton = false;
+        },
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+          this.disableButton = false;
+        }
+      );
+    }
+
 
   }
 
@@ -141,7 +218,6 @@ export class AddEditRegistrationComponent implements OnInit {
     this.qrFlag = true;
 
     this.value = this.url + "/attendance/" + empId;
-    console.log(this.myAngularxQrCode);
   }
 
 }

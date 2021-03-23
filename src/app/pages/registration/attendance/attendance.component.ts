@@ -7,12 +7,14 @@ import * as errorData from "../../../@theme/json/error.json";
 
 
 export class Attendance{
+  controlId : number;
   date : Date;
   inTime : Date;
   outTime : Date;
   createdBy : number;
   createdDate : Date;
-
+  id : number;
+  shift : boolean;
   
 }
 @Component({
@@ -28,7 +30,12 @@ export class AttendanceComponent implements OnInit {
   loading = false;
   formSubmitted = false;
   disableButton = false;
+ disableIn = false;
+ disableOut = false;
   profileUrl;
+  date;
+  todayDate;
+  currentDate = new Date();
   attendance : Attendance = new Attendance();
   constructor(
     private commonService: CommonService,
@@ -48,14 +55,28 @@ export class AttendanceComponent implements OnInit {
     this.attendance.createdBy = this.user.userId;
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
-    this.getTime();
+    this.date = new Date(this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000).toISOString();
+    // this.date = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
+     console.log(this.date)
+
+    
   }
 
   getEmployeeById(){
-    this.registrationService.getEmployeeById(this.currentEmpId).subscribe(
+    this.registrationService.getAttendanceByEmployeeId(this.currentEmpId).subscribe(
       (data) => {
         if (data["success"]) {
-          this.currentData = data["data"];
+          this.currentData = data["data"].employeeMast;
+          this.attendance = data["data"].attendanceLatest;
+        
+         
+          if(this.attendance.inTime){
+            this.disableIn = true;
+          }
+          if(this.attendance.outTime){
+            this.disableOut = true;
+          }
+         
           this.currentData.employeeDocumentList.forEach(element => {
             if(element.type == "profile"){
               this.profileUrl = element.url;
@@ -72,58 +93,45 @@ export class AttendanceComponent implements OnInit {
     );
   }
 
-  getTime(){
-    this.registrationService.getAttendanceByEmployeeId(this.currentEmpId).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.attendance = data["data"];
-          
-          
-        } else {
-          this.toastr.error(data["msg"]);
-        }
-      },
-      (error) => {
-        this.toastr.error(errorData.Serever_Error);
-      }
-    );
-  }
+ 
 
   inClick(){
     let  date = new Date();
-    //let newDate = date.toISOString();
      this.attendance.date = date;
      this.attendance.inTime = date;
      this.addAttendance();
-    // let hours = date.getHours();
-    // let minutes = date.getMinutes();
-    //let ampm = hours >= 12 ? 'pm' : 'am';
-    // var strTime = hours + ':' + minutes;
-   // console.log(newDate)
-    //console.log(strTime)
+     this.disableIn = true;
   }
 
   outClick(){
     let  date = new Date();
-   // let newDate = date.toISOString();
     this.attendance.outTime = date;
-    this.addAttendance();
-
-        // let date = new Date();
-        // let hours = date.getHours();
-        // let minutes = date.getMinutes();
-        //let ampm = hours >= 12 ? 'pm' : 'am';
-      //  var strTime = hours + ':' + minutes;
-       // console.log(strTime)
-
+    this.updateAttendance();
+    this.disableOut = true;
   }
 
   addAttendance(){
+    this.attendance.controlId = this.currentEmpId;
+
     this.registrationService.addAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
           this.toastr.success(data['msg']);
+        }
+      },
+      (error)=>{
+        (error) => {
+          this.toastr.error(errorData.Serever_Error);
+        }
+      }
+    )
+  }
 
+  updateAttendance(){
+    this.registrationService.updateAttendance(this.attendance).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toastr.success(data['msg']);
         }
       },
       (error)=>{

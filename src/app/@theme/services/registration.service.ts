@@ -18,6 +18,11 @@ export class RegistrationService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/employee/add', empData);
   }
 
+  updateEmployee(empData): any {
+    return this.httpClient.put(this.commonService.envUrl() + 'api/employee/update', empData);
+
+  }
+
   getEmployeeById(id):any{
     return this.httpClient.get(this.commonService.envUrl() + 'api/employee?id='+id);
 
@@ -37,8 +42,18 @@ export class RegistrationService {
 
   }
 
+  updateAttendance(data):any{
+    return this.httpClient.put(this.commonService.envUrl() + 'api/attendance', data);
+
+  }
+
   getAttendanceByEmployeeId(id):any{
-    return this.httpClient.get(this.commonService.envUrl() + 'api/attendance/byEmployeeId?id='+id);
+    return this.httpClient.get(this.commonService.envUrl() + 'api/attendance/latest/byEmployeeId?id='+id);
+  }
+
+  deleteEmployee(id): any{
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/employee?id='+id);
+
   }
  
 }
