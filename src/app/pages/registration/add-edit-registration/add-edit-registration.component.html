@@ -163,9 +163,13 @@
                     <div class="col-md-12 col-12">
                         <div class="text-center">
                             <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id" class="scan-id-style">{{emp_id}}</span>
-                            <div class="qr-share-opt display-qr-evenly">
+                            <div  *ngIf="qrFlag" class="qr-share-opt display-qr-evenly">
                                 <div class="download-qr">
-                                    <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
+                                    <a [href]="href"  (click)="downloadImage()"download>
+                                        <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"
+                                           ></nb-icon>
+                                    </a>
+                                    
                                 </div>
                                 <div class="share-qr">
                                     <nb-icon icon="share-outline" class="icon-qr-wd-height"></nb-icon>
@@ -174,8 +178,6 @@
                         </div>
                     </div>
                 </div>
-
-                <a [href]="href" *ngIf="qrFlag" (click)="downloadImage()" download>Download Image</a>
 
                 
 
