@@ -2533,8 +2533,8 @@ ng-select.ng-select-br-none {
 
 .report-card-1 .only-first-card .card-d-label label {
     font-size: 19px;
-    font-weight: 800;
-    color: #0a0a0a;
+    font-weight: 600;
+    color: #5e5b5e;
     text-transform: capitalize;
 }
 
@@ -2550,10 +2550,11 @@ ng-select.ng-select-br-none {
 
 .display-color-input input {
     border: none;
+    color: #fff;
 }
 
 .report-card-1 {
-    margin: 15px 0;
+    margin: 0;
 }
 
 .main-input-report {
@@ -2581,4 +2582,18 @@ ng-select.ng-select-br-none {
 
 .re-checkbox .text {
     padding-left: 4px !important;
+}
+
+.mr-top-bottom {
+    margin: 14px 0 15px;
+}
+
+.report-accordian {
+    background-color: #f4f7f9 !important;
+    border: 2px solid #c3b2b25e !important;
+    border-radius: 11px;
+}
+
+.report-bg-color {
+    background-color: #c3b2b25e !important;
 }
