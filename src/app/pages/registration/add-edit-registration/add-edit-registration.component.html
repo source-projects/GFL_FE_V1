@@ -182,6 +182,10 @@
                     </div>
                 </div>
 
+                <a [href]="href" *ngIf="qrFlag" (click)="downloadImage()" download>Download Image</a>
+
+                
+
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="document-padding-bt-tp">
@@ -199,6 +203,10 @@
                             <button *ngIf="!this.currentEmpId" type="button"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
                                 (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+
+                            <!-- <button *ngIf="!this.currentEmpId && qrFlag" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addQR(empForm)" [disabled]="disableButton">SAVE QR</button>      -->
                         </div>
                     </div>
                 </div>

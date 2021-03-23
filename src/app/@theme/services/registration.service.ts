@@ -55,5 +55,10 @@ export class RegistrationService {
     return this.httpClient.delete(this.commonService.envUrl() + 'api/employee?id='+id);
 
   }
+
+  addQr(data){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/employee/add/document', data);
+
+  }
  
 }
