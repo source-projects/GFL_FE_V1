@@ -150,7 +150,7 @@ export class AddEditUserComponent implements OnInit {
           this.designationList = data["data"];
           if (this.userHead.userHeadId) {
             this.designationList = this.designationList.filter(
-              (v) => v.designation && v.designation.toLowerCase() != "master"
+              (v) => v.designation && v.designation.toLowerCase() != "team head"
             );
           }
           this.loading = false;
@@ -222,7 +222,7 @@ export class AddEditUserComponent implements OnInit {
       if (
         found &&
         found.designation &&
-        found.designation.toLowerCase() == "master"
+        found.designation.toLowerCase() == "team head"
       ) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
@@ -669,7 +669,7 @@ export class AddEditUserComponent implements OnInit {
               this.user && this.user.designationId && this.user.designationId
                 ? this.user.designationId
                 : "";
-            if (designationObj.designation.toLowerCase() != "master") {
+            if (designationObj.designation.toLowerCase() != "team head") {
               this.user.isUserHead = true;
               this.isMasterFlag = false;
             } else {
