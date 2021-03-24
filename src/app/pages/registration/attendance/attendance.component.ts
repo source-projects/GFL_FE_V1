@@ -14,7 +14,7 @@ export class Attendance{
   createdBy : number;
   createdDate : Date;
   id : number;
-  shift : boolean;
+  shift : boolean = false;
   
 }
 @Component({

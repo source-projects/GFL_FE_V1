@@ -5,7 +5,7 @@ import { ShadeRoutingModule } from './shade-routing.module';
 import { ShadeComponent } from './shade.component';
 import { AddEditShadeComponent } from './add-edit-shade/add-edit-shade.component';
 import { SharedModule } from '../../@theme/shared.module';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { ThemeModule } from '../../@theme/theme.module';
 import { PendingApcComponent } from './pending-apc/pending-apc.component';
 
 

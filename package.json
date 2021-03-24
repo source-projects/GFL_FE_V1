@@ -48,6 +48,8 @@
     "@asymmetrik/ngx-leaflet": "^8.1.0",
     "@auth0/angular-jwt": "^5.0.1",
     "@grapecity/wijmo.all": "^5.20203.748",
+    "@ionic-native/core": "^5.31.1",
+    "@ionic-native/qr-scanner": "^5.31.1",
     "@nebular/auth": "6.0.0",
     "@nebular/eva-icons": "6.0.0",
     "@nebular/security": "6.0.0",

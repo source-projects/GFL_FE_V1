@@ -88,6 +88,8 @@
                                 </div>
                             </div>
 
+                            
+
                             <div class="col-md-3 col-12">
                                 <div class="form-group pd-bt">
 
@@ -130,6 +132,18 @@
                                         </div>
                                         <div class=" col-md-12 col-6 mobile-pdl-0">
                                             <span class="view-ans">{{attendance.outTime | date : 'shortTime'}}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="attendance.shift">Day Shift</nb-toggle>
                                         </div>
 
                                     </div>

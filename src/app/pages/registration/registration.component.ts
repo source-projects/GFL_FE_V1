@@ -14,6 +14,7 @@ import { ConfirmationDialogComponent } from '../../@theme/components/confirmatio
 export class RegistrationComponent implements OnInit {
 
   empData=[];
+  profileData = [];
   loading = false;
   tablestyle = "bootstrap";
 
@@ -36,6 +37,7 @@ export class RegistrationComponent implements OnInit {
       (data) => {
         if(data["success"]){
           this.empData = data["data"];
+          
         }
       },
       (error) => {

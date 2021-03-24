@@ -8,6 +8,10 @@
                         <button [routerLink]="['/pages/registration']" class="btn btn-md btn-design"
                             >ADD</button>
                     </div>
+                    <div class="col-md-1 col-3 display-flex-start">
+                        <button [routerLink]="['/pages/registration/scan']" class="btn btn-md btn-design"
+                            >Scan</button>
+                    </div>
                     <div class="col-md-9 col-7">
                         <h2 class="nb-text">Employee</h2>
                     </div>
@@ -38,7 +42,15 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Contact" prop="contact"></ngx-datatable-column>
             <ngx-datatable-column name="Aadhar No" prop="aadhaar"></ngx-datatable-column>
-            <!-- <ngx-datatable-column name="Profile" prop="employeeDocumentList"></ngx-datatable-column> -->
+            <ngx-datatable-column name="Profile" prop="employeeDocumentList">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <ng-container *ngFor="let ele of row.employeeDocumentList">
+                        <span *ngIf="ele.type == 'profile'">
+                            <img [src]="ele.url" class="imageURL" >
+                        </span>
+                    </ng-container>
+                </ng-template>
+            </ngx-datatable-column>
 
            
         </ngx-datatable>

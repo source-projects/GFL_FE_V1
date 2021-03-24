@@ -37,7 +37,7 @@ export class AddEditRegistrationComponent implements OnInit {
   value;
   document;
   profile;
-  imageUrl;
+  imageUrl = "../../../../assets/scan/dummy-profile.png";
   docUrl;
   currentEmpData = [];
   docList = [];
@@ -191,6 +191,7 @@ export class AddEditRegistrationComponent implements OnInit {
 
   addEmployee(form) {
     if (form.valid) {
+      this.loading = true;
 
       this.formSubmitted = true;
       this.disableButton = true;
@@ -205,6 +206,8 @@ export class AddEditRegistrationComponent implements OnInit {
             //this.disableForm = true;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
+            this.loading = false;
+
             this.generateQR(this.emp_id);
           } else {
             this.toastr.error(data["msg"]);
