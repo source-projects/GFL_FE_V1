@@ -106,6 +106,7 @@ export class AddEditUserComponent implements OnInit {
   userData: any;
   userId: any;
   userHead;
+  isLoggedInAsMaster = false;
   currentUserId: any;
   disableViewDependentPermission: boolean = false;
   disableViewGroupDependentPermission: boolean = false;
@@ -126,6 +127,9 @@ export class AddEditUserComponent implements OnInit {
     this.currentUserId = this._route.snapshot.paramMap.get("id");
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+    if(this.userId.userId == this.userHead.userHeadId){
+      this.isLoggedInAsMaster = true;
+    }
     this.getDesignation();
     this.getAllCompany();
     this.getAllDepartment();
@@ -728,10 +732,6 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  check(event) {
-    this.dataEntryFlag = event;
-  }
-
   addUser(myForm) {
     this.getCheckedItem();
 
@@ -740,7 +740,6 @@ export class AddEditUserComponent implements OnInit {
 
     if (myForm.valid) {
       let md5 = new Md5();
-      this.user.dataEntry = this.dataEntryFlag;
       this.user.password = String(md5.appendStr(this.user.password).end());
       this.user.createdBy = this.userId.userId;
       if (!this.user.isUserHead) {
