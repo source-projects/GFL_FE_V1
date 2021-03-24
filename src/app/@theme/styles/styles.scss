@@ -2523,3 +2523,17 @@ ng-select.ng-select-br-none {
 .scan-status-img {
     width: 87px;
 }
+
+.display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ngx-profile-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

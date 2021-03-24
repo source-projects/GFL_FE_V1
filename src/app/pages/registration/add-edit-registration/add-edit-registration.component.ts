@@ -37,7 +37,7 @@ export class AddEditRegistrationComponent implements OnInit {
   value;
   document;
   profile;
-  imageUrl = "../../../../assets/scan/dummy-profile.png";
+  imageUrl = "../../../../assets/scan/user-new.png";
   docUrl;
   currentEmpData = [];
   docList = [];
