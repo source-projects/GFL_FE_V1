@@ -49,4 +49,8 @@ export class PlanningSlipService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/productionPlan/directDyeingSlip',data);
 
   }
+
+  getItemListByShade(data){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dyeingSlip/getItemListByShadeAndBatch',data);
+  }
 }

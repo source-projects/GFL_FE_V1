@@ -315,7 +315,7 @@ export class AdditionSlipComponent implements OnInit {
       modalRef.componentInstance.qualityId = batch.qualityEntryId;
 
       modalRef.componentInstance.directSlipFlag = true;
-      modalRef.componentInstance.batchId = this.directSlip.batchId;
+      modalRef.componentInstance.batchId = batch.batchId;
       modalRef.componentInstance.stockId = batch?.controlId;
     }
 
