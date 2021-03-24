@@ -68,6 +68,7 @@ export class PlanningSlipComponent implements OnInit {
   public itemListArrayCopy: any = [];
   public shadeList = [];
   public colorFlag = false;
+  public shadeSelectedFlag = false;
   public printFlag = false;
   public additionSlipSaveFlag = false;
   public directSlipSaveFlag = false;
@@ -110,6 +111,10 @@ export class PlanningSlipComponent implements OnInit {
       ],
     },
   ];
+  shadeObj = {
+    partyShadeNo:null,
+    color:null
+  }
   slipObj: any;
   directSlipShadeObj = {
     partyId: null,
@@ -234,6 +239,33 @@ export class PlanningSlipComponent implements OnInit {
           .open(this.selectShadeDialog, { ariaLabelledBy: "modal-basic-title" })
           .result.then(
             (result) => {
+              let obj = {
+                shadeId:null,
+                batchId:null,
+                stockId:null
+              }
+              obj.shadeId = this.directSlipShadeObj.shadeId;
+              obj.batchId = this.batchId;
+              obj.stockId = this.stockId;
+              console.log(obj)
+              this.planningSlipService.getItemListByShade(obj).subscribe(
+                (data)=>{
+                  if(data["success"]){
+                    console.log(data["data"]);
+                    this.itemList = data["data"]
+                  }
+                }
+              )
+              this.shadeSelectedFlag = true;
+              this.shadeService.getCurrentShadeData(this.directSlipShadeObj.shadeId).subscribe(
+                (data)=>{
+                  if(data["success"]){
+                    console.log("shade:",data["data"])
+                    this.shadeObj.partyShadeNo = data["data"].partyShadeNo;
+                    this.shadeObj.color = data["data"].colorName;
+                  }
+                }
+              )
               this.closeResult = `Closed with: ${result}`;
             },
             (reason) => {

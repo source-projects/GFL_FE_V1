@@ -431,7 +431,7 @@ export class AddEditStockBatchComponent implements OnInit {
         itemList = _.sortBy(itemList, "batchId", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
         //call update sequence api.....
-        this.stockBatchService.updateBatchSequence({id:this.currentBatchSeqId, sequence:nextBatchId+1}).subscribe(
+        this.stockBatchService.getBatchSequence().subscribe(
           data=>{
             if(data['success']){
               ob.batchId = data['data'].sequence;  
