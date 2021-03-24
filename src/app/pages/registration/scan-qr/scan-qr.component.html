@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-md-5 col-7 display-flex-start max-width-device">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/registration']">
-         Add Employee
-        </button>
+                    Add Employee
+                </button>
             </div>
 
-            <div class="col-md-7 col-5 mobile-pd-lf-0 ">
+            <div class="col-md-7 col-5">
                 <div>
                     <h2 class="nb-text mobile-mr-lf-0">Scan</h2>
                 </div>
@@ -21,27 +21,22 @@
         <div>
             <form #empForm="ngForm">
                 <div class="row">
-                    <div class="col-md-4 col-8">
-                        <div class="form-group">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group mobile-txt-center">
                             <label class="required">Enter employee id </label>
-                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Employee Id" />
+                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
 
                             <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
                                 <span>Employee Id is required</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 col-4 mobile-disply-center">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [routerLink]="['/pages/registration/attendance/',empId]">Ok</button>
 
-                        </div>
-                    </div>
                     <div class="col-md-2 col-12 jus-con-center">
-                        <span class="text-center or-style"><b><u>OR</u></b></span>
+                        <span class="text-center or-style"><b>OR</b></span>
                     </div>
                     <div class="col-md-4 col-12 jus-con-center">
-                       
+
                         <div class="form-group">
 
                             <img src="../../../../assets/scan/qr-code.png" class="scan-status-img">
@@ -50,13 +45,13 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
+                        <div class="form-group mr-top-bt">
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [routerLink]="['/pages/registration/attendance/',empId]">Save</button>
 
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-
-                </div>
-
-
 
             </form>
 
