@@ -7,7 +7,7 @@ import { CommonService } from '../../../@theme/services/common.service';
 import * as errorData from "../../../@theme/json/error.json";
 import { FileUploader } from 'ng2-file-upload';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
-
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'ngx-add-edit-registration',
   templateUrl: './add-edit-registration.component.html',
@@ -37,17 +37,19 @@ export class AddEditRegistrationComponent implements OnInit {
   value;
   document;
   profile;
-  imageUrl;
+  imageUrl = "../../../../assets/scan/user-new.png";
   docUrl;
   currentEmpData = [];
   docList = [];
   href: string;
+  wLink;
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
     private registrationService: RegistrationService,
     private toastr: ToastrService,
-    private route: Router
+    private route: Router,
+    private sanitizer: DomSanitizer
 
 
   ) { }
@@ -185,12 +187,27 @@ export class AddEditRegistrationComponent implements OnInit {
 
   }
   downloadImage() {
-    this.href = document.getElementsByTagName('img')[1].src;
-    console.log(this.href)
+    this.href = document.getElementsByTagName('img')[0].src;
+  }
+
+  shareClick(){
+    this.href = document.getElementsByTagName('img')[0].src;
+    const contentType = 'image/png';
+    let converted_image= "data:image/jpeg;base64,"+this.href;
+    var fakeLink = document.createElement('a');
+    fakeLink.setAttribute('href', 'whatsapp://send?text='+converted_image);
+    fakeLink.setAttribute('data-action', 'share/whatsapp/share');
+    fakeLink.click();
+
+   // window.location = 'whatsapp://send?text='+encodeURIComponent(this.href);
+    let arr = this.href.split(" ");
+    let link=arr[1];
+    this.wLink = "whatsapp://send?"+link;
   }
 
   addEmployee(form) {
     if (form.valid) {
+      this.loading = true;
 
       this.formSubmitted = true;
       this.disableButton = true;
@@ -205,6 +222,8 @@ export class AddEditRegistrationComponent implements OnInit {
             //this.disableForm = true;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
+            this.loading = false;
+
             this.generateQR(this.emp_id);
           } else {
             this.toastr.error(data["msg"]);
@@ -259,3 +278,4 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
 }
+

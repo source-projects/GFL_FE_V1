@@ -2535,6 +2535,20 @@ ng-select.ng-select-br-none {
     width: 87px;
 }
 
+.display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ngx-profile-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .addition-jet-batch {
     padding: 5px 17px !important;
     margin-right: 0px;

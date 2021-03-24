@@ -1,23 +1,41 @@
 .bshadow {
-
     display: flex;
     align-items: center;
     justify-content: center;
     filter: drop-shadow(5px 5px 5px #222222);
     opacity: .5;
-  
-  }
-  
-  textarea {
-      margin-top: 15px; 
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 250px;
-      opacity: .5;
-  }
+}
 
-  .imageURL{
-      height: 50px;
-      width: 50px;
-  }
+textarea {
+    margin-top: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    opacity: .5;
+}
+
+.imageURL {
+    height: 50px;
+    width: 50px;
+}
+
+.filepicker {
+    -webkit-appearance: none;
+    position: absolute;
+    width: 87px;
+    height: 87px !important;
+    text-indent: 100em;
+    background-size: cover;
+    overflow: hidden;
+    outline: none;
+    padding: 0;
+    border: 0;
+}
+
+@media (max-width: 767px) {
+    .filepicker {
+        width: 100px;
+        height: 100px !important;
+    }
+}

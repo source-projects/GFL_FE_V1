@@ -27,6 +27,7 @@ import {
   NbStepperModule,
   NbTabsetModule,
   NbPopoverModule,
+  NbToggleModule,
 } from "@nebular/theme";
 
 import { NbSecurityModule } from "@nebular/security";
@@ -48,9 +49,9 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-// import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
-//import { ZXingScannerModule } from '@zxing/ngx-scanner';
-
+//  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
+// import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// import { NgQrScannerModule } from 'angular2-qrscanner';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 const NB_MODULES = [
   NbLayoutModule,
@@ -86,6 +87,7 @@ const NB_MODULES = [
   NbTabsetModule,
   //NgbModal
   NbAccordionModule,
+  NbToggleModule
   
 ];
 
@@ -101,8 +103,9 @@ const NB_MODULES = [
     NgxCheckboxModule,
     NgxQRCodeModule,
     // NgQrScannerModule,
-    // NgQRCodeReaderModule,
-    //ZXingScannerModule
+  //  NgQRCodeReaderModule,
+  //   ZXingScannerModule,
+  //   NgQrScannerModule,
   ],
 
   exports: [
@@ -113,8 +116,9 @@ const NB_MODULES = [
     NgxCheckboxModule,
     NgxQRCodeModule,
     // NgQrScannerModule,
-    // NgQRCodeReaderModule,
-    //ZXingScannerModule
+  //  NgQRCodeReaderModule,
+  //   ZXingScannerModule,
+  //   NgQrScannerModule,
   ],
   providers: [ExportService, DatePipe],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],

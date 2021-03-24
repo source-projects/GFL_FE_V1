@@ -6,7 +6,8 @@
 
         <div class="row">
             <div class="col-md-5 col-7 display-flex-start max-width-device  mobile-pd-lf-0">
-                <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12" [routerLink]="['/pages/registration/view']">View
+                <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12"
+                    [routerLink]="['/pages/registration/view']">View
                     Table</button>
                 <button class="btn btn-md btn-design mob-font-12  mr-left-10" [routerLink]="['/pages/registration/scan']">Scan
                 </button>
@@ -29,10 +30,42 @@
         <div>
             <form #empForm="ngForm">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
+                        <div class="form-group text-center">
+
+                            <div class="display-flex-center">
+                                <input type="file" name="profile"
+                                    class="form-control size-small registration-document filepicker" id="profile"
+                                    [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')'}"
+                                    placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'profile')" style="position:relative;overflow:hidden; 
+                                    background-color:#ffff; 
+                                    z-index:0;"
+                                    [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
+
+                                <!-- <div *ngIf="imageUrl" class="re-profile-img">
+                                    <img class="imageURL" [src]="imageUrl">
+
+                                    
+
+                                </div> -->
+                                <div class="input-required" *ngIf="profile1.invalid
+                                           &&
+                                           (formSubmitted || profile1.touched)">
+                                    <span>Profile is required</span>
+                                </div>
+                            </div>
+                            <label >Profile</label>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="required">Employee Name</label>
-                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name" class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name" [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" />
+                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name"
+                                [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" />
 
                             <div class="input-required" *ngIf="name1.invalid
                                 &&
@@ -42,42 +75,41 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Phone No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="contact" [(ngModel)]="registration.contact" #contact1="ngModel" required maxlength="10" minlength="10" placeholder="Contact No" />
-                            <span class="input-required" *ngIf="contact1.errors?.maxlength && contact1.errors?.maxlength &&
-                                (formSubmitted || contact1.touched)">
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="contact"
+                                [(ngModel)]="registration.contact" #contact1="ngModel" maxlength="10" minlength="10"
+                                pattern="[6-9]{1}[0-9]{9}" placeholder="Contact No"
+                                [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}" />
+                            <div class="input-required"
+                                *ngIf="(contact1.invalid) && (formSubmitted || contact1.touched)">
                                 Enter 10 digit valid contact
-                            </span>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="required">Aadhar Card No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" [ngClass]="{'is-invalid':(aadhar1.invalid) &&(formSubmitted || aadhar1.touched)}"
-                            />
-                            <div class="input-required" *ngIf="aadhar1.invalid
-                                 &&
-                                 (formSubmitted || aadhar1.touched)">
-                                <span>Aadhar No is required</span>
                             </div>
+
                         </div>
                     </div>
 
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label>Aadhar Card No</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar"
+                                [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" />
 
+                        </div>
+                    </div>
 
-
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Document</label>
 
 
-                            <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}">
+                            <input type="file" name="document" class="form-control size-small registration-document"
+                                id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel"
+                                (change)="handleFileInput($event.target.files,'document')"
+                                [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}">
 
 
                             <div class="input-required" *ngIf="document1.invalid
@@ -88,81 +120,41 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <!-- <div class="form-control size-small"> -->
-
-                            <label class="required">Profile</label>
-
-                            <div class="dis-flex">
-                                <input type="file" name="profile" class="form-control size-small registration-document" id="profile" placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel" (change)="handleFileInput($event.target.files,'profile')" [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
-
-                                <div *ngIf="imageUrl" class="re-profile-img">
-                                    <img class="imageURL" [src]="imageUrl">
-                                </div>
-                                <div class="input-required" *ngIf="profile1.invalid
-                                           &&
-                                           (formSubmitted || profile1.touched)">
-                                    <span>Profile is required</span>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Remark</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark" [(ngModel)]="registration.remark" #remark1="ngModel" placeholder="Remark" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark"
+                                [(ngModel)]="registration.remark" #remark1="ngModel" placeholder="Remark" />
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Remark2</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel" placeholder="Remark" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark2"
+                                [(ngModel)]="registration.remark2" #remark2="ngModel" placeholder="Remark" />
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Remark3</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel" placeholder="Remark" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark3"
+                                [(ngModel)]="registration.remark3" #remark3="ngModel" placeholder="Remark" />
                         </div>
                     </div>
                 </div>
 
 
-                <!-- <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id">{{emp_id}}</span>
-               
-                <div class="row">
-                    <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <div class="padding-bt-tp">
-                           
-                            <button 
-                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                                (click)="reset(empForm)">CANCEL</button>
 
-                           
-                           
-                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="!this.currentEmpId" type="button"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button> -->
-
-                <ngx-qrcode *ngIf="qrFlag" [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
+                <ngx-qrcode *ngIf="qrFlag" [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
+                    [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <div class="text-center">
-                            <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id" class="scan-id-style">{{emp_id}}</span>
+                            <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id"
+                                class="scan-id-style">{{emp_id}}</span>
                             <div *ngIf="qrFlag" class="qr-share-opt display-qr-evenly">
                                 <div class="download-qr">
                                     <a [href]="href" (click)="downloadImage()" download>
@@ -171,7 +163,9 @@
 
                                 </div>
                                 <div class="share-qr">
-                                    <nb-icon icon="share-outline" class="icon-qr-wd-height"></nb-icon>
+                                    <a data-action="share/whatsapp/share" target="_blank" (click)="shareClick()">
+                                        <nb-icon icon="share-outline" class="icon-qr-wd-height"></nb-icon>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -185,17 +179,20 @@
                         <div class="document-padding-bt-tp">
                             <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade'>CANCEL</button> -->
-                            <button *ngIf="!this.currentEmpId" class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(empForm)">CANCEL</button>
+                            <button *ngIf="!this.currentEmpId" class="btn btn-primary btn-sm btn-design-cancel"
+                                type="button" (click)="reset(empForm)">CANCEL</button>
 
 
 
-                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
-
-                            <button *ngIf="!this.currentEmpId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
-
-                            <!-- <button *ngIf="!this.currentEmpId && qrFlag" type="button"
+                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addQR(empForm)" [disabled]="disableButton">SAVE QR</button>      -->
+                                [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="!this.currentEmpId && !this.qrFlag" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+
+
                         </div>
                     </div>
                 </div>

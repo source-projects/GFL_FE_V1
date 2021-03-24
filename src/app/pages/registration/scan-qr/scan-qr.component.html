@@ -5,8 +5,8 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-5 col-7 display-flex-start max-width-device">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration']">
-                    Add Employee
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">
+                    View Employee
                 </button>
             </div>
 
@@ -24,7 +24,9 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
                             <label class="required">Enter employee id </label>
-                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
+                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel"
+                            class="form-control size-small mobile-txt-center"  fieldsize="small" nbinput
+                                placeholder="Enter Employee Id" />
 
                             <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
                                 <span>Employee Id is required</span>
@@ -38,8 +40,22 @@
                     <div class="col-md-4 col-12 jus-con-center">
 
                         <div class="form-group">
-
                             <img src="../../../../assets/scan/qr-code.png" class="scan-status-img">
+
+                            <!-- <ng2-qrcode-reader (result)="render($event)" [qrr-show]="showQRCode"
+                             [qrr-type]="elementType"></ng2-qrcode-reader> -->
+
+                            <!-- <zxing-scanner
+                            #scanner
+                            start="true"
+                            [(device)]="currentDevice"
+                            (scanSuccess)="onCodeResult($event)"
+                            (permissionResponse)="onHasPermission($event)"
+                          ></zxing-scanner> -->
+                            <!-- <qr-scanner [debug]="false" [canvasWidth]="1080" [canvasHeight]="720" 
+                            [stopAfterScan]="true"
+                                [updateTime]="500">
+                            </qr-scanner> -->
 
                         </div>
                     </div>
