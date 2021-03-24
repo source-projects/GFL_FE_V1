@@ -8,12 +8,12 @@
             <div class="col-md-5 col-7 display-flex-start max-width-device  mobile-pd-lf-0">
                 <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12" [routerLink]="['/pages/registration/view']">View
                     Table</button>
-                <button class="btn btn-md btn-design mob-font-12" [routerLink]="['/pages/registration/scan']">Scan
+                <button class="btn btn-md btn-design mob-font-12  mr-left-10" [routerLink]="['/pages/registration/scan']">Scan
                 </button>
             </div>
 
 
-            <div class="col-md-7 col-5 mobile-pd-lf-0">
+            <div class="col-md-7 col-5">
                 <div *ngIf="this.currentEmpId == null; else updateS">
                     <h2 class="nb-text txt-ov-elips mob-font-13">Add Employee</h2>
                 </div>
@@ -163,13 +163,12 @@
                     <div class="col-md-12 col-12">
                         <div class="text-center">
                             <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id" class="scan-id-style">{{emp_id}}</span>
-                            <div  *ngIf="qrFlag" class="qr-share-opt display-qr-evenly">
+                            <div *ngIf="qrFlag" class="qr-share-opt display-qr-evenly">
                                 <div class="download-qr">
-                                    <a [href]="href"  (click)="downloadImage()"download>
-                                        <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"
-                                           ></nb-icon>
+                                    <a [href]="href" (click)="downloadImage()" download>
+                                        <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
                                     </a>
-                                    
+
                                 </div>
                                 <div class="share-qr">
                                     <nb-icon icon="share-outline" class="icon-qr-wd-height"></nb-icon>
@@ -179,7 +178,7 @@
                     </div>
                 </div>
 
-                
+
 
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
@@ -192,9 +191,7 @@
 
                             <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="!this.currentEmpId" type="button"
-                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!this.currentEmpId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
 
                             <!-- <button *ngIf="!this.currentEmpId && qrFlag" type="button"
                                 class="btn btn-primary btn-sm btn-design-save button-base ripple"

@@ -2007,6 +2007,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .nb-text {
         font-size: 15px !important;
+        margin-left: 0 !important;
     }
     .btn-design {
         color: #5e5b5e;
@@ -2015,6 +2016,7 @@ input[type="number"]::-webkit-outer-spin-button {
         border-color: #fff;
         padding: 1px 10px !important;
         font-size: 14px !important;
+        margin-left: 0 !important;
     }
     .display-flex-start {
         align-items: center;
@@ -2204,11 +2206,20 @@ input[type="number"]::-webkit-outer-spin-button {
         font-size: 13px !important;
     }
     .scan-status-img {
-        margin-top: 11px;
-        width: 150px;
+        width: 130px !important;
     }
     .or-style {
         margin: 8% 0;
+    }
+    .mr-top-bt {
+        margin-top: 17px;
+        margin-bottom: 0 !important;
+    }
+    .mobile-txt-center {
+        text-align: center;
+    }
+    .mr-left-10 {
+        margin-left: 10px !important;
     }
 }
 
@@ -2336,7 +2347,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 // view-btn-width
 .max-width-device {
-    display: contents;
+    display: contents !important;
 }
 
 .production-plan-text {
@@ -2522,4 +2533,34 @@ ng-select.ng-select-br-none {
 
 .scan-status-img {
     width: 87px;
+}
+
+.addition-jet-batch {
+    padding: 5px 17px !important;
+    margin-right: 0px;
+    margin-bottom: 4px;
+}
+
+.bg-addition-color {
+    background-color: #f3f3f3 !important;
+}
+
+.mr-bt-0 {
+    margin-bottom: 0 !important;
+}
+
+.pd-8 {
+    padding: 8px !important;
+}
+
+.addition-direct-batch {
+    min-height: 89px;
+    height: 89px;
+    overflow-y: scroll;
+}
+
+.or-style {
+    background: #eaeaea;
+    padding: 15px;
+    border-radius: 44px;
 }
