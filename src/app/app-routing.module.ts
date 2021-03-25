@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./@theme/guards/auth.guard";
 import { ColorGuard } from "./@theme/guards/color.guard";
 import { PartyGuard } from "./@theme/guards/party.guard";
@@ -193,6 +193,13 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "report",
+        loadChildren: () =>
+          import("./pages/generate-report/generate-report.module").then(
+            (m) => m.GenerateReportModule
+          ),
+      },
+      {
         path: "issue-color-box",
         loadChildren: () =>
           import("./pages/color/issue-color-box/issue-color-box.module").then(
@@ -304,6 +311,14 @@ export const routes: Routes = [
     ],
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
+
+  // {
+  //   path: "generate-report",
+  //   loadChildren: () =>
+  //     import("./pages/generate-report/generate-report.module").then(
+  //       (m) => m.GenerateReportModule
+  //     ),
+  // },
 
   // { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
 

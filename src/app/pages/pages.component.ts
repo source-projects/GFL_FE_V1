@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { ColorGuard } from "app/@theme/guards/color.guard";
-import { PartyGuard } from "app/@theme/guards/party.guard";
-import { ProgramGuard } from "app/@theme/guards/program.guard";
-import { QualityGuard } from "app/@theme/guards/quality.guard";
-import { ShadeGuard } from "app/@theme/guards/shade.guard";
-import { StockBatchGuard } from "app/@theme/guards/stock-batch.guard";
-import { SupplierGuard } from "app/@theme/guards/supplier.guard";
-import { UserGuard } from "app/@theme/guards/user.guard";
-import { DyeingProcessGuard } from "app/@theme/guards/dyeing-process.guard";
+import { ColorGuard } from "../@theme/guards/color.guard";
+import { PartyGuard } from "../@theme/guards/party.guard";
+import { ProgramGuard } from "../@theme/guards/program.guard";
+import { QualityGuard } from "../@theme/guards/quality.guard";
+import { ShadeGuard } from "../@theme/guards/shade.guard";
+import { StockBatchGuard } from "../@theme/guards/stock-batch.guard";
+import { SupplierGuard } from "../@theme/guards/supplier.guard";
+import { UserGuard } from "../@theme/guards/user.guard";
+import { DyeingProcessGuard } from "../@theme/guards/dyeing-process.guard";
 import { JetPlanningGuard } from "app/@theme/guards/jet-planning.guard";
 import { ProductionPlanningGuard } from "app/@theme/guards/production-planning.guard";
 import { WaterJetGuard } from "app/@theme/guards/water-jet.guard";
@@ -102,7 +102,9 @@ export class PagesComponent implements OnInit {
 
               case "User":
                 if (
-                  (this.userData.id && this.userData.userHeadId && this.userData.id != this.userData.userHeadId)
+                  this.userData.id &&
+                  this.userData.userHeadId &&
+                  this.userData.id != this.userData.userHeadId
                 ) {
                   e.hidden = true;
                 } else {
@@ -303,18 +305,18 @@ export class PagesComponent implements OnInit {
                 }
                 break;
 
-                case "Database":
-                  this.view = this.adminGuard.accessRights("view");
-                  this.view_all = this.adminGuard.accessRights("view all");
-                  this.view_group = this.adminGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }
-                  break;
+              case "Database":
+                this.view = this.adminGuard.accessRights("view");
+                this.view_all = this.adminGuard.accessRights("view all");
+                this.view_group = this.adminGuard.accessRights("view group");
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                }
+                break;
 
               case "Input Data":
                 this.view = this.inputDataGuard.accessRights("view");

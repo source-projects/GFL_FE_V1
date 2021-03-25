@@ -46,6 +46,7 @@ export class AddEditUserComponent implements OnInit {
   designationList;
   public isChangePass: boolean = false;
   public dataEntryFlag: boolean = false;
+  public teamMemberFlag: boolean = false;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
@@ -129,7 +130,7 @@ export class AddEditUserComponent implements OnInit {
     this.currentUserId = this._route.snapshot.paramMap.get("id");
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
-    if(this.userId.userId == this.userHead.userHeadId){
+    if (this.userId.userId == this.userHead.userHeadId) {
       this.isLoggedInAsMaster = true;
     }
     this.getDesignation();
@@ -230,7 +231,19 @@ export class AddEditUserComponent implements OnInit {
         this.isMasterFlag = true;
         this.user.isUserHead = false;
         this.user.userHeadId = Number(this.commonService.getUser().userId);
+        this.teamMemberFlag = false;
+      } else if (
+        found &&
+        found.designation &&
+        found.designation.toLowerCase() == "team member"
+      ) {
+        console.log("gyasgd");
+        this.teamMemberFlag = true;
+        this.user.isUserHead = true;
+        this.isMasterFlag = false;
       } else {
+        console.log("hiii");
+        this.teamMemberFlag = false;
         this.user.isUserHead = true;
         this.isMasterFlag = false;
       }
