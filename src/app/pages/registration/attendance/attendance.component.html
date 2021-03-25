@@ -1,0 +1,178 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+
+        <div class="row">
+            <div class="col-md-1 col-4 display-flex-start max-width-device">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/scan']">Scan</button>
+            </div>
+
+            <div class="col-md-11 col-8">
+                <div class="">
+                    <h2 class="nb-text">Add Attendance</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+    </nb-card-header>
+    <nb-card-body class="view-registrations-style">
+        <div>
+            <form #empForm="ngForm">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="row">
+
+
+                            <div class="col-md-12">
+                                <div class="form-group text-center">
+                                    <!-- <div class="form-control size-small"> -->
+
+                                    <!-- <label class="required">Profile</label> -->
+                                    <div class="profile-img">
+                                        <img [src]="profileUrl" width="100" height="100">
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 display-fl-center">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Employee Name: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.name}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Phone No: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.contact}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Aadhar Card No: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{currentData.aadhaar}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">Date: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{attendance.date | date : 'shortDate'}}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="pd-bt">
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-title">In Time: </span>
+                                        </div>
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{attendance.inTime | date : 'shortTime'}}</span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="pd-bt">
+                                    <div class="row">
+
+                                        <div class="col-md-12 ol-6 mobile-pdl-0">
+                                            <span class="view-title">Out Time: </span>
+                                        </div>
+                                        <div class=" col-md-12 col-6 mobile-pdl-0">
+                                            <span class="view-ans">{{attendance.outTime | date : 'shortTime'}}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group pd-bt">
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-6 mobile-pdl-0">
+                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="attendance.shift">Day Shift</nb-toggle>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="display-space-evenly desktop-display-block">
+                                    <div class="reg-inout">
+
+                                        <button (click)="inClick()" [disabled]="disableIn" class="btn-reg-inout btn btn-success">In</button>
+                                    </div>
+
+                                    <div class="reg-inout">
+                                        <button (click)="outClick()" [disabled]="disableOut" class="btn-reg-inout btn btn-danger">Out</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

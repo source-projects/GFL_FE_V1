@@ -41,7 +41,7 @@ export class StockBatchService {
     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+q_id+'/'+p_id);
   }
   getAllBatchForAdditionSlip(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/getAllBatchForFinishMtr');
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/forAdditionalSlip');
   }
 
   getJobCardData(stockId, batchId){
@@ -50,5 +50,9 @@ export class StockBatchService {
   
   getBatchSequence(){
     return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/batchSequence/');
+  }
+
+  updateBatchSequence(data){
+    return this.httpClient.put(this.commonService.envUrl()+'api/admin/update/batchSequence/',data);
   }
 }

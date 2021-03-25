@@ -175,6 +175,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    // title: "FEATURES",
+    title: "User-Registration",
+    icon: "edit-2-outline",
+    link: "/pages/registration",
+    hidden: false,
+  },
+  {
     title: "FEATURES",
     group: true,
   },

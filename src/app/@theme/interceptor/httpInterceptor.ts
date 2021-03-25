@@ -6,23 +6,23 @@ import {
   HttpResponse,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
 } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { JwtTokenService } from "../services/jwt-token.service";
-import { ToastrService } from 'ngx-toastr';
-import { StoreTokenService } from '../services/store-token.service';
+import { ToastrService } from "ngx-toastr";
+import { StoreTokenService } from "../services/store-token.service";
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
   userId;
-   errorMessage: string;
-  constructor(private router: Router, 
-    private injector: Injector,     
+  errorMessage: string;
+  constructor(
+    private router: Router,
+    private injector: Injector,
     private toastr: ToastrService,
-    private tokenService: StoreTokenService,
-
-    ) {
+    private tokenService: StoreTokenService
+  ) {
     // this.commonService.getUser();
   }
   intercept(
@@ -33,12 +33,14 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     if (token) {
       let service = this.injector.get(JwtTokenService);
       this.userId = service.getDecodeToken("userId");
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-          id: `${this.userId}`,
-        }
-      });
+      if (!request.url.includes("cloudinary")) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+            id: `${this.userId}`,
+          },
+        });
+      }
     }
     return next.handle(request).pipe(
       tap(
@@ -61,12 +63,13 @@ export class CustomHttpInterceptor implements HttpInterceptor {
                 break;
               case 401:
                 this.errorMessage = "token expired";
-                this.tokenService.remove('token');
-                this.tokenService.remove('refreshToken');
-                this.router.navigate(['auth']);                
-                break; 
+                this.tokenService.remove("token");
+                this.tokenService.remove("refreshToken");
+                this.router.navigate(["auth"]);
+                break;
               case 402:
-                this.errorMessage = "You don't have permission to access the requested resource.";
+                this.errorMessage =
+                  "You don't have permission to access the requested resource.";
                 break;
               case 404:
                 this.errorMessage = "The requested resource does not exist.";
@@ -93,7 +96,5 @@ export class CustomHttpInterceptor implements HttpInterceptor {
         }
       )
     );
-
-    
   }
 }

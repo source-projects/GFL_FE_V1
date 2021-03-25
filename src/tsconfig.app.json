@@ -6,6 +6,7 @@
     "baseUrl": "./",
     "resolveJsonModule": true,
     "moduleResolution": "node",
+    "skipLibCheck": true
     
   },
   "exclude": [

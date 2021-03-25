@@ -158,6 +158,8 @@ invoiceNo : any;
                 ele.wt = ele.wt.toFixed(2);
               })
               this.merge = this.finalbatch;
+              this.finalcheckedrows = [];
+              this.selected = [];
               this.loading = false;
             } else {
               // this.toastr.error(data["msg"]);
@@ -183,6 +185,7 @@ invoiceNo : any;
 
   addInvoice(invoiceForm) {
     this.formSubmitted = true;
+    this.final = [];
     console.log(this.finalcheckedrows)
     if(this.finalcheckedrows.length > 0){
       this.finalcheckedrows.map(ele => {
@@ -297,6 +300,7 @@ invoiceNo : any;
   }
 
   onSelect(value: any) {
+    console.log(value)
     let arr: any =  value.selected;
     this.finalcheckedrows = arr;
   }
