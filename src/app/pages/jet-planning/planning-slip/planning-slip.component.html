@@ -489,7 +489,7 @@
                                                             <div class="col-md-1
                                                                 user-per-check-display">
                                                                 <button class="close
-                                                                    btn-foucs-none" aria-label="Close">
+                                                                    btn-foucs-none" aria-label="Close" (click)="modal.dismiss('Cross click')">
                                                                     <span aria-hidden="true"
                                                                         class="close-icon">&times;</span>
                                                                 </button>
@@ -691,7 +691,7 @@
                                                                         btn-primary
                                                                         btn-sm
                                                                         btn-design-cancel" type="button"
-                                                                        (click)="activeModal.close(false)">CANCEL</button>
+                                                                        (click)="modal.dismiss()">CANCEL</button>
                                                                     <button class="btn
                                                                         btn-primary
                                                                         btn-sm

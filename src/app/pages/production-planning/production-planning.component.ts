@@ -652,7 +652,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   getAllDetailsOfBatch(event, batch) {
-    if (!this.flipped) {
+    // if (!this.flipped) {
       if (batch.partyName)
         this.productionBatchDetail.partyName = batch.partyName;
       if (batch.qualityName)
@@ -665,10 +665,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
       if (batch.processName)
         this.productionBatchDetail.processName = batch.processName;
-    }else{
-    this.setIndexForSlip(batch)
-     this.getBatchDetails();
-    }
+    //}else{
+    // this.setIndexForSlip(batch)
+    //  this.getBatchDetails();
+    // }
   }
 
   resetDetailsOfBatch($event) {
