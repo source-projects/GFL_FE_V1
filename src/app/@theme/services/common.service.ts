@@ -46,7 +46,7 @@ export class CommonService {
     } else {
       url = "http://103.137.194.167:8080/";
     }
-    return "http://15.206.179.225:8080/";
+    return url;
     //return url "http://13.235.71.124:8080/";
   }
 
