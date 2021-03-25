@@ -5,6 +5,7 @@ import { RegistrationService } from '../../@theme/services/registration.service'
 import * as errorData from "../../@theme/json/error.json";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { EmployeeRegistrationGuard } from '../../@theme/guards/employee-registration.guard';
 
 @Component({
   selector: 'ngx-registration',
@@ -17,21 +18,42 @@ export class RegistrationComponent implements OnInit {
   profileData = [];
   loading = false;
   tablestyle = "bootstrap";
+  hiddenAdd: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenDelete: boolean = true;
+
+
 
   constructor(
     private registrationService : RegistrationService,
     private toastr: ToastrService,
     private route: Router,
     private modalService: NgbModal,
+    public registrationGuard: EmployeeRegistrationGuard,
 
 
   ) { }
 
   ngOnInit(): void {
 
+    this.getAccess();
     this.getAllEmployee();
+
+
+  }
+  getAccess() {
+    if (this.registrationGuard.accessRights("add")) {
+      this.hiddenAdd = false;
+    }
+    if (this.registrationGuard.accessRights("delete")) {
+      this.hiddenDelete = false;
+    }
+    if (this.registrationGuard.accessRights("edit")) {
+      this.hiddenEdit = false;
+    }
   }
 
+  
   getAllEmployee(){
     this.registrationService.getAllEmployee().subscribe(
       (data) => {

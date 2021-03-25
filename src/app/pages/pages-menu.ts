@@ -171,9 +171,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'User-Registration',
+    title: 'Employee-Registration',
     icon: 'edit-2-outline',
     link: '/pages/registration',
+    hidden: false,
+  },
+  {
+    title: 'Attendance',
+    icon: 'edit-2-outline',
+    link: '/pages/attendance',
     hidden: false,
   },
   {

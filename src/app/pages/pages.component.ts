@@ -21,6 +21,8 @@ import { InputDataGuard } from "app/@theme/guards/input-data.guard";
 import { CommonService } from "app/@theme/services/common.service";
 import { UserService } from "../@theme/services/user.service";
 import { AdminGuard } from "../@theme/guards/admin.guard";
+import { EmployeeRegistrationGuard } from "../@theme/guards/employee-registration.guard";
+import { AttndanceGuard } from "../@theme/guards/attendance.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -54,6 +56,8 @@ export class PagesComponent implements OnInit {
     public waterJetGuard: WaterJetGuard,
     public invoiceGuard: InvoiceGuard,
     public paymentGuard: PaymentGuard,
+    public registrationGuard : EmployeeRegistrationGuard,
+    public attendanceGuard : AttndanceGuard,
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
     public adminGuard: AdminGuard,
@@ -344,6 +348,32 @@ export class PagesComponent implements OnInit {
                   this.view = this.paymentGuard.accessRights("view");
                   this.view_all = this.paymentGuard.accessRights("view all");
                   this.view_group = this.paymentGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
+
+                  case "Employee-Registration":
+                  this.view = this.registrationGuard.accessRights("view");
+                  this.view_all = this.registrationGuard.accessRights("view all");
+                  this.view_group = this.registrationGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
+
+                  case "Attendance":
+                  this.view = this.attendanceGuard.accessRights("view");
+                  this.view_all = this.attendanceGuard.accessRights("view all");
+                  this.view_group = this.attendanceGuard.accessRights("view group");
                   if (
                     this.view == false &&
                     this.view_all == false &&

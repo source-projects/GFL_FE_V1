@@ -25,6 +25,9 @@ import { FinishedMeterGuard } from "./@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "./@theme/guards/input-data.guard";
 import { DyeingSlipGuard } from "./@theme/guards/dyeing-slip.guard";
 import { AdminGuard } from "./@theme/guards/admin.guard";
+import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration.guard";
+import { AttendanceComponent } from "./pages/attendance/attendance.component";
+import { AttndanceGuard } from "./@theme/guards/attendance.guard";
 
 export const routes: Routes = [
   {
@@ -268,9 +271,19 @@ export const routes: Routes = [
           import("./pages/registration/registration.module").then(
             (m) => m.RegistrationModule
           ),
-        // canActivate: [DyeingSlipGuard],
-        // canLoad: [DyeingSlipGuard],
-        // data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [EmployeeRegistrationGuard],
+        canLoad: [EmployeeRegistrationGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "attendance",
+        loadChildren: () =>
+        import("./pages/attendance/attendance.module").then(
+          (m) => m.AttendanceModule
+        ),
+        canActivate: [AttndanceGuard],
+        canLoad: [AttndanceGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "miscellaneous",
