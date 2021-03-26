@@ -292,6 +292,15 @@ export class AddEditFinishedMeterComponent implements OnInit {
       this.sequenceArray.splice(rowIndex, 1);
     }
     this.setSequenceNo(false);
+    this.arrangeAllSequenceNo();
+  }
+
+  arrangeAllSequenceNo(){
+    this.finishedMeterForm.batchData.forEach(element => {
+      if(element.sequenceId != element.seqNo){
+        element.sequenceId = element.seqNo;
+      }
+    });
   }
 
   splitExtraMeters() {
