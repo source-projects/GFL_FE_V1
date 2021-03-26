@@ -29,7 +29,7 @@
     <nb-card-body>
         <div>
             <form #empForm="ngForm">
-                <div class="row">
+                <div class="row" *ngIf="!qrFlag">
                     <div class="col-md-3 col-12">
                         <div class="form-group text-center">
 
@@ -65,7 +65,7 @@
                             <label class="required">Employee Name</label>
                             <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name"
                                 class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name"
-                                [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" />
+                                [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" required/>
 
                             <div class="input-required" *ngIf="name1.invalid
                                 &&
@@ -78,9 +78,9 @@
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Phone No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="contact"
+                            <input type="number" class="form-control size-small" fieldsize="small" nbinput name="contact"
                                 [(ngModel)]="registration.contact" #contact1="ngModel" maxlength="10" minlength="10"
-                                pattern="[6-9]{1}[0-9]{9}" placeholder="Contact No"
+                                ng-pattern-restrict="[A-Za-z]" pattern="[6-9]{1}[0-9]{9}" placeholder="Contact No"
                                 [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}" />
                             <div class="input-required"
                                 *ngIf="(contact1.invalid) && (formSubmitted || contact1.touched)">
@@ -108,7 +108,7 @@
 
                             <input type="file" name="document" class="form-control size-small registration-document"
                                 id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel"
-                                (change)="handleFileInput($event.target.files,'document')"
+                                (change)="handleFileInput($event.target.files,'document')" required
                                 [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}">
 
 
@@ -147,17 +147,18 @@
 
 
 
+            <div *ngIf="qrFlag">
 
-                <ngx-qrcode *ngIf="qrFlag" [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
+                <ngx-qrcode  [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
                     [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <div class="text-center">
-                            <span *ngIf="qrFlag" [(ngModel)]="emp_id" name="emp_id"
+                            <span  [(ngModel)]="emp_id" name="emp_id"
                                 class="scan-id-style">{{emp_id}}</span>
-                            <div *ngIf="qrFlag" class="qr-share-opt display-qr-evenly">
+                            <div class="qr-share-opt display-qr-evenly">
                                 <div class="download-qr">
-                                    <a [href]="href" (click)="downloadImage()" download>
+                                    <a [href]="href" (click)="downloadImage()" [download]="emp_id">
                                         <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
                                     </a>
 
@@ -172,6 +173,7 @@
                     </div>
                 </div>
 
+            </div>
 
 
                 <div class="row">
@@ -179,9 +181,11 @@
                         <div class="document-padding-bt-tp">
                             <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 routerLink='/pages/shade'>CANCEL</button> -->
-                            <button *ngIf="!this.currentEmpId" class="btn btn-primary btn-sm btn-design-cancel"
+                            <button *ngIf="!this.currentEmpId && !this.qrFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 type="button" (click)="reset(empForm)">CANCEL</button>
-
+                            
+                            <button *ngIf="this.currentEmpId && !this.qrFlag" class="btn btn-primary btn-sm btn-design-cancel"
+                                type="button" [routerLink]="['/pages/registration/view']">CANCEL</button>    
 
 
                             <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"

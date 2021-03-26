@@ -415,7 +415,7 @@
                 </ngx-datatable>
             </nb-tab>
 
-            <nb-tab tabTitle="Invoice Sequence">
+            <nb-tab tabTitle="Sequence">
                 <form #addInvoiceSequence1="ngForm">
                     <div class="row">
                         <div class="col-md-4">
@@ -423,7 +423,7 @@
                                 <label>Invoice Sequence</label>
                                 <div class="row">
                                     <div class="col-md-10">
-                                    <input name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence"
+                                    <input [disabled]="saveHidden" name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence"
                                     [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel"
                                     [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
                                     required>
@@ -447,20 +447,48 @@
                     <div class="row">
                         <div class="col-md-12 display-flex-start desktop-justify-flexend">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
                         </div>
                     </div>
                 </form>
 
-                <!-- <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="sequenceList" [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getSequenceByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Sequence" prop="sequence" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable> -->
+                <form #addBatchSequence1="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Batch Sequence</label>
+                            <div class="row">
+                                <div class="col-md-10">
+                                <input [disabled]="batchSaveHidden" name="name" type="text" class="form-control" placeholder="Enter batch sequence"
+                                [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel"
+                                [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
+                                required>
+                                </div>
+                                <div class="col-md-2">
+                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit"></nb-icon>
+
+                                </div>
+                            </div>
+                            
+                            <div class="input-required"
+                                *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
+                                Batch Sequence is required.
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                        <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled" [hidden]="batchSaveHidden">SAVE</button>
+                    </div>
+                </div>
+            </form>
+
+              
 
             </nb-tab>
         </nb-tabset>
