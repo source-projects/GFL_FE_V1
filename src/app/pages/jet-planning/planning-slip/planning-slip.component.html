@@ -489,7 +489,7 @@
                                                             <div class="col-md-1
                                                                 user-per-check-display">
                                                                 <button class="close
-                                                                    btn-foucs-none" aria-label="Close">
+                                                                    btn-foucs-none" aria-label="Close" (click)="modal.dismiss('Cross click')">
                                                                     <span aria-hidden="true"
                                                                         class="close-icon">&times;</span>
                                                                 </button>
@@ -691,7 +691,7 @@
                                                                         btn-primary
                                                                         btn-sm
                                                                         btn-design-cancel" type="button"
-                                                                        (click)="activeModal.close(false)">CANCEL</button>
+                                                                        (click)="modal.dismiss()">CANCEL</button>
                                                                     <button class="btn
                                                                         btn-primary
                                                                         btn-sm
@@ -705,6 +705,19 @@
                                                 </nb-card>
                                             </ng-template>
 
+                                        </div>
+                                    </div>
+                                    <div *ngIf="shadeSelectedFlag" class="row col-md-12">
+                                        <div class="col-md-6">
+                                            <span>Party Shade No:</span>{{shadeObj.partyShadeNo}}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="col-md-3">Color:</span>
+                                            <input style="width: 25%;"
+                                            [(colorPicker)]="shadeObj.color"
+                                            [style.background]="shadeObj.color"
+                                            disabled="true"
+                                            class="width-100" />
                                         </div>
                                     </div>
 
@@ -746,14 +759,6 @@
 
 
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="shadeSelectedFlag" class="row col-md-12">
-                                            <div class="col-md-6">
-                                                <span>Party Shade No:</span>{{shadeObj.partyShadeNo}}
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span>Color:</span>{{shadeObj.color}}
                                             </div>
                                         </div>
                                     </div>

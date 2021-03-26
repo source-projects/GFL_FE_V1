@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from '../../../@theme/json/error.json';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { ToastrService } from 'ngx-toastr';
@@ -97,7 +97,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.startAt = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 9, 0, 0)
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
     this.getMachineCategory();
-   // this.getPurchaseRequestList();
+    // this.getPurchaseRequestList();
     //this.getWaterJetList();
   }
 
@@ -334,16 +334,16 @@ export class ReportComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPurchaseRequestList() {
-    this.purchaseService.getAllRequests().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.purchaseRequestList = data["data"];
-        }
-      },
-      (error) => { }
-    );
-  }
+  // getPurchaseRequestList() {
+  //   this.purchaseService.getAllRequests().subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         this.purchaseRequestList = data["data"];
+  //       }
+  //     },
+  //     (error) => { }
+  //   );
+  // }
   getWaterJetList() {
     this.loading = true;
     this.waterjetService.getWaterJetList().subscribe(
@@ -368,7 +368,7 @@ export class ReportComponent implements OnInit, OnDestroy {
           if (data["success"]) {
             if (status == 1) this.toastr.success("Request approved");
             else if (status == 2) this.toastr.success("Request declined");
-            this.getPurchaseRequestList();
+            // this.getPurchaseRequestList();
           }
         },
         (error) => {
