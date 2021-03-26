@@ -289,10 +289,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
       let removed = item.splice(rowIndex, 1);
       let list = item;
       this.finishedMeterForm.batchData = [...list];
-      this.sequenceArray.splice(rowIndex, 1);
     }
-    this.setSequenceNo(false);
-    this.arrangeAllSequenceNo();
+    // this.setSequenceNo(false);
+    // this.arrangeAllSequenceNo();
   }
 
   arrangeAllSequenceNo(){
@@ -411,6 +410,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
 
   setArrayOfSequence() {
     for (let i = 0; i < this.indexOfBatchData - 1; i++) {
+      if(this.finishedMeterForm.batchData[i].mtr)
       this.sequenceArray[i] = this.finishedMeterForm.batchData[i].id;
     }
   }
