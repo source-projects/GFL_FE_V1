@@ -70,6 +70,8 @@ export class AddEditUserComponent implements OnInit {
     "Input Data",
     "Database",
     "Dyeing Slip",
+    "Employee Registration",
+    "Attendance"
   ];
 
   userHeadList: any[] = [];
@@ -80,10 +82,10 @@ export class AddEditUserComponent implements OnInit {
     "Edit",
     "Delete",
     "View Group",
-    "View All",
     "Edit Group",
-    "Edit All",
     "Delete Group",
+    "View All",
+    "Edit All",
     "Delete All",
   ];
 
@@ -93,10 +95,10 @@ export class AddEditUserComponent implements OnInit {
     "edit",
     "delete",
     "viewGroup",
-    "viewAll",
     "editGroup",
-    "editAll",
     "deleteGroup",
+    "viewAll",
+    "editAll",
     "deleteAll",
   ];
 
@@ -442,6 +444,24 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Employee Registration": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Employee Registration"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Attendance": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Attendance"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
     }
 
     for (let j = 0; j < this.forms.length; j++) {
@@ -541,6 +561,8 @@ export class AddEditUserComponent implements OnInit {
       ip: "",
       ad: "",
       ds: "",
+      emp:"",
+      attnds:""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {

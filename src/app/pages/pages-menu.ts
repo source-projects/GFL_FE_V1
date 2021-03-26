@@ -169,16 +169,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: "Report",
-    icon: "award-outline",
-    link: "/pages/report",
+    title: 'Employee-Registration',
+    icon: 'edit-2-outline',
+    link: '/pages/registration',
     hidden: false,
   },
   {
-    // title: "FEATURES",
-    title: "User-Registration",
-    icon: "edit-2-outline",
-    link: "/pages/registration",
+    title: 'Attendance',
+    icon: 'edit-2-outline',
+    link: '/pages/attendance',
+    hidden: false,
+  },
+  {
+    title: "Report",
+    icon: "award-outline",
+    link: "/pages/report",
     hidden: false,
   },
   {

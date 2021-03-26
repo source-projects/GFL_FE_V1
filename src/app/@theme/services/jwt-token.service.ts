@@ -81,7 +81,13 @@ export class JwtTokenService {
         return this.tokens.permissions.ad;
 
       case 'dyeingSlip':
-        return this.tokens.permissions.ds;  
+        return this.tokens.permissions.ds;
+      
+      case 'employee':
+        return this.tokens.permissions.emp;
+
+      case 'attendance':
+        return this.tokens.permissions.attnds;  
 
       case 'userId':
         return this.tokens.sub;
