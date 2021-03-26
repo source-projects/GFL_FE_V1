@@ -214,17 +214,17 @@ export class ScanQRComponent implements OnInit {
 
 
 // }
-// qrResultString: string;
+qrResultString: string;
 
-// clearResult(): void {
-//   this.qrResultString = null;
+clearResult(): void {
+  this.qrResultString = null;
   
-// }
+}
 
-// onCodeResult(resultString: string) {
-//   this.qrResultString = resultString;
-//   window.location.href = this.qrResultString;
-// }
+onCodeResult(resultString: string) {
+  this.qrResultString = resultString;
+  window.location.href = this.qrResultString;
+}
 
 }
 
