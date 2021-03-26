@@ -8,7 +8,8 @@ import {
   AddMachine,
   AddMachineCategory,
   AddQuality,
-  AddInvoiceSequence
+  AddInvoiceSequence,
+  AddBatchSequence
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -32,6 +33,7 @@ export class AdminComponent implements OnInit {
   addMachine: AddMachine = new AddMachine();
   addMachineCategory: AddMachineCategory = new AddMachineCategory();
   addInvoiceSequence: AddInvoiceSequence = new AddInvoiceSequence();
+  addBatchSequence: AddBatchSequence = new AddBatchSequence();
   addJetArray: AddJet[] = [];
   addCompanyArray: AddCompany[] = [];
   adddesignationArray: AddDesignation[] = [];
@@ -40,6 +42,8 @@ export class AdminComponent implements OnInit {
   addMachineCategoryArray: AddMachineCategory[] = [];
   addQualityArray: AddQuality[] = [];
   addInvoiceSequenceArray: AddInvoiceSequence[] = [];
+  addBatchSequenceArray: AddBatchSequence[] = [];
+
   jetList = [];
   designationList = [];
   companyList = [];
@@ -48,7 +52,8 @@ export class AdminComponent implements OnInit {
   machineList = [];
   machineCategoryList = [];
   qualityList = [];
-  sequenceList = [];
+  invoiceSequenceList = [];
+  batchSequenceList = [];
   formSubmitted: boolean = false;
   loading = false;
   jetEditFlag = false;
@@ -57,13 +62,15 @@ export class AdminComponent implements OnInit {
   designationEditFlag = false;
   approveByEditFlag = false;
   sequenceByEditFlag = false;
+  batchsequenceByEditFlag = false;
   machineEditFlag = false;
   qualityEditFlag = false;
   machineCategoryEditFlag = false;
   saveHidden = true;
-
+  batchSaveHidden = true;
   disabled = false;
   hiddenEdit = false;
+  batchHiddenEdit = false;
   hiddenDelete = false;
   constructor(
     private adminService: AdminService,
@@ -93,6 +100,8 @@ export class AdminComponent implements OnInit {
     this.getDeleteAccess();
     this.getEditAccess();
     this.getAllInvoiceSequenceData();
+    this.getAllBatchSequenceData();
+
     
   }
 
@@ -231,6 +240,24 @@ export class AdminComponent implements OnInit {
           this.loading = false;
         } else {
           this.saveHidden = false;
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllBatchSequenceData(){
+    this.adminService.getAllBatchSequence().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.addBatchSequence.sequence = data["data"]['sequence']
+          this.addBatchSequence.id = data["data"]['id'];
+          this.loading = false;
+        } else {
+          this.batchSaveHidden = false;
           this.loading = false;
         }
       },
@@ -598,7 +625,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  saveSequence(addSequenceData) {
+  saveInvoiceSequence(addSequenceData) {
     this.formSubmitted = true;
     if (addSequenceData.valid) {
       if(this.sequenceByEditFlag){
@@ -636,6 +663,47 @@ export class AdminComponent implements OnInit {
       return;
     }
   }
+
+
+  saveBatchSequence(addSequenceData) {
+    this.formSubmitted = true;
+    if (addSequenceData.valid) {
+      if(this.batchsequenceByEditFlag){
+        this.adminService.updateBatchSequence(this.addBatchSequence).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllBatchSequenceData();
+              this.resetValue(addSequenceData);
+              this.batchSaveHidden = true;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }else{
+        this.adminService.saveBatchSequence(this.addBatchSequence).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllBatchSequenceData();
+              this.batchSaveHidden = true;
+              // this.resetValue(addSequenceData);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {}
+        );
+      }
+      // }
+    } else {
+      // this.formSubmitted = false;
+      return;
+    }
+  }
+
 
   resetValue(FormName) {
     this.formSubmitted = false;
@@ -691,6 +759,11 @@ export class AdminComponent implements OnInit {
   onCancelSequence(){
     this.saveHidden = true;
     this.getAllInvoiceSequenceData();
+  }
+
+  onBatchCancelSequence(){
+    this.batchSaveHidden = true;
+    this.getAllBatchSequenceData();
   }
 
   removeJet(id) {
@@ -958,6 +1031,12 @@ export class AdminComponent implements OnInit {
   onEdit(){
     this.saveHidden = false;
     this.sequenceByEditFlag = true;
+
+  }
+
+  onBatchEdit(){
+    this.batchSaveHidden = false;
+    this.batchsequenceByEditFlag = true;
 
   }
 }

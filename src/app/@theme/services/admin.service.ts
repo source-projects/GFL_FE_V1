@@ -62,6 +62,12 @@ export class AdminService {
     );
   }
 
+  getAllBatchSequence() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/batchSequence/"
+    );
+  }
+
   getMachineDateById(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/machine/" + id
@@ -128,6 +134,13 @@ export class AdminService {
   saveInvoiceSequence(data) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/admin/add/invoiceSequence/",
+      data
+    );
+  }
+
+  saveBatchSequence(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/batchSequence/",
       data
     );
   }
@@ -231,6 +244,13 @@ export class AdminService {
   updateInvoiceSequence(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/update/invoiceSequence/",
+      data
+    );
+  }
+
+  updateBatchSequence(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/update/batchSequence/",
       data
     );
   }

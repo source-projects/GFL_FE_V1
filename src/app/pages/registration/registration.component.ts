@@ -55,11 +55,13 @@ export class RegistrationComponent implements OnInit {
 
   
   getAllEmployee(){
+    this.loading = true;
     this.registrationService.getAllEmployee().subscribe(
       (data) => {
         if(data["success"]){
           this.empData = data["data"];
-          
+          this.loading = false;
+
         }
       },
       (error) => {
