@@ -4,6 +4,7 @@ import { NgxLoadingModule } from "ngx-loading";
 import { NgxCheckboxModule } from "ngx-checkbox";
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -99,6 +100,7 @@ const NB_MODULES = [
     ...NB_MODULES,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    ZXingScannerModule,
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
@@ -113,6 +115,7 @@ const NB_MODULES = [
     NgxLoadingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
     // NgQrScannerModule,
