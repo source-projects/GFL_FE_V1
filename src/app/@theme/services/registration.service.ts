@@ -60,5 +60,9 @@ export class RegistrationService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/employee/add/document', data);
 
   }
+
+  empIdExistOrNot(id):any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/employee/exist?id='+id);
+  }
  
 }

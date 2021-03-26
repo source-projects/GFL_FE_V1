@@ -27,26 +27,24 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hiddenDelete" (click)="deleteEmp(row.id)"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Employee Name" prop="name" [maxWidth]="500">
-                        <!-- <ng-template ngx-datatable-header-template let-value="value">
-                            Employee Name
-                            <div class="filter-icon" id="onclickFilter">
-                                <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
-                            </div>
-        
-                        </ng-template> -->
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Contact" prop="contact" [maxWidth]="150"></ngx-datatable-column>
-                    <ngx-datatable-column name="Aadhar No" prop="aadhaar" [maxWidth]="200"></ngx-datatable-column>
-                    <ngx-datatable-column name="Profile" prop="employeeDocumentList" [maxWidth]="90">
+                    <ngx-datatable-column name="Employee Id" prop="id" [maxWidth]="200"></ngx-datatable-column>
+
+                    <ngx-datatable-column name="Name" prop="name" [maxWidth]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+
                             <ng-container *ngFor="let ele of row.employeeDocumentList">
                                 <span *ngIf="ele.type == 'profile'" class="ngx-profile-table">
                                     <img [src]="ele.url" class="imageURL" >
                                 </span>
                             </ng-container>
+                            <span >{{row.name}}</span>        
+                                
+                                               
                         </ng-template>
                     </ngx-datatable-column>
+                    <ngx-datatable-column name="Contact" prop="contact" [maxWidth]="200"></ngx-datatable-column>
+                    <ngx-datatable-column name="Aadhar No." prop="aadhaar" [maxWidth]="200"></ngx-datatable-column>
+                   
 
 
                 </ngx-datatable>
