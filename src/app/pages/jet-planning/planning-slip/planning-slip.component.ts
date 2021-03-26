@@ -262,7 +262,7 @@ export class PlanningSlipComponent implements OnInit {
                   if(data["success"]){
                     console.log("shade:",data["data"])
                     this.shadeObj.partyShadeNo = data["data"].partyShadeNo;
-                    this.shadeObj.color = data["data"].colorName;
+                    this.shadeObj.color = data["data"].colorTone;
                   }
                 }
               )

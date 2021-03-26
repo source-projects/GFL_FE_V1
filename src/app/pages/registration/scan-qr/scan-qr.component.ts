@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, Renderer2, VERSION, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RegistrationService } from '../../../@theme/services/registration.service';
+import { ActivatedRoute, Router } from '@angular/router';
 // import {QrScannerComponent} from 'angular2-qrscanner';
 // import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 // import { Result } from '@zxing/library';
@@ -11,6 +12,7 @@ import { RegistrationService } from '../../../@theme/services/registration.servi
   styleUrls: ['./scan-qr.component.scss']
 })
 export class ScanQRComponent implements OnInit {
+
 
   //elementType = 'url';
 //value = 'https://assets.econsultancy.com/images/resized/0002/4236/qr_code-blog-third.png';
@@ -43,7 +45,8 @@ export class ScanQRComponent implements OnInit {
   constructor(
     private registrationService : RegistrationService,
    // private qrScanner: QRScanner
-   private renderer: Renderer2
+   private renderer: Renderer2,
+   private route: Router,
   ) { }
 
   ngOnInit(): void {}
@@ -210,6 +213,17 @@ export class ScanQRComponent implements OnInit {
 //   });
 
 
+// }
+// qrResultString: string;
+
+// clearResult(): void {
+//   this.qrResultString = null;
+  
+// }
+
+// onCodeResult(resultString: string) {
+//   this.qrResultString = resultString;
+//   window.location.href = this.qrResultString;
 // }
 
 }
