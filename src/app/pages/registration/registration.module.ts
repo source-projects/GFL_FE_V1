@@ -6,8 +6,8 @@ import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationComponent } from './registration.component';
 import { AddEditRegistrationComponent } from './add-edit-registration/add-edit-registration.component';
 import { FormsModule } from '@angular/forms';
-import { AttendanceComponent } from './attendance/attendance.component';
-import { ScanQRComponent } from './scan-qr/scan-qr.component';
+import { AttendanceComponent } from '../attendance/attendance.component';
+import { ScanQRComponent } from '../attendance/scan-qr/scan-qr.component';
 // import { QRCodeModule } from 'angularx-qrcode';
 //import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
