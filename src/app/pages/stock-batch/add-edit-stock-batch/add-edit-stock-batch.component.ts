@@ -113,8 +113,10 @@ export class AddEditStockBatchComponent implements OnInit {
     if (this.currentStockBatchId) {
       this.addFlag = false;
       this.getStockBatchById();
+    }else{
+      await this.getCurrentBatchSequence();
     }
-    await this.getCurrentBatchSequence();
+    
     this.maxDate = new Date(
       this.dateForPicker.getFullYear(),
       this.dateForPicker.getMonth(),
@@ -134,9 +136,7 @@ export class AddEditStockBatchComponent implements OnInit {
         if(data['success']){
           this.currentBatchSequence = data['data']['sequence'];
           this.currentBatchSeqId = data['data']['id'];
-          if(this.addFlag){
             this.stockDataValues[0].batchId = this.currentBatchSequence
-          }
         }
       }
     )
