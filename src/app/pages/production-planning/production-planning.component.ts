@@ -477,31 +477,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.detailsList = data['data'];
-            //   "Party Name : " +
-            //   data["data"].partyName +
-            //   "\nBatch No: " +
-            //   data["data"].batchId +
-            //   "\nParty Shade No: " +
-            //   data["data"].partyShadeNo +
-            //   "\nBatch Weight: " +
-            //   data["data"].totalWt;
-            // this.items = [
-            //   { title: "Complete" },
-            //   { title: "Pause" },
-            //   {
-            //     title: "Remove",
-            //   },
-            //   { title: "Print" },
-            //   { title: "Edit And Print" },
-            //   {
-            //     title: "Details",
-            //     children: [
-            //       {
-            //         title: this.detailsList,
-            //       },
-            //     ],
-            //   },
-            // ];
 
             this.loading = false;
           } else {
@@ -652,31 +627,23 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   getAllDetailsOfBatch(event, batch) {
-    // if (!this.flipped) {
-      if (batch.partyName)
-        this.productionBatchDetail.partyName = batch.partyName;
-      if (batch.qualityName)
-        this.productionBatchDetail.qualityName = batch.qualityName;
-      if (batch.qualityId)
-        this.productionBatchDetail.qualityId = batch.qualityId;
-      if (batch.partyShadeNo)
-        this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
-      if (batch.totalWt) this.productionBatchDetail.totalWt = batch.totalWt;
-      if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
-      if (batch.processName)
-        this.productionBatchDetail.processName = batch.processName;
-    //}else{
-    // this.setIndexForSlip(batch)
-    //  this.getBatchDetails();
-    // }
+    this.productionBatchDetail = {...batch};
+      // if (batch.partyName)
+      //   this.productionBatchDetail.partyName = batch.partyName;
+      // if (batch.qualityName)
+      //   this.productionBatchDetail.qualityName = batch.qualityName;
+      // if (batch.qualityId)
+      //   this.productionBatchDetail.qualityId = batch.qualityId;
+      // if (batch.partyShadeNo)
+      //   this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
+      // if (batch.totalWt) this.productionBatchDetail.totalWt = batch.totalWt;
+      // if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
+      // if (batch.processName)
+      //   this.productionBatchDetail.processName = batch.processName;
   }
 
   resetDetailsOfBatch($event) {
-    if(!this.flipped)
       this.productionBatchDetail = new ProductionBatchDetail();
-    else{
-      this.detailsList = [];
-    }
   }
 
   drop(event: CdkDragDrop<any[]>, i) {
