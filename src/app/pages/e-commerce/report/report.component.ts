@@ -97,7 +97,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.startAt = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 9, 0, 0)
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
     this.getMachineCategory();
-    this.getPurchaseRequestList();
+   // this.getPurchaseRequestList();
     //this.getWaterJetList();
   }
 

@@ -82,10 +82,10 @@ export class AddEditUserComponent implements OnInit {
     "Edit",
     "Delete",
     "View Group",
-    "View All",
     "Edit Group",
-    "Edit All",
     "Delete Group",
+    "View All",
+    "Edit All",
     "Delete All",
   ];
 
@@ -95,10 +95,10 @@ export class AddEditUserComponent implements OnInit {
     "edit",
     "delete",
     "viewGroup",
-    "viewAll",
     "editGroup",
-    "editAll",
     "deleteGroup",
+    "viewAll",
+    "editAll",
     "deleteAll",
   ];
 

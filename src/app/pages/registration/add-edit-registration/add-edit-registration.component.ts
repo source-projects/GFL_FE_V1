@@ -56,7 +56,9 @@ export class AddEditRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     let location = window.location;
-    this.url = location["href"];
+    let urls = location["href"].split("registration");
+    this.url = urls[0];
+    
     this.getUserId();
     if (this.currentEmpId) {
       this.getCurrentEmpData();
@@ -191,18 +193,47 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   shareClick(){
+
+   // let b64toBlob = require('b64-to-blob');
     this.href = document.getElementsByTagName('img')[0].src;
-    const contentType = 'image/png';
-    let converted_image= "data:image/jpeg;base64,"+this.href;
+    
+    // let parts = Base64Image.split(';base64,');
+    // // HOLD THE CONTENT TYPE
+    // const imageType = parts[0].split(':')[1];
+    // // DECODE BASE64 STRING
+    // const decodedData = window.atob(parts[1]);
+    // // CREATE UNIT8ARRAY OF SIZE SAME AS ROW DATA LENGTH
+    // const uInt8Array = new Uint8Array(decodedData.length);
+    // // INSERT ALL CHARACTER CODE INTO UINT8ARRAY
+    // for (let i = 0; i < decodedData.length; ++i) {
+    //   uInt8Array[i] = decodedData.charCodeAt(i);
+    // }
+    // RETURN BLOB IMAGE AFTER CONVERSION
+  //  return new Blob([uInt8Array], { type: imageType });
+    // let block = this.href.split(";");
+    // // let contentType = block[0].split(":")[1];
+    // let contentType = "image/png"
+    // let realData = block[1].split(",")[1];
+    
+    // let blob = b64toBlob(realData, contentType);
+    // let blobUrl = URL.createObjectURL(blob);
+    // console.log(blobUrl);
+    // let formDataToUpload = new FormData();
+    // formDataToUpload.append("image", blob);
+
+
+
+    //const contentType = 'image/png';
+    // let converted_image= "data:image/jpeg;base64,"+this.href;
     var fakeLink = document.createElement('a');
-    fakeLink.setAttribute('href', 'whatsapp://send?text='+converted_image);
+    fakeLink.setAttribute('href', 'whatsapp://send?text='+this.href);
     fakeLink.setAttribute('data-action', 'share/whatsapp/share');
     fakeLink.click();
 
    // window.location = 'whatsapp://send?text='+encodeURIComponent(this.href);
-    let arr = this.href.split(" ");
-    let link=arr[1];
-    this.wLink = "whatsapp://send?"+link;
+    // let arr = this.href.split(" ");
+    // let link=arr[1];
+    //this.wLink = "whatsapp://send?"+link;
   }
 
   addEmployee(form) {
@@ -243,7 +274,7 @@ export class AddEditRegistrationComponent implements OnInit {
   generateQR(empId) {
     this.qrFlag = true;
 
-    this.value = this.url + "/attendance/" + empId;
+    this.value = this.url +"attendance/" + empId;
     this.fileUpload();
   }
 
