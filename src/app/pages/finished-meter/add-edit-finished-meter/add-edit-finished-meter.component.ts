@@ -27,7 +27,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
   index: string;
   indexOfBatchData: number = 1;
   sequenceArray: Array<number> = [];
-  public totalFinishMeter: number = 0;
+  public totalFinishMeter: any = 0;
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
@@ -167,7 +167,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.finishedMeterForm.batchData = data["data"];
-
+              this.totalFinishMeter = 0;
               this.finishedMeterForm.batchData.forEach((e) => {
                 this.totalFinishMeter += Number(e.finishMtr);
                 if (e.mtr) e.sequenceId = e.id;
@@ -256,11 +256,19 @@ export class AddEditFinishedMeterComponent implements OnInit {
   //On enter pressed -> check empty field, add new row
   onKeyUp(e, rowIndex, colIndex, colName) {
     //catculate total finish meter
-    this.totalFinishMeter = this.finishedMeterForm.batchData
-      .map((a) => Number(a.finishMtr))
-      .reduce(function (a, b) {
-        return a + b;
-      });
+    this.totalFinishMeter = 0;
+    this.finishedMeterForm.batchData.forEach(element => {
+      let b = 0;
+      let a = (element.finishMtr).toString();
+      if(a.indexOf('+') > -1){
+        let mtrs = a.split("+");
+        
+        for(let i of mtrs){
+          b += Number(i);
+        }
+      }
+      this.totalFinishMeter += Number(b?b:a);
+    });
 
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13 && (colIndex == 3 || colIndex == 4)) {
@@ -289,9 +297,17 @@ export class AddEditFinishedMeterComponent implements OnInit {
       let removed = item.splice(rowIndex, 1);
       let list = item;
       this.finishedMeterForm.batchData = [...list];
-      this.sequenceArray.splice(rowIndex, 1);
     }
-    this.setSequenceNo(false);
+    // this.setSequenceNo(false);
+    // this.arrangeAllSequenceNo();
+  }
+
+  arrangeAllSequenceNo(){
+    this.finishedMeterForm.batchData.forEach(element => {
+      if(element.sequenceId != element.seqNo){
+        element.sequenceId = element.seqNo;
+      }
+    });
   }
 
   splitExtraMeters() {
@@ -402,6 +418,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
 
   setArrayOfSequence() {
     for (let i = 0; i < this.indexOfBatchData - 1; i++) {
+      if(this.finishedMeterForm.batchData[i].mtr)
       this.sequenceArray[i] = this.finishedMeterForm.batchData[i].id;
     }
   }
