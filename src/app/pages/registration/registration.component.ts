@@ -15,6 +15,7 @@ import { EmployeeRegistrationGuard } from '../../@theme/guards/employee-registra
 export class RegistrationComponent implements OnInit {
 
   empData=[];
+  copyEmpData = [];
   profileData = [];
   loading = false;
   tablestyle = "bootstrap";
@@ -60,6 +61,13 @@ export class RegistrationComponent implements OnInit {
       (data) => {
         if(data["success"]){
           this.empData = data["data"];
+          this.copyEmpData = this.empData.map((element) => ({
+            id: element.id,
+            name: element.name,
+            contact: element.contact,
+            aadhaar: element.aadhaar,
+            employeeDocumentList: element.employeeDocumentList,
+          }));
           this.loading = false;
 
         }
@@ -70,6 +78,24 @@ export class RegistrationComponent implements OnInit {
       }
     )
   }
+
+
+  filter(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    const keys = Object.keys(this.copyEmpData[0]);
+    this.empData = this.copyEmpData.filter((item) => {
+      for (let i = 0; i < keys.length; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
 
   deleteEmp(id){
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {

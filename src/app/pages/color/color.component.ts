@@ -185,7 +185,7 @@ export class ColorComponent implements OnInit {
           });
 
           this.copyColorList = this.colorList.map((element) => ({
-            //id: element.id,
+            id: element.id,
             supplierName: element.supplierName,
             billNo: element.billNo,
             billDate: element.billDate,

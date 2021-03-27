@@ -193,6 +193,16 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "merge-batch",
+        loadChildren: () =>
+          import("./pages/merge-batch/merge-batch.module").then(
+            (m) => m.MergeBatchModule
+          ),
+        // canActivate: [MergeBatchGuard],
+        // canLoad: [MergeBatchGuard],
+        //data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
         path: "report",
         loadChildren: () =>
           import("./pages/generate-report/generate-report.module").then(

@@ -86,6 +86,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: "Merge-batch",
+    icon: "layers-outline",
+    link: "/pages/merge-batch",
+    hidden: false,
+  },
+  {
     title: "Batch-shuffle",
     icon: "flip-2-outline",
     link: "/pages/batch-shuffle",

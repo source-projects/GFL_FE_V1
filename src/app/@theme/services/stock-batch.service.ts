@@ -55,4 +55,12 @@ export class StockBatchService {
   updateBatchSequence(data){
     return this.httpClient.put(this.commonService.envUrl()+'api/admin/update/batchSequence/',data);
   }
+
+  getBatchesByPartyQuality(qId, pId) {
+    return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +qId +"/" +pId);
+  }
+
+  getBatchGRById(cId,bId){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+ cId + '/' + bId);
+  }
 }

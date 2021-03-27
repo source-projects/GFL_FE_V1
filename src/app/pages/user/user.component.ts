@@ -166,7 +166,7 @@ export class UserComponent implements OnInit {
             department: element.department,
           }));
           this.copyUserList = this.userList.map((element) => ({
-            // id: element.id,
+            id: element.id,
             userName: element.userName,
             firstName: element.firstName,
             lastName: element.lastName,

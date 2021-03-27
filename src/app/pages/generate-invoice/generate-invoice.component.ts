@@ -83,6 +83,7 @@ export class GenerateInvoiceComponent implements OnInit {
             isSendToParty: element.isSendToParty,
           }));
           this.copyInvoiceList = this.InvoiceList.map((element) => ({
+            is:element.id,
             date: element.date,
             invoiceNo: element.invoiceNo,
             partyName: element.partyName,
