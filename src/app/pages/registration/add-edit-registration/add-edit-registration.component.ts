@@ -150,7 +150,7 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   updateEmployee(form) {
-    if (form.valid) {
+    if (form.value.name) {
       this.formSubmitted = true;
       this.disableButton = true;
       this.registration.id = this.currentEmpId;
@@ -175,7 +175,7 @@ export class AddEditRegistrationComponent implements OnInit {
             this.formSubmitted = false;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
-            this.reset(form);
+            this.route.navigate(["/pages/registration"]);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -186,6 +186,10 @@ export class AddEditRegistrationComponent implements OnInit {
           this.disableButton = false;
         }
       );
+    }
+    else{
+      this.toastr.error("Enter empty fields");
+
     }
 
 

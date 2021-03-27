@@ -56,10 +56,12 @@ export class RegistrationComponent implements OnInit {
 
   
   getAllEmployee(){
+    this.loading = true;
     this.registrationService.getAllEmployee().subscribe(
       (data) => {
         if(data["success"]){
           this.empData = data["data"];
+<<<<<<< HEAD
           this.copyEmpData = this.empData.map((element) => ({
             // id: element.id,
             name: element.name,
@@ -67,6 +69,10 @@ export class RegistrationComponent implements OnInit {
             aadhaar: element.aadhaar,
             employeeDocumentList: element.employeeDocumentList,
           }));
+=======
+          this.loading = false;
+
+>>>>>>> 7811fa97a7cc1ea8bef354a53eac42e24c8387d1
         }
       },
       (error) => {
