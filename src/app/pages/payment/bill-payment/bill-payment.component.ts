@@ -19,7 +19,8 @@ export class BillPaymentComponent implements OnInit {
   userId: any;
   userHeadId: any;
   index: any;
-
+  selectedInvoice;
+  selected;
   currentPaymentId: string;
   //total:Number=0;
   totalAdvance = 0;
@@ -63,6 +64,7 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
+    this.selected = [];
     // this.paymentValues.rdAmt = 0;
     // this.paymentValues.cdAmt = 0;
     // this.paymentValues.otherDiff = 0;
@@ -93,6 +95,7 @@ export class BillPaymentComponent implements OnInit {
   }
 
   partySelected(event) {
+    this.selected = [];
     this.getPendingInvoices(event);
     this.getAdvancePaymentList(event);
     //this.getPaymentDetailsByParty(event);

@@ -147,33 +147,31 @@
 
 
 
-            <div *ngIf="qrFlag">
+                <div *ngIf="qrFlag">
 
-                <ngx-qrcode  [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
-                    [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
-                <div class="row">
-                    <div class="col-md-12 col-12">
-                        <div class="text-center">
-                            <span  [(ngModel)]="emp_id" name="emp_id"
-                                class="scan-id-style">{{emp_id}}</span>
-                            <div class="qr-share-opt display-qr-evenly">
-                                <div class="download-qr">
-                                    <a [href]="href" (click)="downloadImage()" [download]="emp_id">
-                                        <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
-                                    </a>
+                    <ngx-qrcode  [elementType]="elementType" [errorCorrectionLevel]="correctionLevel"
+                        [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="text-center">
+                                <span  [(ngModel)]="emp_id" name="emp_id"
+                                    class="scan-id-style">{{emp_id}}</span>
+                                <div class="qr-share-opt display-qr-evenly">
+                                    <div class="download-qr">
+                                        <a [href]="href" (click)="downloadImage()" download>
+                                            <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
+                                        </a>
 
-                                </div>
-                                <div class="share-qr">
-                                    <a data-action="share/whatsapp/share" target="_blank" (click)="shareClick()">
-                                        <nb-icon icon="share-outline" class="icon-qr-wd-height"></nb-icon>
-                                    </a>
+                                    </div>
+                                    <div class="share-qr">
+                                        <nb-icon icon="share-outline" class="icon-qr-wd-height" (click)="shareImage()"></nb-icon>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
 
 
                 <div class="row">
