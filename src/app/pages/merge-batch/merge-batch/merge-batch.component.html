@@ -13,8 +13,175 @@
                     <div class="col-md-12">
                         <form #mergeForm="ngForm">
                             <div class="row">
-                                <div class="col-md-4" *ngFor="">
-                                    
+                                <div class="col-md-4" *ngFor="let data of filterDetails; let i = index;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2 col-12 display-flex-start label-0">
+                                                <label>Party</label>
+                                            </div>
+                                            <div class="col-md-10 col-12">
+                                                <ng-select name="partyId{{i}}" appendTo="body"
+                                                    [(ngModel)]='data.partyId' #partyId1{{i}}="ngModel"
+                                                    (change)="partySelected($event,i)" placeholder="Select Party">
+                                                    <ng-option disabled="true">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-left txt-ov-elips">Party Name
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-right txt-ov-elips">
+                                                                    Party Code</div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-option>
+                                                    <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-left txt-ov-elips"> {{p.partyName}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-right txt-ov-elips"> {{p.partyCode}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="data.partyId">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2 col-12 display-flex-start label-0">
+                                                <label>Quality</label>
+                                            </div>
+                                            <div class="col-md-10 col-12">
+                                                <ng-select name="qualityId{{i}}" appendTo="body"
+                                                    [(ngModel)]='data.qualityId' #qualityId1{{i}}="ngModel"
+                                                    placeholder="Select Quality" (change)="qualitySelected($event, i)">
+                                                    <ng-option disabled="true">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-left txt-ov-elips">Quality ID
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-right txt-ov-elips">
+                                                                    Party Name</div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-option>
+                                                    <ng-option *ngFor="let q of data.qualityList"
+                                                        [value]="q.qualityEntryId">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-left txt-ov-elips"> {{q.qualityId}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-6">
+                                                                <div class="text-right txt-ov-elips"> {{q.partyName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="data.qualityId">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2 col-12 display-flex-start label-0">
+                                                <label>Batch</label>
+                                            </div>
+                                            <div class="col-md-10 col-12">
+                                                <ng-select name="batchId{{i}}" appendTo="body"
+                                                    [(ngModel)]='data.batchId' #batchId{{i}}="ngModel"
+                                                    placeholder="Select Batch" (click)="batchSelected($event, i)">
+                                                    <ng-option disabled="true">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12">
+                                                                <div class="text-left txt-ov-elips">Batch ID
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-option>
+                                                    <ng-option
+                                                        *ngFor="let b of (data.batchList | filterselectedBatches: filterDetails : i : refreshCount)"
+                                                        [value]="b.batchId">
+                                                        {{b.batchId}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="data.batchId">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                <div class="example-container">
+                                                    <h2 class="batch-text">Batch Part 1</h2>
+
+                                                    <div cdkDropList [cdkDropListData]="data.grList"
+                                                        [attr.id]="addId(i)"
+                                                        [cdkDropListConnectedTo]="[finalPart]" class="example-list"
+                                                        (cdkDropListDropped)="drop($event)">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12">
+                                                                <div *ngFor="let item of data.grList" cdkDrag>
+
+                                                                    <!-- <div class="batch-2"
+                                                                            *ngIf="item.batchId==batchId2">
+                                                                            Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                                        </div> -->
+                                                                    <div class="example-box">
+                                                                        Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="filterDetails.length == 2">
+                                    <nb-icon icon="plus" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="addRemoveThirdFilterDetail(true)"></nb-icon>
+                                </div>
+                                <div class="row" *ngIf="filterDetails.length == 3">
+                                    <nb-icon icon="minus" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="addRemoveThirdFilterDetail(false)"></nb-icon>
+                                </div>
+                            </div>
+
+                            <div class="container">
+                                <div class="example-container">
+                                    <h2 class="batch-text">Batch Part 1</h2>
+
+                                    <div cdkDropList [cdkDropListData]="finalGrList" #finalPart="cdkDropList"
+                                        [cdkDropListConnectedTo]="[DROP_LIST_IDS]"
+                                        class="example-list" (cdkDropListDropped)="drop($event)">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div *ngFor="let item of finalGrList" cdkDrag>
+                                                    <!-- <div class="batch-2"
+                                                        *ngIf="item.batchId==batchId2">
+                                                        Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                    </div> -->
+                                                    <div class="example-box">
+                                                        Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
