@@ -257,7 +257,7 @@ export class PartyComponent implements OnInit {
             masterName: element.masterName,
           }));
           this.copyPartyList = this.partyList.map((element) => ({
-            // id: element.id,
+            id: element.id,
             partyName: element.partyName,
             partyAddress1: element.partyAddress1,
             contactNo: element.contactNo,

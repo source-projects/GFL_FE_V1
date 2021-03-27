@@ -150,7 +150,7 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   updateEmployee(form) {
-    if (form.value.name) {
+    if (form.valid) {
       this.formSubmitted = true;
       this.disableButton = true;
       this.registration.id = this.currentEmpId;
@@ -175,7 +175,7 @@ export class AddEditRegistrationComponent implements OnInit {
             this.formSubmitted = false;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
-            this.route.navigate(["/pages/registration"]);
+            this.reset(form);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -187,10 +187,6 @@ export class AddEditRegistrationComponent implements OnInit {
         }
       );
     }
-    else{
-      this.toastr.error("Enter empty fields");
-
-    }
 
 
   }
@@ -200,57 +196,25 @@ export class AddEditRegistrationComponent implements OnInit {
 
   shareImage(){
     this.href = document.getElementsByTagName('img')[0].src;
-    console.log(this.href)
-    this.image = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64"+this.href).toString();
-    console.log(this.image)
-    this.image.splice(',');
-    console.log(this.image)
-    // window.location.href = "https://web.whatsapp.com/send?text=" + this.image;
-  }
+    const formData: FormData = new FormData();
+    formData.append('upload_preset', 'gfl_upload');
+    formData.append('cloud_name', 'dpemsdha5');
+    formData.append('file', this.href);
 
-  shareClick(){
-
-   // let b64toBlob = require('b64-to-blob');
-    this.href = document.getElementsByTagName('img')[0].src;
-
-    
-    // let parts = Base64Image.split(';base64,');
-    // // HOLD THE CONTENT TYPE
-    // const imageType = parts[0].split(':')[1];
-    // // DECODE BASE64 STRING
-    // const decodedData = window.atob(parts[1]);
-    // // CREATE UNIT8ARRAY OF SIZE SAME AS ROW DATA LENGTH
-    // const uInt8Array = new Uint8Array(decodedData.length);
-    // // INSERT ALL CHARACTER CODE INTO UINT8ARRAY
-    // for (let i = 0; i < decodedData.length; ++i) {
-    //   uInt8Array[i] = decodedData.charCodeAt(i);
-    // }
-    // RETURN BLOB IMAGE AFTER CONVERSION
-  //  return new Blob([uInt8Array], { type: imageType });
-    // let block = this.href.split(";");
-    // // let contentType = block[0].split(":")[1];
-    // let contentType = "image/png"
-    // let realData = block[1].split(",")[1];
-    
-    // let blob = b64toBlob(realData, contentType);
-    // let blobUrl = URL.createObjectURL(blob);
-    // console.log(blobUrl);
-    // let formDataToUpload = new FormData();
-    // formDataToUpload.append("image", blob);
-
-
-
-    //const contentType = 'image/png';
-    // let converted_image= "data:image/jpeg;base64,"+this.href;
-    var fakeLink = document.createElement('a');
-    fakeLink.setAttribute('href', 'whatsapp://send?text='+this.href);
-    fakeLink.setAttribute('data-action', 'share/whatsapp/share');
-    fakeLink.click();
-
-   // window.location = 'whatsapp://send?text='+encodeURIComponent(this.href);
-    // let arr = this.href.split(" ");
-    // let link=arr[1];
-    //this.wLink = "whatsapp://send?"+link;
+    this.registrationService.uploadImage(formData).subscribe((response) => {
+      if (response) {
+        let obj = {
+          id:null,
+          name:this.emp_id,
+          type:"qr",
+          url:response.secure_url,
+          controlId:null
+        }
+        this.employeeDocumentArray.push(obj);
+        let url = response.secure_url;
+        window.location.href = "https://web.whatsapp.com/send?text=" + url;
+      }
+    })
   }
 
   addEmployee(form) {
