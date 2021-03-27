@@ -34,9 +34,20 @@
                             <div class="row width-100">
                                 <div class="col-md-3">
                                     <ng-container *ngFor="let ele of row.employeeDocumentList">
+                                        <span *ngIf="ele">
                                         <span *ngIf="ele.type == 'profile'" class="ngx-profile-table">
                                             <img [src]="ele.url" class="imageURL" >
                                         </span>
+                                        </span>
+                                        <span *ngIf="!ele">
+                                            <span class="ngx-profile-table">
+                                                <img [src]="imageUrl" class="imageURL" >
+                                            </span>
+                                        </span>
+
+                                        <!-- <span *ngIf="ele.type != 'profile'" class="ngx-profile-table">
+                                            <img [src]="imageUrl" class="imageURL" >
+                                        </span> -->
                                     </ng-container>
 
                                 </div>

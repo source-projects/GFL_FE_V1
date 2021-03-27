@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
   hiddenAdd: boolean = true;
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
+  imageUrl = "../../../assets/scan/user-new.png";
 
 
 
