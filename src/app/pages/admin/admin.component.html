@@ -358,71 +358,79 @@
             </nb-tab>
 
             <nb-tab tabTitle="Sequence">
-                <form #addInvoiceSequence1="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Invoice Sequence</label>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input [disabled]="saveHidden" name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence" [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel" [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
-                                            required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onEdit()" [hidden]="hiddenEdit"></nb-icon>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form #addInvoiceSequence1="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Invoice Sequence</label>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input [disabled]="saveHidden" name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence" [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel" [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onEdit()" [hidden]="hiddenEdit"></nb-icon>
 
+                                            </div>
+                                        </div>
+
+                                        <div class="input-required" *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
+                                            Invoice Sequence is required.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="input-required" *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
-                                    Invoice Sequence is required.
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-11 display-flex-start desktop-justify-flexend">
+                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
                                 </div>
                             </div>
-                        </div>
-
-
+                        </form>
                     </div>
+                    <div class="col-md-6">
+                        <form #addBatchSequence1="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Batch Sequence</label>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input [disabled]="batchSaveHidden" name="name" type="text" class="form-control" placeholder="Enter batch sequence" [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel" [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit"></nb-icon>
 
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
-                        </div>
-                    </div>
-                </form>
+                                            </div>
+                                        </div>
 
-                <form #addBatchSequence1="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Batch Sequence</label>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input [disabled]="batchSaveHidden" name="name" type="text" class="form-control" placeholder="Enter batch sequence" [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel" [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
-                                            required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit"></nb-icon>
-
+                                        <div class="input-required" *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
+                                            Batch Sequence is required.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="input-required" *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
-                                    Batch Sequence is required.
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-11 display-flex-start desktop-justify-flexend">
+                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled" [hidden]="batchSaveHidden">SAVE</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
 
 
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled" [hidden]="batchSaveHidden">SAVE</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
 
 
 
