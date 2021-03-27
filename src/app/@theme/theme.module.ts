@@ -46,6 +46,7 @@ import { FilterByIsColorPipe } from "./pipes/filter-by-isColor-slip.pipe";
 import { DisableStockBatchPipe } from "./pipes/disable-Stock-Batch.pipe";
 import { ShowOnlyChemicalPipe } from "./pipes/showOnlyChemicalList.pipe";
 import { FilterSelectedItemPipe } from "./pipes/dyingProcess.pipe";
+import { FilterSelectedBatchPipe } from "./pipes/filter-selected-batch.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -76,6 +77,7 @@ const PIPES = [
   TimingPipe,
   NumberWithCommasPipe,
   CounterPipe,
+  FilterSelectedBatchPipe,
   FilterSelectedProcessPipe,
   FilterSelectedShadePipe,
   FilterProcessNamePipe,
