@@ -40,15 +40,31 @@ export class GenerateInvoiceComponent implements OnInit {
     const val = value.toString().toLowerCase().trim();
     const keys = Object.keys(this.copyInvoiceList[0]);
     this.InvoiceList = this.copyInvoiceList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
+        for (let i = 0; i < keys.length; i++) {
+          if(keys[i] == "batchList"){
+            for (let j =0; j < item[keys[i]].length; j++){
+              if((item[keys[i]][j].batchId &&
+                item[keys[i]][j].batchId.toString().toLowerCase().indexOf(val) !== -1) ||
+                !val)
+                {
+                  return true;
+                }
+
+            }
+            
+          }else{
+            if (
+              (item[keys[i]] &&
+                item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
+              !val
+            ) {
+              return true;
+            }
+          }
+          
         }
-      }
+      
+      
     });
   }
 
@@ -59,7 +75,6 @@ export class GenerateInvoiceComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.InvoiceList = data["data"];
-          console.log(this.InvoiceList);
           this.copyInvoiceList = data["data"];
           this.Invoice = this.InvoiceList.map((element) => ({
             date: element.date,
@@ -68,10 +83,11 @@ export class GenerateInvoiceComponent implements OnInit {
             isSendToParty: element.isSendToParty,
           }));
           this.copyInvoiceList = this.InvoiceList.map((element) => ({
+            is:element.id,
             date: element.date,
-            id: element.id,
             invoiceNo: element.invoiceNo,
-            isSendToParty: element.isSendToParty,
+            partyName: element.partyName,
+            batchList: element.batchList,
           }));
         } else {
           // this.toastr.error(data['msg'])

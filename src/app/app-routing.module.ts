@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./@theme/guards/auth.guard";
 import { ColorGuard } from "./@theme/guards/color.guard";
 import { PartyGuard } from "./@theme/guards/party.guard";
@@ -25,6 +25,9 @@ import { FinishedMeterGuard } from "./@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "./@theme/guards/input-data.guard";
 import { DyeingSlipGuard } from "./@theme/guards/dyeing-slip.guard";
 import { AdminGuard } from "./@theme/guards/admin.guard";
+import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration.guard";
+import { AttendanceComponent } from "./pages/attendance/attendance.component";
+import { AttndanceGuard } from "./@theme/guards/attendance.guard";
 
 export const routes: Routes = [
   {
@@ -190,6 +193,23 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "merge-batch",
+        loadChildren: () =>
+          import("./pages/merge-batch/merge-batch.module").then(
+            (m) => m.MergeBatchModule
+          ),
+        // canActivate: [MergeBatchGuard],
+        // canLoad: [MergeBatchGuard],
+        //data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "report",
+        loadChildren: () =>
+          import("./pages/generate-report/generate-report.module").then(
+            (m) => m.GenerateReportModule
+          ),
+      },
+      {
         path: "issue-color-box",
         loadChildren: () =>
           import("./pages/color/issue-color-box/issue-color-box.module").then(
@@ -261,6 +281,27 @@ export const routes: Routes = [
         canLoad: [DyeingSlipGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+
+      {
+        path: "registration",
+        loadChildren: () =>
+          import("./pages/registration/registration.module").then(
+            (m) => m.RegistrationModule
+          ),
+        canActivate: [EmployeeRegistrationGuard],
+        canLoad: [EmployeeRegistrationGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "attendance",
+        loadChildren: () =>
+        import("./pages/attendance/attendance.module").then(
+          (m) => m.AttendanceModule
+        ),
+        canActivate: [AttndanceGuard],
+        canLoad: [AttndanceGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
       {
         path: "miscellaneous",
         loadChildren: () =>
@@ -280,6 +321,14 @@ export const routes: Routes = [
     ],
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
+
+  // {
+  //   path: "generate-report",
+  //   loadChildren: () =>
+  //     import("./pages/generate-report/generate-report.module").then(
+  //       (m) => m.GenerateReportModule
+  //     ),
+  // },
 
   // { path: 'dyeing-process', loadChildren: () => import('./pages/dyeing-process/dyeing-process.module').then(m => m.DyeingProcessModule) },
 

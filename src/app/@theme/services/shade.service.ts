@@ -48,7 +48,16 @@ export class ShadeService {
   }
   
   getAllDyeingProcess(){
-  return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingProcess/all');
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingProcess/all');
+  }
 
-}
+  getShadeFromPartyQuality(pId, qId){
+    if(!qId){
+      return this.httpClient.get(`${this.commonService.envUrl()}api/shade/all?partyId=${pId}&qualityId=`);
+    }else{
+      return this.httpClient.get(`${this.commonService.envUrl()}api/shade/all?partyId=${pId}&qualityId=${qId}`);
+    }
+    
+    
+  }
 }

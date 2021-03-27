@@ -13,7 +13,7 @@ export class User {
   id: Number;
   userHeadId: Number = 0;
   isUserHead: boolean;
-  dataEntry: boolean;
+  isMaster: boolean = true;
   userPermissionData: {};
 }
 
@@ -24,10 +24,10 @@ export class Permissions {
   edit: boolean;
   delete: boolean;
   viewGroup: boolean;
-  viewAll: boolean;
   editGroup: boolean;
-  editAll: boolean;
   deleteGroup: boolean;
+  viewAll: boolean;
+  editAll: boolean;
   deleteAll: boolean;
   selectAll: boolean;
 
@@ -38,10 +38,10 @@ export class Permissions {
     this.edit = false;
     this.delete = false;
     this.viewGroup = false;
-    this.viewAll = false;
     this.editGroup = false;
-    this.editAll = false;
     this.deleteGroup = false;
+    this.viewAll = false;
+    this.editAll = false;
     this.deleteAll = false;
     this.selectAll = false;
   }

@@ -46,6 +46,7 @@ export class AddEditUserComponent implements OnInit {
   designationList;
   public isChangePass: boolean = false;
   public dataEntryFlag: boolean = false;
+  public teamMemberFlag: boolean = false;
 
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
@@ -69,6 +70,8 @@ export class AddEditUserComponent implements OnInit {
     "Input Data",
     "Database",
     "Dyeing Slip",
+    "Employee Registration",
+    "Attendance"
   ];
 
   userHeadList: any[] = [];
@@ -79,10 +82,10 @@ export class AddEditUserComponent implements OnInit {
     "Edit",
     "Delete",
     "View Group",
-    "View All",
     "Edit Group",
-    "Edit All",
     "Delete Group",
+    "View All",
+    "Edit All",
     "Delete All",
   ];
 
@@ -92,10 +95,10 @@ export class AddEditUserComponent implements OnInit {
     "edit",
     "delete",
     "viewGroup",
-    "viewAll",
     "editGroup",
-    "editAll",
     "deleteGroup",
+    "viewAll",
+    "editAll",
     "deleteAll",
   ];
 
@@ -106,6 +109,7 @@ export class AddEditUserComponent implements OnInit {
   userData: any;
   userId: any;
   userHead;
+  isLoggedInAsMaster = false;
   currentUserId: any;
   disableViewDependentPermission: boolean = false;
   disableViewGroupDependentPermission: boolean = false;
@@ -126,6 +130,9 @@ export class AddEditUserComponent implements OnInit {
     this.currentUserId = this._route.snapshot.paramMap.get("id");
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
+    if (this.userId.userId == this.userHead.userHeadId) {
+      this.isLoggedInAsMaster = true;
+    }
     this.getDesignation();
     this.getAllCompany();
     this.getAllDepartment();
@@ -146,7 +153,7 @@ export class AddEditUserComponent implements OnInit {
           this.designationList = data["data"];
           if (this.userHead.userHeadId) {
             this.designationList = this.designationList.filter(
-              (v) => v.designation && v.designation.toLowerCase() != "master"
+              (v) => v.designation && v.designation.toLowerCase() != "team head"
             );
           }
           this.loading = false;
@@ -218,13 +225,25 @@ export class AddEditUserComponent implements OnInit {
       if (
         found &&
         found.designation &&
-        found.designation.toLowerCase() == "master"
+        found.designation.toLowerCase() == "team head"
       ) {
         //hide userHeadId fields.
         this.isMasterFlag = true;
         this.user.isUserHead = false;
         this.user.userHeadId = Number(this.commonService.getUser().userId);
+        this.teamMemberFlag = false;
+      } else if (
+        found &&
+        found.designation &&
+        found.designation.toLowerCase() == "team member"
+      ) {
+        console.log("gyasgd");
+        this.teamMemberFlag = true;
+        this.user.isUserHead = true;
+        this.isMasterFlag = false;
       } else {
+        console.log("hiii");
+        this.teamMemberFlag = false;
         this.user.isUserHead = true;
         this.isMasterFlag = false;
       }
@@ -425,6 +444,24 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Employee Registration": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Employee Registration"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Attendance": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Attendance"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
     }
 
     for (let j = 0; j < this.forms.length; j++) {
@@ -524,6 +561,8 @@ export class AddEditUserComponent implements OnInit {
       ip: "",
       ad: "",
       ds: "",
+      emp:"",
+      attnds:""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
@@ -665,7 +704,7 @@ export class AddEditUserComponent implements OnInit {
               this.user && this.user.designationId && this.user.designationId
                 ? this.user.designationId
                 : "";
-            if (designationObj.designation.toLowerCase() != "master") {
+            if (designationObj.designation.toLowerCase() != "team head") {
               this.user.isUserHead = true;
               this.isMasterFlag = false;
             } else {
@@ -728,10 +767,6 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
-  check(event) {
-    this.dataEntryFlag = event;
-  }
-
   addUser(myForm) {
     this.getCheckedItem();
 
@@ -740,7 +775,6 @@ export class AddEditUserComponent implements OnInit {
 
     if (myForm.valid) {
       let md5 = new Md5();
-      this.user.dataEntry = this.dataEntryFlag;
       this.user.password = String(md5.appendStr(this.user.password).end());
       this.user.createdBy = this.userId.userId;
       if (!this.user.isUserHead) {

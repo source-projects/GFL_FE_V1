@@ -86,3 +86,12 @@ export class AddInvoiceSequence {
       this.sequence = null;
     }  
 }
+
+export class AddBatchSequence {
+  id: number;
+  sequence: number;
+  constructor() {
+    this.id = null;
+    this.sequence = null;
+  }  
+}

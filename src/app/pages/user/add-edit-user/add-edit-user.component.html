@@ -155,7 +155,7 @@
                         <div class="form-group">
                             <label class="required">Designation</label>
                             <ng-select name="designation" appendTo="body" #designation1="ngModel"
-                                [(ngModel)]="user.designationId"
+                                [(ngModel)]="user.designationId" [disabled]="currentUserId"
                                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || designation1.touched)}"
                                 placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
                                 (change)="designationSelected($event)">
@@ -170,10 +170,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4" *ngIf="!isMasterFlag">
+                    <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
                         <div class="form-group">
                             <label></label>
                             <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
+                                [disabled]="currentUserId || teamMemberFlag"
                                 class="form-control nb-check-user border-none">Assign Under Group Head
                             </nb-checkbox>
                         </div>
@@ -181,16 +182,17 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.dataEntry" (checkedChange)="check($event)"
-                                class="form-control nb-check-user border-none">Is User Data Input
+                            <nb-checkbox name="assign1" [(ngModel)]="user.isMaster"
+                                [disabled]="currentUserId || isLoggedInAsMaster"
+                                class="form-control nb-check-user border-none">Is Master Group
                             </nb-checkbox>
                         </div>
                     </div>
-                    <div class="col-md-4" *ngIf="user.isUserHead">
+                    <div class="col-md-4" *ngIf="user.isUserHead && user.isMaster">
                         <div class="form-group">
                             <label class="required">User Head List</label>
                             <select name="userHeadId" class="form-control dropdown-name" #userHeadListValue="ngModel"
-                                [(ngModel)]="user.userHeadId" required
+                                [(ngModel)]="user.userHeadId" required [disabled]="currentUserId"
                                 [ngClass]="{'is-invalid': (userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)}">
                                 <option *ngFor="let head of userHeadList" [ngValue]="head.id">{{head.userName}}
                                 </option>

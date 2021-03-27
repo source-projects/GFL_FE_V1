@@ -20,7 +20,9 @@
                                                 <label>Party</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-select name="partyId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.partyId' required
+                                                    placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -55,7 +57,9 @@
                                                 <label>Quality</label>
                                             </div>
                                             <div class="col-md-8 col-12">
-                                                <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-select name="qualityId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID"
+                                                    (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -97,12 +101,10 @@
                                             </div>
                                         </div>
 
-
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" *ngIf="!flipped">
+                            <div class="col-md-6">
                                 <div class="jus-con-flex-start">
                                     <div class="col-md-5 col-12 pd-0">
                                         <div class="display-flex mr-0">
@@ -111,21 +113,10 @@
                                             <div class="batch-p-color label-0">
                                                 <label>Party Name</label>
                                             </div>
-                                            <!-- 
-
-                                        <div class="batch-col text-center">
-                                            <span>:</span>
-                                        </div>
- -->
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.partyName}}
                                                 </h6>
                                             </div>
-
-
-
-
                                         </div>
 
                                         <div class="display-flex mr-0">
@@ -134,12 +125,6 @@
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Quality Name</label>
                                             </div>
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}
                                                 </h6>
@@ -154,12 +139,6 @@
                                             <div class=" batch-p-color label-0 text-Left">
                                                 <label>Quality Id</label>
                                             </div>
-
-                                            <!-- <div class="col-md-2">
-                                                <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div>
-                                            </div> -->
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}
@@ -176,13 +155,6 @@
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Process Name</label>
                                             </div>
-
-
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.processName}}
@@ -203,12 +175,6 @@
                                             <div class="batch-p-color label-0 text-Left">
                                                 <label>Party Shade No.</label>
                                             </div>
-
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
 
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}
@@ -244,80 +210,10 @@
                                                 <label>Lot Meter</label>
                                             </div>
 
-
-                                            <!-- <div class="batch-col text-center">
-                                                    <span>:</span>
-                                                </div> -->
-
-
                                             <div class="party-name-text text-center">
                                                 <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" *ngIf="flipped">
-                                <div class="jus-con-flex-start">
-                                    <div class="col-md-5 col-12 pd-0">
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0">
-                                                <label>Party Name</label>
-                                            </div>
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{detailsList.partyName}}
-                                                </h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Batch No</label>
-                                            </div>
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{detailsList.batchId}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class=" batch-p-color label-0 text-Left">
-                                                <label>Party Shade No</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{detailsList.partyShadeNo}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Batch Weight</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{detailsList.totalWt | number }}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -416,7 +312,7 @@
 
                                     </div>
 
-                                    <table class="user-per-table table-responsive table-jet">
+                                    <table class="user-per-table table-jet">
                                         <tr width="100%">
                                             <th width="5%">Jet</th>
                                             <th width="8%">Capacity</th>
@@ -433,9 +329,10 @@
                                                     (cdkDropListDropped)="drop($event,i)">
                                                     <div class="example-box trans-box-drop-1"
                                                         *ngFor="let index of j.jetDataList;let idx = index;"
-                                                        [style.background]="index.colorTone"
+                                                        [style.background]="index.colorTone?index.colorTone:'#ffffff'"
                                                         (click)="setIndexForSlip(index)" cdkDrag>
                                                         <button nbContextMenuTag="my-context-menu"
+                                                            [style.color]="index.colorTone?'#ffffff':'#000000'"
                                                             (mouseenter)="getAllDetailsOfBatch($event,index)"
                                                             (mouseout)="resetDetailsOfBatch($event)"
                                                             [nbContextMenu]="items" nbContextMenuTrigger="click"
@@ -452,7 +349,6 @@
                             </nb-card>
                         </nb-card-back>
                     </nb-flip-card>
-
                 </div>
             </form>
         </div>
