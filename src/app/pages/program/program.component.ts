@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'src/app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { ExportPopupComponent } from 'src/app/@theme/components/export-popup/export-popup.component';
-import { ProgramGuard } from 'src/app/@theme/guards/program.guard';
-import * as errorData from 'src/app/@theme/json/error.json';
-import { CommonService } from 'src/app/@theme/services/common.service';
-import { ExportService } from 'src/app/@theme/services/export.service';
-import { JwtTokenService } from 'src/app/@theme/services/jwt-token.service';
-import { ProgramService } from 'src/app/@theme/services/program.service';
+import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
+import { ProgramGuard } from 'app/@theme/guards/program.guard';
+import * as errorData from 'app/@theme/json/error.json';
+import { CommonService } from 'app/@theme/services/common.service';
+import { ExportService } from 'app/@theme/services/export.service';
+import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
+import { ProgramService } from 'app/@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
 
 
