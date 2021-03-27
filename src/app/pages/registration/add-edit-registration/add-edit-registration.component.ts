@@ -15,6 +15,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AddEditRegistrationComponent implements OnInit {
 
+  image;
+
   registration: Registration = new Registration();
   employeeDocumentArray: EmployeeDocument[] = [];
   loading = false;
@@ -192,10 +194,21 @@ export class AddEditRegistrationComponent implements OnInit {
     this.href = document.getElementsByTagName('img')[0].src;
   }
 
+  shareImage(){
+    this.href = document.getElementsByTagName('img')[0].src;
+    console.log(this.href)
+    this.image = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64"+this.href).toString();
+    console.log(this.image)
+    this.image.splice(',');
+    console.log(this.image)
+    // window.location.href = "https://web.whatsapp.com/send?text=" + this.image;
+  }
+
   shareClick(){
 
    // let b64toBlob = require('b64-to-blob');
     this.href = document.getElementsByTagName('img')[0].src;
+
     
     // let parts = Base64Image.split(';base64,');
     // // HOLD THE CONTENT TYPE
