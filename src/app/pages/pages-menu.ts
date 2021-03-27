@@ -181,6 +181,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: 'Purchase',
+    icon: 'edit-2-outline',
+    link: '/pages/purchase',
+    hidden: false,
+  },
+  {
     title: "Report",
     icon: "award-outline",
     link: "/pages/report",

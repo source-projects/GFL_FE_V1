@@ -40,6 +40,12 @@ export class AdminService {
     );
   }
 
+  getAllReceiveByData() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/receiver"
+    );
+  }
+
   getAllMachine() {
     return this.httpClient.get(this.commonService.envUrl() + "api/machine/all");
   }
@@ -131,6 +137,13 @@ export class AdminService {
     );
   }
 
+  saveReceiveByData(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/receiver/",
+      data
+    );
+  }
+
   saveInvoiceSequence(data) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/admin/add/invoiceSequence/",
@@ -169,6 +182,12 @@ export class AdminService {
   deleteApproveById(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/admin/delete/approved/" + id
+    );
+  }
+
+  deleteReceiveById(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/admin/delete/receiver/" + id
     );
   }
 
@@ -219,6 +238,13 @@ export class AdminService {
   updateApproveByData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/update/approvedBy/",
+      data
+    );
+  }
+
+  updateReceiveByData(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/update/receiver/",
       data
     );
   }

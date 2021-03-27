@@ -1,0 +1,174 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+
+        <div class="row">
+            <div class="col-md-5 col-7 display-flex-start max-width-device  mobile-pd-lf-0">
+                <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12"
+                    [routerLink]="['/pages/purchase/view']">View
+                    Table</button>
+                
+            </div>
+
+
+            <div class="col-md-7 col-5">
+                <div *ngIf="this.currentId == null; else updateS">
+                    <h2 class="nb-text txt-ov-elips mob-font-13">Add Purchase</h2>
+                </div>
+                <ng-template #updateS>
+                    <h2 class="nb-text txt-ov-elips mob-font-13">Update Purchase</h2>
+                </ng-template>
+            </div>
+
+        </div>
+
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #purchaseForm = "ngForm">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label class="required">Invoice</label>
+
+                            <div class="display-flex-center">
+                                <input type="file" name="bill"
+                                    class="form-control size-small registration-document filepicker" id="bill"
+                                    placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'bill')"
+                                    [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
+                                <div class="input-required" *ngIf="bill1.invalid
+                                           &&
+                                           (formSubmitted || bill1.touched)">
+                                    <span>Invoice is required</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label class="required">Material</label>
+
+                            <div class="display-flex-center">
+                                <input type="file" name="material"
+                                    class="form-control size-small registration-document filepicker" id="material"
+                                    placeholder="Upload material" [(ngModel)]="material" #material1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'material')"
+                                    [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">                                
+                                <div class="input-required" *ngIf="material1.invalid
+                                           &&
+                                           (formSubmitted || material1.touched)">
+                                    <span>Material is required</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label class="required">Amount</label>
+                            <input type="text" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Employee amount"
+                                [ngClass]="{'is-invalid':(amount1.invalid) &&(formSubmitted || amount1.touched)}" required/>
+
+                            <div class="input-required" *ngIf="amount1.invalid
+                                &&
+                                (formSubmitted || amount1.touched)">
+                                <span>Amount is required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label class="required">Department</label>
+                        <ng-select name="department" appendTo="body" #department1="ngModel"
+                            [(ngModel)]="purchase.departmentId" [items]="departmentList" bindLabel="name" bindValue="id"
+                            placeholder="Select Department" required
+                            [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
+                            class="required-error-dropdown dropdown-name">
+                        </ng-select>
+                        <div class="input-required"
+                            *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
+                            <span>Department is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <div class="form-group">                    
+                    <label class="required">Approve By</label>
+                    <ng-select name="approveBy" appendTo="body" [(ngModel)]='purchase.approvedById' required #approveBy1="ngModel"
+                        [ngClass]="{'is-invalid': (approveBy1.invalid)&&(formSubmitted || approveBy1.touched)}"
+                        placeholder="Select approve by" class="required-error-dropdown">
+                        <ng-option disabled="true">
+                            <div class="row">
+                                <div class="col-md-4 col-4">
+                                    <div class="text-left txt-ov-elips">Name</div>
+                                </div>
+                                <div class="col-md-4 col-4">
+                                    <div class="text-center txt-ov-elips">Contact</div>
+                                </div>
+            
+                            </div>
+                        </ng-option>
+                        <ng-option *ngFor="let approve of approveByList" [value]="approve.id">
+                            <div class="row">
+                                <div class="col-md-4 col-4">
+                                    <div class="text-left txt-ov-elips"> {{approve.name}}</div>
+                                </div>
+                                <div class="col-md-4 col-4">
+                                    <div class="text-center txt-ov-elips"> {{approve.contact}}</div>
+                                </div>
+            
+                            </div>
+                        </ng-option>
+                    </ng-select>
+                    <div class="input-required"
+                        *ngIf="(formSubmitted && approveBy1.invalid) || (approveBy1.invalid && approveBy1.touched)">
+                        <span>approve by is required</span>
+                    </div>
+                </div>
+            
+
+                 
+
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-righ">
+                        
+                            
+                            <button *ngIf="!this.currentId" class="btn btn-primary btn-sm btn-design-cancel"
+                                type="button" (click)="reset(empForm)">CANCEL</button>
+                            
+                            <button *ngIf="this.currentId" class="btn btn-primary btn-sm btn-design-cancel"
+                                type="button" [routerLink]="['/pages/purchse/view']">CANCEL</button>    
+
+
+                            <button *ngIf="this.currentId" type="button" (click)="updatePurchase(purchaseForm)"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                [disabled]="disableButton">UPDATE</button>
+
+                            <button *ngIf="!this.currentId" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addPurchase(purchaseForm)" [disabled]="disableButton">SAVE</button>
+
+
+                        </div>
+                    
+                </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>
