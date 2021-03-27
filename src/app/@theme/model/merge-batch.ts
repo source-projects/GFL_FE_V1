@@ -5,13 +5,5 @@ export class MergeBatch{
     batchId: any;
     batchList: any;
     grList: any;
-
-    constructor(){
-        this.grList = [
-            { mtr: 10,wt:10 },
-            { mtr: 20,wt:20 },
-            { mtr: 30,wt:30 },
-            { mtr: 40,wt:40 }
-        ]
-    }
+    ckdId: string = 'ckList';
 }

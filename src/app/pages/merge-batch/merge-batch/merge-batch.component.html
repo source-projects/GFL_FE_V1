@@ -100,7 +100,7 @@
                                             <div class="col-md-10 col-12">
                                                 <ng-select name="batchId{{i}}" appendTo="body"
                                                     [(ngModel)]='data.batchId' #batchId{{i}}="ngModel"
-                                                    placeholder="Select Batch" (click)="batchSelected($event, i)">
+                                                    placeholder="Select Batch" (change)="batchSelected($event, i)">
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12">
@@ -124,7 +124,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 col-12">
                                                 <div class="example-container">
-                                                    <h2 class="batch-text">Batch Part 1</h2>
+                                                    <h2 class="batch-text">Batch List {{i + 1}}</h2>
 
                                                     <div cdkDropList [cdkDropListData]="data.grList"
                                                         [attr.id]="addId(i)"
@@ -133,11 +133,6 @@
                                                         <div class="row">
                                                             <div class="col-md-12 col-12">
                                                                 <div *ngFor="let item of data.grList" cdkDrag>
-
-                                                                    <!-- <div class="batch-2"
-                                                                            *ngIf="item.batchId==batchId2">
-                                                                            Meter: {{item.mtr}} Weight: {{item.wt}}
-                                                                        </div> -->
                                                                     <div class="example-box">
                                                                         Meter: {{item.mtr}} Weight: {{item.wt}}
                                                                     </div>
@@ -161,27 +156,32 @@
                                 </div>
                             </div>
 
-                            <div class="container">
-                                <div class="example-container">
-                                    <h2 class="batch-text">Batch Part 1</h2>
-
-                                    <div cdkDropList [cdkDropListData]="finalGrList" #finalPart="cdkDropList"
-                                        [cdkDropListConnectedTo]="[DROP_LIST_IDS]"
-                                        class="example-list" (cdkDropListDropped)="drop($event)">
-                                        <div class="row">
-                                            <div class="col-md-12 col-12">
-                                                <div *ngFor="let item of finalGrList" cdkDrag>
-                                                    <!-- <div class="batch-2"
-                                                        *ngIf="item.batchId==batchId2">
-                                                        Meter: {{item.mtr}} Weight: {{item.wt}}
-                                                    </div> -->
-                                                    <div class="example-box">
-                                                        Meter: {{item.mtr}} Weight: {{item.wt}}
+                                <div class="container">
+                                    <div class="example-container" [style.visibility]="showMergeBox? 'visible':'hidden'">
+                                        <h2 class="batch-text">Merged Batches</h2>
+    
+                                        <div cdkDropList [cdkDropListData]="finalGrList" 
+                                            #finalPart="cdkDropList"
+                                            [cdkDropListConnectedTo]="DROP_LIST_IDS"
+                                            class="example-list" (cdkDropListDropped)="drop($event)">
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                    <div *ngFor="let item of finalGrList" cdkDrag>
+                                                        <div class="example-box">
+                                                            Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            
+
+                            <div class="row" style="float: right">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" 
+                                    [disabled]="loading" (click)="saveMergedBatch(mergeForm)">Save</button>
                                 </div>
                             </div>
                         </form>
