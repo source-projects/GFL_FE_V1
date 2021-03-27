@@ -16,7 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AddEditRegistrationComponent implements OnInit {
 
   image;
-
   registration: Registration = new Registration();
   employeeDocumentArray: EmployeeDocument[] = [];
   loading = false;
@@ -212,7 +211,8 @@ export class AddEditRegistrationComponent implements OnInit {
         }
         this.employeeDocumentArray.push(obj);
         let url = response.secure_url;
-        window.location.href = "https://web.whatsapp.com/send?text=" + url;
+        this.addQR(url);
+        // window.location.href = "https://web.whatsapp.com/send?text=" + url;
       }
     })
   }
@@ -259,11 +259,10 @@ export class AddEditRegistrationComponent implements OnInit {
     this.fileUpload();
   }
 
-  addQR(form) {
-    this.href = document.getElementsByTagName('img')[1].src;
+  addQR(finalurl) {
 
     let qrData = {
-      url : this.href,
+      url : finalurl,
       type : "qr",
       controlId : this.emp_id
     }
