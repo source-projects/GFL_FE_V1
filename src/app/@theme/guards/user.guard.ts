@@ -133,7 +133,6 @@ export class UserGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('user');
     this.permis = this.commonService.decToBin(permission);
     
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')

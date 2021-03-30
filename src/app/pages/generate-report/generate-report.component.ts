@@ -87,10 +87,6 @@ export class GenerateReportComponent implements OnInit {
       );
   }
 
-  lotNoEntered(event){
-    console.log(event)
-  }
-
   getQualityFromParty(event) {
     this.loading = true;
     this.qualityId = null;
@@ -147,7 +143,6 @@ export class GenerateReportComponent implements OnInit {
       this.getReportData();
       this.checkPartySelected();
     } else {
-      console.log(this.qualityList);
       this.qualityList.forEach((element) => {
         if (this.qualityId == element.qualityId) {
           this.qualityId = element.qualityId;

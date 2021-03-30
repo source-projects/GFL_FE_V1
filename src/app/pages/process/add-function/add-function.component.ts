@@ -246,12 +246,8 @@ export class AddFunctionComponent implements OnInit {
         this.processService.getAllItemWithSupplier().subscribe(
           (data) => {
             if (data["success"]) this.itemListArray = data["data"];
-            // console.log(this.itemListArray)
-            // else
-            //   // this.toastr.error(data['msg'])
           },
           (error) => {
-            // this.toastr.error(errorData.Internal_Error)
           }
         );
       }
