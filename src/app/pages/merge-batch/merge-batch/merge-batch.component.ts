@@ -65,6 +65,8 @@ export class MergeBatchComponent implements OnInit {
   partySelected(event, i) {
     //get quality by party
     this.filterDetails[i].qualityList = [];
+    this.filterDetails[i].qualityId = null;
+    this.filterDetails[i].batchId = null;
     if (event) {
       this.qualityService
         .getQualityByParty(this.filterDetails[i].partyId)
@@ -73,14 +75,13 @@ export class MergeBatchComponent implements OnInit {
             this.filterDetails[i].qualityList = data["data"]["qualityDataList"];
           }
         });
-    } else {
-      this.filterDetails[i].qualityId = null;
     }
   }
 
   qualitySelected(event, i) {
     // get batch list by party
     this.filterDetails[i].batchList = [];
+    this.filterDetails[i].batchId = null;
     if (event) {
       this.mergeBatchService
         .getBatchesByPartyQuality(
@@ -92,8 +93,6 @@ export class MergeBatchComponent implements OnInit {
             this.filterDetails[i].batchList = data["data"];
           }
         });
-    } else {
-      this.filterDetails[i].batchId = null;
     }
     if (this.refreshCount > 10) {
       this.refreshCount = 0;
