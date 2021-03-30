@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { identifierName } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 
@@ -18,7 +19,12 @@ export class PurchaseNewService {
   }
 
   updatePurchase(data){
-    return this.httpClient.put(this.commonService.envUrl() + 'api/purchase/update', data);
+    return this.httpClient.put(this.commonService.envUrl() + 'api/purchase', data);
+
+  }
+
+  deletePurchase(id){
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/purchase/delete', id);
 
   }
 

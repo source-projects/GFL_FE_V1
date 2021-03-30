@@ -50,6 +50,7 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { SliderModule } from 'angular-image-slider';
 //  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
@@ -104,6 +105,7 @@ const NB_MODULES = [
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
+    SliderModule
     // NgQrScannerModule,
   //  NgQRCodeReaderModule,
   //   ZXingScannerModule,
@@ -118,6 +120,7 @@ const NB_MODULES = [
     ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
+    SliderModule
     // NgQrScannerModule,
   //  NgQRCodeReaderModule,
   //   ZXingScannerModule,

@@ -29,6 +29,8 @@ export class AddEditPurchaseComponent implements OnInit {
   docType;
   departmentList = [];
   approveByList = [];
+  receiveByList = [];
+  docList = [];
   constructor(
     private commonService: CommonService,
     private purchseService : PurchaseNewService,
@@ -43,12 +45,33 @@ export class AddEditPurchaseComponent implements OnInit {
     this.getUserId();
     this.getAllDepartment();
     this.getApproveBy();
+    this.getReceiveBy();
   }
 
   public getUserId() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentId = this._route.snapshot.paramMap.get("id");
+    if(this.currentId){
+      this.getCurrentPurchase();
+    }
+  }
+
+  getCurrentPurchase(){
+    this.purchseService.getPurchaseById(this.currentId).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.purchase = data["data"];
+          this.docList = this.purchase.materialPhotosList;
+          
+
+        }
+      },
+      (error) => {
+        this.toastr.error(errorData.Serever_Error);
+
+      }
+    )
   }
 
   getAllDepartment() {
@@ -68,6 +91,21 @@ export class AddEditPurchaseComponent implements OnInit {
     this.adminService.getAllApproveByData().subscribe((data) => {
       if (data["success"]) {
         this.approveByList = data["data"];
+        this.loading = false;
+      } else {
+        // this.toastr.error(data["msg"]);
+        this.loading = false;
+      }
+    });
+  }
+
+
+  getReceiveBy() {
+    this.loading = true;
+
+    this.adminService.getAllReceiveByData().subscribe((data) => {
+      if (data["success"]) {
+        this.receiveByList = data["data"];
         this.loading = false;
       } else {
         // this.toastr.error(data["msg"]);
@@ -119,6 +157,8 @@ export class AddEditPurchaseComponent implements OnInit {
   }
 
   reset(form){
+    form.reset();
+    this.formSubmitted = false;
 
   }
 
@@ -157,18 +197,37 @@ updatePurchase(form){
   this.loading = true;
   this.disableButton = true;
   this.formSubmitted = true;
-  if (form.valid) {
-    this.purchase.materialPhotosList = this.materialPhotoArray;
+  if (form.valid || !this.bill || !this.material) {
+    if (this.materialPhotoArray.length > 0) {
+
+      this.materialPhotoArray.forEach((ele, i) => {
+        if (ele.type == 'bill') {
+          this.docList[i] = ele;
+        } else
+          if (ele.type == 'material') {
+            this.docList[i] = ele;
+          }
+      })
+    }
+
+    this.purchase.materialPhotosList = this.docList;
+
+
+    //this.purchase.materialPhotosList = this.materialPhotoArray;
 
     this.purchseService.updatePurchase(this.purchase).subscribe(
       (data) => {
         if (data["success"]) {
+          this.formSubmitted = false;
+
           this.route.navigate(["/pages/purchase"]);
           this.toastr.success(data['msg']);
         }else{
           this.toastr.error(data['msg']);
         }
         this.loading = false;
+        this.disableButton = false;
+
       },
       (error) => {
         this.toastr.error(errorData.Update_Error);

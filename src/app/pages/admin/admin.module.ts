@@ -19,9 +19,10 @@ import {
   NbUserModule
 } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
+import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
-  declarations: [AdminComponent],
+  declarations: [AdminComponent, PreviewComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

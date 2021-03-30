@@ -484,6 +484,63 @@
                 </ngx-datatable>
             </nb-tab>
             
+            <nb-tab tabTitle="Purchase">
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31" >
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeReceiveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getReceiveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Bill"  [maxWidth]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="row width-100">
+                                <div class="col-md-3">
+                                    <ng-container *ngFor="let ele of row.materialPhotosList">
+                                        <span *ngIf="ele.type == 'bill'" class="ngx-profile-table">
+                                            <img [src]="ele.picUrl" class="imageURL" (click)="onBillClick(ele)" >
+                                        </span>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Material"  [maxWidth]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="row width-100">
+                                <div class="col-md-3">
+                                    <ng-container *ngFor="let ele of row.materialPhotosList">
+                                        <span *ngIf="ele.type == 'material'" class="ngx-profile-table">
+                                            <img [src]="ele.picUrl" class="imageURL" >
+                                        </span>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Amount" prop="amt" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Approve By" prop="approvedName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Department" prop="departmentName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+
+                        <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" [(ngModel)]="checked" [checked]="checked" 
+                        (checkedChange)="checked=!checked">
+                        <span *ngIf="checked" class="text cr-txt">Approved</span>
+                        <span *ngIf="!checked" class="text cr-txt">Not Approved</span>
+
+                        </nb-checkbox>
+                    </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-tab>
         </nb-tabset>
     </nb-card-body>
 </nb-card>

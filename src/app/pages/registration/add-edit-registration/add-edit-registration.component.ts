@@ -146,9 +146,10 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   updateEmployee(form) {
-    if (form.valid) {
-      this.formSubmitted = true;
-      this.disableButton = true;
+    this.formSubmitted = true;
+    this.disableButton = true;
+    if (form.valid || !this.document) {
+
       this.registration.id = this.currentEmpId;
       if (this.employeeDocumentArray.length > 0) {
 

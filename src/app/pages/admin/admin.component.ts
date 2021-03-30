@@ -18,6 +18,8 @@ import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminGuard } from "../../@theme/guards/admin.guard";
+import { PurchaseNewService } from "../../@theme/services/purchase-new.service";
+import { PreviewComponent } from "./preview/preview.component";
 
 @Component({
   selector: "ngx-admin",
@@ -54,10 +56,13 @@ export class AdminComponent implements OnInit {
   approveByList = [];
   receiveByList = [];
   machineList = [];
+  purchaseList = [];
   machineCategoryList = [];
   qualityList = [];
   invoiceSequenceList = [];
   batchSequenceList = [];
+  billList = [];
+  materialList = [];
   formSubmitted: boolean = false;
   loading = false;
   jetEditFlag = false;
@@ -79,6 +84,7 @@ export class AdminComponent implements OnInit {
   hiddenDelete = false;
   constructor(
     private adminService: AdminService,
+    private purchseService : PurchaseNewService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private adminGuard : AdminGuard
@@ -108,8 +114,7 @@ export class AdminComponent implements OnInit {
     this.getAllInvoiceSequenceData();
     this.getAllBatchSequenceData();
     this.getAllReceiveByData();
-
-    
+    this.getAllPurchaseData();
   }
 
   getAddAcess() {
@@ -147,6 +152,23 @@ export class AdminComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllPurchaseData(){
+    this.purchseService.getPurchase().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.purchaseList = data["data"];
+          
           this.loading = false;
         } else {
           this.loading = false;
@@ -1150,4 +1172,20 @@ export class AdminComponent implements OnInit {
     this.batchsequenceByEditFlag = true;
 
   }
+
+  onBillClick(row){
+    this.billList = [];
+    this.billList.push(row);
+
+    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
+    
+      modalRef.componentInstance.billList = this.billList;
+      //modalRef.componentInstance.materialList = this.materialList;
+
+      // modalRef.result
+      // .then((result) => {
+      //   if (result) {}
+      // })
+      
+   }
 }
