@@ -194,30 +194,10 @@ export class PartyComponent implements OnInit {
   }
 
   drop(event) {
-    console.log(event);
-    alert("BUTTON CLICKEFD");
   }
   getRecords() {
-    // this.partyService.getAllPartyNameList().subscribe(
-    //   (data) => {
-
-    //     if (data["success"]) {
-    //       this.testingData = data["data"];
 
     this.getGrid();
-
-    //     }
-    //     else {
-    //       // this.toastr.error(data['msg'])
-    //     }
-    //     this.loading = false;
-    //   },
-    //   (error) => {
-    //     //this.toastr.error(errorData.Serever_Error)
-    //     this.loading = false;
-    //   }
-    // )
-    // return this.testingData;
   }
 
   filter(value: any) {
@@ -244,9 +224,7 @@ export class PartyComponent implements OnInit {
         if (data["success"]) {
           this.partyList = data["data"];
           this.rowData = this.partyList;
-          //this.getGrid();
           this.copyPartyList = data["data"];
-          console.log(this.copyPartyList);
           this.party = this.partyList.map((element) => ({
             id: element.id,
             partyName: element.partyName,
@@ -266,12 +244,10 @@ export class PartyComponent implements OnInit {
             masterName: element.masterName,
           }));
         } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

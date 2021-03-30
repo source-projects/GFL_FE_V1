@@ -5,7 +5,6 @@ import { RegistrationService } from '../../../@theme/services/registration.servi
 import { Registration, EmployeeDocument } from '../../../@theme/model/registration';
 import { CommonService } from '../../../@theme/services/common.service';
 import * as errorData from "../../../@theme/json/error.json";
-import { FileUploader } from 'ng2-file-upload';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { DomSanitizer } from '@angular/platform-browser';
 @Component({

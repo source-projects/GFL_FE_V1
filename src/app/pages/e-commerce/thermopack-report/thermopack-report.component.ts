@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ThermopackReportService } from 'app/@theme/services/thermopack-report.service';
+import { ThermopackReportService } from '../../../@theme/services/thermopack-report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
@@ -59,17 +59,8 @@ export class ThermopackReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
-    // this.getAllParameter();
   }
 
-  // getAllParameter(){
-  //   this.data = this.thermorep.getAllParameter().subscribe(
-  //     (res) => {
-  //       this.parameters = res;
-  //       this.parameters = this.parameters.data;
-  //     }
-  //   )
-  // }
 
   parameter(value: any) {
     this.obj.attribute = value;
@@ -89,7 +80,6 @@ export class ThermopackReportComponent implements OnInit {
 
   submit() {
 
-    console.log(this.obj)
     this.NoDataFlag = false;
     this.ThermopackChartFlag = false;
 
@@ -103,14 +93,11 @@ export class ThermopackReportComponent implements OnInit {
             this.lineChartData = [
               { data: this.jsonData.data.map(a => a.value), label: 'Value' },
             ];
-            console.log("DATA FOR CHART:", this.lineChartData);
             let lab: Label = [] = this.jsonData.data.map(e => e.time);
             let labdate = [] = this.jsonData.data.map(e => e.date);
-            console.log("Lab:", lab)
             for (let k = 0; k < labdate.length; k++) {
               labdate[k] = this.datePipe.transform(labdate[k], 'yyyy-MM-dd');
             }
-            console.log("LabDate:", labdate)
 
             for (let a = 0; a < lab.length; a++) {
               labdate[a] = labdate[a] + " " + lab[a] + ":00:00";
@@ -123,12 +110,10 @@ export class ThermopackReportComponent implements OnInit {
             }
             this.lineChartLabels[0] = String(labdate[0]);
             let j = 1;
-            console.log("length:", lab.length)
             for (let i = count; i < labdate.length; i = count + i) {
               this.lineChartLabels[j] = String(labdate[i]);
               j++;
             }
-            console.log("LABEL FOR CHART:", this.lineChartLabels)
             this.ThermopackChartFlag = true;
           }
 

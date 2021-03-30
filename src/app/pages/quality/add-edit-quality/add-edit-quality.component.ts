@@ -191,7 +191,6 @@ export class AddEditQualityComponent implements OnInit {
     this.addEditQualityForm.controls["qualityType"].reset("Fabric");
   }
   setQualityName(id) {
-    console.log(id);
     this.qualityNameList.forEach((element) => {
       if (element.id == id) {
         this.addEditQualityForm.value.qualityName = element.qualityName;
@@ -221,7 +220,6 @@ export class AddEditQualityComponent implements OnInit {
           this.disableButton = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
           this.disableButton = false;
         }
       );

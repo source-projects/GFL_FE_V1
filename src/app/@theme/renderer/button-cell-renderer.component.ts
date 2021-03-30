@@ -27,20 +27,6 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from 'ag-grid-community'
 
     }
 
-    // onEdit(event) {
-    //   console.log(this.params.node.data);
-      // if (this.params.onClick instanceof Function) {
-      //   // put anything into params u want pass into parents component
-      //   const params = {
-      //     event: $event,
-      //     rowData: this.params.node.data,
-      //     // ...something
-      //   }
-      //   this.params.onClick(params);
-  
-      // }
-   // }
-
     onClick($event) {
       if (this.params.onClick instanceof Function) {
         // put anything into params u want pass into parents component
@@ -54,11 +40,7 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from 'ag-grid-community'
   
       }
     }
-  
-    // btnClickedHandler(event) {
-    //   this.params.clicked(this.params.value);
-    //   console.log(event);
-    // }
+
   
     ngOnDestroy() {
       // no need to remove the button click handler 

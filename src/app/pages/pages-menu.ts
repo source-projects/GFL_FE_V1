@@ -87,7 +87,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: "Merge-batch",
-    icon: "layers-outline",
+    icon: "shuffle-outline",
     link: "/pages/merge-batch",
     hidden: false,
   },
@@ -176,13 +176,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Employee-Registration',
-    icon: 'edit-2-outline',
+    icon: 'browser-outline',
     link: '/pages/registration',
     hidden: false,
   },
   {
     title: 'Attendance',
-    icon: 'edit-2-outline',
+    icon: 'clipboard-outline',
     link: '/pages/attendance',
     hidden: false,
   },

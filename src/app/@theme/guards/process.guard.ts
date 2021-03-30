@@ -93,7 +93,6 @@ export class ProcessGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('process');
     this.permis = this.commonService.decToBin(permission);
     
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')

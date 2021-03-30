@@ -134,7 +134,6 @@ export class QualityGuard implements CanActivate {
     var permission = this.jwtToken.getDecodeToken('quality');
     this.permis = this.commonService.decToBin(permission);
     
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')

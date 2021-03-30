@@ -166,7 +166,6 @@ export class SupplierComponent implements OnInit {
         if (data['success']) {
           if (data['data'].length > 0) {
             this.supplierList = data['data']
-            console.log(this.supplierList)
             this.supplier = this.supplierList.map((element) => ({
               id:element.id,supplierName: element.supplierName, discountPercentage: element.discountPercentage,
               gstPercentage: element.gstPercentage, paymentTerms: element.paymentTerms, remark: element.remark
