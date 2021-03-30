@@ -40,7 +40,7 @@ export class MergeBatchComponent implements OnInit {
 
   async ngOnInit() {
     await this.getAllParties();
-    for(let i = 0; i < 3; i++){
+    for(let i = 1; i <= 3; i++){
       this.addId(i);
     }
   }
@@ -51,7 +51,6 @@ export class MergeBatchComponent implements OnInit {
 
   addId(i) {
     this.DROP_LIST_IDS.push("cdk-drop-list-" + i);
-    return i;
   }
 
   getAllParties() {
