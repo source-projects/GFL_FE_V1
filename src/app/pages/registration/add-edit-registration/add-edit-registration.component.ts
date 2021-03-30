@@ -210,10 +210,16 @@ export class AddEditRegistrationComponent implements OnInit {
         this.employeeDocumentArray.push(obj);
         let url = response.secure_url;
         this.addQR(url);
-        // window.location.href = "https://web.whatsapp.com/send?text=" + url;
+        if(window.innerWidth >= 1024){
+          window.location.href = "https://web.whatsapp.com/send?phone=+91"+ this.registration.contact + "&text=" + url;
+        }
+        else{
+          window.location.href = "whatsapp://send?phone=+91"+ this.registration.contact + "&text=" + url;
+        }
       }
     })
   }
+  
 
   addEmployee(form) {
     this.formSubmitted = true;

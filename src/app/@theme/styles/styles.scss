@@ -2654,7 +2654,7 @@ ng-select.ng-select-br-none {
 }
 
 .report-card-1 {
-    margin: 0;
+    margin-bottom: 24px;
 }
 
 .main-input-report {
@@ -2798,4 +2798,58 @@ ng-select.ng-select-br-none {
 
 .fn-tab-title .tabset li a span {
     font-size: 12px;
+}
+
+.batch-merged-pd {
+    padding: 0 !important;
+    padding-top: 11px !important;
+}
+
+.merged-batch-indiviual {
+    min-height: 147px;
+    height: 85px;
+    overflow-y: scroll;
+    padding-bottom: 2px;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.add-minus-party {
+    background: #777777;
+    height: 32px;
+    padding: 4px 4px;
+    border-radius: 50px;
+    width: 32px;
+    position: absolute;
+    right: 14px;
+    top: -9px;
+}
+
+.pd-0-mr-15 {
+    padding: 0 !important;
+    margin-top: 15px;
+}
+
+.mrtp-10 {
+    margin-top: 15px;
 }

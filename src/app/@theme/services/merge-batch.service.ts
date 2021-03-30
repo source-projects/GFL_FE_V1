@@ -13,4 +13,8 @@ export class MergeBatchService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/stockBatch/create/mergeBatchList', data);
   }
 
+  getBatchesByPartyQuality(qId, pId) {
+    return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/batch/ByQualityAndPartyWithoutProductionPlan/" +qId +"/" +pId);
+  }
+
 }
