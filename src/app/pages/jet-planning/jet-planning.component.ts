@@ -169,7 +169,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   }
 
   setIndexForSlip(index) {
-    console.log(index);
     //on click set batchId stockId to get print-slip data
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;

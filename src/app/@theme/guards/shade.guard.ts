@@ -127,7 +127,6 @@ else if(PermissionName.length==3){
     var permission = this.jwtToken.getDecodeToken('shade');
     this.permis = this.commonService.decToBin(permission);
     
-    //console.log(PermissionName)
     switch (PermissionName) {
       case 'view':
         if (this.permis[0] == '1')

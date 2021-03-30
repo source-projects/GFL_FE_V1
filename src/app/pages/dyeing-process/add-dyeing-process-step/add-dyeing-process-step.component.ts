@@ -102,7 +102,6 @@ export class AddDyeingProcessStepComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
-          console.log(this.itemListArray);
         } else {
         }
       },
@@ -186,7 +185,6 @@ export class AddDyeingProcessStepComponent implements OnInit {
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
       }
     });
-    console.log(this.dyeingChemicalData);
   }
 
   trackByFn(index: number, obj: any) {

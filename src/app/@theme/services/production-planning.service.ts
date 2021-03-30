@@ -13,7 +13,6 @@ export class ProductionPlanningService {
     private commonService: CommonService
   ) {
     this.addToJetClicked.subscribe((ele) => {
-      console.log(ele);
     });
   }
 

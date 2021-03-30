@@ -339,7 +339,6 @@ export class AddEditStockBatchComponent implements OnInit {
       });
       this.production_flag[i] = batch.isProductionPlanned;
     });
-    // console.log(this.production_flag);
 
     this.reCalcMTWTValue();
   }

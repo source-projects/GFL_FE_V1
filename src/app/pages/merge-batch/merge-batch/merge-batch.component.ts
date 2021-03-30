@@ -40,6 +40,9 @@ export class MergeBatchComponent implements OnInit {
 
   async ngOnInit() {
     await this.getAllParties();
+    for(let i = 0; i < 3; i++){
+      this.addId(i);
+    }
   }
 
   _clone(obj): any {
@@ -80,7 +83,7 @@ export class MergeBatchComponent implements OnInit {
     // get batch list by party
     this.filterDetails[i].batchList = [];
     if (event) {
-      this.stockBatchService
+      this.mergeBatchService
         .getBatchesByPartyQuality(
           this.filterDetails[i].qualityId,
           this.filterDetails[i].partyId

@@ -247,11 +247,9 @@ export class PlanningSlipComponent implements OnInit {
               obj.shadeId = this.directSlipShadeObj.shadeId;
               obj.batchId = this.batchId;
               obj.stockId = this.stockId;
-              console.log(obj)
               this.planningSlipService.getItemListByShade(obj).subscribe(
                 (data)=>{
                   if(data["success"]){
-                    console.log(data["data"]);
                     this.itemList = data["data"]
                   }
                 }
@@ -260,7 +258,6 @@ export class PlanningSlipComponent implements OnInit {
               this.shadeService.getCurrentShadeData(this.directSlipShadeObj.shadeId).subscribe(
                 (data)=>{
                   if(data["success"]){
-                    console.log("shade:",data["data"])
                     this.shadeObj.partyShadeNo = data["data"].partyShadeNo;
                     this.shadeObj.color = data["data"].colorTone;
                   }
@@ -577,9 +574,7 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   itemSelected1(event, index) {
-    console.log(event);
     let i_id = event;
-    console.log("id", i_id);
     this.itemListArray.forEach((element) => {
       if (element.itemId == i_id) {
         this.itemList[index].itemName = element.itemName;

@@ -56,8 +56,6 @@ export class AttendanceComponent implements OnInit {
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
     this.date = new Date(this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000).toISOString();
-    // this.date = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
-     console.log(this.date)
 
     
   }

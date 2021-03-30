@@ -186,7 +186,6 @@ invoiceNo : any;
   addInvoice(invoiceForm) {
     this.formSubmitted = true;
     this.final = [];
-    console.log(this.finalcheckedrows)
     if(this.finalcheckedrows.length > 0){
       this.finalcheckedrows.map(ele => {
         let obj: invoiceobj = new invoiceobj();
@@ -300,7 +299,6 @@ invoiceNo : any;
   }
 
   onSelect(value: any) {
-    console.log(value)
     let arr: any =  value.selected;
     this.finalcheckedrows = arr;
   }

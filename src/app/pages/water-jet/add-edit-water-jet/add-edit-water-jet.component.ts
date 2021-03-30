@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import * as errorData from "app/@theme/json/error.json";
-import { WaterJet } from 'app/@theme/model/water-jet';
-import { CommonService } from 'app/@theme/services/common.service';
-import { WaterJetService } from 'app/@theme/services/water-jet.service';
+import * as errorData from "../../../@theme/json/error.json";
+import { WaterJet } from '../../../@theme/model/water-jet';
+import { WaterJetService } from '../../../@theme/services/water-jet.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -17,22 +15,13 @@ export class AddEditWaterJetComponent implements OnInit {
   waterjet: WaterJet = new WaterJet();
   formSubmitted: boolean = false;
   public disableButton = false;
-  // name:any=14.2;
-  // maxlength=3;
-  constructor( private commonService: CommonService,
+  constructor(
     private waterjetService: WaterJetService,
-    private toastr: ToastrService,
-    private route: Router,
-    private router: ActivatedRoute) { }
+    private toastr: ToastrService,) { }
 
   ngOnInit(): void {
   }
 
-  // getVal(item){
-  //   console.log(item.target.value);
-  //   let v=parseFloat(item.target.value);
-  //   console.log("float",v);
-  // }
   addWaterJet(myForm){
     this.formSubmitted=true;
     if(myForm.valid){
