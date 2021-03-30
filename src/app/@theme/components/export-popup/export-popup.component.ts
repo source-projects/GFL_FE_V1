@@ -56,7 +56,6 @@ export class ExportPopupComponent implements OnInit {
       modalData.subjectEmail = this.subjectEmail;
       modalData.toEmail = this.toEmail;
       modalData.toRow = this.endRow;
-      console.log(modalData);
       this.exportService.sendMail(modalData);
 
     }

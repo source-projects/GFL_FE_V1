@@ -239,10 +239,7 @@ export class AddEditPartyComponent implements OnInit {
           (this.debtor && this.partyForm.get("partyAddress1").value) ||
           !this.debtor
         ) {
-          //  this.partyForm.value.createdBy = this.user.userId;
-          // console.log('raw',this.partyForm.getRawValue())
           this.partyForm.patchValue({
-            //userHeadId: this.userHead.userHeadId,
             createdBy: this.user.userId,
           });
           this.partyService.saveParty(this.partyForm.value).subscribe(

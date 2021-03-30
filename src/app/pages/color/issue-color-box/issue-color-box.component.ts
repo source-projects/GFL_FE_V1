@@ -105,7 +105,6 @@ export class IssueColorBoxComponent implements OnInit {
   }
 
   consoSelected(event) {
-    console.log(event);
 
     if (event) {
       this.consolidated = true;

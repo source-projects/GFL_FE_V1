@@ -109,9 +109,9 @@
                                         <div class="form-group col-md-12">
 
                                             <div class="example-container batch-merged-pd">
-                                                <h2 class="batch-text">Batch List {{i + 1}}</h2>
+                                                <h2 class="batch-text">Batch List</h2>
 
-                                                <div cdkDropList [cdkDropListData]="data.grList" [attr.id]="addId(i)" [cdkDropListConnectedTo]="[finalPart]" class="example-list" (cdkDropListDropped)="drop($event)">
+                                                <div cdkDropList [cdkDropListData]="data.grList" [attr.id]="i" [cdkDropListConnectedTo]="[finalPart]" class="example-list" (cdkDropListDropped)="drop($event)">
                                                     <div class="row">
                                                         <div class="col-md-12 col-12">
                                                             <div class="merged-batch-indiviual">

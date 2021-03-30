@@ -237,12 +237,10 @@ export class AddEditUserComponent implements OnInit {
         found.designation &&
         found.designation.toLowerCase() == "team member"
       ) {
-        console.log("gyasgd");
         this.teamMemberFlag = true;
         this.user.isUserHead = true;
         this.isMasterFlag = false;
       } else {
-        console.log("hiii");
         this.teamMemberFlag = false;
         this.user.isUserHead = true;
         this.isMasterFlag = false;

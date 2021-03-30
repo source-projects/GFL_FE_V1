@@ -191,7 +191,6 @@ export class LogSheetComponent implements OnInit {
 
     this.logsheet.saveBoilerData(this.finalBoilerobj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
@@ -253,7 +252,6 @@ export class LogSheetComponent implements OnInit {
 
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
-        console.log(data)
         if(data["success"]){
           this.toast.success("Added")
         }
@@ -282,8 +280,6 @@ export class LogSheetComponent implements OnInit {
     boilerdata.dateToEnter = this.datePipeString;
     boilerdata.timeOf = time;
     this.finalBoilerobj.push(boilerdata)
-    console.log("Boiler Obj:", boilerdata)
-    console.log("Final Object:", this.finalBoilerobj)
   }
 
   thermoobjadd(array, time) {
@@ -302,13 +298,10 @@ export class LogSheetComponent implements OnInit {
     thermodata.controlId = this.thermoId;
     thermodata.timeOf = time;
     this.finalThermoobj.push(thermodata)
-    console.log("Thermo Obj:", thermodata)
-    console.log("Final Object:", this.finalThermoobj)
   }
 
   shiftchange(value: any) {
 
-    console.log("value", value)
     if (value == 1) {
       this.nightFlag = false;
       this.dayFlag = true;
@@ -327,7 +320,6 @@ export class LogSheetComponent implements OnInit {
 
   masterchange(value: any) {
 
-    console.log("master", value)
     this.masterId = value;
   }
 
@@ -343,7 +335,6 @@ export class LogSheetComponent implements OnInit {
   getBoiler() {
     this.data = this.logsheet.getBoilerMachines().subscribe(
       (res) => {
-        console.log(res)
         this.boiler = res;
         this.boiler = this.boiler.data;
       }
@@ -361,13 +352,11 @@ export class LogSheetComponent implements OnInit {
 
   boilerchange(value: any) {
 
-    console.log("boilerid", value)
     this.boilerId = value;
   }
 
   thermopackchange(value: any) {
 
-    console.log("ther", value)
     this.thermoId = value;
 
   }
