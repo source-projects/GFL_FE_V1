@@ -483,28 +483,27 @@
                     </ngx-datatable-column>
                 </ngx-datatable>
             </nb-tab>
-            
+
             <nb-tab tabTitle="Purchase">
 
                 <div class="row">
                     <div class="col-md-4">
-                        <nb-checkbox [(ngModel)]="approved" [name]="approved"
-                        (change)="getApproved($event.target.checked)"></nb-checkbox>
+                        <nb-checkbox [(ngModel)]="approved" [name]="approved" (change)="getApproved($event.target.checked)">Approved</nb-checkbox>
                     </div>
                 </div>
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31" >
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                             <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeReceiveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getReceiveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Bill"  [maxWidth]="300">
+                    <ngx-datatable-column name="Bill" [maxWidth]="300">
                         <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
                                     <ng-container>
-                                            <img [src]="billImages[rowIndex][0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)" >
+                                        <img [src]="billImages[rowIndex][0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)">
                                     </ng-container>
 
                                 </div>
@@ -512,12 +511,12 @@
 
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Material"  [maxWidth]="300">
+                    <ngx-datatable-column name="Material" [maxWidth]="300">
                         <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container >
-                                            <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)" >
+                                    <ng-container>
+                                        <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)">
                                     </ng-container>
                                 </div>
                             </div>
@@ -533,13 +532,12 @@
                     <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
 
-                        <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" (change)="updatePurchaseStatus(row , $event.target.checked)"
-                        [checked]="row.checked">
-                        <span *ngIf="row.checked" class="text cr-txt">Approved</span>
-                        <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
+                            <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" (change)="updatePurchaseStatus(row , $event.target.checked)" [checked]="row.checked">
+                                <span *ngIf="row.checked" class="text cr-txt">Approved</span>
+                                <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
 
-                        </nb-checkbox>
-                    </ng-template>
+                            </nb-checkbox>
+                        </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>
             </nb-tab>

@@ -2856,15 +2856,14 @@ ng-select.ng-select-br-none {
 }
 
 .back-btn {
-    left: 10px;
-    width: 100%;
+    left: 39px;
     margin-top: 0;
     position: absolute;
     top: 50%;
 }
 
 .next-btn {
-    right: 10px;
+    right: 39px;
     margin-top: 0px;
     position: absolute;
     top: 50%;
@@ -2881,4 +2880,40 @@ ng-select.ng-select-br-none {
 
 .fn-tab-title .tabset li a {
     padding: 15px 0 !important;
+}
+
+.purchase-popup {
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    border: 0;
+}
+
+.bottom-count-img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    background: #fff;
+    bottom: -24px;
+    padding: 3px 0;
+    color: #5e5e5e;
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-size: 13px;
+}
+
+.max-popup-purchase {
+    max-height: 521px;
+    height: 462px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.pd-tp-low {
+    padding: 17px 0 23px !important;
+}
+
+.material-img {
+    height: 100%;
+    width: 100%;
 }
