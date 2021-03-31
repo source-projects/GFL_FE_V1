@@ -15,6 +15,7 @@ export class GenerateReportComponent implements OnInit {
   qualityControlId: any;
   qualityId: any;
   qualityName: any;
+  batchId;
   partyList: any[];
   qualityList: any[];
   colorTone = "#40f0f0";
@@ -90,6 +91,15 @@ export class GenerateReportComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
+            if(this.batchId){
+              let data = [];
+              this.reportData.forEach((ele) => {
+                if(this.batchId == ele.batchId){
+                  data.push(ele);
+                }
+              })
+              this.reportData = data;
+            }
             this.reportData.forEach(ele => {
               if(ele.isFinishMtrSave){
                 this.finishedMeter.push(ele);
@@ -173,5 +183,17 @@ export class GenerateReportComponent implements OnInit {
       this.getReportData();
       this.checkPartySelected();
     }
+  }
+
+  batchIdSelected(event){
+    if (event == undefined) {
+      this.batchId = null;
+     
+    } 
+
+      this.getReportData();
+      this.checkPartySelected();
+      
+
   }
 }
