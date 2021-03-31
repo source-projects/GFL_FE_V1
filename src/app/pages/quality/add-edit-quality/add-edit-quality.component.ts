@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
+import { AdminService } from "../../../@theme/services/admin.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
-import { ToastRef, ToastrService } from "ngx-toastr";
-import { AdminService } from "../../../@theme/services/admin.service";
 
 @Component({
   selector: "ngx-add-edit-quality",
