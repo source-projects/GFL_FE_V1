@@ -48,4 +48,9 @@ export class PurchaseNewService {
 
   }
 
+  updateStatus(flag){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/purchase/status?flag=' + flag);
+
+  }
+
 }

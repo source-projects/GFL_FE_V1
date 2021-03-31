@@ -485,6 +485,13 @@
             </nb-tab>
             
             <nb-tab tabTitle="Purchase">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <nb-checkbox [(ngModel)]="approved" [name]="approved"
+                        (change)="getApproved($event.target.checked)"></nb-checkbox>
+                    </div>
+                </div>
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31" >
                     <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
@@ -496,10 +503,8 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container *ngFor="let ele of row.materialPhotosList; let i=index;">
-                                        <span *ngIf="ele.type == 'bill'" class="ngx-profile-table">
-                                            <img [src]="ele.picUrl" class="imageURL" (click)="onBillClick(ele)" >
-                                        </span>
+                                    <ng-container>
+                                            <img [src]="billImages[0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)" >
                                     </ng-container>
 
                                 </div>
@@ -511,12 +516,9 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container *ngFor="let ele of row.materialPhotosList">
-                                        <span *ngIf="ele.type == 'material'" class="ngx-profile-table">
-                                            <img [src]="ele.picUrl" class="imageURL" >
-                                        </span>
+                                    <ng-container >
+                                            <img [src]="materialImages[0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)" >
                                     </ng-container>
-
                                 </div>
                             </div>
 

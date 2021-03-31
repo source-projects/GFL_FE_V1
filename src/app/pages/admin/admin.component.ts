@@ -63,6 +63,8 @@ export class AdminComponent implements OnInit {
   batchSequenceList = [];
   billList = [];
   materialList = [];
+  billImages = [];
+  materialImages = [];
   formSubmitted: boolean = false;
   loading = false;
   jetEditFlag = false;
@@ -82,6 +84,7 @@ export class AdminComponent implements OnInit {
   hiddenEdit = false;
   batchHiddenEdit = false;
   hiddenDelete = false;
+  approved = false;
   constructor(
     private adminService: AdminService,
     private purchseService : PurchaseNewService,
@@ -168,6 +171,16 @@ export class AdminComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.purchaseList = data["data"];
+          this.purchaseList.forEach(element => {
+            element.materialPhotosList.forEach(ele => {
+              if(ele.type == "bill"){
+                this.billImages.push(ele);
+              }
+              else{
+                this.materialImages.push(ele);
+              }
+            });
+          })
           
           this.loading = false;
         } else {
@@ -1175,18 +1188,38 @@ export class AdminComponent implements OnInit {
 
   onBillClick(row){
     this.billList = [];
-    this.billList.push(row);
+    row.forEach(element => {
+      if(element.type == "bill"){
+        this.billList.push(element);
+      }
+    });
 
     const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
     
       modalRef.componentInstance.billList = this.billList;
-      //modalRef.componentInstance.materialList = this.materialList;
-
-      // modalRef.result
-      // .then((result) => {
-      //   if (result) {}
-      // })
+      modalRef.result
+      .then((result) => {
+        if (result) {}
+      })
       
+   }
+
+   onMaterialClick(row){
+    this.materialList = [];
+    row.forEach(element => {
+      if(element.type == "material"){
+        this.materialList.push(element);
+      }
+    });
+
+    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
+    
+      modalRef.componentInstance.materialList = this.materialList;
+      modalRef.result
+      .then((result) => {
+        if (result) {}
+      })
+    
    }
 
    updatePurchaseStatus(row , event)
@@ -1202,5 +1235,21 @@ export class AdminComponent implements OnInit {
 
       }
      )
+   }
+
+   getApproved(event){
+     if(event){
+        this.purchseService.updateStatus(this.approved).subscribe(
+          (data) => {
+            if(data["success"]){
+              this.toastr.success(errorData.Update_Success);
+              //this.getAllPurchaseData();
+            }
+          },
+          (error) => {
+
+          }
+        )
+     }
    }
 }
