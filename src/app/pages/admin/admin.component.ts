@@ -167,20 +167,27 @@ export class AdminComponent implements OnInit {
   }
 
   getAllPurchaseData(){
+    
     this.purchseService.getPurchase().subscribe(
       (data) => {
         if (data["success"]) {
           this.purchaseList = data["data"];
-          this.purchaseList.forEach(element => {
+          this.purchaseList.forEach((element , i) => {
+            let tempBill = [];
+            let tempMaterial = [];
             element.materialPhotosList.forEach(ele => {
               if(ele.type == "bill"){
-                this.billImages.push(ele);
+                tempBill.push(ele);
               }
               else{
-                this.materialImages.push(ele);
+                tempMaterial.push(ele);
               }
             });
+            this.billImages[i] = (tempBill);
+            this.materialImages[i] = (tempMaterial);
           })
+
+          
           
           this.loading = false;
         } else {
@@ -1197,9 +1204,13 @@ export class AdminComponent implements OnInit {
     const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
     
       modalRef.componentInstance.billList = this.billList;
+      modalRef.componentInstance.materialList = null;
+
       modalRef.result
       .then((result) => {
-        if (result) {}
+        if (result) {
+          
+        }
       })
       
    }
@@ -1213,7 +1224,8 @@ export class AdminComponent implements OnInit {
     });
 
     const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
-    
+
+      modalRef.componentInstance.billList = null;
       modalRef.componentInstance.materialList = this.materialList;
       modalRef.result
       .then((result) => {

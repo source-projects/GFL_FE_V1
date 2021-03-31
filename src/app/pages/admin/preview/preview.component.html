@@ -1,4 +1,12 @@
 <nb-card class="nb-style mr-0">
+    <nb-card-header>
+        <div class="modal-header nb-header">
+            <h4 class="modal-title nb-text">Preview</h4>
+            <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
+                <span aria-hidden="true" class="close-icon">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
     <nb-card-body>
         <div *ngIf="billList">
 
@@ -14,11 +22,16 @@
                 <nb-icon icon="arrow-forward-outline" (click)="next('bill')"></nb-icon>
             </div>
         </div>
+
+        <nb-card-footer>
+
         <div class="row text-center mt-3">
             <div class="col-md-12">
                 {{imageIndex + 1}} / {{billList.length}}
             </div>
         </div>
+         </nb-card-footer>
+
 
         </div>
 
@@ -36,11 +49,15 @@
                     <nb-icon icon="arrow-forward-outline" (click)="next('material')"></nb-icon>
                 </div>
             </div>
+
+            <nb-card-footer>
+
             <div class="row text-center mt-3">
                 <div class="col-md-12">
                     {{imageIndex + 1}} / {{materialList.length}}
                 </div>
             </div>
+            </nb-card-footer>
     
             </div>
 

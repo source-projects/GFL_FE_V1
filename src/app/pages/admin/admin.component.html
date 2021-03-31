@@ -500,11 +500,11 @@
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Bill"  [maxWidth]="300">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
                                     <ng-container>
-                                            <img [src]="billImages[0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)" >
+                                            <img [src]="billImages[rowIndex][0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)" >
                                     </ng-container>
 
                                 </div>
@@ -513,11 +513,11 @@
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Material"  [maxWidth]="300">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
                                     <ng-container >
-                                            <img [src]="materialImages[0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)" >
+                                            <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)" >
                                     </ng-container>
                                 </div>
                             </div>

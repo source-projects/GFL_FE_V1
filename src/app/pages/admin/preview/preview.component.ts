@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
@@ -12,11 +13,17 @@ export class PreviewComponent implements OnInit {
   imageIndex = 0;
   @Input() materialList : any;
   picUrl = [];
-  constructor() { }
+  constructor(
+    private _NgbActiveModal: NgbActiveModal,
+
+  ) { }
  
 
   ngOnInit(): void {    
-    console.log(this.billList , this.materialList)
+  }
+
+  get activeModal() {
+    return this._NgbActiveModal;
   }
 
   previous(type){
