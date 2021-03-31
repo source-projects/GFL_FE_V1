@@ -42,4 +42,10 @@ export class PurchaseNewService {
   uploadImage(data):any{
     return this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data);
   }
+
+  updatePurchaseStatus(id , flag){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/purchase/update/' + id + '/' + flag);
+
+  }
+
 }

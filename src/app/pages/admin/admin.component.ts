@@ -1188,4 +1188,19 @@ export class AdminComponent implements OnInit {
       // })
       
    }
+
+   updatePurchaseStatus(row , event)
+   {
+     this.purchseService.updatePurchaseStatus(row.id , event ).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toastr.success(errorData.Update_Success);
+          this.getAllPurchaseData();
+        }
+      },
+      (error) => {
+
+      }
+     )
+   }
 }

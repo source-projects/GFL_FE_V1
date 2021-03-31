@@ -496,7 +496,7 @@
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container *ngFor="let ele of row.materialPhotosList">
+                                    <ng-container *ngFor="let ele of row.materialPhotosList; let i=index;">
                                         <span *ngIf="ele.type == 'bill'" class="ngx-profile-table">
                                             <img [src]="ele.picUrl" class="imageURL" (click)="onBillClick(ele)" >
                                         </span>
@@ -531,10 +531,10 @@
                     <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
 
-                        <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" [(ngModel)]="checked" [checked]="checked" 
-                        (checkedChange)="checked=!checked">
-                        <span *ngIf="checked" class="text cr-txt">Approved</span>
-                        <span *ngIf="!checked" class="text cr-txt">Not Approved</span>
+                        <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" (change)="updatePurchaseStatus(row , $event.target.checked)"
+                        [checked]="row.checked">
+                        <span *ngIf="row.checked" class="text cr-txt">Approved</span>
+                        <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
 
                         </nb-checkbox>
                     </ng-template>
