@@ -1,7 +1,10 @@
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 //import { ExportService } from 'app/@theme/services/export.service';
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -12,9 +15,6 @@ import { BtnCellRenderer } from "../../@theme/renderer/button-cell-renderer.comp
 import { CommonService } from "../../@theme/services/common.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { PartyService } from "../../@theme/services/party.service";
-import { ToastrService } from "ngx-toastr";
-import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 
 @Component({
   selector: "ngx-party",
@@ -87,7 +87,6 @@ export class PartyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRecords();
 
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
@@ -116,88 +115,6 @@ export class PartyComponent implements OnInit {
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 1;
     }
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    // this.gridOptions.api.refreshView();
-    // this.gridOptions.columnApi.sizeColumnsToFit();
-  }
-
-  getGrid() {
-    this.gridOptions = {
-      pagination: true,
-      rowSelection: "multiple",
-    };
-
-    this.columnDefs = [
-      {
-        headerName: "Action",
-        field: "value",
-        cellRenderer: "btnCellRenderer",
-        cellRendererParams: {
-          onClick: this.onBtnClick1.bind(this),
-          label: "delete",
-        },
-        maxWidth: 150,
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-      },
-      {
-        headerName: "Party Name",
-        field: "partyName",
-        maxWidth: 150,
-      },
-      {
-        headerName: "Party Address1",
-        field: "partyAddress1",
-        minWidth: 150,
-      },
-      {
-        headerName: "Contact No",
-        field: "contactNo",
-        minWidth: 90,
-      },
-      {
-        headerName: "City",
-        field: "city",
-        minWidth: 30,
-      },
-      {
-        headerName: "State",
-        field: "state",
-        minWidth: 90,
-      },
-    ];
-    // setTimeout(()=>{
-    this.rowData = this.partyList;
-    //},1000)
-
-    (this.defaultColDef = {
-      //
-      flex: 1,
-      minWidth: 100,
-      // editable: true,
-      sortable: true,
-      filter: true,
-      resizable: true,
-    }),
-      (this.paginationPageSize = 10);
-    this.rowSelection = "multiple";
-    // this.rowModelType = 'serverSide';
-    // this.serverSideStoreType = 'partial';
-  }
-
-  onBtnClick1(e) {
-    this.deleteParty(e.rowData.id);
-  }
-
-  drop(event) {
-  }
-  getRecords() {
-
-    this.getGrid();
   }
 
   filter(value: any) {
