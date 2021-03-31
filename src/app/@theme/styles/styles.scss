@@ -2234,6 +2234,9 @@ input[type="number"]::-webkit-outer-spin-button {
     .mr-left-10 {
         margin-left: 10px !important;
     }
+    .fn-tab-title .tabset li a span {
+        padding: 12px
+    }
 }
 
 @media (min-width: 992px) {
