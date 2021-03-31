@@ -21,6 +21,12 @@ export class GenerateReportComponent implements OnInit {
   loading: boolean = false;
   partySelected: boolean = false;
   reportData: any[];
+  planned = [];
+  notPlanned = [];
+  finishedMeter = [];
+  Production = true;
+  notProduction = true;
+  finished = true;
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
@@ -75,12 +81,25 @@ export class GenerateReportComponent implements OnInit {
   }
 
   getReportData() {
+    this.planned = [];
+    this.finishedMeter = [];
+    this.notPlanned = [];
     this.reportService
       .getPartyQualityReportData(this.partyId, this.qualityControlId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
+            this.reportData.forEach(ele => {
+              if(ele.isFinishMtrSave){
+                this.finishedMeter.push(ele);
+              }
+              else if(ele.isProductionPlanned){
+                this.planned.push(ele);
+              }else {
+                this.notPlanned.push(ele);
+              }
+            })
           }
         },
         (error) => {}
