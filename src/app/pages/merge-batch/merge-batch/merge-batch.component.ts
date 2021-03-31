@@ -199,6 +199,7 @@ export class MergeBatchComponent implements OnInit {
                 if (data["success"]) {
                   this.toastr.success(data["msg"]);
                   this.loading = false;
+                  this.showMergeBox = false;
                   this.resetForm(myForm);
                 }
               },
