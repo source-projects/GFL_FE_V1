@@ -1,8 +1,16 @@
-<nb-card class="nb-style">
-<nb-card-body>
-  <div *ngFor="let bill of billList; let i = index" >
-    <img [src]="bill.picUrl" style="width: 425px; height: 425px;" >
-  </div>
-</nb-card-body>
-</nb-card>
+<nb-card class="nb-style mr-0">
+    <nb-card-body>
+        <div *ngFor="let bill of billList; let i = index" class="text-center">
+            <img [src]="bill.picUrl" style="width: 425px; height: 425px;">
+        </div>
+        <div class="next-previous-btn">
+            <div class="back-btn">
+                <nb-icon icon="arrow-back-outline"></nb-icon>
+            </div>
 
+            <div class="next-btn">
+                <nb-icon icon="arrow-forward-outline"></nb-icon>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
