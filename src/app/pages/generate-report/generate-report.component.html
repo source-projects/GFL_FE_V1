@@ -698,7 +698,9 @@
                                         Id</label></div>
 
                                 <div class="card-d-label width-70">
-                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="qualityId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" [(ngModel)]="qualityId" class="required-error-dropdown dropdown-name input-border">
+                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="batchId" #batchId1="ngModel"
+                                     (change)="batchIdSelected($event)" [(ngModel)]="batchId" 
+                                     class="required-error-dropdown dropdown-name input-border">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -706,26 +708,16 @@
                                                         Batch Id
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-6">
-                                                    <div class="text-right txt-ov-elips">
-                                                        Party Name
-                                                    </div>
-                                                </div>
                                             </div>
                                         </ng-option>
-                                        <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                        <ng-option *ngFor="let b of reportData" [value]="b.batchId">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
                                                     <div class="text-left txt-ov-elips">
-                                                        {{ q.qualityId }}
+                                                        {{b.batchId }}
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-6">
-                                                    <div class="text-right
-                                                            txt-ov-elips">
-                                                        {{ q.partyName }}
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </ng-option>
                                     </ng-select>

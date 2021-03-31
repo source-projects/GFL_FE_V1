@@ -303,6 +303,16 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "purchase",
+        loadChildren: () =>
+        import("./pages/purchase/purchase.module").then(
+          (m) => m.PurchaseModule
+        ),
+        // canActivate: [AttndanceGuard],
+        // canLoad: [AttndanceGuard],
+        // data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
         path: "miscellaneous",
         loadChildren: () =>
           import("./pages/miscellaneous/miscellaneous.module").then(

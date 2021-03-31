@@ -427,6 +427,120 @@
 
 
             </nb-tab>
+
+            <nb-tab tabTitle="Receive By">
+                <form #addReceiveByData="ngForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input name="name" type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="receiveBy.name" #name2="ngModel" [ngClass]="{'is-invalid':(name2.invalid) &&(formSubmitted || name2.touched) }" required>
+                                <div class="input-required" *ngIf="(name2.invalid) && (formSubmitted || name2.touched)">
+                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Contact No</label>
+                                <input name="contactNo" type="number" class="form-control" placeholder="Enter Contact No." [(ngModel)]="receiveBy.contact" #contactNo2="ngModel" pattern="[6-9]{1}[0-9]{9}" [ngClass]="{'is-invalid':(contactNo2.invalid) &&(formSubmitted || contactNo2.touched) }"
+                                    required>
+                                <div class="input-required" *ngIf="(contactNo2.invalid) && (formSubmitted || contactNo2.touched)">
+                                    Valid 10 digit Contact no is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input name="email" type="text" class="form-control" placeholder="Enter Email" [(ngModel)]="receiveBy.email" #email2="ngModel" [ngClass]="{'is-invalid':(email2.invalid) &&(formSubmitted || email2.touched) }" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}"
+                                    required>
+                                <div class="input-required" *ngIf="(email2.invalid) && (formSubmitted || email2.touched)">
+                                    Valid email is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelReceiveBy()">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveReceiveBy(addReceiveByData)" [disabled]="disabled">SAVE</button>
+                        </div>
+                    </div>
+                </form>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="receiveByList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeReceiveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getReceiveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Contact No" prop="contact" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Email" prop="email" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-tab>
+
+            <nb-tab tabTitle="Purchase">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <nb-checkbox [(ngModel)]="approved" [name]="approved" (change)="getApproved($event.target.checked)">Approved</nb-checkbox>
+                    </div>
+                </div>
+                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90" *ngIf="!hiddenEdit || !hiddenDelete">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeReceiveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
+                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="getReceiveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Bill" [maxWidth]="300">
+                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                            <div class="row width-100">
+                                <div class="col-md-3">
+                                    <ng-container>
+                                        <img [src]="billImages[rowIndex][0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)">
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Material" [maxWidth]="300">
+                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                            <div class="row width-100">
+                                <div class="col-md-3">
+                                    <ng-container>
+                                        <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)">
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Amount" prop="amt" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Approve By" prop="approvedName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Department" prop="departmentName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+
+                            <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" (change)="updatePurchaseStatus(row , $event.target.checked)" [checked]="row.checked">
+                                <span *ngIf="row.checked" class="text cr-txt">Approved</span>
+                                <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
+
+                            </nb-checkbox>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </nb-tab>
         </nb-tabset>
     </nb-card-body>
 </nb-card>

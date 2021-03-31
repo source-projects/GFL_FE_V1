@@ -116,7 +116,7 @@
                                                         <div class="col-md-12 col-12">
                                                             <div class="merged-batch-indiviual">
                                                                 <div *ngFor="let item of data.grList" cdkDrag>
-                                                                    <div class="example-box">
+                                                                    <div class="example-box" *ngIf ="!item.mergeBatchId">
                                                                         Meter: {{item.mtr}} Weight: {{item.wt}}
                                                                     </div>
                                                                 </div>

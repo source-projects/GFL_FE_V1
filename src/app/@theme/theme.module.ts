@@ -47,6 +47,7 @@ import { DisableStockBatchPipe } from "./pipes/disable-Stock-Batch.pipe";
 import { ShowOnlyChemicalPipe } from "./pipes/showOnlyChemicalList.pipe";
 import { FilterSelectedItemPipe } from "./pipes/dyingProcess.pipe";
 import { FilterSelectedBatchPipe } from "./pipes/filter-selected-batch.pipe";
+import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -86,6 +87,7 @@ const PIPES = [
   ShowOnlyChemicalPipe,
   DisableStockBatchPipe,
   FilterSelectedItemPipe,
+  ImagePreviewPipe
 ];
 
 @NgModule({

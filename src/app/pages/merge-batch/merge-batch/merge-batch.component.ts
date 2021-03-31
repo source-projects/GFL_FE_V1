@@ -223,5 +223,6 @@ export class MergeBatchComponent implements OnInit {
     this.filterDetails = [];
     this.filterDetails.push(this._clone(new MergeBatch()));
     this.filterDetails.push(this._clone(new MergeBatch()));
+    this.showMergeBox = false;
   }
 }

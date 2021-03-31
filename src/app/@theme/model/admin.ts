@@ -58,6 +58,19 @@ export class ApproveBy {
   }
 }
 
+export class ReceiveBy {
+  id: number;
+  name: string;
+  contact: string;
+  email: string;
+  constructor() {
+    this.id = null;
+    this.name = null;
+    this.contact = null;
+    this.email = null;
+  }
+}
+
 export class AddMachine {
   controlId: number;
   machineName: string;

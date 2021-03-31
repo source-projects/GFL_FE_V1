@@ -6,7 +6,6 @@ import { Registration, EmployeeDocument } from '../../../@theme/model/registrati
 import { CommonService } from '../../../@theme/services/common.service';
 import * as errorData from "../../../@theme/json/error.json";
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
-import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'ngx-add-edit-registration',
   templateUrl: './add-edit-registration.component.html',
@@ -49,7 +48,6 @@ export class AddEditRegistrationComponent implements OnInit {
     private registrationService: RegistrationService,
     private toastr: ToastrService,
     private route: Router,
-    private sanitizer: DomSanitizer
 
 
   ) { }
@@ -148,9 +146,10 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   updateEmployee(form) {
-    if (form.valid) {
-      this.formSubmitted = true;
-      this.disableButton = true;
+    this.formSubmitted = true;
+    this.disableButton = true;
+    if (form.valid || !this.document) {
+
       this.registration.id = this.currentEmpId;
       if (this.employeeDocumentArray.length > 0) {
 
@@ -223,10 +222,11 @@ export class AddEditRegistrationComponent implements OnInit {
   
 
   addEmployee(form) {
+    this.formSubmitted = true;
+
     if (form.valid) {
       this.loading = true;
 
-      this.formSubmitted = true;
       this.disableButton = true;
       this.registration.id = 0;
       // this.fileUpload();
