@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
+import { ToastrService } from "ngx-toastr";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { QualityGuard } from "../../@theme/guards/quality.guard";
 import { UtilsHelper } from "../../@theme/helper/utils.helper";
@@ -9,9 +10,8 @@ import * as errorData from "../../@theme/json/error.json";
 import { Page } from "../../@theme/model/page";
 import { CommonService } from "../../@theme/services/common.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
-import { StoreTokenService } from "../../@theme/services/store-token.service";
-import { ToastrService } from "ngx-toastr";
 import { QualityService } from "../../@theme/services/quality.service";
+import { StoreTokenService } from "../../@theme/services/store-token.service";
 @Component({
   selector: "ngx-quality",
   templateUrl: "./quality.component.html",
@@ -181,7 +181,7 @@ export class QualityComponent implements OnInit {
             partyCode: element.partyCode,
           }));
           this.loading = false;
-          if (this.qualityList.length > 0) this.updateDatatableFooterPage();
+          // if (this.qualityList.length > 0) this.updateDatatableFooterPage();
         } else {
           // this.toastr.error(data['msg'])
           this.loading = false;
@@ -251,38 +251,38 @@ export class QualityComponent implements OnInit {
       this.hiddenEdit = true;
     }
   }
-  get footerHeight() {
-    if (this.qualityList) {
-      return this.qualityList.length > 10 ? 50 : 0;
-    } else {
-      return 0;
-    }
-  }
-  public changePageSize() {
-    this.page.size = +this.pageSelector.value;
-    this.updateDatatableFooterPage();
-  }
-  /** update table footer page count */
-  public updateDatatableFooterPage() {
-    this.page.totalElements = this.qualityList.length;
-    this.page.totalPages = Math.ceil(this.qualityList.length / this.page.size);
-    this.page.pageNumber = 0;
-    this.pageSelected = 1;
-    if (this.DataTable) {
-      this.DataTable.offset = 0;
-    }
+  // get footerHeight() {
+  //   if (this.qualityList) {
+  //     return this.qualityList.length > 10 ? 50 : 0;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
+  // public changePageSize() {
+  //   this.page.size = +this.pageSelector.value;
+  //   this.updateDatatableFooterPage();
+  // }
+  // /** update table footer page count */
+  // public updateDatatableFooterPage() {
+  //   this.page.totalElements = this.qualityList.length;
+  //   this.page.totalPages = Math.ceil(this.qualityList.length / this.page.size);
+  //   this.page.pageNumber = 0;
+  //   this.pageSelected = 1;
+  //   if (this.DataTable) {
+  //     this.DataTable.offset = 0;
+  //   }
 
-    UtilsHelper.aftertableInit();
-  }
-  public pageChange(e) {
-    this.pageSelected = e.page;
-  }
-  public changePage() {
-    this.page.pageNumber = this.pageSelected - 1;
-    if (this.pageSelected == 1) {
-      this.updateDatatableFooterPage();
-    } else {
-      UtilsHelper.aftertableInit();
-    }
-  }
+  //   UtilsHelper.aftertableInit();
+  // }
+  // public pageChange(e) {
+  //   this.pageSelected = e.page;
+  // }
+  // public changePage() {
+  //   this.page.pageNumber = this.pageSelected - 1;
+  //   if (this.pageSelected == 1) {
+  //     this.updateDatatableFooterPage();
+  //   } else {
+  //     UtilsHelper.aftertableInit();
+  //   }
+  // }
 }
