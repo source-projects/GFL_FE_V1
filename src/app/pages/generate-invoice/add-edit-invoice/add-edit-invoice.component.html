@@ -36,22 +36,7 @@
                 </div>
             </div>
 
-            <!-- Batch Id -->
-            <!-- <div class="row">
-                            <div class="col-md-4">
-                             <div class="form-group">
-                                 <label class="required">Batch Id</label>
-                                 <ng-select name="batchId" [(ngModel)]='invoiceValues.batchId' required #batchId1="ngModel"
-                                     [ngClass]="{'is-invalid': (batchId1.invalid)&&(formSubmitted || batchId1.touched)}"
-                                     (change)="getMtrList($event)" placeholder="Batch Id" class="required-error-dropdown">
-                                     <ng-option *ngFor="let q of batch" [value]="q.batchId">{{q.batchId}}</ng-option>
-                                 </ng-select>
-                                 <div class="required-class" *ngIf="(formSubmitted && batchId1.invalid) || (batchId1.invalid && batchId1.touched)">
-                                     <span>Batch Id is required</span>
-                                 </div>
-                             </div>
-                         </div>
-                         </div> -->
+            
             <ngx-datatable [rows]="merge" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" [selected]="selected" (select)="onSelect($event)">
                 <ngx-datatable-column name="Batch Id" prop="batchId" [headerCheckboxable]="true" [checkboxable]="true" [maxWidth]="130">
                 </ngx-datatable-column>
