@@ -1,16 +1,11 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <!-- <div class="col-md-2 col-5 mobile-btn desktop-btn">
-                <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list txt-ov-elips">Generate
-                    Invoice</button>
-            </div> -->
+            
             <div class="col-md-9 col-12">
                 <h2 class="nb-text txt-ov-elips">Advance Payment</h2>
             </div>
-            <!-- <div class="col-md-1 col-3 mobile-btn desktop-btn dek-jus">
-                <button style="float:right;" class="btn btn-primary btn-md btn-list">PRINT</button>
-            </div> -->
+            
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -67,14 +62,7 @@
 
                             <ngx-datatable-column name="Type" prop="payTypeId" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
-                                        name='payTypeId{{rowIndex}}' class="tableForm" id="payTypeId"
-                                        [(ngModel)]="row.payTypeId" required
-                                        (keyup)="onKeyUp($event,rowIndex,0,'payTypeId')"
-                                        [id]="'advancePaymentList'+rowIndex+'-0'">
-                                        <option *ngFor="let type of paymentTypeList" [value]="type.id">
-                                            {{type.paymentType}}</option>
-                                    </select> -->
+            
                                     <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel" name='payTypeId{{rowIndex}}' class="tableForm" id="payTypeId" [(ngModel)]="row.payTypeId" required (keyup)="onKeyUp($event,rowIndex,0,'payTypeId')" [id]="'advancePaymentList'+rowIndex+'-0'"
                                         appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let type of paymentTypeList" [value]="type.id">
@@ -125,8 +113,6 @@
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
 
-                        <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
-                            class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
                         <button type="button" class="btn btn-primary btn-sm btn-design-cancel" routerLink="/pages/payment">CANCEL</button>
                         <button *ngIf="this.currentAdvancePaymentId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addAdvancePayment(advancePaymentForm)">SAVE</button>
                     </div>
