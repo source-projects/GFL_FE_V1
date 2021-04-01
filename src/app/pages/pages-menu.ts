@@ -188,7 +188,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Purchase',
-    icon: 'edit-2-outline',
+    icon: 'shopping-bag-outline',
     link: '/pages/purchase',
     hidden: false,
   },

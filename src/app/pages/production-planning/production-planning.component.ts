@@ -320,7 +320,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       }
     });
 
-    const modalRef = this.modalService.open(AddShadeComponent);
+    const modalRef = this.modalService.open(AddShadeComponent, {size: "lg"});
     if (
       (this.productionPlanning.partyId && this.productionPlanning.qualityId) ==
       undefined
