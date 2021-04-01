@@ -145,17 +145,26 @@
 
                             <div class="container">
                                 <div class="example-container pd-0-mr-15" [style.visibility]="showMergeBox? 'visible':'hidden'">
-                                    <h2 class="batch-text">Merged Batches</h2>
-
+                                    <div class="disply-flex">
+                                        <h2 class="batch-text">Merged Batches</h2>
+                                        
+                                    </div>
+                                   
                                     <div cdkDropList [cdkDropListData]="finalGrList" #finalPart="cdkDropList" [cdkDropListConnectedTo]="DROP_LIST_IDS" class="example-list" (cdkDropListDropped)="drop($event)">
                                         <div class="row">
                                             <div class="col-md-12 col-12">
 
-                                                <div *ngFor="let item of finalGrList" cdkDrag>
-                                                    <div class="example-box">
+                                                <div *ngFor="let item of finalGrList; let i = index">
+                                                    <div class="example-box position-rel">
                                                         Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                        <span>
+                                                            <button class="close btn-foucs-none pd-18" aria-label="Close" (click)="crossClick(item , i)">
+                                                            <span aria-hidden="true" class="close-icon">&times;</span>
+                                                        </button></span>
                                                     </div>
                                                 </div>
+
+
 
                                             </div>
                                         </div>
