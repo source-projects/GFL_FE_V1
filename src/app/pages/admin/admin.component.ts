@@ -168,7 +168,7 @@ export class AdminComponent implements OnInit {
 
   getAllPurchaseData(){
     
-    this.purchseService.getPurchase().subscribe(
+    this.purchseService.updateStatus(this.approved).subscribe(
       (data) => {
         if (data["success"]) {
           this.purchaseList = data["data"];
@@ -1249,19 +1249,7 @@ export class AdminComponent implements OnInit {
      )
    }
 
-   getApproved(event){
-     if(event){
-        this.purchseService.updateStatus(this.approved).subscribe(
-          (data) => {
-            if(data["success"]){
-              this.toastr.success(errorData.Update_Success);
-              //this.getAllPurchaseData();
-            }
-          },
-          (error) => {
-
-          }
-        )
-     }
+   getApproved(){
+    this.getAllPurchaseData();
    }
 }
