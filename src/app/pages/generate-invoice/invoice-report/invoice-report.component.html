@@ -65,7 +65,6 @@
 
             <div *ngIf="shortReport && shortReport.length > 0" id="shortReport">
                 <div *ngFor="let invoice of shortReport">
-                    <!-- Invoice No: {{invoice.invoiceNo}} Party: {{invoice.partyName}} Master: {{invoice.headName}} Total Mtr: {{invoice.totalBatchMtr}} Total Finish Mtr: {{invoice.totalFinishMtr}} Total Amount: {{invoice.amt}} -->
                     <div class="print-layout-report">
                         <h1 class="font-25">INVOICE REPORT</h1>
                         <table class="table process-tb table-bordered table-striped table-process-fnt dying-table  width-100">
@@ -134,7 +133,6 @@
 
                                 </table>
                             </div>
-                            <!-- BatchId: {{quality.batchId}} Quality ID: {{quality.qulityId}} Total Meter: {{quality.totalMtr}} Total Finished Meter: {{quality.totalFinishMtr}} Rate: {{quality.rate}} Total Amount: {{quality.amt}} -->
                         </div>
                     </div>
                 </div>
