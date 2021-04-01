@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NbToastrService } from "@nebular/theme";
 import * as errorData from "app/@theme/json/error.json";
 import { CommonService } from "app/@theme/services/common.service";
 import { SupplierService } from "app/@theme/services/supplier.service";
@@ -17,10 +16,7 @@ export class AddEditSupplierRateComponent implements OnInit {
   //data fatch supplier Name
   supplier: [];
   itemTypeData = ["Color" , ]
-  // itemTypeData = [
-  //   { id: "color", name: "Color" },
-  //   { id: "chemical", name: "Chemical" },
-  // ];
+  
   selectedType = 'Color';
   //Form Validation flag
   formSubmitted: boolean = false;
@@ -119,7 +115,6 @@ export class AddEditSupplierRateComponent implements OnInit {
         } 
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -131,12 +126,8 @@ export class AddEditSupplierRateComponent implements OnInit {
         if (data["success"]) {
           this.supplier = data["data"];
         } 
-        // else {
-        //   this.toastr.error(data["msg"]);
-        // }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
       }
     );
   }
@@ -153,8 +144,6 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.remark;
       delete this.formValues.paymentTerms;
       delete this.formValues.updatedBy;
-      //delete this.formValues.supplierRates[0].discountedRate;
-      //delete this.formValues.supplierRates[0].gstRate;
       this.formValues.supplierRates.forEach((e) => {
         e.createdBy = this.user.userId;
         e.userHeadId = this.userHead.userHeadId;
@@ -194,8 +183,6 @@ export class AddEditSupplierRateComponent implements OnInit {
       delete this.formValues.paymentTerms;
       delete this.formValues.createdBy;
       this.formValues.supplierRates.forEach((e) => {
-        //delete e.discountedRate;
-        //delete e.gstRate;
         e.updatedBy = this.user.userId;
         e.supplierId = this.formValues.supplierId;
       });

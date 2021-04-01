@@ -112,8 +112,7 @@ export class AddEditSupplierComponent implements OnInit {
             });
           },
           (error) => {
-            //toaster
-            // this.toastr.error(errorData.Serever_Error)
+            
           }
         );
     }
@@ -143,7 +142,6 @@ export class AddEditSupplierComponent implements OnInit {
             this.disableButton = false;
           },
           (error) => {
-            //toaster
             this.disableButton = false;
 
             this.toastr.error(errorData.Serever_Error);
@@ -178,7 +176,6 @@ export class AddEditSupplierComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          //toaster
           this.disableButton = false;
           this.toastr.error(errorData.Serever_Error);
           this.loading = false;

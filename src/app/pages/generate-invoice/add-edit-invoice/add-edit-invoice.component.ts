@@ -94,12 +94,10 @@ invoiceNo : any;
                   this.merge = this.finalbatch;
                   this.loading = false;
                 } else {
-                  // this.toastr.error(data["msg"]);
                   this.loading = false;
                 }
               },
               (error) => {
-                // this.toastr.error(errorData.Serever_Error);
                 this.loading = false;
                 this.merge = [];
               }
@@ -109,14 +107,12 @@ invoiceNo : any;
             this.selected = data["data"].batchWithControlIdList;
             this.finalcheckedrows = [...this.selected];
           } else {
-            // this.toastr.error(data["msg"]);
             this.loading = false;
             this.disableButton = false;
             this.merge = [];
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
           this.disableButton = false;
           this.merge = [];
@@ -135,12 +131,10 @@ invoiceNo : any;
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -162,13 +156,11 @@ invoiceNo : any;
               this.selected = [];
               this.loading = false;
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
               this.merge = []
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
             this.merge = [];
           }
@@ -210,7 +202,6 @@ invoiceNo : any;
                 async data => {
                   if (data['success']) {
                     this.invoiceNo = data["data"];
-                    // this.route.navigate(["/pages/generate_invoice"]);
                     this.toastr.success(errorData.Add_Success);
                     this.merge = [];
                     this.disableButton = false;
@@ -243,7 +234,6 @@ invoiceNo : any;
    print(invoiceNo) {
     const queryParams: any = {};
    
-      // queryParams.myArray = JSON.stringify(arrayOfValues);
       queryParams.invoice = invoiceNo;
       const navigationExtras: NavigationExtras = {
         queryParams,
