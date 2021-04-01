@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { ColorService } from "../../../@theme/services/color.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
-import { ToastrService } from "ngx-toastr";
-import * as errorData from "../../../@theme/json/error.json";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "ngx-issue-color-box",
@@ -42,12 +41,10 @@ export class IssueColorBoxComponent implements OnInit {
           this.itemList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       error => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -61,7 +58,6 @@ export class IssueColorBoxComponent implements OnInit {
 
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
@@ -81,12 +77,10 @@ export class IssueColorBoxComponent implements OnInit {
             this.loading = false;
           } else {
             this.colorBoxList = [];
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         error => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
