@@ -2237,6 +2237,17 @@ input[type="number"]::-webkit-outer-spin-button {
     .fn-tab-title .tabset li a span {
         padding: 12px
     }
+    .fn-tab-title ul {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        display: -webkit-box !important;
+    }
+    .fn-tab-title nb-tab {
+        padding: 15px 0 !important;
+    }
+    .mobile-width-100 .mobile-100 img {
+        width: 100%;
+    }
 }
 
 @media (min-width: 992px) {

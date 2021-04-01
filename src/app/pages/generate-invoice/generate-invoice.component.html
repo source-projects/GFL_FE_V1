@@ -1,17 +1,17 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <div class="col-md-2 col-3 display-flex-start">
+            <div class="col-md-2 col-3 display-flex-start max-width-device">
                 <button [routerLink]="['/pages/generate_invoice']" class="btn btn-primary btn-md btn-design txt-ov-elips">Generate
                     Invoice</button>
             </div>
             <div class="col-md-8 col-3">
                 <h2 class="nb-text txt-ov-elips">Generate Invoice</h2>
             </div>
-            <div class="col-md-1 col-3 display-flex-start desktop-justify-flexend">
+            <div class="col-md-1 col-2 display-flex-start desktop-justify-flexend mobile-pd-0">
                 <button class="btn btn-primary btn-md btn-design" (click)="goToReport()">REPORT</button>
             </div>
-            <div class="col-md-1 col-3 display-flex-start desktop-justify-flexend">
+            <div class="col-md-1 col-2 display-flex-start desktop-justify-flexend mobile-pd-0">
                 <button class="btn btn-primary btn-md btn-design" (click)="print()">PRINT</button>
             </div>
         </div>

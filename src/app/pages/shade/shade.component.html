@@ -2,11 +2,10 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <div class="col-md-1 col-3 display-flex-start">
-                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/shade']"
-                    [disabled]="disabled">Add</button>
+            <div class="col-md-1 col-3 display-flex-start max-width-device">
+                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/shade']" [disabled]="disabled">Add</button>
             </div>
-            <div class="col-md-9 col-7">
+            <div class="col-md-9 col-8">
                 <h2 class="nb-text">Shade</h2>
             </div>
             <div class="col-md-2 col-2 display-flex-start desktop-justify-flexend">
@@ -18,25 +17,19 @@
         <div class="row">
             <div class="col-md-6">
                 <nb-radio-group [(ngModel)]="radioSelect" class="nb-radio">
-                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
-                        (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled" (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
                 </nb-radio-group>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
         <!--  ngx- DataTable  -->
-        <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31"
-            [footerHeight]="40">
-            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false"
-                [maxWidth]="90">
+        <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
+            <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false" [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                        [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden"
-                        (click)="deleteShade(row.id)"></nb-icon>
+                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [hidden]="hiddenEdit" [routerLink]="['/pages/shade/edit',row.id]"></nb-icon>
+                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" [hidden]="hidden" (click)="deleteShade(row.id)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Party Shade No." prop="partyShadeNo"></ngx-datatable-column>
@@ -45,8 +38,7 @@
             <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
             <ngx-datatable-column name="Color Tone " prop="colorTone">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <input [(colorPicker)]="row.colorTone" [style.background]="row.colorTone" [value]="row.colorTone"
-                        disabled="true" class="width-100" />
+                    <input [(colorPicker)]="row.colorTone" [style.background]="row.colorTone" [value]="row.colorTone" disabled="true" class="width-100" />
                 </ng-template>
             </ngx-datatable-column>
 
