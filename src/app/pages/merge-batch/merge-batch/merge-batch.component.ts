@@ -76,6 +76,11 @@ export class MergeBatchComponent implements OnInit {
           }
         });
     }
+    if (this.refreshCount > 10) {
+      this.refreshCount = 0;
+    } else {
+      this.refreshCount++;
+    }
   }
 
   qualitySelected(event, i) {
@@ -224,5 +229,18 @@ export class MergeBatchComponent implements OnInit {
     this.filterDetails.push(this._clone(new MergeBatch()));
     this.filterDetails.push(this._clone(new MergeBatch()));
     this.showMergeBox = false;
+  }
+
+  crossClick(item , i){
+    this.finalGrList.splice(i,1);
+    this.filterDetails.forEach(element => {
+      
+        if(element.batchId == item.batchId){
+          element.grList.push(item);
+        }
+      });
+
+
+   
   }
 }

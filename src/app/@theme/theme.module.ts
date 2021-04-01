@@ -48,6 +48,7 @@ import { ShowOnlyChemicalPipe } from "./pipes/showOnlyChemicalList.pipe";
 import { FilterSelectedItemPipe } from "./pipes/dyingProcess.pipe";
 import { FilterSelectedBatchPipe } from "./pipes/filter-selected-batch.pipe";
 import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
+import { FilterSelectedSupplierPipe } from "./pipes/filter-selected-supplier.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -82,6 +83,7 @@ const PIPES = [
   FilterSelectedProcessPipe,
   FilterSelectedShadePipe,
   FilterProcessNamePipe,
+  FilterSelectedSupplierPipe,
   FilterItemPipe,
   FilterByIsColorPipe,
   ShowOnlyChemicalPipe,

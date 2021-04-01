@@ -763,6 +763,7 @@ export class AddEditUserComponent implements OnInit {
       this.setPermissionFalse(i);
       this.permissionArray[i].selectAll = false;
     }
+    this.user.isMaster = true;
   }
 
   addUser(myForm) {
@@ -785,6 +786,9 @@ export class AddEditUserComponent implements OnInit {
             this.allRightsFlag = false;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
+            this.getUserHeadList();
+            
+
           } else {
             this.toastr.error(data["msg"]);
           }
