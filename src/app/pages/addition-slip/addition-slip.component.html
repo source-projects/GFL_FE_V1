@@ -1,13 +1,5 @@
 <nb-card class="nb-style">
-    <!-- <nb-card-header class="nb-header">
-        <div>
-            <div class="row">
-                <div class="col-md-11 col-10">
-                    <h2 class="nb-text">Addition Slip</h2>
-                </div>
-            </div>
-        </div>
-    </nb-card-header> -->
+    
     <nb-card-body>
 
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
@@ -132,39 +124,6 @@
 
                             </div>
                         </div>
-
-
-
-                        <!-- <div *ngIf="showJetListFlag" class="modal-body mb-4">
-                            <div class="form-group">
-                                <label class="required">Select Jet: </label>
-                                <ng-select name="jet" [(ngModel)]='jetid' required #jet1="ngModel" (change)="jetSelected($event)"
-                                    placeholder="Jet Number">
-                                    <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
-                                    </ng-option>
-                                </ng-select>
-                                <div class="required-class" *ngIf="jetCapacity && jetId">
-                                    <span>Weight is greater than selected jet capacity</span>
-                                </div>
-                            </div>
-                            <div class="row" *ngIf="jetSelectedFlag">
-                                <div class="col-md-12">
-                                    <div class="form-group mb-0">
-                                        <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
-                                            class="example-list main-table-drag jet-plan">
-                                            <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
-                                                <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
-                                                    class="btn-bg-color">
-                                                    {{jetData.batchId}}
-                                                </button>
-                                            </div>
-                                        </div>
-                    
-                    
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
 
                     </form>
                 </div>

@@ -119,13 +119,7 @@ export class ShuffleComponent implements OnInit {
         if (data["success"]) {
           this.party = data["data"];
         }
-        else {
-          // this.toastr.error(data['msg'])
-        }
       },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error)
-      }
     );
   }
 
@@ -136,13 +130,7 @@ export class ShuffleComponent implements OnInit {
           this.quality = data["data"];
 
         }
-        else {
-          // this.toastr.error(data['msg'])
-        }
       },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error)
-      }
     );
   }
 
@@ -218,79 +206,8 @@ export class ShuffleComponent implements OnInit {
 
   }
 
-  // dropSelect(event) {
-  //   this.formSubmitted = true;
-  //   this.pId = this.shuffleForm.controls['partyName'].value;
-  //   this.qId = this.shuffleForm.controls['qualityName'].value;
-
-
-  //   if (this.shuffleForm.controls['partyName'].value == null || this.shuffleForm.controls['qualityName'].value == null) {
-
-  //     this.shuffleForm.controls['batchName1'].reset();
-  //     this.shuffleForm.controls['batchName2'].reset();
-
-  //     this.batches = [];
-  //     this.part1 = [];
-  //     this.part2 = [];
-  //     this.qualityParty = [];
-  //     this.qualityParty2 = [];
-  //     this.qualityParty2[0] = [];
-  //     this.quality=[];
-  //     // this.getPartyList();
-  //     // this.getQualtiyList();
-  //   }
-
-  //   if(this.pId!=null)
-  //   {
-  //     this.qualityService.getQualityByParty(this.pId).subscribe(
-
-  //       (data) => {
-  //         if (data["success"]) {
-
-  //           this.quality = data.data.qualityDataList;
-
-  //         }
-  //         else {
-  //           this.toastr.error(data['msg'])
-  //         }
-  //       },
-  //       (error) => {
-  //         this.toastr.error(errorData.Serever_Error)
-  //       }
-  //     );
-
-  //   }
-  //   if(this.qId!=null)
-  //   {
-  //     this.programService.getPartyByQuality(this.qId).subscribe(
-
-  //       (data) => {
-  //         if (data["success"]) {
-
-  //           this.party = data.data;
-
-  //         }
-  //         else {
-  //           this.toastr.error(data['msg'])
-  //         }
-  //       },
-  //       (error) => {
-  //         this.toastr.error(errorData.Serever_Error)
-  //       }
-  //     );
-
-  //   }
-  //   if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid) {
-  //     this.getVal();
-  //   }
-
-
-  // }
   dropSelectQuality(event) {
     this.formSubmitted = true;
-
-    // let temp = this.shuffleForm.controls['qualityName'].value;
-    // this.qId=QualityId;
 
     this.qId = this.shuffleForm.controls['qualityName'].value;
     if (event == undefined) {
@@ -311,7 +228,6 @@ export class ShuffleComponent implements OnInit {
       this.shuffleForm.controls['totalmtr1'].reset();
       this.shuffleForm.controls['totalmtr2'].reset();
 
-      // this.quality=[];
       this.getPartyList();
 
     }
@@ -412,13 +328,7 @@ export class ShuffleComponent implements OnInit {
             this.qualityParty[0].splice(this.index, 1);
           }
         }
-        // else {
-        //   this.toastr.error(data['msg'])
-        // }
       },
-      (error) => {
-        // this.toastr.error(errorData.Serever_Error)
-      }
     );
   }
 
@@ -554,36 +464,13 @@ export class ShuffleComponent implements OnInit {
 
 
           }
-          else {
-            // this.toastr.error(data['msg'])
-          }
           this.setBatchFlag = 1;
         },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error)
-        }
       );
     }
 
     else if (this.rval == 2) {
 
-      // if (this.shuffleForm.controls['batchName2'].valid) {
-      //   this.batchList.getBatchById(currentCId, currentbId).subscribe(
-      //     (data) => {
-      //       if (data["success"]) {
-      //         this.part2 = data["data"];
-      //       }
-      //       else {
-      //         this.toastr.error(data['msg'])
-      //       }
-
-      //     },
-      //     (error) => {
-      //       this.toastr.error(errorData.Serever_Error)
-      //     }
-      //   );
-      // }
-      // if (this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag == 0) {
       if (this.shuffleForm.controls['batchName1'].valid) {
 
         this.setBatchFlag = 1;
@@ -597,13 +484,7 @@ export class ShuffleComponent implements OnInit {
             this.shuffleForm.controls['totalrowsPart2'].setValue(this.part2.length);
 
             }
-            else {
-              // this.toastr.error(data['msg'])
-            }
           },
-          (error) => {
-            // this.toastr.error(errorData.Serever_Error)
-          }
         );
       }
 
@@ -624,14 +505,8 @@ export class ShuffleComponent implements OnInit {
             this.shuffleForm.controls['totalrowsPart1'].setValue(this.batches.length);
             this.shuffleForm.controls['totalrowsPart2'].setValue(this.part2.length);
           }
-          else {
-            // this.toastr.error(data['msg'])
-          }
           this.setBatchFlag = 1;
         },
-        (error) => {
-          // this.toastr.error(errorData.Serever_Error)
-        }
       );
     }
 
@@ -650,31 +525,13 @@ export class ShuffleComponent implements OnInit {
 
             }
             else {
-              // this.toastr.error(data['msg'])
             }
 
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error)
           }
         );
       }
-      // if (this.shuffleForm.controls['batchName1'].valid && this.setBatchFlag == 0) {
-      //   this.setBatchFlag = 1;
-      //   this.batchList.getBatchById(currentCId, currentbId).subscribe(
-      //     (data) => {
-      //       if (data["success"]) {
-      //         this.batches = data["data"];
-      //       }
-      //       else {
-      //         this.toastr.error(data['msg'])
-      //       }
-      //     },
-      //     (error) => {
-      //       this.toastr.error(errorData.Serever_Error)
-      //     }
-      //   );
-      // }
 
     }
   }
@@ -724,7 +581,6 @@ export class ShuffleComponent implements OnInit {
 
           this.objectOfBatch2 = {
             "batchDataList": this.part2,
-            // "batchId": this.batchId1.concat("_Split_Part2"),
             "batchId": newBatch,
             "controlId": this.cId1,
             "isSplit": true
@@ -771,7 +627,6 @@ export class ShuffleComponent implements OnInit {
     else {
       this.formSubmitted = true;
 
-      // this.shuffleForm.value.updatedBy = this.batches;
       if (this.shuffleForm.controls['partyName'].valid && this.shuffleForm.controls['qualityName'].valid && this.shuffleForm.controls['batchName1'].valid && this.shuffleForm.controls['batchName2'].valid) {
 
 

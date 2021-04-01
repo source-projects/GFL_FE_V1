@@ -19,7 +19,6 @@ export class GenerateInvoiceComponent implements OnInit {
   copyInvoiceList = [];
   Invoice = [];
   finalcheckedrows = [];
-  // invoiceValues: Invoice = new Invoice();
 
   hidden: boolean = true;
   hiddenEdit: boolean = true;
@@ -90,12 +89,10 @@ export class GenerateInvoiceComponent implements OnInit {
             batchList: element.batchList,
           }));
         } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -127,6 +124,5 @@ export class GenerateInvoiceComponent implements OnInit {
     arr.forEach((ele) => {
       this.finalcheckedrows.push(ele.invoiceNo);
     });
-    // this.finalcheckedrows = arr;
   }
 }

@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)=" onCancelJet()">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveJet(addJetData)" [disabled]="disabled" [disabled]="disabled">SAVE</button>
                         </div>
@@ -65,7 +65,7 @@
             <nb-tab tabTitle="Company">
                 <form #addCompanyData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label>Company Name</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Company Name." [(ngModel)]="addCompany.name" #companyName="ngModel" [ngClass]="{'is-invalid':(companyName.invalid) &&(formSubmitted || companyName.touched) }" required>
@@ -74,14 +74,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelCompany()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveCompany(addCompanyData)" [disabled]="disabled">SAVE</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                    <!-- <div class="row">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelCompany()">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveCompany(addCompanyData)" [disabled]="disabled">SAVE</button>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList" [headerHeight]="31" [footerHeight]="31">
@@ -100,7 +106,7 @@
             <nb-tab tabTitle="Department">
                 <form #addDepartmentData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label>Department Name</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Department Name." [(ngModel)]="addDepartment.name" #DepartmentName="ngModel" [ngClass]="{'is-invalid':(DepartmentName.invalid) &&(formSubmitted || DepartmentName.touched) }" required>
@@ -109,15 +115,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDepartment()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDepartment(addDepartmentData)" [disabled]="disabled">SAVE</button>
+                            </div>
 
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDepartment()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDepartment(addDepartmentData)" [disabled]="disabled">SAVE</button>
                         </div>
+
                     </div>
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="departmentList" [headerHeight]="31" [footerHeight]="31">
@@ -136,7 +143,7 @@
             <nb-tab tabTitle="Quality">
                 <form #addQualityData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label>Quality Name</label>
                                 <input name="qualityName" type="text" class="form-control" placeholder="Enter Quality Name." [(ngModel)]="addQuality.qualityName" #qualityName="ngModel" [ngClass]="{'is-invalid':(qualityName.invalid) &&(formSubmitted || qualityName.touched) }" required>
@@ -145,14 +152,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelQuality()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveQuality(addQualityData)">SAVE</button>
+                        <div class="col-md-6 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelQuality()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveQuality(addQualityData)">SAVE</button>
+                            </div>
                         </div>
                     </div>
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="qualityList" [headerHeight]="31" [footerHeight]="31">
@@ -172,7 +179,7 @@
             <nb-tab tabTitle="Machine">
                 <form #addMachineData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label>Machine Name</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Machine Name" [(ngModel)]="addMachine.machineName" #machineName="ngModel" [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }" required>
@@ -181,7 +188,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label>Machine Category</label>
                                 <ng-select name="category" class="dropdown-name" placeholder="select Machine Category" [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel" [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
@@ -195,14 +202,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend text-btn-right">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachine()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachine(addMachineData)" [disabled]="disabled">SAVE</button>
+                        <div class="col-md-4 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachine()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachine(addMachineData)" [disabled]="disabled">SAVE</button>
+                            </div>
                         </div>
                     </div>
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList" [headerHeight]="31" [footerHeight]="31">
@@ -227,7 +234,7 @@
             <nb-tab tabTitle="Machine Category">
                 <form #addMachineCategoryData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label>Machine Category</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Machine Category" [(ngModel)]="addMachineCategory.name" #machineCategoryName="ngModel" [ngClass]="{'is-invalid':(machineCategoryName.invalid) &&(formSubmitted || machineCategoryName.touched) }"
@@ -237,16 +244,14 @@
                                 </div>
                             </div>
                         </div>
-
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachineCategory()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachineCategory(addMachineCategoryData)" [disabled]="disabled">SAVE</button>
+                        <div class="col-md-6 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelMachineCategory()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveMachineCategory(addMachineCategoryData)" [disabled]="disabled">SAVE</button>
+                            </div>
                         </div>
                     </div>
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList" [headerHeight]="31" [footerHeight]="31">
@@ -268,7 +273,7 @@
             <nb-tab tabTitle="Designation">
                 <form #addDesignationData="ngForm">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label>Designation</label>
                                 <input name="name" type="text" class="form-control" placeholder="Enter Designation" [(ngModel)]="addDesignation.designation" #designationName1="ngModel" [ngClass]="{'is-invalid':(designationName1.invalid) &&(formSubmitted || designationName1.touched) }"
@@ -278,16 +283,16 @@
                                 </div>
                             </div>
                         </div>
-
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDesignation()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDesignation(addDesignationData)" [disabled]="disabled">SAVE</button>
+                        <div class="col-md-6 col-12">
+                            <div class="mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelDesignation()">CANCEL</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveDesignation(addDesignationData)" [disabled]="disabled">SAVE</button>
+                            </div>
                         </div>
+
+
                     </div>
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="designationList" [headerHeight]="31" [footerHeight]="31">
@@ -335,7 +340,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelApproveBy()">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveApproveBy(addApproveByData)" [disabled]="disabled">SAVE</button>
                         </div>
@@ -358,72 +363,79 @@
             </nb-tab>
 
             <nb-tab tabTitle="Sequence">
-                <form #addInvoiceSequence1="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Invoice Sequence</label>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input [disabled]="saveHidden" name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence" [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel" [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
-                                            required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onEdit()" [hidden]="hiddenEdit"></nb-icon>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form #addInvoiceSequence1="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Invoice Sequence</label>
+                                        <div class="row">
+                                            <div class="col-md-10 col-11">
+                                                <input [disabled]="saveHidden" name="name" type="text" class="form-control" placeholder="Enter Invoice Sequence" [(ngModel)]="addInvoiceSequence.sequence" #invoiceSequence1="ngModel" [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-2 col-1">
+                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onEdit()" [hidden]="hiddenEdit"></nb-icon>
 
+                                            </div>
+                                        </div>
+
+                                        <div class="input-required" *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
+                                            Invoice Sequence is required.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="input-required" *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
-                                    Invoice Sequence is required.
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 col-12">
+                                    <div class="mobile-btn-center text-btn-right">
+                                        <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
+                                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-
+                        </form>
                     </div>
+                    <div class="col-md-6">
+                        <form #addBatchSequence1="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Batch Sequence</label>
+                                        <div class="row">
+                                            <div class="col-md-10 col-11">
+                                                <input [disabled]="batchSaveHidden" name="name" type="text" class="form-control" placeholder="Enter batch sequence" [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel" [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-2 col-1">
+                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit"></nb-icon>
 
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled" [hidden]="saveHidden">SAVE</button>
-                        </div>
-                    </div>
-                </form>
+                                            </div>
+                                        </div>
 
-                <form #addBatchSequence1="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Batch Sequence</label>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input [disabled]="batchSaveHidden" name="name" type="text" class="form-control" placeholder="Enter batch sequence" [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel" [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
-                                            required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit"></nb-icon>
-
+                                        <div class="input-required" *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
+                                            Batch Sequence is required.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="input-required" *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
-                                    Batch Sequence is required.
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-11 col-12 mobile-btn-center text-btn-right">
+                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled" [hidden]="batchSaveHidden">SAVE</button>
                                 </div>
                             </div>
-                        </div>
-
-
+                        </form>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled" [hidden]="batchSaveHidden">SAVE</button>
-                        </div>
-                    </div>
-                </form>
-
+                </div>
 
 
             </nb-tab>
@@ -462,7 +474,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 display-flex-start desktop-justify-flexend">
+                        <div class="col-md-12 mobile-btn-center text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelReceiveBy()">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveReceiveBy(addReceiveByData)" [disabled]="disabled">SAVE</button>
                         </div>
@@ -487,8 +499,8 @@
             <nb-tab tabTitle="Purchase">
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <nb-checkbox [(ngModel)]="approved" [name]="approved" (change)="getApproved($event.target.checked)">Approved</nb-checkbox>
+                    <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
+                        <nb-checkbox [(ngModel)]="approved" [name]="approved" (change)="getApproved()">Approved</nb-checkbox>
                     </div>
                 </div>
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList" [headerHeight]="31" [footerHeight]="31">

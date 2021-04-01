@@ -177,13 +177,10 @@ export class SupplierComponent implements OnInit {
             }))
           }
           
-          //this.router.navigate(['pages/supplier']);
         }
         this.loading = false;
       },
       error => {
-        //toaster
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     )

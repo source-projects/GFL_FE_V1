@@ -194,6 +194,9 @@ export class GenerateReportComponent implements OnInit {
       this.getReportData();
       this.checkPartySelected();
       
+      this.Production = true;
+      this.notProduction = true;
+      this.finished = true;
 
   }
 }
