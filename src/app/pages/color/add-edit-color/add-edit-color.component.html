@@ -100,11 +100,6 @@
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Item Name" prop="color.itemId" [sortable]="false" [width]="250">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <!-- <select #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)">
-                                        <option *ngFor="let s of supplierListRate" [value]="s.id">
-                                            {{s.itemName}}
-                                        </option>
-                                    </select> -->
                                     <ng-select #data #itemName1="ngModel" name='itemName{{rowIndex}}' class="tableForm" id="itemName" [(ngModel)]="row.itemId" required [id]="'colorList'+rowIndex+'-0'" (change)="itemSelected(rowIndex,0)" appendTo="body" class="ng-select-br-none">
                                         <ng-option *ngFor="let s of supplierListRate" [value]="s.id">
                                             {{s.itemName}}</ng-option>
