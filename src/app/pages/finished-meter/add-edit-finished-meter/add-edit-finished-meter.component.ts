@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import * as errorData from "app/@theme/json/error.json";
-import { BatchData, FinishedMeter } from "app/@theme/model/finished-meter";
-import { CommonService } from "app/@theme/services/common.service";
-import { FinishedMeterService } from "app/@theme/services/finished-meter.service";
-import { PartyService } from "app/@theme/services/party.service";
-import { QualityService } from "app/@theme/services/quality.service";
+import * as errorData from "../../../@theme/json/error.json";
+import { BatchData, FinishedMeter } from "../../../@theme/model/finished-meter";
+import { CommonService } from "../../../@theme/services/common.service";
+import { FinishedMeterService } from "../../../@theme/services/finished-meter.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { QualityService } from "../../../@theme/services/quality.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -325,6 +325,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
             obj.controlId = element.controlId;
             obj.finishMtr = mtrs[i];
             obj.isExtra = true;
+            obj.mergeBatchId = element.mergeBatchId
             let list = [...this.finishedMeterForm.batchData];
             list.push(obj);
             this.finishedMeterForm.batchData = [...list];
