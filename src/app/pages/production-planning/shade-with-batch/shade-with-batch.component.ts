@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { ShadeService } from "../../../@theme/services/shade.service";
-import * as errorData from "../../../@theme/json/error.json";
 import { ToastrService } from "ngx-toastr";
+import * as errorData from "../../../@theme/json/error.json";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
+import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
 
 @Component({
   selector: "ngx-shade-with-batch",

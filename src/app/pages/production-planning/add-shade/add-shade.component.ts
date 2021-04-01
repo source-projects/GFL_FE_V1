@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ShadeService } from "../../../@theme/services/shade.service";
-import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
-import { ShadeWithBatchComponent } from "../shade-with-batch/shade-with-batch.component";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
-import { Router } from "@angular/router";
 import { AdminService } from "../../../@theme/services/admin.service";
-// import { AdminService } from '../../../@theme/services/admin.service';
+import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
+import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
 
 @Component({
   selector: "ngx-add-shade",
@@ -94,12 +91,10 @@ export class AddShadeComponent implements OnInit {
             this.shadeList = data["data"];
             this.loading = false;
           } else {
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error);
           this.loading = false;
         }
       );
@@ -113,7 +108,6 @@ export class AddShadeComponent implements OnInit {
         this.approveByList = data["data"];
         this.loading = false;
       } else {
-        // this.toastr.error(data["msg"]);
         this.loading = false;
       }
     });
@@ -144,7 +138,6 @@ export class AddShadeComponent implements OnInit {
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
