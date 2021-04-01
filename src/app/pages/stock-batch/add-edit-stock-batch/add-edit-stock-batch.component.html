@@ -102,13 +102,7 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <!-- <div class="col-md-4 mobile-mr-bt">
-                            <label class="required">Bill No</label>
-                            <input type="text" name="billNo" class="form-control" #billNo1="ngModel" [(ngModel)]='stockBatch.billNo' required pattern="[A-Za-z0-9]*" [ngClass]="{'is-invalid':(billNo1.invalid)&&(formSubmitted || billNo1.touched)}" min="0">
-                            <div class="input-required" *ngIf="(billNo1.invalid)&&(formSubmitted || billNo1.touched)">
-                                <span>Bill no. is required and should not contain special characters</span>
-                            </div>
-                        </div> -->
+                        
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Receive Date:</label>
                             <input name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
@@ -190,7 +184,6 @@
                                                     [(ngModel)]='block.batchId' [disabled]="true"
                                                     class="form-control size-small" fieldsize="small" nbinput
                                                     name="batchNo{{i}}" min="0" (click)="batchInsertCheck()">
-                                                <!--(focusout)="checkDuplicates(i, $event)"  [disabled]="flag || production_flag[i]"-->
                                                 <div class="input-required" style="display: block !important;"
                                                     *ngIf="block.isNotUnique">
                                                     <span>Batch id already exists</span>
@@ -316,7 +309,6 @@
                             <button *ngIf="!addFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button"
                                 [routerLink]="['/pages/stock-batch/view']">CANCEL</button>
 
-                            <!-- <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple" *ngIf="addFlag" (click)="rearrangeBatchNo()">Rearrange Batch No.</button> -->
                             <button *ngIf="addFlag" type="button"
                                 class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="addUpdateStockBatch(myForm, false)" [disabled]="disableButton">SAVE</button>

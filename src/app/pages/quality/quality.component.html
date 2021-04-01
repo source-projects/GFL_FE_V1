@@ -28,8 +28,6 @@
             </div>
         </div>
 
-        <!-- [limit]="page.size" [offset]="page.pageNumber" [count]="page.totalElements" -->
-        <!--  ngx- DataTable  -->
         <ngx-datatable #DataTable [rows]="qualityList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
             [footerHeight]="31">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id"
@@ -45,47 +43,7 @@
             <ngx-datatable-column name="Party Code" prop="partyCode"></ngx-datatable-column>
             <ngx-datatable-column name="wt Per 100m" prop="wtPer100m"></ngx-datatable-column>
             <ngx-datatable-column name="Rate" prop="rate"></ngx-datatable-column>
-            <!-- <ngx-datatable-footer>
-                <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
-                    let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset"
-                    let-isVisible="isVisible">
-                    <div class="d-flex justify-content-between flex-fill" *ngIf="page.totalPages >= 0">
-                        <div class="d-flex align-items-center">
-                            <div class="table-items d-flex align-items-center mr-36">
-                                Items per page:
-                                <div class=" ml-8">
-                                    <select class="custom-select border-less" [formControl]="pageSelector"
-                                        (change)="changePageSize()">
-                                        <option *ngFor="let limit of limitArray;" [value]="limit">{{ limit }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <span>
-                                {{(rowCount > 0 ? (( offset * pageSize ) + 1 ) : 0)}} -
-                                {{(rowCount> (curPage*pageSize)) ? (curPage*pageSize):(rowCount)}} of
-                                {{(rowCount > 1) ? (rowCount) +' items' : (rowCount) +' item'}}
-                            </span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <select class="custom-select border-less" [(ngModel)]="pageSelected"
-                                (change)="changePage()">
-                                <option *ngFor='let num of page.totalPages | counterPipe;let i= index' [value]="i+1">
-                                    Page {{ i+1 }} of {{page.totalPages}}
-                                </option>
-                            </select>
-                            <div class="ml-8">
-                                <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left icon icon-angle-left'"
-                                    [pagerRightArrowIcon]="'datatable-icon-right icon icon-angle-right'"
-                                    [page]="curPage" [size]="pageSize" [count]="rowCount"
-                                    [hidden]="!((rowCount / pageSize) > 1)"
-                                    (change)="DataTable.onFooterPage($event);pageChange($event)">
-                                </datatable-pager>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </ngx-datatable-footer> -->
+            
         </ngx-datatable>
 
     </nb-card-body>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { StockBatchGuard } from "../../@theme/guards/stock-batch.guard";
@@ -8,7 +9,6 @@ import { CommonService } from "../../@theme/services/common.service";
 import { ExportService } from "../../@theme/services/export.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-stock-batch",
@@ -72,7 +72,6 @@ export class StockBatchComponent implements OnInit {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
     this.getAddAcess();
-    // this.getStockBatchList(this.userId, "own");
     this.getViewAccess();
     this.getDeleteAccess();
     this.getDeleteAccess1();
@@ -183,7 +182,6 @@ export class StockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );

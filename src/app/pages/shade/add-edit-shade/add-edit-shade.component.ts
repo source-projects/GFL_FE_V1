@@ -112,12 +112,10 @@ export class AddEditShadeComponent implements OnInit {
           this.partyList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(errorData.Internal_Error);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -138,16 +136,13 @@ export class AddEditShadeComponent implements OnInit {
             this.getAllSupplier();
             this.loading = false;
           } else {
-            // this.toastr.error(data["msg"]);
             this.loading = false;
           }
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -161,12 +156,10 @@ export class AddEditShadeComponent implements OnInit {
           this.supplierListRate = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -180,12 +173,10 @@ export class AddEditShadeComponent implements OnInit {
           this.processList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -199,12 +190,10 @@ export class AddEditShadeComponent implements OnInit {
           this.qualityList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -252,13 +241,11 @@ export class AddEditShadeComponent implements OnInit {
           this.loading = false;
           this.disableButton = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
           this.disableButton = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
         this.disableButton = false;
       }
@@ -404,7 +391,6 @@ export class AddEditShadeComponent implements OnInit {
       }
     } else {
       this.shadeObj.shadeDataList[rowIndex].concentration = null;
-      //this.toastr.error("Select Quality");
       return;
     }
   }
@@ -590,7 +576,6 @@ export class AddEditShadeComponent implements OnInit {
               this.disableButton = false;
             },
             (error) => {
-              //this.toastr.error(errorData.Serever_Error);
               this.disableButton = false;
             }
           );
