@@ -79,7 +79,6 @@ export class ColorComponent implements OnInit {
 
     this.getViewAccess();
     this.getAddAcess();
-    // this.getColor(this.userId, "own");
     this.getDeleteAccess();
     this.getDeleteAccess1();
     this.getEditAccess();
@@ -194,14 +193,10 @@ export class ColorComponent implements OnInit {
             billAmount: element.billAmount,
           }));
         }
-        // else {
-        //   // this.toastr.error(data['msg']);
-
-        // }
+        
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

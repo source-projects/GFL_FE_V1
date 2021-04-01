@@ -178,7 +178,6 @@ export class UserComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
