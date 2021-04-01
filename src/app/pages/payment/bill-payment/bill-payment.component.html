@@ -1,16 +1,11 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <!-- <div class="col-md-2 col-5 mobile-btn desktop-btn">
-                <button routerLink='add' style="float:right" class="btn btn-primary btn-md btn-list txt-ov-elips">Generate
-                    Invoice</button>
-            </div> -->
+            
             <div class="col-md-9 col-12">
                 <h2 class="nb-text txt-ov-elips">Bill Payment</h2>
             </div>
-            <!-- <div class="col-md-1 col-3 mobile-btn desktop-btn dek-jus">
-                <button style="float:right;" class="btn btn-primary btn-md btn-list">PRINT</button>
-            </div> -->
+            
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -86,7 +81,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <!-- <input type="number" name="billTotal" class="form-control" [(ngModel)]='paymentValues.totalBill' required placeholder="Bill Total"> -->
                                         {{paymentValues.totalBill}}
                                     </div>
                                 </div>
@@ -323,7 +317,6 @@
                                 <div class="col-md-7">
                                     <div class="form-group center-txt-title">
                                         {{paymentValues.amtToPay}}
-                                        <!-- <input type="number" name="amtToPay" class="form-control" [(ngModel)]='paymentValues.amtToPay' required placeholder="Amount to pay"> -->
                                     </div>
                                 </div>
                             </div>
@@ -340,7 +333,6 @@
                                 <div class="col-md-7">
                                     <div class="form-group center-txt-title">
                                         {{paymentValues.amtPaid}}
-                                        <!-- <input type="number" name="amtPaid" class="form-control" [(ngModel)]='paymentValues.amtPaid' required placeholder="Amount Paid"> -->
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +349,6 @@
                                 <div class="col-md-5">
                                     <div class="form-group center-txt-title">
                                         {{totalCurrentPayment}}
-                                        <!-- <input type="number" name="totalCurrentPayment" class="form-control" [(ngModel)]="totalCurrentPayment" required placeholder="Total Current Payment"> -->
                                     </div>
                                 </div>
                             </div>
@@ -373,8 +364,6 @@
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
 
-                        <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)"
-                            class="btn btn-primary btn-sm btn-design" style="margin-right:20px" [disabled]="disableButton">UPDATE</button> -->
                         <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="reset(paymentForm)">CANCEL</button>
                         <button *ngIf="this.currentPaymentId == null" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="onAddPayment(paymentForm)">SAVE</button>
                     </div>
