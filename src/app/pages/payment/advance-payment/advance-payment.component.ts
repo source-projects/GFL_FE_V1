@@ -1,13 +1,12 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import * as errorData from '../../../@theme/json/error.json';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { ToastrService } from 'ngx-toastr';
 import { AdvancePayment } from '../../../@theme/model/advance-payment';
 import { CommonService } from '../../../@theme/services/common.service';
 import { JwtTokenService } from '../../../@theme/services/jwt-token.service';
 import { PartyService } from '../../../@theme/services/party.service';
 import { PaymentService } from '../../../@theme/services/payment.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'ngx-advance-payment',
