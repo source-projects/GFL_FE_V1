@@ -26,9 +26,9 @@
                 [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                         [routerLink]="['/pages/purchase/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                         [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
-                        (click)="deletePurchase(row.id)"></nb-icon>
+                        (click)="deletePurchase(row.id)" [hidden]="row.checked"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>

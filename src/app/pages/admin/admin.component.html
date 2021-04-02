@@ -544,7 +544,8 @@
                     <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
 
-                            <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" (change)="updatePurchaseStatus(row , $event.target.checked)" [checked]="row.checked">
+                            <nb-checkbox class="status-basic nb-transition" id="approved" name="approved" [disabled]="row.checked" 
+                            (change)="updatePurchaseStatus(row , $event.target.checked)" [checked]="row.checked">
                                 <span *ngIf="row.checked" class="text cr-txt">Approved</span>
                                 <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
 

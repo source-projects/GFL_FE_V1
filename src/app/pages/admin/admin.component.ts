@@ -167,7 +167,7 @@ export class AdminComponent implements OnInit {
   }
 
   getAllPurchaseData(){
-    
+    this.purchaseList = [];
     this.purchseService.updateStatus(this.approved).subscribe(
       (data) => {
         if (data["success"]) {
