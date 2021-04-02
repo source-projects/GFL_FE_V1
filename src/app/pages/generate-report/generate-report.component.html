@@ -128,88 +128,7 @@
                     <div class="col-md-6 col-12">
                         <!--2nd Sub Card Div-->
 
-                        <div class="report-card-1">
 
-                            <div class="card-detail-report only-first-card">
-
-
-                                <div class="card-d-label"><label>Shade Applied</label></div>
-                            </div>
-                            <div class="bg-main-cont">
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Shade No</label></div>
-
-
-                                    <div class="card-d-label"><span>25</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Shade Color</label></div>
-
-
-                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
-                                        <span>
-                                            <div class="text-center txt-ov-elips width-50 display-inline">
-                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone"
-                                                    [value]="colorTone" disabled="true" class="width-100 text-center" />
-
-                                            </div>
-                                        </span>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Costing / weight</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Costing / meter</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Extra Charge</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-
-
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-12">
-                        <!--3rd Sub Card Div-->
 
                         <div class="report-card-1">
 
@@ -307,6 +226,89 @@
 
 
                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <!--3rd Sub Card Div-->
+                        <div class="report-card-1">
+
+                            <div class="card-detail-report only-first-card">
+
+
+                                <div class="card-d-label"><label>Shade Applied</label></div>
+                            </div>
+                            <div class="bg-main-cont">
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade No</label></div>
+
+
+                                    <div class="card-d-label"><span>25</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade Color</label></div>
+
+
+                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
+                                        <span>
+                                            <div class="text-center txt-ov-elips width-50 display-inline">
+                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone"
+                                                    [value]="colorTone" disabled="true" class="width-100 text-center" />
+
+                                            </div>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / weight</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / meter</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Extra Charge</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+
 
                     </div>
                 </div>
@@ -698,9 +700,7 @@
                                         Id</label></div>
 
                                 <div class="card-d-label width-70">
-                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="batchId" #batchId1="ngModel"
-                                     (change)="batchIdSelected($event)" [(ngModel)]="batchId" 
-                                     class="required-error-dropdown dropdown-name input-border">
+                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="batchId" #batchId1="ngModel" (change)="batchIdSelected($event)" [(ngModel)]="batchId" class="required-error-dropdown dropdown-name input-border">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -717,7 +717,7 @@
                                                         {{b.batchId }}
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </ng-option>
                                     </ng-select>
@@ -751,7 +751,7 @@
 
                 </div>
                 <div>
-                    <div class="row" >
+                    <div class="row">
 
                         <div class="col-md-12 col-12" *ngIf="notProduction">
                             <nb-accordion class="acc-start mr-top-bottom">
@@ -762,7 +762,7 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-12"  *ngFor="let data of notPlanned" >
+                                            <div class="col-md-6 col-12" *ngFor="let data of notPlanned">
                                                 <!--2nd Sub Card Div-->
                                                 <div class="report-card-1">
                                                     <div class="row">
@@ -853,7 +853,7 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-12 col-12" >
+                                            <div class="col-md-12 col-12">
                                                 <!--2nd Sub Card Div-->
                                                 <div class="report-card-1" *ngFor="let data1 of planned">
                                                     <div class="row">
@@ -989,7 +989,7 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-12"  *ngFor="let data2 of finishedMeter">
+                                            <div class="col-md-6 col-12" *ngFor="let data2 of finishedMeter">
                                                 <!--2nd Sub Card Div-->
                                                 <div class="report-card-1">
                                                     <div class="row">
