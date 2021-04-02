@@ -37,6 +37,14 @@ export class PurchaseComponent implements OnInit {
       (data) => {
         if(data['success']){
           this.purchaseArray = data["data"];
+          this.copyPurchaseArray = this.purchaseArray.map((element) => ({
+            id: element.id,
+            amt: element.amt,
+            approvedName: element.approvedName,
+            departmentName: element.departmentName,
+            receiverName: element.receiverName,
+          }));
+
           this.loading = false;
         }else{
           this.loading = false;
@@ -62,7 +70,7 @@ export class PurchaseComponent implements OnInit {
         }
       }
     });
-  }
+    }
 
   deletePurchase(id){
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
