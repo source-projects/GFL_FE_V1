@@ -550,7 +550,8 @@ export class AddEditShadeComponent implements OnInit {
         if (
           this.shadeObj.partyId &&
           this.shadeObj.processId &&
-          this.shadeObj.qualityId
+          this.shadeObj.qualityId && 
+          this.shadeObj.pending
         ) {
           if (
             (this.shadeObj.shadeDataList.length == 1 &&
