@@ -23,6 +23,7 @@ import { UserService } from "../@theme/services/user.service";
 import { AdminGuard } from "../@theme/guards/admin.guard";
 import { EmployeeRegistrationGuard } from "../@theme/guards/employee-registration.guard";
 import { AttndanceGuard } from "../@theme/guards/attendance.guard";
+import { PurchaseGuard } from "../@theme/guards/purchase.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -61,6 +62,7 @@ export class PagesComponent implements OnInit {
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
     public adminGuard: AdminGuard,
+    public purchaseGuard : PurchaseGuard,
     private commonService: CommonService,
     private userService: UserService
   ) {}
@@ -376,6 +378,19 @@ export class PagesComponent implements OnInit {
                   this.view = this.attendanceGuard.accessRights("view");
                   this.view_all = this.attendanceGuard.accessRights("view all");
                   this.view_group = this.attendanceGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }
+                  break;
+
+                  case "Purchase":
+                  this.view = this.purchaseGuard.accessRights("view");
+                  this.view_all = this.purchaseGuard.accessRights("view all");
+                  this.view_group = this.purchaseGuard.accessRights("view group");
                   if (
                     this.view == false &&
                     this.view_all == false &&

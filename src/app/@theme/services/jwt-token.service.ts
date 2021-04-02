@@ -89,6 +89,9 @@ export class JwtTokenService {
       case 'attendance':
         return this.tokens.permissions.attnds;  
 
+      case 'purchase':
+        return this.tokens.permissions.po;    
+
       case 'userId':
         return this.tokens.sub;
 
