@@ -4,7 +4,7 @@ import { NgxLoadingModule } from "ngx-loading";
 import { NgxCheckboxModule } from "ngx-checkbox";
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -49,8 +49,8 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
-import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-import { SliderModule } from 'angular-image-slider';
+import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
+import { SliderModule } from "angular-image-slider";
 //  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
@@ -89,8 +89,7 @@ const NB_MODULES = [
   NbTabsetModule,
   //NgbModal
   NbAccordionModule,
-  NbToggleModule
-  
+  NbToggleModule,
 ];
 
 @NgModule({
@@ -105,11 +104,11 @@ const NB_MODULES = [
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
-    SliderModule
+    SliderModule,
     // NgQrScannerModule,
-  //  NgQRCodeReaderModule,
-  //   ZXingScannerModule,
-  //   NgQrScannerModule,
+    //  NgQRCodeReaderModule,
+    //   ZXingScannerModule,
+    //   NgQrScannerModule,
   ],
 
   exports: [
@@ -120,11 +119,11 @@ const NB_MODULES = [
     ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
-    SliderModule
+    SliderModule,
     // NgQrScannerModule,
-  //  NgQRCodeReaderModule,
-  //   ZXingScannerModule,
-  //   NgQrScannerModule,
+    //  NgQRCodeReaderModule,
+    //   ZXingScannerModule,
+    //   NgQrScannerModule,
   ],
   providers: [ExportService, DatePipe],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],

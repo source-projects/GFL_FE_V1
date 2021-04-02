@@ -14,6 +14,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: "Task",
+    icon: "edit-2-outline",
+    link: "/pages/task",
+    hidden: false,
+  },
+  {
     title: "Party",
     icon: "person-outline",
     link: "/pages/party",
@@ -67,7 +73,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  
+
   {
     title: "Stock-batch",
     icon: "layers-outline",
@@ -144,21 +150,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Employee-Registration',
-    icon: 'browser-outline',
-    link: '/pages/registration',
+    title: "Employee-Registration",
+    icon: "browser-outline",
+    link: "/pages/registration",
     hidden: false,
   },
   {
-    title: 'Attendance',
-    icon: 'clipboard-outline',
-    link: '/pages/attendance',
+    title: "Attendance",
+    icon: "clipboard-outline",
+    link: "/pages/attendance",
     hidden: false,
   },
   {
-    title: 'Purchase',
-    icon: 'shopping-bag-outline',
-    link: '/pages/purchase',
+    title: "Purchase",
+    icon: "shopping-bag-outline",
+    link: "/pages/purchase",
     hidden: false,
   },
   {

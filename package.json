@@ -99,6 +99,7 @@
     "ngx-checkbox": "0.0.9",
     "ngx-color-picker": "^10.1.0",
     "ngx-contextmenu": "^5.4.0",
+    "ngx-dropzone": "^3.0.0",
     "ngx-echarts": "^5.2.1",
     "ngx-export-as": "^1.5.0",
     "ngx-filesaver": "^11.0.0",
