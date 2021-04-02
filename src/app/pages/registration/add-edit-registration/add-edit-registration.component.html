@@ -9,8 +9,7 @@
                 <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12"
                     [routerLink]="['/pages/registration/view']">View
                     Table</button>
-                <!-- <button class="btn btn-md btn-design mob-font-12  mr-left-10" [routerLink]="['/pages/registration/scan']">Scan
-                </button> -->
+                
             </div>
 
 
@@ -43,12 +42,7 @@
                                     z-index:0;"
                                     [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
 
-                                <!-- <div *ngIf="imageUrl" class="re-profile-img">
-                                    <img class="imageURL" [src]="imageUrl">
-
-                                    
-
-                                </div> -->
+                                
                                 <div class="input-required" *ngIf="profile1.invalid
                                            &&
                                            (formSubmitted || profile1.touched)">
@@ -101,7 +95,6 @@
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <!-- <div class="form-control size-small"> -->
 
                             <label class="required">Document</label>
 
@@ -177,8 +170,7 @@
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="document-padding-bt-tp">
-                            <!-- <button *ngIf="!apcFlag" class="btn btn-primary btn-sm btn-design-cancel"
-                                routerLink='/pages/shade'>CANCEL</button> -->
+                            
                             <button *ngIf="!this.currentEmpId && !this.qrFlag" class="btn btn-primary btn-sm btn-design-cancel"
                                 type="button" (click)="reset(empForm)">CANCEL</button>
                             

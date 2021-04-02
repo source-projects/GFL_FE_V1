@@ -108,7 +108,6 @@ export class AddEditPurchaseComponent implements OnInit {
         this.receiveByList = data["data"];
         this.loading = false;
       } else {
-        // this.toastr.error(data["msg"]);
         this.loading = false;
       }
     });
@@ -141,16 +140,6 @@ export class AddEditPurchaseComponent implements OnInit {
 
     this.fileToUpload = files.item(0);
     this.docType = type;
-    // if (this.docType == 'profile') {
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-
-    //     this.imageUrl = reader.result as string;
-    //   }
-    //   reader.readAsDataURL(this.fileToUpload)
-
-    // }
-
 
     this.fileUpload();
 
@@ -213,7 +202,6 @@ updatePurchase(form){
     this.purchase.materialPhotosList = this.docList;
 
 
-    //this.purchase.materialPhotosList = this.materialPhotoArray;
 
     this.purchseService.updatePurchase(this.purchase).subscribe(
       (data) => {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from '../../@theme/services/common.service';
 import { RegistrationService } from '../../@theme/services/registration.service';
-import * as errorData from "../../@theme/json/error.json";
 
 
 export class Attendance{
@@ -138,10 +138,6 @@ export class AttendanceComponent implements OnInit {
         }
       }
     )
-  }
-
-  reset(form){
-
   }
 
 

@@ -9,21 +9,11 @@
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Purchase</h2>
             </div>
-            <!-- <div class="col-md-2 col-2 display-flex-start desktop-justify-flexend">
-                <button class="btn btn-primary btn-md btn-design" (click)="open()">EXPORT</button>
-            </div> -->
-
 
         </div>
     </nb-card-header>
     <nb-card-body>
         <div class="row">
-            <!-- <div class="col-md-6">
-                <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
-                    <nb-radio *ngFor="let radio of radioArray" [value]=radio.id [disabled]="radio.disabled"
-                        (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
-                </nb-radio-group>
-            </div> -->
             <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                     aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
