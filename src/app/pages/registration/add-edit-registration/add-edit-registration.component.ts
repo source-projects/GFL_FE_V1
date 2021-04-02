@@ -1,11 +1,11 @@
-import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { RegistrationService } from '../../../@theme/services/registration.service';
-import { Registration, EmployeeDocument } from '../../../@theme/model/registration';
-import { CommonService } from '../../../@theme/services/common.service';
-import * as errorData from "../../../@theme/json/error.json";
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { ToastrService } from 'ngx-toastr';
+import * as errorData from "../../../@theme/json/error.json";
+import { EmployeeDocument, Registration } from '../../../@theme/model/registration';
+import { CommonService } from '../../../@theme/services/common.service';
+import { RegistrationService } from '../../../@theme/services/registration.service';
 @Component({
   selector: 'ngx-add-edit-registration',
   templateUrl: './add-edit-registration.component.html',
@@ -112,7 +112,6 @@ export class AddEditRegistrationComponent implements OnInit {
         this.employeeDocumentArray.push(obj)
         this.loading = false;
 
-        // this.addEmployee(form);
 
       }
     })
@@ -229,14 +228,12 @@ export class AddEditRegistrationComponent implements OnInit {
 
       this.disableButton = true;
       this.registration.id = 0;
-      // this.fileUpload();
       this.registration.employeeDocumentList = this.employeeDocumentArray;
       this.registrationService.addEmployee(this.registration).subscribe(
         (data) => {
           if (data["success"]) {
             this.emp_id = data["data"];
             this.formSubmitted = false;
-            //this.disableForm = true;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
             this.loading = false;
@@ -277,7 +274,6 @@ export class AddEditRegistrationComponent implements OnInit {
           if (data["success"]) {
           
             this.formSubmitted = false;
-            //this.disableForm = true;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
           } else {
