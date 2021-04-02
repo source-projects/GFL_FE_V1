@@ -122,15 +122,6 @@
                                                                     {{item.itemName}}-{{item.supplierName}}
                                                                 </option>
                                                             </select>
-                                                            <!-- <ng-select #data name="{{dc._id}}_{{i1}}_{{i}}"
-                                                                    [(ngModel)]="dc.itemId" class="tableForm" required
-                                                                    (change)="itemSelected($event,i1,i)"
-                                                                    class="ng-select-br-none">
-                                                                    <ng-option *ngFor="let item of itemListArray"
-                                                                        [value]="item.itemId" placeholder="Select Item">
-                                                                        {{item.itemName}}-{{item.supplierName}}
-                                                                    </ng-option>
-                                                                </ng-select> -->
                                                         </td>
                                                         <td>
                                                             <input type="number" (keypress)="numberOnly($event)"
@@ -282,17 +273,6 @@
                                                                     {{item.supplierName}}
                                                                 </option>
                                                             </select>
-                                                            <!-- <ng-select #data name="dcId{{dc._id}}"
-                                                                        [(ngModel)]="dc.itemId" class="tableForm"
-                                                                        required
-                                                                        (change)="itemSelected($event.target.value,dcIndex)"
-                                                                        appendTo="body" class="ng-select-br-none">
-                                                                        <ng-option *ngFor="let item of itemListArray"
-                                                                            [value]="item.itemId"
-                                                                            placeholder="Select Item">
-                                                                            {{item.itemName}} - {{item.supplierName}}
-                                                                        </ng-option>
-                                                                    </ng-select> -->
                                                         </td>
                                                         <td>
                                                             <input type="number" name='dcqty{{dc._id}}'
@@ -417,27 +397,18 @@
                                                 <th>Action</th>
                                             </tr>
 
-                                            <tr *ngFor='let item of (itemList |
-                                                filterByIsColor : isColor :
-                                                refreshPipe);let
+                                            <tr *ngFor='let item of itemList;let
                                                 i1=index;trackBy:trackByFn'>
                                                 <td>
-                                                    <!-- <select name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
-                                                        [(ngModel)]="item.itemId" #itemId1="ngModel" class="tableForm"
-                                                        (change)="itemSelected1($event,i1)" required>
-                                                        <option *ngFor="let item of itemListArray" [value]="item.itemId"
-                                                            placeholder="Select Item">
-                                                            {{item.itemName}} - {{item.supplierName}}
-                                                        </option>
-                                                    </select> -->
                                                     <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
                                                         appendTo="body" [(ngModel)]="item.itemId" #itemId1="ngModel"
                                                         class="tableForm" (change)="itemSelected1($event,i1)" required
                                                         appendTo="body" class="ng-select-br-none" required>
                                                         <ng-option *ngFor="let
                                                             item of
-                                                            (itemListArray | filterOutSelectedSupplier : itemList)" [value]="item.itemId" placeholder="Select
-                                                            Item">
+                                                            itemListArray |
+                                                            filterByIsColor : isColor : itemListArray | filterOutSelectedSupplier : itemList "
+                                                             [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} -
                                                             {{item.supplierName}}</ng-option>
                                                     </ng-select>
@@ -470,11 +441,6 @@
                                                     btn-sm btn-design-save" type="button"
                                                     (click)="pickColor($event)">Pick
                                                     color from</button>
-                                                <!-- <div>
-                                                    <ng-container *ngIf="directSlipShadeObj.shadeId">
-                                                        {{directSlipShadeObj.shadeId}}
-                                                    </ng-container>
-                                                </div> -->
                                             </div>
 
                                             <ng-template #selectShadeDialog let-modal>
@@ -977,26 +943,6 @@
 
 
 
-    <!-- <div class="row">
-        <div class="col-md-12 mobile-btn-center text-btn-right">
-
-            <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                (click)="activeModal.close(false)">CANCEL</button>
-            <button type="button" class="btn btn-primary btn-sm btn-design-save"
-                (click)="directSlipSaveFlag = true;saveSlipData(myForm)">SAVE</button>
-            <button type="button" class="btn btn-primary btn-sm btn-design-save"
-                (click)="printFlag = true; printSlip(myForm)">Save And
-                Print</button>
-
-        </div>
-    </div>
-    </form>
-
-    </div>
-    </div>
-    </div>
-    </nb-card-body>
-    </div> -->
     <div id="print-slip" [hidden]="isPrinting" class="jet-slip size-A5">
         <nb-card-body *ngIf="!additionSlipFlag">
             <div *ngIf="slipData != null || slipData != undefined">
