@@ -1,4 +1,4 @@
-.required-class{
+.required-class {
     display: contents !important;
     width: 100%;
     margin-top: 0.25rem;
@@ -6,3 +6,10 @@
     color: #dc3545
 }
 
+.ng-select-br-none {
+    width: auto !important;
+}
+
+ng-select.ng-select-br-none {
+    width: 100% !important;
+}
