@@ -3,11 +3,11 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-1 col-3 display-flex-start">
-                <button class="btn btn-primary btn-md btn-design" [disabled]="hiddenAdd" [routerLink]="['/pages/purchase']"
+                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/merge-batch']"
                     >ADD</button>
             </div>
             <div class="col-md-9 col-7">
-                <h2 class="nb-text">Purchase</h2>
+                <h2 class="nb-text">Merge-Batch</h2>
             </div>
 
         </div>
@@ -20,15 +20,15 @@
             </div>
         </div>
         <!--  ngx- DataTable -->
-        <ngx-datatable [rows]="purchaseArray" [ngClass]="tableStyle" [headerHeight]="31" class="material"
+        <!-- <ngx-datatable [rows]="purchaseArray" [ngClass]="tableStyle" [headerHeight]="31" class="material"
             [footerHeight]="40">
             <ngx-datatable-column name="Action"  sortable="false" prop="id"
                 [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                         [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked || hiddenEdit"></nb-icon>&nbsp;&nbsp;
+                         [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
-                        (click)="deletePurchase(row.id)" [hidden]="row.checked || hiddenDelete"></nb-icon>
+                        (click)="deletePurchase(row.id)" [hidden]="row.checked"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
@@ -36,7 +36,7 @@
             <ngx-datatable-column name="Department" prop="departmentName"></ngx-datatable-column>
             <ngx-datatable-column name="Received By" prop="receiverName"></ngx-datatable-column>
             
-        </ngx-datatable>
+        </ngx-datatable> -->
 
     </nb-card-body>
 </nb-card>
