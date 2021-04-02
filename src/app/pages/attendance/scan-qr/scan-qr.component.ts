@@ -1,14 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { RegistrationService } from '../../../@theme/services/registration.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from "../../../@theme/json/error.json";
+import { RegistrationService } from '../../../@theme/services/registration.service';
 
-// import {QrScannerComponent} from 'angular2-qrscanner';
-// import { ZXingScannerComponent } from '@zxing/ngx-scanner';
-// import { Result } from '@zxing/library';
-// import {QrScannerComponent} from 'angular2-qrscanner';
-//import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 @Component({
   selector: 'ngx-scan-qr',
   templateUrl: './scan-qr.component.html',
