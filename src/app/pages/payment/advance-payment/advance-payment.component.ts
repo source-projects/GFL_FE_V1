@@ -187,6 +187,15 @@ export class AdvancePaymentComponent implements OnInit {
     });
   }
 
+  reset(form){
+    form.reset();
+    this.formSubmitted = false;
+    this.advancePaymentArray = [];
+    this.advancePaymentArray.push(this.advancePaymentValues);
+
+
+  }
+
   addAdvancePayment(event) {
     this.formSubmitted = true;
     this.advancePaymentArray.forEach(element => {
@@ -197,8 +206,9 @@ export class AdvancePaymentComponent implements OnInit {
     this.paymentService.addAdvancePayment(this.advancePaymentArray).subscribe(
       data => {
         if (data['success']) {
-          this.route.navigate(["/pages/payment/bill-payment"]);
+         // this.route.navigate(["/pages/payment/bill-payment"]);
           this.toastr.success(data['msg']);
+          this.reset(event)
         }
         else {
           this.toastr.error(data['msg'])

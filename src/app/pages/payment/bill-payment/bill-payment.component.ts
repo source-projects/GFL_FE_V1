@@ -175,21 +175,26 @@ export class BillPaymentComponent implements OnInit {
   }
 
   advancePaymentSelected(event) {
-    let selected = event.selected;
-    let advance = [];
-    selected.forEach(element => {
-      advance.push(element.id);
-    })
-
-    this.paymentValues.advancePayList = advance;
-
-    this.totalCredit = 0;
-    event.selected.forEach(element => {
-      this.totalCredit = this.totalCredit + element.amt;
-    });
-    if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
-      this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+    if(event.selected){
+      let selected = event.selected;
+      let advance = [];
+      selected.forEach(element => {
+        advance.push(element.id);
+      })
+  
+      this.paymentValues.advancePayList = advance;
+  
+      this.totalCredit = 0;
+      event.selected.forEach(element => {
+        this.totalCredit = this.totalCredit + element.amt;
+      });
+      if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
+        this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+      }else{
+        this.paymentValues.amtPaid = 0;
+      }
     }
+    
   }
 
   gstSelected(event) {
@@ -351,6 +356,8 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.totalBill = 0;
     this.invoiceList = [];
     this.advancePaymentList = [];
+    this.paymentDataListArray.push(this.paymentDataList);
+    this.paymentValues.paymentData = this.paymentDataListArray;
   }
 
   onAddPayment(paymentForm) {

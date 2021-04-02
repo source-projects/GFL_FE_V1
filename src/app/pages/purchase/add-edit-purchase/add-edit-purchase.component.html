@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label class="required">Amount</label>
                             <input type="text" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt"
-                                class="form-control size-small" fieldsize="small" nbinput placeholder="Employee amount"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Amount"
                                 [ngClass]="{'is-invalid':(amount1.invalid) &&(formSubmitted || amount1.touched)}"
                                 required />
 
@@ -202,7 +202,7 @@
                             (click)="reset(purchaseForm)">CANCEL</button>
 
                         <button *ngIf="this.currentId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
-                            [routerLink]="['/pages/purchse/view']">CANCEL</button>
+                            [routerLink]="['/pages/purchase/view']">CANCEL</button>
 
 
                         <button *ngIf="this.currentId" type="button" (click)="updatePurchase(purchaseForm)"
