@@ -3,8 +3,8 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-1 col-3 display-flex-start">
-                <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/purchase']"
-                    [disabled]="disabled">ADD</button>
+                <button class="btn btn-primary btn-md btn-design" [disabled]="hiddenAdd" [routerLink]="['/pages/purchase']"
+                    >ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Purchase</h2>
@@ -26,9 +26,9 @@
                 [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                         [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked"></nb-icon>&nbsp;&nbsp;
+                         [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked && hiddenEdit"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
-                        (click)="deletePurchase(row.id)" [hidden]="row.checked"></nb-icon>
+                        (click)="deletePurchase(row.id)" [hidden]="row.checked && hiddenDelete"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
