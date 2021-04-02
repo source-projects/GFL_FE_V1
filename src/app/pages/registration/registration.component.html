@@ -34,7 +34,7 @@
                     <ngx-datatable-column name="Name" prop="name" [maxWidth]="300">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="row width-100">
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-3">
                                     <ng-container *ngFor="let ele of row.employeeDocumentList">
                                         <span *ngIf="ele.type == 'profile'" class="ngx-profile-table">
                                             <img [src]="ele.url" class="imageURL" >
@@ -42,7 +42,7 @@
                                     </ng-container>
 
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9 col-9">
                                     <span>{{row.name}}</span>
                                 </div>
                             </div>
