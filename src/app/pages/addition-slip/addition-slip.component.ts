@@ -348,6 +348,7 @@ export class AdditionSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
+          this.directSlip.shadeId = null;
           if (this.printNow) {
             //open Print slip popup...
             const modalRef = this.modalService.open(PlanningSlipComponent);

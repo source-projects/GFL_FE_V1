@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
-@Pipe({ name: "filterByIsColor" })
+@Pipe({ name: "filterByIsColor",pure:true })
 export class FilterByIsColorPipe implements PipeTransform {
-  transform(processList: any, isColor, refreshPipe) {
-    if (processList && processList.length && isColor) {
-      return processList.filter(
-        a=> a.isColor == true
+  transform(processList: any, isColor, itemListArr) {
+    if (processList && processList.length && isColor==true) {
+      return processList = itemListArr.filter(
+        a=> a.itemType == "Color"
       );
     } else {
       return processList;
