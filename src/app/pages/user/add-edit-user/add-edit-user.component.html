@@ -174,20 +174,20 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
-                            <nb-checkbox name="assign1" [(ngModel)]="user.isMaster"
-                                [disabled]="currentUserId || isLoggedInAsMaster"
-                                class="form-control nb-check-user border-none">Is Master Group
-                            </nb-checkbox>
+                            <nb-checkbox name="isMaster" [(ngModel)]="user.isMaster"
+                            [disabled]="currentUserId || isLoggedInAsMaster"
+                            class="form-control nb-check-user border-none">Is Master Group
+                        </nb-checkbox>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
                         <div class="form-group">
                             <label></label>
                             <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
                                 [disabled]="currentUserId || teamMemberFlag"
                                 class="form-control nb-check-user border-none">Assign Under Group Head
-                            </nb-checkbox>
+                           </nb-checkbox>
                         </div>
                     </div>
                    

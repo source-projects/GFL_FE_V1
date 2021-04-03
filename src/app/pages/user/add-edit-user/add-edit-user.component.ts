@@ -128,6 +128,7 @@ export class AddEditUserComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.user = new User();
     this.currentUserId = this._route.snapshot.paramMap.get("id");
     this.userId = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -250,6 +251,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   createPermission() {
+    this.permissionArray = [];
     for (let i = 0; i < this.forms.length; i++) {
       this.permissionArray.push(new Permissions());
 
@@ -768,7 +770,8 @@ export class AddEditUserComponent implements OnInit {
   }
 
   reset(myForm) {
-    myForm.reset();
+    myForm.reset(myForm.value);
+    this.user = new User();
     this.formSubmitted = false;
     for (var i = 0; i < this.permissionArray.length; i++) {
       this.setPermissionFalse(i);
