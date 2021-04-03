@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { PurchaseGuard } from '../../@theme/guards/purchase.guard';
 import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { PurchaseNewService } from '../../@theme/services/purchase-new.service';
 
@@ -13,13 +14,16 @@ import { PurchaseNewService } from '../../@theme/services/purchase-new.service';
 export class PurchaseComponent implements OnInit {
 
   loading = false;
-  disabled = false;
   tableStyle = "bootstrap";
+  hiddenAdd: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenDelete: boolean = true;
 
   purchaseArray = [];
   copyPurchaseArray = [];
   constructor(
     private purchseService : PurchaseNewService,
+    private purchaseGuard : PurchaseGuard,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private route: Router,
@@ -27,7 +31,21 @@ export class PurchaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAccess();
     this.getAllPurchase();
+  }
+
+
+  getAccess() {
+    if (this.purchaseGuard.accessRights("add")) {
+      this.hiddenAdd = false;
+    }
+    if (this.purchaseGuard.accessRights("delete")) {
+      this.hiddenDelete = false;
+    }
+    if (this.purchaseGuard.accessRights("edit")) {
+      this.hiddenEdit = false;
+    }
   }
 
   getAllPurchase(){
@@ -43,6 +61,7 @@ export class PurchaseComponent implements OnInit {
             approvedName: element.approvedName,
             departmentName: element.departmentName,
             receiverName: element.receiverName,
+            checked: element.checked
           }));
 
           this.loading = false;
