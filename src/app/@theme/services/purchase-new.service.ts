@@ -24,7 +24,7 @@ export class PurchaseNewService {
   }
 
   deletePurchase(id){
-    return this.httpClient.delete(this.commonService.envUrl() + 'api/purchase/delete', id);
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/purchase/delete/'+ id);
 
   }
 
