@@ -100,6 +100,9 @@ export class JwtTokenService {
 
       case 'userName':
           return this.tokens.userName;
+
+      case 'allPermissions':
+          return this.tokens;
       
       default:
         return null;
