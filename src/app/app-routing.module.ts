@@ -28,6 +28,7 @@ import { AdminGuard } from "./@theme/guards/admin.guard";
 import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration.guard";
 import { AttendanceComponent } from "./pages/attendance/attendance.component";
 import { AttndanceGuard } from "./@theme/guards/attendance.guard";
+import { PurchaseGuard } from "./@theme/guards/purchase.guard";
 
 export const routes: Routes = [
   {
@@ -313,12 +314,12 @@ export const routes: Routes = [
       {
         path: "purchase",
         loadChildren: () =>
-          import("./pages/purchase/purchase.module").then(
-            (m) => m.PurchaseModule
-          ),
-        // canActivate: [AttndanceGuard],
-        // canLoad: [AttndanceGuard],
-        // data: { PermissionName: ["view", "view group", "view all"] },
+        import("./pages/purchase/purchase.module").then(
+          (m) => m.PurchaseModule
+        ),
+        canActivate: [PurchaseGuard],
+        canLoad: [PurchaseGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "miscellaneous",

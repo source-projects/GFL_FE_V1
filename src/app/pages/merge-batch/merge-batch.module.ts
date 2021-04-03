@@ -7,11 +7,12 @@ import { MergeBatchRoutingModule } from './merge-batch-routing.module';
 import { ThemeModule } from '../../@theme/theme.module';
 import { SharedModule } from '../../@theme/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ViewMergeBatchComponent } from './view-merge-batch/view-merge-batch.component';
 
 
 
 @NgModule({
-  declarations: [MergeBatchComponent],
+  declarations: [MergeBatchComponent, ViewMergeBatchComponent],
   imports: [
     CommonModule,
     SharedModule,
