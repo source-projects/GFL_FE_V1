@@ -119,16 +119,21 @@ export class GenerateReportComponent implements OnInit {
   getQualityFromParty(event) {
     this.loading = true;
     this.qualityId = null;
+    this.batchId = null;
+
     this.checkPartySelected();
     if (event == undefined) {
       this.getPartyList();
       this.getQualityList();
       this.qualityId = null;
-      this.qualityControlId = null;
-      this.partyId = null;
+      this.qualityControlId = "";
+      this.partyId = "";
       this.partyName = null;
+      this.reportData = [];
       this.getReportData();
+      this.partyId = null;
       this.loading = false;
+      this.batchId = null;
     } else {
       this.shadeService.getQualityFromParty(this.partyId).subscribe(
         (data) => {
@@ -156,7 +161,7 @@ export class GenerateReportComponent implements OnInit {
     if (event == undefined) {
       this.qualityName = null;
       this.qualityId = null;
-      this.qualityControlId = null;
+      this.qualityControlId = "";
       this.partyName = null;
       this.getQualityList();
       this.getReportData();

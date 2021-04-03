@@ -490,7 +490,7 @@
                 <div>
                     <div class="row">
 
-                        <div class="col-md-12 col-12" *ngIf="notProduction">
+                        <div class="col-md-12 col-12" *ngIf="notProduction && notPlanned.length > 0">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
@@ -581,7 +581,7 @@
                             </nb-accordion>
                         </div>
 
-                        <div class="col-md-12 col-12" *ngIf="Production">
+                        <div class="col-md-12 col-12" *ngIf="Production && planned.length > 0">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
@@ -717,7 +717,7 @@
                         </div>
 
 
-                        <div class="col-md-12 col-12" *ngIf="finished">
+                        <div class="col-md-12 col-12" *ngIf="finished && finishedMeter.length > 0">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
