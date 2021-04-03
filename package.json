@@ -103,6 +103,7 @@
     "ngx-echarts": "^5.2.1",
     "ngx-export-as": "^1.5.0",
     "ngx-filesaver": "^11.0.0",
+    "ngx-image-compress": "^11.0.3",
     "ngx-loading": "^8.0.0",
     "ngx-material-timepicker": "^5.5.3",
     "ngx-toastr": "^13.1.0",
