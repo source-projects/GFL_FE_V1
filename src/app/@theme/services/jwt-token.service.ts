@@ -101,6 +101,9 @@ export class JwtTokenService {
       case 'userName':
           return this.tokens.userName;
 
+      case 'mergeBatch':
+          return this.tokens.permissions.mg;
+
       case 'allPermissions':
           return this.tokens;
       

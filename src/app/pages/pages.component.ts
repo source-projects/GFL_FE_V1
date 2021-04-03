@@ -26,6 +26,7 @@ import { AttndanceGuard } from "../@theme/guards/attendance.guard";
 import { PurchaseGuard } from "../@theme/guards/purchase.guard";
 import { JwtTokenService } from "../@theme/services/jwt-token.service";
 import { StoreTokenService } from "../@theme/services/store-token.service";
+import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -66,7 +67,8 @@ export class PagesComponent implements OnInit {
     public adminGuard: AdminGuard,
     public purchaseGuard : PurchaseGuard,
     private commonService: CommonService,
-    private userService: UserService
+    private userService: UserService,
+    private mergeGuard: MergeBatchGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -92,6 +94,21 @@ export class PagesComponent implements OnInit {
                   e.hidden = false;
                 }
                 break;
+
+                case "Merge-batch":
+                  this.view = this.mergeGuard.accessRights("view");
+                  this.view_all = this.mergeGuard.accessRights("view all");
+                  this.view_group = this.mergeGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
+                  break;
 
               case "Quality":
                 this.view = this.qualityGuard.accessRights("view");
