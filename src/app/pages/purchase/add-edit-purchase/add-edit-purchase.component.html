@@ -74,7 +74,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label class="required">Amount</label>
-                            <input type="text" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt"
+                            <input type="number" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt"
                                 class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Amount"
                                 [ngClass]="{'is-invalid':(amount1.invalid) &&(formSubmitted || amount1.touched)}"
                                 required />
