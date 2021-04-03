@@ -170,15 +170,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
-                                [disabled]="currentUserId || teamMemberFlag"
-                                class="form-control nb-check-user border-none">Assign Under Group Head
-                            </nb-checkbox>
-                        </div>
-                    </div>
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
@@ -188,6 +180,17 @@
                             </nb-checkbox>
                         </div>
                     </div>
+                    
+                    <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
+                        <div class="form-group">
+                            <label></label>
+                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
+                                [disabled]="currentUserId || teamMemberFlag"
+                                class="form-control nb-check-user border-none">Assign Under Group Head
+                            </nb-checkbox>
+                        </div>
+                    </div>
+                   
                     <div class="col-md-4" *ngIf="user.isUserHead && user.isMaster">
                         <div class="form-group">
                             <label class="required">User Head List</label>

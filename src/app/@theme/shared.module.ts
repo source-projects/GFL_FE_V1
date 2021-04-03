@@ -51,6 +51,7 @@ import { WarningPopupComponent } from "./components/warning-popup/warning-popup.
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { SliderModule } from 'angular-image-slider';
+import {NgxImageCompressService} from 'ngx-image-compress';
 //  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
@@ -126,7 +127,7 @@ const NB_MODULES = [
   //   ZXingScannerModule,
   //   NgQrScannerModule,
   ],
-  providers: [ExportService, DatePipe],
+  providers: [ExportService, DatePipe, NgxImageCompressService],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],
 })
 export class SharedModule {}

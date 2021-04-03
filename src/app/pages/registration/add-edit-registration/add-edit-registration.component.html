@@ -39,7 +39,7 @@
                                     placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel"
                                     (change)="handleFileInput($event.target.files,'profile')" style="position:relative;overflow:hidden; 
                                     background-color:#ffff; 
-                                    z-index:0;"
+                                    z-index:0;" [crossOrigin]="'anonymous'"
                                     [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
 
                                 

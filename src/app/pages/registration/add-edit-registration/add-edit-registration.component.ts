@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from "../../../@theme/json/error.json";
 import { EmployeeDocument, Registration } from '../../../@theme/model/registration';
@@ -42,13 +43,17 @@ export class AddEditRegistrationComponent implements OnInit {
   docList = [];
   href: string;
   wLink;
+  imgResultBeforeCompress:string;
+  imgResultAfterCompress:string;
+  localUrl;
+   imageFile : File = null;
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
     private registrationService: RegistrationService,
     private toastr: ToastrService,
     private route: Router,
-
+    private imageCompress: NgxImageCompressService
 
   ) { }
 
@@ -91,9 +96,43 @@ export class AddEditRegistrationComponent implements OnInit {
     }
   }
 
+   compressFile() :any{
+  
+    this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
+      result => {
+        this.imgResultAfterCompress = result;
+        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
+
+        const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+
+        this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+        //console.log(this.imageFile);
+        //return imageFile;
+        this.fileUpload();
+      }
+    );
+  }
+
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
+    }
+
   fileUpload() {
+    console.log(this.fileToUpload);
+
     this.loading = true;
 
+   // this.imageFile =  this.compressFile();
+    console.log(this.imageFile)
+    if(this.imageFile){
+    this.fileToUpload = this.imageFile;
 
     const data = new FormData();
     data.append('file', this.fileToUpload);
@@ -115,7 +154,8 @@ export class AddEditRegistrationComponent implements OnInit {
 
       }
     })
-
+  }
+this.loading = false;
 
   }
   handleFileInput(files: FileList, type) {
@@ -125,15 +165,16 @@ export class AddEditRegistrationComponent implements OnInit {
     if (this.docType == 'profile') {
       const reader = new FileReader();
       reader.onload = () => {
-
         this.imageUrl = reader.result as string;
+        this.compressFile();
       }
       reader.readAsDataURL(this.fileToUpload)
 
+    }else{
+      this.compressFile();
     }
 
-
-    this.fileUpload();
+    
 
   }
 
@@ -142,6 +183,8 @@ export class AddEditRegistrationComponent implements OnInit {
   reset(form) {
     form.reset();
     this.formSubmitted = false;
+    this.imageUrl = "../../../../assets/scan/user-new.png";
+
   }
 
   updateEmployee(form) {
