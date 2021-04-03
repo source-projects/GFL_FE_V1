@@ -12,7 +12,8 @@ import { RegistrationService } from '../../../@theme/services/registration.servi
   styleUrls: ['./add-edit-registration.component.scss']
 })
 export class AddEditRegistrationComponent implements OnInit {
-
+  imgLoading = false;
+  progress = 0;
   image;
   registration: Registration = new Registration();
   employeeDocumentArray: EmployeeDocument[] = [];
@@ -92,8 +93,8 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   fileUpload() {
-    this.loading = true;
-
+    //this.loading = true;
+    this.imgLoading = true;
 
     const data = new FormData();
     data.append('file', this.fileToUpload);
@@ -110,11 +111,10 @@ export class AddEditRegistrationComponent implements OnInit {
           controlId: null
         }
         this.employeeDocumentArray.push(obj)
-        this.loading = false;
-
-
+        this.imgLoading = false;
       }
-    })
+    }
+    );
 
 
   }
