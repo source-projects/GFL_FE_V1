@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-1 col-3 display-flex-start">
                 <button class="btn btn-primary btn-md btn-design" [routerLink]="['/pages/merge-batch']"
-                    >ADD</button>
+                [disabled]="hiddenAdd" >ADD</button>
             </div>
             <div class="col-md-9 col-7">
                 <h2 class="nb-text">Merge-Batch</h2>
@@ -26,9 +26,9 @@
                 [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                         [routerLink]="['/pages/merge-batch/edit',row.mergeBatchId]"></nb-icon>&nbsp;&nbsp;
+                         [routerLink]="['/pages/merge-batch/edit',row.mergeBatchId]" [hidden]="hiddenEdit"></nb-icon>&nbsp;&nbsp;
                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
-                        (click)="deleteMergeBatch(row.mergeBatchId)"></nb-icon>
+                        (click)="deleteMergeBatch(row.mergeBatchId)" [hidden]="hiddenDelete"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Mergeed Batch Id" prop="mergeBatchId"></ngx-datatable-column>

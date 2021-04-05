@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../../@theme/services/common.service';
 import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { MergeBatchService } from '../../../@theme/services/merge-batch.service';
+import { MergeBatchGuard } from '../../../@theme/guards/merge-batch.guard';
 
 @Component({
   selector: 'ngx-view-merge-batch',
@@ -17,18 +18,35 @@ export class ViewMergeBatchComponent implements OnInit {
   tableStyle = "bootstrap";
   loading = false;
   mergeListCopy = [];
-
+  hiddenAdd: boolean = true;
+  hiddenEdit: boolean = true;
+  hiddenDelete: boolean = true;
   constructor(
     private toastr: ToastrService,
     private mergeBatchService: MergeBatchService,
     private modalService : NgbModal,
-    
+    private mergeBatchGuard : MergeBatchGuard,
+
 
   ) { }
 
   ngOnInit(): void {
+    this.getAccess();
+
     this.getAllMergeBatch();
     
+  }
+
+  getAccess() {
+    if (this.mergeBatchGuard.accessRights("add")) {
+      this.hiddenAdd = false;
+    }
+    if (this.mergeBatchGuard.accessRights("delete")) {
+      this.hiddenDelete = false;
+    }
+    if (this.mergeBatchGuard.accessRights("edit")) {
+      this.hiddenEdit = false;
+    }
   }
 
   filter(value: any) {
