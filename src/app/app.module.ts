@@ -28,7 +28,6 @@ import { ToastrModule } from "ngx-toastr";
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
 import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
 import { ShadeModule } from "./pages/shade/shade.module";
-import { NgxDropzoneModule } from "ngx-dropzone";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -63,7 +62,6 @@ import { NgxDropzoneModule } from "ngx-dropzone";
       useClass: CustomHttpInterceptor,
       multi: true,
     },
-    NgxDropzoneModule,
   ],
 
   bootstrap: [AppComponent],

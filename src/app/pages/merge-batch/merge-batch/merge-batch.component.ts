@@ -118,11 +118,6 @@ export class MergeBatchComponent implements OnInit {
     this.enableMergeBox();
     this.filterDetails[i].grList = [];
     if (event) {
-      if (this.refreshCount > 10) {
-        this.refreshCount = 0;
-      } else {
-        this.refreshCount++;
-      }
       let stockId = 0;
       this.filterDetails[i].batchList.forEach((element) => {
         if (element.batchId == this.filterDetails[i].batchId) {
@@ -142,6 +137,11 @@ export class MergeBatchComponent implements OnInit {
           this.batchSelected(element.batchId, i1);
         }
       });
+    }
+    if (this.refreshCount > 10) {
+      this.refreshCount = 0;
+    } else {
+      this.refreshCount++;
     }
     this.finalGrList = [];
   }

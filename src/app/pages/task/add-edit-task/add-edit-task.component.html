@@ -25,13 +25,17 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Attachments</label>
-                    <!-- <ngx-dropzone (change)="onSelect($event)">
-                        <ngx-dropzone-label>Drop it</ngx-dropzone-label>
-                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                        <ngx-dropzone-label>
+                            <div>
+                                <p>Drop Here!</p>
+                            </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)">
                             <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                        </ngx-dropzone-preview>
-                    </ngx-dropzone> -->
-                    <input class="form-control registration-document" type="file">
+                        </ngx-dropzone-image-preview>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,8 +43,9 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Department</label>
-                    <ng-select>
-                        <ng-option></ng-option>
+                    <ng-select (change)="getUserList($event)">
+                        <ng-option *ngFor="let department of departmentList" [value]="department.id">{{department.name}}
+                        </ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -48,7 +53,8 @@
                 <div class="form-group">
                     <label>Assign To</label>
                     <ng-select>
-                        <ng-option></ng-option>
+                        <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}} {{user.lastName}}
+                        </ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -58,7 +64,7 @@
                 <div class="form-group">
                     <label>Task Type</label>
                     <ng-select>
-                        <ng-option></ng-option>
+                        <ng-option *ngFor="let type of typeList" [value]="type.name">{{type.name}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -106,7 +112,7 @@
                 <div class="form-group">
                     <label>Report</label>
                     <ng-select>
-                        <ng-option></ng-option>
+                        <ng-option *ngFor="let report of reportList" [value]="report.id">{{report.formName}}</ng-option>
                     </ng-select>
                 </div>
             </div>

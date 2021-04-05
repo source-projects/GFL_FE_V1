@@ -7,6 +7,7 @@ import { PurchaseNewService } from '../../../@theme/services/purchase-new.servic
 import { UserService } from '../../../@theme/services/user.service';
 import { AdminService } from '../../../@theme/services/admin.service';
 import * as errorData from "../../../@theme/json/error.json";
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'ngx-add-edit-purchase',
@@ -31,6 +32,10 @@ export class AddEditPurchaseComponent implements OnInit {
   approveByList = [];
   receiveByList = [];
   docList = [];
+imageUrl;
+  imgResultBeforeCompress:string;
+  imgResultAfterCompress:string;
+  imageFile:File;
   constructor(
     private commonService: CommonService,
     private purchseService : PurchaseNewService,
@@ -39,6 +44,8 @@ export class AddEditPurchaseComponent implements OnInit {
     private _route: ActivatedRoute,
     private toastr: ToastrService,
     private route: Router,
+    private imageCompress: NgxImageCompressService
+
   ) { }
 
   ngOnInit(): void {
@@ -113,9 +120,40 @@ export class AddEditPurchaseComponent implements OnInit {
     });
   }
 
+  compressFile() :any{
+  
+    this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
+      result => {
+        this.imgResultAfterCompress = result;
+        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
+
+        const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+
+        this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+        //console.log(this.imageFile);
+        //return imageFile;
+        this.fileUpload();
+      }
+    );
+  }
+
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
+    }
+
+
   fileUpload() {
     this.loading = true;
-
+    if(this.imageFile){
+      this.fileToUpload = this.imageFile;
+  
     const data = new FormData();
     data.append('file', this.fileToUpload);
     data.append('upload_preset', 'gfl_upload');
@@ -133,15 +171,22 @@ export class AddEditPurchaseComponent implements OnInit {
         this.loading = false;
       }
     })
-
+  }else{
+    this.loading = false;
+  }
 
   }
   handleFileInput(files: FileList, type) {
 
     this.fileToUpload = files.item(0);
     this.docType = type;
+    const reader = new FileReader();
+      reader.onload = () => {
+        this.imageUrl = reader.result as string;
+        this.compressFile();
+      } 
+      reader.readAsDataURL(this.fileToUpload)
 
-    this.fileUpload();
 
   }
 

@@ -49,12 +49,15 @@ onSave(){
           this.toastr.error(data["msg"]);
 
         }
+      }else{
+        this.toastr.error(data["msg"]);
+
       }
     },
     (error)=>{
-      (error) => {
+      
         this.toastr.error(errorData.Serever_Error);
-      }
+     
     }
   )
 }

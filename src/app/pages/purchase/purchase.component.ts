@@ -61,6 +61,7 @@ export class PurchaseComponent implements OnInit {
             approvedName: element.approvedName,
             departmentName: element.departmentName,
             receiverName: element.receiverName,
+            checked: element.checked
           }));
 
           this.loading = false;
