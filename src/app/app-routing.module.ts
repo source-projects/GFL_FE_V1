@@ -29,6 +29,7 @@ import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration
 import { AttendanceComponent } from "./pages/attendance/attendance.component";
 import { AttndanceGuard } from "./@theme/guards/attendance.guard";
 import { PurchaseGuard } from "./@theme/guards/purchase.guard";
+import { MergeBatchGuard } from "./@theme/guards/merge-batch.guard";
 
 export const routes: Routes = [
   {
@@ -199,9 +200,9 @@ export const routes: Routes = [
           import("./pages/merge-batch/merge-batch.module").then(
             (m) => m.MergeBatchModule
           ),
-        // canActivate: [MergeBatchGuard],
-        // canLoad: [MergeBatchGuard],
-        //data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [MergeBatchGuard],
+        canLoad: [MergeBatchGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "report",

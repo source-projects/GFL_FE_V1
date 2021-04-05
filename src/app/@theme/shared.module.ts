@@ -51,6 +51,7 @@ import { WarningPopupComponent } from "./components/warning-popup/warning-popup.
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { SliderModule } from 'angular-image-slider';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import {NgxImageCompressService} from 'ngx-image-compress';
 //  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
@@ -106,11 +107,13 @@ const NB_MODULES = [
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
-    SliderModule
-    // NgQrScannerModule,
-  //  NgQRCodeReaderModule,
-  //   ZXingScannerModule,
-  //   NgQrScannerModule,
+    SliderModule,
+    NgCircleProgressModule.forRoot({
+      "radius": 60,
+      "outerStrokeWidth": 10,
+      "innerStrokeWidth": 5,
+      "showBackground": false,
+      "startFromZero": false})
   ],
 
   exports: [
@@ -121,7 +124,8 @@ const NB_MODULES = [
     ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
-    SliderModule
+    SliderModule,
+    NgCircleProgressModule
     // NgQrScannerModule,
   //  NgQRCodeReaderModule,
   //   ZXingScannerModule,
