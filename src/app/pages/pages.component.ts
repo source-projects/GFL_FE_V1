@@ -336,18 +336,27 @@ export class PagesComponent implements OnInit {
                 break;
 
               case "Database":
-                this.view = this.adminGuard.accessRights("view");
-                this.view_all = this.adminGuard.accessRights("view all");
-                this.view_group = this.adminGuard.accessRights("view group");
                 if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
+                  this.userData.id &&
+                  !this.userData.userHeadId && 
+                  !this.userData.superUserHeadId
                 ) {
-                  e.hidden = true;
-                }else{
                   e.hidden = false;
-                }
+                } else {
+                  e.hidden = true;
+                // this.view = this.adminGuard.accessRights("view");
+                // this.view_all = this.adminGuard.accessRights("view all");
+                // this.view_group = this.adminGuard.accessRights("view group");
+                // if (
+                //   this.view == false &&
+                //   this.view_all == false &&
+                //   this.view_group == false
+                // ) {
+                //   e.hidden = true;
+                // }else{
+                //   e.hidden = false;
+                // }
+              }
                 break;
 
               case "Input Data":

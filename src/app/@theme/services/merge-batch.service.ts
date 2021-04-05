@@ -17,4 +17,24 @@ export class MergeBatchService {
     return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/batch/ByQualityAndPartyWithoutProductionPlan/" +qId +"/" +pId);
   }
 
+  getAllMergeBatch(){
+    return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/get/mergeBatchList" );
+
+  }
+
+  getMergeBatchById(id){
+    return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/get/mergeBatchListBy?mergeBatchId=" + id );
+
+  }
+
+  deleteMergeBatch(id){
+    return this.httpClient.delete(this.commonService.envUrl() +"api/stockBatch/delete/mergeBatchListBy?mergeBatchId=" + id );
+
+  }
+
+  updateMergeBatch(data){
+    return this.httpClient.put(this.commonService.envUrl() + 'api/stockBatch/update/mergeBatchList', data);
+
+  }
+
 }

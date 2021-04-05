@@ -60,7 +60,7 @@ export class StockBatchService {
     return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +qId +"/" +pId);
   }
 
-  getBatchGRById(cId,bId){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/'+ cId + '/' + bId);
+  getBatchGRById(bId){
+    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/' + bId+'/'+bId);
   }
 }
