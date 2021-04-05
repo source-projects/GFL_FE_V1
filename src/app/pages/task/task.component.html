@@ -22,15 +22,18 @@
                 <div class="main-box-task">
                     <div class="row">
                         <div class="col-md-2 col-12">
-                            <div class="task-top-img">
+                            <div class="hover-img-task">
+                                <div class="task-top-img">
 
-                                <img src="../../../assets/task/all.svg">
+                                    <img src="../../../assets/task/all.svg">
 
+                                </div>
+                                <div class="t-all text-center top-style-task">
+                                    <span class="main-title-task label-top-task">All</span>
+                                    <span class="main-title-task label-top-task-value">25</span>
+                                </div>
                             </div>
-                            <div class="t-all text-center top-style-task">
-                                <span class="main-title-task label-top-task">All</span>
-                                <span class="main-title-task">25</span>
-                            </div>
+
                         </div>
                         <div class="col-md-2 col-12">
                             <div class="task-top-img">
@@ -57,7 +60,7 @@
                         <div class="col-md-2 col-12">
                             <div class="task-top-img">
 
-                                <img src="../../../assets/scan/user.png">
+                                <img src="../../../assets/task/check.svg">
 
                             </div>
                             <div class="t-approved text-center top-style-task">
@@ -68,7 +71,7 @@
                         <div class="col-md-2 col-12">
                             <div class="task-top-img">
 
-                                <img src="../../../assets/scan/user.png">
+                                <img src="../../../assets/task/not-approve.svg">
 
                             </div>
                             <div class="t-notapproved text-center top-style-task">
@@ -79,7 +82,7 @@
                         <div class="col-md-2 col-12">
                             <div class="task-top-img">
 
-                                <img src="../../../assets/scan/user.png">
+                                <img src="../../../assets/task/block.svg">
 
                             </div>
                             <div class="t-blocker text-center top-style-task">
@@ -107,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="task-detail-dash" (click)="openDetail()">
+                            <div class="task-detail-dash t-all" (click)="openDetail()">
                                 <div class="task-main-1 border-bottom-color">
                                     <div class="container">
                                         <div class="row">
@@ -294,7 +297,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="task-detail-dash" (click)="openDetail()">
+                            <div class="task-detail-dash t-assign" (click)="openDetail()">
                                 <div class="task-main-1 border-bottom-color">
                                     <div class="container">
                                         <div class="row">
@@ -397,7 +400,318 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="task-detail-dash" (click)="openDetail()">
+                            <div class="task-detail-dash t-completed" (click)="openDetail()">
+                                <div class="task-main-1 border-bottom-color">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-8 col-8 pd-0">
+                                                <div class="first-border-right">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="user-task pd-rl mr-bt-0">
+
+                                                                    <span class="title-value">Bhautik Mehta</span>
+
+                                                                    <!-- <span class="title-value">Department A</span> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">DEPARTMENT</label>
+                                                                    <span class="taske-date-vlue">Department A</span>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">NAME</label>
+                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">COMPILATION DAYS</label>
+                                                                    <span class="taske-date-vlue">3</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-4 pd-0">
+                                                <div class="short-task-detail">
+
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="priority-dots">
+                                                                    <span class="p-dots-color rd-o" title="P1"></span>
+                                                                    <span class="p-dots-color rd-o" title="P2"></span>
+                                                                    <span class="p-dots-color rd-o" title="P3"></span>
+                                                                    <span class="p-dots-color rd-o" title="P4"></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0 order-1">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">STATUS</label>
+                                                                    <span class="taske-date-vlue">Pending</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">TYPE</label>
+                                                                    <span class="taske-date-vlue">General</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4 col-12 mobile-pd-0">
+                        <div class="mb-4">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 pd-0">
+                                        <div class="task-btn">
+                                            <div class="task-email-btn">
+                                                <nb-icon icon="email-outline" class="email-task-complete"></nb-icon>
+                                            </div>
+                                            <div class="task-btn-del">
+                                                <nb-icon icon="trash-2-outline"></nb-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-detail-dash t-approved" (click)="openDetail()">
+                                <div class="task-main-1 border-bottom-color">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-8 col-8 pd-0">
+                                                <div class="first-border-right">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="user-task pd-rl mr-bt-0">
+
+                                                                    <span class="title-value">Bhautik Mehta</span>
+
+                                                                    <!-- <span class="title-value">Department A</span> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">DEPARTMENT</label>
+                                                                    <span class="taske-date-vlue">Department A</span>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">NAME</label>
+                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">COMPILATION DAYS</label>
+                                                                    <span class="taske-date-vlue">3</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-4 pd-0">
+                                                <div class="short-task-detail">
+
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="priority-dots">
+                                                                    <span class="p-dots-color rd-o" title="P1"></span>
+                                                                    <span class="p-dots-color rd-o" title="P2"></span>
+                                                                    <span class="p-dots-color rd-o" title="P3"></span>
+                                                                    <span class="p-dots-color rd-o" title="P4"></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0 order-1">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">STATUS</label>
+                                                                    <span class="taske-date-vlue">Pending</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">TYPE</label>
+                                                                    <span class="taske-date-vlue">General</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4 col-12 mobile-pd-0">
+                        <div class="mb-4">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 pd-0">
+                                        <div class="task-btn">
+                                            <div class="task-email-btn">
+                                                <nb-icon icon="email-outline" class="email-task-complete"></nb-icon>
+                                            </div>
+                                            <div class="task-btn-del">
+                                                <nb-icon icon="trash-2-outline"></nb-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-detail-dash t-notapproved" (click)="openDetail()">
+                                <div class="task-main-1 border-bottom-color">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-8 col-8 pd-0">
+                                                <div class="first-border-right">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="user-task pd-rl mr-bt-0">
+
+                                                                    <span class="title-value">Bhautik Mehta</span>
+
+                                                                    <!-- <span class="title-value">Department A</span> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">DEPARTMENT</label>
+                                                                    <span class="taske-date-vlue">Department A</span>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">NAME</label>
+                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="task-name mr-tb pd-rl">
+                                                                    <label class="task-label">COMPILATION DAYS</label>
+                                                                    <span class="taske-date-vlue">3</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-4 pd-0">
+                                                <div class="short-task-detail">
+
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="priority-dots">
+                                                                    <span class="p-dots-color rd-o" title="P1"></span>
+                                                                    <span class="p-dots-color rd-o" title="P2"></span>
+                                                                    <span class="p-dots-color rd-o" title="P3"></span>
+                                                                    <span class="p-dots-color rd-o" title="P4"></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0 order-1">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">STATUS</label>
+                                                                    <span class="taske-date-vlue">Pending</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-12 pd-0">
+                                                                <div class="st-date-task mr-tb">
+                                                                    <label class="task-label">TYPE</label>
+                                                                    <span class="taske-date-vlue">General</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 col-12 mobile-pd-0">
+                        <div class="mb-4">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 pd-0">
+                                        <div class="task-btn">
+                                            <div class="task-email-btn">
+                                                <nb-icon icon="email-outline" class="email-task-complete"></nb-icon>
+                                            </div>
+                                            <div class="task-btn-del">
+                                                <nb-icon icon="trash-2-outline"></nb-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-detail-dash t-blocker" (click)="openDetail()">
                                 <div class="task-main-1 border-bottom-color">
                                     <div class="container">
                                         <div class="row">

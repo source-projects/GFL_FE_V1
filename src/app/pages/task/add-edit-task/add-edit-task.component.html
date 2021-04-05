@@ -31,8 +31,7 @@
                                 <p>Drop Here!</p>
                             </div>
                         </ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                            [file]="f" [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
                             <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                         </ngx-dropzone-image-preview>
                     </div>
@@ -73,10 +72,10 @@
                     <label>Priority</label>
                     <br>
                     <span>
-                        <button id="p1" class="priority-btn priority-p1">P1</button>
-                        <button id="p2" class="priority-btn priority-p2">P2</button>
-                        <button id="p3" class="priority-btn priority-p3">P3</button>
-                        <button id="p4" class="priority-btn priority-p4">P4</button>
+                        <button id="p1" class="priority-btn priority-p1 rd-p">P1</button>
+                        <button id="p2" class="priority-btn priority-p2 rd-o">P2</button>
+                        <button id="p3" class="priority-btn priority-p3 rd-y">P3</button>
+                        <button id="p4" class="priority-btn priority-p4 rd-g">P4</button>
                     </span>
                 </div>
             </div>
