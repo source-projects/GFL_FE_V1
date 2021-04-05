@@ -272,6 +272,14 @@ export const routes: Routes = [
         canLoad: [AdminGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+      {
+        path: "task",
+        loadChildren: () =>
+          import("./pages/task/task.module").then((m) => m.TaskModule),
+        // canActivate: [AdminGuard],
+        // canLoad: [AdminGuard],
+        // data: { PermissionName: ["view", "view group", "view all"] },
+      },
 
       {
         path: "addition-slip",
@@ -297,9 +305,9 @@ export const routes: Routes = [
       {
         path: "attendance",
         loadChildren: () =>
-        import("./pages/attendance/attendance.module").then(
-          (m) => m.AttendanceModule
-        ),
+          import("./pages/attendance/attendance.module").then(
+            (m) => m.AttendanceModule
+          ),
         canActivate: [AttndanceGuard],
         canLoad: [AttndanceGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
@@ -333,6 +341,11 @@ export const routes: Routes = [
     ],
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
+  {
+    path: "task",
+    loadChildren: () =>
+      import("./pages/task/task.module").then((m) => m.TaskModule),
+  },
 
   // {
   //   path: "generate-report",

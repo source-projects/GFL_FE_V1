@@ -31,8 +31,7 @@
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 //@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-alpine.css";
-
-.backdrop{
+.backdrop {
     min-height: 100vh;
 }
 
@@ -2240,7 +2239,7 @@ input[type="number"]::-webkit-outer-spin-button {
         margin-left: 10px !important;
     }
     .fn-tab-title .tabset li a span {
-        padding: 12px
+        padding: 12px;
     }
     .fn-tab-title ul {
         overflow-x: scroll;
@@ -2252,6 +2251,20 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .mobile-width-100 .mobile-100 img {
         width: 100%;
+    }
+    //task mobile view
+    .first-border-right {
+        border-right: none !important;
+    }
+    .mobile-left {
+        justify-content: flex-end !important;
+    }
+    .first-border-left {
+        border-left: none !important;
+    }
+    .cd-task,
+    .end-date-task {
+        text-align: left !important;
     }
 }
 
@@ -2850,7 +2863,7 @@ ng-select.ng-select-br-none {
 
 /* Handle on hover */
 
- ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
@@ -2949,4 +2962,255 @@ ng-select.ng-select-br-none {
 
 .position-rel {
     position: relative;
+}
+
+.priority-btn {
+    margin: 10px;
+    border-radius: 18px;
+    width: 64px;
+    height: 31px;
+    margin-top: 0px;
+}
+
+.priority-p1 {
+    background-color: #ff1a1a;
+}
+
+.priority-p2 {
+    background-color: #ff704d;
+}
+
+.priority-p3 {
+    background-color: #ffad33;
+}
+
+.priority-p4 {
+    background-color: #88cc00;
+}
+
+.pd-18 {
+    padding: 0px !important;
+    margin-right: 0px;
+    color: #fff;
+    opacity: 1 !important;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+}
+
+.position-rel {
+    position: relative;
+}
+
+//tooltip changes
+.pd-tooltip-changes {
+    padding: 3px 9px !important;
+    font-size: 9px;
+    left: 2px !important;
+}
+
+.task-dash-changes {
+    height: 33px !important;
+    width: 33px !important;
+    top: 3px !important;
+}
+
+//treloo bugs fix
+ng-select .ng-clear-wrapper {
+    top: 2px;
+    padding-left: 6px;
+}
+
+// dashboard tooltip card
+.title-value {
+    font-size: 13px;
+    color: #402f01;
+    font-weight: 600;
+    padding: 7px 0 2px;
+}
+
+.user-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.first-border-right {
+    border-right: 1px solid #c1c1c1;
+}
+
+.first-border-left {
+    border-left: 1px solid #c1c1c1;
+}
+
+.border-bottom-color {
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.task-detail-dash {
+    border: 1px solid #c1c1c1;
+    background: #ffb64f1f;
+}
+
+.p-dots-color {
+    height: 10px;
+    width: 10px;
+    background-color: #000;
+    margin-right: 6px;
+    border-radius: 50px;
+}
+
+.priority-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.rd-p {
+    background-color: #ff0000;
+}
+
+.rd-o {
+    background-color: #FFA500;
+}
+
+.rd-y {
+    background-color: #FFFF00;
+}
+
+.rd-g {
+    background-color: #228B22;
+}
+
+.task-label,
+.taske-date-vlue {
+    display: block;
+}
+
+.task-label {
+    margin-bottom: 1px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #5e5b5e;
+    letter-spacing: 0.4px;
+}
+
+.taske-date-vlue {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: -4px;
+}
+
+.mr-tb {
+    margin: 2px 0;
+}
+
+.short-task-detail {
+    padding: 0 7px;
+}
+
+.end-date-task,
+.cd-task {
+    text-align: right;
+}
+
+.pd-rl {
+    padding: 0px 9px;
+    margin-bottom: 2px;
+}
+
+.task-link a {
+    color: #1d254c;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.task-link a:hover {
+    color: #aa3634
+}
+
+.mr-bt-0 {
+    margin-bottom: 0;
+}
+
+.remark-ellips {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    font-size: 12px !important;
+}
+
+.task-img {
+    display: inline-block;
+    margin-right: 9px;
+}
+
+.task-img img {
+    width: 48px;
+    margin-bottom: 10px;
+}
+
+.mt-img-3 {
+    margin-top: 3px;
+    min-height: 50px;
+    height: 59px;
+    overflow-y: scroll;
+}
+
+.pdb-5 {
+    padding-bottom: 5px;
+}
+
+.pd-tp-5 {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.task-btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.task-email-btn {
+    padding: 7px 8px 3px 8px;
+    border-top: 1px solid #c1c1c1;
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+}
+
+.task-btn-del {
+    padding: 7px 8px 3px 8px;
+    border-top: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+}
+
+.short-task-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.task-btn-del nb-icon {
+    color: #aa3634;
+}
+
+.task-btn-del:hover {
+    background-color: #aa3634;
+    transition: .5s;
+    border-top: 1px solid #aa3634;
+    border-right: 1px solid #aa3634;
+}
+
+.task-btn-del:hover nb-icon {
+    color: #fff;
+    transition: .5s;
+}
+
+.task-email-btn .email-task-complete {
+    color: #228B22;
 }

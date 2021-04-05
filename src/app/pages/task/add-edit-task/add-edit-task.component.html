@@ -1,0 +1,125 @@
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="nb-text">Assign Task</h2>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" name="taskName" placeholder="Task Name" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Task Detail</label>
+                    <textarea col="4" row="5" name="taskDetail" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Attachments</label>
+                    <!-- <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone-label>Drop it</ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone> -->
+                    <input class="form-control registration-document" type="file">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Department</label>
+                    <ng-select>
+                        <ng-option></ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Assign To</label>
+                    <ng-select>
+                        <ng-option></ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Task Type</label>
+                    <ng-select>
+                        <ng-option></ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Priority</label>
+                    <br>
+                    <span>
+                        <button id="p1" class="priority-btn priority-p1">P1</button>
+                        <button id="p2" class="priority-btn priority-p2">P2</button>
+                        <button id="p3" class="priority-btn priority-p3">P3</button>
+                        <button id="p4" class="priority-btn priority-p4">P4</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input name="startDate" id="startDate" class="form-control" type="date">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Till Date</label>
+                    <input name="tillDate" id="tillDate" class="form-control" type="date">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Complitaion Day</label>
+                    <input type="number" id="complitaionDay" name="complitaionDay" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Remark</label>
+                    <textarea col="4" row="5" name="remark" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Report</label>
+                    <ng-select>
+                        <ng-option></ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <nb-checkbox>Notify via mobile or email</nb-checkbox>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary btn-sm btn-design-save button-base ripple">Submit</button>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

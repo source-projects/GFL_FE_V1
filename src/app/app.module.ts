@@ -56,14 +56,14 @@ import { ShadeModule } from "./pages/shade/shade.module";
       preventDuplicates: true,
     }),
   ],
-  providers:[
-    {  provide: HTTP_INTERCEPTORS,
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
-      multi: true
-   },
+      multi: true,
+    },
   ],
- 
-  
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
