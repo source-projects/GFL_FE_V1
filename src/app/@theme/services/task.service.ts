@@ -23,4 +23,11 @@ export class TaskService {
       this.commonService.envUrl() + "api/admin/get/reportType"
     );
   }
+
+  addTask(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/task/add",
+      data
+    );
+  }
 }

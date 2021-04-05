@@ -8,7 +8,7 @@ export class AddTask {
   completedDays: any;
   remark: any;
   reportId: any;
-  notify: boolean;
+  notify: boolean = false;
   isCompleted: boolean;
   departmentId: any;
   assignUserId: any;
@@ -16,4 +16,11 @@ export class AddTask {
   createdDate: Date;
   updatedDate: Date;
   completedDate: Date;
+  taskImageList: TaskImageList[];
+}
+export class TaskImageList {
+  controlId: any;
+  id: any;
+  type: any;
+  url: any;
 }
