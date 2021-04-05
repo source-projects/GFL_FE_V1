@@ -2253,9 +2253,9 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 100%;
     }
     //task mobile view
-    .first-border-right {
-        border-right: none !important;
-    }
+    // .first-border-right {
+    //     border-right: none !important;
+    // }
     .mobile-left {
         justify-content: flex-end !important;
     }
@@ -3024,7 +3024,8 @@ ng-select .ng-clear-wrapper {
 // dashboard tooltip card
 .title-value {
     font-size: 13px;
-    color: #402f01;
+    // color: #402f01;
+    color: #ffff;
     font-weight: 600;
     padding: 7px 0 2px;
 }
@@ -3037,20 +3038,23 @@ ng-select .ng-clear-wrapper {
 }
 
 .first-border-right {
-    border-right: 1px solid #c1c1c1;
+    border-right: 1px solid #a9a9a9;
+    padding-bottom: 5px;
 }
 
 .first-border-left {
     border-left: 1px solid #c1c1c1;
 }
 
-.border-bottom-color {
-    border-bottom: 1px solid #c1c1c1;
-}
-
+// .border-bottom-color {
+//     border-bottom: 1px solid #c1c1c1;
+// }
 .task-detail-dash {
-    border: 1px solid #c1c1c1;
-    background: #ffb64f1f;
+    border: 1px solid #563333;
+    // background: #ffc26d59;
+    background: #563333;
+    cursor: pointer;
+    border-bottom: 0;
 }
 
 .p-dots-color {
@@ -3093,7 +3097,8 @@ ng-select .ng-clear-wrapper {
     margin-bottom: 1px;
     font-size: 10px;
     font-weight: 700;
-    color: #5e5b5e;
+    // color: #5e5b5e;
+    color: #d8d8d8;
     letter-spacing: 0.4px;
 }
 
@@ -3101,6 +3106,7 @@ ng-select .ng-clear-wrapper {
     font-size: 12px;
     font-weight: 600;
     margin-top: -4px;
+    color: #fff;
 }
 
 .mr-tb {
@@ -3111,8 +3117,7 @@ ng-select .ng-clear-wrapper {
     padding: 0 7px;
 }
 
-.end-date-task,
-.cd-task {
+.end-date-task {
     text-align: right;
 }
 
@@ -3136,10 +3141,14 @@ ng-select .ng-clear-wrapper {
 }
 
 .remark-ellips {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
+    // display: -webkit-box;
+    // -webkit-box-orient: vertical;
+    // -webkit-line-clamp: 3;
+    // overflow: hidden;
+    margin-top: 3px;
+    min-height: 50px;
+    height: 59px;
+    overflow-y: scroll;
     font-size: 12px !important;
 }
 
@@ -3177,15 +3186,15 @@ ng-select .ng-clear-wrapper {
 
 .task-email-btn {
     padding: 7px 8px 3px 8px;
-    border-top: 1px solid #c1c1c1;
-    border-left: 1px solid #c1c1c1;
-    border-right: 1px solid #c1c1c1;
+    border-top: 1px solid #563333;
+    border-left: 1px solid #563333;
+    border-right: 1px solid #563333;
 }
 
 .task-btn-del {
     padding: 7px 8px 3px 8px;
-    border-top: 1px solid #c1c1c1;
-    border-right: 1px solid #c1c1c1;
+    border-top: 1px solid #563333;
+    border-right: 1px solid #563333;
 }
 
 .short-task-detail {
@@ -3213,4 +3222,109 @@ ng-select .ng-clear-wrapper {
 
 .task-email-btn .email-task-complete {
     color: #228B22;
+}
+
+.popup-border-bottom {
+    border-bottom: 1px solid #3e3e3e !important;
+}
+
+.task-popup {
+    background: #ff53000d !important
+}
+
+.task-pop-label .title-value {
+    color: #4a1414 !important;
+    font-weight: 700 !important;
+}
+
+.task-pop-label .task-label {
+    color: #5e5b5e !important;
+}
+
+.task-pop-label .taske-date-vlue {
+    color: #000 !important;
+}
+
+.first-border-popup {
+    border-right: 1px solid #3e3e3e !important;
+    padding-bottom: 5px;
+}
+
+.task-popup-bottom {
+    border-bottom: 1px solid #3e3e3e !important;
+}
+
+.task-popup-left {
+    border-left: 1px solid #3e3e3e !important;
+}
+
+.main-title-task {
+    display: block;
+}
+
+.main-box-task {
+    margin-bottom: 50px;
+}
+
+.t-all {
+    background-color: #acb52c;
+}
+
+.t-all .label-top-task,
+.t-all .label-top-task-value {
+    color: #000;
+}
+
+.t-assign {
+    background-color: #1e1772;
+}
+
+.t-assign .label-top-task,
+.t-assign .label-top-task-value {
+    color: #fff;
+}
+
+.t-completed {
+    background-color: #017e27;
+}
+
+.t-approved {
+    background-color: #1bee22;
+}
+
+.t-notapproved {
+    background-color: #7a7a7a;
+}
+
+.t-blocker {
+    background-color: #ff0000;
+}
+
+.top-style-task {
+    padding: 29px 19px 19px;
+}
+
+.task-top-img {
+    margin-left: auto!important;
+    margin-right: auto!important;
+    max-width: 75px;
+    z-index: 99999!important;
+    text-align: center;
+}
+
+.task-top-img img {
+    width: 50px;
+    margin-bottom: -23px;
+    background: #fff;
+    border-radius: 1000px 1000px 1000px 1000px;
+}
+
+.label-top-task {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 13px 0 8px;
+}
+
+.t-all .label-top-task {
+    color: #5e5b5e;
 }
