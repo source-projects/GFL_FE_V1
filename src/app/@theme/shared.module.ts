@@ -57,6 +57,7 @@ import { NgxImageCompressService } from "ngx-image-compress";
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxDropzoneModule } from "ngx-dropzone";
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -114,6 +115,7 @@ const NB_MODULES = [
       showBackground: false,
       startFromZero: false,
     }),
+    NgxDropzoneModule,
   ],
 
   exports: [
@@ -126,6 +128,7 @@ const NB_MODULES = [
     NgxQRCodeModule,
     SliderModule,
     NgCircleProgressModule,
+    NgxDropzoneModule,
     // NgQrScannerModule,
     //  NgQRCodeReaderModule,
     //   ZXingScannerModule,
