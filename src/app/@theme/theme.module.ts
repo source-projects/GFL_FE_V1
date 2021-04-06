@@ -49,6 +49,7 @@ import { FilterSelectedItemPipe } from "./pipes/dyingProcess.pipe";
 import { FilterSelectedBatchPipe } from "./pipes/filter-selected-batch.pipe";
 import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
 import { FilterSelectedSupplierPipe } from "./pipes/filter-selected-supplier.pipe";
+import { DesignationFilterPipe } from "./pipes/designation.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -78,6 +79,7 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  DesignationFilterPipe,
   CounterPipe,
   FilterSelectedBatchPipe,
   FilterSelectedProcessPipe,

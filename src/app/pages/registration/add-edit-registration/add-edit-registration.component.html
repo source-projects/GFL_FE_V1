@@ -1,11 +1,11 @@
 <ngx-loading [show]="loading"></ngx-loading>
 <ng-container *ngIf="uploadFlag">
-<circle-progress
+<circle-progress [showInnerStroke]=false
   [percent]="processValue"
-  [outerStrokeColor]="'#78C000'"
-  [innerStrokeColor]="'#C7E596'"
+  [outerStrokeColor]="'#005ec2'"
   [animation]="true"
   [animationDuration]="300"
+  [radius]="40"
 ></circle-progress>
 </ng-container>
 

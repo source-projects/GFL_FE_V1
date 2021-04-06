@@ -23,9 +23,11 @@ export class AddCompany {
 export class AddDepartment {
   id: number;
   name: string;
+  isMaster:boolean;
   constructor() {
     this.id = 0;
     this.name = null;
+    this.isMaster = false;
   }
 }
 export class AddQuality {
