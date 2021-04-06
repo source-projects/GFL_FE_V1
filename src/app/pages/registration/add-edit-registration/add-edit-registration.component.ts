@@ -127,9 +127,8 @@ export class AddEditRegistrationComponent implements OnInit {
 
   fileUpload() {
     
-    this.processValue = 0;
+    
     this.loading = true;
-    this.uploadFlag = true;
 
     if(this.imageFile){
     this.fileToUpload = this.imageFile;
@@ -139,25 +138,26 @@ export class AddEditRegistrationComponent implements OnInit {
     data.append('upload_preset', 'gfl_upload');
     data.append('cloud_name', 'dpemsdha5');
 
-
-    this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data,{
-      reportProgress:true,
-      observe:'events'
-    })
-      .subscribe(event => {
-      //send success response
-        if(event){
-          if (event.type === HttpEventType.UploadProgress) {
-            this.processValue = Math.round(100 * event.loaded / event.total);
-            this.value=this.progress
-          }else if(event.type==HttpEventType.Response){
-            console.log(event.body)
-          }
-        }
-
-      }, (err) => {
-      //send error response
-    });
+      if(this.uploadFlag){
+        this.processValue = 0;
+        this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data,{
+          reportProgress:true,
+          observe:'events'
+        })
+          .subscribe(event => {
+          //send success response
+            if(event){
+              if (event.type === HttpEventType.UploadProgress) {
+                this.processValue = Math.round(100 * event.loaded / event.total);
+              }else if(event.type==HttpEventType.Response){
+              }
+            }
+    
+          }, (err) => {
+          //send error response
+        });
+    
+      }
 
     this.registrationService.uploadImage(data).subscribe((response) => {
       if (response) {
@@ -182,6 +182,9 @@ export class AddEditRegistrationComponent implements OnInit {
   handleFileInput(files: FileList, type) {
 
     this.uploadFlag = false;
+    if(type == "document"){
+      this.uploadFlag = true;
+    }
     this.fileToUpload = files.item(0);
     this.docType = type;
     if (this.docType == 'profile') {
