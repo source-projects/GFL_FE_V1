@@ -28,6 +28,7 @@ import { JwtTokenService } from "../@theme/services/jwt-token.service";
 import { StoreTokenService } from "../@theme/services/store-token.service";
 import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
 import { ReportGuard } from "../@theme/guards/report.guard";
+import { TaskGuard } from "../@theme/guards/task.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -70,7 +71,8 @@ export class PagesComponent implements OnInit {
     private commonService: CommonService,
     private userService: UserService,
     private mergeGuard: MergeBatchGuard,
-    private reportGuard : ReportGuard
+    private reportGuard : ReportGuard,
+    private taskGuard : TaskGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -492,6 +494,21 @@ export class PagesComponent implements OnInit {
                   //   e.hidden = false;
                   // }
                     }
+                  break;
+
+                  case "Task":
+                  this.view = this.taskGuard.accessRights("view");
+                  this.view_all = this.taskGuard.accessRights("view all");
+                  this.view_group = this.taskGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
                   break;
             }
           });

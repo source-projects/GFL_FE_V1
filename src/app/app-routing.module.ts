@@ -31,6 +31,7 @@ import { AttndanceGuard } from "./@theme/guards/attendance.guard";
 import { PurchaseGuard } from "./@theme/guards/purchase.guard";
 import { MergeBatchGuard } from "./@theme/guards/merge-batch.guard";
 import { ReportGuard } from "./@theme/guards/report.guard";
+import { TaskGuard } from "./@theme/guards/task.guard";
 
 export const routes: Routes = [
   {
@@ -280,9 +281,9 @@ export const routes: Routes = [
         path: "task",
         loadChildren: () =>
           import("./pages/task/task.module").then((m) => m.TaskModule),
-        // canActivate: [AdminGuard],
-        // canLoad: [AdminGuard],
-        // data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [TaskGuard],
+        canLoad: [TaskGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
 
       {
