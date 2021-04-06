@@ -6,6 +6,7 @@ import { UserComponent } from './user.component';
 import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 import { SharedModule } from '../../@theme/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ThemeModule } from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [UserComponent, AddEditUserComponent],
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     UserRoutingModule,
-    FormsModule
+    FormsModule,
+    ThemeModule
   ]
 })
 export class UserModule { }
