@@ -113,7 +113,7 @@
                                 <div class="input-required" *ngIf="(DepartmentName.invalid) && (formSubmitted || DepartmentName.touched)">
                                     Department name is required.
                                 </div>
-                                <nb-checkbox [(ngModel)]="addDepartment.isMaster" name="isMasterGrp">Is Master Group</nb-checkbox>
+                                <nb-checkbox [disabled]="departmentEditFlag" [(ngModel)]="addDepartment.isMaster" name="isMasterGrp">Is Master Group</nb-checkbox>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
