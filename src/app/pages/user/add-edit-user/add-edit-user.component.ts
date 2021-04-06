@@ -583,11 +583,12 @@ export class AddEditUserComponent implements OnInit {
       ip: "",
       ad: "",
       ds: "",
-      emp: "",
-      attnds: "",
-      po: "",
-      mg: "",
-      rpt: "",
+      emp:"",
+      attnds:"",
+      po:"",
+      mg:"",
+      rpt:"",
+      tt:""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
