@@ -26,7 +26,8 @@
 
                                         <label class="required">Party</label>
 
-                                        <ng-select name="partyId{{i}}" appendTo="body" [(ngModel)]='data.partyId' #partyId1{{i}}="ngModel" (change)="partySelected($event,i)" placeholder="Select Party">
+                                        <ng-select name="partyId{{i}}" appendTo="body" [(ngModel)]='data.partyId' #partyId1{{i}}="ngModel" 
+                                        (change)="partySelected($event,i)" placeholder="Select Party" [disabled]="disable">
                                             <ng-option disabled="true">
                                                 <div class="row">
                                                     <div class="col-md-6 col-6">
@@ -60,7 +61,8 @@
                                             <div class="quality-in">
                                                 <label class="required">Quality</label>
 
-                                                <ng-select name="qualityId{{i}}" appendTo="body" [(ngModel)]='data.qualityId' #qualityId1{{i}}="ngModel" placeholder="Select Quality" (change)="qualitySelected($event, i)">
+                                                <ng-select name="qualityId{{i}}" appendTo="body" [(ngModel)]='data.qualityId' #qualityId1{{i}}="ngModel" 
+                                                placeholder="Select Quality" (change)="qualitySelected($event, i)" [disabled]="disable">
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -96,7 +98,8 @@
                                             <div class="batch-in">
                                                 <label class="required">Batch</label>
 
-                                                <ng-select name="batchId{{i}}" appendTo="body" [(ngModel)]='data.batchId' #batchId{{i}}="ngModel" placeholder="Select Batch" (change)="batchSelected($event, i)">
+                                                <ng-select name="batchId{{i}}" appendTo="body" [(ngModel)]='data.batchId' #batchId{{i}}="ngModel" placeholder="Select Batch"
+                                                 (change)="batchSelected($event, i)" [disabled]="disable">
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12">
@@ -124,7 +127,7 @@
                                                         <div class="col-md-12 col-12">
                                                             <div class="merged-batch-indiviual">
                                                                 <div *ngFor="let item of data.grList" cdkDrag>
-                                                                    <div class="example-box" *ngIf ="!item.mergeBatchId">
+                                                                    <div class="example-box" >
                                                                         Meter: {{item.mtr}} Weight: {{item.wt}}
                                                                     </div>
                                                                 </div>
@@ -184,7 +187,17 @@
                             <div class="row">
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
                                     <div class="mrtp-10">
-                                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="loading" (click)="saveMergedBatch(mergeForm)">Save</button>
+                                        <button *ngIf="!currentId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                        (click)="resetForm(mergeForm)">CANCEL</button>
+
+                                        <button *ngIf="currentId" class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                        [routerLink]="['/pages/merge-batch/view']">CANCEL</button>
+   
+                                        <button *ngIf="!currentId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" 
+                                        [disabled]="loading" (click)="saveMergedBatch(mergeForm)">Save</button>
+                                        <button *ngIf="currentId" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" 
+                                        [disabled]="loading" (click)="updateMergedBatch(mergeForm)">Update</button>
+
                                     </div>
 
                                 </div>
