@@ -74,7 +74,8 @@ export class AddEditUserComponent implements OnInit {
     "Attendance",
     "Purchase",
     "Merge-Batch",
-    "Report"
+    "Report",
+    "Task"
   ];
 
   userHeadList: any[] = [];
@@ -487,6 +488,15 @@ export class AddEditUserComponent implements OnInit {
       case "Report": {
         let index = this.permissionArray.findIndex(
           (v) => v.module == "Report"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Task": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Task"
         );
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);

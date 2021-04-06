@@ -105,7 +105,10 @@ export class JwtTokenService {
           return this.tokens.permissions.mg;
 
       case 'report':
-          return this.tokens.permissions.rpt;    
+          return this.tokens.permissions.rpt;
+          
+      case 'task':
+          return this.tokens.permissions.tt;    
 
       case 'allPermissions':
           return this.tokens;
