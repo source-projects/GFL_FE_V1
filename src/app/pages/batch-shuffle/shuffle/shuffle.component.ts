@@ -10,6 +10,7 @@ import { ProgramService } from "app/@theme/services/program.service";
 import { QualityService } from 'app/@theme/services/quality.service';
 import { ShuffleService } from "app/@theme/services/shuffle.service";
 import { ToastrService } from 'ngx-toastr';
+import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 @Component({
   selector: 'ngx-shuffle',
   templateUrl: './shuffle.component.html',
@@ -57,8 +58,20 @@ export class ShuffleComponent implements OnInit {
   batchId1: any;
   batchId2: any;
   index: number;
+  currentBatchSequence;
+  currentBatchSeqId;
 
-  constructor(private partyService: PartyService, private shuffleService: ShuffleService, private qualityService: QualityService, private toastr: ToastrService, private programService: ProgramService, private formBuilder: FormBuilder, private route: Router, private batchByQualityPartyService: BatchByQualityPartyService, private batchList: BatchListService) {
+  constructor(
+    private partyService: PartyService, 
+    private shuffleService: ShuffleService, 
+    private qualityService: QualityService, 
+    private toastr: ToastrService, 
+    private programService: ProgramService, 
+    private formBuilder: FormBuilder, 
+    private route: Router, 
+    private batchByQualityPartyService: BatchByQualityPartyService, 
+    private batchList: BatchListService,
+    private stockBatchService : StockBatchService) {
     this.shuffleForm = this.formBuilder.group({
       partyName: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
@@ -75,13 +88,28 @@ export class ShuffleComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     this.flag = 1;
     this.getPartyList();
     this.getQualtiyList();
     this.btnFlag = 0;
 
+    this.getCurrentBatchSequence();
+
+  }
+
+
+  getCurrentBatchSequence(){
+    this.stockBatchService.getBatchSequence().subscribe(
+      data=>{
+        if(data['success']){
+          this.currentBatchSequence = data['data']['sequence'];
+          this.currentBatchSeqId = data['data']['id'];
+          //this.shuffleForm.controls['newBatchName'].setValue(this.currentBatchSequence);
+        }
+      }
+    )
   }
 
   //party drop down validation
