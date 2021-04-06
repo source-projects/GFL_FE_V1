@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -14,6 +15,8 @@ import { RegistrationService } from '../../../@theme/services/registration.servi
 })
 export class AddEditRegistrationComponent implements OnInit {
   imgLoading = false;
+  processValue: number =  0;
+  uploadFlag:boolean = false;
   progress = 0;
   image;
   registration: Registration = new Registration();
@@ -62,7 +65,7 @@ export class AddEditRegistrationComponent implements OnInit {
     let location = window.location;
     let urls = location["href"].split("registration");
     this.url = urls[0];
-    
+    this.uploadFlag = false;
     this.getUserId();
     if (this.currentEmpId) {
       this.getCurrentEmpData();
@@ -126,8 +129,9 @@ export class AddEditRegistrationComponent implements OnInit {
     }
 
   fileUpload() {
-
+this.processValue = 0;
     this.loading = true;
+    this.uploadFlag = true;
 
    // this.imageFile =  this.compressFile();
     console.log(this.imageFile)
@@ -141,6 +145,12 @@ export class AddEditRegistrationComponent implements OnInit {
 
     this.registrationService.uploadImage(data).subscribe((response) => {
       if (response) {
+        if (response.type === HttpEventType.UploadProgress) {
+          this.processValue = Math.round(100 * response.loaded / response.total);
+          // this.value=this.progress
+        }else if(response.type==HttpEventType.Response){
+          console.log(response.body)
+        }
         let obj = {
           id: null,
           name: this.fileToUpload.name,
@@ -148,16 +158,19 @@ export class AddEditRegistrationComponent implements OnInit {
           url: response.secure_url,
           controlId: null
         }
-        this.employeeDocumentArray.push(obj)
+        this.employeeDocumentArray.push(obj);
+        
         this.imgLoading = false;
       }
     })
   }
+  
 this.loading = false;
 
   }
   handleFileInput(files: FileList, type) {
 
+    this.uploadFlag = false;
     this.fileToUpload = files.item(0);
     this.docType = type;
     if (this.docType == 'profile') {
@@ -262,6 +275,7 @@ this.loading = false;
   
 
   addEmployee(form) {
+    this.uploadFlag = false;
     this.formSubmitted = true;
 
     if (form.valid) {
