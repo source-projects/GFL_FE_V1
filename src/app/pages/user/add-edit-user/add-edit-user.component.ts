@@ -116,6 +116,8 @@ export class AddEditUserComponent implements OnInit {
   disableViewGroupDependentPermission: boolean = false;
   disableViewAllDependentPermission: boolean = false;
   userNameExist = false;
+  isHeadAvailable: boolean = false;
+
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -735,6 +737,7 @@ export class AddEditUserComponent implements OnInit {
             } else {
               this.user.isUserHead = false;
             }
+            this.isHeadAvailable = this.user.isUserHead;
             this.user.designationId = data["data"].designationId.id;
             this.getCurrentCheckValue(this.user);
           }
@@ -783,12 +786,15 @@ export class AddEditUserComponent implements OnInit {
   }
 
   departmentSelected(event) {
+    this.user.designationId = null;
     if (event.userId) {
       this.user.userHeadId = event.userId;
       this.user.isUserHead = true;
+      this.isHeadAvailable = true;
     }else{
       this.user.userHeadId = Number(this.userId.userId);
       this.user.isUserHead = false;
+      this.isHeadAvailable = false;
     }
     this.user.isMaster = event.isMaster;
   }
@@ -825,6 +831,7 @@ export class AddEditUserComponent implements OnInit {
             this.disableButton = false;
             this.toastr.success(data["msg"]);
             this.getUserHeadList();
+            this.getAllDepartment();
           } else {
             this.toastr.error(data["msg"]);
           }
