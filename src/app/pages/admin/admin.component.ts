@@ -1136,6 +1136,7 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addDepartment.id = element.id;
         this.addDepartment.name = element.name;
+        this.addDepartment.isMaster = element.isMaster;
       }
     });
   }

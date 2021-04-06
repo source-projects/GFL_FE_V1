@@ -29,7 +29,6 @@ export class AddEditUserComponent implements OnInit {
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
-  isMasterFlag = false;
   adminFlag = false;
   masterFlag = false;
   operatorFlag = false;
@@ -46,8 +45,6 @@ export class AddEditUserComponent implements OnInit {
   designationList;
   public isChangePass: boolean = false;
   public dataEntryFlag: boolean = false;
-  public teamMemberFlag: boolean = false;
-
   //designation = ['Manager', 'Master', 'Accountant', 'Staff', 'Helper'];
 
   formSubmitted: boolean = false;
@@ -75,7 +72,7 @@ export class AddEditUserComponent implements OnInit {
     "Purchase",
     "Merge-Batch",
     "Report",
-    "Task"
+    "Task",
   ];
 
   userHeadList: any[] = [];
@@ -119,6 +116,8 @@ export class AddEditUserComponent implements OnInit {
   disableViewGroupDependentPermission: boolean = false;
   disableViewAllDependentPermission: boolean = false;
   userNameExist = false;
+  isHeadAvailable: boolean = false;
+
   constructor(
     private route: Router,
     private _route: ActivatedRoute,
@@ -222,35 +221,24 @@ export class AddEditUserComponent implements OnInit {
   }
 
   designationSelected(event) {
-    if (!event) {
-      this.isMasterFlag = false;
-      this.user.isUserHead = false;
-    } else {
-      const found = this.designationList.find((element) => element.id == event);
-      if (
-        found &&
-        found.designation &&
-        found.designation.toLowerCase() == "team head"
-      ) {
-        //hide userHeadId fields.
-        this.isMasterFlag = true;
-        this.user.isUserHead = false;
-        this.user.userHeadId = Number(this.commonService.getUser().userId);
-        this.teamMemberFlag = false;
-      } else if (
-        found &&
-        found.designation &&
-        found.designation.toLowerCase() == "team member"
-      ) {
-        this.teamMemberFlag = true;
-        this.user.isUserHead = true;
-        this.isMasterFlag = false;
-      } else {
-        this.teamMemberFlag = false;
-        this.user.isUserHead = true;
-        this.isMasterFlag = false;
-      }
-    }
+    // const found = this.designationList.find((element) => element.id == event);
+    // if (
+    //   found &&
+    //   found.designation &&
+    //   found.designation.toLowerCase() == "team head"
+    // ) {
+    //   //hide userHeadId fields.
+    //   this.user.isUserHead = false;
+    //   this.user.userHeadId = Number(this.commonService.getUser().userId);
+    // } else if (
+    //   found &&
+    //   found.designation &&
+    //   found.designation.toLowerCase() == "team member"
+    // ) {
+    //   this.user.isUserHead = true;
+    // } else {
+    //   this.user.isUserHead = true;
+    // }
   }
 
   createPermission() {
@@ -486,18 +474,14 @@ export class AddEditUserComponent implements OnInit {
       }
 
       case "Report": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Report"
-        );
+        let index = this.permissionArray.findIndex((v) => v.module == "Report");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
       }
 
       case "Task": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Task"
-        );
+        let index = this.permissionArray.findIndex((v) => v.module == "Task");
         if (e.target.checked == true) this.setPermissionTrue(index);
         else this.setPermissionFalse(index);
         break;
@@ -606,6 +590,7 @@ export class AddEditUserComponent implements OnInit {
       po:"",
       mg:"",
       rpt:"",
+      tt:""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
@@ -749,11 +734,10 @@ export class AddEditUserComponent implements OnInit {
                 : "";
             if (designationObj.designation.toLowerCase() != "team head") {
               this.user.isUserHead = true;
-              this.isMasterFlag = false;
             } else {
               this.user.isUserHead = false;
-              this.isMasterFlag = true;
             }
+            this.isHeadAvailable = this.user.isUserHead;
             this.user.designationId = data["data"].designationId.id;
             this.getCurrentCheckValue(this.user);
           }
@@ -801,6 +785,20 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
+  departmentSelected(event) {
+    this.user.designationId = null;
+    if (event.userId) {
+      this.user.userHeadId = event.userId;
+      this.user.isUserHead = true;
+      this.isHeadAvailable = true;
+    }else{
+      this.user.userHeadId = Number(this.userId.userId);
+      this.user.isUserHead = false;
+      this.isHeadAvailable = false;
+    }
+    this.user.isMaster = event.isMaster;
+  }
+
   reset(myForm) {
     myForm.reset(myForm.value);
     this.user = new User();
@@ -833,8 +831,7 @@ export class AddEditUserComponent implements OnInit {
             this.disableButton = false;
             this.toastr.success(data["msg"]);
             this.getUserHeadList();
-            
-
+            this.getAllDepartment();
           } else {
             this.toastr.error(data["msg"]);
           }

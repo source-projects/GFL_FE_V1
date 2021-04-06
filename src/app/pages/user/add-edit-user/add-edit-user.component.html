@@ -139,9 +139,9 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="departmenty" appendTo="body" #department1="ngModel"
+                            <ng-select name="departmenty" appendTo="body" #department1="ngModel" [disabled]="currentUserId"
                                 [(ngModel)]="user.departmentId" [items]="departmentList" bindLabel="name" bindValue="id"
-                                placeholder="Select Department" required
+                                placeholder="Select Department" required (change)="departmentSelected($event)"
                                 [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
@@ -155,11 +155,10 @@
                         <div class="form-group">
                             <label class="required">Designation</label>
                             <ng-select name="designation" appendTo="body" #designation1="ngModel"
-                                [(ngModel)]="user.designationId" [disabled]="currentUserId"
+                                [(ngModel)]="user.designationId" [disabled]="!user.departmentId || currentUserId"
                                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || designation1.touched)}"
-                                placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
-                                (change)="designationSelected($event)">
-                                <ng-option *ngFor="let dsgn of designationList" [value]="dsgn.id">{{dsgn.designation}}
+                                placeholder="Select Designation" required class="required-error-dropdown dropdown-name">
+                                <ng-option *ngFor="let dsgn of designationList | designationFilter: isHeadAvailable" [value]="dsgn.id">{{dsgn.designation}}
                                 </ng-option>
                             </ng-select>
                             <div class="input-required"
@@ -171,7 +170,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="form-group">
                             <label></label>
                             <nb-checkbox name="isMaster" [(ngModel)]="user.isMaster"
@@ -205,7 +204,7 @@
                                 <span>UserHead is required.</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4" *ngIf="currentUserId">
                         <div class="form-group">
                             <nb-checkbox name="assign" [checked]="false" [(ngModel)]="isChangePass"
