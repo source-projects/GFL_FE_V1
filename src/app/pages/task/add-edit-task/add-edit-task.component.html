@@ -1,141 +1,144 @@
-<nb-card class="nb-style">
+<nb-card class="nb-style mb-0 popup-fix-height">
     <nb-card-header class="nb-header">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="nb-text">Assign Task</h2>
-            </div>
+        <div class="modal-header purchase-popup">
+            <h4 class="modal-title nb-text">Assign Task</h4>
+            <button class="close btn-foucs-none" aria-label="Close">
+                <span aria-hidden="true" class="close-icon">&times;</span>
+            </button>
+
         </div>
     </nb-card-header>
-    <nb-card-body>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Task Name</label>
-                    <input type="text" name="taskName" placeholder="Task Name" class="form-control"
-                        [(ngModel)]="addTask.taskName">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Task Detail</label>
-                    <textarea col="4" row="5" name="taskDetail" class="form-control"
-                        [(ngModel)]="addTask.detail"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Attachments</label>
-                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
-                        <ngx-dropzone-label>
-                            <div>
-                                <p>Drop Here!</p>
-                            </div>
-                        </ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                            [file]="f" [removable]="true" (removed)="onRemove(f)">
-                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                        </ngx-dropzone-image-preview>
+    <nb-card-body class="pd-normal">
+        <div class="add-task-popup-style">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Task Name</label>
+                        <input type="text" name="taskName" placeholder="Task Name" class="form-control"
+                            [(ngModel)]="addTask.taskName">
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Department</label>
+                        <ng-select (change)="getUserList($event)" [(ngModel)]="addTask.departmentId">
+                            <ng-option *ngFor="let department of departmentList" [value]="department.id">
+                                {{department.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Task Detail</label>
+                        <textarea col="4" row="5" name="taskDetail" class="form-control"
+                            [(ngModel)]="addTask.detail"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Attachments</label>
+                        <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
+                            (change)="onSelect($event)">
+                            <ngx-dropzone-label>
+                                <div class="drop-task-attch">
+                                    <nb-icon icon="cloud-upload-outline"></nb-icon>
+                                    <p> Drop files to attach!</p>
+                                </div>
+                            </ngx-dropzone-label>
+                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-image-preview>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Assign To</label>
+                        <ng-select [(ngModel)]="addTask.assignUserId">
+                            <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}}
+                                {{user.lastName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Task Type</label>
+                        <ng-select [(ngModel)]="addTask.taskType">
+                            <ng-option *ngFor="let type of typeList" [value]="type.name">{{type.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <br>
+                        <span>
+                            <button id="p1" class="priority-btn  rd-p" (click)="setPriority('p1')">P1</button>
+                            <button id="p2" class="priority-btn  rd-o" (click)="setPriority('p2')">P2</button>
+                            <button id="p3" class="priority-btn  rd-y" (click)="setPriority('p3')">P3</button>
+                            <button id="p4" class="priority-btn  rd-g" (click)="setPriority('p4')">P4</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input name="startDate" id="startDate" class="form-control" type="date"
+                            [(ngModel)]="addTask.startDate">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Till Date</label>
+                        <input name="tillDate" id="tillDate" class="form-control" type="date"
+                            [(ngModel)]="addTask.endDate">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Complitaion Day</label>
+                        <input type="number" id="complitaionDay" name="complitaionDay" class="form-control"
+                            [(ngModel)]="addTask.completedDays">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Report</label>
+                        <ng-select [(ngModel)]="addTask.reportId">
+                            <ng-option *ngFor="let report of reportList" [value]="report.id">{{report.formName}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Remark</label>
+                        <textarea col="4" row="5" name="remark" class="form-control"
+                            [(ngModel)]="addTask.remark"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <nb-checkbox [(ngModel)]="addTask.notify">Notify via mobile or email</nb-checkbox>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                        (click)="addTaskDetail()">Submit</button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Department</label>
-                    <ng-select (change)="getUserList($event)" [(ngModel)]="addTask.departmentId">
-                        <ng-option *ngFor="let department of departmentList" [value]="department.id">{{department.name}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Assign To</label>
-                    <ng-select [(ngModel)]="addTask.assignUserId">
-                        <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}} {{user.lastName}}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Task Type</label>
-                    <ng-select [(ngModel)]="addTask.taskType">
-                        <ng-option *ngFor="let type of typeList" [value]="type.name">{{type.name}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Priority</label>
-                    <br>
-                    <span>
-                        <button id="p1" name="priority-p1" (click)="setPriority('p1')"
-                            class="priority-btn priority-p1">P1</button>
-                        <button id="p2" name="priority-p2" (click)="setPriority('p2')"
-                            class="priority-btn priority-p2">P2</button>
-                        <button id="p3" name="priority-p3" (click)="setPriority('p3')"
-                            class="priority-btn priority-p3">P3</button>
-                        <button id="p4" name="priority-p4" (click)="setPriority('p4')"
-                            class="priority-btn priority-p4">P4</button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Start Date</label>
-                    <input name="startDate" id="startDate" class="form-control" type="date"
-                        [(ngModel)]="addTask.startDate">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Till Date</label>
-                    <input name="tillDate" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Complitaion Day</label>
-                    <input type="number" id="complitaionDay" name="complitaionDay" class="form-control"
-                        [(ngModel)]="addTask.completedDays">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Remark</label>
-                    <textarea col="4" row="5" name="remark" class="form-control"
-                        [(ngModel)]="addTask.remark"></textarea>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Report</label>
-                    <ng-select [(ngModel)]="addTask.reportId">
-                        <ng-option *ngFor="let report of reportList" [value]="report.id">{{report.formName}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-9">
-                <div class="form-group">
-                    <nb-checkbox [(ngModel)]="addTask.notify">Notify via mobile or email</nb-checkbox>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                    (click)="addTaskDetail()">Submit</button>
-            </div>
-        </div>
+
     </nb-card-body>
 </nb-card>

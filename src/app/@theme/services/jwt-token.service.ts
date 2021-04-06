@@ -104,6 +104,12 @@ export class JwtTokenService {
       case 'mergeBatch':
           return this.tokens.permissions.mg;
 
+      case 'report':
+          return this.tokens.permissions.rpt;
+          
+      case 'task':
+          return this.tokens.permissions.tt;    
+
       case 'allPermissions':
           return this.tokens;
       

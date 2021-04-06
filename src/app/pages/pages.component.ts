@@ -27,6 +27,8 @@ import { PurchaseGuard } from "../@theme/guards/purchase.guard";
 import { JwtTokenService } from "../@theme/services/jwt-token.service";
 import { StoreTokenService } from "../@theme/services/store-token.service";
 import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
+import { ReportGuard } from "../@theme/guards/report.guard";
+import { TaskGuard } from "../@theme/guards/task.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -68,7 +70,9 @@ export class PagesComponent implements OnInit {
     public purchaseGuard : PurchaseGuard,
     private commonService: CommonService,
     private userService: UserService,
-    private mergeGuard: MergeBatchGuard
+    private mergeGuard: MergeBatchGuard,
+    private reportGuard : ReportGuard,
+    private taskGuard : TaskGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -100,9 +104,9 @@ export class PagesComponent implements OnInit {
                   this.view_all = this.mergeGuard.accessRights("view all");
                   this.view_group = this.mergeGuard.accessRights("view group");
                   if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
+                    this.view == false
+                    // this.view_all == false &&
+                    // this.view_group == false
                   ) {
                     e.hidden = true;
                   }else{
@@ -353,18 +357,27 @@ export class PagesComponent implements OnInit {
                 break;
 
               case "Database":
-                this.view = this.adminGuard.accessRights("view");
-                this.view_all = this.adminGuard.accessRights("view all");
-                this.view_group = this.adminGuard.accessRights("view group");
                 if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
+                  this.userData.id &&
+                  !this.userData.userHeadId && 
+                  !this.userData.superUserHeadId
                 ) {
-                  e.hidden = true;
-                }else{
                   e.hidden = false;
-                }
+                } else {
+                  e.hidden = true;
+                // this.view = this.adminGuard.accessRights("view");
+                // this.view_all = this.adminGuard.accessRights("view all");
+                // this.view_group = this.adminGuard.accessRights("view group");
+                // if (
+                //   this.view == false &&
+                //   this.view_all == false &&
+                //   this.view_group == false
+                // ) {
+                //   e.hidden = true;
+                // }else{
+                //   e.hidden = false;
+                // }
+              }
                 break;
 
               case "Input Data":
@@ -448,6 +461,45 @@ export class PagesComponent implements OnInit {
                   this.view = this.purchaseGuard.accessRights("view");
                   this.view_all = this.purchaseGuard.accessRights("view all");
                   this.view_group = this.purchaseGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
+                  break;
+
+                  case "Report":
+                    if (
+                      this.userData.id &&
+                      !this.userData.userHeadId && 
+                      !this.userData.superUserHeadId
+                    ) {
+                      e.hidden = false;
+                    } else {
+                      e.hidden = true;
+                  // this.view = this.reportGuard.accessRights("view");
+                  // this.view_all = this.reportGuard.accessRights("view all");
+                  // this.view_group = this.reportGuard.accessRights("view group");
+                  // if (
+                  //   this.view == false &&
+                  //   this.view_all == false &&
+                  //   this.view_group == false
+                  // ) {
+                  //   e.hidden = true;
+                  // }else{
+                  //   e.hidden = false;
+                  // }
+                    }
+                  break;
+
+                  case "Task":
+                  this.view = this.taskGuard.accessRights("view");
+                  this.view_all = this.taskGuard.accessRights("view all");
+                  this.view_group = this.taskGuard.accessRights("view group");
                   if (
                     this.view == false &&
                     this.view_all == false &&

@@ -2253,9 +2253,9 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 100%;
     }
     //task mobile view
-    .first-border-right {
-        border-right: none !important;
-    }
+    // .first-border-right {
+    //     border-right: none !important;
+    // }
     .mobile-left {
         justify-content: flex-end !important;
     }
@@ -2965,11 +2965,15 @@ ng-select.ng-select-br-none {
 }
 
 .priority-btn {
-    margin: 10px;
+    margin: 8px 4px;
     border-radius: 18px;
-    width: 64px;
-    height: 31px;
+    width: 48px;
+    height: 27px;
     margin-top: 0px;
+    border: 0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .priority-p1 {
@@ -3006,13 +3010,17 @@ ng-select.ng-select-br-none {
 .pd-tooltip-changes {
     padding: 3px 9px !important;
     font-size: 9px;
-    left: 2px !important;
+    left: 17px !important;
+    width: 59px;
 }
 
 .task-dash-changes {
-    height: 33px !important;
-    width: 33px !important;
-    top: 3px !important;
+    height: 27px !important;
+    width: 26px !important;
+    top: 7px !important;
+    right: 0;
+    color: #017e27 !important;
+    background-color: #ffffff;
 }
 
 //treloo bugs fix
@@ -3024,7 +3032,8 @@ ng-select .ng-clear-wrapper {
 // dashboard tooltip card
 .title-value {
     font-size: 13px;
-    color: #402f01;
+    // color: #402f01;
+    color: #ffff;
     font-weight: 600;
     padding: 7px 0 2px;
 }
@@ -3037,20 +3046,23 @@ ng-select .ng-clear-wrapper {
 }
 
 .first-border-right {
-    border-right: 1px solid #c1c1c1;
+    border-right: 1px solid #ffffff;
+    padding-bottom: 5px;
 }
 
 .first-border-left {
     border-left: 1px solid #c1c1c1;
 }
 
-.border-bottom-color {
-    border-bottom: 1px solid #c1c1c1;
-}
-
+// .border-bottom-color {
+//     border-bottom: 1px solid #c1c1c1;
+// }
 .task-detail-dash {
-    border: 1px solid #c1c1c1;
-    background: #ffb64f1f;
+    border: 1px solid #563333;
+    // background: #ffc26d59;
+    background: #563333;
+    cursor: pointer;
+    border-bottom: 0;
 }
 
 .p-dots-color {
@@ -3093,7 +3105,8 @@ ng-select .ng-clear-wrapper {
     margin-bottom: 1px;
     font-size: 10px;
     font-weight: 700;
-    color: #5e5b5e;
+    // color: #5e5b5e;
+    color: #d8d8d8;
     letter-spacing: 0.4px;
 }
 
@@ -3101,6 +3114,7 @@ ng-select .ng-clear-wrapper {
     font-size: 12px;
     font-weight: 600;
     margin-top: -4px;
+    color: #fff;
 }
 
 .mr-tb {
@@ -3111,8 +3125,7 @@ ng-select .ng-clear-wrapper {
     padding: 0 7px;
 }
 
-.end-date-task,
-.cd-task {
+.end-date-task {
     text-align: right;
 }
 
@@ -3136,10 +3149,14 @@ ng-select .ng-clear-wrapper {
 }
 
 .remark-ellips {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
+    // display: -webkit-box;
+    // -webkit-box-orient: vertical;
+    // -webkit-line-clamp: 3;
+    // overflow: hidden;
+    margin-top: 3px;
+    min-height: 50px;
+    height: 59px;
+    overflow-y: scroll;
     font-size: 12px !important;
 }
 
@@ -3177,15 +3194,15 @@ ng-select .ng-clear-wrapper {
 
 .task-email-btn {
     padding: 7px 8px 3px 8px;
-    border-top: 1px solid #c1c1c1;
-    border-left: 1px solid #c1c1c1;
-    border-right: 1px solid #c1c1c1;
+    border-top: 1px solid #563333;
+    border-left: 1px solid #563333;
+    border-right: 1px solid #563333;
 }
 
 .task-btn-del {
     padding: 7px 8px 3px 8px;
-    border-top: 1px solid #c1c1c1;
-    border-right: 1px solid #c1c1c1;
+    border-top: 1px solid #563333;
+    border-right: 1px solid #563333;
 }
 
 .short-task-detail {
@@ -3213,4 +3230,154 @@ ng-select .ng-clear-wrapper {
 
 .task-email-btn .email-task-complete {
     color: #228B22;
+}
+
+.popup-border-bottom {
+    border-bottom: 1px solid #3e3e3e !important;
+}
+
+.task-popup {
+    background: #f1dfe3 !important
+}
+
+.task-pop-label .title-value {
+    color: #4a1414 !important;
+    font-weight: 700 !important;
+}
+
+.task-pop-label .task-label {
+    color: #5e5b5e !important;
+}
+
+.task-pop-label .taske-date-vlue {
+    color: #000 !important;
+}
+
+.first-border-popup {
+    border-right: 1px solid #3e3e3e !important;
+    padding-bottom: 5px;
+}
+
+.task-popup-bottom {
+    border-bottom: 1px solid #3e3e3e !important;
+}
+
+.task-popup-left {
+    border-left: 1px solid #3e3e3e !important;
+}
+
+.main-title-task {
+    display: block;
+}
+
+.main-box-task {
+    margin-bottom: 50px;
+}
+
+.t-all {
+    background-color: #acb52c;
+    border: 1px solid #acb52c;
+}
+
+.t-assign {
+    background-color: #1e1772;
+    border: 1px solid #1e1772;
+}
+
+.t-completed {
+    background-color: #017e27;
+    border: 1px solid #017e27;
+}
+
+.t-approved {
+    background-color: #1bee22;
+    border: 1px solid #1bee22;
+}
+
+.t-notapproved {
+    background-color: #7a7a7a;
+    border: 1px solid #7a7a7a;
+}
+
+.t-blocker {
+    background-color: #ff0000;
+    border: 1px solid #ff0000;
+}
+
+.top-style-task .label-top-task,
+.top-style-task .label-top-task-value {
+    color: #ffffff;
+}
+
+.top-style-task .label-top-task-value {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.top-style-task {
+    padding: 29px 19px 19px;
+}
+
+.task-top-img {
+    margin-left: auto!important;
+    margin-right: auto!important;
+    max-width: 75px;
+    z-index: 99999!important;
+    text-align: center;
+}
+
+.task-top-img img {
+    width: 50px;
+    margin-bottom: -23px;
+    background: #fff;
+    border-radius: 1000px 1000px 1000px 1000px;
+}
+
+.label-top-task {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 13px 0 12px;
+}
+
+.hover-img-task {
+    cursor: pointer;
+    transition: .5s;
+}
+
+.hover-img-task:hover {
+    box-shadow: 5px 5px 8px 0px #8e8e8e;
+    transition: .5s;
+}
+
+.task-attach {
+    border: 1px dashed #a19fa1 !important;
+    overflow: hidden !important;
+    height: 49px !important;
+}
+
+.drop-task-attch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-task-attch nb-icon {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.drop-task-attch p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px
+}
+
+.add-task-popup-style .form-group {
+    margin-bottom: 12px !important;
+}
+
+.popup-fix-height {
+    min-height: 567px;
+    height: 195px;
+    overflow-y: scroll;
 }

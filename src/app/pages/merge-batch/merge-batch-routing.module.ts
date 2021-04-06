@@ -10,14 +10,22 @@ const routes: Routes = [
     component:MergeBatchComponent,
     canActivate:[MergeBatchGuard],
     canLoad:[MergeBatchGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['add']}
   },
   { 
     path:'view',
     component:ViewMergeBatchComponent,
     canActivate:[MergeBatchGuard],
     canLoad:[MergeBatchGuard],
-    data: { PermissionName: ['view']}
+    data: { PermissionName: ['view','view group','view all']}
+  }  ,
+  { 
+    path:'edit/:id',
+    component:MergeBatchComponent,
+    canActivate:[MergeBatchGuard],
+    canLoad:[MergeBatchGuard],
+    data: { PermissionName: ['edit','edit group','edit all']}
+    
   }  
 ];
 
