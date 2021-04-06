@@ -3229,7 +3229,7 @@ ng-select .ng-clear-wrapper {
 }
 
 .task-popup {
-    background: #ff53000d !important
+    background: #f1dfe3 !important
 }
 
 .task-pop-label .title-value {
@@ -3331,16 +3331,12 @@ ng-select .ng-clear-wrapper {
     margin: 13px 0 12px;
 }
 
-.task-detail-dash {
-    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
+.hover-img-task {
+    cursor: pointer;
+    transition: .5s;
 }
 
-.hover-img-task:hover .task-top-img img {
-    -ms-transform: scale(1.5);
-    /* IE 9 */
-    -webkit-transform: scale(1.5);
-    /* Safari 3-8 */
-    transform: scale(1.5);
-    width: 60px;
+.hover-img-task:hover {
+    box-shadow: 4px 4px 8px 0px #8e8e8e;
     transition: .5s;
 }
