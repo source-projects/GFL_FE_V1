@@ -68,9 +68,8 @@ export class RegistrationComponent implements OnInit {
             aadhaar: element.aadhaar,
             employeeDocumentList: element.employeeDocumentList,
           }));
-          this.loading = false;
-
         }
+        this.loading = false;
       },
       (error) => {
         this.toastr.error(errorData.Serever_Error);
