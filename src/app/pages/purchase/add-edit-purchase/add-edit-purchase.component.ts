@@ -8,6 +8,7 @@ import { UserService } from '../../../@theme/services/user.service';
 import { AdminService } from '../../../@theme/services/admin.service';
 import * as errorData from "../../../@theme/json/error.json";
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-add-edit-purchase',
@@ -16,6 +17,10 @@ import { NgxImageCompressService } from 'ngx-image-compress';
 })
 export class AddEditPurchaseComponent implements OnInit {
 
+  invUploadFlag:boolean = false;
+  matUploadFlag:boolean = false;
+  processValue = 0;
+  processValue2=0;
   loading = false;
   formSubmitted = false;
   disableButton = false;
@@ -44,7 +49,8 @@ imageUrl;
     private _route: ActivatedRoute,
     private toastr: ToastrService,
     private route: Router,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private httpClient: HttpClient,
 
   ) { }
 
@@ -120,7 +126,7 @@ imageUrl;
     });
   }
 
-  compressFile() :any{
+  compressFile(type){
   
     this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
       result => {
@@ -132,7 +138,7 @@ imageUrl;
         this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
         //console.log(this.imageFile);
         //return imageFile;
-        this.fileUpload();
+        this.fileUpload(type);
       }
     );
   }
@@ -149,15 +155,37 @@ imageUrl;
     }
 
 
-  fileUpload() {
-    this.loading = true;
+  fileUpload(type) {
+    // this.loading = true;
     if(this.imageFile){
       this.fileToUpload = this.imageFile;
-  
     const data = new FormData();
     data.append('file', this.fileToUpload);
     data.append('upload_preset', 'gfl_upload');
     data.append('cloud_name', 'dpemsdha5');
+
+    this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data,{
+      reportProgress:true,
+      observe:'events'
+    })
+      .subscribe(event => {
+      //send success response
+        if(event){
+          if (event.type === HttpEventType.UploadProgress) {
+            if(type == "bill"){
+              this.processValue = Math.round(100 * event.loaded / event.total);
+            }
+            else if(type == "material"){
+              this.processValue2 = Math.round(100 * event.loaded / event.total);
+            }
+          }else if(event.type==HttpEventType.Response){
+          }
+        }
+
+      }, (err) => {
+      //send error response
+    });
+
 
     this.purchseService.uploadImage(data).subscribe((response) => {
       if (response) {
@@ -168,7 +196,7 @@ imageUrl;
           controlId: null
         }
         this.materialPhotoArray.push(obj)
-        this.loading = false;
+        // this.loading = false;
       }
     })
   }else{
@@ -178,12 +206,23 @@ imageUrl;
   }
   handleFileInput(files: FileList, type) {
 
+    if(type == "bill"){
+      this.invUploadFlag = true;
+    }
+    else if(type == "material"){
+      this.matUploadFlag = true;
+    }
+    else{
+      this.invUploadFlag = false;
+      this.matUploadFlag = false;
+    }
+
     this.fileToUpload = files.item(0);
     this.docType = type;
     const reader = new FileReader();
       reader.onload = () => {
         this.imageUrl = reader.result as string;
-        this.compressFile();
+        this.compressFile(type);
       } 
       reader.readAsDataURL(this.fileToUpload)
 

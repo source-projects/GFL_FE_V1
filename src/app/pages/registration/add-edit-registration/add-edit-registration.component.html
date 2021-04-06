@@ -1,17 +1,5 @@
 <ngx-loading [show]="loading"></ngx-loading>
-<ng-container *ngIf="uploadFlag">
-<circle-progress [showInnerStroke]=false
-  [percent]="processValue"
-  [outerStrokeColor]="'#005ec2'"
-  [animation]="true"
-  [animationDuration]="300"
-  [radius]="40"
-></circle-progress>
-</ng-container>
 
-<!-- <ng-container *ngIf="uploadFlag">
-    <owl-progressbar [value]="processValue" [bufferValue]="bufferValue" [type]="'tradition'"></owl-progressbar>  
-</ng-container> -->
 
 <div id="target"></div>
 <nb-card class="nb-style">
@@ -108,9 +96,23 @@
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-
                             <label class="required">Document</label>
-
+                            <ng-container class="mar-left-for-prog" *ngIf="uploadFlag">
+                                <circle-progress [showInnerStroke]=false
+                                  [percent]="processValue"
+                                  [outerStrokeColor]="'#005ec2'"
+                                  [innerStrokeColor]="'#C7E596'"
+                                  [animation]="true"
+                                  [animationDuration]="300"
+                                  [radius]="10"
+                                  [titleFontSize] = "6"
+                                  [unitsFontSize]="6"
+                                  [outerStrokeWidth]="2"
+                                  [titleFontWeight]="900"
+                                  [unitsFontWeight]="900"
+                                  [showSubtitle] = false
+                                ></circle-progress>
+                                </ng-container>
 
                             <input type="file" name="document" class="form-control size-small registration-document"
                                 id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel"
