@@ -1,4 +1,4 @@
-import { HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -57,7 +57,8 @@ export class AddEditRegistrationComponent implements OnInit {
     private registrationService: RegistrationService,
     private toastr: ToastrService,
     private route: Router,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private httpClient: HttpClient, 
 
   ) { }
 
@@ -105,13 +106,9 @@ export class AddEditRegistrationComponent implements OnInit {
     this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
       result => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
-
         const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
 
         this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
-        //console.log(this.imageFile);
-        //return imageFile;
         this.fileUpload();
       }
     );
@@ -129,12 +126,11 @@ export class AddEditRegistrationComponent implements OnInit {
     }
 
   fileUpload() {
-this.processValue = 0;
+    
+    this.processValue = 0;
     this.loading = true;
     this.uploadFlag = true;
 
-   // this.imageFile =  this.compressFile();
-    console.log(this.imageFile)
     if(this.imageFile){
     this.fileToUpload = this.imageFile;
 
@@ -143,14 +139,28 @@ this.processValue = 0;
     data.append('upload_preset', 'gfl_upload');
     data.append('cloud_name', 'dpemsdha5');
 
+
+    this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data,{
+      reportProgress:true,
+      observe:'events'
+    })
+      .subscribe(event => {
+      //send success response
+        if(event){
+          if (event.type === HttpEventType.UploadProgress) {
+            this.processValue = Math.round(100 * event.loaded / event.total);
+            this.value=this.progress
+          }else if(event.type==HttpEventType.Response){
+            console.log(event.body)
+          }
+        }
+
+      }, (err) => {
+      //send error response
+    });
+
     this.registrationService.uploadImage(data).subscribe((response) => {
       if (response) {
-        if (response.type === HttpEventType.UploadProgress) {
-          this.processValue = Math.round(100 * response.loaded / response.total);
-          // this.value=this.progress
-        }else if(response.type==HttpEventType.Response){
-          console.log(response.body)
-        }
         let obj = {
           id: null,
           name: this.fileToUpload.name,
@@ -158,6 +168,7 @@ this.processValue = 0;
           url: response.secure_url,
           controlId: null
         }
+        console.log(obj)
         this.employeeDocumentArray.push(obj);
         
         this.imgLoading = false;
@@ -165,7 +176,7 @@ this.processValue = 0;
     })
   }
   
-this.loading = false;
+  this.loading = false;
 
   }
   handleFileInput(files: FileList, type) {
