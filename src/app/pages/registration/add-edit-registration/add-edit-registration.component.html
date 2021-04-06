@@ -1,13 +1,17 @@
 <ngx-loading [show]="loading"></ngx-loading>
-<ng-container *ngIf="false">
+<ng-container *ngIf="uploadFlag">
 <circle-progress
-  [percent]="progress"
+  [percent]="processValue"
   [outerStrokeColor]="'#78C000'"
   [innerStrokeColor]="'#C7E596'"
   [animation]="true"
   [animationDuration]="300"
 ></circle-progress>
 </ng-container>
+
+<!-- <ng-container *ngIf="uploadFlag">
+    <owl-progressbar [value]="processValue" [bufferValue]="bufferValue" [type]="'tradition'"></owl-progressbar>  
+</ng-container> -->
 
 <div id="target"></div>
 <nb-card class="nb-style">
