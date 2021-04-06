@@ -606,6 +606,7 @@ export class AddEditUserComponent implements OnInit {
       po:"",
       mg:"",
       rpt:"",
+      tt:""
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
