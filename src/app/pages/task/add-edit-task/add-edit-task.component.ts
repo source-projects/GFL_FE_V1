@@ -31,6 +31,7 @@ export class AddEditTaskComponent implements OnInit {
   imgResultAfterCompress: string;
   imageFile: File = null;
   fileToUpload: File = null;
+  formSubmitted: boolean = false;
   constructor(
     private adminService: AdminService,
     private taskService: TaskService,
@@ -163,17 +164,26 @@ export class AddEditTaskComponent implements OnInit {
     );
   }
 
-  addTaskDetail() {
-    this.uploadFileOnServer();
-    //splice null value from taskImageListrray
-    this.addTask.taskImageList.splice(0, 1);
-    this.addTask.createdBy = this.commonService.getUser().userId;
-    this.taskService.addTask(this.addTask).subscribe(
-      (data) => {
-        this.activeModel.close();
-      },
-      (error) => {}
-    );
-    console.log(this.addTask);
+  closeAddTask() {
+    this.activeModel.close();
+  }
+
+  addTaskDetail(taskForm) {
+    this.formSubmitted = true;
+    if (taskForm.valid) {
+      this.uploadFileOnServer();
+      //splice null value from taskImageListrray
+      this.addTask.taskImageList.splice(0, 1);
+      this.addTask.createdBy = this.commonService.getUser().userId;
+      this.taskService.addTask(this.addTask).subscribe(
+        (data) => {
+          this.activeModel.close();
+        },
+        (error) => {}
+      );
+      console.log(this.addTask);
+    } else {
+      return;
+    }
   }
 }

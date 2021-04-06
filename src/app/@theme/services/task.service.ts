@@ -30,4 +30,14 @@ export class TaskService {
       data
     );
   }
+  getAllTaskCard() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/task/all/all/0"
+    );
+  }
+  getAssignCard() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/task/all/assign/0"
+    );
+  }
 }
