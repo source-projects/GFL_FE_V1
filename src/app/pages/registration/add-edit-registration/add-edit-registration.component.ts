@@ -149,9 +149,7 @@ export class AddEditRegistrationComponent implements OnInit {
         if(event){
           if (event.type === HttpEventType.UploadProgress) {
             this.processValue = Math.round(100 * event.loaded / event.total);
-            this.value=this.progress
           }else if(event.type==HttpEventType.Response){
-            console.log(event.body)
           }
         }
 
