@@ -72,7 +72,9 @@ export class AddEditUserComponent implements OnInit {
     "Dyeing Slip",
     "Employee Registration",
     "Attendance",
-    "Purchase"
+    "Purchase",
+    "Merge-Batch",
+    "Report"
   ];
 
   userHeadList: any[] = [];
@@ -472,6 +474,24 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
+
+      case "Merge-Batch": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Merge-Batch"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
+
+      case "Report": {
+        let index = this.permissionArray.findIndex(
+          (v) => v.module == "Report"
+        );
+        if (e.target.checked == true) this.setPermissionTrue(index);
+        else this.setPermissionFalse(index);
+        break;
+      }
     }
 
     for (let j = 0; j < this.forms.length; j++) {
@@ -573,7 +593,9 @@ export class AddEditUserComponent implements OnInit {
       ds: "",
       emp:"",
       attnds:"",
-      po:""
+      po:"",
+      mg:"",
+      rpt:"",
     };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
