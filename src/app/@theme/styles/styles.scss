@@ -2965,11 +2965,15 @@ ng-select.ng-select-br-none {
 }
 
 .priority-btn {
-    margin: 10px;
+    margin: 8px 4px;
     border-radius: 18px;
-    width: 64px;
-    height: 31px;
+    width: 48px;
+    height: 27px;
     margin-top: 0px;
+    border: 0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .priority-p1 {
@@ -3006,13 +3010,17 @@ ng-select.ng-select-br-none {
 .pd-tooltip-changes {
     padding: 3px 9px !important;
     font-size: 9px;
-    left: 2px !important;
+    left: 17px !important;
+    width: 59px;
 }
 
 .task-dash-changes {
-    height: 33px !important;
-    width: 33px !important;
-    top: 3px !important;
+    height: 27px !important;
+    width: 26px !important;
+    top: 7px !important;
+    right: 0;
+    color: #017e27 !important;
+    background-color: #ffffff;
 }
 
 //treloo bugs fix
@@ -3337,6 +3345,39 @@ ng-select .ng-clear-wrapper {
 }
 
 .hover-img-task:hover {
-    box-shadow: 4px 4px 8px 0px #8e8e8e;
+    box-shadow: 5px 5px 8px 0px #8e8e8e;
     transition: .5s;
+}
+
+.task-attach {
+    border: 1px dashed #a19fa1 !important;
+    overflow: hidden !important;
+    height: 49px !important;
+}
+
+.drop-task-attch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-task-attch nb-icon {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.drop-task-attch p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px
+}
+
+.add-task-popup-style .form-group {
+    margin-bottom: 12px !important;
+}
+
+.popup-fix-height {
+    min-height: 567px;
+    height: 195px;
+    overflow-y: scroll;
 }
