@@ -8,7 +8,8 @@
                 <div class="nb-icon-add">
                     <a class="link-fab linkedin" media="Linkedin">
                         <div class="tooltip pd-tooltip-changes">Add Task</div>
-                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus"  class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
+                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus"
+                            class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
                         </nb-icon>
                     </a>
                 </div>
@@ -22,7 +23,7 @@
                 <div class="main-box-task">
                     <div class="row">
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('all')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/all.svg">
@@ -36,7 +37,7 @@
 
                         </div>
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('assign')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/assign.svg">
@@ -49,7 +50,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('complete')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/completed.svg">
@@ -62,7 +63,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('approved')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/check.svg">
@@ -75,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('notApproved')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/not-approve.svg">
@@ -88,7 +89,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-6">
-                            <div class="hover-img-task">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('blocker')">
                                 <div class="task-top-img">
 
                                     <img src="../../../assets/task/block.svg">
@@ -102,7 +103,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <!--All-->
+            <div *ngIf="allFlag">
                 <div class="row">
                     <div class="col-md-4 col-12 mobile-pd-0">
                         <div class="mb-4">
@@ -147,7 +151,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -202,90 +207,90 @@
 
                                 </div>
                                 <!-- <div class="task-main-1 border-bottom-color">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-6 col-12 pd-0">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 pd-0">
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                    <div class="task-name mr-tb pd-rl pd-tp-5">
+                                                        <label class="task-label">REPORT</label>
+                                                        <span class="taske-date-vlue task-link"><a href="#">https://www.google.com</a> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-12 pd-0">
+                                            <div class="first-border-left">
                                                 <div class="row">
                                                     <div class="col-md-12 col-12">
                                                         <div class="task-name mr-tb pd-rl pd-tp-5">
-                                                            <label class="task-label">REPORT</label>
-                                                            <span class="taske-date-vlue task-link"><a href="#">https://www.google.com</a> </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-6 col-12 pd-0">
-                                                <div class="first-border-left">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12">
-                                                            <div class="task-name mr-tb pd-rl pd-tp-5">
-                                                                <label class="task-label">REMARK</label>
-                                                                <span class="taske-date-vlue remark-ellips">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</span>
-                                                            </div>
+                                                            <label class="task-label">REMARK</label>
+                                                            <span class="taske-date-vlue remark-ellips">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="task-main-1">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12 col-12 pd-0">
 
-                                                <div class="row">
-                                                    <div class="col-md-12 col-12">
-                                                        <div class="task-name mr-tb pd-rl pd-tp-5">
-                                                            <label class="task-label">ATTACHMENT</label>
-                                                            <span class="taske-date-vlue task-link mt-img-3"> 
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-    
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-                                                                <div class="task-img">
-                                                                    <img src="../../../assets/scan/qr-code.png">
-                                                                </div>
-    
-                                                            </span>
-                                                        </div>
+                            </div>
+                            <div class="task-main-1">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 pd-0">
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                    <div class="task-name mr-tb pd-rl pd-tp-5">
+                                                        <label class="task-label">ATTACHMENT</label>
+                                                        <span class="taske-date-vlue task-link mt-img-3"> 
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+                                                            <div class="task-img">
+                                                                <img src="../../../assets/scan/qr-code.png">
+                                                            </div>
+
+                                                        </span>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                         </div>
+
                                     </div>
-                                </div> -->
+                                </div>
+                            </div> -->
                             </div>
                         </div>
 
@@ -334,7 +339,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -437,7 +443,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -541,7 +548,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -645,7 +653,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -748,7 +757,8 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                                    <span class="taske-date-vlue">Merged Batch in
+                                                                        GFL</span>
                                                                 </div>
                                                             </div>
 
@@ -810,6 +820,31 @@
 
 
                 </div>
+            </div>
+
+            <!--Assigned-->
+            <div *ngIf="assignFlag">
+                <h1>No Task Assignded</h1>
+            </div>
+
+            <!--Completed-->
+            <div *ngIf="completedFlag">
+                <h1>No Completed Task</h1>
+            </div>
+
+            <!--Approved-->
+            <div *ngIf="approvedFlag">
+                <h1>All Approved</h1>
+            </div>
+
+            <!--Not Approved-->
+            <div *ngIf="notApprovedFlag">
+                <h1>No task To Approved</h1>
+            </div>
+
+            <!--Blocker-->
+            <div *ngIf="blockerFlag">
+                <h1>No task in Blocker</h1>
             </div>
         </div>
     </nb-card-body>
