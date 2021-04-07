@@ -176,7 +176,8 @@ invoiceNo : any;
   selected = [];
 
   addInvoice(invoiceForm) {
-    this.formSubmitted = true;
+    if(this.finalcheckedrows.length <= 4){
+      this.formSubmitted = true;
     this.final = [];
     if(this.finalcheckedrows.length > 0){
       this.finalcheckedrows.map(ele => {
@@ -227,8 +228,12 @@ invoiceNo : any;
             this.disableButton = false;
           }
         })
-  
     }
+    }
+    else{
+      this.toastr.warning("Select upto 4 batches only");
+    }
+    
       
   }
    print(invoiceNo) {
@@ -245,51 +250,66 @@ invoiceNo : any;
   }
 
   updateInvoice(invoiceForm) {
-    this.disableButton = true;
-    this.formSubmitted = true;
 
-    this.final = [];
-   
-    this.finalcheckedrows.map((ele,i) => {
-      let obj: invoiceobj = new invoiceobj();
-      obj.batchId = ele.batchId;
-      obj.stockId = ele.controlId;
-      this.final.push(obj);
-      })
-   
-   
-    let obj = {
-      batchAndStockIdList: this.final,
-      createdBy: this.userId,
-      invoiceNo: this.currentInvoiceId,
-      updatedBy:this.userId
-    }
-
-    if (invoiceForm.valid) {
-      this.generateInvoiceService.updateInvoice(obj).subscribe(
-        data => {
-          if (data['success']) {
-            this.route.navigate(["/pages/generate_invoice"]);
-            this.toastr.success(errorData.Update_Success);
+    if(this.finalcheckedrows.length <= 4){
+      this.disableButton = true;
+      this.formSubmitted = true;
+  
+      this.final = [];
+     
+      this.finalcheckedrows.map((ele,i) => {
+        let obj: invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
+        obj.stockId = ele.controlId;
+        this.final.push(obj);
+        })
+     
+     
+      let obj = {
+        batchAndStockIdList: this.final,
+        createdBy: this.userId,
+        invoiceNo: this.currentInvoiceId,
+        updatedBy:this.userId
+      }
+  
+      if (invoiceForm.valid) {
+        this.generateInvoiceService.updateInvoice(obj).subscribe(
+          data => {
+            if (data['success']) {
+              this.route.navigate(["/pages/generate_invoice"]);
+              this.toastr.success(errorData.Update_Success);
+              this.disableButton = false;
+            }
+            else {
+              this.disableButton = false;
+              this.toastr.error(errorData.Update_Error)
+            }
+          },
+          error => {
             this.disableButton = false;
+            this.toastr.error(errorData.Serever_Error)
           }
-          else {
-            this.disableButton = false;
-            this.toastr.error(errorData.Update_Error)
-          }
-        },
-        error => {
-          this.disableButton = false;
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
+        )
+      }else{
+        this.disableButton = false;
+      }
+  
     }else{
-      this.disableButton = false;
+      this.toastr.warning("Select upto 4 batches only")
     }
   }
 
   onSelect(value: any) {
-    let arr: any =  value.selected;
+    
+    let arr: any[] =  value.selected;
+    if(arr.length <= 4){
+    }
+    else{
+      this.toastr.warning("Select upto 4 batches only");
+      
+    }
+
     this.finalcheckedrows = arr;
+
   }
 }
