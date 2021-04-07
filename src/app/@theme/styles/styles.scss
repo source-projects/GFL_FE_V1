@@ -1889,6 +1889,7 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: left;
 }
 
+// media query
 @media print {
     .row-print,
     .print-wth-100 {
@@ -2275,6 +2276,28 @@ input[type="number"]::-webkit-outer-spin-button {
     .first-border-popup {
         border-right: none !important
     }
+    .desktop-view {
+        display: none;
+    }
+    .mobile-task-font-style {
+        font-size: 11px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .img-btn-title img {
+        width: 26px;
+        margin-right: 7px;
+    }
+    .mobile-task-filter-btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 8px 7px;
+    }
+    .mobile-view {
+        margin-bottom: 25px !important;
+    }
 }
 
 @media (min-width: 992px) {
@@ -2313,7 +2336,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media (min-width: 767px) {
-    .border-top-mob {
+    .border-top-mob,
+    .mobile-view {
         display: none;
     }
 }
@@ -2402,6 +2426,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 }
 
+// end media query
 // view-btn-width
 .max-width-device {
     display: contents !important;
@@ -2414,9 +2439,6 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-// .batch-mb {
-//     margin-bottom: 15px;
-// }
 .batch-pd-top-16 {
     padding: 16px 1.5rem !important;
 }
@@ -2432,14 +2454,6 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-left: 0 !important;
 }
 
-// .border-right-batch::after {
-//     content: " ";
-//     border-right: 1px solid #afafaf;
-//     position: absolute;
-//     height: 100%;
-//     top: 0;
-//     right: 18px;
-// }
 .display-flex {
     display: flex;
     justify-content: space-between;
@@ -2538,98 +2552,6 @@ ng-select.ng-select-br-none {
     width: 100% !important;
 }
 
-// report page changes
-// .input-border {
-//     border-radius: 50px;
-// }
-// .report-card-1,
-// .report-card-2,
-// .report-card-3 {
-//     // border: 2px solid #1a1e54;
-//     // padding: 15px;
-//     margin-bottom: 15px;
-//     // border-radius: 9px;
-// }
-// .report-card-1,
-// .report-card-2 {
-//     border-bottom: 1px solid;
-// }
-// .report-card-1 {
-//     margin-top: 25px;
-// }
-// .report-card-2,
-// .report-card-3 {
-//     margin-top: 43px;
-// }
-// .card-detail-style {
-//     background-color: #e4e4e4;
-//     text-align: center;
-//     padding: 22px;
-//     border-radius: 0;
-//     padding-top: 30px;
-//     padding: 37px 0 22px;
-//     margin-bottom: 48px;
-// }
-// .card-detail-style label,
-// .report-label,
-// .shade-content label {
-//     color: #0f1e2b !important;
-//     font-size: 16px !important;
-//     font-weight: 900 !important;
-// }
-// .card-img-icon-style {
-//     text-align: center;
-//     position: absolute;
-//     left: 102px;
-//     top: -24px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
-// .eve-report-style {
-//     font-size: 42px !important;
-//     background: #2f1d40;
-//     color: #ffff;
-//     padding: 8px;
-//     border-radius: 50px;
-// }
-// .report-card-2 h6,
-// .report-card-3 h6 {
-//     background-color: #2f1d40;
-//     color: #fff;
-//     display: inline;
-//     padding: 3px 15px;
-//     margin-bottom: 30px;
-//     border-radius: 54px 0 0 54px;
-// }
-// .shade-box {
-//     padding: 23px 17px;
-//     margin-top: 26px;
-//     border: 1px solid #2f1d40;
-// }
-// .shade-img-box {
-//     margin-bottom: 17px;
-// }
-// .display-center {
-//     display: flex;
-//     justify-self: center
-// }
-// .display-center {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
-// .display-color-input input {
-//     border: none;
-// }
-// .card-detail-style span {
-//     font-weight: 500;
-// }
-// .shade-box:hover {
-//     box-shadow: 0px 13px 68px 0px #9393934d;
-//     border: none;
-//     transition: .2s;
-// }
 .report-card-1 {
     border: 2px solid #c3b2b25e;
     box-shadow: 0px 0px 0px 0px #00000026;
