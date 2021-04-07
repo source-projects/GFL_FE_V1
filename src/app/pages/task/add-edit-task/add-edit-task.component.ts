@@ -6,6 +6,7 @@ import { AdminService } from "../../../@theme/services/admin.service";
 import { TaskService } from "../../../@theme/services/task.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-add-edit-task",
@@ -38,7 +39,8 @@ export class AddEditTaskComponent implements OnInit {
     private imageCompress: NgxImageCompressService,
     private registrationService: RegistrationService,
     private commonService: CommonService,
-    private activeModel: NgbActiveModal
+    private activeModel: NgbActiveModal,
+    private toastrService: ToastrService
   ) {
     this.taskImageListArray.push(this.taskImageList);
     this.addTask.taskImageList = this.taskImageListArray;
@@ -177,6 +179,7 @@ export class AddEditTaskComponent implements OnInit {
       this.addTask.createdBy = this.commonService.getUser().userId;
       this.taskService.addTask(this.addTask).subscribe(
         (data) => {
+          this.toastrService.success("Task added successfully");
           this.activeModel.close();
         },
         (error) => {}

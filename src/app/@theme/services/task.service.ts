@@ -30,14 +30,33 @@ export class TaskService {
       data
     );
   }
-  getAllTaskCard() {
+  getAllTaskCard(id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/task/all/all/0"
+      this.commonService.envUrl() +
+        "api/task/all?getBy=assignAndCreated&id=" +
+        id
     );
   }
-  getAssignCard() {
+  getAssignCard(id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/task/all/assign/0"
+      this.commonService.envUrl() + "api/task/all?getBy=assign&id=" + id
+    );
+  }
+
+  getDataAccordingToStatus(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/task/getByDateAndStatus",
+      data
+    );
+  }
+
+  getApprovedAndNotApprovedList(id, status) {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/task/get/approved?id=" +
+        id +
+        "&approved=" +
+        status
     );
   }
 }
