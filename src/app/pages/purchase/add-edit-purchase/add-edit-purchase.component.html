@@ -49,11 +49,14 @@
                                 ></circle-progress>
                                 </ng-container>
                             <div class="display-flex-center">
-                                <input type="file" name="bill" value="bill"
+                                <input type="file" name="bill" value="bill" style=" color: transparent; "
                                     class="form-control size-small registration-document filepicker" id="bill"
                                     placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel"
                                     (change)="handleFileInput($event.target.files,'bill')" required
                                     [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
+                                <label *ngIf="bill">{{bill}}</label>
+                                <label *ngIf="!bill">No file chosen</label>
+
                                 <div class="input-required" *ngIf="bill1.invalid
                                            &&
                                            (formSubmitted || bill1.touched)">
@@ -83,12 +86,14 @@
                                 ></circle-progress>
                                 </ng-container>
                             <div class="display-flex-center">
-                                <input type="file" name="material"
+                                <input type="file" name="material" style=" color: transparent;"
                                     class="form-control size-small registration-document filepicker" id="material"
                                     placeholder="Upload material" [(ngModel)]="material" #material1="ngModel"
                                     (change)="handleFileInput($event.target.files,'material')" required
                                     [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
-                                <div class="input-required" *ngIf="material1.invalid
+                                    <label *ngIf="material">{{material}}</label>
+                                    <label *ngIf="!material">No file chosen</label>
+                                    <div class="input-required" *ngIf="material1.invalid
                                            &&
                                            (formSubmitted || material1.touched)">
                                     <span>Material is required</span>

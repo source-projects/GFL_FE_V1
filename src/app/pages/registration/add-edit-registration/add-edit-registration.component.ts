@@ -94,6 +94,8 @@ export class AddEditRegistrationComponent implements OnInit {
           this.registration.employeeDocumentList.forEach((element) => {
             if (element.type == "profile") {
               this.imageUrl = element.url;
+            }else{
+              this.document = element.name;
             }
           });
         }
@@ -198,6 +200,7 @@ export class AddEditRegistrationComponent implements OnInit {
     }
     this.fileToUpload = files.item(0);
     this.docType = type;
+    this.document = this.fileToUpload.name;
     if (this.docType == "profile") {
       const reader = new FileReader();
       reader.onload = () => {

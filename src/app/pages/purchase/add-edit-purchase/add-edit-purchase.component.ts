@@ -41,6 +41,7 @@ imageUrl;
   imgResultBeforeCompress:string;
   imgResultAfterCompress:string;
   imageFile:File;
+ 
   constructor(
     private commonService: CommonService,
     private purchseService : PurchaseNewService,
@@ -76,7 +77,13 @@ imageUrl;
         if (data["success"]) {
           this.purchase = data["data"];
           this.docList = this.purchase.materialPhotosList;
-          
+          this.docList.forEach(element => {
+            if(element.type == "bill"){
+              this.bill = element.name;
+            }else{
+              this.material = element.name;
+            }
+          })
 
         }
       },
@@ -192,6 +199,7 @@ imageUrl;
         let obj = {
           id: null,
           type: this.docType,
+          name: this.fileToUpload.name,
           picUrl: response.secure_url,
           controlId: null
         }
