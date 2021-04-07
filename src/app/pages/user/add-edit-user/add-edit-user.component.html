@@ -169,42 +169,6 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    <!-- <div class="col-md-4">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="isMaster" [(ngModel)]="user.isMaster"
-                            [disabled]="currentUserId || isLoggedInAsMaster"
-                            class="form-control nb-check-user border-none">Is Master Group
-                        </nb-checkbox>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
-                                [disabled]="currentUserId || teamMemberFlag"
-                                class="form-control nb-check-user border-none">Assign Under Group Head
-                           </nb-checkbox>
-                        </div>
-                    </div>
-                   
-                    <div class="col-md-4" *ngIf="user.isUserHead && user.isMaster">
-                        <div class="form-group">
-                            <label class="required">User Head List</label>
-                            <select name="userHeadId" class="form-control dropdown-name" #userHeadListValue="ngModel"
-                                [(ngModel)]="user.userHeadId" required [disabled]="currentUserId"
-                                [ngClass]="{'is-invalid': (userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)}">
-                                <option *ngFor="let head of userHeadList" [ngValue]="head.id">{{head.userName}}
-                                </option>
-                            </select>
-                            <div class="input-required"
-                                *ngIf="(userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)">
-                                <span>UserHead is required.</span>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="col-md-4" *ngIf="currentUserId">
                         <div class="form-group">
                             <nb-checkbox name="assign" [checked]="false" [(ngModel)]="isChangePass"
@@ -270,21 +234,23 @@
                         (change)="checkUncheckSelectAll(perm.viewGroup,i,'viewGroup')"></nb-checkbox>
                 </td>
                 <td>
-                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
-                        (change)="checkUncheckSelectAll(perm.viewAll,i,'viewAll')"></nb-checkbox>
-                </td>
-                <td>
                     <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
                         (change)="checkUncheckSelectAll(perm.editGroup,i,'editGroup')"></nb-checkbox>
-                </td>
-                <td>
-                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
-                        (change)="checkUncheckSelectAll(perm.editAll,i,'editAll')"></nb-checkbox>
                 </td>
                 <td>
                     <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
                         (change)="checkUncheckSelectAll(perm.deleteGroup,i,'deleteGroup')"></nb-checkbox>
                 </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
+                        (change)="checkUncheckSelectAll(perm.viewAll,i,'viewAll')"></nb-checkbox>
+                </td>
+                
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
+                        (change)="checkUncheckSelectAll(perm.editAll,i,'editAll')"></nb-checkbox>
+                </td>
+                
                 <td>
                     <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
                         (change)="checkUncheckSelectAll(perm.deleteAll,i,'deleteAll')"></nb-checkbox>
