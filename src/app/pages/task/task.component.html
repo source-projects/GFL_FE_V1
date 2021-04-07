@@ -8,8 +8,7 @@
                 <div class="nb-icon-add">
                     <a class="link-fab linkedin" media="Linkedin">
                         <div class="tooltip pd-tooltip-changes">Add Task</div>
-                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus"
-                            class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
+                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus" class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
                         </nb-icon>
                     </a>
                 </div>
@@ -20,7 +19,9 @@
 
         <div class="task-main-div">
             <div class="container mobile-pd-0">
-                <div class="main-box-task">
+
+                <!-- desktop view design -->
+                <div class="main-box-task desktop-view">
                     <div class="row">
                         <div class="col-md-2 col-6">
                             <div class="hover-img-task" (click)="showCardAccordingToStatus('all')">
@@ -98,6 +99,97 @@
                                 <div class="t-blocker text-center top-style-task">
                                     <span class="main-title-task label-top-task">Blocker</span>
                                     <span class="main-title-task label-top-task-value">{{blockerCardCount}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- mobile view design -->
+                <div class="main-box-task mobile-view">
+                    <div class="row">
+                        <div class="col-6 pl-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('all')">
+                                <div class="all-btn">
+                                    <button class="btn btn-sm t-all mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/all.svg"><span class="mobile-task-font-style">All</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=" col-6 pr-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('assign')">
+                                <div class="assign-btn">
+                                    <button class="btn btn-sm t-assign mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/assign.svg"><span class="mobile-task-font-style">Assign</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 pl-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('complete')">
+                                <div class="complete-btn">
+                                    <button class="btn btn-sm t-completed mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/completed.svg"><span class="mobile-task-font-style">Completed</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 pr-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('approved')">
+                                <div class="approved-btn">
+                                    <button class="btn btn-sm t-approved mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/check.svg"><span class="mobile-task-font-style">Approved</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 pl-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('notApproved')">
+                                <div class="notapproved-btn">
+                                    <button class="btn btn-sm t-notapproved mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/not-approve.svg"><span class="mobile-task-font-style">Not Approved</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 pr-0">
+                            <div class="hover-img-task" (click)="showCardAccordingToStatus('blocker')">
+                                <div class="block-btn">
+                                    <button class="btn btn-sm t-blocker mobile-task-filter-btn">
+                                        <div class="img-btn-title">
+                                            <img src="../../../assets/task/block.svg"><span class="mobile-task-font-style">Blocker</span>
+                                        </div>
+                                            <div class="task-mobile-count">
+                                                <span class="mobile-task-font-style">25</span>
+                                            </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>

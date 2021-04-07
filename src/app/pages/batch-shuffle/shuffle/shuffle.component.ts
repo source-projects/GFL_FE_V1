@@ -10,6 +10,7 @@ import { ProgramService } from "app/@theme/services/program.service";
 import { QualityService } from 'app/@theme/services/quality.service';
 import { ShuffleService } from "app/@theme/services/shuffle.service";
 import { ToastrService } from 'ngx-toastr';
+import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 @Component({
   selector: 'ngx-shuffle',
   templateUrl: './shuffle.component.html',
@@ -57,8 +58,20 @@ export class ShuffleComponent implements OnInit {
   batchId1: any;
   batchId2: any;
   index: number;
+  currentBatchSequence;
+  currentBatchSeqId;
 
-  constructor(private partyService: PartyService, private shuffleService: ShuffleService, private qualityService: QualityService, private toastr: ToastrService, private programService: ProgramService, private formBuilder: FormBuilder, private route: Router, private batchByQualityPartyService: BatchByQualityPartyService, private batchList: BatchListService) {
+  constructor(
+    private partyService: PartyService, 
+    private shuffleService: ShuffleService, 
+    private qualityService: QualityService, 
+    private toastr: ToastrService, 
+    private programService: ProgramService, 
+    private formBuilder: FormBuilder, 
+    private route: Router, 
+    private batchByQualityPartyService: BatchByQualityPartyService, 
+    private batchList: BatchListService,
+    private stockBatchService : StockBatchService) {
     this.shuffleForm = this.formBuilder.group({
       partyName: new FormControl(null, Validators.required),
       qualityName: new FormControl(null, Validators.required),
@@ -75,13 +88,28 @@ export class ShuffleComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     this.flag = 1;
     this.getPartyList();
     this.getQualtiyList();
     this.btnFlag = 0;
 
+    this.getCurrentBatchSequence();
+
+  }
+
+
+  getCurrentBatchSequence(){
+    this.stockBatchService.getBatchSequence().subscribe(
+      data=>{
+        if(data['success']){
+          this.currentBatchSequence = data['data']['sequence'];
+          this.currentBatchSeqId = data['data']['id'];
+          this.shuffleForm.controls['newBatchName'].setValue(this.currentBatchSequence);
+        }
+      }
+    )
   }
 
   //party drop down validation
@@ -592,8 +620,11 @@ export class ShuffleComponent implements OnInit {
             (data) => {
 
               if (data["success"]) {
-                location.reload();  
-                this.toastr.success(errorData.Update_Success)
+                this.reset();
+                //location.reload();  
+                this.getCurrentBatchSequence();
+                this.toastr.success(errorData.Update_Success);
+
               }
               else {
                 this.mergeArray = [];
@@ -614,6 +645,24 @@ export class ShuffleComponent implements OnInit {
       }
     }
 
+  }
+
+  reset(){
+    this.shuffleForm.controls['batchName1'].reset();
+    this.shuffleForm.controls['partyName'].reset();
+    this.shuffleForm.controls['qualityName'].reset();
+    this.shuffleForm.controls['batchName2'].reset();
+    this.shuffleForm.controls['totalrowsPart1'].reset();
+    this.shuffleForm.controls['totalrowsPart2'].reset();
+    this.shuffleForm.controls['totalwt1'].reset();
+    this.shuffleForm.controls['totalwt2'].reset();
+    this.shuffleForm.controls['totalmtr1'].reset();
+    this.shuffleForm.controls['totalmtr2'].reset();
+
+
+    this.part2 = [];
+    this.qualityParty2 = [];
+    this.batches = [];
   }
 
   mergesubmit() {

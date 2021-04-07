@@ -220,32 +220,10 @@ export class AddEditUserComponent implements OnInit {
     );
   }
 
-  designationSelected(event) {
-    // const found = this.designationList.find((element) => element.id == event);
-    // if (
-    //   found &&
-    //   found.designation &&
-    //   found.designation.toLowerCase() == "team head"
-    // ) {
-    //   //hide userHeadId fields.
-    //   this.user.isUserHead = false;
-    //   this.user.userHeadId = Number(this.commonService.getUser().userId);
-    // } else if (
-    //   found &&
-    //   found.designation &&
-    //   found.designation.toLowerCase() == "team member"
-    // ) {
-    //   this.user.isUserHead = true;
-    // } else {
-    //   this.user.isUserHead = true;
-    // }
-  }
-
   createPermission() {
     this.permissionArray = [];
     for (let i = 0; i < this.forms.length; i++) {
       this.permissionArray.push(new Permissions());
-
       this.permissionArray[i].module = this.forms[i];
     }
   }
@@ -663,8 +641,8 @@ export class AddEditUserComponent implements OnInit {
       array1[i] = this.pad(array1[i], this.perName.length);
     }
 
-    let index = [];
-    let len = array1.length;
+    // let index = [];
+    // let len = array1.length;
     let perString = "";
     for (let i1 = 0; i1 < this.forms.length; i1++) {
       let j = 0;
