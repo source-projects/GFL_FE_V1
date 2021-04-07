@@ -226,6 +226,11 @@ imageUrl;
     }
 
     this.fileToUpload = files.item(0);
+    if(this.matUploadFlag){
+      this.material = this.fileToUpload.name;
+    }else{
+      this.bill = this.fileToUpload.name;
+    }
     this.docType = type;
     const reader = new FileReader();
       reader.onload = () => {
