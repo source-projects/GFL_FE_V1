@@ -36,7 +36,7 @@
                                 <input type="file" name="profile" class="form-control size-small registration-document filepicker" id="profile" [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')'}" placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel" (change)="handleFileInput($event.target.files,'profile')"
                                     style="position:relative;overflow:hidden; 
                                     background-color:#ffff; 
-                                    z-index:0;" [crossOrigin]="'anonymous'" [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
+                                    z-index:0;" accept="image/x-png,image/gif,image/jpeg" [crossOrigin]="'anonymous'" [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
 
 
                                 <div class="input-required" *ngIf="profile1.invalid
@@ -88,11 +88,11 @@
                             <label class="required">Document</label>
                             <ng-container class="mar-left-for-prog" *ngIf="uploadFlag">
                                 <circle-progress [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2" [titleFontWeight]="900"
-                                    [unitsFontWeight]="900" [showSubtitle]=f alse></circle-progress>
+                                    [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
 
                             <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
-                                required [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}">
+                                required [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}" accept="image/x-png,image/gif,image/jpeg">
 
                             <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
                             <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label>
