@@ -95,9 +95,26 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="department" appendTo="body" #department1="ngModel" [(ngModel)]="purchase.departmentId" [items]="departmentList" bindLabel="name" bindValue="id" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
+                            <ng-select name="department" appendTo="body" #department1="ngModel" [(ngModel)]="purchase.departmentId" 
+                              placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
                                 class="required-error-dropdown dropdown-name">
-                            </ng-select>
+                            <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-left txt-ov-elips">Department Name</div>
+                                    </div>
+                                </div>
+                            </ng-option>
+                            <ng-option *ngFor="let department of departmentList" [value]="department.id">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        <div class="text-left txt-ov-elips"> {{department.name}}</div>
+                                    </div>
+
+                                </div>
+                            </ng-option>
+                        </ng-select>
+
                             <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
                                 <span>Department is required.</span>
                             </div>

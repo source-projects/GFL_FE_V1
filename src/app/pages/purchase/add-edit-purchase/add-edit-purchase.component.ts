@@ -283,15 +283,19 @@ updatePurchase(form){
   this.loading = true;
   this.disableButton = true;
   this.formSubmitted = true;
-  if (form.valid || !this.bill || !this.material) {
+  if (form.valid || this.bill || this.material) {
     if (this.materialPhotoArray.length > 0) {
 
       this.materialPhotoArray.forEach((ele, i) => {
         if (ele.type == 'bill') {
           this.docList[i] = ele;
+          this.docList[i].id = ele.id;
+          this.docList[i].controlId = ele.controlId;
         } else
           if (ele.type == 'material') {
             this.docList[i] = ele;
+            this.docList[i].id = ele.id;
+            this.docList[i].controlId = ele.controlId;
           }
       })
     }
