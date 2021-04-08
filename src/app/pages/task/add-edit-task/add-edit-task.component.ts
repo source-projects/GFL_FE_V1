@@ -112,6 +112,7 @@ export class AddEditTaskComponent implements OnInit {
   onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
+    this.uploadFileOnServer();
   }
 
   uploadFileOnServer() {
