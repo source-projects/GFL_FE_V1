@@ -41,6 +41,7 @@ imageUrl;
   imgResultBeforeCompress:string;
   imgResultAfterCompress:string;
   imageFile:File;
+ 
   constructor(
     private commonService: CommonService,
     private purchseService : PurchaseNewService,
@@ -76,7 +77,13 @@ imageUrl;
         if (data["success"]) {
           this.purchase = data["data"];
           this.docList = this.purchase.materialPhotosList;
-          
+          this.docList.forEach(element => {
+            if(element.type == "bill"){
+              this.bill = element.name;
+            }else{
+              this.material = element.name;
+            }
+          })
 
         }
       },
@@ -192,6 +199,7 @@ imageUrl;
         let obj = {
           id: null,
           type: this.docType,
+          name: this.fileToUpload.name,
           picUrl: response.secure_url,
           controlId: null
         }
@@ -218,6 +226,11 @@ imageUrl;
     }
 
     this.fileToUpload = files.item(0);
+    if(this.matUploadFlag){
+      this.material = this.fileToUpload.name;
+    }else{
+      this.bill = this.fileToUpload.name;
+    }
     this.docType = type;
     const reader = new FileReader();
       reader.onload = () => {
@@ -270,15 +283,19 @@ updatePurchase(form){
   this.loading = true;
   this.disableButton = true;
   this.formSubmitted = true;
-  if (form.valid || !this.bill || !this.material) {
+  if (form.valid || this.bill || this.material) {
     if (this.materialPhotoArray.length > 0) {
 
       this.materialPhotoArray.forEach((ele, i) => {
         if (ele.type == 'bill') {
           this.docList[i] = ele;
+          this.docList[i].id = ele.id;
+          this.docList[i].controlId = ele.controlId;
         } else
           if (ele.type == 'material') {
             this.docList[i] = ele;
+            this.docList[i].id = ele.id;
+            this.docList[i].controlId = ele.controlId;
           }
       })
     }

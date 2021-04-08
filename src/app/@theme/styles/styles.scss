@@ -3324,3 +3324,20 @@ ng-select .ng-clear-wrapper {
 .border-jet {
     border: 1px solid #000 !important;
 }
+
+.no-file-choose-new {
+    position: absolute;
+    bottom: 16px;
+    font-size: 13px;
+    left: 32%;
+    overflow: hidden;
+    width: 180px;
+    text-overflow: ellipsis;
+}
+
+.file-left-text {
+    left: 41%;
+    overflow: hidden;
+    width: 135px !important;
+    text-overflow: ellipsis;
+}
