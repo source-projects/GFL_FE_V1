@@ -515,7 +515,7 @@
                         <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container>
+                                    <ng-container *ngIf="billImages && billImages[rowIndex] && billImages[rowIndex][0]">
                                         <img [src]="billImages[rowIndex][0].picUrl" class="imageURL" (click)="onBillClick(row.materialPhotosList)">
                                     </ng-container>
 
@@ -528,7 +528,7 @@
                         <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                             <div class="row width-100">
                                 <div class="col-md-3">
-                                    <ng-container>
+                                    <ng-container *ngIf="materialImages && materialImages[rowIndex] && materialImages[rowIndex][0]">
                                         <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL" (click)="onMaterialClick(row.materialPhotosList)">
                                     </ng-container>
                                 </div>

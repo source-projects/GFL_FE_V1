@@ -9,9 +9,9 @@ import { NgImageSliderComponent } from 'ng-image-slider';
 })
 export class PreviewComponent implements OnInit {
 
-  @Input() billList : any;
+  @Input("billList") billList : any;
   imageIndex = 0;
-  @Input() materialList : any;
+  @Input("materialList") materialList : any;
   picUrl = [];
   constructor(
     private _NgbActiveModal: NgbActiveModal,

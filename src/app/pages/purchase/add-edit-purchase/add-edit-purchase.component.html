@@ -33,7 +33,7 @@
                             <label class="required">Invoice</label>
                             <ng-container class="mar-left-for-prog" *ngIf="invUploadFlag">
                                 <circle-progress #invbar [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
-                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=f alse></circle-progress>
+                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
                             <div class="">
                                 <input type="file" name="bill"  style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
