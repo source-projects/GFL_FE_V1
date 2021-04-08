@@ -45,6 +45,11 @@ export class TaskComponent implements OnInit {
   //filter Date
   filterDate;
 
+  //filter Radio Button
+  assignedByMe: boolean = false;
+  assignedByOther: boolean = false;
+  allAssigned: boolean = false;
+
   constructor(
     private modalService: NgbModal,
     private taskGuard: TaskGuard,
@@ -184,14 +189,17 @@ export class TaskComponent implements OnInit {
         //not Started status task card
         let assignDateStatusObj = [
           {
+            id: this.commonService.getUser().userId,
             date: event.target.value,
             status: "NotStarted",
           },
           {
+            id: this.commonService.getUser().userId,
             date: event.target.value,
             status: "Running",
           },
           {
+            id: this.commonService.getUser().userId,
             date: event.target.value,
             status: "Hold",
           },
@@ -217,6 +225,7 @@ export class TaskComponent implements OnInit {
       //filter task card for complete status
       case "complete":
         let completeDateStatusObj = {
+          id: this.commonService.getUser().userId,
           date: event.target.value,
           status: "Completed",
         };
@@ -231,6 +240,7 @@ export class TaskComponent implements OnInit {
       //filter task card for blocker
       case "blocker":
         let blockerDaeStatusObj = {
+          id: this.commonService.getUser().userId,
           date: event.target.value,
           status: "Blocker",
         };
@@ -244,6 +254,7 @@ export class TaskComponent implements OnInit {
       //filter task card for all
       case "all":
         let allDateStatusObj = {
+          id: this.commonService.getUser().userId,
           data: event.target.value,
           status: "",
         };
@@ -255,6 +266,13 @@ export class TaskComponent implements OnInit {
           });
         break;
     }
+  }
+
+  //filter radio button
+  filterAssignedByMe() {
+    console.log("byMe", this.assignedByMe);
+    console.log("byOther", this.assignedByOther);
+    console.log("all", this.allAssigned);
   }
 
   getAllCardDetail() {
@@ -275,26 +293,65 @@ export class TaskComponent implements OnInit {
       );
   }
 
-  getAssignCardDetail() {
+  async getAssignCardDetail() {
     this.assignedCardCount = 0;
-    this.taskService
-      .getAssignCard(this.commonService.getUser().userId)
-      .subscribe(
-        (data) => {
-          console.log("Assign ", data["data"]);
-          this.assignCardDetail = data["data"];
-          if (this.assignCardDetail && this.assignCardDetail.length > 0) {
-            this.assignCardDetail.forEach((element) => {
-              this.assignedCardCount++;
-            });
-          }
-        },
-        (error) => {}
-      );
+    let assignCardDetailWithStatus: any[] = [];
+    //not Started status task card
+    let assignDateStatusObj = [
+      {
+        id: this.commonService.getUser().userId,
+        date: "",
+        status: "NotStarted",
+      },
+      {
+        id: this.commonService.getUser().userId,
+        date: "",
+        status: "Running",
+      },
+      {
+        id: this.commonService.getUser().userId,
+        date: "",
+        status: "Hold",
+      },
+    ];
+    await assignDateStatusObj.forEach((element, index) => {
+      this.taskService.getDataAccordingToStatus(element).subscribe((data) => {
+        if (assignCardDetailWithStatus) {
+          assignCardDetailWithStatus = data["data"];
+        } else {
+          assignCardDetailWithStatus.concat(data["data"]);
+        }
+        console.log(element.status, data["data"]);
+        console.log(index, assignCardDetailWithStatus);
+        this.assignCardDetail = assignCardDetailWithStatus;
+        console.log(" assign", this.assignCardDetail);
+      });
+    });
+    console.log("outside assign", this.assignCardDetail);
+    if (this.assignCardDetail && this.assignCardDetail.length > 0) {
+      this.assignCardDetail.forEach((element) => {
+        this.assignedCardCount++;
+      });
+    }
+    // this.taskService
+    //   .getAssignCard(this.commonService.getUser().userId)
+    //   .subscribe(
+    //     (data) => {
+    //       console.log("Assign ", data["data"]);
+    //       this.assignCardDetail = data["data"];
+    //       if (this.assignCardDetail && this.assignCardDetail.length > 0) {
+    //         this.assignCardDetail.forEach((element) => {
+    //           this.assignedCardCount++;
+    //         });
+    //       }
+    //     },
+    //     (error) => {}
+    //   );
   }
   getCompletetedList() {
     this.completedCardCount = 0;
     let completedateStatusObj = {
+      id: this.commonService.getUser().userId,
       data: "",
       status: "Completed",
     };
@@ -314,6 +371,7 @@ export class TaskComponent implements OnInit {
   getBlockerList() {
     this.blockerCardCount = 0;
     let blockerDateStatusObj = {
+      id: this.commonService.getUser().userId,
       date: "",
       status: "Blocker",
     };

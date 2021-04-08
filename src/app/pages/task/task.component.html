@@ -8,7 +8,8 @@
                 <div class="nb-icon-add">
                     <a class="link-fab linkedin" media="Linkedin">
                         <div class="tooltip pd-tooltip-changes">Add Task</div>
-                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus" class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
+                        <nb-icon [options]="{animation:{type:'zoom'}}" icon="plus"
+                            class="add-icon display-inline task-dash-changes" (click)="openAddTaskComponent()">
                         </nb-icon>
                     </a>
                 </div>
@@ -113,11 +114,12 @@
                                 <div class="all-btn">
                                     <button class="btn btn-sm t-all mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/all.svg"><span class="mobile-task-font-style">All</span>
+                                            <img src="../../../assets/task/all.svg"><span
+                                                class="mobile-task-font-style">All</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -128,11 +130,12 @@
                                 <div class="assign-btn">
                                     <button class="btn btn-sm t-assign mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/assign.svg"><span class="mobile-task-font-style">Assign</span>
+                                            <img src="../../../assets/task/assign.svg"><span
+                                                class="mobile-task-font-style">Assign</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -142,11 +145,12 @@
                                 <div class="complete-btn">
                                     <button class="btn btn-sm t-completed mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/completed.svg"><span class="mobile-task-font-style">Completed</span>
+                                            <img src="../../../assets/task/completed.svg"><span
+                                                class="mobile-task-font-style">Completed</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -156,11 +160,12 @@
                                 <div class="approved-btn">
                                     <button class="btn btn-sm t-approved mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/check.svg"><span class="mobile-task-font-style">Approved</span>
+                                            <img src="../../../assets/task/check.svg"><span
+                                                class="mobile-task-font-style">Approved</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -170,11 +175,12 @@
                                 <div class="notapproved-btn">
                                     <button class="btn btn-sm t-notapproved mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/not-approve.svg"><span class="mobile-task-font-style">Not Approved</span>
+                                            <img src="../../../assets/task/not-approve.svg"><span
+                                                class="mobile-task-font-style">Not Approved</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -184,11 +190,12 @@
                                 <div class="block-btn">
                                     <button class="btn btn-sm t-blocker mobile-task-filter-btn">
                                         <div class="img-btn-title">
-                                            <img src="../../../assets/task/block.svg"><span class="mobile-task-font-style">Blocker</span>
+                                            <img src="../../../assets/task/block.svg"><span
+                                                class="mobile-task-font-style">Blocker</span>
                                         </div>
-                                            <div class="task-mobile-count">
-                                                <span class="mobile-task-font-style">25</span>
-                                            </div>
+                                        <div class="task-mobile-count">
+                                            <span class="mobile-task-font-style">25</span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -206,6 +213,34 @@
                                 id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
                         </div>
                     </div>
+                    <!-- <div class="col-md-6">
+                        <nb-radio-group class="radio-flex-between mr-16 mobile-pr-0">
+                            <nb-radio [(ngModel)]="assignedByMe" [checked]="true" (input)="filterAssignedByMe()">
+                                Assigned By me
+                            </nb-radio>
+                            <nb-radio [(ngModel)]="assignedByOther" (input)="filterAssignedByMe()">
+                                Assigned By other
+                            </nb-radio>
+                            <nb-radio [(ngModel)]="allAssigned" (input)="filterAssignedByMe()">
+                                Assigned By all
+                            </nb-radio>
+                        </nb-radio-group>
+                    </div> -->
+                    <!-- <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="radio" class="form-control" name="sameAssign">Assigned By me
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="radio" class="form-control" name="notsameAssign">Assigned By other
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="radio" class="form-control" name="all">All
+                        </div>
+                    </div> -->
                     <div class="col-md-2">
                         <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
                             (click)="clearDate('all')">Clear</button>
