@@ -70,4 +70,19 @@ export class TaskService {
     );
   }
 
+  getTaskMasterDatabyId(data) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/task/taskMast/getBy?taskDataId=" + data);
+  }
+
+  getTaskDataDatabyId(data) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/task/taskData/getBy?id=" + data);
+  }
+
+  updateTask(data){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/task/taskData/update",data);
+  }
+
 }

@@ -15,6 +15,9 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./task.component.scss"],
 })
 export class TaskComponent implements OnInit {
+
+  assignFlagForDetails:boolean = false;
+
   hiddenAdd: boolean = true;
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
@@ -90,8 +93,15 @@ export class TaskComponent implements OnInit {
       this.recallAllCardDetail();
     });
   }
-  openDetail() {
-    this.modalService.open(TaskDetailComponent);
+  openDetail(id,type) {
+    this.assignFlagForDetails = false;
+  if(type == "assign")
+  {
+    this.assignFlagForDetails = true
+  }
+    const modelref = this.modalService.open(TaskDetailComponent);
+    modelref.componentInstance.taskId = id;
+    modelref.componentInstance.assign = this.assignFlagForDetails;
   }
 
   showCardAccordingToStatus(value) {

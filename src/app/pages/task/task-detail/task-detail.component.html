@@ -43,24 +43,22 @@
                                                 <div class="col-md-12 col-12">
                                                     <div class="user-task pd-rl mr-bt-0">
 
-                                                        <span class="title-value">Bhautik Mehta</span>
+                                                        <span class="title-value">{{taskDetail.firstName}} {{taskDetail.lastName}}</span>
 
-                                                        <span class="title-value">Department A</span>
+                                                        <span class="title-value">{{taskDetail.departmentName}}</span>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12 col-12">
                                                     <div class="task-name mr-tb pd-rl">
                                                         <label class="task-label">NAME</label>
-                                                        <span class="taske-date-vlue">Merged Batch in GFL</span>
+                                                        <span class="taske-date-vlue">{{taskDetail.taskName}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-12">
                                                     <div class="task-name mr-tb pd-rl">
                                                         <label class="task-label">DETAIL</label>
-                                                        <span class="taske-date-vlue">Lorem ipsum, or lipsum as it is
-                                                            sometimes known, is dummy text used in laying out print,
-                                                            graphic or web designs. </span>
+                                                        <span class="taske-date-vlue">{{taskDetail.detail}}</span>
                                                     </div>
                                                 </div>
 
@@ -85,26 +83,26 @@
                                                     <div class="col-md-12 col-3 pd-0">
                                                         <div class="type-task mr-tb">
                                                             <label class="task-label">TYPE</label>
-                                                            <span class="taske-date-vlue">General</span>
+                                                            <span class="taske-date-vlue">{{taskDetail.taskType}}</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 col-4 pd-0">
                                                         <div class="st-date-task mr-tb">
                                                             <label class="task-label">START DATE</label>
-                                                            <span class="taske-date-vlue">25/03/2021</span>
+                                                            <span class="taske-date-vlue">{{taskDetail.startDate | date:'shortDate'}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-4 pd-0">
                                                         <div class="end-date-task mr-tb">
                                                             <label class="task-label">END DATE</label>
-                                                            <span class="taske-date-vlue">26/03/2021</span>
+                                                            <span class="taske-date-vlue">{{taskDetail.endDate | date:'shortDate'}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-5 pd-0">
                                                         <div class="cd-task mr-tb">
                                                             <label class="task-label">COMPILATION DAYS</label>
-                                                            <span class="taske-date-vlue">2</span>
+                                                            <span class="taske-date-vlue">{{taskDetail.completedDays}}</span>
                                                         </div>
                                                     </div>
 
@@ -127,7 +125,7 @@
                                                 <div class="task-name mr-tb pd-rl pd-tp-5">
                                                     <label class="task-label">REPORT</label>
                                                     <span class="taske-date-vlue task-link"><a
-                                                            href="#">https://www.google.com</a> </span>
+                                                            href="#">{{taskDetail.urlName}}</a> </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,12 +137,7 @@
                                                 <div class="col-md-12 col-12">
                                                     <div class="task-name mr-tb pd-rl pd-tp-5">
                                                         <label class="task-label">REMARK</label>
-                                                        <span class="taske-date-vlue remark-ellips">Lorem ipsum, or
-                                                            lipsum as it is sometimes known, is dummy text used in
-                                                            laying out print, graphic or web designs. The passage is
-                                                            attributed to an unknown typesetter in the 15th century who
-                                                            is thought to have scrambled parts of Cicero's De Finibus
-                                                            Bonorum et Malorum for use in a type specimen book.</span>
+                                                        <span class="taske-date-vlue remark-ellips">{{taskDetail.remark}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -164,20 +157,9 @@
                                                 <div class="task-name mr-tb pd-rl pd-tp-5">
                                                     <label class="task-label">ATTACHMENT</label>
                                                     <span class="taske-date-vlue task-link mt-img-3">
-                                                        <div class="task-img">
-                                                            <img src="../../../assets/scan/qr-code.png">
+                                                        <div class="task-img" *ngFor="let img of taskDetail.taskImageList">
+                                                            <img [src]="img.url">
                                                         </div>
-                                                        <div class="task-img">
-                                                            <img src="../../../assets/scan/qr-code.png">
-                                                        </div>
-                                                        <div class="task-img">
-                                                            <img src="../../../assets/scan/qr-code.png">
-                                                        </div>
-                                                        <div class="task-img">
-                                                            <img src="../../../assets/scan/qr-code.png">
-                                                        </div>
-
-
                                                     </span>
                                                 </div>
                                             </div>
@@ -188,11 +170,60 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
 
             </div>
         </div>
+
+        <ng-container *ngIf="assign">
+            <div class="row">
+                <div class="container">
+                    <form #detailForm="ngForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="required">Status</label>
+                                <ng-select name="statusId" appendTo="body" [(ngModel)]="statusSelected" required #statusId1="ngModel" (change)="getStatus($event.target.value)" placeholder="Status Name" class="required-error-dropdown dropdown-name">
+                                    <ng-option *ngFor="let stat of status" [value]="stat.statusName">{{stat.statusName}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Remark</label>
+                            <input class="form-control" type="text" placeholder="Remark">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Attachments</label>
+                            <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
+                                (change)="onSelect($event)">
+                                <ngx-dropzone-label>
+                                    <div class="drop-task-attch">
+                                        <nb-icon icon="cloud-upload-outline"></nb-icon>
+                                        <p> Drop files to attach!</p>
+                                    </div>
+                                </ngx-dropzone-label>
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                    [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                </ngx-dropzone-image-preview>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                          (click)="updateDetail()">Submit</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            
+        </ng-container>
+        
 
     </nb-card-body>
 </nb-card>
