@@ -3341,3 +3341,8 @@ ng-select .ng-clear-wrapper {
     width: 135px !important;
     text-overflow: ellipsis;
 }
+
+.required-choose-file .no-file-choose-new,
+.choose-file-registration .file-left-text {
+    bottom: 40px;
+}
