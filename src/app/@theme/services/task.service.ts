@@ -60,6 +60,15 @@ export class TaskService {
     );
   }
 
+  changeStatus(id, status) {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/task/update/approved?id=" +
+        id +
+        "&approved=" +
+        status
+    );
+  }
 
   getTaskMasterDatabyId(data) {
     return this.httpClient.get(

@@ -7,6 +7,7 @@ import { TaskDetailComponent } from "./task-detail/task-detail.component";
 import { CommonService } from "../../@theme/services/common.service";
 import { result } from "lodash";
 import { CardComponent } from "@swimlane/ngx-charts";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-task",
@@ -52,7 +53,9 @@ export class TaskComponent implements OnInit {
     private modalService: NgbModal,
     private taskGuard: TaskGuard,
     private taskService: TaskService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private toastr: ToastrService,
+
   ) {}
 
   ngOnInit(): void {
@@ -371,5 +374,17 @@ export class TaskComponent implements OnInit {
           });
         }
       });
+  }
+
+  onApprove(id){
+    this.taskService
+    .changeStatus(id, true)
+    .subscribe((data) => {
+      if(data["success"]){
+        this.toastr.success(data["msg"]);
+        this.getApprovedList();
+        this.getNotApprovedList();
+      }
+    });
   }
 }
