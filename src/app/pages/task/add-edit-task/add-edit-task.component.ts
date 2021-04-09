@@ -40,7 +40,8 @@ export class AddEditTaskComponent implements OnInit {
     private registrationService: RegistrationService,
     private commonService: CommonService,
     private activeModel: NgbActiveModal,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+
   ) {
     this.taskImageListArray.push(this.taskImageList);
     this.addTask.taskImageList = this.taskImageListArray;
@@ -181,7 +182,7 @@ export class AddEditTaskComponent implements OnInit {
       this.taskService.addTask(this.addTask).subscribe(
         (data) => {
           this.toastrService.success("Task added successfully");
-          this.activeModel.close();
+          this.activeModel.close(true);
         },
         (error) => {}
       );
