@@ -192,7 +192,6 @@ export class TaskComponent implements OnInit {
 
   //filter Data according to date
   filteredCardDetailByDate(event, value) {
-    console.log(event.target.value);
     switch (value) {
       //filter card for assign status
       case "assign":
@@ -202,14 +201,20 @@ export class TaskComponent implements OnInit {
           {
             date: event.target.value,
             status: "NotStarted",
+            id:null,
+
           },
           {
             date: event.target.value,
             status: "Running",
+            id:null,
+
           },
           {
             date: event.target.value,
             status: "Hold",
+            id:null,
+
           },
         ];
         assignDateStatusObj.forEach((element, index) => {
@@ -235,6 +240,8 @@ export class TaskComponent implements OnInit {
         let completeDateStatusObj = {
           date: event.target.value,
           status: "Completed",
+          id:null,
+
         };
         this.taskService
           .getDataAccordingToStatus(completeDateStatusObj)
@@ -249,6 +256,8 @@ export class TaskComponent implements OnInit {
         let blockerDaeStatusObj = {
           date: event.target.value,
           status: "Blocker",
+          id:null,
+
         };
         this.taskService
           .getDataAccordingToStatus(blockerDaeStatusObj)
@@ -271,6 +280,34 @@ export class TaskComponent implements OnInit {
             this.allCardDetail = data["data"];
           });
         break;
+
+        case "approve":
+          let approveDateStatusObj = {
+            date: event.target.value,
+            status: "Approved",
+            id:null,
+          };
+          this.taskService
+            .getDataAccordingToStatus(approveDateStatusObj)
+            .subscribe((data) => {
+              console.log("approve filter", data["data"]);
+              this.approvedCardDetail = data["data"];
+            });
+          break;
+
+          case "notApprove":
+          let notApproveDateStatusObj = {
+            date: event.target.value,
+            status: "Not Approved",
+            id:null,
+          };
+          this.taskService
+            .getDataAccordingToStatus(notApproveDateStatusObj)
+            .subscribe((data) => {
+              console.log("Not approve filter", data["data"]);
+              this.approvedCardDetail = data["data"];
+            });
+          break;
     }
   }
 
