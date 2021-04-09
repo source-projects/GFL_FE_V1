@@ -26,7 +26,7 @@
                         <div class="col-md-2 col-6">
                             <div class="hover-img-task" (click)="showCardAccordingToStatus('all')">
 
-                                <div class="task-top-img" >
+                                <div class="task-top-img">
 
                                     <img src="../../../assets/task/all.svg">
 
@@ -201,19 +201,29 @@
 
             <!--All-->
             <div *ngIf="allFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter</label>
+                <div class="mt-5 mb-3">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
+                    <div class="row">
+                        <div class="col-md-8">
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <label>Date filter</label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
+
+                                    </div>
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('all')">Clear</button>
-                    </div>
+
                 </div>
                 <div class="row" *ngIf="allCardCount">
                     <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail">
@@ -222,7 +232,7 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12 pd-0">
                                         <div class="task-btn">
-                                            
+
                                             <div class="task-email-btn">
                                                 <nb-icon icon="email-outline" class="email-task-complete" nbTooltip="email" nbTooltipPlacement="bottom"></nb-icon>
                                             </div>
@@ -253,8 +263,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{all.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{all.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -262,16 +271,14 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{all.taskName}}</span>
+                                                                    <span class="taske-date-vlue">{{all.taskName}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{all.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{all.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -287,29 +294,25 @@
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <!-- {{all.taskPriority}} -->
-                                                                <div class="priority-dots"
-                                                                    *ngIf="all.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="all.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="all.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="all.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="all.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="all.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="all.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="all.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -320,16 +323,14 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{all.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{all.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">TYPE</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{all.taskType}}</span>
+                                                                    <span class="taske-date-vlue">{{all.taskType}}</span>
                                                                 </div>
                                                             </div>
 
@@ -432,25 +433,35 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!allCardDetail">
-                    <h1>No task card</h1>
+                <div *ngIf="!allCardDetail" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Card</h1>
                 </div>
             </div>
 
             <!--Assigned-->
             <div *ngIf="assignFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter</label>
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'assign')">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('assign')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+
+                                        <label>Date filter</label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'assign')">
+
+                                    </div>
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('assign')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="assignedCardCount">
@@ -490,8 +501,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{assign.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{assign.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -499,16 +509,14 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{assign.taskName}}</span>
+                                                                    <span class="taske-date-vlue">{{assign.taskName}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{assign.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{assign.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -523,29 +531,25 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
-                                                                <div class="priority-dots"
-                                                                    *ngIf="assign.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="assign.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="assign.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="assign.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="assign.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="assign.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="assign.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="assign.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -556,16 +560,14 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{assign.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{assign.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">TYPE</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{assign.taskType}}</span>
+                                                                    <span class="taske-date-vlue">{{assign.taskType}}</span>
                                                                 </div>
                                                             </div>
 
@@ -585,25 +587,36 @@
 
                     </div>
                 </div>
-                <div *ngIf="!assignedCardCount">
-                    <h1>No task assignded</h1>
+                <div *ngIf="!assignedCardCount" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Task Assignded</h1>
                 </div>
             </div>
 
             <!--Completed-->
             <div *ngIf="completedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter  </label>
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'complete')">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('complete')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <label>Date filter  </label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'complete')">
+
+                                    </div>
+
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('complete')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="completedCardCount">
@@ -643,8 +656,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{complete.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{complete.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -652,16 +664,14 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{complete.taskName}}</span>
+                                                                    <span class="taske-date-vlue">{{complete.taskName}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{complete.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{complete.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -676,29 +686,25 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
-                                                                <div class="priority-dots"
-                                                                    *ngIf="complete.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="complete.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="complete.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="complete.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="complete.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="complete.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="complete.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="complete.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -709,16 +715,14 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{complete.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{complete.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">TYPE</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{complete.taskType}}</span>
+                                                                    <span class="taske-date-vlue">{{complete.taskType}}</span>
                                                                 </div>
                                                             </div>
 
@@ -738,25 +742,35 @@
 
                     </div>
                 </div>
-                <div *ngIf="!completedCardCount">
-                    <h1>No task completed</h1>
+                <div *ngIf="!completedCardCount" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Completed Task</h1>
                 </div>
             </div>
 
             <!--Approved-->
             <div *ngIf="approvedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter</label>
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'approve')">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('approve')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <label>Date filter</label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'approve')">
+
+                                    </div>
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('approve')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="approvedCardCount">
@@ -797,8 +811,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{approve.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{approve.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -806,16 +819,14 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{approve.taskName}}</span>
+                                                                    <span class="taske-date-vlue">{{approve.taskName}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{approve.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{approve.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -830,29 +841,25 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
-                                                                <div class="priority-dots"
-                                                                    *ngIf="approve.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="approve.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="approve.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="approve.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="approve.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="approve.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="approve.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="approve.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -863,16 +870,14 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{approve.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{approve.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">TYPE</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{approve.taskType}}</span>
+                                                                    <span class="taske-date-vlue">{{approve.taskType}}</span>
                                                                 </div>
                                                             </div>
 
@@ -892,25 +897,35 @@
 
                     </div>
                 </div>
-                <div *ngIf="!approvedCardCount">
-                    <h1>All tasks approved</h1>
+                <div *ngIf="!approvedCardCount" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">All Approved</h1>
                 </div>
             </div>
 
             <!--Not Approved-->
             <div *ngIf="notApprovedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter</label>
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'notApprove')">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('notApprove')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <label>Date filter</label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'notApprove')">
+
+                                    </div>
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('notApprove')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="notApprovedCardCount">
@@ -920,10 +935,10 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12 pd-0">
                                         <div class="task-btn">
-                                            <div class="task-email-btn">
+                                            <div class="task-email-btn-email">
                                                 <nb-icon icon="checkmark-square-outline" class="email-task-complete" (click)="onApprove(notApprove.id)" nbTooltip="approve" nbTooltipPlacement="bottom"></nb-icon>
                                             </div>
-                                            
+
                                             <div class="task-email-btn">
                                                 <nb-icon icon="email-outline" class="email-task-complete" nbTooltip="email" nbTooltipPlacement="bottom"></nb-icon>
                                             </div>
@@ -955,8 +970,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{notApprove.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{notApprove.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -973,8 +987,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{notApprove.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{notApprove.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -989,29 +1002,25 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
-                                                                <div class="priority-dots"
-                                                                    *ngIf="notApprove.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="notApprove.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="notApprove.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="notApprove.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="notApprove.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="notApprove.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="notApprove.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="notApprove.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -1022,8 +1031,7 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{notApprove.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{notApprove.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
@@ -1053,27 +1061,37 @@
                     </div>
 
                 </div>
-                <div *ngIf="!notApprovedCardCount">
-                    <h1>No task to approve</h1>
+                <div *ngIf="!notApprovedCardCount" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No task To Approved</h1>
                 </div>
 
             </div>
 
             <!--Blocker-->
             <div *ngIf="blockerFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Date filter</label>
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate"
-                                id="filterDate" (input)="filteredCardDetailByDate($event,'blocker')">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <label>Date filter</label>
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'blocker')">
+
+                                    </div>
+                                    <div class="col-md-4 text-center dis-fl">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('blocker')">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="clearDate('blocker')">Clear</button>
-                    </div>
+
                 </div>
                 <div class="row" *ngIf="blockerCardCount">
                     <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail">
@@ -1113,8 +1131,7 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">DEPARTMENT</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{block.departmentName}}</span>
+                                                                    <span class="taske-date-vlue">{{block.departmentName}}</span>
                                                                 </div>
                                                             </div>
 
@@ -1122,16 +1139,14 @@
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">NAME</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{block.taskName}}</span>
+                                                                    <span class="taske-date-vlue">{{block.taskName}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="task-name mr-tb pd-rl">
                                                                     <label class="task-label">COMPILATION DAYS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{block.completedDays}}</span>
+                                                                    <span class="taske-date-vlue">{{block.completedDays}}</span>
                                                                 </div>
                                                             </div>
 
@@ -1146,29 +1161,25 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12 col-12 pd-0">
-                                                                <div class="priority-dots"
-                                                                    *ngIf="block.taskPriority==='p1'">
+                                                                <div class="priority-dots" *ngIf="block.taskPriority==='p1'">
                                                                     <span class="p-dots-color rd-p" title="P1"></span>
                                                                     <span class="p-dots-color rd-p" title="P2"></span>
                                                                     <span class="p-dots-color rd-p" title="P3"></span>
                                                                     <span class="p-dots-color rd-p" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="block.taskPriority==='p2'">
+                                                                <div class="priority-dots" *ngIf="block.taskPriority==='p2'">
                                                                     <span class="p-dots-color rd-o" title="P1"></span>
                                                                     <span class="p-dots-color rd-o" title="P2"></span>
                                                                     <span class="p-dots-color rd-o" title="P3"></span>
                                                                     <span class="p-dots-color rd-o" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="block.taskPriority==='p3'">
+                                                                <div class="priority-dots" *ngIf="block.taskPriority==='p3'">
                                                                     <span class="p-dots-color rd-y" title="P1"></span>
                                                                     <span class="p-dots-color rd-y" title="P2"></span>
                                                                     <span class="p-dots-color rd-y" title="P3"></span>
                                                                     <span class="p-dots-color rd-y" title="P4"></span>
                                                                 </div>
-                                                                <div class="priority-dots"
-                                                                    *ngIf="block.taskPriority==='p4'">
+                                                                <div class="priority-dots" *ngIf="block.taskPriority==='p4'">
                                                                     <span class="p-dots-color rd-g" title="P1"></span>
                                                                     <span class="p-dots-color rd-g" title="P2"></span>
                                                                     <span class="p-dots-color rd-g" title="P3"></span>
@@ -1179,16 +1190,14 @@
                                                             <div class="col-md-12 col-12 pd-0 order-1">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">STATUS</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{block.taskStatus}}</span>
+                                                                    <span class="taske-date-vlue">{{block.taskStatus}}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-12 col-12 pd-0">
                                                                 <div class="st-date-task mr-tb">
                                                                     <label class="task-label">TYPE</label>
-                                                                    <span
-                                                                        class="taske-date-vlue">{{block.taskType}}</span>
+                                                                    <span class="taske-date-vlue">{{block.taskType}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1202,8 +1211,8 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!blockerCardCount">
-                    <h1>No task in blocker</h1>
+                <div *ngIf="!blockerCardCount" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No task in Blocker</h1>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { TaskImageList } from "../../../@theme/model/task";
 import { RegistrationService } from "../../../@theme/services/registration.service";
 import { TaskService } from "../../../@theme/services/task.service";
-import { stat } from "node:fs";
+// import { stat } from "node:fs";
 import { update } from "lodash";
 @Component({
   selector: "ngx-task-detail",
