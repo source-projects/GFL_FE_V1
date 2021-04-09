@@ -35,19 +35,19 @@
                                 <circle-progress #invbar [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
                                     [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
-                                <input type="file" name="bill"  style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
-                                    required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
-                                    <div [ngClass]="{'required-choose-file' : (bill1.invalid) && (formSubmitted || bill1.touched)}" >
+                            <input type="file" name="bill" style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
+                                required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
+                            <div [ngClass]="{'required-choose-file' : (bill1.invalid) && (formSubmitted || bill1.touched)}">
 
-                                    <label *ngIf="bill" class="no-file-choose-new">{{bill}}</label>
-                                    <label *ngIf="!bill" class="no-file-choose-new">No file chosen</label>
-                                    </div>
+                                <label *ngIf="bill" class="no-file-choose-new">{{bill}}</label>
+                                <label *ngIf="!bill" class="no-file-choose-new">No file chosen</label>
+                            </div>
 
-                                <div class="input-required" *ngIf="bill1.invalid
+                            <div class="input-required" *ngIf="bill1.invalid
                                            &&
                                            (formSubmitted || bill1.touched)">
-                                    <span>Invoice is required</span>
-                                </div>
+                                <span>Invoice is required</span>
+                            </div>
                         </div>
                     </div>
 
@@ -61,8 +61,11 @@
                             <div class="">
                                 <input type="file" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
                                     required [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
-                                <label *ngIf="material" class="no-file-choose-new">{{material}}</label>
-                                <label *ngIf="!material" class="no-file-choose-new">No file chosen</label>
+
+                                <div [ngClass]="{'required-choose-file' : (material1.invalid) && (formSubmitted || material1.touched)}">
+                                    <label *ngIf="material" class="no-file-choose-new">{{material}}</label>
+                                    <label *ngIf="!material" class="no-file-choose-new">No file chosen</label>
+                                </div>
                                 <div class="input-required" *ngIf="material1.invalid
                                            &&
                                            (formSubmitted || material1.touched)">
@@ -96,25 +99,23 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="department" appendTo="body" #department1="ngModel" [(ngModel)]="purchase.departmentId" 
-                              placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
-                                class="required-error-dropdown dropdown-name">
-                            <ng-option disabled="true">
-                                <div class="row">
-                                    <div class="col-md-4 col-4">
-                                        <div class="text-left txt-ov-elips">Department Name</div>
+                            <ng-select name="department" appendTo="body" #department1="ngModel" [(ngModel)]="purchase.departmentId" placeholder="Select Department" required [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}" class="required-error-dropdown dropdown-name">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-4 col-4">
+                                            <div class="text-left txt-ov-elips">Department Name</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </ng-option>
-                            <ng-option *ngFor="let department of departmentList" [value]="department.id">
-                                <div class="row">
-                                    <div class="col-md-4 col-4">
-                                        <div class="text-left txt-ov-elips"> {{department.name}}</div>
-                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let department of departmentList" [value]="department.id">
+                                    <div class="row">
+                                        <div class="col-md-4 col-4">
+                                            <div class="text-left txt-ov-elips"> {{department.name}}</div>
+                                        </div>
 
-                                </div>
-                            </ng-option>
-                        </ng-select>
+                                    </div>
+                                </ng-option>
+                            </ng-select>
 
                             <div class="input-required" *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
                                 <span>Department is required.</span>

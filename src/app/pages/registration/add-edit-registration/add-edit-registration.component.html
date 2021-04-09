@@ -94,8 +94,10 @@
                             <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
                                 required [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}">
 
-                            <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
-                            <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label>
+                            <div [ngClass]="{'required-choose-file' : (document1.invalid) && (formSubmitted || document1.touched)}">
+                                <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
+                                <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label>
+                            </div>
                             <div class="input-required" *ngIf="document1.invalid
                                        &&
                                        (formSubmitted || document1.touched)">
