@@ -3040,7 +3040,7 @@ ng-select .ng-clear-wrapper {
     font-size: 10px;
     font-weight: 700;
     // color: #5e5b5e;
-    color: #d8d8d8;
+    color: #feffda;
     letter-spacing: 0.4px;
 }
 
@@ -3190,6 +3190,7 @@ ng-select .ng-clear-wrapper {
 .first-border-popup {
     border-right: 1px solid #3e3e3e;
     padding-bottom: 5px;
+    height: 100%;
 }
 
 .task-popup-bottom {
@@ -3209,23 +3210,23 @@ ng-select .ng-clear-wrapper {
 }
 
 .t-all {
-    background-color: #acb52c;
-    border: 1px solid #acb52c;
+    background-color: #c06d6d;
+    border: 1px solid #c06d6d;
 }
 
 .t-assign {
-    background-color: #1e1772;
-    border: 1px solid #1e1772;
+    background-color: #1e1772e0;
+    border: 1px solid #1e1772e0;
 }
 
 .t-completed {
-    background-color: #017e27;
-    border: 1px solid #017e27;
+    background-color: #29a04d;
+    border: 1px solid #29a04d;
 }
 
 .t-approved {
-    background-color: #1bee22;
-    border: 1px solid #1bee22;
+    background-color: #40b1de;
+    border: 1px solid #40b1de;
 }
 
 .t-notapproved {
@@ -3234,8 +3235,8 @@ ng-select .ng-clear-wrapper {
 }
 
 .t-blocker {
-    background-color: #ff0000;
-    border: 1px solid #ff0000;
+    background-color: #ec0b0bc7;
+    border: 1px solid #ec0b0bc7;
 }
 
 .top-style-task .label-top-task,
@@ -3249,7 +3250,7 @@ ng-select .ng-clear-wrapper {
 }
 
 .top-style-task {
-    padding: 29px 19px 19px;
+    padding: 22px 19px 18px;
 }
 
 .task-top-img {
