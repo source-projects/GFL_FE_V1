@@ -17,15 +17,19 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 })
 export class AddEditPurchaseComponent implements OnInit {
 
-  invUploadFlag:boolean = false;
-  matUploadFlag:boolean = false;
+  invurl = [];
+  maturl = [];
+  invUpdateurl = []
+  matUpdateurl = [];
+  invUploadFlag: boolean = false;
+  matUploadFlag: boolean = false;
   processValue = 0;
-  processValue2=0;
+  processValue2 = 0;
   loading = false;
   formSubmitted = false;
   disableButton = false;
-  purchase : Purchase = new Purchase();
-  materialPhotoArray : MaterialPhotos[] = [];
+  purchase: Purchase = new Purchase();
+  materialPhotoArray: MaterialPhotos[] = [];
   bill;
   material;
   user;
@@ -37,16 +41,16 @@ export class AddEditPurchaseComponent implements OnInit {
   approveByList = [];
   receiveByList = [];
   docList = [];
-imageUrl;
-  imgResultBeforeCompress:string;
-  imgResultAfterCompress:string;
-  imageFile:File;
- 
+  imageUrl;
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string;
+  imageFile: File;
+
   constructor(
     private commonService: CommonService,
-    private purchseService : PurchaseNewService,
-    private userService : UserService,
-    private adminService : AdminService,
+    private purchseService: PurchaseNewService,
+    private userService: UserService,
+    private adminService: AdminService,
     private _route: ActivatedRoute,
     private toastr: ToastrService,
     private route: Router,
@@ -66,22 +70,25 @@ imageUrl;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.currentId = this._route.snapshot.paramMap.get("id");
-    if(this.currentId){
+    if (this.currentId) {
       this.getCurrentPurchase();
     }
   }
 
-  getCurrentPurchase(){
+  getCurrentPurchase() {
+    this.invUpdateurl = [];
+    this.matUpdateurl = []
     this.purchseService.getPurchaseById(this.currentId).subscribe(
       (data) => {
         if (data["success"]) {
           this.purchase = data["data"];
           this.docList = this.purchase.materialPhotosList;
+          console.log("list:,", this.docList)
           this.docList.forEach(element => {
-            if(element.type == "bill"){
-              this.bill = element.name;
-            }else{
-              this.material = element.name;
+            if (element.type == "bill") {
+              this.invUpdateurl.push(element.picUrl);
+            } else {
+              this.matUpdateurl.push(element.picUrl);
             }
           })
 
@@ -101,7 +108,7 @@ imageUrl;
           this.departmentList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -133,8 +140,8 @@ imageUrl;
     });
   }
 
-  compressFile(type){
-  
+  compressFile(type) {
+
     this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
       result => {
         this.imgResultAfterCompress = result;
@@ -155,100 +162,134 @@ imageUrl;
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
     for (let i = 0; i < byteString.length; i++) {
-    int8Array[i] = byteString.charCodeAt(i);
+      int8Array[i] = byteString.charCodeAt(i);
     }
     const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
-    }
+  }
 
 
   fileUpload(type) {
     // this.loading = true;
-    if(this.imageFile){
+    this.matUpdateurl = [];
+    this.invUpdateurl = [];
+    this.invurl = [];
+    this.maturl = [];
+    if (this.imageFile) {
       this.fileToUpload = this.imageFile;
-    const data = new FormData();
-    data.append('file', this.fileToUpload);
-    data.append('upload_preset', 'gfl_upload');
-    data.append('cloud_name', 'dpemsdha5');
+      const data = new FormData();
+      data.append('file', this.fileToUpload);
+      data.append('upload_preset', 'gfl_upload');
+      data.append('cloud_name', 'dpemsdha5');
 
-    this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data,{
-      reportProgress:true,
-      observe:'events'
-    })
-      .subscribe(event => {
-      //send success response
-        if(event){
-          if (event.type === HttpEventType.UploadProgress) {
-            if(type == "bill"){
-              this.processValue = Math.round(100 * event.loaded / event.total);
+      this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data, {
+        reportProgress: true,
+        observe: 'events'
+      })
+        .subscribe(event => {
+          //send success response
+          if (event) {
+            if (event.type === HttpEventType.UploadProgress) {
+              if (type == "bill") {
+                this.processValue = Math.round(100 * event.loaded / event.total);
+              }
+              else if (type == "material") {
+                this.processValue2 = Math.round(100 * event.loaded / event.total);
+              }
+            } else if (event.type == HttpEventType.Response) {
             }
-            else if(type == "material"){
-              this.processValue2 = Math.round(100 * event.loaded / event.total);
-            }
-          }else if(event.type==HttpEventType.Response){
           }
+
+        }, (err) => {
+          //send error response
+        });
+
+
+      this.purchseService.uploadImage(data).subscribe((response) => {
+        if (response) {
+          let obj = {
+            id: null,
+            type: this.docType,
+            name: this.fileToUpload.name,
+            picUrl: response.secure_url,
+            controlId: null
+          }
+          // if (this.currentId) {
+
+          //   this.docList.forEach(ele => {
+          //     this.materialPhotoArray.push(ele)
+          //   })
+          //   this.materialPhotoArray.push(obj)
+
+          // }
+          // else {
+          //   this.materialPhotoArray.push(obj)
+          // }
+          this.docList.push(obj);
+          this.docList
+            .forEach(ele => {
+              if (!this.currentId) {
+                if (ele.type == "bill") {
+                  this.invurl.push(ele.picUrl);
+                }
+                else {
+                  this.maturl.push(ele.picUrl);
+                }
+              }
+              else {
+                if (ele.type == "bill") {
+                  this.invUpdateurl.push(ele.picUrl);
+                }
+                else {
+                  this.matUpdateurl.push(ele.picUrl);
+                }
+              }
+            })
+          // this.loading = false;
         }
-
-      }, (err) => {
-      //send error response
-    });
-
-
-    this.purchseService.uploadImage(data).subscribe((response) => {
-      if (response) {
-        let obj = {
-          id: null,
-          type: this.docType,
-          name: this.fileToUpload.name,
-          picUrl: response.secure_url,
-          controlId: null
-        }
-        this.materialPhotoArray.push(obj)
-        // this.loading = false;
-      }
-    })
-  }else{
-    this.loading = false;
-  }
+      })
+    } else {
+      this.loading = false;
+    }
 
   }
   handleFileInput(files: FileList, type) {
 
-    if(type == "bill"){
+    if (type == "bill") {
       this.invUploadFlag = true;
     }
-    else if(type == "material"){
+    else if (type == "material") {
       this.matUploadFlag = true;
     }
-    else{
+    else {
       this.invUploadFlag = false;
       this.matUploadFlag = false;
     }
 
     this.fileToUpload = files.item(0);
-    if(this.matUploadFlag){
+    if (this.matUploadFlag) {
       this.material = this.fileToUpload.name;
-    }else{
+    } else {
       this.bill = this.fileToUpload.name;
     }
     this.docType = type;
     const reader = new FileReader();
-      reader.onload = () => {
-        this.imageUrl = reader.result as string;
-        this.compressFile(type);
-      } 
-      reader.readAsDataURL(this.fileToUpload)
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+      this.compressFile(type);
+    }
+    reader.readAsDataURL(this.fileToUpload)
 
 
   }
 
-  reset(form){
+  reset(form) {
     form.reset();
     this.formSubmitted = false;
 
   }
 
-  addPurchase(form){
+  addPurchase(form) {
     this.disableButton = true;
     this.formSubmitted = true;
     if (form.valid) {
@@ -260,6 +301,12 @@ imageUrl;
             this.reset(form);
             this.disableButton = false;
             this.toastr.success(data['msg']);
+            this.invurl = [];
+            this.maturl = [];
+            this.invUploadFlag = false;
+            this.matUploadFlag = false;
+            this.processValue = 0;
+            this.processValue2 = 0;
             // this.disableButton=true;
           } else {
             this.toastr.error(data['msg']);
@@ -271,63 +318,97 @@ imageUrl;
         }
       );
     }
-    else{
+    else {
       this.toastr.error("Fill empty fields");
- 
+
     }
     this.disableButton = false;
 
   }
 
-updatePurchase(form){
-  this.loading = true;
-  this.disableButton = true;
-  this.formSubmitted = true;
-  if (form.valid || this.bill || this.material) {
-    if (this.materialPhotoArray.length > 0) {
+  updatePurchase(form) {
+    this.loading = true;
+    this.disableButton = true;
+    this.formSubmitted = true;
+    if (form.valid || this.bill || this.material) {
+      if (this.materialPhotoArray.length > 0) {
 
-      this.materialPhotoArray.forEach((ele, i) => {
-        if (ele.type == 'bill') {
-          this.docList[i] = ele;
-          this.docList[i].id = ele.id;
-          this.docList[i].controlId = ele.controlId;
-        } else
-          if (ele.type == 'material') {
+        this.materialPhotoArray.forEach((ele, i) => {
+          if (ele.type == 'bill') {
             this.docList[i] = ele;
             this.docList[i].id = ele.id;
             this.docList[i].controlId = ele.controlId;
+          } else
+            if (ele.type == 'material') {
+              this.docList[i] = ele;
+              this.docList[i].id = ele.id;
+              this.docList[i].controlId = ele.controlId;
+            }
+        })
+      }
+
+      this.purchase.materialPhotosList = this.docList;
+
+
+
+      this.purchseService.updatePurchase(this.purchase).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.formSubmitted = false;
+
+            this.route.navigate(["/pages/purchase"]);
+            this.toastr.success(data['msg']);
+          } else {
+            this.toastr.error(data['msg']);
           }
+          this.loading = false;
+          this.disableButton = false;
+
+        },
+        (error) => {
+          this.toastr.error(errorData.Update_Error);
+          this.loading = false;
+        }
+      );
+    } else {
+      this.loading = false;
+      this.disableButton = false;
+    }
+  }
+
+
+  removeImage(type, index) {
+    if (type == "invAdd") {
+      let rem = this.invurl.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.picUrl == rem){
+          this.docList.splice(index,1)
+        }
       })
     }
-
-    this.purchase.materialPhotosList = this.docList;
-
-
-
-    this.purchseService.updatePurchase(this.purchase).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.formSubmitted = false;
-
-          this.route.navigate(["/pages/purchase"]);
-          this.toastr.success(data['msg']);
-        }else{
-          this.toastr.error(data['msg']);
+    else if(type == "invUpdate"){
+      let rem = this.invUpdateurl.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.picUrl == rem){
+          this.docList.splice(index,1)
         }
-        this.loading = false;
-        this.disableButton = false;
-
-      },
-      (error) => {
-        this.toastr.error(errorData.Update_Error);
-        this.loading = false;
-      }
-    );
-  } else {
-    this.loading = false;
-    this.disableButton = false;
+      })    }
+    else if(type == "matAdd"){
+      let rem = this.maturl.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.picUrl == rem){
+          this.docList.splice(index,1)
+        }
+      })    }
+    else if(type == "matUpdate"){
+      let rem = this.matUpdateurl.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.picUrl == rem){
+          this.docList.splice(index,1)
+        }
+      })
+    }
   }
-}
 }
 
 

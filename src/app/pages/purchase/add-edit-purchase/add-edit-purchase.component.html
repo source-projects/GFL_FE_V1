@@ -25,71 +25,10 @@
 
     </nb-card-header>
     <nb-card-body>
+
+        
         <div>
             <form #purchaseForm="ngForm">
-                <div class="row">
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label class="required">Invoice</label>
-                            <ng-container class="mar-left-for-prog" *ngIf="invUploadFlag">
-                                <circle-progress #invbar [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
-                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
-                            </ng-container>
-                            <div class="">
-                                <input type="file" name="bill"  style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
-                                    required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
-                                <label *ngIf="bill" class="no-file-choose-new">{{bill}}</label>
-                                <label *ngIf="!bill" class="no-file-choose-new">No file chosen</label>
-
-                                <div class="input-required" *ngIf="bill1.invalid
-                                           &&
-                                           (formSubmitted || bill1.touched)">
-                                    <span>Invoice is required</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label class="required">Material</label>
-                            <ng-container class="mar-left-for-prog" *ngIf="matUploadFlag">
-                                <circle-progress #matbar [showInnerStroke]=false [percent]="processValue2" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
-                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
-                            </ng-container>
-                            <div class="">
-                                <input type="file" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
-                                    required [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
-                                <label *ngIf="material" class="no-file-choose-new">{{material}}</label>
-                                <label *ngIf="!material" class="no-file-choose-new">No file chosen</label>
-                                <div class="input-required" *ngIf="material1.invalid
-                                           &&
-                                           (formSubmitted || material1.touched)">
-                                    <span>Material is required</span>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label class="required">Amount</label>
-                            <input type="number" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt" class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Amount" [ngClass]="{'is-invalid':(amount1.invalid) &&(formSubmitted || amount1.touched)}" required
-                            />
-
-                            <div class="input-required" *ngIf="amount1.invalid
-                                &&
-                                (formSubmitted || amount1.touched)">
-                                <span>Amount is required</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
 
                     <div class="col-md-4 col-12">
@@ -120,6 +59,34 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label class="required">Amount</label>
+                            <input type="number" name="amount" #amount1="ngModel" [(ngModel)]="purchase.amt" class="form-control size-small" fieldsize="small" nbinput placeholder="Enter Amount" [ngClass]="{'is-invalid':(amount1.invalid) &&(formSubmitted || amount1.touched)}" required
+                            />
+
+                            <div class="input-required" *ngIf="amount1.invalid
+                                &&
+                                (formSubmitted || amount1.touched)">
+                                <span>Amount is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Remark</label>
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark" [(ngModel)]="purchase.remark" #remark1="ngModel" placeholder="Remark" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
 
                     <div class="col-md-4 col-12">
                         <div class="form-group">
@@ -190,14 +157,79 @@
                 </div>
 
 
-                <div class="row">
 
-                    <div class="col-md-4 col-12">
+
+                <div class="row">
+                    <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Remark</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark" [(ngModel)]="purchase.remark" #remark1="ngModel" placeholder="Remark" />
+                            
+                            <label class="required">Invoice</label>
+                            <ng-container class="mar-left-for-prog" *ngIf="invUploadFlag">
+                                <circle-progress #invbar [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
+                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
+                            </ng-container>
+                            <div class="">
+                                <input type="file" name="bill" multiple style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
+                                    required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
+                                <!-- <label *ngIf="bill" class="no-file-choose-new">{{bill}}</label> -->
+                                <!-- <label *ngIf="!bill" class="no-file-choose-new">No file chosen</label> -->
+
+                                <div class="input-required" *ngIf="bill1.invalid
+                                           &&
+                                           (formSubmitted || bill1.touched)">
+                                    <span>Invoice is required</span>
+                                </div>
+                            </div>
                         </div>
+                        <ng-container *ngIf="!currentId">
+                            <div *ngFor='let url of invurl;let i=index'>
+                                <img [src]="url" height="50">
+                                <nb-icon icon="close-circle-outline" (click)="removeImage('invAdd',i)"></nb-icon>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="currentId">
+                            <div *ngFor='let url of invUpdateurl;let i=index'>
+                                <img [src]="url" height="50">
+                                <nb-icon icon="close-circle-outline" (click)="removeImage('invUpdate',i)"></nb-icon>
+                            </div>
+                        </ng-container>
                     </div>
+
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label class="required">Material</label>
+                            <ng-container class="mar-left-for-prog" *ngIf="matUploadFlag">
+                                <circle-progress #matbar [showInnerStroke]=false [percent]="processValue2" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2"
+                                    [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
+                            </ng-container>
+                            <div class="">
+                                <input type="file" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
+                                    required [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
+                                <!-- <label *ngIf="material" class="no-file-choose-new">{{material}}</label> -->
+                                <!-- <label *ngIf="!material" class="no-file-choose-new">No file chosen</label> -->
+                                <div class="input-required" *ngIf="material1.invalid
+                                           &&
+                                           (formSubmitted || material1.touched)">
+                                    <span>Material is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="!currentId">
+                            <div *ngFor='let url of maturl;let i=index'>
+                                <img [src]="url" height="50">
+                                <nb-icon icon="close-circle-outline" (click)="removeImage('matAdd',i)"></nb-icon>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="currentId">
+                            <div *ngFor='let url of matUpdateurl;let i=index'>
+                                <img [src]="url" height="50">
+                                <nb-icon icon="close-circle-outline" (click)="removeImage('matUpdate',i)"></nb-icon>
+                            </div>
+                        </ng-container>
+
+                    </div>
+
                 </div>
 
                 <div class="row">
