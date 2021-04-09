@@ -85,4 +85,10 @@ export class TaskService {
       this.commonService.envUrl() + "api/task/taskData/update",data);
   }
 
+  deleteTask(id){
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/task/taskData/deleteBy?id="+ id);
+
+  }
+
 }
