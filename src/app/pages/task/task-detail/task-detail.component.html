@@ -20,7 +20,7 @@
     <nb-card-body class="pd-normal">
         <div class="row">
             <div class="col-md-12 col-12 mobile-pd-0">
-                <div class="mb-0">
+                <div class="mb-3">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 col-12 pd-0">
@@ -182,48 +182,49 @@
             <div class="row">
                 <div class="container">
                     <form #detailForm="ngForm">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="required">Status</label>
-                                <ng-select name="statusId" appendTo="body" [(ngModel)]="statusSelected" required #statusId1="ngModel" (change)="getStatus($event.target.value)" placeholder="Status Name" class="required-error-dropdown dropdown-name">
-                                    <ng-option *ngFor="let stat of status" [value]="stat.statusName">{{stat.statusName}}</ng-option>
-                                </ng-select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="required">Status</label>
+                                    <ng-select name="statusId" appendTo="body" [(ngModel)]="statusSelected" required #statusId1="ngModel" (change)="getStatus($event.target.value)" placeholder="Status Name" class="required-error-dropdown dropdown-name">
+                                        <ng-option *ngFor="let stat of status" [value]="stat.statusName">{{stat.statusName}}</ng-option>
+                                    </ng-select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Remark</label>
-                            <input class="form-control" type="text" placeholder="Remark">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Attachments</label>
-                            <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
-                                (change)="onSelect($event)">
-                                <ngx-dropzone-label>
-                                    <div class="drop-task-attch">
-                                        <nb-icon icon="cloud-upload-outline"></nb-icon>
-                                        <p> Drop files to attach!</p>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Remark</label>
+                                    <input class="form-control" type="text" placeholder="Remark">
+                                </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Attachments</label>
+                                    <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                        <ngx-dropzone-label>
+                                            <div class="drop-task-attch">
+                                                <nb-icon icon="cloud-upload-outline"></nb-icon>
+                                                <p> Drop files to attach!</p>
+                                            </div>
+                                        </ngx-dropzone-label>
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                        </ngx-dropzone-image-preview>
                                     </div>
-                                </ngx-dropzone-label>
-                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                                    [file]="f" [removable]="true" (removed)="onRemove(f)">
-                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                                </ngx-dropzone-image-preview>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mobile-btn-center text-btn-right">
+                                <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="updateDetail()">Submit</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                          (click)="updateDetail()">Submit</button>
-                    </div>
-                </form>
+
+                    </form>
                 </div>
             </div>
-            
+
         </ng-container>
-        
+
 
     </nb-card-body>
 </nb-card>

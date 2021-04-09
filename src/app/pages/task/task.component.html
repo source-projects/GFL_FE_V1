@@ -199,7 +199,7 @@
 
             <!--All-->
             <div *ngIf="allFlag">
-                <div class="mt-2">
+                <div class="mt-5 mb-3">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -429,21 +429,32 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="allCardDetail==0">
-                    <h1>No Card</h1>
+                <div *ngIf="allCardDetail==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Card</h1>
                 </div>
             </div>
 
             <!--Assigned-->
             <div *ngIf="assignFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'assign')">
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('assign')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'assign')">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('assign')">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="assignCardDetail.length>0">
@@ -569,21 +580,32 @@
 
                     </div>
                 </div>
-                <div *ngIf="assignCardDetail.length==0">
-                    <h1>No Task Assignded</h1>
+                <div *ngIf="assignCardDetail.length==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Task Assignded</h1>
                 </div>
             </div>
 
             <!--Completed-->
             <div *ngIf="completedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'complete')">
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('complete')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'complete')">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 text-center">
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('complete')">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="completedCardDetail.length>0">
@@ -709,21 +731,31 @@
 
                     </div>
                 </div>
-                <div *ngIf="completedCardDetail.length==0">
-                    <h1>No Completed Task</h1>
+                <div *ngIf="completedCardDetail.length==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No Completed Task</h1>
                 </div>
             </div>
 
             <!--Approved-->
             <div *ngIf="approvedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'approve')">
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('approve')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'approve')">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('approve')">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="approvedCardDetail.length>0">
@@ -850,21 +882,31 @@
 
                     </div>
                 </div>
-                <div *ngIf="approvedCardDetail.length==0">
-                    <h1>All Approved</h1>
+                <div *ngIf="approvedCardDetail.length==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">All Approved</h1>
                 </div>
             </div>
 
             <!--Not Approved-->
             <div *ngIf="notApprovedFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'notApprove')">
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('notApprove')">Clear</button>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'notApprove')">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('notApprove')">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="notApprovedCardDetail.length>0">
@@ -874,7 +916,7 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12 pd-0">
                                         <div class="task-btn">
-                                            <div class="task-email-btn">
+                                            <div class="task-email-btn-email">
                                                 <nb-icon icon="checkmark-square-outline" class="email-task-complete" (click)="onApprove(notApprove.id)"></nb-icon>
                                             </div>
 
@@ -1000,23 +1042,33 @@
                     </div>
 
                 </div>
-                <div *ngIf="notApprovedCardDetail.length==0">
-                    <h1>No task To Approved</h1>
+                <div *ngIf="notApprovedCardDetail.length==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No task To Approved</h1>
                 </div>
 
             </div>
 
             <!--Blocker-->
             <div *ngIf="blockerFlag">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'blocker')">
+                <div class="mt-5 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'blocker')">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('blocker')">Clear</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('blocker')">Clear</button>
-                    </div>
+
                 </div>
                 <div class="row" *ngIf="blockerCardDetail.length>0">
                     <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail">
@@ -1136,8 +1188,8 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="blockerCardDetail.length==0">
-                    <h1>No task in Blocker</h1>
+                <div *ngIf="blockerCardDetail.length==0" class="no-task-found-div text-center">
+                    <h1 class="no-task-data-text">No task in Blocker</h1>
                 </div>
             </div>
         </div>

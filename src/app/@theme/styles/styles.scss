@@ -3133,6 +3133,12 @@ ng-select .ng-clear-wrapper {
     border-right: 1px solid #563333;
 }
 
+.task-email-btn-email {
+    padding: 7px 8px 3px 8px;
+    border-top: 1px solid #563333;
+    border-left: 1px solid #563333;
+}
+
 .task-btn-del {
     padding: 7px 8px 3px 8px;
     border-top: 1px solid #563333;
@@ -3162,7 +3168,8 @@ ng-select .ng-clear-wrapper {
     transition: .5s;
 }
 
-.task-email-btn .email-task-complete {
+.task-email-btn .email-task-complete,
+.task-email-btn-email .email-task-complete {
     color: #228B22;
 }
 
@@ -3341,4 +3348,32 @@ ng-select .ng-clear-wrapper {
     overflow: hidden;
     width: 135px !important;
     text-overflow: ellipsis;
+}
+
+.display-inline-block {
+    display: inline-block;
+    height: 100%;
+}
+
+.display-inline-block .img-style-invoice {
+    width: 238px
+}
+
+.font-16 {
+    font-size: 16px !important;
+    position: absolute;
+    top: -15px;
+    right: 13px;
+}
+
+.no-task-data-text {
+    font-size: 19px !important;
+    padding: 0;
+    margin: 0;
+}
+
+.no-task-found-div {
+    border: 1px solid #0000002e;
+    border-radius: 7px;
+    background: antiquewhite;
 }
