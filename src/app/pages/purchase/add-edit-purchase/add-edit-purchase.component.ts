@@ -335,10 +335,10 @@ export class AddEditPurchaseComponent implements OnInit {
     this.loading = true;
     this.disableButton = true;
     this.formSubmitted = true;
-    if (form.valid || this.bill || this.material) {
-      if (this.materialPhotoArray.length > 0) {
+    if (form.valid || this.invUpdateurl || this.matUpdateurl) {
+      if (this.docList.length > 0) {
 
-        this.materialPhotoArray.forEach((ele, i) => {
+        this.docList.forEach((ele, i) => {
           if (ele.type == 'bill') {
             this.docList[i] = ele;
             this.docList[i].id = ele.id;
