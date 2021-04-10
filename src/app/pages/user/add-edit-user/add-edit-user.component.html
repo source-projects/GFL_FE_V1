@@ -59,11 +59,10 @@
                             <label class="required">User Name</label>
                             <input name="userName" fieldsize="small" nbinput class="form-control size-small"
                                 (change)="checkUserName()" [(ngModel)]="user.userName" required #userName1="ngModel"
-                                [ngClass]="{'is-invalid': (userName1.invalid)&&(formSubmitted || userName1.touched)}" />
+                                [ngClass]="{'is-invalid': ((userName1.invalid)&&(formSubmitted || userName1.touched) || userNameExist)}" />
                             <div class="input-required" *ngIf="userNameExist">
                                 <span>User Name is already Exist </span>
                             </div>
-
 
                             <div class="input-required"
                                 *ngIf="(userName1.invalid)&&(formSubmitted || userName1.touched)">

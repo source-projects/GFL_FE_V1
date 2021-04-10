@@ -103,6 +103,32 @@ export class AddEditUserComponent implements OnInit {
     "deleteAll",
   ];
 
+  binArr1 = {
+    pa: "",
+    qu: "",
+    u: "",
+    sb: "",
+    sh: "",
+    su: "",
+    sr: "",
+    cs: "",
+    pr: "",
+    pp: "",
+    jp: "",
+    pt: "",
+    d: "",
+    bf: "",
+    ip: "",
+    ad: "",
+    ds: "",
+    emp: "",
+    attnds: "",
+    po: "",
+    mg: "",
+    rpt: "",
+    tt: "",
+  };
+
   checkArray: any[] = [];
 
   data: any[] = [];
@@ -545,31 +571,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getCheckedItem() {
-    let binArray1 = {
-      pa: "",
-      qu: "",
-      u: "",
-      sb: "",
-      sh: "",
-      su: "",
-      sr: "",
-      cs: "",
-      pr: "",
-      pp: "",
-      jp: "",
-      pt: "",
-      d: "",
-      bf: "",
-      ip: "",
-      ad: "",
-      ds: "",
-      emp:"",
-      attnds:"",
-      po:"",
-      mg:"",
-      rpt:"",
-      tt:""
-    };
+    let binArray1 = {...this.binArr1};
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
         binArray1[key] += "1";
@@ -586,16 +588,16 @@ export class AddEditUserComponent implements OnInit {
       if (this.permissionArray[i].viewGroup == true) {
         binArray1[key] += "1";
       } else binArray1[key] += "0";
-      if (this.permissionArray[i].viewAll == true) {
-        binArray1[key] += "1";
-      } else binArray1[key] += "0";
       if (this.permissionArray[i].editGroup == true) {
         binArray1[key] += "1";
       } else binArray1[key] += "0";
-      if (this.permissionArray[i].editAll == true) {
+      if (this.permissionArray[i].deleteGroup == true) {
         binArray1[key] += "1";
       } else binArray1[key] += "0";
-      if (this.permissionArray[i].deleteGroup == true) {
+      if (this.permissionArray[i].viewAll == true) {
+        binArray1[key] += "1";
+      } else binArray1[key] += "0";
+      if (this.permissionArray[i].editAll == true) {
         binArray1[key] += "1";
       } else binArray1[key] += "0";
       if (this.permissionArray[i].deleteAll == true) {
@@ -627,18 +629,24 @@ export class AddEditUserComponent implements OnInit {
   getCurrentCheckValue(user) {
     let i = 0;
     let val;
-    let arr = [];
+    let arr = {};
     let array1 = [];
-    let sliceArray = [];
+    let sliceArray = {};
     let temp = Object.keys(user.userPermissionData).map((key) => {
-      val = user.userPermissionData[key];
-      arr[i] = val;
-      i++;
+      if (key != "id") {
+        val = user.userPermissionData[key];
+        arr[key] = val;
+        i++;
+      }
     });
-    sliceArray = arr.slice(1, arr.length);
-    for (let i = 0; i < sliceArray.length; i++) {
-      array1[i] = this.dec2bin(sliceArray[i]);
+    
+    sliceArray = {...arr};
+
+    i = 0;
+    for(let [key, val] of Object.entries(sliceArray)){
+      array1[i] = this.dec2bin(val);
       array1[i] = this.pad(array1[i], this.perName.length);
+      i++
     }
 
     // let index = [];
@@ -769,7 +777,7 @@ export class AddEditUserComponent implements OnInit {
       this.user.userHeadId = event.userId;
       this.user.isUserHead = true;
       this.isHeadAvailable = true;
-    }else{
+    } else {
       this.user.userHeadId = Number(this.userId.userId);
       this.user.isUserHead = false;
       this.isHeadAvailable = false;
