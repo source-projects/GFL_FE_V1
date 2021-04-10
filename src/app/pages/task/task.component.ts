@@ -9,6 +9,7 @@ import { result } from "lodash";
 import { CardComponent } from "@swimlane/ngx-charts";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "ngx-task",
@@ -23,6 +24,14 @@ export class TaskComponent implements OnInit {
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
 
+  radioSelect = 0;
+  radioArray = [
+    { id: 1, value: "All"},
+    { id: 2, value: "Assigned by me"},
+    { id: 3, value: "Assigned by others"},
+  ];
+
+
   //card Status Flag
   allFlag: boolean = true;
   assignFlag: boolean = false;
@@ -34,6 +43,7 @@ export class TaskComponent implements OnInit {
   //task card detail according to status
   allCardDetail: any[] = [];
   assignCardDetail: any[] = [];
+  assignCardDetailCopy: any[] = [];
   completedCardDetail: any[] = [];
   approvedCardDetail: any[] = [];
   notApprovedCardDetail: any[] = [];
@@ -49,6 +59,8 @@ export class TaskComponent implements OnInit {
 
   //filter Date
   filterDate;
+  currentDate;
+  datePipeString;
 
   constructor(
     private modalService: NgbModal,
@@ -56,7 +68,7 @@ export class TaskComponent implements OnInit {
     private taskService: TaskService,
     private commonService: CommonService,
     private toastr: ToastrService,
-
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +97,29 @@ export class TaskComponent implements OnInit {
       this.hiddenEdit = false;
     }
   }
+
+  onChange(event) {
+    //this.assignCardDetail = [];
+    // this.getAssignCardDetail();
+
+    // switch (event) {
+    //   case 1:
+
+       
+    //     break;
+
+    //   case 2:
+    //     this.getAllUser(this.userId, "group");
+        
+    //     break;
+
+    //   case 3:
+    //     this.getAllUser(0, "all");
+        
+    //     break;
+    // }
+  }
+
 
   openAddTaskComponent() {
     const modalRef = this.modalService.open(AddEditTaskComponent, {
@@ -118,12 +153,20 @@ export class TaskComponent implements OnInit {
         this.blockerFlag = false;
         break;
       case "assign":
+       // this.assignCardDetail = [];
         this.allFlag = false;
         this.assignFlag = true;
         this.completedFlag = false;
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
+        this.assignCardDetail = this.assignCardDetail.filter( ele => {
+          this.datePipeString = this.datePipe.transform(ele.taskDate, 'yyyy-MM-dd');
+          if(this.datePipeString == this.currentDate){
+            return true;
+          }
+        })
+
         break;
       case "complete":
         this.allFlag = false;
@@ -192,123 +235,124 @@ export class TaskComponent implements OnInit {
 
   //filter Data according to date
   filteredCardDetailByDate(event, value) {
-    switch (value) {
-      //filter card for assign status
-      case "assign":
-        let assignCardDetailWithStatus: any[] = [];
-        //not Started status task card
-        let assignDateStatusObj = [
-          {
-            date: event.target.value,
-            status: "NotStarted",
-            id:null,
+    this.currentDate = event.target.value;
+    // switch (value) {
+    //   //filter card for assign status
+    //   case "assign":
+    //     let assignCardDetailWithStatus: any[] = [];
+    //     //not Started status task card
+    //     let assignDateStatusObj = [
+    //       {
+    //         date: event.target.value,
+    //         status: "NotStarted",
+    //         id:null,
 
-          },
-          {
-            date: event.target.value,
-            status: "Running",
-            id:null,
+    //       },
+    //       {
+    //         date: event.target.value,
+    //         status: "Running",
+    //         id:null,
 
-          },
-          {
-            date: event.target.value,
-            status: "Hold",
-            id:null,
+    //       },
+    //       {
+    //         date: event.target.value,
+    //         status: "Hold",
+    //         id:null,
 
-          },
-        ];
-        assignDateStatusObj.forEach((element, index) => {
-          this.taskService
-            .getDataAccordingToStatus(element)
-            .subscribe((data) => {
-              if (assignCardDetailWithStatus) {
-                assignCardDetailWithStatus = data["data"];
-              } else {
-                assignCardDetailWithStatus.concat(data["data"]);
-              }
-              console.log(element.status, data["data"]);
-              console.log(index, assignCardDetailWithStatus);
-              this.assignCardDetail = assignCardDetailWithStatus;
-              console.log("filter assign", this.assignCardDetail);
-            });
-        });
+    //       },
+    //     ];
+    //     assignDateStatusObj.forEach((element, index) => {
+    //       this.taskService
+    //         .getDataAccordingToStatus(element)
+    //         .subscribe((data) => {
+    //           if (assignCardDetailWithStatus) {
+    //             assignCardDetailWithStatus = data["data"];
+    //           } else {
+    //             assignCardDetailWithStatus.concat(data["data"]);
+    //           }
+    //           console.log(element.status, data["data"]);
+    //           console.log(index, assignCardDetailWithStatus);
+    //           this.assignCardDetail = assignCardDetailWithStatus;
+    //           console.log("filter assign", this.assignCardDetail);
+    //         });
+    //     });
 
-        break;
+    //     break;
 
-      //filter task card for complete status
-      case "complete":
-        let completeDateStatusObj = {
-          date: event.target.value,
-          status: "Completed",
-          id:null,
+    //   //filter task card for complete status
+    //   case "complete":
+    //     let completeDateStatusObj = {
+    //       date: event.target.value,
+    //       status: "",
+    //       id:null,
 
-        };
-        this.taskService
-          .getDataAccordingToStatus(completeDateStatusObj)
-          .subscribe((data) => {
-            console.log("complete filter", data["data"]);
-            this.completedCardDetail = data["data"];
-          });
-        break;
+    //     };
+    //     this.taskService
+    //       .getDataAccordingToStatus(completeDateStatusObj)
+    //       .subscribe((data) => {
+    //         console.log("complete filter", data["data"]);
+    //         this.completedCardDetail = data["data"];
+    //       });
+    //     break;
 
-      //filter task card for blocker
-      case "blocker":
-        let blockerDaeStatusObj = {
-          date: event.target.value,
-          status: "Blocker",
-          id:null,
+    //   //filter task card for blocker
+    //   case "blocker":
+    //     let blockerDaeStatusObj = {
+    //       date: event.target.value,
+    //       status: "Blocker",
+    //       id:null,
 
-        };
-        this.taskService
-          .getDataAccordingToStatus(blockerDaeStatusObj)
-          .subscribe((data) => {
-            console.log("blocker filter", data["data"]);
-            this.blockerCardDetail = data["data"];
-          });
-        break;
-      //filter task card for all
-      case "all":
-        let allDateStatusObj = {
-          date: event.target.value,
-          status: "",
-          id:null,
-        };
-        this.taskService
-          .getDataAccordingToStatus(allDateStatusObj)
-          .subscribe((data) => {
-            console.log("all filter", data["data"]);
-            this.allCardDetail = data["data"];
-          });
-        break;
+    //     };
+    //     this.taskService
+    //       .getDataAccordingToStatus(blockerDaeStatusObj)
+    //       .subscribe((data) => {
+    //         console.log("blocker filter", data["data"]);
+    //         this.blockerCardDetail = data["data"];
+    //       });
+    //     break;
+    //   //filter task card for all
+    //   case "all":
+    //     let allDateStatusObj = {
+    //       date: event.target.value,
+    //       status: "",
+    //       id:null,
+    //     };
+    //     this.taskService
+    //       .getDataAccordingToStatus(allDateStatusObj)
+    //       .subscribe((data) => {
+    //         console.log("all filter", data["data"]);
+    //         this.allCardDetail = data["data"];
+    //       });
+    //     break;
 
-        case "approve":
-          let approveDateStatusObj = {
-            date: event.target.value,
-            status: "Approved",
-            id:null,
-          };
-          this.taskService
-            .getDataAccordingToStatus(approveDateStatusObj)
-            .subscribe((data) => {
-              console.log("approve filter", data["data"]);
-              this.approvedCardDetail = data["data"];
-            });
-          break;
+    //     case "approve":
+    //       let approveDateStatusObj = {
+    //         date: event.target.value,
+    //         status: "Approved",
+    //         id:null,
+    //       };
+    //       this.taskService
+    //         .getDataAccordingToStatus(approveDateStatusObj)
+    //         .subscribe((data) => {
+    //           console.log("approve filter", data["data"]);
+    //           this.approvedCardDetail = data["data"];
+    //         });
+    //       break;
 
-          case "notApprove":
-          let notApproveDateStatusObj = {
-            date: event.target.value,
-            status: "Not Approved",
-            id:null,
-          };
-          this.taskService
-            .getDataAccordingToStatus(notApproveDateStatusObj)
-            .subscribe((data) => {
-              console.log("Not approve filter", data["data"]);
-              this.approvedCardDetail = data["data"];
-            });
-          break;
-    }
+    //       case "notApprove":
+    //       let notApproveDateStatusObj = {
+    //         date: event.target.value,
+    //         status: "Not Approved",
+    //         id:null,
+    //       };
+    //       this.taskService
+    //         .getDataAccordingToStatus(notApproveDateStatusObj)
+    //         .subscribe((data) => {
+    //           console.log("Not approve filter", data["data"]);
+    //           this.approvedCardDetail = data["data"];
+    //         });
+    //       break;
+    // }
   }
 
   getAllCardDetail() {
@@ -334,6 +378,7 @@ export class TaskComponent implements OnInit {
       .subscribe(
         (data) => {
           this.assignCardDetail = data["data"];
+
           if(this.assignCardDetail){
           this.assignedCardCount = this.assignCardDetail.length;
           }
