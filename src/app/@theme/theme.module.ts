@@ -50,6 +50,7 @@ import { FilterSelectedBatchPipe } from "./pipes/filter-selected-batch.pipe";
 import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
 import { FilterSelectedSupplierPipe } from "./pipes/filter-selected-supplier.pipe";
 import { DesignationFilterPipe } from "./pipes/designation.pipe";
+import { TaskFilterPipe } from "./pipes/task-filter.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -89,6 +90,7 @@ const PIPES = [
   FilterItemPipe,
   FilterByIsColorPipe,
   ShowOnlyChemicalPipe,
+  TaskFilterPipe,
   DisableStockBatchPipe,
   FilterSelectedItemPipe,
   ImagePreviewPipe

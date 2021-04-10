@@ -7,6 +7,7 @@ import { AddEditTaskComponent } from "./add-edit-task/add-edit-task.component";
 import { SharedModule } from "../../@theme/shared.module";
 import { TaskDetailComponent } from "./task-detail/task-detail.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ThemeModule } from "../../@theme/theme.module";
 
 @NgModule({
   declarations: [TaskComponent, AddEditTaskComponent, TaskDetailComponent],
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    ThemeModule
   ],
 })
 export class TaskModule {}
