@@ -21,6 +21,16 @@ export class AddEditPurchaseComponent implements OnInit {
   maturl = [];
   invUpdateurl = []
   matUpdateurl = [];
+
+  imgPreviewForinvAdd:boolean = false;
+  imgPreviewForinvUpdate:boolean = false;
+  imgPreviewFormatAdd:boolean = false;
+  imgPreviewFormatUpdate:boolean = false;
+
+  imageIndexForinvAdd = 0;
+  imageIndexForinvUpdate = 0;
+  imageIndexFormatAdd = 0;
+  imageIndexFormatUpdate = 0;
   invUploadFlag: boolean = false;
   matUploadFlag: boolean = false;
   processValue = 0;
@@ -64,6 +74,8 @@ export class AddEditPurchaseComponent implements OnInit {
     this.getAllDepartment();
     this.getApproveBy();
     this.getReceiveBy();
+    this.imgPreviewForinvAdd = false;
+    this.imgPreviewFormatAdd = false;
   }
 
   public getUserId() {
@@ -83,7 +95,6 @@ export class AddEditPurchaseComponent implements OnInit {
         if (data["success"]) {
           this.purchase = data["data"];
           this.docList = this.purchase.materialPhotosList;
-          console.log("list:,", this.docList)
           this.docList.forEach(element => {
             if (element.type == "bill") {
               this.invUpdateurl.push(element.picUrl);
@@ -92,6 +103,8 @@ export class AddEditPurchaseComponent implements OnInit {
             }
           })
 
+          this.imgPreviewForinvUpdate = true;
+          this.imgPreviewFormatUpdate = true;
         }
       },
       (error) => {
@@ -214,17 +227,6 @@ export class AddEditPurchaseComponent implements OnInit {
             picUrl: response.secure_url,
             controlId: null
           }
-          // if (this.currentId) {
-
-          //   this.docList.forEach(ele => {
-          //     this.materialPhotoArray.push(ele)
-          //   })
-          //   this.materialPhotoArray.push(obj)
-
-          // }
-          // else {
-          //   this.materialPhotoArray.push(obj)
-          // }
           this.docList.push(obj);
           this.docList
             .forEach(ele => {
@@ -235,6 +237,9 @@ export class AddEditPurchaseComponent implements OnInit {
                 else {
                   this.maturl.push(ele.picUrl);
                 }
+
+                this.imgPreviewForinvAdd = true;
+                this.imgPreviewFormatAdd = true;
               }
               else {
                 if (ele.type == "bill") {
@@ -245,9 +250,9 @@ export class AddEditPurchaseComponent implements OnInit {
                 }
               }
             })
-          // this.loading = false;
         }
       })
+      
     } else {
       this.loading = false;
     }
@@ -294,7 +299,7 @@ export class AddEditPurchaseComponent implements OnInit {
     this.formSubmitted = true;
     if (form.valid) {
       this.purchase.createdBy = this.user.userId;
-      this.purchase.materialPhotosList = this.materialPhotoArray;
+      this.purchase.materialPhotosList = this.docList;
       this.purchseService.addPurchase(this.purchase).subscribe(
         (data) => {
           if (data["success"]) {
@@ -385,6 +390,7 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
+      this.invurl = [...this.invurl];
     }
     else if(type == "invUpdate"){
       let rem = this.invUpdateurl.splice(index,1);
@@ -392,14 +398,18 @@ export class AddEditPurchaseComponent implements OnInit {
         if(ele.picUrl == rem){
           this.docList.splice(index,1)
         }
-      })    }
+      })
+      this.invUpdateurl = [...this.invUpdateurl];    
+    }
     else if(type == "matAdd"){
       let rem = this.maturl.splice(index,1);
       this.docList.forEach((ele,index)=>{
         if(ele.picUrl == rem){
           this.docList.splice(index,1)
         }
-      })    }
+      })
+      this.maturl = [...this.maturl];    
+    }
     else if(type == "matUpdate"){
       let rem = this.matUpdateurl.splice(index,1);
       this.docList.forEach((ele,index)=>{
@@ -407,6 +417,79 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
+      this.matUpdateurl = [...this.matUpdateurl];
+    }
+  }
+
+  previous(type){
+
+    if(type == "invAdd"){
+      if(this.imageIndexForinvAdd){
+        this.imageIndexForinvAdd--;
+      }
+      else{
+        this.imageIndexForinvAdd = this.invurl.length - 1;
+      }
+    }
+    else if(type == "invUpdate"){
+      if(this.imageIndexForinvUpdate){
+        this.imageIndexForinvUpdate--;
+      }
+      else{
+        this.imageIndexForinvUpdate = this.invUpdateurl.length - 1;
+      }
+    }
+    else if(type == "matAdd"){
+      if(this.imageIndexFormatAdd){
+        this.imageIndexFormatAdd--;
+      }
+      else{
+        this.imageIndexFormatAdd = this.maturl.length - 1;
+      }
+    }
+    else if(type == "matUpdate"){
+      if(this.imageIndexFormatUpdate){
+        this.imageIndexFormatUpdate--;
+      }
+      else{
+        this.imageIndexFormatUpdate = this.matUpdateurl.length - 1;
+      }
+    }
+  }
+
+  next(type){
+
+    if(type == "invAdd"){
+      if(this.imageIndexForinvAdd < (this.invurl.length - 1)){
+        this.imageIndexForinvAdd++;
+      }
+      else{
+        this.imageIndexForinvAdd = 0;
+      }
+    }
+    else if(type == "invUpdate"){
+      if(this.imageIndexForinvUpdate < (this.invUpdateurl.length - 1)){
+        this.imageIndexForinvUpdate++;
+      }
+      else{
+        this.imageIndexForinvUpdate = 0;
+      }
+    }
+    else if(type == "matAdd"){
+      if(this.imageIndexFormatAdd < (this.maturl.length - 1)){
+        this.imageIndexFormatAdd++;
+      }
+      else{
+        this.imageIndexFormatAdd = 0;
+      }
+    }
+    else if(type == "matUpdate"){
+      if(this.imageIndexFormatUpdate < (this.matUpdateurl.length - 1)){
+        this.imageIndexFormatUpdate++;
+      }
+      else{
+        this.imageIndexFormatUpdate = 0;
+      }
     }
   }
 }
