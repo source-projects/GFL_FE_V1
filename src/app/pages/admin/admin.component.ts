@@ -1253,4 +1253,27 @@ export class AdminComponent implements OnInit {
    getApproved(){
     this.getAllPurchaseData();
    }
+
+   deletePurchase(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.purchseService.deletePurchase(id).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllReceiveByData();
+            } else {
+              this.toastr.error(data['msg']);
+            }
+          },
+          (error) => {
+            //this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+  }
 }
