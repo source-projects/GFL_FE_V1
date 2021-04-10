@@ -244,9 +244,11 @@ export class AddEditPurchaseComponent implements OnInit {
               else {
                 if (ele.type == "bill") {
                   this.invUpdateurl.push(ele.picUrl);
+                  this.imageIndexForinvUpdate = 0;
                 }
                 else {
                   this.matUpdateurl.push(ele.picUrl);
+                  this.imageIndexFormatUpdate = 0;
                 }
               }
             })
@@ -335,50 +337,58 @@ export class AddEditPurchaseComponent implements OnInit {
     this.loading = true;
     this.disableButton = true;
     this.formSubmitted = true;
-    if (form.valid || this.invUpdateurl || this.matUpdateurl) {
-      if (this.docList.length > 0) {
-
-        this.docList.forEach((ele, i) => {
-          if (ele.type == 'bill') {
-            this.docList[i] = ele;
-            this.docList[i].id = ele.id;
-            this.docList[i].controlId = ele.controlId;
-          } else
-            if (ele.type == 'material') {
+    
+    if(this.invUpdateurl.length){
+      if (this.purchase.departmentId && this.purchase.amt && this.purchase.approvedById && this.purchase.receiverById) {
+        if (this.docList.length > 0) {
+  
+          this.docList.forEach((ele, i) => {
+            if (ele.type == 'bill') {
               this.docList[i] = ele;
               this.docList[i].id = ele.id;
               this.docList[i].controlId = ele.controlId;
-            }
-        })
-      }
-
-      this.purchase.materialPhotosList = this.docList;
-
-
-
-      this.purchseService.updatePurchase(this.purchase).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.formSubmitted = false;
-
-            this.route.navigate(["/pages/purchase"]);
-            this.toastr.success(data['msg']);
-          } else {
-            this.toastr.error(data['msg']);
-          }
-          this.loading = false;
-          this.disableButton = false;
-
-        },
-        (error) => {
-          this.toastr.error(errorData.Update_Error);
-          this.loading = false;
+            } else
+              if (ele.type == 'material') {
+                this.docList[i] = ele;
+                this.docList[i].id = ele.id;
+                this.docList[i].controlId = ele.controlId;
+              }
+          })
         }
-      );
-    } else {
+  
+        this.purchase.materialPhotosList = this.docList;
+  
+  
+  
+        this.purchseService.updatePurchase(this.purchase).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.formSubmitted = false;
+  
+              this.route.navigate(["/pages/purchase"]);
+              this.toastr.success(data['msg']);
+            } else {
+              this.toastr.error(data['msg']);
+            }
+            this.loading = false;
+            this.disableButton = false;
+  
+          },
+          (error) => {
+            this.toastr.error(errorData.Update_Error);
+            this.loading = false;
+          }
+        );
+      } else {
+        this.loading = false;
+        this.disableButton = false;
+      }  
+    }
+    else {
       this.loading = false;
       this.disableButton = false;
-    }
+      this.invUpdateurl = [...this.invUpdateurl]
+    } 
   }
 
 
@@ -390,6 +400,9 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
+      if(this.invurl.length == index){
+        this.imageIndexForinvAdd--;    
+      }
       this.invurl = [...this.invurl];
     }
     else if(type == "invUpdate"){
@@ -399,7 +412,11 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
-      this.invUpdateurl = [...this.invUpdateurl];    
+      
+      if(this.invUpdateurl.length == index){
+        this.imageIndexForinvUpdate--;    
+      }
+      this.invUpdateurl = [...this.invUpdateurl];
     }
     else if(type == "matAdd"){
       let rem = this.maturl.splice(index,1);
@@ -408,6 +425,9 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
+      if(this.maturl.length == index){
+        this.imageIndexFormatAdd--;    
+      }
       this.maturl = [...this.maturl];    
     }
     else if(type == "matUpdate"){
@@ -417,7 +437,11 @@ export class AddEditPurchaseComponent implements OnInit {
           this.docList.splice(index,1)
         }
       })
+      if(this.matUpdateurl.length == index){
+        this.imageIndexFormatUpdate--;    
+      }
       this.matUpdateurl = [...this.matUpdateurl];
+
     }
   }
 
