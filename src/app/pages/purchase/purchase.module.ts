@@ -6,6 +6,7 @@ import { PurchaseComponent } from './purchase.component';
 import { AddEditPurchaseComponent } from './add-edit-purchase/add-edit-purchase.component';
 import { SharedModule } from '../../@theme/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ThemeModule } from '../../@theme/theme.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     PurchaseRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ThemeModule
   ]
 })
 export class PurchaseModule { }
