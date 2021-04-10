@@ -1264,7 +1264,8 @@ export class AdminComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
-              this.getAllReceiveByData();
+              this.getAllPurchaseData();
+
             } else {
               this.toastr.error(data['msg']);
             }
