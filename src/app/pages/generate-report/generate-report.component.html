@@ -13,7 +13,7 @@
 
 
                                 <div class="card-d-label">
-                                    <input type="number" class="form-control input-border" (keyup)="lotNoEntered($event.target.value)" placeholder="Enter Lot no"></div>
+                                    <input type="number" class="form-control input-border" placeholder="Enter Lot no"></div>
 
 
                             </div>
@@ -22,12 +22,6 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
-                        <!-- <div class="form-group">
-                            <label class="report-label">Lot No</label>
-                            <input type="number" class="form-control input-border" placeholder="Enter Lot no">
-                        </div> -->
-
-                        <!--1st Sub Card Div-->
                         <div class="report-card-1">
 
                             <div class="card-detail-report only-first-card">
@@ -134,88 +128,7 @@
                     <div class="col-md-6 col-12">
                         <!--2nd Sub Card Div-->
 
-                        <div class="report-card-1">
 
-                            <div class="card-detail-report only-first-card">
-
-
-                                <div class="card-d-label"><label>Shade Applied</label></div>
-                            </div>
-                            <div class="bg-main-cont">
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Shade No</label></div>
-
-
-                                    <div class="card-d-label"><span>25</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Shade Color</label></div>
-
-
-                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
-                                        <span>
-                                            <div class="text-center txt-ov-elips width-50 display-inline">
-                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone"
-                                                    [value]="colorTone" disabled="true" class="width-100 text-center" />
-
-                                            </div>
-                                        </span>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Costing / weight</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Costing / meter</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-                                <div class="card-detail-report">
-
-
-                                    <div class="card-d-label"><label>Extra Charge</label></div>
-
-
-                                    <div class="card-d-label"><span>156</span></div>
-
-
-                                </div>
-
-
-
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-12">
-                        <!--3rd Sub Card Div-->
 
                         <div class="report-card-1">
 
@@ -313,272 +226,92 @@
 
 
                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <!--3rd Sub Card Div-->
+                        <div class="report-card-1">
+
+                            <div class="card-detail-report only-first-card">
+
+
+                                <div class="card-d-label"><label>Shade Applied</label></div>
+                            </div>
+                            <div class="bg-main-cont">
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade No</label></div>
+
+
+                                    <div class="card-d-label"><span>25</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Shade Color</label></div>
+
+
+                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
+                                        <span>
+                                            <div class="text-center txt-ov-elips width-50 display-inline">
+                                                <input [(colorPicker)]="colorTone" [style.background]="colorTone"
+                                                    [value]="colorTone" disabled="true" class="width-100 text-center" />
+
+                                            </div>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / weight</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Costing / meter</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+                                <div class="card-detail-report">
+
+
+                                    <div class="card-d-label"><label>Extra Charge</label></div>
+
+
+                                    <div class="card-d-label"><span>156</span></div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+
 
                     </div>
                 </div>
-                <!--Report Data-->
-
-                <!-- <div>
-                    
-                    <div>
-                        
-                        <div class="report-card-1">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="card-detail-report">
-                                        <div class="card-img-icon-style">
-                                            <img src="../../../assets/report/user.png" class="eve-report-style">
-                                        </div>
-                                        <div class="form-group card-detail-style">
-                                            <label>Party Name</label>
-                                            <div>
-                                                <span>Abcdef abc</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-detail-report">
-                                        <div class="card-img-icon-style">
-                                            <img src="../../../assets/report/medal.png" class="eve-report-style">
-                                        </div>
-                                        <div class="form-group card-detail-style">
-                                            <label>Quality Name</label>
-                                            <div>
-                                                <span>Abcdef abc</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-detail-report">
-                                        <div class="card-img-icon-style">
-                                            <img src="../../../assets/report/analytics.png" class="eve-report-style">
-                                        </div>
-                                        <div class="form-group card-detail-style">
-                                            <label>Stock Type</label>
-                                            <div>
-                                                <span>Fabric</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-detail-report">
-                                        <div class="card-img-icon-style">
-                                            <img src="../../../assets/report/money.png" class="eve-report-style">
-                                        </div>
-                                        <div class="form-group card-detail-style">
-                                            <label>Rate</label>
-                                            <div>
-                                                <span>56</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="card-img-icon-style">
-                                        <img src="../../../assets/report/measure-tape.png" class="eve-report-style">
-                                    </div>
-                                    <div class="form-group card-detail-style">
-                                        <label>Total Meter</label>
-                                        <div>
-                                            <span>689</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-img-icon-style">
-                                        <img src="../../../assets/report/weights.png" class="eve-report-style">
-                                    </div>
-                                    <div class="form-group card-detail-style">
-                                        <label>Total weight</label>
-                                        <div>
-                                            <span>2021</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-img-icon-style">
-                                        <img src="../../../assets/report/dye.png" class="eve-report-style">
-                                    </div>
-                                    <div class="form-group card-detail-style">
-                                        <label>Dyed Date</label>
-                                        <div>
-                                            <span>12/02/2021</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card-img-icon-style">
-                                        <img src="../../../assets/report/package.png" class="eve-report-style">
-                                    </div>
-                                    <div class="form-group card-detail-style">
-                                        <label>Delivery Date</label>
-                                        <div>
-                                            <span>12/03/2021</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        
-                        <div class="report-card-2">
-                            <h6>SHADE APPLIED</h6>
-
-                            <div class="row">
-                                <div class="col-md-3">
-
-                                    <div class="form-group shade-box text-center">
-                                        <div class="shade-img-box">
-                                            <img src="../../../assets/report/package.png" class="eve-report-style">
-                                        </div>
-                                        <div class="shade-content">
-                                            <label>Shade No</label>
-                                            <div>
-                                                <span>156</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group shade-box text-center">
-                                        <div class="shade-img-box">
-                                            <img src="../../../assets/report/package.png" class="eve-report-style">
-                                        </div>
-
-
-                                        <div class="shade-content">
-                                            <label>Shade Color</label>
-                                            <span class="display-center">
-                                                    <div class="text-center txt-ov-elips width-50 display-color-input">
-                                                        <input [(colorPicker)]="colorTone" [style.background]="colorTone"
-                                                            [value]="colorTone" disabled="true" class="width-100 text-center" />
-                                                    </div>
-                                                </span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group shade-box text-center">
-                                        <div class="shade-img-box">
-                                            <img src="../../../assets/report/package.png" class="eve-report-style">
-                                        </div>
-                                        <div class="shade-content">
-                                            <label>Costing / weight</label>
-                                            <div>
-                                                <span>156</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group shade-box text-center">
-                                        <div class="shade-img-box">
-                                            <img src="../../../assets/report/package.png" class="eve-report-style">
-                                        </div>
-                                        <div class="shade-content">
-                                            <label>Costing / meter</label>
-                                            <div>
-                                                <span>156</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group shade-box text-center">
-                                        <div class="shade-img-box">
-                                            <img src="../../../assets/report/package.png" class="eve-report-style">
-                                        </div>
-                                        <div class="shade-content">
-                                            <label>Extra Charge</label>
-                                            <div>
-                                                <span>156</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-
-                        </div>
-                        
-                        <div class="report-card-3">
-                            <h6>Cost Evaluation</h6>
-                            <div class="mr-top">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Chemical Cost</label>
-                                            <div>
-                                                <span>156</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Steam Cost</label>
-                                            <div>
-                                                <span>126</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Labour Cost</label>
-                                            <div>
-                                                <span>26</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Steam Cost</label>
-                                            <div>
-                                                <span>126</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Batch Cost</label>
-                                            <div>
-                                                <span>226</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Total Billing</label>
-                                            <div>
-                                                <span>23126</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Amount</label>
-                                            <div>
-                                                <span>3126</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div> -->
 
 
 
@@ -704,7 +437,7 @@
                                         Id</label></div>
 
                                 <div class="card-d-label width-70">
-                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="qualityId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" [(ngModel)]="qualityId" class="required-error-dropdown dropdown-name input-border">
+                                    <ng-select placeholder="Select Batch Id" appendTo="body" name="batchId" #batchId1="ngModel" (change)="batchIdSelected($event)" [(ngModel)]="batchId" class="required-error-dropdown dropdown-name input-border">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -712,26 +445,16 @@
                                                         Batch Id
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-6">
-                                                    <div class="text-right txt-ov-elips">
-                                                        Party Name
-                                                    </div>
-                                                </div>
                                             </div>
                                         </ng-option>
-                                        <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                        <ng-option *ngFor="let b of reportData" [value]="b.batchId">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
                                                     <div class="text-left txt-ov-elips">
-                                                        {{ q.qualityId }}
+                                                        {{b.batchId }}
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-6">
-                                                    <div class="text-right
-                                                            txt-ov-elips">
-                                                        {{ q.partyName }}
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </ng-option>
                                     </ng-select>
@@ -749,13 +472,13 @@
                         <div class="report-card-1 main-input-report">
 
                             <div class="check-content">
-                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                <nb-checkbox class="status-basic nb-transition re-checkbox" [(ngModel)]="notProduction" name="notProduction">
                                     <span class="text cr-txt">Not Production Plan</span>
                                 </nb-checkbox>
-                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                <nb-checkbox class="status-basic nb-transition re-checkbox" [(ngModel)]="Production" name="Production">
                                     <span class="text cr-txt">Production Plan</span>
                                 </nb-checkbox>
-                                <nb-checkbox class="status-basic nb-transition re-checkbox">
+                                <nb-checkbox class="status-basic nb-transition re-checkbox" [(ngModel)]="finished" name="finished">
                                     <span class="text cr-txt">Finished Meter</span>
                                 </nb-checkbox>
                             </div>
@@ -765,9 +488,9 @@
 
                 </div>
                 <div>
-                    <div class="row" *ngFor="let data of reportData">
+                    <div class="row">
 
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-12 col-12" *ngIf="notProduction">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
@@ -776,7 +499,7 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-12" *ngIf="!data.isProductionPlanned">
+                                            <div class="col-md-6 col-12" *ngFor="let data of notPlanned">
                                                 <!--2nd Sub Card Div-->
                                                 <div class="report-card-1">
                                                     <div class="row">
@@ -858,7 +581,7 @@
                             </nb-accordion>
                         </div>
 
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-12 col-12" *ngIf="Production">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
@@ -867,9 +590,9 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-12 col-12" *ngIf="data.isProductionPlanned">
+                                            <div class="col-md-12 col-12">
                                                 <!--2nd Sub Card Div-->
-                                                <div class="report-card-1">
+                                                <div class="report-card-1" *ngFor="let data1 of planned">
                                                     <div class="row">
 
                                                         <div class="col-md-6">
@@ -881,7 +604,7 @@
                                                                     <div class="card-d-label"><label>Total Pcs</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.pcs}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.pcs}}</span></div>
 
 
                                                                 </div>
@@ -892,7 +615,7 @@
                                                                     <div class="card-d-label"><label>Batch Id</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.batchId}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.batchId}}</span></div>
 
 
                                                                 </div>
@@ -903,7 +626,7 @@
                                                                     <div class="card-d-label"><label>Quality Id</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.qualityId}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.qualityId}}</span></div>
 
 
                                                                 </div>
@@ -914,7 +637,7 @@
                                                                     <div class="card-d-label"><label>Total Grey Mtr</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.totalMtr}}</span></div>
 
 
                                                                 </div>
@@ -925,7 +648,7 @@
                                                                     <div class="card-d-label"><label>Received Date</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.receiveDate | date: 'medium'}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.receiveDate | date: 'medium'}}</span></div>
 
 
                                                                 </div>
@@ -941,7 +664,7 @@
                                                                     <div class="card-d-label"><label>Shade No</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.partyShadeNo}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.partyShadeNo}}</span></div>
 
 
                                                                 </div>
@@ -955,8 +678,8 @@
                                                                     <div class="card-d-label text-right txt-ov-elips display-color-input">
                                                                         <span>
                                                                         <div class="text-center txt-ov-elips width-50 display-inline">
-                                                                            <input [(colorPicker)]="data.colorTone"
-                                                                                [style.background]="data.colorTone" [value]="data.colorTone"
+                                                                            <input [(colorPicker)]="data1.colorTone"
+                                                                                [style.background]="data1.colorTone" [value]="data1.colorTone"
                                                                                 disabled="true" class="width-100 text-center" />
                 
                                                                         </div>
@@ -972,7 +695,7 @@
                                                                     <div class="card-d-label"><label>Color Name</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.colorName}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data1.colorName}}</span></div>
 
 
                                                                 </div>
@@ -994,7 +717,7 @@
                         </div>
 
 
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-12 col-12" *ngIf="finished">
                             <nb-accordion class="acc-start mr-top-bottom">
                                 <nb-accordion-item class="item accordian-process report-bg-color">
                                     <nb-accordion-item-header class="item-header nb-accordian-fn-size nb-accordian display-flex-between report-accordian">
@@ -1003,7 +726,7 @@
                                     </nb-accordion-item-header>
                                     <nb-accordion-item-body class="nb-item-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-12" *ngIf="data.isFinishMtrSave">
+                                            <div class="col-md-6 col-12" *ngFor="let data2 of finishedMeter">
                                                 <!--2nd Sub Card Div-->
                                                 <div class="report-card-1">
                                                     <div class="row">
@@ -1017,7 +740,7 @@
                                                                     <div class="card-d-label"><label>Total Pcs</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.pcs}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.pcs}}</span></div>
 
 
                                                                 </div>
@@ -1028,7 +751,7 @@
                                                                     <div class="card-d-label"><label>Batch Id</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.batchId}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.batchId}}</span></div>
 
 
                                                                 </div>
@@ -1039,7 +762,7 @@
                                                                     <div class="card-d-label"><label>Quality Id</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.qualityId}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.qualityId}}</span></div>
 
 
                                                                 </div>
@@ -1050,7 +773,7 @@
                                                                     <div class="card-d-label"><label>Total Grey Mtr</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.totalMtr}}</span></div>
 
 
                                                                 </div>
@@ -1061,7 +784,7 @@
                                                                     <div class="card-d-label"><label>Received Date</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.receiveDate | date:'medium'}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.receiveDate | date:'medium'}}</span></div>
 
 
                                                                 </div>
@@ -1072,7 +795,7 @@
                                                                     <div class="card-d-label"><label>Finished Meter</label></div>
 
 
-                                                                    <div class="card-d-label"><span>{{data.totalFinish}}</span></div>
+                                                                    <div class="card-d-label"><span>{{data2.totalFinish}}</span></div>
 
 
                                                                 </div>
@@ -1091,310 +814,6 @@
                                 </nb-accordion-item>
                             </nb-accordion>
                         </div>
-
-
-                        <!-- <div>
-                            <div class="col-md-12 col-12" *ngIf="!data.isProductionPlanned">
-                            
-                                <div class="report-card-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card-detail-report only-first-card">
-    
-    
-                                                <div class="card-d-label"><label>Not Production Planned</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-    
-    
-    
-                                            <div class="bg-main-cont">
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Pcs</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.pcs}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Batch Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.batchId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Quality Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.qualityId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Grey Mtr</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Received Date</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.receiveDate | date:'medium'}}</span></div>
-    
-    
-                                                </div>
-    
-    
-    
-    
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-    
-                                </div>
-    
-                            </div>
-    
-                            <div class="col-md-12 col-12" *ngIf="data.isProductionPlanned">
-                                
-                                <div class="report-card-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card-detail-report only-first-card">
-    
-    
-                                                <div class="card-d-label"><label>Production Planned</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-    
-                                            <div class="bg-main-cont">
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Pcs</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.pcs}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Batch Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.batchId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Quality Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.qualityId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Grey Mtr</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Received Date</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.receiveDate | date: 'medium'}}</span></div>
-    
-    
-                                                </div>
-    
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 report-display-flexend">
-    
-                                            <div class="bg-main-cont width-100 height-100">
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Shade No</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.partyShadeNo}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Color Tone</label></div>
-    
-    
-                                                    <div class="card-d-label text-right txt-ov-elips display-color-input">
-                                                        <span>
-                                                            <div class="text-center txt-ov-elips width-50 display-inline">
-                                                                <input [(colorPicker)]="data.colorTone"
-                                                                    [style.background]="data.colorTone" [value]="data.colorTone"
-                                                                    disabled="true" class="width-100 text-center" />
-    
-                                                            </div>
-                                                        </span>
-                                                    </div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Color Name</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.colorName}}</span></div>
-    
-    
-                                                </div>
-    
-    
-                                            </div>
-                                        </div>
-    
-                                    </div>
-    
-                                </div>
-    
-                            </div>
-    
-                            <div class="col-md-12 col-12" *ngIf="data.isFinishMtrSave">
-                                
-                                <div class="report-card-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card-detail-report only-first-card">
-    
-    
-                                                <div class="card-d-label"><label>Finished Mtr</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-    
-                                            <div class="bg-main-cont">
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Pcs</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.pcs}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Batch Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.batchId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Quality Id</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.qualityId}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Total Grey Mtr</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.totalMtr}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Received Date</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.receiveDate | date:'medium'}}</span></div>
-    
-    
-                                                </div>
-    
-                                                <div class="card-detail-report">
-    
-    
-                                                    <div class="card-d-label"><label>Finished Meter</label></div>
-    
-    
-                                                    <div class="card-d-label"><span>{{data.totalFinish}}</span></div>
-    
-    
-                                                </div>
-    
-                                            </div>
-                                        </div>
-                                       
-    
-                                    </div>
-    
-                                </div>
-    
-                            </div>
-    
-                        </div> -->
-
 
                     </div>
                 </div>

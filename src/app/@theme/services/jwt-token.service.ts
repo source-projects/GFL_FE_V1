@@ -89,6 +89,9 @@ export class JwtTokenService {
       case 'attendance':
         return this.tokens.permissions.attnds;  
 
+      case 'purchase':
+        return this.tokens.permissions.po;    
+
       case 'userId':
         return this.tokens.sub;
 
@@ -97,6 +100,18 @@ export class JwtTokenService {
 
       case 'userName':
           return this.tokens.userName;
+
+      case 'mergeBatch':
+          return this.tokens.permissions.mg;
+
+      case 'report':
+          return this.tokens.permissions.rpt;
+          
+      case 'task':
+          return this.tokens.permissions.tt;    
+
+      case 'allPermissions':
+          return this.tokens;
       
       default:
         return null;

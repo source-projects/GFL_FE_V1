@@ -8,21 +8,27 @@ import { StockBatchGuard } from "../@theme/guards/stock-batch.guard";
 import { SupplierGuard } from "../@theme/guards/supplier.guard";
 import { UserGuard } from "../@theme/guards/user.guard";
 import { DyeingProcessGuard } from "../@theme/guards/dyeing-process.guard";
-import { JetPlanningGuard } from "app/@theme/guards/jet-planning.guard";
-import { ProductionPlanningGuard } from "app/@theme/guards/production-planning.guard";
-import { WaterJetGuard } from "app/@theme/guards/water-jet.guard";
-import { InvoiceGuard } from "app/@theme/guards/invoice.guard";
-import { PaymentGuard } from "app/@theme/guards/payment.guard";
+import { JetPlanningGuard } from "../@theme/guards/jet-planning.guard";
+import { ProductionPlanningGuard } from "../@theme/guards/production-planning.guard";
+import { WaterJetGuard } from "../@theme/guards/water-jet.guard";
+import { InvoiceGuard } from "../@theme/guards/invoice.guard";
+import { PaymentGuard } from "../@theme/guards/payment.guard";
 import { AnyAaaaRecord } from "dns";
 import { BehaviorSubject, from } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
-import { FinishedMeterGuard } from "app/@theme/guards/finished-meter.guard";
-import { InputDataGuard } from "app/@theme/guards/input-data.guard";
-import { CommonService } from "app/@theme/services/common.service";
+import { FinishedMeterGuard } from "../@theme/guards/finished-meter.guard";
+import { InputDataGuard } from "../@theme/guards/input-data.guard";
+import { CommonService } from "../@theme/services/common.service";
 import { UserService } from "../@theme/services/user.service";
 import { AdminGuard } from "../@theme/guards/admin.guard";
 import { EmployeeRegistrationGuard } from "../@theme/guards/employee-registration.guard";
 import { AttndanceGuard } from "../@theme/guards/attendance.guard";
+import { PurchaseGuard } from "../@theme/guards/purchase.guard";
+import { JwtTokenService } from "../@theme/services/jwt-token.service";
+import { StoreTokenService } from "../@theme/services/store-token.service";
+import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
+import { ReportGuard } from "../@theme/guards/report.guard";
+import { TaskGuard } from "../@theme/guards/task.guard";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -61,8 +67,12 @@ export class PagesComponent implements OnInit {
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
     public adminGuard: AdminGuard,
+    public purchaseGuard : PurchaseGuard,
     private commonService: CommonService,
-    private userService: UserService
+    private userService: UserService,
+    private mergeGuard: MergeBatchGuard,
+    private reportGuard : ReportGuard,
+    private taskGuard : TaskGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -84,8 +94,25 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
+
+                case "Merge-batch":
+                  this.view = this.mergeGuard.accessRights("view");
+                  this.view_all = this.mergeGuard.accessRights("view all");
+                  this.view_group = this.mergeGuard.accessRights("view group");
+                  if (
+                    this.view == false
+                    // this.view_all == false &&
+                    // this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
+                  break;
 
               case "Quality":
                 this.view = this.qualityGuard.accessRights("view");
@@ -97,6 +124,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -118,6 +147,8 @@ export class PagesComponent implements OnInit {
                     this.view_group == false
                   ) {
                     e.hidden = true;
+                  }else{
+                    e.hidden = false;
                   }
                 }
 
@@ -133,6 +164,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
               // case "Program":
@@ -160,6 +193,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
               case "Shade":
@@ -172,6 +207,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
               case "Supplier":
@@ -184,6 +221,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
               // case "Water-jet":
@@ -212,6 +251,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -225,6 +266,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -240,6 +283,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -257,6 +302,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -274,6 +321,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -302,20 +351,33 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
               case "Database":
-                this.view = this.adminGuard.accessRights("view");
-                this.view_all = this.adminGuard.accessRights("view all");
-                this.view_group = this.adminGuard.accessRights("view group");
                 if (
-                  this.view == false &&
-                  this.view_all == false &&
-                  this.view_group == false
+                  this.userData.id &&
+                  !this.userData.userHeadId && 
+                  !this.userData.superUserHeadId
                 ) {
+                  e.hidden = false;
+                } else {
                   e.hidden = true;
-                }
+                // this.view = this.adminGuard.accessRights("view");
+                // this.view_all = this.adminGuard.accessRights("view all");
+                // this.view_group = this.adminGuard.accessRights("view group");
+                // if (
+                //   this.view == false &&
+                //   this.view_all == false &&
+                //   this.view_group == false
+                // ) {
+                //   e.hidden = true;
+                // }else{
+                //   e.hidden = false;
+                // }
+              }
                 break;
 
               case "Input Data":
@@ -330,6 +392,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -343,6 +407,8 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
+                }else{
+                  e.hidden = false;
                 }
                 break;
 
@@ -356,6 +422,8 @@ export class PagesComponent implements OnInit {
                     this.view_group == false
                   ) {
                     e.hidden = true;
+                  }else{
+                    e.hidden = false;
                   }
                   break;
 
@@ -369,6 +437,8 @@ export class PagesComponent implements OnInit {
                     this.view_group == false
                   ) {
                     e.hidden = true;
+                  }else{
+                    e.hidden = false;
                   }
                   break;
 
@@ -382,6 +452,62 @@ export class PagesComponent implements OnInit {
                     this.view_group == false
                   ) {
                     e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
+                  break;
+
+                  case "Purchase":
+                  this.view = this.purchaseGuard.accessRights("view");
+                  this.view_all = this.purchaseGuard.accessRights("view all");
+                  this.view_group = this.purchaseGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
+                  }
+                  break;
+
+                  case "Report":
+                    if (
+                      this.userData.id &&
+                      !this.userData.userHeadId && 
+                      !this.userData.superUserHeadId
+                    ) {
+                      e.hidden = false;
+                    } else {
+                      e.hidden = true;
+                  // this.view = this.reportGuard.accessRights("view");
+                  // this.view_all = this.reportGuard.accessRights("view all");
+                  // this.view_group = this.reportGuard.accessRights("view group");
+                  // if (
+                  //   this.view == false &&
+                  //   this.view_all == false &&
+                  //   this.view_group == false
+                  // ) {
+                  //   e.hidden = true;
+                  // }else{
+                  //   e.hidden = false;
+                  // }
+                    }
+                  break;
+
+                  case "Task":
+                  this.view = this.taskGuard.accessRights("view");
+                  this.view_all = this.taskGuard.accessRights("view all");
+                  this.view_group = this.taskGuard.accessRights("view group");
+                  if (
+                    this.view == false &&
+                    this.view_all == false &&
+                    this.view_group == false
+                  ) {
+                    e.hidden = true;
+                  }else{
+                    e.hidden = false;
                   }
                   break;
             }

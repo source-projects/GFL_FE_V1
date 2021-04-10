@@ -36,18 +36,20 @@ export class CommonService {
   envUrl() {
     let url = "";
     let location = window.location;
-    if (location["hostname"] == "192.168.1.103") {
+    const hostName = location["hostname"];
+
+    if (hostName == "192.168.1.103") {
       url = "http://192.168.1.103:8080/";
-    } else if (
-      location["hostname"] == "15.206.179.225" ||
-      location["hostname"] == "localhost"
-    ) {
+
+    } else if (hostName.includes("dyeingerp.gloryautotech.com")) {
+      url = "https://api.dyeingerp.gloryautotech.com/"
+    }
+    else if (hostName == "15.206.179.225" || hostName == "localhost") {
       url = "http://15.206.179.225:8080/";
     } else {
       url = "http://103.137.194.167:8080/";
     }
     return url;
-    //return url "http://13.235.71.124:8080/";
   }
 
   decToBin(n): any {

@@ -6,7 +6,7 @@ export class User {
   contact: string;
   password: string;
   companyId: number;
-  departmentId: number;
+  departmentId: number = null;
   designationId: number;
   createdBy: Number;
   updatedBy: Number;

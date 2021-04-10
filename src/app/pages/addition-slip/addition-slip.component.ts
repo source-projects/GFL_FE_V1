@@ -1,17 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import * as errorData from "../../@theme/json/error.json";
+import { PartyService } from "../../@theme/services/party.service";
+import { PlanningSlipService } from "../../@theme/services/planning-slip.service";
+import { ProgramService } from "../../@theme/services/program.service";
+import { QualityService } from "../../@theme/services/quality.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
-import { PlanningSlipService } from "../../@theme/services/planning-slip.service";
-import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import * as errorData from "../../@theme/json/error.json";
-import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { PartyService } from "../../@theme/services/party.service";
-import { QualityService } from "../../@theme/services/quality.service";
-import { NumberCardComponent } from "@swimlane/ngx-charts";
-import { ProgramService } from "../../@theme/services/program.service";
-// import { AdditionSlip } from 'src/app/@theme/model/additon-slip';
 
 export class AdditionSlip {
   id: number;
@@ -29,29 +27,6 @@ export class DirectSlip {
   jetId: number;
   dyeingSlipData: DyeingSlipData;
 }
-
-// export class DyeingProcessData{
-//   controlId: number;
-//   dyeingChemicalData: DyeingChemicalData[];
-//   holdTime: number;
-//   id: number;
-//   isColor: boolean;
-//   liquerRation: number;
-//   processType: string;
-//   sequence: number;
-//   temp: number;
-// }
-
-// export class DyeingChemicalData{
-//   controlId: number;
-//   id: number;
-//   itemId: number;
-//   itemName: string;
-//   qty: number;
-//   supplierId: number;
-//   supplierName: string;
-//   byChemical: string;
-// }
 
 export class DyeingSlipData {
   controlId: number;
@@ -99,7 +74,6 @@ export class AdditionSlipComponent implements OnInit {
     },
   ];
   additionSlipData: any;
-  // additionListArray:additionList[] = [] ;
 
   loading = true;
   tableStyle = "bootstrap";
@@ -115,8 +89,6 @@ export class AdditionSlipComponent implements OnInit {
   directSlipPartyId = null;
   directSlipQualityId = null;
   printNow = false;
-  // dyeingSlipData: DyeingSlipData = new DyeingSlipData();
-  // dyeingChemicalData: DyeingChemicalData = new DyeingChemicalData();
 
   constructor(
     private modalService: NgbModal,
@@ -267,7 +239,6 @@ export class AdditionSlipComponent implements OnInit {
           if (e.id == this.directSlip.qualityEntryId) {
             this.p_id = e.partyId;
             this.q_id = e.qualityId;
-            //this.productionPlanning.partyId = this.qualityList.
             this.directSlip.qualityEntryId = e.id;
           }
         });
@@ -355,7 +326,6 @@ export class AdditionSlipComponent implements OnInit {
   }
 
   batchSelected(event) {
-    // let batch = event.target.value;
     this.additionSlip.batchId = event.batchId;
     this.additionSlip.productionId = event.productionId;
 
@@ -378,6 +348,7 @@ export class AdditionSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
+          this.directSlip.shadeId = null;
           if (this.printNow) {
             //open Print slip popup...
             const modalRef = this.modalService.open(PlanningSlipComponent);
@@ -489,7 +460,6 @@ export class AdditionSlipComponent implements OnInit {
     );
   }
   saveAdditionSlip(result) {
-    console.log(this.additionSlip);
     this.dyeingSlipData.holdTime = result.holdTime;
     this.dyeingSlipData.temp = result.temp;
     this.dyeingSlipData.isColor = result.isColor;

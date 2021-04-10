@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { NbMenuService, NbSidebarService } from "@nebular/theme";
-import { LayoutService } from "app/@core/utils";
+import { LayoutService } from "../../../@core/utils";
 import { Subject } from "rxjs";
-import { CommonService } from 'app/@theme/services/common.service';
+import { CommonService } from '../../../@theme/services/common.service';
 import { event } from 'jquery';
 
 @Component({
@@ -23,9 +23,6 @@ import { event } from 'jquery';
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
 
-      <!-- <nb-layout-footer fixed>
-        <ngx-footer></ngx-footer>
-      </nb-layout-footer> -->
     </nb-layout>
   `,
 })
@@ -50,15 +47,6 @@ export class OneColumnLayoutComponent implements OnDestroy{
       });
     }
   }
-  // changeHeader(){
-  //   this.menu.onItemClick().subscribe(() => {
-  //     let nameHeader=event.target as HTMLElement;
-  //     this.commonService.updateBrodCast(nameHeader);
-  //     this.sidebarService.toggle(true, 'menu-sidebar');
-  //     this.layoutService.changeLayoutSize();
-  //     return false;
-  //   });
-  // }
   ngOnDestroy() {
     if(this.unSubscribe$)
       this.unSubscribe$.unsubscribe();

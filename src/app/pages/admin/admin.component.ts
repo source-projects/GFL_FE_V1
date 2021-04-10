@@ -9,7 +9,8 @@ import {
   AddMachineCategory,
   AddQuality,
   AddInvoiceSequence,
-  AddBatchSequence
+  AddBatchSequence,
+  ReceiveBy
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -17,6 +18,8 @@ import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminGuard } from "../../@theme/guards/admin.guard";
+import { PurchaseNewService } from "../../@theme/services/purchase-new.service";
+import { PreviewComponent } from "./preview/preview.component";
 
 @Component({
   selector: "ngx-admin",
@@ -30,6 +33,7 @@ export class AdminComponent implements OnInit {
   addQuality: AddQuality = new AddQuality();
   addDesignation: AddDesignation = new AddDesignation();
   approveBy: ApproveBy = new ApproveBy();
+  receiveBy: ReceiveBy = new ReceiveBy();
   addMachine: AddMachine = new AddMachine();
   addMachineCategory: AddMachineCategory = new AddMachineCategory();
   addInvoiceSequence: AddInvoiceSequence = new AddInvoiceSequence();
@@ -38,6 +42,7 @@ export class AdminComponent implements OnInit {
   addCompanyArray: AddCompany[] = [];
   adddesignationArray: AddDesignation[] = [];
   approveByArray: ApproveBy[] = [];
+  receiveByArray: ReceiveBy[] = [];
   addMachineArray: AddMachine[] = [];
   addMachineCategoryArray: AddMachineCategory[] = [];
   addQualityArray: AddQuality[] = [];
@@ -49,11 +54,17 @@ export class AdminComponent implements OnInit {
   companyList = [];
   departmentList = [];
   approveByList = [];
+  receiveByList = [];
   machineList = [];
+  purchaseList = [];
   machineCategoryList = [];
   qualityList = [];
   invoiceSequenceList = [];
   batchSequenceList = [];
+  billList = [];
+  materialList = [];
+  billImages = [];
+  materialImages = [];
   formSubmitted: boolean = false;
   loading = false;
   jetEditFlag = false;
@@ -61,6 +72,7 @@ export class AdminComponent implements OnInit {
   departmentEditFlag = false;
   designationEditFlag = false;
   approveByEditFlag = false;
+  receiveByEditFlag = false;
   sequenceByEditFlag = false;
   batchsequenceByEditFlag = false;
   machineEditFlag = false;
@@ -72,8 +84,10 @@ export class AdminComponent implements OnInit {
   hiddenEdit = false;
   batchHiddenEdit = false;
   hiddenDelete = false;
+  approved = false;
   constructor(
     private adminService: AdminService,
+    private purchseService : PurchaseNewService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private adminGuard : AdminGuard
@@ -82,6 +96,7 @@ export class AdminComponent implements OnInit {
     this.addCompanyArray.push(this.addCompany);
     this.adddesignationArray.push(this.addDesignation);
     this.approveByArray.push(this.approveBy);
+    this.receiveByArray.push(this.receiveBy);
     this.addMachineArray.push(this.addMachine);
     this.addMachineCategoryArray.push(this.addMachineCategory);
     this.addQualityArray.push(this.addQuality);
@@ -101,8 +116,8 @@ export class AdminComponent implements OnInit {
     this.getEditAccess();
     this.getAllInvoiceSequenceData();
     this.getAllBatchSequenceData();
-
-    
+    this.getAllReceiveByData();
+    this.getAllPurchaseData();
   }
 
   getAddAcess() {
@@ -140,6 +155,40 @@ export class AdminComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
+  getAllPurchaseData(){
+    this.purchaseList = [];
+    this.purchseService.updateStatus(this.approved).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.purchaseList = data["data"];
+          this.purchaseList.forEach((element , i) => {
+            let tempBill = [];
+            let tempMaterial = [];
+            element.materialPhotosList.forEach(ele => {
+              if(ele.type == "bill"){
+                tempBill.push(ele);
+              }
+              else{
+                tempMaterial.push(ele);
+              }
+            });
+            this.billImages[i] = (tempBill);
+            this.materialImages[i] = (tempMaterial);
+          })
+
+          
+          
           this.loading = false;
         } else {
           this.loading = false;
@@ -230,6 +279,23 @@ export class AdminComponent implements OnInit {
       }
     );
   }
+
+  getAllReceiveByData() {
+    this.adminService.getAllReceiveByData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.receiveByList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
+
 
   getAllInvoiceSequenceData() {
     this.adminService.getAllInvoiceSequence().subscribe(
@@ -449,6 +515,49 @@ export class AdminComponent implements OnInit {
               this.toastr.success(errorData.Add_Success);
               this.getAllApproveByData();
               this.resetValue(addApproveByData);
+              this.formSubmitted = false;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    } else {
+      return;
+    }
+  }
+
+  saveReceiveBy(addReceiveByData) {
+    this.formSubmitted = true;
+    if (addReceiveByData.valid) {
+      if (this.receiveByEditFlag == true) {
+        this.adminService.updateReceiveByData(this.receiveBy).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Update_Success);
+              this.getAllReceiveByData();
+              this.onCancelReceiveBy();
+              this.resetValue(addReceiveByData);
+              this.formSubmitted = false;
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+        this.receiveByEditFlag = false;
+      } else {
+        this.adminService.saveReceiveByData(this.receiveBy).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Add_Success);
+              this.getAllReceiveByData();
+              this.resetValue(addReceiveByData);
               this.formSubmitted = false;
             } else {
               this.toastr.error(data["msg"]);
@@ -756,6 +865,14 @@ export class AdminComponent implements OnInit {
     this.approveByEditFlag = false;
   }
 
+  onCancelReceiveBy() {
+    this.receiveBy.id = null;
+    this.receiveBy.name = null;
+    this.receiveBy.email = null;
+    this.receiveBy.contact = null;
+    this.receiveByEditFlag = false;
+  }
+
   onCancelSequence(){
     this.saveHidden = true;
     this.getAllInvoiceSequenceData();
@@ -950,6 +1067,29 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+  removeReceiveBy(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.adminService.deleteReceiveById(id).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllReceiveByData();
+            } else {
+              this.toastr.error("Can't delete this record");
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
+  }
   getjetEdit(id1) {
     this.jetEditFlag = true;
     this.jetList.forEach((element) => {
@@ -996,6 +1136,7 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addDepartment.id = element.id;
         this.addDepartment.name = element.name;
+        this.addDepartment.isMaster = element.isMaster;
       }
     });
   }
@@ -1028,6 +1169,19 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+  getReceiveByEdit(id) {
+    this.receiveByEditFlag = true;
+    this.receiveByList.forEach((element) => {
+      if (element.id == id) {
+        this.receiveBy.id = element.id;
+        this.receiveBy.name = element.name;
+        this.receiveBy.email = element.email;
+        this.receiveBy.contact = element.contact;
+      }
+    });
+  }
+
   onEdit(){
     this.saveHidden = false;
     this.sequenceByEditFlag = true;
@@ -1038,5 +1192,89 @@ export class AdminComponent implements OnInit {
     this.batchSaveHidden = false;
     this.batchsequenceByEditFlag = true;
 
+  }
+
+  onBillClick(row){
+    this.billList = [];
+    row.forEach(element => {
+      if(element.type == "bill"){
+        this.billList.push(element);
+      }
+    });
+
+    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
+    
+      modalRef.componentInstance.billList = this.billList;
+      modalRef.componentInstance.materialList = null;
+
+      modalRef.result
+      .then((result) => {
+        if (result) {
+          
+        }
+      })
+      
+   }
+
+   onMaterialClick(row){
+    this.materialList = [];
+    row.forEach(element => {
+      if(element.type == "material"){
+        this.materialList.push(element);
+      }
+    });
+
+    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
+
+      modalRef.componentInstance.billList = null;
+      modalRef.componentInstance.materialList = this.materialList;
+      modalRef.result
+      .then((result) => {
+        if (result) {}
+      })
+    
+   }
+
+   updatePurchaseStatus(row , event)
+   {
+     this.purchseService.updatePurchaseStatus(row.id , event ).subscribe(
+      (data) => {
+        if(data["success"]){
+          this.toastr.success(errorData.Update_Success);
+          this.getAllPurchaseData();
+        }
+      },
+      (error) => {
+
+      }
+     )
+   }
+
+   getApproved(){
+    this.getAllPurchaseData();
+   }
+
+   deletePurchase(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.purchseService.deletePurchase(id).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.getAllPurchaseData();
+
+            } else {
+              this.toastr.error(data['msg']);
+            }
+          },
+          (error) => {
+            //this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }
+    });
   }
 }

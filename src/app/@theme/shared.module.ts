@@ -4,7 +4,7 @@ import { NgxLoadingModule } from "ngx-loading";
 import { NgxCheckboxModule } from "ngx-checkbox";
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -49,11 +49,15 @@ import { ExportPopupComponent } from "./components/export-popup/export-popup.com
 
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
 import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
-import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
+import { SliderModule } from "angular-image-slider";
+import { NgCircleProgressModule } from "ng-circle-progress";
+import { NgxImageCompressService } from "ngx-image-compress";
 //  import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 //import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxDropzoneModule } from "ngx-dropzone";
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -88,8 +92,7 @@ const NB_MODULES = [
   NbTabsetModule,
   //NgbModal
   NbAccordionModule,
-  NbToggleModule
-  
+  NbToggleModule,
 ];
 
 @NgModule({
@@ -104,10 +107,15 @@ const NB_MODULES = [
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
-    // NgQrScannerModule,
-  //  NgQRCodeReaderModule,
-  //   ZXingScannerModule,
-  //   NgQrScannerModule,
+    SliderModule,
+    NgCircleProgressModule.forRoot({
+      radius: 60,
+      outerStrokeWidth: 10,
+      innerStrokeWidth: 5,
+      showBackground: false,
+      startFromZero: false,
+    }),
+    NgxDropzoneModule,
   ],
 
   exports: [
@@ -118,12 +126,15 @@ const NB_MODULES = [
     ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
+    SliderModule,
+    NgCircleProgressModule,
+    NgxDropzoneModule,
     // NgQrScannerModule,
-  //  NgQRCodeReaderModule,
-  //   ZXingScannerModule,
-  //   NgQrScannerModule,
+    //  NgQRCodeReaderModule,
+    //   ZXingScannerModule,
+    //   NgQrScannerModule,
   ],
-  providers: [ExportService, DatePipe],
+  providers: [ExportService, DatePipe, NgxImageCompressService],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],
 })
 export class SharedModule {}

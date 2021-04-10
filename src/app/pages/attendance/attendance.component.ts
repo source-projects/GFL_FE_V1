@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from '../../@theme/services/common.service';
 import { RegistrationService } from '../../@theme/services/registration.service';
-import * as errorData from "../../@theme/json/error.json";
 
 
 export class Attendance{
@@ -56,8 +56,6 @@ export class AttendanceComponent implements OnInit {
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
     this.date = new Date(this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000).toISOString();
-    // this.date = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
-     console.log(this.date)
 
     
   }
@@ -140,10 +138,6 @@ export class AttendanceComponent implements OnInit {
         }
       }
     )
-  }
-
-  reset(form){
-
   }
 
 

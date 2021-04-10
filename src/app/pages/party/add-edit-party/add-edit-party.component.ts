@@ -2,10 +2,10 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
-import { ToastrService } from "ngx-toastr";
 import { UserService } from "../../../@theme/services/user.service";
 
 @Component({
@@ -239,10 +239,7 @@ export class AddEditPartyComponent implements OnInit {
           (this.debtor && this.partyForm.get("partyAddress1").value) ||
           !this.debtor
         ) {
-          //  this.partyForm.value.createdBy = this.user.userId;
-          // console.log('raw',this.partyForm.getRawValue())
           this.partyForm.patchValue({
-            //userHeadId: this.userHead.userHeadId,
             createdBy: this.user.userId,
           });
           this.partyService.saveParty(this.partyForm.value).subscribe(
@@ -303,9 +300,6 @@ export class AddEditPartyComponent implements OnInit {
             ...this.partyForm.value,
             id: this.currentPartyId,
           };
-          // this.partyForm.patchValue({
-          //   userHeadId: this.userHead.userHeadId,
-          // });
           let obj = await this.partyService.updateParty(body).subscribe(
             (data) => {
               if (data["success"]) {

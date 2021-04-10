@@ -75,7 +75,6 @@
                                         </div>
                                     </div>
                                 </ng-option>
-                                <!-- <ng-option *ngFor="let colorBox of colorBoxList" [value]="colorBox.boxNo">{{colorBox.boxNo}}</ng-option> -->
                             </ng-select>
                             <div class="input-required" *ngIf="(boxNo1.invalid)&&(formSubmitted || boxNo1.touched)">
                                 <span>Box no is required</span>
@@ -90,7 +89,6 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="padding-bt-tp">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel" (click)="onCancel()">CANCEL</button>
-                            <!-- <button *ngIf="this.currentProgramId != null" type="button" (click)="updateProgram(myForm)" class="btn btn-primary btn-sm btn-design button-base ripple" [disabled]="disableButton">UPDATE</button> -->
 
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="issueBox(myForm)">Issue</button>
                         </div>

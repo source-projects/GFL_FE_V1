@@ -28,6 +28,10 @@ import { AdminGuard } from "./@theme/guards/admin.guard";
 import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration.guard";
 import { AttendanceComponent } from "./pages/attendance/attendance.component";
 import { AttndanceGuard } from "./@theme/guards/attendance.guard";
+import { PurchaseGuard } from "./@theme/guards/purchase.guard";
+import { MergeBatchGuard } from "./@theme/guards/merge-batch.guard";
+import { ReportGuard } from "./@theme/guards/report.guard";
+import { TaskGuard } from "./@theme/guards/task.guard";
 
 export const routes: Routes = [
   {
@@ -198,9 +202,9 @@ export const routes: Routes = [
           import("./pages/merge-batch/merge-batch.module").then(
             (m) => m.MergeBatchModule
           ),
-        // canActivate: [MergeBatchGuard],
-        // canLoad: [MergeBatchGuard],
-        //data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [MergeBatchGuard],
+        canLoad: [MergeBatchGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "report",
@@ -208,6 +212,9 @@ export const routes: Routes = [
           import("./pages/generate-report/generate-report.module").then(
             (m) => m.GenerateReportModule
           ),
+        canActivate: [ReportGuard],
+        canLoad: [ReportGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "issue-color-box",
@@ -270,6 +277,14 @@ export const routes: Routes = [
         canLoad: [AdminGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
+      {
+        path: "task",
+        loadChildren: () =>
+          import("./pages/task/task.module").then((m) => m.TaskModule),
+        canActivate: [TaskGuard],
+        canLoad: [TaskGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
 
       {
         path: "addition-slip",
@@ -295,11 +310,21 @@ export const routes: Routes = [
       {
         path: "attendance",
         loadChildren: () =>
-        import("./pages/attendance/attendance.module").then(
-          (m) => m.AttendanceModule
-        ),
+          import("./pages/attendance/attendance.module").then(
+            (m) => m.AttendanceModule
+          ),
         canActivate: [AttndanceGuard],
         canLoad: [AttndanceGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "purchase",
+        loadChildren: () =>
+        import("./pages/purchase/purchase.module").then(
+          (m) => m.PurchaseModule
+        ),
+        canActivate: [PurchaseGuard],
+        canLoad: [PurchaseGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
@@ -321,6 +346,11 @@ export const routes: Routes = [
     ],
   },
   { path: "", redirectTo: "auth", pathMatch: "full" },
+  {
+    path: "task",
+    loadChildren: () =>
+      import("./pages/task/task.module").then((m) => m.TaskModule),
+  },
 
   // {
   //   path: "generate-report",

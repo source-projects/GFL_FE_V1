@@ -29,9 +29,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group text-center">
-                                    <!-- <div class="form-control size-small"> -->
-
-                                    <!-- <label class="required">Profile</label> -->
+                                    
                                     <div class="profile-img">
                                         <img [src]="profileUrl" width="100" height="100">
                                     </div>
@@ -88,7 +86,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="col-md-3 col-12">
                                 <div class="form-group pd-bt">
@@ -138,12 +136,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 col-12">
-                                <div class="form-group pd-bt">
 
+                            <div class="col-md-3 col-12">
+                                <div class="pd-bt">
                                     <div class="row">
+
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="attendance.shift">Day Shift</nb-toggle>
+                                            <span class="view-title">Day Shift: </span>
+                                        </div>
+                                        <div class=" col-md-12 col-6 mobile-pdl-0">
+                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="attendance.shift"></nb-toggle>
                                         </div>
 
                                     </div>

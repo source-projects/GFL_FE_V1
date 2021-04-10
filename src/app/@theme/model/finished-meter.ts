@@ -19,6 +19,7 @@ export class BatchData{
     controlId:number;
     isProductionPlanned:Boolean = false;
     isExtra:Boolean = false;
+    mergeBatchId: string = '';
     sequenceId:number;
     finishMtr:string;
     isBillGenrated:Boolean = false;

@@ -80,8 +80,8 @@ export class UserComponent implements OnInit {
     this.getEditAccess1();
     if (this.userGuard.accessRights("view all")) {
       this.getAllUser(0, "all");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.userGuard.accessRights("view group")) {
       this.getAllUser(this.userId, "group");
@@ -90,8 +90,8 @@ export class UserComponent implements OnInit {
       this.radioSelect = 2;
     } else if (this.userGuard.accessRights("view")) {
       this.getAllUser(this.userId, "own");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
     }
   }
@@ -178,7 +178,6 @@ export class UserComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );

@@ -1,0 +1,212 @@
+<nb-card class="nb-style mb-0 popup-fix-height">
+    <nb-card-header class="nb-header">
+        <div class="modal-header purchase-popup">
+            <h4 class="modal-title nb-text">Assign Task</h4>
+            <button class="close btn-foucs-none" aria-label="Close" (click)="closeAddTask()">
+                <span aria-hidden="true" class="close-icon">&times;</span>
+            </button>
+
+        </div>
+    </nb-card-header>
+    <nb-card-body class="pd-normal">
+        <div class="add-task-popup-style">
+            <form #taskForm="ngForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="required">Task Name</label>
+                            <input type="text" name="taskName" placeholder="Task Name" class="form-control"
+                                [(ngModel)]="addTask.taskName" #taskName1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    taskName1.invalid &&
+                                    (formSubmitted || taskName1.touched)
+                                    }" required>
+                            <div class="input-required" *ngIf="taskName1.invalid &&
+                                    (formSubmitted || taskName1.touched)">
+                                <span>Task name is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="required">Department</label>
+                            <ng-select (change)="getUserList($event)" name="department"
+                                [(ngModel)]="addTask.departmentId" #department1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    department1.invalid &&
+                                    (formSubmitted || department1.touched)
+                                    }" required>
+                                <ng-option *ngFor="let department of departmentList" [value]="department.id">
+                                    {{department.name}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="input-required" *ngIf="department1.invalid &&
+                            (formSubmitted || department1.touched)">
+                                <span>Department is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="required">Task Detail</label>
+                            <textarea col="4" row="5" name="taskDetail" class="form-control"
+                                [(ngModel)]="addTask.detail" #taskDetail1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    taskDetail1.invalid &&
+                                    (formSubmitted || taskDetail1.touched)
+                                    }" required></textarea>
+                            <div class="input-required" *ngIf="taskDetail1.invalid &&
+                                    (formSubmitted || taskDetail1.touched)">
+                                <span>Task detail is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Attachments</label>
+                            <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
+                                (change)="onSelect($event)">
+                                <ngx-dropzone-label>
+                                    <div class="drop-task-attch">
+                                        <nb-icon icon="cloud-upload-outline"></nb-icon>
+                                        <p> Drop files to attach!</p>
+                                    </div>
+                                </ngx-dropzone-label>
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                    [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                </ngx-dropzone-image-preview>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Assign To</label>
+                            <ng-select [(ngModel)]="addTask.assignUserId" name="assign" #assign1="ngModel" [ngClass]="{
+                                'is-invalid':
+                                assign1.invalid &&
+                                (formSubmitted || assign1.touched)
+                                }" required>
+                                <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}}
+                                    {{user.lastName}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="input-required" *ngIf="assign1.invalid &&
+                                    (formSubmitted || assign1.touched)">
+                                <span>Assign is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Task Type</label>
+                            <ng-select [(ngModel)]="addTask.taskType" name="tasktype" #type1="ngModel" [ngClass]="{
+                                'is-invalid':
+                                type1.invalid &&
+                                (formSubmitted || type1.touched)
+                                }" required>
+                                <ng-option *ngFor="let type of typeList" [value]="type.name">{{type.name}}</ng-option>
+                            </ng-select>
+                            <div class="input-required" *ngIf="type1.invalid &&
+                                    (formSubmitted || type1.touched)">
+                                <span>Task type is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Priority</label>
+                            <br>
+                            <span>
+                                <button id="p1" class="priority-btn  rd-p" (click)="setPriority('p1')">P1</button>
+                                <button id="p2" class="priority-btn  rd-o" (click)="setPriority('p2')">P2</button>
+                                <button id="p3" class="priority-btn  rd-y" (click)="setPriority('p3')">P3</button>
+                                <button id="p4" class="priority-btn  rd-g" (click)="setPriority('p4')">P4</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Start Date</label>
+                            <input name="startDate" id="startDate" class="form-control" type="date"
+                                [(ngModel)]="addTask.startDate" #startDate1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    startDate1.invalid &&
+                                    (formSubmitted || startDate1.touched)
+                                    }" required>
+                            <div class="input-required" *ngIf="startDate1.invalid &&
+                                    (formSubmitted || startDate1.touched)">
+                                <span>Start date is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Till Date</label>
+                            <input name="tillDate" id="tillDate" class="form-control" type="date"
+                                [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    enddate1.invalid &&
+                                    (formSubmitted || enddate1.touched)
+                                    }" required>
+                            <div class="input-required" *ngIf="enddate1.invalid &&
+                                    (formSubmitted || enddate1.touched)">
+                                <span>End date is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Complitaion Day</label>
+                            <input type="number" id="complitaionDay" name="complitaionDay" class="form-control"
+                                [(ngModel)]="addTask.completedDays" #completeDays1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    completeDays1.invalid &&
+                                    (formSubmitted || completeDays1.touched)
+                                    }" required>
+                            <div class="input-required" *ngIf="completeDays1.invalid &&
+                                    (formSubmitted || completeDays1.touched)">
+                                <span>Complitaion day is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Report</label>
+                            <ng-select [(ngModel)]="addTask.reportId" name="report">
+                                <ng-option *ngFor="let report of reportList" [value]="report.id">{{report.formName}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Remark</label>
+                            <textarea col="4" row="5" name="remark" class="form-control"
+                                [(ngModel)]="addTask.remark"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <nb-checkbox [(ngModel)]="addTask.notify" name="notify">Notify via mobile or email
+                            </nb-checkbox>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="addTaskDetail(taskForm)">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </nb-card-body>
+</nb-card>

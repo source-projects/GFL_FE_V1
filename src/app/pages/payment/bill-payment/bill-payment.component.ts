@@ -65,10 +65,6 @@ export class BillPaymentComponent implements OnInit {
     this.getUserId();
     this.getPaymentType();
     this.selected = [];
-    // this.paymentValues.rdAmt = 0;
-    // this.paymentValues.cdAmt = 0;
-    // this.paymentValues.otherDiff = 0;
-    // this.paymentValues.amtPaid = 0;
 
   }
 
@@ -83,12 +79,10 @@ export class BillPaymentComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -98,7 +92,6 @@ export class BillPaymentComponent implements OnInit {
     this.selected = [];
     this.getPendingInvoices(event);
     this.getAdvancePaymentList(event);
-    //this.getPaymentDetailsByParty(event);
   }
 
   getPendingInvoices(event) {
@@ -111,12 +104,10 @@ export class BillPaymentComponent implements OnInit {
               this.invoiceList = data["data"];
               this.loading = false;
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -134,12 +125,10 @@ export class BillPaymentComponent implements OnInit {
               this.advancePaymentList = data["data"];
               this.loading = false;
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -156,14 +145,11 @@ export class BillPaymentComponent implements OnInit {
             if (data["success"]) {
               this.paymentDetails = data["data"];
               this.loading = false;
-              //this.setPaymentDetails();
             } else {
-              // this.toastr.error(data["msg"]);
               this.loading = false;
             }
           },
           (error) => {
-            // this.toastr.error(errorData.Serever_Error);
             this.loading = false;
           }
         );
@@ -172,9 +158,6 @@ export class BillPaymentComponent implements OnInit {
 
   }
 
-  setPaymentDetails() {
-    //this.paymentValues.rdAmt = this.paymentDetails.rd
-  }
 
   invoiceSelected(event) {
     let selected = event.selected;
@@ -192,21 +175,26 @@ export class BillPaymentComponent implements OnInit {
   }
 
   advancePaymentSelected(event) {
-    let selected = event.selected;
-    let advance = [];
-    selected.forEach(element => {
-      advance.push(element.id);
-    })
-
-    this.paymentValues.advancePayList = advance;
-
-    this.totalCredit = 0;
-    event.selected.forEach(element => {
-      this.totalCredit = this.totalCredit + element.amt;
-    });
-    if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
-      this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+    if(event.selected){
+      let selected = event.selected;
+      let advance = [];
+      selected.forEach(element => {
+        advance.push(element.id);
+      })
+  
+      this.paymentValues.advancePayList = advance;
+  
+      this.totalCredit = 0;
+      event.selected.forEach(element => {
+        this.totalCredit = this.totalCredit + element.amt;
+      });
+      if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
+        this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
+      }else{
+        this.paymentValues.amtPaid = 0;
+      }
     }
+    
   }
 
   gstSelected(event) {
@@ -225,12 +213,10 @@ export class BillPaymentComponent implements OnInit {
           this.paymentTypeList = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -294,9 +280,7 @@ export class BillPaymentComponent implements OnInit {
           id: null,
         };
         let list = this.paymentValues.paymentData;
-        // list.forEach(element=>{
-        //   this.totalCurrentPayment = this.totalCurrentPayment + element.payAmt;
-        // })
+        
         list.push(obj);
         this.paymentValues.paymentData = [...list];
 
@@ -372,6 +356,8 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.totalBill = 0;
     this.invoiceList = [];
     this.advancePaymentList = [];
+    this.paymentDataListArray.push(this.paymentDataList);
+    this.paymentValues.paymentData = this.paymentDataListArray;
   }
 
   onAddPayment(paymentForm) {

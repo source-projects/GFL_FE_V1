@@ -1,33 +1,31 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   CdkDragDrop,
   CdkDropList,
   moveItemInArray,
-  transferArrayItem,
+  transferArrayItem
 } from "@angular/cdk/drag-drop";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from "../../@theme/json/error.json";
-import { ProductionPlanning } from "../../@theme/model/production-planning";
-import { CommonService } from "../../@theme/services/common.service";
-import { PartyService } from "../../@theme/services/party.service";
-import { QualityService } from "../../@theme/services/quality.service";
-import { StockBatchService } from "../../@theme/services/stock-batch.service";
-import { ProgramService } from "../../@theme/services/program.service";
-
-import { ToastrService } from "ngx-toastr";
-import { AddShadeComponent } from "./add-shade/add-shade.component";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ShadeService } from "../../@theme/services/shade.service";
-import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
-import { JetPlanningService } from "../../@theme/services/jet-planning.service";
 import { NbMenuService } from "@nebular/theme";
-import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
-import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
 import { filter, map, takeUntil } from "rxjs/operators";
-import { ShadeWithBatchComponent } from "./shade-with-batch/shade-with-batch.component";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { ProductionBatchDetail } from "../../@theme/model/production-planning";
+import * as errorData from "../../@theme/json/error.json";
+import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
+import { ProductionBatchDetail, ProductionPlanning } from "../../@theme/model/production-planning";
+import { CommonService } from "../../@theme/services/common.service";
+import { JetPlanningService } from "../../@theme/services/jet-planning.service";
+import { PartyService } from "../../@theme/services/party.service";
+import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
+import { ProgramService } from "../../@theme/services/program.service";
+import { QualityService } from "../../@theme/services/quality.service";
+import { ShadeService } from "../../@theme/services/shade.service";
+import { StockBatchService } from "../../@theme/services/stock-batch.service";
+import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
+import { AddShadeComponent } from "./add-shade/add-shade.component";
+
 
 @Component({
   selector: "ngx-production-planning",
@@ -251,7 +249,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         this.qualityList.forEach((e) => {
           if (e.qualityId == this.productionPlanning.qualityId) {
             this.p_id = e.partyId;
-            //this.productionPlanning.partyId = this.qualityList.
             this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
           }
         });
@@ -320,7 +317,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       }
     });
 
-    const modalRef = this.modalService.open(AddShadeComponent);
+    const modalRef = this.modalService.open(AddShadeComponent, {size: "lg"});
     if (
       (this.productionPlanning.partyId && this.productionPlanning.qualityId) ==
       undefined
@@ -340,20 +337,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
         if (result) {
-          // if (this.editProductionPlanFlag) {
-          //   result.id = id;
-          //   this.updateProduction(result);
-          // }
-          // if (this.productionPlanning.partyId) {
-          //   this.partySelected(this.productionPlanning.partyId);
-          // } else if (
-          //   this.productionPlanning.partyId &&
-          //   this.productionPlanning.qualityId
-          // ) {
-          //   this.qualitySelected(this.productionPlanning.qualityId);
-          // }
-          // this.getAllBatchData();
-          // this.plannedProductionListForDataTable();
+          
           this.ngOnInit();
           this.productionPlanning.partyId = null;
           this.productionPlanning.qualityId = null;
@@ -410,9 +394,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       (error) => {}
     );
   }
-  // addToJet(data) {
-  //   this.router.navigate(["/pages/jet-planning/" + data.id]);
-  // }
 
   flipped = false;
 
@@ -580,12 +561,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           this.batchList = data["data"];
           this.allBatchList = data["data"];
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -611,9 +590,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.batchControl = production[0].stockId;
       modalRef.componentInstance.shadeId = production[0].shadeId;
       modalRef.componentInstance.colorTone = production[0].colorTone;
-      // if (production[0].jetId) {
-      //   modalRef.componentInstance.jetid = production[0].jetId;
-      // }
       modalRef.componentInstance.editProductionPlanFlag = true;
       modalRef.result
         .then((result) => {
@@ -628,18 +604,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   getAllDetailsOfBatch(event, batch) {
     this.productionBatchDetail = {...batch};
-      // if (batch.partyName)
-      //   this.productionBatchDetail.partyName = batch.partyName;
-      // if (batch.qualityName)
-      //   this.productionBatchDetail.qualityName = batch.qualityName;
-      // if (batch.qualityId)
-      //   this.productionBatchDetail.qualityId = batch.qualityId;
-      // if (batch.partyShadeNo)
-      //   this.productionBatchDetail.partyShadeNo = batch.partyShadeNo;
-      // if (batch.totalWt) this.productionBatchDetail.totalWt = batch.totalWt;
-      // if (batch.totalMtr) this.productionBatchDetail.totalMtr = batch.totalMtr;
-      // if (batch.processName)
-      //   this.productionBatchDetail.processName = batch.processName;
   }
 
   resetDetailsOfBatch($event) {

@@ -23,9 +23,11 @@ export class AddCompany {
 export class AddDepartment {
   id: number;
   name: string;
+  isMaster:boolean;
   constructor() {
     this.id = 0;
     this.name = null;
+    this.isMaster = false;
   }
 }
 export class AddQuality {
@@ -46,6 +48,19 @@ export class AddDesignation {
 }
 
 export class ApproveBy {
+  id: number;
+  name: string;
+  contact: string;
+  email: string;
+  constructor() {
+    this.id = null;
+    this.name = null;
+    this.contact = null;
+    this.email = null;
+  }
+}
+
+export class ReceiveBy {
   id: number;
   name: string;
   contact: string;

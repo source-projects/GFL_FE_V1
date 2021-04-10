@@ -4,13 +4,8 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-            <!-- <div class="col-md-5 col-7 display-flex-start max-width-device">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/registration/view']">
-                    View Employee
-                </button>
-            </div> -->
-
-            <div class="col-md-7 col-5">
+           
+            <div class="col-md-7 col-5 display-flex-start max-width-device">
                 <div>
                     <h2 class="nb-text mobile-mr-lf-0">Scan</h2>
                 </div>
@@ -24,9 +19,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
                             <label class="required">Enter employee id </label>
-                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel"
-                            class="form-control size-small mobile-txt-center"  fieldsize="small" nbinput
-                                placeholder="Enter Employee Id" />
+                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
 
                             <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
                                 <span>Employee Id is required</span>
@@ -43,11 +36,11 @@
                         <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
 
                         <section class="results" *ngIf="qrResultString">
-                          <div>
-                            <small>Result</small>
-                            <strong>{{ qrResultString }}</strong>
-                          </div>
-                          <button mat-icon-button (click)="clearResult()">&times;</button>
+                            <div>
+                                <small>Result</small>
+                                <strong>{{ qrResultString }}</strong>
+                            </div>
+                            <button mat-icon-button (click)="clearResult()">&times;</button>
                         </section>
 
                     </div>
@@ -55,7 +48,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
                         <div class="form-group mr-top-bt">
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="onSave()" [routerLink]="['/pages/attendance/',empId]">Save</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="onSave()" >Submit</button>
 
                         </div>
                     </div>

@@ -1,13 +1,12 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import * as errorData from 'app/@theme/json/error.json';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdvancePayment } from 'app/@theme/model/advance-payment';
-import { CommonService } from 'app/@theme/services/common.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { PaymentService } from 'app/@theme/services/payment.service';
-import { ToastrService } from 'ngx-toastr';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { ToastrService } from 'ngx-toastr';
+import { AdvancePayment } from '../../../@theme/model/advance-payment';
+import { CommonService } from '../../../@theme/services/common.service';
+import { JwtTokenService } from '../../../@theme/services/jwt-token.service';
+import { PartyService } from '../../../@theme/services/party.service';
+import { PaymentService } from '../../../@theme/services/payment.service';
 
 @Component({
   selector: 'ngx-advance-payment',
@@ -30,7 +29,6 @@ export class AdvancePaymentComponent implements OnInit {
 
   party: any[];
   paymentTypeList: any[];
-  // advancePaymentDataListArray: AdvancePayment[] = [];
 
   advancePaymentValues: AdvancePayment = new AdvancePayment();
   advancePaymentArray: AdvancePayment[] = [];
@@ -46,8 +44,6 @@ export class AdvancePaymentComponent implements OnInit {
   ) {
 
     this.advancePaymentArray.push(this.advancePaymentValues);
-    console.log(this.advancePaymentArray);
-    //this.advancePaymentValues = this.advancePaymentArray;
   }
 
   ngOnInit(): void {
@@ -72,12 +68,10 @@ export class AdvancePaymentComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -88,15 +82,12 @@ export class AdvancePaymentComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.paymentTypeList = data["data"];
-          console.log(this.paymentTypeList);
           this.loading = false;
         } else {
-          // this.toastr.error(data["msg"]);
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -143,10 +134,8 @@ export class AdvancePaymentComponent implements OnInit {
           creditId: null,
         };
         let list = this.advancePaymentArray;
-        console.log(list);
         list.push(obj);
         this.advancePaymentArray = [...list];
-        console.log(this.advancePaymentArray);
         
         
         this.data.changes.subscribe(() => {
@@ -198,29 +187,34 @@ export class AdvancePaymentComponent implements OnInit {
     });
   }
 
+  reset(form){
+    form.reset();
+    this.formSubmitted = false;
+    this.advancePaymentArray = [];
+    this.advancePaymentArray.push(this.advancePaymentValues);
+
+
+  }
+
   addAdvancePayment(event) {
     this.formSubmitted = true;
-    //delete event.value.chequeAmt;
-    // console.log(event.value);
-    // console.log(this.advancePaymentArray);
     this.advancePaymentArray.forEach(element => {
       element.payTypeId = Number(element.payTypeId);
       element.no = Number(element.no);
     })
-    console.log(this.advancePaymentArray);
 
     this.paymentService.addAdvancePayment(this.advancePaymentArray).subscribe(
       data => {
         if (data['success']) {
-          this.route.navigate(["/pages/payment/bill-payment"]);
-          this.toastr.success(errorData.Add_Success);
+         // this.route.navigate(["/pages/payment/bill-payment"]);
+          this.toastr.success(data['msg']);
+          this.reset(event)
         }
         else {
-          this.toastr.error(errorData.Add_Error)
+          this.toastr.error(data['msg'])
         }
       },
       error => {
-        this.toastr.error(errorData.Serever_Error)
       }
     )
   }

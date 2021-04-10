@@ -34,7 +34,7 @@ export class RegistrationService {
   }
 
   uploadImage(data):any{
-    return this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data);
+    return this.httpClient.post('https://api.cloudinary.com/v1_1/dpemsdha5/image/upload', data)
   }
 
   addAttendance(data):any{

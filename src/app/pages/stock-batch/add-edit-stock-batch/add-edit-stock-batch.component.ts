@@ -154,7 +154,6 @@ export class AddEditStockBatchComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -167,15 +166,12 @@ export class AddEditStockBatchComponent implements OnInit {
           if (data["data"] && data["data"].length > 0) {
             this.qualityList = data["data"];
           } else {
-            // this.toastr.error(errorData.Not_added);
           }
         } else {
-          //this.toastr.error(errorData.Internal_Error);
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error);
         this.loading = false;
       }
     );
@@ -193,10 +189,6 @@ export class AddEditStockBatchComponent implements OnInit {
                 this.qualityList = data["data"].qualityDataList;
               if (this.qualityList && !this.qualityList.length)
                 this.stockBatch.qualityId = null;
-              // else
-              // {
-              //   this.stockBatch.qualityId = this.qualityList[0].qualityEntryId;
-              // }
             },
             (error) => {
               this.loading = false;
@@ -286,7 +278,6 @@ export class AddEditStockBatchComponent implements OnInit {
             this.stockBatch.chlDate = new Date(this.stockBatch.chlDate);
             this.stockBatch.receiveDate = new Date(this.stockBatch.receiveDate);
             if (!this.stockBatch.batchData.length) {
-              //this.zeroValueBatch = true;
             } else {
               this.stockBatch.batchData = _.sortBy(
                 data["data"].batchData,
@@ -339,7 +330,6 @@ export class AddEditStockBatchComponent implements OnInit {
       });
       this.production_flag[i] = batch.isProductionPlanned;
     });
-    // console.log(this.production_flag);
 
     this.reCalcMTWTValue();
   }
@@ -373,7 +363,6 @@ export class AddEditStockBatchComponent implements OnInit {
             return;
           }
         }
-        //let obj:BatchMrtWt  = new BatchMrtWt();
         let obj = { mtr: null, wt: null, totalMt: null, totalWt: null };
         let list = this.stockDataValues[idx].batchMW;
         list.push({ ...obj });
@@ -450,7 +439,6 @@ export class AddEditStockBatchComponent implements OnInit {
             }
           }
         )
-        //ob.batchId = ++nextBatchId;
       }
     }
   }
@@ -465,47 +453,6 @@ export class AddEditStockBatchComponent implements OnInit {
     }
   }
 
-  // checkDuplicates(index, event) {
-  //   this.stockDataValues[index].isNotUnique = false;
-  //   if (event.target.value) {
-  //     let id = 0;
-  //     if (this.stockBatch.id) id = this.stockBatch.id;
-  //     this.stockBatchService.isBatchIdExists(event.target.value, id).subscribe(
-  //       (data) => {
-  //         if (data["success"])
-  //           this.stockDataValues[index].isNotUnique = data["data"];
-  //           if(!this.stockDataValues[index].isNotUnique){
-  //             if (this.stockDataValues && this.stockDataValues.length) {
-  //               let i = this.stockDataValues.findIndex(
-  //                 (v) => v.batchId == this.stockDataValues[index].batchId
-  //               );
-  //               if (i > -1 && i != index) {
-  //                 this.toastr.error("Cannot add duplicate batch No.");
-  //                 this.stockDataValues[index].isNotUnique = true;
-  //                 this.stockDataValues[index].batchId = null;
-  //               }
-  //             }
-  //           }
-  //       },
-  //       (error) => {}
-  //     );
-  //   }
-    
-  // }
-
-  // rearrangeBatchNo() {
-  //   if (this.stockDataValues) {
-  //     this.stockDataValues = _.sortBy(this.stockDataValues, "batchId", "asc");
-  //     let initialStockBatchNo = 0;
-  //     this.stockDataValues.forEach((ele, index) => {
-  //       if (!index) {
-  //         initialStockBatchNo = ele.batchId;
-  //       } else {
-  //         ele.batchId = ++initialStockBatchNo;
-  //       }
-  //     });
-  //   }
-  // }
 
   calculateWt(meter: number, i, j, col) {
     let w: number;
@@ -526,11 +473,7 @@ export class AddEditStockBatchComponent implements OnInit {
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
     } else {
-      //this.weight = [];
       this.MtWtIndex = i;
-      // this.stockDataValues[i].batchMW.forEach(e=>{
-      //   this.weight.push({'meter':e.mtr,'w':e.wt});
-      // })
       this.weight[j] = {
         meter: meter,
         w: w,
@@ -777,12 +720,6 @@ export class AddEditStockBatchComponent implements OnInit {
         );
         this.loading = false;
       }
-     // } else {
-      //   this.disableButton = false;
-      //   const errorField = this.renderer.selectRootElement("#target");
-      //   errorField.scrollIntoView();
-      //   this.loading = false;
-      // }
       }
       else{
         this.loading = false;
@@ -829,7 +766,6 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   printJobCard(form, data){
-    //data = {'stockId':9587};
     this.isDirectPrintFlag=true
     const modalRef = this.modalService.open(JobCardComponent);
     modalRef.componentInstance.isDirectPrintFlag=this.isDirectPrintFlag

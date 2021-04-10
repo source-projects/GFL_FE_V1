@@ -15,12 +15,19 @@ export class GenerateReportComponent implements OnInit {
   qualityControlId: any;
   qualityId: any;
   qualityName: any;
+  batchId;
   partyList: any[];
   qualityList: any[];
   colorTone = "#40f0f0";
   loading: boolean = false;
   partySelected: boolean = false;
   reportData: any[];
+  planned = [];
+  notPlanned = [];
+  finishedMeter = [];
+  Production = true;
+  notProduction = true;
+  finished = true;
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
@@ -75,20 +82,38 @@ export class GenerateReportComponent implements OnInit {
   }
 
   getReportData() {
+    this.planned = [];
+    this.finishedMeter = [];
+    this.notPlanned = [];
     this.reportService
       .getPartyQualityReportData(this.partyId, this.qualityControlId)
       .subscribe(
         (data) => {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
+            if(this.batchId){
+              let data = [];
+              this.reportData.forEach((ele) => {
+                if(this.batchId == ele.batchId){
+                  data.push(ele);
+                }
+              })
+              this.reportData = data;
+            }
+            this.reportData.forEach(ele => {
+              if(ele.isFinishMtrSave){
+                this.finishedMeter.push(ele);
+              }
+              else if(ele.isProductionPlanned){
+                this.planned.push(ele);
+              }else {
+                this.notPlanned.push(ele);
+              }
+            })
           }
         },
         (error) => {}
       );
-  }
-
-  lotNoEntered(event){
-    console.log(event)
   }
 
   getQualityFromParty(event) {
@@ -109,17 +134,7 @@ export class GenerateReportComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.qualityList = data["data"].qualityDataList;
-            // this.qualityList.forEach((e) => {
-            //   e.partyName = data["data"].partyName;
-            //   if (this.partyId == e.partyId) {
-            //     this.partyName = e.partyName;
-            //   }
-            //   if(this.partySelected){
-            //     this.qualityControlId = null;
-            //   }
-            //   this.getReportData();
-            //   this.loading = false;
-            // });
+            
             if(this.partySelected){
               this.qualityControlId = "";
             }
@@ -147,7 +162,6 @@ export class GenerateReportComponent implements OnInit {
       this.getReportData();
       this.checkPartySelected();
     } else {
-      console.log(this.qualityList);
       this.qualityList.forEach((element) => {
         if (this.qualityId == element.qualityId) {
           this.qualityId = element.qualityId;
@@ -159,5 +173,20 @@ export class GenerateReportComponent implements OnInit {
       this.getReportData();
       this.checkPartySelected();
     }
+  }
+
+  batchIdSelected(event){
+    if (event == undefined) {
+      this.batchId = null;
+     
+    } 
+
+      this.getReportData();
+      this.checkPartySelected();
+      
+      this.Production = true;
+      this.notProduction = true;
+      this.finished = true;
+
   }
 }

@@ -149,7 +149,6 @@ export class InputDataComponent implements OnInit {
     this.readonlyThermopackNightFlag = false;
 
     this.masterId = this.jwt.getDecodeToken("userHeadId");
-    console.log(this.masterId)
     this.max = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate(), 23, 59);
     this.getBoiler();
     this.getThermopack();
@@ -370,7 +369,6 @@ export class InputDataComponent implements OnInit {
   }
 
   saveThermoData(value:any) {
-    console.log(this.finalThermoobj)
     this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
       (data) => {
         if (data["success"]) {
@@ -638,7 +636,6 @@ export class InputDataComponent implements OnInit {
 
       this.logsheet.fetchThermoData(obj).subscribe(
         (data) => {
-          console.log(data);
           if (data["success"]) {
             this.fetchedData = data["data"]
             if (obj.shift == "night") {

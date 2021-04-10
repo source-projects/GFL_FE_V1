@@ -14,6 +14,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: "Task",
+    icon: "edit-2-outline",
+    link: "/pages/task",
+    hidden: false,
+  },
+  {
     title: "Party",
     icon: "person-outline",
     link: "/pages/party",
@@ -67,18 +73,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  // {
-  //   title: 'Program',
-  //   icon: 'hard-drive-outline',
-  //   link: '/pages/program',
-  //   hidden:false
-  // },
-  // {
-  //   title: 'Water-jet',
-  //   icon: 'droplet-outline',
-  //   link: '/pages/waterJet',
-  //   hidden:false
-  // },
+
   {
     title: "Stock-batch",
     icon: "layers-outline",
@@ -87,7 +82,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: "Merge-batch",
-    icon: "layers-outline",
+    icon: "shuffle-outline",
     link: "/pages/merge-batch",
     hidden: false,
   },
@@ -104,13 +99,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
 
-  // {
-  //   title: 'Process',
-  //   icon: 'settings-2-outline',
-  //   link: '/pages/process',
-  //   hidden:false
-  // },
-
   {
     title: "Finished Meter",
     icon: "bar-chart-outline",
@@ -123,12 +111,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: "/pages/production-planning",
     hidden: false,
   },
-  // {
-  //   title: 'Jet Planning',
-  //   icon: 'options-outline',
-  //   link: '/pages/jet-planning',
-  //   hidden:false
-  // },
   {
     title: "Addition Slip",
     icon: "file-text-outline",
@@ -147,13 +129,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: "/pages/generate_invoice",
     hidden: false,
   },
-
-  // {
-  //   title: 'Issue-Color-Box',
-  //   icon: 'file-text-outline',
-  //   link: '/pages/issue-color-box',
-  //   hidden:false
-  // },
   {
     title: "Input Data",
     icon: "edit-2-outline",
@@ -175,20 +150,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Employee-Registration',
-    icon: 'edit-2-outline',
-    link: '/pages/registration',
+    title: "Employee-Registration",
+    icon: "browser-outline",
+    link: "/pages/registration",
     hidden: false,
   },
   {
-    title: 'Attendance',
-    icon: 'edit-2-outline',
-    link: '/pages/attendance',
+    title: "Attendance",
+    icon: "clipboard-outline",
+    link: "/pages/attendance",
+    hidden: false,
+  },
+  {
+    title: "Purchase",
+    icon: "shopping-bag-outline",
+    link: "/pages/purchase",
     hidden: false,
   },
   {
     title: "Report",
-    icon: "award-outline",
+    icon: "pie-chart-outline",
     link: "/pages/report",
     hidden: false,
   },

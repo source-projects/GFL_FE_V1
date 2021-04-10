@@ -107,9 +107,6 @@
                                     </ng-option>
                                 </ng-select>
                             </div>
-                            <!-- <div class="text-danger" *ngIf="formSubmitted && hasDropDownError1()">
-                <span>Batch Name is required.</span>
-              </div> -->
                         </div>
 
                         <div class="col-md-6" [hidden]="flag">
@@ -172,7 +169,7 @@
                                                 <span class="t-12">Total</span>
                                             </div>
                                             <div class="col-md-5 col-5 jus-con-center">
-                                                <input type="text" placeholder="Enter Batch Id" formControlName="newBatchName" [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">
+                                                <label [hidden]="btnFlag" class="mtr-wei enter-batch-id-2">Batch Id : {{currentBatchSequence}}</label>
 
                                             </div>
 

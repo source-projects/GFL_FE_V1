@@ -47,7 +47,6 @@ export class AddEditColorComponent implements OnInit {
   convertedDate2: any;
 
   maxDate: any;
-  // const isDisabled = (date: NgbDate, current: {month: number}) => day.date === 13;
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -95,12 +94,10 @@ export class AddEditColorComponent implements OnInit {
                 if (data["success"]) {
                   this.supplierListRate = data["data"];
                 } else {
-                  // this.toastr.error(data['msg'])
                 }
                 this.loading = false;
               },
               (error) => {
-                // this.toastr.error(errorData.Serever_Error)
                 this.loading = false;
               }
             );
@@ -119,7 +116,6 @@ export class AddEditColorComponent implements OnInit {
           });
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error)
           this.loading = false;
         }
       );
@@ -133,12 +129,10 @@ export class AddEditColorComponent implements OnInit {
         if (data["success"]) {
           this.supplierList = data["data"];
         } else {
-          // this.toastr.error(data['msg'])
         }
         this.loading = false;
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -156,12 +150,10 @@ export class AddEditColorComponent implements OnInit {
               if (data["success"]) {
                 this.supplierListRate = data["data"];
               } else {
-                // this.toastr.error(data['msg'])
               }
               this.loading = false;
             },
             (error) => {
-              // this.toastr.error(errorData.Serever_Error)
               this.loading = false;
             }
           );

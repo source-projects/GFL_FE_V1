@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
+import { AdminService } from "../../../@theme/services/admin.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
-import { ToastRef, ToastrService } from "ngx-toastr";
-import { AdminService } from "../../../@theme/services/admin.service";
 
 @Component({
   selector: "ngx-add-edit-quality",
@@ -150,7 +150,6 @@ export class AddEditQualityComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          // this.toastr.error(errorData.Serever_Error)
           this.loading = false;
         }
       );
@@ -165,12 +164,10 @@ export class AddEditQualityComponent implements OnInit {
           this.party = data["data"];
           this.loading = false;
         } else {
-          // this.toastr.error(data['msg'])
           this.loading = false;
         }
       },
       (error) => {
-        // this.toastr.error(errorData.Serever_Error)
         this.loading = false;
       }
     );
@@ -191,7 +188,6 @@ export class AddEditQualityComponent implements OnInit {
     this.addEditQualityForm.controls["qualityType"].reset("Fabric");
   }
   setQualityName(id) {
-    console.log(id);
     this.qualityNameList.forEach((element) => {
       if (element.id == id) {
         this.addEditQualityForm.value.qualityName = element.qualityName;
@@ -221,7 +217,6 @@ export class AddEditQualityComponent implements OnInit {
           this.disableButton = false;
         },
         (error) => {
-          this.toastr.error(errorData.Serever_Error);
           this.disableButton = false;
         }
       );

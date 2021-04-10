@@ -59,11 +59,10 @@
                             <label class="required">User Name</label>
                             <input name="userName" fieldsize="small" nbinput class="form-control size-small"
                                 (change)="checkUserName()" [(ngModel)]="user.userName" required #userName1="ngModel"
-                                [ngClass]="{'is-invalid': (userName1.invalid)&&(formSubmitted || userName1.touched)}" />
+                                [ngClass]="{'is-invalid': ((userName1.invalid)&&(formSubmitted || userName1.touched) || userNameExist)}" />
                             <div class="input-required" *ngIf="userNameExist">
                                 <span>User Name is already Exist </span>
                             </div>
-
 
                             <div class="input-required"
                                 *ngIf="(userName1.invalid)&&(formSubmitted || userName1.touched)">
@@ -139,9 +138,9 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select name="departmenty" appendTo="body" #department1="ngModel"
+                            <ng-select name="departmenty" appendTo="body" #department1="ngModel" [disabled]="currentUserId"
                                 [(ngModel)]="user.departmentId" [items]="departmentList" bindLabel="name" bindValue="id"
-                                placeholder="Select Department" required
+                                placeholder="Select Department" required (change)="departmentSelected($event)"
                                 [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
                                 class="required-error-dropdown dropdown-name">
                             </ng-select>
@@ -155,11 +154,10 @@
                         <div class="form-group">
                             <label class="required">Designation</label>
                             <ng-select name="designation" appendTo="body" #designation1="ngModel"
-                                [(ngModel)]="user.designationId" [disabled]="currentUserId"
+                                [(ngModel)]="user.designationId" [disabled]="!user.departmentId || currentUserId"
                                 [ngClass]="{'is-invalid': (designation1.invalid)&&(formSubmitted || designation1.touched)}"
-                                placeholder="Select Designation" required class="required-error-dropdown dropdown-name"
-                                (change)="designationSelected($event)">
-                                <ng-option *ngFor="let dsgn of designationList" [value]="dsgn.id">{{dsgn.designation}}
+                                placeholder="Select Designation" required class="required-error-dropdown dropdown-name">
+                                <ng-option *ngFor="let dsgn of designationList | designationFilter: isHeadAvailable" [value]="dsgn.id">{{dsgn.designation}}
                                 </ng-option>
                             </ng-select>
                             <div class="input-required"
@@ -170,39 +168,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4" *ngIf="!isMasterFlag && user.isMaster">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="assign" [(ngModel)]="user.isUserHead"
-                                [disabled]="currentUserId || teamMemberFlag"
-                                class="form-control nb-check-user border-none">Assign Under Group Head
-                            </nb-checkbox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label></label>
-                            <nb-checkbox name="assign1" [(ngModel)]="user.isMaster"
-                                [disabled]="currentUserId || isLoggedInAsMaster"
-                                class="form-control nb-check-user border-none">Is Master Group
-                            </nb-checkbox>
-                        </div>
-                    </div>
-                    <div class="col-md-4" *ngIf="user.isUserHead && user.isMaster">
-                        <div class="form-group">
-                            <label class="required">User Head List</label>
-                            <select name="userHeadId" class="form-control dropdown-name" #userHeadListValue="ngModel"
-                                [(ngModel)]="user.userHeadId" required [disabled]="currentUserId"
-                                [ngClass]="{'is-invalid': (userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)}">
-                                <option *ngFor="let head of userHeadList" [ngValue]="head.id">{{head.userName}}
-                                </option>
-                            </select>
-                            <div class="input-required"
-                                *ngIf="(userHeadListValue.invalid)&&(formSubmitted || userHeadListValue.touched)">
-                                <span>UserHead is required.</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-4" *ngIf="currentUserId">
                         <div class="form-group">
                             <nb-checkbox name="assign" [checked]="false" [(ngModel)]="isChangePass"
@@ -268,21 +233,23 @@
                         (change)="checkUncheckSelectAll(perm.viewGroup,i,'viewGroup')"></nb-checkbox>
                 </td>
                 <td>
-                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
-                        (change)="checkUncheckSelectAll(perm.viewAll,i,'viewAll')"></nb-checkbox>
-                </td>
-                <td>
                     <nb-checkbox [(ngModel)]="perm.editGroup" [name]="perm.module+'editGroup'"
                         (change)="checkUncheckSelectAll(perm.editGroup,i,'editGroup')"></nb-checkbox>
-                </td>
-                <td>
-                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
-                        (change)="checkUncheckSelectAll(perm.editAll,i,'editAll')"></nb-checkbox>
                 </td>
                 <td>
                     <nb-checkbox [(ngModel)]="perm.deleteGroup" [name]="perm.module+'deleteGroup'"
                         (change)="checkUncheckSelectAll(perm.deleteGroup,i,'deleteGroup')"></nb-checkbox>
                 </td>
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.viewAll" [name]="perm.module+'viewAll'"
+                        (change)="checkUncheckSelectAll(perm.viewAll,i,'viewAll')"></nb-checkbox>
+                </td>
+                
+                <td>
+                    <nb-checkbox [(ngModel)]="perm.editAll" [name]="perm.module+'editAll'"
+                        (change)="checkUncheckSelectAll(perm.editAll,i,'editAll')"></nb-checkbox>
+                </td>
+                
                 <td>
                     <nb-checkbox [(ngModel)]="perm.deleteAll" [name]="perm.module+'deleteAll'"
                         (change)="checkUncheckSelectAll(perm.deleteAll,i,'deleteAll')"></nb-checkbox>
