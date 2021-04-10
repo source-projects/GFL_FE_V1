@@ -24,7 +24,7 @@ export class TaskComponent implements OnInit {
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
 
-  radioSelect = 0;
+  radioSelect = 1;
   radioArray = [
     { id: 1, value: "All"},
     { id: 2, value: "Assigned by me"},
@@ -61,6 +61,7 @@ export class TaskComponent implements OnInit {
   filterDate;
   currentDate;
   datePipeString;
+  refreshPipeCount = 0;
 
   constructor(
     private modalService: NgbModal,
@@ -100,24 +101,33 @@ export class TaskComponent implements OnInit {
 
   onChange(event) {
     //this.assignCardDetail = [];
-    // this.getAssignCardDetail();
+    //this.getAssignCardDetail();
 
-    // switch (event) {
-    //   case 1:
-
-       
-    //     break;
-
-    //   case 2:
-    //     this.getAllUser(this.userId, "group");
+    switch (event) {
+      case 1:
         
-    //     break;
+        break;
 
-    //   case 3:
-    //     this.getAllUser(0, "all");
+      case 2:
         
-    //     break;
-    // }
+        break;
+
+      case 3:
+        
+        break;
+    }
+  }
+
+  getAllTasks(){
+
+  }
+
+  getSameUserTasks(){
+
+  }
+
+  getOthersAssignedTasks(){
+
   }
 
 
@@ -143,6 +153,8 @@ export class TaskComponent implements OnInit {
   }
 
   showCardAccordingToStatus(value) {
+    
+
     switch (value) {
       case "all":
         this.allFlag = true;
@@ -151,6 +163,8 @@ export class TaskComponent implements OnInit {
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
+
+        
         break;
       case "assign":
        // this.assignCardDetail = [];
@@ -160,13 +174,7 @@ export class TaskComponent implements OnInit {
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
-        this.assignCardDetail = this.assignCardDetail.filter( ele => {
-          this.datePipeString = this.datePipe.transform(ele.taskDate, 'yyyy-MM-dd');
-          if(this.datePipeString == this.currentDate){
-            return true;
-          }
-        })
-
+      
         break;
       case "complete":
         this.allFlag = false;
@@ -175,6 +183,8 @@ export class TaskComponent implements OnInit {
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
+
+       
         break;
       case "approved":
         this.allFlag = false;
@@ -183,6 +193,8 @@ export class TaskComponent implements OnInit {
         this.approvedFlag = true;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
+
+       
         break;
       case "notApproved":
         this.allFlag = false;
@@ -192,6 +204,8 @@ export class TaskComponent implements OnInit {
         this.notApprovedFlag = true;
         this.blockerFlag = false;
         break;
+
+       
       case "blocker":
         this.allFlag = false;
         this.assignFlag = false;
@@ -199,6 +213,8 @@ export class TaskComponent implements OnInit {
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = true;
+
+        
         break;
     }
   }
@@ -235,6 +251,10 @@ export class TaskComponent implements OnInit {
 
   //filter Data according to date
   filteredCardDetailByDate(event, value) {
+    this.refreshPipeCount++;
+    if(this.refreshPipeCount > 10){
+      this.refreshPipeCount = 0;
+    }
     this.currentDate = event.target.value;
     // switch (value) {
     //   //filter card for assign status
