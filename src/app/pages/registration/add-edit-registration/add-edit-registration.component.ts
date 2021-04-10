@@ -20,6 +20,14 @@ import { RegistrationService } from "../../../@theme/services/registration.servi
   styleUrls: ["./add-edit-registration.component.scss"],
 })
 export class AddEditRegistrationComponent implements OnInit {
+
+  docAdd = [];
+  docUpdate = [];
+  imageIndexFordocAdd = 0;
+  imageIndexFordocUpdate = 0;
+  imagePreviewFordocAdd:boolean = false;
+  imagePreviewFordocUpdate:boolean = false;
+
   imgLoading = false;
   processValue: number = 0;
   uploadFlag: boolean = false;
@@ -76,6 +84,8 @@ export class AddEditRegistrationComponent implements OnInit {
     if (this.currentEmpId) {
       this.getCurrentEmpData();
     }
+    this.imagePreviewFordocAdd = false;
+
   }
 
   public getUserId() {
@@ -85,6 +95,7 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   getCurrentEmpData() {
+    this.docUpdate = [];
     this.registrationService
       .getEmployeeById(this.currentEmpId)
       .subscribe((data) => {
@@ -95,9 +106,12 @@ export class AddEditRegistrationComponent implements OnInit {
             if (element.type == "profile") {
               this.imageUrl = element.url;
             }else{
-              this.document = element.name;
+              this.docUpdate.push(element.url);
             }
           });
+
+          this.imagePreviewFordocUpdate = true;
+
         }
       }),
       (error) => {
@@ -105,20 +119,37 @@ export class AddEditRegistrationComponent implements OnInit {
       };
   }
 
-  compressFile(): any {
-    this.imageCompress
-      .compressFile(this.imageUrl, -1, 50, 50)
-      .then((result) => {
-        this.imgResultAfterCompress = result;
-        const imageBlob = this.dataURItoBlob(
-          this.imgResultAfterCompress.split(",")[1]
-        );
-
-        this.imageFile = new File([result], this.fileToUpload.name, {
-          type: "image/jpeg",
-        });
-        this.fileUpload();
-      });
+  compressFile(type): any {
+    if(type == "profile"){
+      this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
+        result => {
+          this.imgResultAfterCompress = result;
+          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
+  
+          const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+  
+          this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+          //console.log(this.imageFile);
+          //return imageFile;
+          this.fileUpload();
+        }
+      );
+    }
+    else{
+      this.imageCompress.compressFile(this.docUrl, -1, 50, 50).then(
+        result => {
+          this.imgResultAfterCompress = result;
+          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
+  
+          const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+  
+          this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+          //console.log(this.imageFile);
+          //return imageFile;
+          this.fileUpload();
+        }
+      );
+    }
   }
 
   dataURItoBlob(dataURI) {
@@ -133,7 +164,10 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   fileUpload() {
-    this.loading = true;
+    // this.loading = true;
+
+    this.docAdd = [];
+    this.docUpdate = [];
 
     if (this.imageFile) {
       this.fileToUpload = this.imageFile;
@@ -183,15 +217,32 @@ export class AddEditRegistrationComponent implements OnInit {
           };
           console.log(obj);
           this.employeeDocumentArray.push(obj);
+          this.docList.push(obj);
 
-          this.imgLoading = false;
+          this.docList
+          .forEach(ele => {
+            if (!this.currentEmpId) {
+              if (ele.type == "document") {
+                this.docAdd.push(ele.url);
+                this.imageIndexFordocAdd = 0;
+              }
+              this.imagePreviewFordocAdd = true;
+            }
+            else {
+              if (ele.type == "document") {
+                this.docUpdate.push(ele.url);
+                this.imageIndexFordocUpdate = 0;
+              }
+            }
+          })
+          // this.imgLoading = false;
         }
       });
     }
 
-    this.loading = false;
+    // this.loading = false;
 
-    this.loading = false;
+    // this.loading = false;
   }
   handleFileInput(files: FileList, type) {
     this.uploadFlag = false;
@@ -204,16 +255,23 @@ export class AddEditRegistrationComponent implements OnInit {
     }
     this.docType = type;
     this.document = this.fileToUpload.name;
-    if (this.docType == "profile") {
+    if(type == "profile"){
       const reader = new FileReader();
-      reader.onload = () => {
-        this.imageUrl = reader.result as string;
-        this.compressFile();
-      };
-      reader.readAsDataURL(this.fileToUpload);
-    } else {
-      this.compressFile();
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+      this.compressFile(type);
     }
+    reader.readAsDataURL(this.fileToUpload)
+    }
+    else{
+      const reader = new FileReader();
+    reader.onload = () => {
+      this.docUrl = reader.result as string;
+      this.compressFile(type);
+    }
+    reader.readAsDataURL(this.fileToUpload)
+    }
+    
   }
 
   reset(form) {
@@ -225,38 +283,45 @@ export class AddEditRegistrationComponent implements OnInit {
   updateEmployee(form) {
     this.formSubmitted = true;
     this.disableButton = true;
-    if (form.valid || !this.document) {
-      this.registration.id = this.currentEmpId;
-      if (this.employeeDocumentArray.length > 0) {
-        this.employeeDocumentArray.forEach((ele, i) => {
-          if (ele.type == "profile") {
-            this.docList[i] = ele;
-          } else if (ele.type == "document") {
-            this.docList[i] = ele;
-          }
-        });
-      }
-
-      this.registration.employeeDocumentList = this.docList;
-
-      this.registrationService.updateEmployee(this.registration).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.formSubmitted = false;
-            this.disableButton = false;
-            this.toastr.success(data["msg"]);
-            this.reset(form);
-          } else {
-            this.toastr.error(data["msg"]);
-          }
-          this.disableButton = false;
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-          this.disableButton = false;
+    if(this.docUpdate.length){
+      if (this.registration.name) {
+        this.registration.id = this.currentEmpId;
+        if (this.docList.length > 0) {
+          this.docList.forEach((ele, i) => {
+            if (ele.type == "profile") {
+              this.docList[i] = ele;
+            } else if (ele.type == "document") {
+              this.docList[i] = ele;
+            }
+          });
         }
-      );
+  
+        this.registration.employeeDocumentList = this.docList;
+  
+        this.registrationService.updateEmployee(this.registration).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.formSubmitted = false;
+              this.toastr.success(data["msg"]);
+              this.route.navigate(["/pages/registration"]);
+              // this.reset(form);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+            this.disableButton = false;
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
+          }
+        );
+      }else {
+        this.disableButton = false;
+      }  
     }
+    else{
+      this.disableButton = false;
+    }
+    
   }
   downloadImage() {
     this.href = document.getElementsByTagName("img")[0].src;
@@ -315,6 +380,8 @@ export class AddEditRegistrationComponent implements OnInit {
             this.formSubmitted = false;
             this.disableButton = false;
             this.toastr.success(data["msg"]);
+            this.docAdd = [];
+            this.processValue = 0;
             this.loading = false;
 
             this.generateQR(this.emp_id);
@@ -361,4 +428,72 @@ export class AddEditRegistrationComponent implements OnInit {
       }
     );
   }
+
+  removeImage(type, index) {
+    if (type == "docAdd") {
+      let rem = this.docAdd.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.url == rem){
+          this.docList.splice(index,1)
+        }
+      })
+      if(this.docAdd.length == index){
+        this.imageIndexFordocAdd--;    
+      }
+      this.docAdd = [...this.docAdd];
+    }
+    else if(type == "docUpdate"){
+      let rem = this.docUpdate.splice(index,1);
+      this.docList.forEach((ele,index)=>{
+        if(ele.url == rem){
+          this.docList.splice(index,1)
+        }
+      })
+      
+      if(this.docUpdate.length == index){
+        this.imageIndexFordocUpdate--;    
+      }
+      this.docUpdate = [...this.docUpdate];
+    }
+  }
+
+  previous(type){
+
+    if(type == "docAdd"){
+      if(this.imageIndexFordocAdd){
+        this.imageIndexFordocAdd--;
+      }
+      else{
+        this.imageIndexFordocAdd = this.docAdd.length - 1;
+      }
+    }
+    else if(type == "docUpdate"){
+      if(this.imageIndexFordocUpdate){
+        this.imageIndexFordocUpdate--;
+      }
+      else{
+        this.imageIndexFordocUpdate = this.docUpdate.length - 1;
+      }
+    }
+  }
+
+  next(type){
+
+    if(type == "docAdd"){
+      if(this.imageIndexFordocAdd < (this.docAdd.length - 1)){
+        this.imageIndexFordocAdd++;
+      }
+      else{
+        this.imageIndexFordocAdd = 0;
+      }
+    }
+    else if(type == "docUpdate"){
+      if(this.imageIndexFordocUpdate < (this.docUpdate.length - 1)){
+        this.imageIndexFordocUpdate++;
+      }
+      else{
+        this.imageIndexFordocUpdate = 0;
+      }
+    }
+   }
 }
