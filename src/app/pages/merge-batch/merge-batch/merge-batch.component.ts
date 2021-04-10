@@ -268,6 +268,7 @@ export class MergeBatchComponent implements OnInit {
                   this.showMergeBox = false;
                   this.resetForm(myForm);
                 }
+                this.loading = false;
               },
               (error) => {
                 this.loading = false;
@@ -287,6 +288,7 @@ export class MergeBatchComponent implements OnInit {
                   this.showMergeBox = false;
                   this.resetForm(myForm);
                 }
+                this.loading = false;
               },
               (error) => {
                 this.loading = false;
