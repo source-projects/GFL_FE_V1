@@ -91,16 +91,75 @@
                                     [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
 
-                            <input type="file" name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
+                            <input type="file" multiple name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
                                 required [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}" accept="image/x-png,image/gif,image/jpeg">
 
-                            <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
-                            <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label>
+                            <!-- <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
+                            <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label> -->
                             <div class="input-required" *ngIf="document1.invalid
                                        &&
                                        (formSubmitted || document1.touched)">
                                 <span>Document is required</span>
                             </div>
+                            <ng-container *ngIf="!currentEmpId">
+                                <ng-container *ngIf="imagePreviewFordocAdd && docAdd.length">
+                                  <div class="max-popup-purchase mobile-width-100">
+                                      <div *ngFor="let url of docAdd | imagePreviewPipe : imageIndexFordocAdd; let i = index" class="text-center mobile-100">
+                                          <img [src]="url">
+                                          <nb-icon icon="close-circle-outline" (click)="removeImage('docAdd',imageIndexFordocAdd)"></nb-icon>
+                                      </div>
+                                      <div class="next-previous-btn">
+                                          <div class="back-btn">
+                                              <nb-icon icon="arrow-back-outline" (click)="previous('docAdd')"></nb-icon>
+                                          </div>
+                      
+                                          <div class="next-btn">
+                                              <nb-icon icon="arrow-forward-outline" (click)="next('docAdd')"></nb-icon>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div>
+                                      <div class="row text-center mt-3">
+                                          <div class="col-md-12">
+                                              <span class="bottom-count-img">
+                                              {{imageIndexFordocAdd + 1}} / {{docAdd.length}}
+                                             </span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </ng-container>
+                              </ng-container>
+                              <ng-container *ngIf="currentEmpId">
+      
+                                  <ng-container *ngIf="imagePreviewFordocUpdate && docUpdate.length">
+                                      <div class="max-popup-purchase mobile-width-100">
+                                          <div *ngFor="let url of docUpdate | imagePreviewPipe : imageIndexFordocUpdate; let i = index" class="text-center mobile-100">
+                                              <img [src]="url">
+                                              <nb-icon icon="close-circle-outline" (click)="removeImage('docUpdate',imageIndexFordocUpdate)"></nb-icon>
+                                          </div>
+                                          <div class="next-previous-btn">
+                                              <div class="back-btn">
+                                                  <nb-icon icon="arrow-back-outline" (click)="previous('docUpdate')"></nb-icon>
+                                              </div>
+                          
+                                              <div class="next-btn">
+                                                  <nb-icon icon="arrow-forward-outline" (click)="next('docUpdate')"></nb-icon>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div>
+                                          <div class="row text-center mt-3">
+                                              <div class="col-md-12">
+                                                  <span class="bottom-count-img">
+                                                  {{imageIndexFordocUpdate + 1}} / {{docUpdate.length}}
+                                                 </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </ng-container>
+      
+                              </ng-container>
+    
                         </div>
                     </div>
 

@@ -233,9 +233,11 @@ export class AddEditPurchaseComponent implements OnInit {
               if (!this.currentId) {
                 if (ele.type == "bill") {
                   this.invurl.push(ele.picUrl);
+                  this.imageIndexForinvAdd = 0;
                 }
                 else {
                   this.maturl.push(ele.picUrl);
+                  this.imageIndexFormatAdd = 0;
                 }
 
                 this.imgPreviewForinvAdd = true;
