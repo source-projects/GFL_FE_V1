@@ -1,7 +1,7 @@
 <ngx-loading [show]="loading"></ngx-loading>
 
 <div id="target"></div>
-<nb-card class="nb-style">
+<nb-card class="nb-style" *ngIf="employeeDetail && attendance">
     <nb-card-header class="nb-header">
 
         <div class="row">
@@ -49,7 +49,7 @@
                                             <span class="view-title">Employee Name: </span>
                                         </div>
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <span class="view-ans">{{currentData.name}}</span>
+                                            <span class="view-ans">{{employeeDetail.name}}</span>
                                         </div>
                                     </div>
 
@@ -64,7 +64,7 @@
                                             <span class="view-title">Phone No: </span>
                                         </div>
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <span class="view-ans">{{currentData.contact}}</span>
+                                            <span class="view-ans">{{employeeDetail.contact}}</span>
                                         </div>
                                     </div>
 
@@ -80,7 +80,7 @@
                                             <span class="view-title">Aadhar Card No: </span>
                                         </div>
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <span class="view-ans">{{currentData.aadhaar}}</span>
+                                            <span class="view-ans">{{employeeDetail.aadhaar}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -142,10 +142,10 @@
                                     <div class="row">
 
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <span class="view-title">Day Shift: </span>
+                                            <span class="view-title">Shift: </span>
                                         </div>
                                         <div class=" col-md-12 col-6 mobile-pdl-0">
-                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="attendance.shift"></nb-toggle>
+                                            <nb-toggle status="primary" (change)="shiftChanged()" labelPosition="start" name="shift" [(ngModel)]="attendance.shift"></nb-toggle>
                                         </div>
 
                                     </div>

@@ -14,7 +14,12 @@ export class Attendance{
   createdBy : number;
   createdDate : Date;
   id : number;
-  shift : boolean = false;
+  shift : boolean;
+
+  constructor(){
+    this.date = new Date();
+    this.shift = false;
+  }
   
 }
 @Component({
@@ -36,6 +41,7 @@ export class AttendanceComponent implements OnInit {
   date;
   todayDate;
   currentDate = new Date();
+  employeeDetail: any;
   attendance : Attendance = new Attendance();
   constructor(
     private commonService: CommonService,
@@ -56,15 +62,46 @@ export class AttendanceComponent implements OnInit {
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
     this.date = new Date(this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000).toISOString();
-
-    
+    this.attendance.date = this.date;
+  }
+  
+  shiftChanged(){
+    let obj = {
+      date: this.date,
+      shift: this.attendance.shift,
+      id: this.currentEmpId
+    }
+    this.registrationService.getAttendenceByEmpId(obj).subscribe(
+      data=>{
+        if(data['success']){
+          //this.employeeDetail = data['data'].employeeMast;
+          this.attendance = data["data"].attendanceLatest;
+          if(this.attendance.inTime){
+            this.disableIn = true;
+          }
+          if(this.attendance.outTime){
+            this.disableOut = true;
+          }
+         
+          // this.employeeDetail.employeeDocumentList.forEach(element => {
+          //   if(element.type == "profile"){
+          //     this.profileUrl = element.url;
+          //   }
+          // });
+        }
+        else{
+          this.toastr.error(data['msg']);
+        }
+      }
+    )
   }
 
   getEmployeeById(){
+
     this.registrationService.getAttendanceByEmployeeId(this.currentEmpId).subscribe(
       (data) => {
         if (data["success"]) {
-          this.currentData = data["data"].employeeMast;
+          this.employeeDetail = data["data"].employeeMast;
           this.attendance = data["data"].attendanceLatest;
         
          
@@ -75,7 +112,7 @@ export class AttendanceComponent implements OnInit {
             this.disableOut = true;
           }
          
-          this.currentData.employeeDocumentList.forEach(element => {
+          this.employeeDetail.employeeDocumentList.forEach(element => {
             if(element.type == "profile"){
               this.profileUrl = element.url;
             }
