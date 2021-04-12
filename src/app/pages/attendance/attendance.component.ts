@@ -13,6 +13,8 @@ export class Attendance{
   outTime : Date;
   createdBy : number;
   createdDate : Date;
+  updatedDate: Date;
+  updatedBy: number;
   id : number;
   shift : boolean;
 
@@ -76,11 +78,16 @@ export class AttendanceComponent implements OnInit {
         if(data['success']){
           //this.employeeDetail = data['data'].employeeMast;
           this.attendance = data["data"].attendanceLatest;
+          this.attendance.shift = obj.shift;
           if(this.attendance.inTime){
             this.disableIn = true;
+          }else{
+            this.disableIn = false;
           }
           if(this.attendance.outTime){
             this.disableOut = true;
+          }else{
+            this.disableOut = false;
           }
          
           // this.employeeDetail.employeeDocumentList.forEach(element => {
@@ -107,9 +114,13 @@ export class AttendanceComponent implements OnInit {
          
           if(this.attendance.inTime){
             this.disableIn = true;
+          }else{
+            this.disableIn = false;
           }
           if(this.attendance.outTime){
             this.disableOut = true;
+          }else{
+            this.disableOut = false;
           }
          
           this.employeeDetail.employeeDocumentList.forEach(element => {
@@ -147,11 +158,15 @@ export class AttendanceComponent implements OnInit {
 
   addAttendance(){
     this.attendance.controlId = this.currentEmpId;
-
+    if(!this.attendance.shift){
+      this.attendance.shift = false;
+    }
+      
     this.registrationService.addAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
           this.toastr.success(data['msg']);
+          this.attendance.id = data['data'];
         }
       },
       (error)=>{
@@ -163,6 +178,8 @@ export class AttendanceComponent implements OnInit {
   }
 
   updateAttendance(){
+    this.attendance.controlId = this.currentEmpId;
+    this.attendance.updatedBy = this.user.userId;
     this.registrationService.updateAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
@@ -170,9 +187,6 @@ export class AttendanceComponent implements OnInit {
         }
       },
       (error)=>{
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
       }
     )
   }
