@@ -167,9 +167,9 @@
                                     [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
                             <div class="">
-                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="bill" multiple style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel" (change)="handleFileInput($event.target.files,'bill')"
-                                    required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
-                          
+                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="bill" multiple style=" color: transparent; " class="form-control size-small registration-document filepicker width-100" id="bill" placeholder="Upload invoice" [(ngModel)]="bill" #bill1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'bill')" required [ngClass]="{'is-invalid':(bill1.invalid) &&(formSubmitted || bill1.touched)}">
+
                                 <div class="input-required" *ngIf="bill1.invalid
                                            &&
                                            (formSubmitted || bill1.touched)">
@@ -178,46 +178,46 @@
                             </div>
                         </div>
                         <ng-container *ngIf="!currentId">
-                          <ng-container *ngIf="imgPreviewForinvAdd && invurl.length">
-                            <div class="max-popup-purchase mobile-width-100">
-                                <div *ngFor="let url of invurl | imagePreviewPipe : imageIndexForinvAdd; let i = index" class="text-center mobile-100">
-                                    <img [src]="url">
-                                    <nb-icon icon="close-circle-outline" (click)="removeImage('invAdd',imageIndexForinvAdd)"></nb-icon>
-                                </div>
-                                <div class="next-previous-btn">
-                                    <div class="back-btn">
-                                        <nb-icon icon="arrow-back-outline" (click)="previous('invAdd')"></nb-icon>
+                            <ng-container *ngIf="imgPreviewForinvAdd && invurl.length">
+                                <div class="max-popup-purchase mobile-width-100">
+                                    <div *ngFor="let url of invurl | imagePreviewPipe : imageIndexForinvAdd; let i = index" class="text-center mobile-100 display-flex-purchase-view">
+                                        <img [src]="url">
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('invAdd',imageIndexForinvAdd)"></nb-icon>
                                     </div>
-                
-                                    <div class="next-btn">
-                                        <nb-icon icon="arrow-forward-outline" (click)="next('invAdd')"></nb-icon>
+                                    <div class="next-previous-btn">
+                                        <div class="back-btn">
+                                            <nb-icon icon="arrow-back-outline" (click)="previous('invAdd')"></nb-icon>
+                                        </div>
+
+                                        <div class="next-btn">
+                                            <nb-icon icon="arrow-forward-outline" (click)="next('invAdd')"></nb-icon>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="row text-center mt-3">
-                                    <div class="col-md-12">
-                                        <span class="bottom-count-img">
+                                <div>
+                                    <div class="row text-center mt-3">
+                                        <div class="col-md-12">
+                                            <span class="bottom-count-img">
                                         {{imageIndexForinvAdd + 1}} / {{invurl.length}}
                                        </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                          </ng-container>
+                            </ng-container>
                         </ng-container>
                         <ng-container *ngIf="currentId">
 
                             <ng-container *ngIf="imgPreviewForinvUpdate && invUpdateurl.length">
                                 <div class="max-popup-purchase mobile-width-100">
-                                    <div *ngFor="let url of invUpdateurl | imagePreviewPipe : imageIndexForinvUpdate; let i = index" class="text-center mobile-100">
+                                    <div *ngFor="let url of invUpdateurl | imagePreviewPipe : imageIndexForinvUpdate; let i = index" class="text-center mobile-100 display-flex-purchase-view">
                                         <img [src]="url">
-                                        <nb-icon icon="close-circle-outline" (click)="removeImage('invUpdate',imageIndexForinvUpdate)"></nb-icon>
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('invUpdate',imageIndexForinvUpdate)"></nb-icon>
                                     </div>
                                     <div class="next-previous-btn">
                                         <div class="back-btn">
                                             <nb-icon icon="arrow-back-outline" (click)="previous('invUpdate')"></nb-icon>
                                         </div>
-                    
+
                                         <div class="next-btn">
                                             <nb-icon icon="arrow-forward-outline" (click)="next('invUpdate')"></nb-icon>
                                         </div>
@@ -245,8 +245,8 @@
                                     [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
                             <div class="">
-                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
-                                     [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
+                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'material')" [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
                                 <!-- <div class="input-required" *ngIf="material1.invalid
                                            &&
                                            (formSubmitted || material1.touched)">
@@ -258,15 +258,15 @@
 
                             <ng-container *ngIf="imgPreviewFormatAdd && maturl.length">
                                 <div class="max-popup-purchase mobile-width-100">
-                                    <div *ngFor="let url of maturl | imagePreviewPipe : imageIndexFormatAdd; let i = index" class="text-center mobile-100">
+                                    <div *ngFor="let url of maturl | imagePreviewPipe : imageIndexFormatAdd; let i = index" class="text-center mobile-100 display-flex-purchase-view">
                                         <img [src]="url">
-                                        <nb-icon icon="close-circle-outline" (click)="removeImage('matAdd',imageIndexFormatAdd)"></nb-icon>
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('matAdd',imageIndexFormatAdd)"></nb-icon>
                                     </div>
                                     <div class="next-previous-btn">
                                         <div class="back-btn">
                                             <nb-icon icon="arrow-back-outline" (click)="previous('matAdd')"></nb-icon>
                                         </div>
-                    
+
                                         <div class="next-btn">
                                             <nb-icon icon="arrow-forward-outline" (click)="next('matAdd')"></nb-icon>
                                         </div>
@@ -289,15 +289,15 @@
 
                             <ng-container *ngIf="imgPreviewFormatUpdate && matUpdateurl.length">
                                 <div *ngFor="let url of matUpdateurl | imagePreviewPipe : imageIndexFormatUpdate; let i = index" class="max-popup-purchase mobile-width-100">
-                                    <div  class="text-center mobile-100">
+                                    <div class="text-center mobile-100 display-flex-purchase-view">
                                         <img [src]="url">
-                                        <nb-icon icon="close-circle-outline" (click)="removeImage('matUpdate',imageIndexFormatUpdate)"></nb-icon>
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('matUpdate',imageIndexFormatUpdate)"></nb-icon>
                                     </div>
                                     <div class="next-previous-btn">
                                         <div class="back-btn">
                                             <nb-icon icon="arrow-back-outline" (click)="previous('matUpdate')"></nb-icon>
                                         </div>
-                    
+
                                         <div class="next-btn">
                                             <nb-icon icon="arrow-forward-outline" (click)="next('matUpdate')"></nb-icon>
                                         </div>
@@ -339,4 +339,4 @@
             </form>
         </div>
     </nb-card-body>
-</nb-card>  
+</nb-card>
