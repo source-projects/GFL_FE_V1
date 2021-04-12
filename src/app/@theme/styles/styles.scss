@@ -3377,3 +3377,24 @@ ng-select .ng-clear-wrapper {
     border-radius: 7px;
     background: antiquewhite;
 }
+
+.display-flex-purchase-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    padding: 21px;
+    border: 2px solid #e2e2e2;
+}
+
+.purchase-close-img {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+}
+
+.display-flex-purchase-view img {
+    width: 298px;
+    height: auto;
+}
