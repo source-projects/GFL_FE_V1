@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { throwIfAlreadyLoaded } from 'src/app/@core/module-import-guard';
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from '../../@theme/services/common.service';
 import { RegistrationService } from '../../@theme/services/registration.service';
@@ -13,6 +14,8 @@ export class Attendance{
   outTime : Date;
   createdBy : number;
   createdDate : Date;
+  updatedDate: Date;
+  updatedBy: number;
   id : number;
   shift : boolean;
 
@@ -164,7 +167,7 @@ export class AttendanceComponent implements OnInit {
       (data) => {
         if(data["success"]){
           this.toastr.success(data['msg']);
-
+          this.attendance.id = data['data'];
         }
       },
       (error)=>{
@@ -177,6 +180,7 @@ export class AttendanceComponent implements OnInit {
 
   updateAttendance(){
     this.attendance.controlId = this.currentEmpId;
+    this.attendance.updatedBy = this.user.userId;
     this.registrationService.updateAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
