@@ -245,7 +245,7 @@
                                     [titleFontWeight]="900" [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
                             </ng-container>
                             <div class="">
-                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
+                                <input type="file" multiple accept="image/x-png,image/gif,image/jpeg" name="material" style=" color: transparent;" class="form-control size-small registration-document filepicker width-100" id="material" placeholder="Upload material" [(ngModel)]="material" #material1="ngModel" (change)="handleFileInput($event.target.files,'material')"
                                      [ngClass]="{'is-invalid':(material1.invalid) &&(formSubmitted || material1.touched)}">
                                 <!-- <div class="input-required" *ngIf="material1.invalid
                                            &&

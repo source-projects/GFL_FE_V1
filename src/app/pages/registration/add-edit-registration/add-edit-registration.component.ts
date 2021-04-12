@@ -215,7 +215,6 @@ export class AddEditRegistrationComponent implements OnInit {
             url: response.secure_url,
             controlId: null,
           };
-          console.log(obj);
           this.employeeDocumentArray.push(obj);
           this.docList.push(obj);
 
@@ -223,14 +222,20 @@ export class AddEditRegistrationComponent implements OnInit {
           .forEach(ele => {
             if (!this.currentEmpId) {
               if (ele.type == "document") {
-                this.docAdd.push(ele.url);
+                if(this.docAdd.indexOf(ele.url) == -1){
+                  this.docAdd.push(ele.url);
+                }
+
                 this.imageIndexFordocAdd = 0;
               }
               this.imagePreviewFordocAdd = true;
             }
             else {
               if (ele.type == "document") {
-                this.docUpdate.push(ele.url);
+                if(this.docUpdate.indexOf(ele.url) == -1){
+                  this.docUpdate.push(ele.url);
+                }
+                
                 this.imageIndexFordocUpdate = 0;
               }
             }
@@ -257,19 +262,23 @@ export class AddEditRegistrationComponent implements OnInit {
     this.document = this.fileToUpload.name;
     if(type == "profile"){
       const reader = new FileReader();
-    reader.onload = () => {
+      reader.onload = () => {
       this.imageUrl = reader.result as string;
       this.compressFile(type);
     }
     reader.readAsDataURL(this.fileToUpload)
     }
     else{
-      const reader = new FileReader();
-    reader.onload = () => {
-      this.docUrl = reader.result as string;
-      this.compressFile(type);
-    }
-    reader.readAsDataURL(this.fileToUpload)
+      for(let i=0;i<files.length;i++){
+        this.fileToUpload = files.item(i);
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.docUrl = reader.result as string;
+          this.compressFile(type);
+        }
+        reader.readAsDataURL(this.fileToUpload)
+    
+      }
     }
     
   }
