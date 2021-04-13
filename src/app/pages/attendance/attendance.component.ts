@@ -13,8 +13,15 @@ export class Attendance{
   outTime : Date;
   createdBy : number;
   createdDate : Date;
+  updatedDate: Date;
+  updatedBy: number;
   id : number;
-  shift : boolean = false;
+  shift : boolean;
+
+  constructor(){
+    this.date = new Date();
+    this.shift = false;
+  }
   
 }
 @Component({
@@ -36,6 +43,7 @@ export class AttendanceComponent implements OnInit {
   date;
   todayDate;
   currentDate = new Date();
+  employeeDetail: any;
   attendance : Attendance = new Attendance();
   constructor(
     private commonService: CommonService,
@@ -56,26 +64,66 @@ export class AttendanceComponent implements OnInit {
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
     this.getEmployeeById();
     this.date = new Date(this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000).toISOString();
-
-    
+    this.attendance.date = this.date;
+  }
+  
+  shiftChanged(){
+    let obj = {
+      date: this.date,
+      shift: this.attendance.shift,
+      id: this.currentEmpId
+    }
+    this.registrationService.getAttendenceByEmpId(obj).subscribe(
+      data=>{
+        if(data['success']){
+          //this.employeeDetail = data['data'].employeeMast;
+          this.attendance = data["data"].attendanceLatest;
+          this.attendance.shift = obj.shift;
+          if(this.attendance.inTime){
+            this.disableIn = true;
+          }else{
+            this.disableIn = false;
+          }
+          if(this.attendance.outTime){
+            this.disableOut = true;
+          }else{
+            this.disableOut = false;
+          }
+         
+          // this.employeeDetail.employeeDocumentList.forEach(element => {
+          //   if(element.type == "profile"){
+          //     this.profileUrl = element.url;
+          //   }
+          // });
+        }
+        else{
+          this.toastr.error(data['msg']);
+        }
+      }
+    )
   }
 
   getEmployeeById(){
+
     this.registrationService.getAttendanceByEmployeeId(this.currentEmpId).subscribe(
       (data) => {
         if (data["success"]) {
-          this.currentData = data["data"].employeeMast;
+          this.employeeDetail = data["data"].employeeMast;
           this.attendance = data["data"].attendanceLatest;
         
          
           if(this.attendance.inTime){
             this.disableIn = true;
+          }else{
+            this.disableIn = false;
           }
           if(this.attendance.outTime){
             this.disableOut = true;
+          }else{
+            this.disableOut = false;
           }
          
-          this.currentData.employeeDocumentList.forEach(element => {
+          this.employeeDetail.employeeDocumentList.forEach(element => {
             if(element.type == "profile"){
               this.profileUrl = element.url;
             }
@@ -110,11 +158,15 @@ export class AttendanceComponent implements OnInit {
 
   addAttendance(){
     this.attendance.controlId = this.currentEmpId;
-
+    if(!this.attendance.shift){
+      this.attendance.shift = false;
+    }
+      
     this.registrationService.addAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
           this.toastr.success(data['msg']);
+          this.attendance.id = data['data'];
         }
       },
       (error)=>{
@@ -126,6 +178,8 @@ export class AttendanceComponent implements OnInit {
   }
 
   updateAttendance(){
+    this.attendance.controlId = this.currentEmpId;
+    this.attendance.updatedBy = this.user.userId;
     this.registrationService.updateAttendance(this.attendance).subscribe(
       (data) => {
         if(data["success"]){
@@ -133,9 +187,6 @@ export class AttendanceComponent implements OnInit {
         }
       },
       (error)=>{
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
-        }
       }
     )
   }

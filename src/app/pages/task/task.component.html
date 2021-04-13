@@ -34,7 +34,7 @@
                                 <div class="t-all text-center top-style-task">
 
                                     <span class="main-title-task label-top-task">All</span>
-                                    <span class="main-title-task label-top-task-value">{{allCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
 
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="t-assign text-center top-style-task">
                                     <span class="main-title-task label-top-task">Assigned</span>
-                                    <span class="main-title-task label-top-task-value">{{assignedCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{ (assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="t-completed text-center top-style-task">
                                     <span class="main-title-task label-top-task">Completed</span>
-                                    <span class="main-title-task label-top-task-value">{{completedCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="t-approved text-center top-style-task">
                                     <span class="main-title-task label-top-task">Approved</span>
-                                    <span class="main-title-task label-top-task-value">{{approvedCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="t-notapproved text-center top-style-task">
                                     <span class="main-title-task label-top-task">Not Approved</span>
-                                    <span class="main-title-task label-top-task-value">{{notApprovedCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="t-blocker text-center top-style-task">
                                     <span class="main-title-task label-top-task">Blocker</span>
-                                    <span class="main-title-task label-top-task-value">{{blockerCardCount}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -198,10 +198,41 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-5 mb-5 mobile-mt-bottom">
+                <div class="row">
+                    <div class="col-md-7 col-12">
+                        <div class="display-flex-center-task style-detail-ng-radio">
+                            <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0 mb-0">
+                                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                            </nb-radio-group>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label>Date filter</label>
+                                    <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
+
+                                </div>
+                                <div class="col-md-3 dis-fl">
+                                    <div class="mobile-top-date">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
             <!--All-->
             <div *ngIf="allFlag">
-                <div class="mt-5 mb-3">
+                <!-- <div class="mt-5 mb-3">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -209,24 +240,14 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-                                        <label>Date filter</label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
-
-                                    </div>
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                </div> -->
                 <div class="row" *ngIf="allCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -447,25 +468,14 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-
-                                        <label>Date filter</label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'assign')">
-
-                                    </div>
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('assign')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div class="row" *ngIf="assignedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let assign of assignCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let assign of assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -601,18 +611,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-                                        <label>Date filter  </label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'complete')">
-
-                                    </div>
-
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('complete')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -620,7 +619,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="completedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let complete of completedCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let complete of completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -756,17 +755,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-                                        <label>Date filter</label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'approve')">
-
-                                    </div>
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('approve')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -774,7 +763,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="approvedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let approve of approvedCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let approve of approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -911,17 +900,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-                                        <label>Date filter</label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'notApprove')">
-
-                                    </div>
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('notApprove')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -929,7 +908,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="notApprovedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let notApprove of notApprovedCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let notApprove of notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -1076,17 +1055,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
 
-                                        <label>Date filter</label>
-                                        <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'blocker')">
-
-                                    </div>
-                                    <div class="col-md-4 text-center dis-fl">
-                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('blocker')">Clear</button>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -1094,7 +1063,7 @@
 
                 </div>
                 <div class="row" *ngIf="blockerCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">

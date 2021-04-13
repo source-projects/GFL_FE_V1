@@ -51,6 +51,10 @@ export class RegistrationService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/attendance/latest/byEmployeeId?id='+id);
   }
 
+  getAttendenceByEmpId(data):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/attendance/latest/byEmployeeIdDateAndShift', data)
+  }
+
   deleteEmployee(id): any{
     return this.httpClient.delete(this.commonService.envUrl() + 'api/employee?id='+id);
 

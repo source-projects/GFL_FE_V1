@@ -9,6 +9,7 @@ import { CommonService } from "../../@theme/services/common.service";
 import { ExportService } from "../../@theme/services/export.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
+import { JobCardComponent } from "./job-card/job-card.component";
 
 @Component({
   selector: "ngx-stock-batch",
@@ -265,5 +266,15 @@ export class StockBatchComponent implements OnInit {
     } else {
       this.hiddenEdit = true;
     }
+  }
+
+  printJobCard(data){
+    const modalRef = this.modalService.open(JobCardComponent);
+    modalRef.componentInstance.isDirectPrintFlag=true
+    modalRef.componentInstance.stockBatchData = data;
+    modalRef.componentInstance.stockId = Number(data.id);
+    modalRef.result
+      .then((result) => {
+      })
   }
 }

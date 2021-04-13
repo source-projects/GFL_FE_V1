@@ -227,27 +227,36 @@ export class AddEditPurchaseComponent implements OnInit {
             picUrl: response.secure_url,
             controlId: null
           }
-          this.docList.push(obj);
+          this.docList.push(obj)
           this.docList
             .forEach(ele => {
               if (!this.currentId) {
                 if (ele.type == "bill") {
-                  this.invurl.push(ele.picUrl);
+                  if(this.invurl.indexOf(ele.picUrl) == -1){
+                    this.invurl.push(ele.picUrl);
+                  }
+                  this.imageIndexForinvAdd = 0;
                 }
                 else {
-                  this.maturl.push(ele.picUrl);
+                  if(this.maturl.indexOf(ele.picUrl) == -1){
+                    this.maturl.push(ele.picUrl);
+                  }
+                  this.imageIndexFormatAdd = 0;
                 }
-
                 this.imgPreviewForinvAdd = true;
                 this.imgPreviewFormatAdd = true;
               }
               else {
                 if (ele.type == "bill") {
-                  this.invUpdateurl.push(ele.picUrl);
+                  if(this.invUpdateurl.indexOf(ele.picUrl) == -1){
+                    this.invUpdateurl.push(ele.picUrl);
+                  }
                   this.imageIndexForinvUpdate = 0;
                 }
                 else {
-                  this.matUpdateurl.push(ele.picUrl);
+                  if(this.matUpdateurl.indexOf(ele.picUrl) == -1){
+                    this.matUpdateurl.push(ele.picUrl);
+                  }
                   this.imageIndexFormatUpdate = 0;
                 }
               }
@@ -273,20 +282,22 @@ export class AddEditPurchaseComponent implements OnInit {
       this.matUploadFlag = false;
     }
 
-    this.fileToUpload = files.item(0);
-    if (this.matUploadFlag) {
-      this.material = this.fileToUpload.name;
-    } else {
-      this.bill = this.fileToUpload.name;
+    for(let i=0;i<files.length;i++){
+      this.fileToUpload = files.item(i);
+      if (this.matUploadFlag) {
+        this.material = this.fileToUpload.name;
+      } else {
+        this.bill = this.fileToUpload.name;
+      }
+      this.docType = type;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageUrl = reader.result as string;
+        this.compressFile(type);
+      }
+      reader.readAsDataURL(this.fileToUpload)
+  
     }
-    this.docType = type;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageUrl = reader.result as string;
-      this.compressFile(type);
-    }
-    reader.readAsDataURL(this.fileToUpload)
-
 
   }
 
@@ -299,12 +310,15 @@ export class AddEditPurchaseComponent implements OnInit {
   addPurchase(form) {
     this.disableButton = true;
     this.formSubmitted = true;
-    if (form.valid) {
+    if(this.invurl.length){
+      if (this.purchase.departmentId && this.purchase.amt && this.purchase.approvedById && this.purchase.receiverById) {
+
       this.purchase.createdBy = this.user.userId;
       this.purchase.materialPhotosList = this.docList;
       this.purchseService.addPurchase(this.purchase).subscribe(
         (data) => {
           if (data["success"]) {
+            this.formSubmitted = false;
             this.reset(form);
             this.disableButton = false;
             this.toastr.success(data['msg']);
@@ -325,11 +339,16 @@ export class AddEditPurchaseComponent implements OnInit {
         }
       );
     }
-    else {
+    else{
       this.toastr.error("Fill empty fields");
+    }
+  }
+    else {
+      this.toastr.error("Invoice empty");
 
     }
     this.disableButton = false;
+    this.invurl = [...this.invurl];
 
   }
 
