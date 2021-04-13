@@ -219,7 +219,7 @@
                                                                         (input)="calculateWt(meter1.value,i,rowIndex,0);"
                                                                         [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}"
                                                                         min="0"
-                                                                        [disabled]="flag || production_flag[i] || weightFlag">
+                                                                        [disabled]="flag || row.disable || weightFlag">
                                                                     <div class="input-required display-inlineblock"
                                                                         *ngIf="formSubmitted && (meter1.invalid)"
                                                                         min="0">
@@ -240,7 +240,7 @@
                                                                         (input)="calculateMtr(weight1.value,i,rowIndex,1);"
                                                                         [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
                                                                         min="0"
-                                                                        [disabled]="flag || production_flag[i] || !weightFlag">
+                                                                        [disabled]="flag || row.disable || !weightFlag">
                                                                     <div class="input-required display-inlineblock"
                                                                         *ngIf="formSubmitted && (weight1.invalid)"
                                                                         min="0">

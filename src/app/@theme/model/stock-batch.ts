@@ -30,10 +30,12 @@ export class BatchData {
 export class BatchMrtWt {
   mtr: number;
   wt: number;
+  disable: boolean;
 
-  constructor(m?, w?) {
+  constructor(m?, w?, d?) {
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;
+    d? (this.disable = d) : this.disable = false;
   }
 }
 

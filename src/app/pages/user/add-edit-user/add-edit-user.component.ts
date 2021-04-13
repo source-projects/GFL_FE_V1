@@ -65,7 +65,6 @@ export class AddEditUserComponent implements OnInit {
     "Invoice",
     "Finished Meter",
     "Input Data",
-    "Database",
     "Dyeing Slip",
     "Employee Registration",
     "Attendance",
@@ -120,7 +119,6 @@ export class AddEditUserComponent implements OnInit {
     bf: "",
     ip: "",
     ad: "",
-    ds: "",
     emp: "",
     attnds: "",
     po: "",
@@ -332,14 +330,7 @@ export class AddEditUserComponent implements OnInit {
         else this.setPermissionFalse(index);
         break;
       }
-      case "Database": {
-        let index = this.permissionArray.findIndex(
-          (v) => v.module == "Database"
-        );
-        if (e.target.checked == true) this.setPermissionTrue(index);
-        else this.setPermissionFalse(index);
-        break;
-      }
+
       case "Shade": {
         let index = this.permissionArray.findIndex((v) => v.module == "Shade");
         if (e.target.checked == true) this.setPermissionTrue(index);
@@ -571,7 +562,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getCheckedItem() {
-    let binArray1 = {...this.binArr1};
+    let binArray1 = { ...this.binArr1 };
     Object.keys(binArray1).map((key, i) => {
       if (this.permissionArray[i].view == true) {
         binArray1[key] += "1";
@@ -639,14 +630,14 @@ export class AddEditUserComponent implements OnInit {
         i++;
       }
     });
-    
-    sliceArray = {...arr};
+
+    sliceArray = { ...arr };
 
     i = 0;
-    for(let [key, val] of Object.entries(sliceArray)){
+    for (let [key, val] of Object.entries(sliceArray)) {
       array1[i] = this.dec2bin(val);
       array1[i] = this.pad(array1[i], this.perName.length);
-      i++
+      i++;
     }
 
     // let index = [];

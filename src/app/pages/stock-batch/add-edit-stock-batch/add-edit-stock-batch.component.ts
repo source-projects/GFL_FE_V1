@@ -60,7 +60,7 @@ export class AddEditStockBatchComponent implements OnInit {
   validationCardRowIndex = 0;
   flag = 0;
 
-  stockDataValues = [
+  stockDataValues1 = [
     {
       batchId: null,
       totalWt: null,
@@ -76,6 +76,7 @@ export class AddEditStockBatchComponent implements OnInit {
       ],
     },
   ];
+  stockDataValues = [];
 
   stockBatchArray: BatchData[] = [];
   stockBatch: StockBatch = new StockBatch();
@@ -114,7 +115,6 @@ export class AddEditStockBatchComponent implements OnInit {
       this.addFlag = false;
       this.getStockBatchById();
     }else{
-      await this.getCurrentBatchSequence();
     }
     
     this.maxDate = new Date(
@@ -136,7 +136,8 @@ export class AddEditStockBatchComponent implements OnInit {
         if(data['success']){
           this.currentBatchSequence = data['data']['sequence'];
           this.currentBatchSeqId = data['data']['id'];
-            this.stockDataValues[0].batchId = this.currentBatchSequence
+          if(this.stockDataValues && this.stockDataValues[0])
+          this.stockDataValues[0].batchId = this.currentBatchSequence
         }
       }
     )
@@ -231,22 +232,6 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         });
 
-        this.stockDataValues = [
-          {
-            batchId: this.currentBatchSequence,
-            totalWt: null,
-            totalMt: null,
-            isNotUnique: false,
-            isProductionPlanned: false,
-            batchMW: [
-              {
-                mtr: null,
-                wt: null,
-              },
-            ],
-          },
-        ];
-
         //re-calculate mtr/wt when quality changed
         this.reCalcMTWTValue();
       }
@@ -324,8 +309,8 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockDataValues.forEach((batch, i) => {
       this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
-          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt));
-          batch.isProductionPlanned = x.isProductionPlanned;
+          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt, x.isProductionPlanned));
+          //batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
       this.production_flag[i] = batch.isProductionPlanned;
@@ -409,6 +394,8 @@ export class AddEditStockBatchComponent implements OnInit {
       this.toastr.warning('Please select quality first');
       return;
     }
+
+
     var ob = new BatchCard();
     ob.batchMW.push(new BatchMrtWt());
     if (this.stockDataValues.length) {
@@ -440,6 +427,13 @@ export class AddEditStockBatchComponent implements OnInit {
           }
         )
       }
+    }else{
+      this.stockDataValues = [];
+      var ob = new BatchCard();
+      ob.batchMW.push(new BatchMrtWt());
+      this.stockDataValues.push({...ob});
+      this.getCurrentBatchSequence();
+      this.stockDataValues[0].batchId = this.currentBatchSequence;
     }
   }
 
