@@ -125,4 +125,10 @@ export class GenerateInvoiceComponent implements OnInit {
       this.finalcheckedrows.push(ele.invoiceNo);
     });
   }
+
+  printCurrentInvoice($event, row){
+    this.finalcheckedrows = [];
+    this.finalcheckedrows.push(row.invoiceNo);
+    this.print();
+  }
 }

@@ -15,8 +15,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Task Name</label>
-                            <input type="text" name="taskName" placeholder="Task Name" class="form-control"
-                                [(ngModel)]="addTask.taskName" #taskName1="ngModel" [ngClass]="{
+                            <input type="text" name="taskName" placeholder="Task Name" class="form-control" [(ngModel)]="addTask.taskName" #taskName1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     taskName1.invalid &&
                                     (formSubmitted || taskName1.touched)
@@ -30,8 +29,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <ng-select (change)="getUserList($event)" name="department"
-                                [(ngModel)]="addTask.departmentId" #department1="ngModel" [ngClass]="{
+                            <ng-select (change)="getUserList($event)" name="department" [(ngModel)]="addTask.departmentId" #department1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     department1.invalid &&
                                     (formSubmitted || department1.touched)
@@ -49,8 +47,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="required">Task Detail</label>
-                            <textarea col="4" row="5" name="taskDetail" class="form-control"
-                                [(ngModel)]="addTask.detail" #taskDetail1="ngModel" [ngClass]="{
+                            <textarea col="4" row="5" name="taskDetail" class="form-control height-106" [(ngModel)]="addTask.detail" #taskDetail1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     taskDetail1.invalid &&
                                     (formSubmitted || taskDetail1.touched)
@@ -65,16 +62,14 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Attachments</label>
-                            <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
-                                (change)="onSelect($event)">
+                            <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
                                 <ngx-dropzone-label>
                                     <div class="drop-task-attch">
                                         <nb-icon icon="cloud-upload-outline"></nb-icon>
                                         <p> Drop files to attach!</p>
                                     </div>
                                 </ngx-dropzone-label>
-                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                                    [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
                                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                                 </ngx-dropzone-image-preview>
                             </div>
@@ -90,8 +85,7 @@
                                 assign1.invalid &&
                                 (formSubmitted || assign1.touched)
                                 }" required>
-                                <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}}
-                                    {{user.lastName}}
+                                <ng-option *ngFor="let user of userList" [value]="user.id">{{user.firstName}} {{user.lastName}}
                                 </ng-option>
                             </ng-select>
                             <div class="input-required" *ngIf="assign1.invalid &&
@@ -133,8 +127,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Start Date</label>
-                            <input name="startDate" id="startDate" class="form-control" type="date"
-                                [(ngModel)]="addTask.startDate" #startDate1="ngModel" [ngClass]="{
+                            <input name="startDate" id="startDate" class="form-control" type="date" [(ngModel)]="addTask.startDate" #startDate1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     startDate1.invalid &&
                                     (formSubmitted || startDate1.touched)
@@ -148,8 +141,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Till Date</label>
-                            <input name="tillDate" id="tillDate" class="form-control" type="date"
-                                [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
+                            <input name="tillDate" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     enddate1.invalid &&
                                     (formSubmitted || enddate1.touched)
@@ -163,8 +155,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Complitaion Day</label>
-                            <input type="number" id="complitaionDay" name="complitaionDay" class="form-control"
-                                [(ngModel)]="addTask.completedDays" #completeDays1="ngModel" [ngClass]="{
+                            <input type="number" id="complitaionDay" name="complitaionDay" class="form-control" [(ngModel)]="addTask.completedDays" #completeDays1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     completeDays1.invalid &&
                                     (formSubmitted || completeDays1.touched)
@@ -188,8 +179,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Remark</label>
-                            <textarea col="4" row="5" name="remark" class="form-control"
-                                [(ngModel)]="addTask.remark"></textarea>
+                            <textarea col="4" row="5" name="remark" class="form-control" [(ngModel)]="addTask.remark"></textarea>
                         </div>
                     </div>
 
@@ -201,8 +191,7 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="addTaskDetail(taskForm)">Submit</button>
+                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addTaskDetail(taskForm)">Submit</button>
                     </div>
                 </div>
             </form>

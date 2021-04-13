@@ -198,27 +198,41 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-5 mb-5 mobile-mt-bottom">
+                <div class="row">
+                    <div class="col-md-7 col-12">
+                        <div class="display-flex-center-task style-detail-ng-radio">
+                            <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0 mb-0">
+                                <nb-radio *ngFor="let radio of radioArray" [value]=radio.id (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
+                            </nb-radio-group>
+                        </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <nb-radio-group [(ngModel)]="radioSelect" class="radio-flex-between mr-16 mobile-pr-0">
-                        <nb-radio *ngFor="let radio of radioArray" [value]=radio.id  (valueChange)="onChange($event)">{{radio.value}}</nb-radio>
-                    </nb-radio-group>
-                </div>
-                <div class="col-md-8">
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label>Date filter</label>
+                                    <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
 
-                    <label>Date filter</label>
-                    <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
+                                </div>
+                                <div class="col-md-3 dis-fl">
+                                    <div class="mobile-top-date">
+                                        <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
+                                    </div>
 
-                </div>
-                 <div class="col-md-4 text-center dis-fl">
-                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
+
             <!--All-->
             <div *ngIf="allFlag">
-                <div class="mt-5 mb-3">
+                <!-- <div class="mt-5 mb-3">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -226,12 +240,12 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                
+
                             </div>
                         </div>
                     </div>
 
-                </div>
+                </div> -->
                 <div class="row" *ngIf="allCardCount">
                     <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
                         <div class="mb-4">
@@ -454,7 +468,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                               
+
                             </div>
                         </div>
 
@@ -597,7 +611,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                               
+
                             </div>
 
                         </div>
@@ -741,7 +755,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                               
+
                             </div>
 
                         </div>
@@ -886,7 +900,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                               
+
                             </div>
 
                         </div>
@@ -1041,7 +1055,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                
+
                             </div>
 
                         </div>

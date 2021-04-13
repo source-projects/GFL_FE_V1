@@ -43,6 +43,8 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
                                 (click)="deleteStockBatch(row.id)" [hidden]="hidden || (row | disableStockBatchPipe)">
                             </nb-icon>
+                            <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger"
+                                (click)="printJobCard(row)" [hidden]="(row | disableStockBatchPipe)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType" [maxWidth]="130">
