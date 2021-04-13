@@ -630,6 +630,14 @@ input[type="number"]::-webkit-outer-spin-button {
     height: 100%;
 }
 
+.display-flex-center-task {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    padding: 0 17px;
+}
+
 .batch-1-input,
 .batch-2-input {
     width: 100%;
@@ -2298,6 +2306,21 @@ input[type="number"]::-webkit-outer-spin-button {
     .mobile-view {
         margin-bottom: 25px !important;
     }
+    .style-detail-ng-radio {
+        margin-right: 17px;
+        padding: 0 !important;
+        margin-bottom: 20px !important;
+    }
+    .style-detail-ng-radio label .text {
+        line-height: 15px;
+    }
+    .mobile-mt-bottom {
+        margin-top: 0 !important;
+        margin-bottom: 5px !important;
+    }
+    .mobile-top-date {
+        margin-top: 18px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -3320,7 +3343,9 @@ ng-select .ng-clear-wrapper {
 
 .popup-fix-height {
     min-height: 567px;
-    height: 195px;
+    // height: 195px;
+    // min-height: 650px;
+    height: 225px;
     overflow-y: scroll;
 }
 
@@ -3398,3 +3423,9 @@ ng-select .ng-clear-wrapper {
     width: 298px;
     height: auto;
 }
+
+.height-106 {
+    height: 106px !important;
+}
+
+.btn-fix-bottom-right {}
