@@ -119,7 +119,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (title === "Print") this.generateSlip(true);
         else if (title === "Edit And Print") this.generateSlip(false);
         else if (title === "Complete") this.completeChangeStatus();
-        else if (title === "Pause") this.pauseChangeStatus();
+        // else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
         //else if (title === "Details") this.getBatchDetails();
       });
@@ -434,7 +434,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     //var detail = this.getBatchDetails();
     this.items = [
       { title: "Complete" },
-      { title: "Pause" },
+      // { title: "Pause" },
       {
         title: "Remove",
       },

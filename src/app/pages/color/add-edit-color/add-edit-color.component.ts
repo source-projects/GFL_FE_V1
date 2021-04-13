@@ -159,7 +159,7 @@ export class AddEditColorComponent implements OnInit {
           );
       }
     } else {
-      this.getSupplierList();
+      this.supplierListRate = [];      
     }
     this.loading = false;
   }
