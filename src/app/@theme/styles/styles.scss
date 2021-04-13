@@ -3342,9 +3342,9 @@ ng-select .ng-clear-wrapper {
 }
 
 .popup-fix-height {
-    // min-height: 567px;
+    min-height: 567px;
     // height: 195px;
-    min-height: 650px;
+    // min-height: 650px;
     height: 225px;
     overflow-y: scroll;
 }
@@ -3425,5 +3425,7 @@ ng-select .ng-clear-wrapper {
 }
 
 .height-106 {
-    height: 106px;
+    height: 106px !important;
 }
+
+.btn-fix-bottom-right {}

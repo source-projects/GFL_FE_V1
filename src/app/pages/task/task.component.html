@@ -211,13 +211,13 @@
                     <div class="col-md-5 col-12">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <label>Date filter</label>
                                     <input type="date" [(ngModel)]="filterDate" class="form-control" name="filterDate" id="filterDate" (input)="filteredCardDetailByDate($event,'all')">
 
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="dis-fl mobile-top-date">
+                                <div class="col-md-3 dis-fl">
+                                    <div class="mobile-top-date">
                                         <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="clearDate('all')">Clear</button>
                                     </div>
 
