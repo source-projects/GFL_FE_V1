@@ -148,9 +148,10 @@ export class AddEditStockBatchComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
-        } else {
-          this.toastr.error(data["msg"]);
         }
+        //  else {
+        //   this.toastr.error(data["msg"]);
+        // }
         this.loading = false;
       },
       (error) => {
@@ -289,9 +290,10 @@ export class AddEditStockBatchComponent implements OnInit {
 
               this.setStockDataValues1();
             }
-          } else {
-            this.toastr.error(data["msg"]);
-          }
+          } 
+          // else {
+          //   this.toastr.error(data["msg"]);
+          // }
           this.loading = false;
         },
         (error) => {
@@ -679,7 +681,7 @@ export class AddEditStockBatchComponent implements OnInit {
                 this.loading = false;
                 this.disableButton = false;
                 this.stockBatchArray = [];
-                this.toastr.error(data["msg"]);
+                // this.toastr.error(data["msg"]);
               }
             },
             (error) => {
@@ -705,7 +707,7 @@ export class AddEditStockBatchComponent implements OnInit {
             } else {
               this.disableButton = false;
               this.stockBatchArray = [];
-              this.toastr.error(data["msg"]);
+              // this.toastr.error(data["msg"]);
             }
             this.loading = false;
           },
@@ -738,14 +740,14 @@ export class AddEditStockBatchComponent implements OnInit {
                 } else {
                   this.disableButton = false;
                   this.stockBatchArray = [];
-                  this.toastr.error(data["msg"]);
+                  // this.toastr.error(data["msg"]);
                 }
                 this.loading = false;
               },
     
               (error) => {
                 this.stockBatchArray = [];
-                this.toastr.error(errorData.Update_Error);
+                // this.toastr.error(errorData.Update_Error);
                 this.loading = false;
                 this.disableButton = false;
                 this.loading = false;

@@ -322,20 +322,18 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Contact No</label>
-                                <input name="contactNo" type="number" class="form-control" placeholder="Enter Contact No." [(ngModel)]="approveBy.contact" #contactNo1="ngModel" pattern="[6-9]{1}[0-9]{9}" [ngClass]="{'is-invalid':(contactNo1.invalid) &&(formSubmitted || contactNo1.touched) }"
-                                    required>
-                                <div class="input-required" *ngIf="(contactNo1.invalid) && (formSubmitted || contactNo1.touched)">
-                                    Valid 10 digit Contact no is required.
+                                <input name="contactNo" type="number" class="form-control" placeholder="Enter Contact No." [(ngModel)]="approveBy.contact" #contactNo1="ngModel" pattern="[6-9]{1}[0-9]{9}" [ngClass]="{'is-invalid':(contactNo1.invalid)}">
+                                <div class="input-required" *ngIf="(contactNo1.invalid)">
+                                    Enter Valid 10 digit number
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input name="email" type="text" class="form-control" placeholder="Enter Email" [(ngModel)]="approveBy.email" #email1="ngModel" [ngClass]="{'is-invalid':(email1.invalid) &&(formSubmitted || email1.touched) }" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}"
-                                    required>
-                                <div class="input-required" *ngIf="(email1.invalid) && (formSubmitted || email1.touched)">
-                                    Valid email is required.
+                                <input name="email" type="text" class="form-control" placeholder="Enter Email" [(ngModel)]="approveBy.email" #email1="ngModel" [ngClass]="{'is-invalid':(email1.invalid)}" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}">
+                                <div class="input-required" *ngIf="(email1.invalid)">
+                                    Enter Valid Email
                                 </div>
                             </div>
                         </div>

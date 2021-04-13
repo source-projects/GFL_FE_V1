@@ -1,32 +1,31 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
   CdkDragDrop,
   CdkDropList,
   moveItemInArray,
-  transferArrayItem,
+  transferArrayItem
 } from "@angular/cdk/drag-drop";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ShadeWithBatchComponent } from "../production-planning/shade-with-batch/shade-with-batch.component";
-import { JetPlanningService } from "../../@theme/services/jet-planning.service";
-import { JetPlanning, JetDataList } from "../../@theme/model/jet-planning";
-import { ToastrService } from "ngx-toastr";
-import * as errorData from "../../@theme/json/error.json";
-import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
-import { WarningPopupComponent } from "../../@theme/components/warning-popup/warning-popup.component";
-import { ProductionPlanning } from "../../@theme/model/production-planning";
-import { PartyService } from "../../@theme/services/party.service";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { QualityService } from "../../@theme/services/quality.service";
-import { CommonService } from "../../@theme/services/common.service";
-import { StockBatchService } from "../../@theme/services/stock-batch.service";
-import { ProgramService } from "../../@theme/services/program.service";
-import { ShadeService } from "../../@theme/services/shade.service";
-
-import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
 import { NbMenuService } from "@nebular/theme";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from "rxjs";
 import { filter, map, takeUntil } from "rxjs/operators";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { Subject } from "rxjs";
+import * as errorData from "../../@theme/json/error.json";
+import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
+import { ProductionPlanning } from "../../@theme/model/production-planning";
+import { CommonService } from "../../@theme/services/common.service";
+import { JetPlanningService } from "../../@theme/services/jet-planning.service";
+import { PartyService } from "../../@theme/services/party.service";
+import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
+import { ProgramService } from "../../@theme/services/program.service";
+import { QualityService } from "../../@theme/services/quality.service";
+import { ShadeService } from "../../@theme/services/shade.service";
+import { StockBatchService } from "../../@theme/services/stock-batch.service";
+import { ShadeWithBatchComponent } from "../production-planning/shade-with-batch/shade-with-batch.component";
+import { PlanningSlipComponent } from "./planning-slip/planning-slip.component";
+
 @Component({
   selector: "ngx-jet-planning",
   templateUrl: "./jet-planning.component.html",
@@ -176,7 +175,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
     var detail = this.getBatchDetails();
     this.items = [
       { title: "Complete" },
-      { title: "Pause" },
       {
         title: "Remove",
       },
@@ -288,7 +286,6 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
               data["data"].totalWt;
             this.items = [
               { title: "Complete" },
-              { title: "Pause" },
               {
                 title: "Remove",
               },

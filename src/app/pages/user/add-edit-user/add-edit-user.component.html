@@ -91,14 +91,14 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required">Mobile No.</label>
+                            <label>Mobile No.</label>
                             <input name="contact" class="form-control size-small" fieldsize="small" nbinput
                                 (keypress)="checkIsDigit($event)" [(ngModel)]="user.contact" pattern="[6-9]{1}[0-9]{9}"
                                 #contact1="ngModel"
-                                [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}"
-                                onFocusout="" required />
-                            <div class="input-required" *ngIf="(contact1.invalid)&&(formSubmitted || contact1.touched)">
-                                <span>Mobile No of 10 digit is required.</span>
+                                [ngClass]="{'is-invalid': (contact1.invalid)}"
+                                onFocusout="" />
+                            <div class="input-required" *ngIf="(contact1.invalid)">
+                                <span>Enter valid 10 digit number</span>
                             </div>
                         </div>
                     </div>
