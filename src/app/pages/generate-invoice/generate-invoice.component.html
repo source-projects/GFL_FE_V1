@@ -25,7 +25,7 @@
         <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
             <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" prop="id" [maxWidth]="110">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-
+                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" (click)="printCurrentInvoice($event, row)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
 
