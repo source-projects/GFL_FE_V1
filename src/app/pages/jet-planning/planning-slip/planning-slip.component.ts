@@ -107,6 +107,7 @@ export class PlanningSlipComponent implements OnInit {
           qty: null,
           supplierId: null,
           supplierName: null,
+          itemType:null,
         },
       ],
     },
@@ -580,6 +581,8 @@ export class PlanningSlipComponent implements OnInit {
         this.itemList[index].itemName = element.itemName;
         this.itemList[index].supplierId = element.supplierId;
         this.itemList[index].supplierName = element.supplierName;
+        this.itemList[index].itemType = element.itemType;
+
       }
     });
   }

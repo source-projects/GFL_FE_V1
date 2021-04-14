@@ -31,6 +31,7 @@ export class DyeingProcess {
     supplierId: number;
     qty: number;
     _id: string;
+    itemType:string;
     constructor() {
       this._id = uuidv4();
     }
