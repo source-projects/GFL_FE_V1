@@ -290,9 +290,15 @@ export class AddEditStockBatchComponent implements OnInit {
     let batchIDs = [
       ...new Set(this.stockBatch.batchData.map((x) => x.batchId)),
     ];
+    let ids = [
+      ...new Set(this.stockBatch.batchData.map((x) => x.id)),
+    ];
     this.stockDataValues = [];
-    batchIDs.forEach((x) => {
-      this.stockDataValues.push(new BatchCard(x));
+    batchIDs.forEach((x,i) => {
+      this.stockDataValues.push(new BatchCard());
+      this.stockDataValues[i].batchId = batchIDs[i];
+      this.stockDataValues[i].id = ids[i];
+      this.stockDataValues[i].controlId = this.currentStockBatchId;
     });
     if (this.qualityList.length != 0) {
       this.qualityList.forEach((element) => {
@@ -647,6 +653,7 @@ export class AddEditStockBatchComponent implements OnInit {
                 isNotUnique: false,
                 totalWt: 0,
                 isProductionPlanned: false,
+                controlId:0
               };
               obj.id = ele.id;
               obj.batchId = ele.batchId;
@@ -655,6 +662,7 @@ export class AddEditStockBatchComponent implements OnInit {
               obj.totalMt = ele.totalMt;
               obj.totalWt = ele.totalWt;
               obj.isProductionPlanned = ele.isProductionPlanned;
+              obj.controlId = ele.controlId;
               this.stockBatchArray.push(obj);
             }
           });

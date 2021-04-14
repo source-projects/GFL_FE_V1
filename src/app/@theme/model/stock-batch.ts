@@ -40,14 +40,19 @@ export class BatchMrtWt {
 }
 
 export class BatchCard {
+
+  id:number;
   batchId: number;
   totalWt: number;
   totalMt: number;
   isNotUnique: boolean;
   batchMW: BatchMrtWt[];
   isProductionPlanned:boolean;
+  controlId:number;
 
-  constructor(batchId?) {
+  constructor(batchId?,id?) {
+    this.controlId = null;
+    this.id ? (this.id = id) : (this.id = null);
     this.isNotUnique = false;
     batchId ? (this.batchId = batchId) : (this.batchId = null);
     this.batchMW = [];
