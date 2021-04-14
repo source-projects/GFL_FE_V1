@@ -351,7 +351,7 @@ export class AddEditStockBatchComponent implements OnInit {
             return;
           }
         }
-        let obj = { mtr: null, wt: null, totalMt: null, totalWt: null };
+        let obj = {id:null,controlId:null, mtr: null, wt: null,isProductionPlanned:false};
         let list = this.stockDataValues[idx].batchMW;
         list.push({ ...obj });
         this.stockDataValues[idx].batchMW = [...list];
@@ -656,7 +656,7 @@ export class AddEditStockBatchComponent implements OnInit {
               obj.wt = subele.wt;
               obj.totalMt = ele.totalMt;
               obj.totalWt = ele.totalWt;
-              obj.isProductionPlanned = ele.isProductionPlanned;
+              obj.isProductionPlanned = subele.isProductionPlanned;
               obj.controlId = subele.controlId;
               this.stockBatchArray.push(obj);
             }

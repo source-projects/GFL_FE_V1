@@ -31,7 +31,7 @@ export class BatchMrtWt {
   id:number;
   mtr: number;
   wt: number;
-  disable: boolean;
+  isProductionPlanned: boolean;
   controlId:number;
 
   constructor(m?, w?, d?,id?,controlId?) {
@@ -39,7 +39,7 @@ export class BatchMrtWt {
     id ? (this.id = id) : (this.id = null);
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;
-    d? (this.disable = d) : this.disable = false;
+    d? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
   }
 }
 
