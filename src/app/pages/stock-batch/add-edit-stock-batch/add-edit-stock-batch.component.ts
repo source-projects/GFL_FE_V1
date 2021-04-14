@@ -290,15 +290,10 @@ export class AddEditStockBatchComponent implements OnInit {
     let batchIDs = [
       ...new Set(this.stockBatch.batchData.map((x) => x.batchId)),
     ];
-    let ids = [
-      ...new Set(this.stockBatch.batchData.map((x) => x.id)),
-    ];
     this.stockDataValues = [];
     batchIDs.forEach((x,i) => {
       this.stockDataValues.push(new BatchCard());
       this.stockDataValues[i].batchId = batchIDs[i];
-      this.stockDataValues[i].id = ids[i];
-      this.stockDataValues[i].controlId = this.currentStockBatchId;
     });
     if (this.qualityList.length != 0) {
       this.qualityList.forEach((element) => {
@@ -317,7 +312,7 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockDataValues.forEach((batch, i) => {
       this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
-          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt, x.isProductionPlanned));
+          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt, x.isProductionPlanned,x.id));
           //batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
@@ -655,14 +650,13 @@ export class AddEditStockBatchComponent implements OnInit {
                 isProductionPlanned: false,
                 controlId:0
               };
-              obj.id = ele.id;
+              obj.id = subele.id;
               obj.batchId = ele.batchId;
               obj.mtr = subele.mtr;
               obj.wt = subele.wt;
               obj.totalMt = ele.totalMt;
               obj.totalWt = ele.totalWt;
               obj.isProductionPlanned = ele.isProductionPlanned;
-              obj.controlId = ele.controlId;
               this.stockBatchArray.push(obj);
             }
           });
