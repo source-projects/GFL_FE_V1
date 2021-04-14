@@ -32,8 +32,10 @@ export class BatchMrtWt {
   mtr: number;
   wt: number;
   disable: boolean;
+  controlId:number;
 
-  constructor(m?, w?, d?,id?) {
+  constructor(m?, w?, d?,id?,controlId?) {
+    controlId ? (this.controlId = controlId) : this.controlId = null;
     id ? (this.id = id) : (this.id = null);
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;

@@ -312,7 +312,7 @@ export class AddEditStockBatchComponent implements OnInit {
     this.stockDataValues.forEach((batch, i) => {
       this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
-          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt, x.isProductionPlanned,x.id));
+          batch.batchMW.push(new BatchMrtWt(x.mtr, x.wt, x.isProductionPlanned,x.id,x.controlId));
           //batch.isProductionPlanned = x.isProductionPlanned;
         }
       });
@@ -657,6 +657,7 @@ export class AddEditStockBatchComponent implements OnInit {
               obj.totalMt = ele.totalMt;
               obj.totalWt = ele.totalWt;
               obj.isProductionPlanned = ele.isProductionPlanned;
+              obj.controlId = subele.controlId;
               this.stockBatchArray.push(obj);
             }
           });
