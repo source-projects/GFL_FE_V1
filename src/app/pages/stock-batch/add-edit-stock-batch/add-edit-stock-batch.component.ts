@@ -639,6 +639,7 @@ export class AddEditStockBatchComponent implements OnInit {
           ele.batchMW.forEach((subele) => {
             if (!!subele.mtr && !!subele.wt) {
               let obj = {
+                id:0,
                 batchId: 0,
                 mtr: 0,
                 wt: 0,
@@ -647,6 +648,7 @@ export class AddEditStockBatchComponent implements OnInit {
                 totalWt: 0,
                 isProductionPlanned: false,
               };
+              obj.id = ele.id;
               obj.batchId = ele.batchId;
               obj.mtr = subele.mtr;
               obj.wt = subele.wt;

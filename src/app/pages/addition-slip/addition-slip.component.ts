@@ -65,6 +65,8 @@ export class AdditionSlipComponent implements OnInit {
   partyList = [];
   qualityList = [];
   additionSlipList = [];
+  copyAdditionalSlip = [];
+  addition = [];
   additionList = [
     {
       batchId: null,
@@ -491,6 +493,23 @@ export class AdditionSlipComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.additionSlipList = data["data"];
+
+
+          this.addition = this.additionSlipList.map((element) => ({
+            id: element.id,
+            batchId: element.batchId,
+            holdTime: element.dyeingSlipData.holdTime,
+            liquerRation: element.dyeingSlipData.liquerRation,
+            temp: element.dyeingSlipData.temp,
+          }));
+
+          this.copyAdditionalSlip = this.additionSlipList.map((element) => ({
+            id: element.id,
+            batchId: element.batchId,
+            holdTime: element.dyeingSlipData.holdTime,
+            liquerRation: element.dyeingSlipData.liquerRation,
+            temp: element.dyeingSlipData.temp,
+          }));
         } else {
         }
         this.loading = false;
@@ -500,4 +519,21 @@ export class AdditionSlipComponent implements OnInit {
       }
     );
   }
+
+  filter(value: any) {
+    const val = value.toString().toLowerCase().trim();
+    const keys = Object.keys(this.copyAdditionalSlip[0]);
+    this.addition = this.copyAdditionalSlip.filter((item) => {
+      for (let i = 0; i < keys.length; i++) {
+        if (
+          (item[keys[i]] &&
+            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
+          !val
+        ) {
+          return true;
+        }
+      }
+    });
+  }
+
 }
