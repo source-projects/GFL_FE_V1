@@ -15,6 +15,7 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   //data fatch supplier Name
   supplier: [];
+  duplicateFlag:boolean = false;
   itemTypeData = ["Color" , ]
   
   selectedType = 'Color';
@@ -177,10 +178,13 @@ export class AddEditSupplierRateComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
 
-      if (this.hasDuplicates(this.formValues.supplierRates)) {
-        this.toastr.warning("ItemName is Same");
+      if(this.hasDuplicates(this.formValues.supplierRates)){
+        this.toastr.warning("Same item name")
       }
-      else {
+      else if(this.duplicateFlag){
+        this.toastr.warning("Item Name already exist");
+      }
+      else{
         this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
         this.formValues.supplierId = this.formValues.id;
   
@@ -217,6 +221,9 @@ export class AddEditSupplierRateComponent implements OnInit {
           }
         );
       }
+
+
+        
     } else {
       this.toastr.error("Fill empty fields");
 
@@ -243,6 +250,19 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   onKeyUp(e, rowIndex, colIndex, colName) {
+    this.duplicateFlag = false;
+    if(colName == "itemName"){
+      this.supplierService.getDuplicateCheck(0,e.target.value).subscribe(
+        (data) => {
+          if(data["data"]){
+            this.toastr.warning("Item Name already exist");
+            this.duplicateFlag = data["data"];
+          }
+        },
+        (error) => {
+        }
+      );
+    }
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
@@ -337,14 +357,34 @@ export class AddEditSupplierRateComponent implements OnInit {
     }
   }
 
-  hasDuplicates(arr) {
-    for(let i = 0;i<arr.length;++i){
-      for(let j=0;j<i;++j){
-        if(arr[i].itemName == arr[j].itemName){
-          return true;
+  // hasDuplicates(arr) {
+  //   for(let i = 0;i<arr.length;++i){
+  //     for(let j=0;j<i;++j){
+  //       if(arr[i].itemName == arr[j].itemName){
+  //         return true;
+  //       }
+  //     }
+  //   }
+  //   return false;
+  // }
+
+  hasDuplicates(value:any[]){
+
+    let itemNames = [];
+    value.forEach(ele=>{
+      itemNames.push(ele.itemName)
+    })
+    let sorted_arr = itemNames.slice().sort();
+    let results = [];
+    for (var i = 0; i < sorted_arr.length - 1; i++) {
+        if (sorted_arr[i + 1] === sorted_arr[i]) {
+            results.push(sorted_arr[i]);
         }
-      }
     }
+    if(results.length > 0){
+      return true;
+    } 
+    
     return false;
-  }
+  }    
 }
