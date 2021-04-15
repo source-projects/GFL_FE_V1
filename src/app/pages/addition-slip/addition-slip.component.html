@@ -3,7 +3,7 @@
     <nb-card-body>
 
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
-            <nb-tab tabTitle="Adition slip">
+            <nb-tab tabTitle="Addition slip">
                 <div>
                     <form #myForm="ngForm">
                         <div class="row">
@@ -17,10 +17,14 @@
 
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <label>Search:</label>
+                                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                            </div>
                         </div>
 
-                        <ngx-datatable [rows]="additionSlipList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
-                            <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90">
+                        <ngx-datatable [rows]="addition" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
+                            <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90" prop="id">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
                                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
@@ -28,10 +32,10 @@
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110">
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Hold Time" prop="dyeingSlipData.holdTime">
+                            <ngx-datatable-column name="Hold Time" prop="holdTime">
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Liquor Ratio" prop="dyeingSlipData.liquerRation" [maxWidth]="120"></ngx-datatable-column>
-                            <ngx-datatable-column name="Temperature" prop="dyeingSlipData.temp" [maxWidth]="115">
+                            <ngx-datatable-column name="Liquor Ratio" prop="liquerRation" [maxWidth]="120"></ngx-datatable-column>
+                            <ngx-datatable-column name="Temperature" prop="temp" [maxWidth]="115">
                             </ngx-datatable-column>
 
 

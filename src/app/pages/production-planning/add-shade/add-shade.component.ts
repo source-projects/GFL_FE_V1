@@ -150,7 +150,7 @@ export class AddShadeComponent implements OnInit {
       this.showJetListFlag = true;
     } else {
       this.showJetListFlag = false;
-      this.jetid = 0;
+      this.jetid = null;
     }
   }
 

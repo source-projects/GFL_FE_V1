@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as errorData from "app/@theme/json/error.json";
-import { CommonService } from "app/@theme/services/common.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
+import * as errorData from "../../../@theme/json/error.json";
+import { CommonService } from "../../../@theme/services/common.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -148,6 +148,8 @@ export class AddEditSupplierRateComponent implements OnInit {
         e.createdBy = this.user.userId;
         e.userHeadId = this.userHead.userHeadId;
       });
+
+      
       this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
         (data) => {
           if (data["success"]) {
@@ -163,6 +165,7 @@ export class AddEditSupplierRateComponent implements OnInit {
           this.disableButton = false;
         }
       );
+      
     } else {
       this.disableButton = false;
       return;
@@ -170,23 +173,32 @@ export class AddEditSupplierRateComponent implements OnInit {
   }
 
   public updateSupplierRateInfo(myForm) {
-    this.disableButton = true;
+   
     this.formSubmitted = true;
     if (myForm.valid) {
-      this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
-      delete this.formValues.discountPercentage;
-      delete this.formValues.supplierName;
-      this.formValues.supplierId = this.formValues.id;
-      delete this.formValues.id;
-      delete this.formValues.gstPercentage;
-      delete this.formValues.remark;
-      delete this.formValues.paymentTerms;
-      delete this.formValues.createdBy;
-      this.formValues.supplierRates.forEach((e) => {
-        e.updatedBy = this.user.userId;
-        e.supplierId = this.formValues.supplierId;
-      });
-      this.formValues.updatedBy = this.user.userId;
+
+      if (this.hasDuplicates(this.formValues.supplierRates)) {
+        this.toastr.warning("ItemName is Same");
+      }
+      else {
+        this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
+        this.formValues.supplierId = this.formValues.id;
+  
+        this.formValues.supplierRates.forEach((e) => {
+          e.updatedBy = this.user.userId;
+          e.supplierId = this.formValues.supplierId;
+        });
+        this.formValues.updatedBy = this.user.userId;
+  
+        delete this.formValues.discountPercentage;
+        delete this.formValues.supplierName;
+        delete this.formValues.id;
+        delete this.formValues.gstPercentage;
+        delete this.formValues.remark;
+        delete this.formValues.paymentTerms;
+        delete this.formValues.createdBy;
+  
+
       this.supplierService
         .updateSupplierRateInSystem(this.formValues)
         .subscribe(
@@ -204,6 +216,7 @@ export class AddEditSupplierRateComponent implements OnInit {
             this.toastr.error(errorData.Serever_Error);
           }
         );
+      }
     } else {
       this.toastr.error("Fill empty fields");
 
@@ -322,5 +335,16 @@ export class AddEditSupplierRateComponent implements OnInit {
       let list = item;
       this.formValues.supplierRates = [...list];
     }
+  }
+
+  hasDuplicates(arr) {
+    for(let i = 0;i<arr.length;++i){
+      for(let j=0;j<i;++j){
+        if(arr[i].itemName == arr[j].itemName){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

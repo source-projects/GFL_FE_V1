@@ -233,6 +233,16 @@ export class AddEditShadeComponent implements OnInit {
             this.shadeObj.qualityType = this.qualityList[
               qualityIndex
             ].qualityType;
+            this.qualityList.forEach((element) => {
+              if (this.shadeObj.qualityId == element.qualityId) {
+                this.shadeObj.qualityId = element.qualityId;
+                this.shadeObj.qualityName = element.qualityName;
+                this.shadeObj.qualityType = element.qualityType;
+                this.shadeObj.partyId = element.partyId;
+                this.shadeObj.qualityEntryId = element.id;
+                this.wt100m = element.wtPer100m;
+              }
+            });
             this.shadeDataListArray.forEach((element, index) => {
               this.calculateAmount(index);
             });

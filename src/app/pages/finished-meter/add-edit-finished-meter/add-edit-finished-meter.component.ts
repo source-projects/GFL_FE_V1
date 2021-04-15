@@ -348,9 +348,6 @@ export class AddEditFinishedMeterComponent implements OnInit {
     this.isAddButtonClicked = true;
     let isFinishMtrflag = false;
 
-    //split extra meters....
-    this.splitExtraMeters();
-
     this.finishedMeterForm.batchData.forEach((b) => {
       if (b.finishMtr == null) {
         isFinishMtrflag = true;
@@ -389,6 +386,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
           if (!isIdValid) allSequenceValid = false;
         });
         if (allSequenceValid) {
+          //split extra meters....
+          this.splitExtraMeters();
+          
           this.finishedMeterService
             .addFinishedMeter(this.finishedMeterForm.batchData)
             .subscribe(

@@ -85,6 +85,19 @@ export class AdminComponent implements OnInit {
   batchHiddenEdit = false;
   hiddenDelete = false;
   approved = false;
+
+  ApprovedFlag:boolean = false;
+  RecieveFlag:boolean = false;
+  
+  items = [
+    {
+      id:1,name:"Approved By"
+    },
+    {
+      id:2,name:"Recieved By"
+    }
+  ];
+  selectedBy;
   constructor(
     private adminService: AdminService,
     private purchseService : PurchaseNewService,
@@ -1276,5 +1289,21 @@ export class AdminComponent implements OnInit {
         );
       }
     });
+  }
+
+  getApprovedOrRecieved(value){
+
+    if(value == 1){
+      this.ApprovedFlag = true;
+      this.RecieveFlag = false;
+    }
+    else if(value == 2){
+      this.ApprovedFlag = false;
+      this.RecieveFlag = true;
+    }
+    else{
+      this.ApprovedFlag = false;
+      this.RecieveFlag = false;
+    }
   }
 }

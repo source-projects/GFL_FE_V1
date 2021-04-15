@@ -3,12 +3,12 @@
 <form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm" aria-labelledby="title">
 
     <div class="form-control-group">
-        <label class="label" for="email">Email address:</label>
-        <input nbInput fullWidth type="email" name="email" placeholder="Email address" autofocus
-            [(ngModel)]="loginReq.userName" required #email="ngModel" class="form-control"
-            [ngClass]="{'is-invalid': formSubmitted && email.invalid}">
-            <div class="invalid-feedback" *ngIf="formSubmitted && (email.invalid || email.dirty || email.touched)" >
-                <span>Email is required</span>
+        <label class="label" for="email">Username:</label>
+        <input nbInput fullWidth type="text" name="userName" placeholder="Username" autofocus
+            [(ngModel)]="loginReq.userName" required #userName="ngModel" class="form-control"
+            [ngClass]="{'is-invalid': formSubmitted && userName.invalid}">
+            <div class="invalid-feedback" *ngIf="formSubmitted && (userName.invalid || userName.dirty || userName.touched)" >
+                <span>Username is required</span>
             </div>
     </div>
 

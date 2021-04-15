@@ -28,16 +28,23 @@ export class BatchData {
 }
 
 export class BatchMrtWt {
+  id:number;
   mtr: number;
   wt: number;
+  isProductionPlanned: boolean;
+  controlId:number;
 
-  constructor(m?, w?) {
+  constructor(m?, w?, d?,id?,controlId?) {
+    controlId ? (this.controlId = controlId) : this.controlId = null;
+    id ? (this.id = id) : (this.id = null);
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;
+    d? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
   }
 }
 
 export class BatchCard {
+
   batchId: number;
   totalWt: number;
   totalMt: number;
