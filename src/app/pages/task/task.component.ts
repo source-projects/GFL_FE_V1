@@ -19,6 +19,12 @@ import { DatePipe } from "@angular/common";
 export class TaskComponent implements OnInit {
 
   assignFlagForDetails:boolean = false;
+  userHeadId;
+  completedateStatusObj = {
+    id:null,
+    date: "",
+    status: "Completed",
+  };
 
   hiddenAdd: boolean = true;
   hiddenEdit: boolean = true;
@@ -73,6 +79,8 @@ export class TaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userHeadId = this.commonService.getUserHeadId();
+    this.userHeadId = this.userHeadId["userHeadId"];  
     this.getAccess();
     this.recallAllCardDetail();
   }
@@ -409,12 +417,18 @@ export class TaskComponent implements OnInit {
   }
   getCompletetedList() {
     this.completedCardCount = 0;
-    let completedateStatusObj = {
-      date: "",
-      status: "Completed",
-    };
+    if(this.userHeadId == 0){
+      this.completedateStatusObj.date = "";
+      this.completedateStatusObj.status = "Completed";
+      this.completedateStatusObj.id = null;
+    }
+    else{
+      this.completedateStatusObj.date = "";
+      this.completedateStatusObj.status = "Completed";
+      this.completedateStatusObj.id = this.commonService.getUser().userId;
+    }
     this.taskService
-      .getDataAccordingToStatus(completedateStatusObj)
+      .getDataAccordingToStatus(this.completedateStatusObj)
       .subscribe((data) => {
         this.completedCardDetail = data["data"];
         if(this.completedCardDetail){
@@ -456,7 +470,19 @@ export class TaskComponent implements OnInit {
 
   getNotApprovedList() {
     this.notApprovedCardCount = 0;
-    this.taskService
+    if(this.userHeadId == 0){
+      this.taskService
+      .getApprovedAndNotApprovedList("", false)
+      .subscribe((data) => {
+        this.notApprovedCardDetail = data["data"];
+        if(this.notApprovedCardDetail){
+          this.notApprovedCardCount = this.notApprovedCardDetail.length;
+        }
+       
+      });
+    }
+    else{
+      this.taskService
       .getApprovedAndNotApprovedList(this.commonService.getUser().userId, false)
       .subscribe((data) => {
         this.notApprovedCardDetail = data["data"];
@@ -465,6 +491,7 @@ export class TaskComponent implements OnInit {
         }
        
       });
+    }
   }
 
   onApprove(id){

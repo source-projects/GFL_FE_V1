@@ -58,4 +58,8 @@ export class SupplierService {
   getItemWithSupplier(){
     return this.httpClient.get(this.commonService.envUrl() + 'api/color/supplierList/getSupplierItemWithAvailableStock');
   }
+
+  getDuplicateCheck(id,name){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/rates/exist?id=' + id + '&name=' + name);
+  }
 }
