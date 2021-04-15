@@ -102,7 +102,7 @@
                                 'is-invalid':
                                 type1.invalid &&
                                 (formSubmitted || type1.touched)
-                                }" required>
+                                }" required (change)="taskTypeChanged($event)">
                                 <ng-option *ngFor="let type of typeList" [value]="type.name">{{type.name}}</ng-option>
                             </ng-select>
                             <div class="input-required" *ngIf="type1.invalid &&
@@ -141,7 +141,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Till Date</label>
-                            <input name="tillDate" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
+                            <input name="tillDate" [disabled]="taskTypeOnceFlag" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     enddate1.invalid &&
                                     (formSubmitted || enddate1.touched)

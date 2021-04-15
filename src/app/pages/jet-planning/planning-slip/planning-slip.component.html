@@ -407,7 +407,7 @@
                                                         appendTo="body" class="ng-select-br-none" required>
                                                         <ng-option *ngFor="let
                                                             item of
-                                                            itemListArray | filterOutSelectedSupplier : itemList "
+                                                            itemListArray | filterOutSelectedSupplier : itemList : item.itemId"
                                                              [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} -
                                                             {{item.supplierName}}</ng-option>

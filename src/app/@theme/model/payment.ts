@@ -2,7 +2,7 @@ export class Payment {
     partyId: Number;
     id:Number;
     isSendToParty:boolean;
-    gstAmt:Number;
+    gstAmt:number;
     cdAmt:number;
     rdAmt:number;
     otherDiff:number;
@@ -10,8 +10,8 @@ export class Payment {
     cdDetail:string;
     diffDetail:string;
     amtToPay:number;
-    amtPaid:Number;
-    totalBill:Number;
+    amtPaid:number;
+    totalBill:number;
     invoices:Invoices[];
     paymentData:PaymentData[];
     advancePayList:AdvancePayList[];
@@ -23,6 +23,7 @@ export class Payment {
         this.cdAmt = 0;
         this.rdAmt = 0;
         this.otherDiff = 0;
+        this.gstAmt = 0;
     }
 }
 export class Invoices{

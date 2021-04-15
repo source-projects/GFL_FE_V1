@@ -60,7 +60,23 @@
                                 <ngx-datatable-column name="Invoice No" prop="invoicNo">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Amount" prop="amt"></ngx-datatable-column>
-                                <ngx-datatable-column name="Date" prop="date"></ngx-datatable-column>
+                                <ngx-datatable-column name="Date" prop="date">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                        {{row.date | date : 'shortDate'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-footer>
+                                    <ng-template ngx-datatable-footer-template let-rowCount="rowCount">
+    
+                                        <div class="col-md-12">
+                                            <div class="toal-finish-mtr">
+                                                Bill Total: {{paymentValues.totalBill}}
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-footer>
+    
                             </ngx-datatable>
                         </div>
                     </div>
@@ -72,7 +88,7 @@
                 <div class="row main-input-sm">
 
                     <div class="col-md-4">
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group center-txt-title">
@@ -85,7 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="mb-4">
                             <div class="row">
@@ -96,8 +112,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group center-txt-title">
-                                        <input type="number" name="gstAmount" class="form-control" [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount" (keyup)="gstSelected($event)">
+                                        {{paymentValues.gstAmt}}
                                     </div>
+                                    <!-- <div class="form-group center-txt-title">
+                                        <input type="number" name="gstAmount" class="form-control" [(ngModel)]='paymentValues.gstAmt' required placeholder="Gst Amount" (keyup)="gstSelected($event)">
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -226,16 +245,32 @@
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Amount" prop="amt" [width]="30"></ngx-datatable-column>
                                 <ngx-datatable-column name="Type" prop="payType" [width]="30"></ngx-datatable-column>
-                                <ngx-datatable-column name="Date" prop="date" [width]="30"></ngx-datatable-column>
+                                <ngx-datatable-column name="Date" prop="date" [width]="30">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                        {{row.date | date : 'shortDate'}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-footer>
+                                    <ng-template ngx-datatable-footer-template let-rowCount="rowCount">
+    
+                                        <div class="col-md-12">
+                                            <div class="toal-finish-mtr">
+                                                Credit Amount: {{totalCredit}}
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-footer>
+
                             </ngx-datatable>
                         </div>
                     </div>
-                    <div class="col-md-6 desktop-btn">
+                    <!-- <div class="col-md-6 desktop-btn">
                         <div class="form-group center-txt-title user-per-check-display">
                             <label class="width-87">Credit Amount:</label>
                             <input type="number" name="totalCredit" class="form-control" [(ngModel)]="totalCredit" required placeholder="Total Credit">
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

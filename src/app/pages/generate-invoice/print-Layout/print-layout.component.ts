@@ -57,7 +57,7 @@ export class PrintLayoutComponent implements OnInit {
           if(data["success"]){
             this.printInvoiceData = data["data"];
             this.start();
-          }
+          } 
         },
         (error) => {
 
@@ -163,12 +163,20 @@ export class PrintLayoutComponent implements OnInit {
               for(let lotIndex = 0; lotIndex < 4-lengthOfLots; lotIndex++){
                 this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
               }            
-
+              if(!this.printInvoiceData[index].discount)
               this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+
+              if(!this.printInvoiceData[index].sgst)
               this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+              
+              if(!this.printInvoiceData[index].taxAmt)
               this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
-              this.printInvoiceData[index].netAmt = 
+              
+              if(!this.printInvoiceData[index].netAmt)
+              {
+                this.printInvoiceData[index].netAmt = 
                 this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+              }
               index++;
               if (index == this.invoiceIds.length) {
                 this.print();
@@ -248,11 +256,20 @@ export class PrintLayoutComponent implements OnInit {
         this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
       }            
 
+      if(!this.printInvoiceData[index].discount)
       this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+      
+      if(!this.printInvoiceData[index].sgst)
       this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+      
+      if(!this.printInvoiceData[index].taxAmt)
       this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
-      this.printInvoiceData[index].netAmt = 
-      this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+      
+      if(!this.printInvoiceData[index].netAmt)
+      {
+        this.printInvoiceData[index].netAmt = 
+        this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+      }
 
     }
   }
@@ -298,6 +315,16 @@ export class PrintLayoutComponent implements OnInit {
   }
 
   onSave(){
-    this.activeModal.close(true);
+    let obj = {};
+    if(this.printInvoiceData && this.printInvoiceData.length){
+      obj = {
+        cgst:this.printInvoiceData[0].cgst,
+        discount:this.printInvoiceData[0].discount,
+        taxAmt:this.printInvoiceData[0].taxAmt,
+        sgst:this.printInvoiceData[0].sgst,
+        netAmt:this.printInvoiceData[0].netAmt
+      }
+    }
+    this.activeModal.close(obj);
   }
 }
