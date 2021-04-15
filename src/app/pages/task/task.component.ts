@@ -20,6 +20,7 @@ export class TaskComponent implements OnInit {
 
   assignFlagForDetails:boolean = false;
   userHeadId;
+  user;
   completedateStatusObj = {
     id:null,
     date: "",
@@ -80,7 +81,8 @@ export class TaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.userHeadId = this.commonService.getUserHeadId();
-    this.userHeadId = this.userHeadId["userHeadId"];  
+    this.userHeadId = this.userHeadId["userHeadId"];
+    this.user = this.commonService.getUser().userId;  
     this.getAccess();
     this.recallAllCardDetail();
   }

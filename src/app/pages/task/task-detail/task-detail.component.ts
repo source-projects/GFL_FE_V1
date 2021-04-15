@@ -193,7 +193,7 @@ export class TaskDetailComponent implements OnInit {
       this.taskService.updateTask(updateObj).subscribe(
         (data) => {
           this.toastrService.success("Updated successfully");
-          this.activeModel.close();        
+          this.activeModel.close();
         },
         (error) => {}
   
