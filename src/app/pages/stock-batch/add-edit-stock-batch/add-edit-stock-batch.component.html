@@ -37,6 +37,7 @@
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
                                 (change)="setQualityByParty($event)" required
+                                [disabled]="stockDataValues && stockDataValues[0]"
                                 class="required-error-dropdown dropdown-name">
                                 <ng-option disabled="true">
                                     <div class="row">
@@ -70,7 +71,8 @@
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
                                 #qualityId1="ngModel"
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
-                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name">
+                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name"
+                                [disabled]="stockDataValues && stockDataValues[0]">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">

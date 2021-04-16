@@ -440,13 +440,7 @@ export class AddEditStockBatchComponent implements OnInit {
   }
 
   removeBatch(index) {
-    if (this.stockDataValues.length == 1) {
-      this.stockDataValues[0] = new BatchCard();
-      this.stockDataValues[0].batchMW.push(new BatchMrtWt());
-      this.stockDataValues[0].batchId = this.currentBatchSequence;
-    } else {
       this.stockDataValues.splice(index, 1);
-    }
   }
 
 
