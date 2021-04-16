@@ -40,61 +40,59 @@ export class ScanQRComponent implements OnInit {
     window.location.href = this.qrResultString;
   }
 
-  onSave() {
-    this.registrationService.empIdExistOrNot(this.employee).subscribe(
-      (data) => {
-        if (data["success"]) {
-          if (data["data"]) {
-            this.route.navigate(['/pages/attendance/', this.employee]);
-          }
-          else {
-            this.toastr.error(data["msg"]);
+  // onSave() {
+  //   this.registrationService.getEmployeeById(this.employee).subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         if (data["data"]) {
+  //           this.route.navigate(['/pages/attendance/', this.employee]);
+  //         }
+  //         else {
+  //           this.toastr.error(data["msg"]);
 
-          }
-        } else {
-          this.toastr.error(data["msg"]);
+  //         }
+  //       } else {
+  //           this.toastr.error(data["msg"]);
 
-        }
-      },
-      (error) => {
+  //       }
+  //     },
+  //     (error) => {
 
-        this.toastr.error(errorData.Serever_Error);
+  //       this.toastr.error(errorData.Serever_Error);
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 
   getEmployee(value) {
 
-    if (value.length >= 3) {
-      this.registrationService.empIdExistOrNot(value).subscribe(
-        (data) => {
-          if (data["success"]) {
-            if (data["data"]) {
-              this.list = data["data"];
-            }
-            else {
+      if (value.length >= 3) {
+        this.registrationService.empIdExistOrNot(value).subscribe(
+          (data) => {
+            if (data["success"]) {
+              if (data["data"]) {
+                this.list = data["data"];
+              }
+              else {
+                this.toastr.error(data["msg"]);
+  
+              }
+            } else {
               this.toastr.error(data["msg"]);
-
+  
             }
-          } else {
-            this.toastr.error(data["msg"]);
-
+          },
+          (error) => {
+            this.toastr.error(errorData.Serever_Error);
           }
-        },
-        (error) => {
-
-          this.toastr.error(errorData.Serever_Error);
-
-        }
-      )
-
-    }
-
+        )
+  
+      }
   }
 
   searchSelected(ele) {
     this.employee = ele;
+    this.route.navigate(['/pages/attendance/', this.employee]);
   }
 
 }
