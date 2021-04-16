@@ -18,6 +18,12 @@ export class RegistrationComponent implements OnInit {
   copyEmpData = [];
   profileData = [];
   loading = false;
+  url;
+  emp_id;
+  contact;
+  href: string;
+  value;
+  qrFlag = false;
   tablestyle = "bootstrap";
   hiddenAdd: boolean = true;
   hiddenEdit: boolean = true;
@@ -39,6 +45,9 @@ export class RegistrationComponent implements OnInit {
 
     this.getAccess();
     this.getAllEmployee();
+    let location = window.location;
+    let urls = location["href"].split("registration");
+    this.url = urls[0];
 
 
   }
@@ -118,5 +127,61 @@ export class RegistrationComponent implements OnInit {
       }
     });
   }
+
+  generateQR(value,index){
+
+    this.emp_id = index.empId;
+    this.contact = index.contact;
+    this.generateQRcode(this.emp_id);
+  }
+
+  generateQRcode(empId) {
+
+    this.qrFlag = false;
+    this.value = this.url + "attendance/" + empId;
+    this.qrFlag = true;
+
+  }
+
+  downloadImage() {
+    this.href = document.getElementsByTagName("img")[0].src;
+  }
+
+  shareImage() {
+    this.href = document.getElementsByTagName("img")[0].src;
+    const formData: FormData = new FormData();
+    formData.append("upload_preset", "gfl_upload");
+    formData.append("cloud_name", "dpemsdha5");
+    formData.append("file", this.href);
+
+    this.registrationService.uploadImage(formData).subscribe((response) => {
+      if (response) {
+        let obj = {
+          id: null,
+          name: this.emp_id,
+          type: "qr",
+          url: response.secure_url,
+          controlId: null,
+        };
+        let url = response.secure_url;
+        if (window.innerWidth >= 1024) {
+          window.location.href =
+            "https://web.whatsapp.com/send?phone=+91" +
+            this.contact +
+            "&text=" +
+            url;
+        } else {
+          window.location.href =
+            "whatsapp://send?phone=+91" +
+            this.contact +
+            "&text=" +
+            url;
+        }
+      }
+    });
+  }
+
+
+
 
 }
