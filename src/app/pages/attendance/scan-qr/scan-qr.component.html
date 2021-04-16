@@ -18,8 +18,8 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
-                            <ng-select [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
-                                <ng-option *ngFor="let emp of list" [value]="emp.id">{{emp.name}}</ng-option>
+                            <ng-select appendTo="body" name="search" [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
+                                <ng-option *ngFor="let emp of list" [value]="emp.empId">{{emp.name}}</ng-option>
                              </ng-select>
                             <!-- <label class="required">Enter employee id </label>
                             <input type="text" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
@@ -48,14 +48,14 @@
 
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
                         <div class="form-group mr-top-bt">
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="onSave()" >Submit</button>
 
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </form>
 
