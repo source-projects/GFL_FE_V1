@@ -34,7 +34,7 @@
                                 <div class="t-all text-center top-style-task">
 
                                     <span class="main-title-task label-top-task">All</span>
-                                    <span class="main-title-task label-top-task-value">{{(allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
 
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="t-assign text-center top-style-task">
                                     <span class="main-title-task label-top-task">Assigned</span>
-                                    <span class="main-title-task label-top-task-value">{{ (assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{ (assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="t-completed text-center top-style-task">
                                     <span class="main-title-task label-top-task">Completed</span>
-                                    <span class="main-title-task label-top-task-value">{{(completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="t-approved text-center top-style-task">
                                     <span class="main-title-task label-top-task">Approved</span>
-                                    <span class="main-title-task label-top-task-value">{{(approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="t-notapproved text-center top-style-task">
                                     <span class="main-title-task label-top-task">Not Approved</span>
-                                    <span class="main-title-task label-top-task-value">{{(notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="t-blocker text-center top-style-task">
                                     <span class="main-title-task label-top-task">Blocker</span>
-                                    <span class="main-title-task label-top-task-value">{{(blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray).length}}</span>
+                                    <span class="main-title-task label-top-task-value">{{(blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user).length}}</span>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
 
                 </div> -->
                 <div class="row" *ngIf="allCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let all of allCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -475,7 +475,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="assignedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let assign of assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let assign of assignCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -619,7 +619,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="completedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let complete of completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let complete of completedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -763,7 +763,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="approvedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let approve of approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let approve of approvedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -908,7 +908,7 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="notApprovedCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let notApprove of notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let notApprove of notApprovedCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">
@@ -1063,7 +1063,7 @@
 
                 </div>
                 <div class="row" *ngIf="blockerCardCount">
-                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray">
+                    <div class="col-md-4 col-12 mobile-pd-0" *ngFor="let block of blockerCardDetail | taskFilterPipe : filterDate : refreshPipeCount : radioSelect : radioArray : user">
                         <div class="mb-4">
                             <div class="container">
                                 <div class="row">

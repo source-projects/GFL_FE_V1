@@ -27,6 +27,7 @@
 
                             <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [hidden]="hiddenEdit" [routerLink]="['/pages/registration/edit',row.id]"></nb-icon>&nbsp;&nbsp;
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash" [hidden]="hiddenDelete" (click)="deleteEmp(row.id)"></nb-icon>
+                            <nb-icon icon="camera-outline" nbTooltip="QR" nbTooltipStatus="primary" status="danger" (click)="generateQR($event,row)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Employee Id" prop="empId" [maxWidth]="200"></ngx-datatable-column>
@@ -55,6 +56,31 @@
 
 
                 </ngx-datatable>
+
+                <div *ngIf="qrFlag">
+                    
+
+                    <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="text-center">
+                                <span class="scan-id-style">{{emp_id}}</span>
+                                <div class="qr-share-opt display-qr-evenly">
+                                    <div class="download-qr">
+                                        <a [href]="href" (click)="downloadImage()" download>
+                                            <nb-icon icon="cloud-download-outline" class="icon-qr-wd-height"></nb-icon>
+                                        </a>
+
+                                    </div>
+                                    <div class="share-qr">
+                                        <nb-icon icon="share-outline" class="icon-qr-wd-height" (click)="shareImage()"></nb-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </nb-card-body>
         </nb-card>

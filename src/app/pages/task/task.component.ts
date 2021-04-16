@@ -1,15 +1,13 @@
-import { Component, NgModule, OnInit } from "@angular/core";
+import { DatePipe } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TaskService } from "../../@theme/services/task.service";
-import { TaskGuard } from "../../@theme/guards/task.guard";
-import { AddEditTaskComponent } from "./add-edit-task/add-edit-task.component";
-import { TaskDetailComponent } from "./task-detail/task-detail.component";
-import { CommonService } from "../../@theme/services/common.service";
-import { result } from "lodash";
-import { CardComponent } from "@swimlane/ngx-charts";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { DatePipe } from "@angular/common";
+import { TaskGuard } from "../../@theme/guards/task.guard";
+import { CommonService } from "../../@theme/services/common.service";
+import { TaskService } from "../../@theme/services/task.service";
+import { AddEditTaskComponent } from "./add-edit-task/add-edit-task.component";
+import { TaskDetailComponent } from "./task-detail/task-detail.component";
 
 @Component({
   selector: "ngx-task",
@@ -20,11 +18,17 @@ export class TaskComponent implements OnInit {
 
   assignFlagForDetails:boolean = false;
   userHeadId;
-  user;
+  user = this.commonService.getUser().userId;;
   completedateStatusObj = {
     id:null,
     date: "",
     status: "Completed",
+  };
+
+  blockerdateStatusObj = {
+    id:null,
+    date: "",
+    status: "Blocker",
   };
 
   hiddenAdd: boolean = true;
@@ -387,7 +391,23 @@ export class TaskComponent implements OnInit {
 
   getAllCardDetail() {
     this.allCardCount = 0;
-    this.taskService
+    if(this.userHeadId == 0){
+      this.taskService
+      .getAllTaskCard("")
+      .subscribe(
+        (data) => {
+          this.allCardDetail = data["data"];
+          if(this.allCardDetail){
+          this.allCardCount = this.allCardDetail.length;
+          }
+        
+        },
+        (error) => {}
+      );
+      
+    }
+    else{
+      this.taskService
       .getAllTaskCard(this.commonService.getUser().userId)
       .subscribe(
         (data) => {
@@ -399,6 +419,7 @@ export class TaskComponent implements OnInit {
         },
         (error) => {}
       );
+    }
   }
 
   getAssignCardDetail() {
@@ -442,12 +463,15 @@ export class TaskComponent implements OnInit {
 
   getBlockerList() {
     this.blockerCardCount = 0;
-    let blockerDateStatusObj = {
-      date: "",
-      status: "Blocker",
-    };
-    this.taskService
-      .getDataAccordingToStatus(blockerDateStatusObj)
+    
+    if(this.userHeadId == 0){
+
+      this.blockerdateStatusObj.id = null;
+      this.blockerdateStatusObj.date = "";
+      this.blockerdateStatusObj.status = "Blocker"
+    
+      this.taskService
+      .getDataAccordingToStatus(this.blockerdateStatusObj)
       .subscribe((data) => {
         this.blockerCardDetail = data["data"];
         if(this.blockerCardCount){
@@ -455,19 +479,47 @@ export class TaskComponent implements OnInit {
         }
       
       });
+    }
+    else{
+
+      this.blockerdateStatusObj.id = this.commonService.getUser().userId;
+      this.blockerdateStatusObj.date = "";
+      this.blockerdateStatusObj.status = "Blocker"
+
+      this.taskService
+      .getDataAccordingToStatus(this.blockerdateStatusObj)
+      .subscribe((data) => {
+        this.blockerCardDetail = data["data"];
+        if(this.blockerCardCount){
+          this.blockerCardCount = this.blockerCardDetail.length;
+        }
+      
+      });
+    }
   }
 
   getApprovedList() {
     this.approvedCardCount = 0;
-    this.taskService
+    if(this.userHeadId == 0){
+      this.taskService
+      .getApprovedAndNotApprovedList("", true)
+      .subscribe((data) => {
+        this.approvedCardDetail = data["data"];
+        if(this.approvedCardDetail){
+          this.approvedCardCount = this.approvedCardDetail.length;
+        }
+      });
+    }
+    else{
+      this.taskService
       .getApprovedAndNotApprovedList(this.commonService.getUser().userId, true)
       .subscribe((data) => {
         this.approvedCardDetail = data["data"];
         if(this.approvedCardDetail){
           this.approvedCardCount = this.approvedCardDetail.length;
         }
-       
       });
+    }
   }
 
   getNotApprovedList() {
