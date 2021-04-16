@@ -397,7 +397,8 @@
                                                 <th>Action</th>
                                             </tr>
 
-                                            <tr *ngFor='let item of itemList;let
+                                            <tr *ngFor='let item of itemList |
+                                            filterByIsColor : isColor : directSlipFlag;let
                                                 i1=index;trackBy:trackByFn'>
                                                 <td>
                                                     <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
@@ -406,8 +407,7 @@
                                                         appendTo="body" class="ng-select-br-none" required>
                                                         <ng-option *ngFor="let
                                                             item of
-                                                            itemListArray |
-                                                            filterByIsColor : isColor : itemListArray | filterOutSelectedSupplier : itemList "
+                                                            itemListArray | filterOutSelectedSupplier : itemList : item.itemId"
                                                              [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} -
                                                             {{item.supplierName}}</ng-option>

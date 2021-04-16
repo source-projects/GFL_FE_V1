@@ -14,6 +14,9 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./add-edit-task.component.scss"],
 })
 export class AddEditTaskComponent implements OnInit {
+
+  taskTypeOnceFlag:boolean = false;
+
   files: File[] = [];
   addTask: AddTask = new AddTask();
   taskImageListArray: TaskImageList[] = [];
@@ -179,6 +182,11 @@ export class AddEditTaskComponent implements OnInit {
       //splice null value from taskImageListrray
       this.addTask.taskImageList.splice(0, 1);
       this.addTask.createdBy = this.commonService.getUser().userId;
+
+      if(this.addTask.taskType == "Once"){
+        this.addTask.endDate = this.addTask.startDate;
+      }
+
       this.taskService.addTask(this.addTask).subscribe(
         (data) => {
           this.toastrService.success("Task added successfully");
@@ -190,5 +198,16 @@ export class AddEditTaskComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  taskTypeChanged(value){
+
+    if(value == "Once"){
+      this.taskTypeOnceFlag = true;
+    }
+    else{
+      this.taskTypeOnceFlag = false;
+    }
+
   }
 }

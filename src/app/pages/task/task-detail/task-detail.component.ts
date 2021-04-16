@@ -192,7 +192,8 @@ export class TaskDetailComponent implements OnInit {
       updateObj.taskDataImageList = this.taskImageListArray;
       this.taskService.updateTask(updateObj).subscribe(
         (data) => {
-          this.toastrService.success("Updated successfully");        
+          this.toastrService.success("Updated successfully");
+          this.activeModel.close();
         },
         (error) => {}
   

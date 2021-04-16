@@ -1,12 +1,12 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdvancePayList, Payment, PaymentData } from 'app/@theme/model/payment'
-import { CommonService } from 'app/@theme/services/common.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { PaymentService } from 'app/@theme/services/payment.service';
+import { AdvancePayList, Payment, PaymentData } from '../../../@theme/model/payment'
+import { CommonService } from '../../../@theme/services/common.service';
+import { JwtTokenService } from '../../../@theme/services/jwt-token.service';
+import { PartyService } from '../../../@theme/services/party.service';
+import { PaymentService } from '../../../@theme/services/payment.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from '../../../@theme/json/error.json';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -24,6 +24,7 @@ export class BillPaymentComponent implements OnInit {
   currentPaymentId: string;
   //total:Number=0;
   totalAdvance = 0;
+  gstAmount = 0;
   temp1: any;
   temp2: any;
   temp3: any;
@@ -167,12 +168,15 @@ export class BillPaymentComponent implements OnInit {
     })
     this.paymentValues.invoices = inv;
     this.totalInvoice = 0;
+    this.gstAmount = 0;
     event.selected.forEach(element => {
-      this.totalInvoice = this.totalInvoice + element.amt;
+      this.totalInvoice = this.totalInvoice + element.netAmt;
+      this.gstAmount = this.gstAmount + element.cgst + element.sgst;
     });
     this.paymentValues.totalBill = this.totalInvoice;
-    this.paymentValues.amtToPay = this.totalInvoice;
-  }
+    this.paymentValues.gstAmt = this.gstAmount;
+    this.paymentValues.amtToPay = this.paymentValues.totalBill;
+  } 
 
   advancePaymentSelected(event) {
     if(event.selected){
@@ -197,14 +201,14 @@ export class BillPaymentComponent implements OnInit {
     
   }
 
-  gstSelected(event) {
-    if (event.target.value || event.target.value == "") {
-      this.paymentValues.totalBill = this.totalInvoice;
-      this.paymentValues.amtToPay = this.totalInvoice;
-    }
-    let gst = Number(event.target.value);
-    this.paymentValues.amtToPay = this.totalInvoice - gst;
-  }
+  // gstSelected(event) {
+  //   if (event.target.value || event.target.value == "") {
+  //     this.paymentValues.totalBill = this.totalInvoice;
+  //     this.paymentValues.amtToPay = this.totalInvoice;
+  //   }
+  //   let gst = Number(event.target.value);
+  //   this.paymentValues.amtToPay = this.totalInvoice + gst;
+  // }
 
   getPaymentType() {
     this.paymentService.getAllPaymentType().subscribe(

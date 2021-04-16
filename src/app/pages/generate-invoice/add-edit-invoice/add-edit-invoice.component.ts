@@ -189,7 +189,12 @@ invoiceNo : any;
       let obj = {
         batchAndStockIdList: this.final,
         createdBy: this.userId,
-        userHeadId: this.userHeadId
+        userHeadId: this.userHeadId,
+        cgst:null,
+        sgst:null,
+        discount:null,
+        taxAmt:null,
+        netAmt:null
       }
       const modalRef = this.modalService.open(PrintLayoutComponent,{size: "xl"});
       modalRef.componentInstance.finalInvoice = obj;
@@ -197,7 +202,13 @@ invoiceNo : any;
   
       modalRef.result
         .then((result) => {
+          console.log(result)
           if(result){
+            obj.cgst = result.cgst;
+            obj.sgst = result.sgst;
+            obj.discount = result.discount;
+            obj.netAmt = result.netAmt;
+            obj.taxAmt = result.taxAmt;
             if (invoiceForm.valid) {
               this.generateInvoiceService.addInvoicedata(obj).subscribe(
                 async data => {

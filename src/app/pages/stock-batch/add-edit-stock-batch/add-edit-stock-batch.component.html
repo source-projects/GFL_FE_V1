@@ -221,7 +221,7 @@
                                                                         (input)="calculateWt(meter1.value,i,rowIndex,0);"
                                                                         [ngClass]="{'is-invalid': formSubmitted && meter1.invalid}"
                                                                         min="0"
-                                                                        [disabled]="flag || row.disable || weightFlag">
+                                                                        [disabled]="flag || row.isProductionPlanned || weightFlag">
                                                                     <div class="input-required display-inlineblock"
                                                                         *ngIf="formSubmitted && (meter1.invalid)"
                                                                         min="0">
@@ -242,7 +242,7 @@
                                                                         (input)="calculateMtr(weight1.value,i,rowIndex,1);"
                                                                         [ngClass]="{'is-invalid': formSubmitted && weight1.invalid}"
                                                                         min="0"
-                                                                        [disabled]="flag || row.disable || !weightFlag">
+                                                                        [disabled]="flag || row.isProductionPlanned || !weightFlag">
                                                                     <div class="input-required display-inlineblock"
                                                                         *ngIf="formSubmitted && (weight1.invalid)"
                                                                         min="0">
@@ -255,7 +255,7 @@
                                                                 <ng-template let-row="row" let-value="value"
                                                                     ngx-datatable-cell-template let-rowIndex="rowIndex">
                                                                     <nb-icon icon="trash" status="danger"
-                                                                        [hidden]="production_flag[i] || flag || row.disable"
+                                                                        [hidden]="production_flag[i] || flag || row.isProductionPlanned"
                                                                         [options]="{ animation: { type: 'zoom' } }"
                                                                         (click)="removeItem(rowIndex,i)">
                                                                     </nb-icon>
