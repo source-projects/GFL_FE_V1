@@ -18,12 +18,15 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
-                            <label class="required">Enter employee id </label>
-                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
+                            <ng-select [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
+                                <ng-option *ngFor="let emp of list" [value]="emp.id">{{emp.name}}</ng-option>
+                             </ng-select>
+                            <!-- <label class="required">Enter employee id </label>
+                            <input type="text" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
 
                             <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
                                 <span>Employee Id is required</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

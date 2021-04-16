@@ -7,8 +7,7 @@ export class TaskFilterPipe implements PipeTransform {
    datePipeString;
     datePipe: DatePipe;
      transform(
-    cardDetail , date: string, refreshCount , radioSelect , radioArray
-  ) {
+    cardDetail , date: string, refreshCount , radioSelect , radioArray ,user) {
     this.datePipe = new DatePipe('en-IN');
     if(cardDetail && cardDetail.length){
   
@@ -22,13 +21,13 @@ export class TaskFilterPipe implements PipeTransform {
                 return true;
 
               case 2:
-                if(ele.assignBySameUser){
+                if(ele.createdBy == user){
                   return true;
                 }
                 return false;
 
               case 3:
-                if(!ele.assignBySameUser){
+                if(ele.createdBy != user){
                   return true;
                 }
                 return false;
@@ -44,13 +43,13 @@ export class TaskFilterPipe implements PipeTransform {
             return true;
 
           case 2:
-            if(ele.assignBySameUser){
+            if(ele.createdBy == user){
               return true;
             }
             return false;
 
           case 3:
-            if(!ele.assignBySameUser){
+            if(ele.createdBy != user){
               return true;
             }
             return false;

@@ -147,6 +147,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: "Advance Payment",
         link: "/pages/payment/advance-payment",
       },
+      {
+        title: "Payment",
+        link: "/pages/payment/payment",
+      },
     ],
   },
   {

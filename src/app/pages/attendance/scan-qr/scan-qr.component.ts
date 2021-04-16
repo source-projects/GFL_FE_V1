@@ -12,55 +12,90 @@ import { RegistrationService } from '../../../@theme/services/registration.servi
 export class ScanQRComponent implements OnInit {
 
 
-  
+
   loading = false;
   formSubmitted = false;
-  empId : any;
+  empId: any;
+  list = [];
+  employee;
   constructor(
-    private registrationService : RegistrationService,
-   private renderer: Renderer2,
-   private route: Router,
-   private toastr: ToastrService,
+    private registrationService: RegistrationService,
+    private renderer: Renderer2,
+    private route: Router,
+    private toastr: ToastrService,
 
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-qrResultString: string;
+  qrResultString: string;
 
-clearResult(): void {
-  this.qrResultString = null;
-  
-}
+  clearResult(): void {
+    this.qrResultString = null;
 
-onCodeResult(resultString: string) {
-  this.qrResultString = resultString;
-  window.location.href = this.qrResultString;
-}
+  }
 
-onSave(){
-  this.registrationService.empIdExistOrNot(this.empId).subscribe(
-    (data) => {
-      if(data["success"]){
-        if(data["data"]){
-          this.route.navigate(['/pages/attendance/',this.empId]);
-        }
-        else{
+  onCodeResult(resultString: string) {
+    this.qrResultString = resultString;
+    window.location.href = this.qrResultString;
+  }
+
+  onSave() {
+    this.registrationService.empIdExistOrNot(this.employee).subscribe(
+      (data) => {
+        if (data["success"]) {
+          if (data["data"]) {
+            this.route.navigate(['/pages/attendance/', this.employee]);
+          }
+          else {
+            this.toastr.error(data["msg"]);
+
+          }
+        } else {
           this.toastr.error(data["msg"]);
 
         }
-      }else{
-        this.toastr.error(data["msg"]);
+      },
+      (error) => {
+
+        this.toastr.error(errorData.Serever_Error);
 
       }
-    },
-    (error)=>{
-      
-        this.toastr.error(errorData.Serever_Error);
-     
+    )
+  }
+
+  getEmployee(value) {
+
+    if (value.length >= 3) {
+      this.registrationService.empIdExistOrNot(value).subscribe(
+        (data) => {
+          if (data["success"]) {
+            if (data["data"]) {
+              this.list = data["data"];
+            }
+            else {
+              this.toastr.error(data["msg"]);
+
+            }
+          } else {
+            this.toastr.error(data["msg"]);
+
+          }
+        },
+        (error) => {
+
+          this.toastr.error(errorData.Serever_Error);
+
+        }
+      )
+
     }
-  )
-}
+
+  }
+
+  searchSelected(ele) {
+    this.employee = ele;
+  }
 
 }
 

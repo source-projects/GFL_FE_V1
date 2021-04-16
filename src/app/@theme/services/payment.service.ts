@@ -39,4 +39,8 @@ savePayment(paymentData){
   return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/",paymentData);
 
 }
+
+getAllPayment(){
+  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAllPayment");
+}
 }
