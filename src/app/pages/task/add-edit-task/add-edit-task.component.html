@@ -127,11 +127,22 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Start Date</label>
-                            <input name="startDate" id="startDate" class="form-control" type="date" [(ngModel)]="addTask.startDate" #startDate1="ngModel" [ngClass]="{
+
+                            <input name="startDate" class="form-control size-small" fieldsize="small" nbinput
+                            #startDate1="ngModel" [(ngModel)]='addTask.startDate' [owlDateTimeTrigger]="dt2"
+                                [owlDateTime]="dt2" placeholder="MM-DD-YYYY"
+                                [ngClass]="{
                                     'is-invalid':
                                     startDate1.invalid &&
                                     (formSubmitted || startDate1.touched)
                                     }" required>
+                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+
+                            <!-- <input name="startDate" id="startDate" class="form-control" type="date" [(ngModel)]="addTask.startDate" #startDate1="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    startDate1.invalid &&
+                                    (formSubmitted || startDate1.touched)
+                                    }" required> -->
                             <div class="input-required" *ngIf="startDate1.invalid &&
                                     (formSubmitted || startDate1.touched)">
                                 <span>Start date is required</span>
@@ -141,11 +152,22 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Till Date</label>
-                            <input name="tillDate" [disabled]="taskTypeOnceFlag" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
+                            
+                            <input  name="tillDate" [disabled]="taskTypeOnceFlag" id="tillDate" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
+                                'is-invalid':
+                                enddate1.invalid &&
+                                (formSubmitted || enddate1.touched)
+                                }" required  class="form-control" fieldsize="small" nbinput
+                                [owlDateTimeTrigger]="dt1"
+                                [owlDateTime]="dt1" placeholder="MM-DD-YYYY"
+                                [min]="minDate" >
+                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                            
+                            <!-- <input name="tillDate" [disabled]="taskTypeOnceFlag" id="tillDate" class="form-control" type="date" [(ngModel)]="addTask.endDate" #enddate1="ngModel" [ngClass]="{
                                     'is-invalid':
                                     enddate1.invalid &&
                                     (formSubmitted || enddate1.touched)
-                                    }" required>
+                                    }" required> -->
                             <div class="input-required" *ngIf="enddate1.invalid &&
                                     (formSubmitted || enddate1.touched)">
                                 <span>End date is required</span>

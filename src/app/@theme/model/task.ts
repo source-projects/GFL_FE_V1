@@ -17,6 +17,10 @@ export class AddTask {
   updatedDate: Date;
   completedDate: Date;
   taskImageList: TaskImageList[];
+
+  constructor(){
+    this.startDate = new Date();
+  }
 }
 export class TaskImageList {
   controlId: any;

@@ -17,6 +17,7 @@ export class AdvancePaymentComponent implements OnInit {
 
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
 
+  AdvancebillBanks = [];
   userId: any;
   userHeadId: any;
   currentAdvancePaymentId: string;
@@ -52,8 +53,26 @@ export class AdvancePaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
+    this.getAdvanceBillBank();
   }
 
+
+  getAdvanceBillBank(){
+    this.loading = true;
+    this.paymentService.getAllAdvancePaymentBanks().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.AdvancebillBanks = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+  }
 
   public getUserId() {
     this.currentAdvancePaymentId = this._route.snapshot.paramMap.get("id");
@@ -217,6 +236,14 @@ export class AdvancePaymentComponent implements OnInit {
       error => {
       }
     )
+  }
+
+  bankSelected(value,index,colName){
+    
+    if(colName == "bank"){
+      this.advancePaymentArray[index].bank = value.label;
+    }
+    this.AdvancebillBanks.push({name:value.label});
   }
 
 }

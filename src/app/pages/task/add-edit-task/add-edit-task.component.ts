@@ -7,6 +7,7 @@ import { TaskService } from "../../../@theme/services/task.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "ngx-add-edit-task",
@@ -16,7 +17,8 @@ import { ToastrService } from "ngx-toastr";
 export class AddEditTaskComponent implements OnInit {
 
   taskTypeOnceFlag:boolean = false;
-
+  minDate;
+  dateForPicker = new Date();
   files: File[] = [];
   addTask: AddTask = new AddTask();
   taskImageListArray: TaskImageList[] = [];
@@ -36,6 +38,7 @@ export class AddEditTaskComponent implements OnInit {
   imageFile: File = null;
   fileToUpload: File = null;
   formSubmitted: boolean = false;
+  datepipestring;
   constructor(
     private adminService: AdminService,
     private taskService: TaskService,
@@ -44,13 +47,23 @@ export class AddEditTaskComponent implements OnInit {
     private commonService: CommonService,
     private activeModel: NgbActiveModal,
     private toastrService: ToastrService,
+    private datepipe:DatePipe
 
   ) {
     this.taskImageListArray.push(this.taskImageList);
     this.addTask.taskImageList = this.taskImageListArray;
+    this.addTask.startDate = new Date();
   }
 
   ngOnInit(): void {
+    this.addTask.startDate = new Date();
+    this.minDate = new Date(
+      this.dateForPicker.getFullYear(),
+      this.dateForPicker.getMonth(),
+      this.dateForPicker.getDate(),
+      23,
+      59
+    );
     this.getDeviceList();
     this.getReportList();
   }
