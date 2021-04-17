@@ -132,19 +132,6 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  getAllTasks(){
-
-  }
-
-  getSameUserTasks(){
-
-  }
-
-  getOthersAssignedTasks(){
-
-  }
-
-
   openAddTaskComponent() {
     const modalRef = this.modalService.open(AddEditTaskComponent, {
       size: "lg",
@@ -164,6 +151,12 @@ export class TaskComponent implements OnInit {
     const modelref = this.modalService.open(TaskDetailComponent);
     modelref.componentInstance.taskId = id;
     modelref.componentInstance.assign = this.assignFlagForDetails;
+
+    modelref.result.then((result) => {
+      if(result){
+        this.recallAllCardDetail();
+      }
+    }).catch((err) => {});
   }
 
   showCardAccordingToStatus(value) {
