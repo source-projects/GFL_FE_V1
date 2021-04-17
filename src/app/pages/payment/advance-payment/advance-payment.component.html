@@ -92,7 +92,14 @@
 
                             <ngx-datatable-column name="Bank" prop="bank" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}' [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')" [id]="'advancePaymentList'+rowIndex+'-bank'">
+                                    <!-- <input class="tableForm line-height-subtable" type="text" #bank1="ngModel" name='bank{{rowIndex}}' [(ngModel)]="row.bank" (keyup)="onKeyUp($event,rowIndex,3,'bank')" [id]="'advancePaymentList'+rowIndex+'-bank'"> -->
+                                    <ng-select appendTo="body" name='bank{{rowIndex}}' [(ngModel)]='row.bank' #bank1="ngModel" [addTag]="true" placeholder="Bank Name"  class="tableForm" class="ng-select-br-none"
+                                    (keyup)="onKeyUp($event,rowIndex,3,'bank')" [id]="'advancePaymentList'+rowIndex+'-bank'" (change)="bankSelected($event,rowIndex,'bank')">
+                                    
+                                        <ng-option *ngFor="let bank of AdvancebillBanks" [value]="bank.name">
+                                            {{bank.name}}
+                                        </ng-option>
+                                    </ng-select>
                                 </ng-template>
                             </ngx-datatable-column>
 

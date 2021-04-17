@@ -354,7 +354,6 @@ export class AddEditRegistrationComponent implements OnInit {
         };
         this.employeeDocumentArray.push(obj);
         let url = response.secure_url;
-        this.addQR(url);
         if (window.innerWidth >= 1024) {
           window.location.href =
             "https://web.whatsapp.com/send?phone=+91" +
@@ -377,6 +376,8 @@ export class AddEditRegistrationComponent implements OnInit {
     this.formSubmitted = true;
 
     if (form.valid) {
+      this.generateQR(this.emp_id);
+
       this.loading = true;
 
       this.disableButton = true;
@@ -392,8 +393,8 @@ export class AddEditRegistrationComponent implements OnInit {
             this.docAdd = [];
             this.processValue = 0;
             this.loading = false;
+            this.qrFlag = true;
 
-            this.generateQR(this.emp_id);
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -408,18 +409,27 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   generateQR(empId) {
-    this.qrFlag = true;
 
     this.value = this.url + "attendance/" + empId;
+    this.addQR(this.value);
     this.fileUpload();
   }
 
   addQR(finalurl) {
+
+    let obj = {
+      id: null,
+      name: this.emp_id,
+      type: "qr",
+      url: finalurl,
+      controlId: null,
+    };
     let qrData = {
       url: finalurl,
       type: "qr",
       controlId: this.emp_id,
     };
+    this.employeeDocumentArray.push(obj)
     this.registrationService.addQr(qrData).subscribe(
       (data) => {
         if (data["success"]) {
