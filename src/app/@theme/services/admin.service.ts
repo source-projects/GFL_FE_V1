@@ -68,9 +68,9 @@ export class AdminService {
     );
   }
 
-  getAllBatchSequence() {
+  getAllBatchSequence(id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/admin/get/batchSequence/"
+      this.commonService.envUrl() + "api/admin/get/batchSequence?update="+id
     );
   }
 
