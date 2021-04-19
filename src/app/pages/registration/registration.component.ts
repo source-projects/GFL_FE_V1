@@ -128,20 +128,28 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  generateQR(value,index){
+  generateQR(element,index){
 
-    this.emp_id = index.empId;
-    this.contact = index.contact;
-    this.generateQRcode(this.emp_id);
-  }
-
-  generateQRcode(empId) {
-
-    this.qrFlag = false;
-    this.value = this.url + "attendance/" + empId;
+    // this.emp_id = index.empId;
+    // this.contact = index.contact;
+    // this.generateQRcode(this.emp_id);
+    let doc = [];
+    doc = index.employeeDocumentList;
+    doc.forEach(ele=>{
+      if(ele.type == "qr"){
+        this.value = ele.url;
+      }
+    })
     this.qrFlag = true;
-
   }
+
+  // generateQRcode(empId) {
+
+  //   this.qrFlag = false;
+  //   this.value = this.url + "attendance/" + empId;
+  //   this.qrFlag = true;
+
+  // }
 
   downloadImage() {
     this.href = document.getElementsByTagName("img")[0].src;

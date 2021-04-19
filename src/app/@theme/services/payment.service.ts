@@ -14,6 +14,14 @@ export class PaymentService {
   ) { }
 
   
+getAllAdvancePaymentBanks(){
+  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/advancePayment/getAllBank");
+}
+  
+getAllBillBank(){
+  return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAllBank");
+}
+
 getPendingBillByPartyId(partyId){
   return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPendingBillByPartyId/"+partyId);
 }

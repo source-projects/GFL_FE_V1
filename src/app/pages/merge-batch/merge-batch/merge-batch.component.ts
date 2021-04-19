@@ -39,7 +39,7 @@ export class MergeBatchComponent implements OnInit {
     private qualityService: QualityService,
     private stockBatchService: StockBatchService,
     private mergeBatchService: MergeBatchService,
-    private commonService : CommonService,
+    private commonService: CommonService,
     private _route: ActivatedRoute
   ) {
     this.filterDetails.push(this._clone(new MergeBatch()));
@@ -49,17 +49,14 @@ export class MergeBatchComponent implements OnInit {
   async ngOnInit() {
     this.getUserId();
     if (this.currentId) {
-       this.getCurrentMergeBatchData();
-       this.disable = true;
+      this.getCurrentMergeBatchData();
+      this.disable = true;
     }
-   await this.getAllParties();
-    for(let i = 1; i <= 3; i++){
+    await this.getAllParties();
+    for (let i = 1; i <= 3; i++) {
       this.addId(i);
     }
-
   }
-
-  
 
   public getUserId() {
     this.user = this.commonService.getUser();
@@ -67,40 +64,35 @@ export class MergeBatchComponent implements OnInit {
     this.currentId = this._route.snapshot.paramMap.get("id");
   }
 
-  getCurrentMergeBatchData(){
+  getCurrentMergeBatchData() {
     this.mergeBatchService.getMergeBatchById(this.currentId).subscribe(
       (data) => {
-        if(data["success"]){
+        if (data["success"]) {
           this.currentMergeBatch = data["data"];
-         
-          
-         let partyId = this.currentMergeBatch.partyId.split(',');
-         let qualityId = this.currentMergeBatch.qualityEntryId.split(',');
-         let batchId = this.currentMergeBatch.batchId.split(',');
 
-         partyId.forEach((element , i) => {
-          this.filterDetails[i].partyId = Number(element); 
-          this.partySelected(element, i );
-         }
-         );
-         qualityId.forEach((element , i) => {
-          this.filterDetails[i].qualityId = Number(element); 
-          this.qualitySelected(element, i );
-         });
+          let partyId = this.currentMergeBatch.partyId.split(",");
+          let qualityId = this.currentMergeBatch.qualityEntryId.split(",");
+          let batchId = this.currentMergeBatch.batchId.split(",");
 
-         batchId.forEach((element , i) => {
-          this.filterDetails[i].batchId = Number(element); 
-          this.batchSelected(element, i );
-         });
-         this.showMergeBox = true;
-         this.finalGrList = this.currentMergeBatch.batchDataList;
+          partyId.forEach((element, i) => {
+            this.filterDetails[i].partyId = Number(element);
+            this.partySelected(element, i);
+          });
+          qualityId.forEach((element, i) => {
+            this.filterDetails[i].qualityId = Number(element);
+            this.qualitySelected(element, i);
+          });
+
+          batchId.forEach((element, i) => {
+            this.filterDetails[i].batchId = Number(element);
+            this.batchSelected(element, i);
+          });
+          this.showMergeBox = true;
+          this.finalGrList = this.currentMergeBatch.batchDataList;
         }
-       
       },
-      (error) => {
-
-      }
-    )
+      (error) => {}
+    );
   }
 
   _clone(obj): any {
@@ -221,14 +213,14 @@ export class MergeBatchComponent implements OnInit {
     }
   }
 
-  enableMergeBox(){
+  enableMergeBox() {
     let count = 0;
-      this.filterDetails.forEach((element) => {
-        if (element.batchId) count++;
-      });
-    if(count > 1){
+    this.filterDetails.forEach((element) => {
+      if (element.batchId) count++;
+    });
+    if (count > 1) {
       this.showMergeBox = true;
-    }else{
+    } else {
       this.showMergeBox = false;
     }
   }
@@ -244,56 +236,55 @@ export class MergeBatchComponent implements OnInit {
 
       if (count > 1) {
         //get Batch Sequence for new batchId...
-        if(!this.currentId){
-        this.stockBatchService.getBatchSequence().subscribe((data) => {
-          if (data["success"]) {
-            this.newBatchId = data["data"]["sequence"];
-          }
-        });
-      }
+        if (!this.currentId) {
+          this.stockBatchService.getBatchSequence(true).subscribe((data) => {
+            if (data["success"]) {
+              this.newBatchId = data["data"]["sequence"];
+            }
+          });
+        }
         setTimeout(() => {
           //save merged batches....
-          if(!this.currentId){
-
-          this.mergeBatchService
-            .saveMergedBatch({
-              mergeBatchId: this.newBatchId,
-              batchDataList: this.finalGrList,
-            })
-            .subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.toastr.success(data["msg"]);
-                  this.loading = false;
-                  this.showMergeBox = false;
-                  this.resetForm(myForm);
-                }
-                this.loading = false;
-              },
-              (error) => {
-                this.loading = false;
-              }
-            );
-          }else{
+          if (!this.currentId) {
             this.mergeBatchService
-            .updateMergeBatch({
-              mergeBatchId: this.currentMergeBatch.mergeBatchId,
-              batchDataList: this.finalGrList,
-            })
-            .subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.toastr.success(data["msg"]);
+              .saveMergedBatch({
+                mergeBatchId: this.newBatchId,
+                batchDataList: this.finalGrList,
+              })
+              .subscribe(
+                (data) => {
+                  if (data["success"]) {
+                    this.toastr.success(data["msg"]);
+                    this.loading = false;
+                    this.showMergeBox = false;
+                    this.resetForm(myForm);
+                  }
                   this.loading = false;
-                  this.showMergeBox = false;
-                  this.resetForm(myForm);
+                },
+                (error) => {
+                  this.loading = false;
                 }
-                this.loading = false;
-              },
-              (error) => {
-                this.loading = false;
-              }
-            );
+              );
+          } else {
+            this.mergeBatchService
+              .updateMergeBatch({
+                mergeBatchId: this.currentMergeBatch.mergeBatchId,
+                batchDataList: this.finalGrList,
+              })
+              .subscribe(
+                (data) => {
+                  if (data["success"]) {
+                    this.toastr.success(data["msg"]);
+                    this.loading = false;
+                    this.showMergeBox = false;
+                    this.resetForm(myForm);
+                  }
+                  this.loading = false;
+                },
+                (error) => {
+                  this.loading = false;
+                }
+              );
           }
         }, 1000);
       } else {
@@ -314,20 +305,16 @@ export class MergeBatchComponent implements OnInit {
     this.showMergeBox = false;
   }
 
-  crossClick(item , i){
-    this.finalGrList.splice(i,1);
-    this.filterDetails.forEach(element => {
-      
-        if(element.batchId == item.batchId){
-          element.grList = [...element.grList, item];
-        }
-      });
-     
-   
+  crossClick(item, i) {
+    this.finalGrList.splice(i, 1);
+    this.filterDetails.forEach((element) => {
+      if (element.batchId == item.batchId) {
+        element.grList = [...element.grList, item];
+      }
+    });
   }
 
-
-  updateMergedBatch(form){
+  updateMergedBatch(form) {
     this.saveMergedBatch(form);
   }
 }

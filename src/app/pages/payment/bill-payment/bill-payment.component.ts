@@ -16,6 +16,8 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 export class BillPaymentComponent implements OnInit {
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
+
+  billBanks = [];
   userId: any;
   userHeadId: any;
   index: any;
@@ -66,8 +68,27 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
+    this.getBillBank();
+
     this.selected = [];
 
+  }
+
+  getBillBank(){
+    this.loading = true;
+    this.paymentService.getAllBillBank().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.billBanks = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   public getUserId() {
@@ -106,6 +127,7 @@ export class BillPaymentComponent implements OnInit {
               this.invoiceList = data["data"];
               this.loading = false;
             } else {
+              this.invoiceList = [];
               this.loading = false;
             }
           },
@@ -127,6 +149,7 @@ export class BillPaymentComponent implements OnInit {
               this.advancePaymentList = data["data"];
               this.loading = false;
             } else {
+              this.advancePaymentList = [];
               this.loading = false;
             }
           },
@@ -365,6 +388,7 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.totalBill = 0;
     this.paymentValues.gstAmt = 0;
     this.paymentValues.netAmt = 0;
+    this.paymentValues.paymentData = [];
     this.invoiceList = [];
     this.advancePaymentList = [];
     this.paymentDataListArray.push(this.paymentDataList);
@@ -392,6 +416,14 @@ export class BillPaymentComponent implements OnInit {
         }
       )
     }
+  }
+
+  bankSelected(value,index,colName){
+    
+    if(colName == "bank"){
+      this.paymentValues.paymentData[index].bank = value.label;
+    }
+    this.billBanks.push({name:value.label});
   }
 
 }
