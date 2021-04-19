@@ -3428,4 +3428,7 @@ ng-select .ng-clear-wrapper {
     height: 106px !important;
 }
 
-.btn-fix-bottom-right {}
+.nb-theme-default .cdk-overlay-container {
+    z-index: 9999999 !important
+  }
+  

@@ -24,6 +24,7 @@ export class TaskDetailComponent implements OnInit {
   statusSelected;
   taskDetail;
   taskDetailData;
+  detailFlag;
 
   @Input("taskId") taskId: number;
   @Input("assign") assign:boolean;
@@ -41,20 +42,20 @@ export class TaskDetailComponent implements OnInit {
 
     ) {}
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.getTaskMasterDetailById();
     this.getTaskDataDetailById();
-
+    
   }
 
   getTaskMasterDetailById(){
-    console.log(this.taskId)
     this.taskService
     .getTaskMasterDatabyId(this.taskId)
     .subscribe(
       (data) => {
         console.log(data["data"]);
         this.taskDetail = data["data"];
+        this.detailFlag = true;
       },
       (error) => {}
     );
@@ -66,7 +67,6 @@ export class TaskDetailComponent implements OnInit {
     .getTaskDataDatabyId(this.taskId)
     .subscribe(
       (data) => {
-        console.log(data["data"]);
         this.taskDetailData = data["data"];
         this.statusSelected = this.taskDetailData.taskStatus;
       },
