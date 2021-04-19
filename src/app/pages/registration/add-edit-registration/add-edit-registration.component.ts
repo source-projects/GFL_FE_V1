@@ -376,7 +376,6 @@ export class AddEditRegistrationComponent implements OnInit {
     this.formSubmitted = true;
 
     if (form.valid) {
-      this.generateQR(this.emp_id);
 
       this.loading = true;
 
@@ -391,6 +390,7 @@ export class AddEditRegistrationComponent implements OnInit {
             this.disableButton = false;
             this.toastr.success(data["msg"]);
             this.docAdd = [];
+            this.generateQR(this.emp_id);
             this.processValue = 0;
             this.loading = false;
             this.qrFlag = true;

@@ -19,6 +19,8 @@ import { NgSelectComponent } from "@ng-select/ng-select";
 })
 export class AddEditColorComponent implements OnInit {
 
+  itemSelectedFlag:boolean = false;
+
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
@@ -165,6 +167,7 @@ export class AddEditColorComponent implements OnInit {
   }
 
   itemSelected(rowIndex) {
+    this.itemSelectedFlag = true;
     let id = this.color.colorDataList[rowIndex].itemId;
     this.supplierListRate.forEach((element) => {
       if (id == element.id) {
