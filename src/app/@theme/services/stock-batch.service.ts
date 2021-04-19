@@ -1,66 +1,111 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CommonService } from './common.service';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { CommonService } from "./common.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class StockBatchService {
+  constructor(
+    private httpClient: HttpClient,
+    private commonService: CommonService
+  ) {}
 
-  constructor(private httpClient:HttpClient,private commonService:CommonService) { }
-
-  isBatchIdExists(name, id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/stockBatch/isBatchExists/'+name+'/'+id);
+  isBatchIdExists(name, id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/stockBatch/isBatchExists/" +
+        name +
+        "/" +
+        id
+    );
   }
 
-   deleteStockBatchById(id): any{
-     return this.httpClient.delete(this.commonService.envUrl()+'api/stockBatch/'+id);
-   }
-
-   getAllStockBatchList(id,getBy): any{
-     return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/all/'+getBy+'/'+id);
-   }
-
-  addStockBatch(myForm){
-    return this.httpClient.post(this.commonService.envUrl()+'api/stockBatch',myForm);
+  deleteStockBatchById(id): any {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/stockBatch/" + id
+    );
   }
 
-  updateStockBatch(myForm){
-    return this.httpClient.put(this.commonService.envUrl()+'api/stockBatch',myForm);
+  getAllStockBatchList(id, getBy): any {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/all/" + getBy + "/" + id
+    );
   }
 
-  getStockBatchById(id){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/'+id);
+  addStockBatch(myForm) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch",
+      myForm
+    );
   }
 
-  getAllBatch(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/all');
+  updateStockBatch(myForm) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/stockBatch",
+      myForm
+    );
   }
 
-  getBatchById(p_id,q_id){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/ByQualityAndParty/'+q_id+'/'+p_id);
-  }
-  getAllBatchForAdditionSlip(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/forAdditionalSlip');
-  }
-
-  getJobCardData(stockId, batchId){
-    return this.httpClient.get(`${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}&stockId=${stockId}`);
-  }
-  
-  getBatchSequence(){
-    return this.httpClient.get(this.commonService.envUrl()+'api/admin/get/batchSequence/');
+  getStockBatchById(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/" + id
+    );
   }
 
-  updateBatchSequence(data){
-    return this.httpClient.put(this.commonService.envUrl()+'api/admin/update/batchSequence/',data);
+  getAllBatch() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/batch/all"
+    );
+  }
+
+  getBatchById(p_id, q_id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/stockBatch/batch/ByQualityAndParty/" +
+        q_id +
+        "/" +
+        p_id
+    );
+  }
+  getAllBatchForAdditionSlip() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/batch/forAdditionalSlip"
+    );
+  }
+
+  getJobCardData(stockId, batchId) {
+    return this.httpClient.get(
+      `${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}&stockId=${stockId}`
+    );
+  }
+
+  getBatchSequence(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/batchSequence?update=" + id
+    );
+  }
+
+  updateBatchSequence(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/update/batchSequence/",
+      data
+    );
   }
 
   getBatchesByPartyQuality(qId, pId) {
-    return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +qId +"/" +pId);
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+        "api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +
+        qId +
+        "/" +
+        pId
+    );
   }
 
-  getBatchGRById(bId){
-    return this.httpClient.get(this.commonService.envUrl()+'api/stockBatch/batch/' + bId+'/'+bId);
+  getBatchGRById(bId) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/batch/" + bId + "/" + bId
+    );
   }
 }

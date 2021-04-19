@@ -4,7 +4,7 @@ import { JwtTokenService } from "./jwt-token.service";
 import { StoreTokenService } from "./store-token.service";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class CommonService {
   // private broadCastMesaage=new BehaviorSubject<string>("Demo");
@@ -40,11 +40,9 @@ export class CommonService {
 
     if (hostName == "192.168.1.103") {
       url = "http://192.168.1.103:8080/";
-
     } else if (hostName.includes("dyeingerp.gloryautotech.com")) {
-      url = "https://api.dyeingerp.gloryautotech.com/"
-    }
-    else if (hostName == "15.206.179.225" || hostName == "localhost") {
+      url = "https://api.dyeingerp.gloryautotech.com/";
+    } else if (hostName == "15.206.179.225" || hostName == "localhost") {
       url = "http://15.206.179.225:8080/";
     } else {
       url = "http://103.137.194.167:8080/";
