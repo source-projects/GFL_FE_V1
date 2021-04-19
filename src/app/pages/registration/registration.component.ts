@@ -130,7 +130,7 @@ export class RegistrationComponent implements OnInit {
 
   generateQR(element,index){
 
-    // this.emp_id = index.empId;
+    this.emp_id = index.empId;
     // this.contact = index.contact;
     // this.generateQRcode(this.emp_id);
     let doc = [];

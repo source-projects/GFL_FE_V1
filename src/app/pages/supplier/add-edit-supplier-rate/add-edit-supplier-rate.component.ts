@@ -178,13 +178,6 @@ export class AddEditSupplierRateComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
 
-      if(this.hasDuplicates(this.formValues.supplierRates)){
-        this.toastr.warning("Same item name")
-      }
-      else if(this.duplicateFlag){
-        this.toastr.warning("Item Name already exist");
-      }
-      else{
         this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
         this.formValues.supplierId = this.formValues.id;
   
@@ -220,9 +213,6 @@ export class AddEditSupplierRateComponent implements OnInit {
             this.toastr.error(errorData.Serever_Error);
           }
         );
-      }
-
-
         
     } else {
       this.toastr.error("Fill empty fields");
@@ -249,20 +239,43 @@ export class AddEditSupplierRateComponent implements OnInit {
     }
   }
 
-  onKeyUp(e, rowIndex, colIndex, colName) {
+  checkDuplicateLocally(ele,index){
+
     this.duplicateFlag = false;
-    if(colName == "itemName"){
-      this.supplierService.getDuplicateCheck(0,e.target.value).subscribe(
+    if(this.hasDuplicates(this.formValues.supplierRates)){
+      this.toastr.warning("Item Name exist in same Supplier");
+      let item = this.formValues.supplierRates;
+            item[index].itemName = null;
+            item[index].rate = null;
+            item[index].discountedRate = null;
+            item[index].gstRate = null;
+            let list = item;
+            this.formValues.supplierRates = [...list];
+    }
+    else{
+      this.supplierService.getDuplicateCheck(0,ele.target.value).subscribe(
         (data) => {
           if(data["data"]){
             this.toastr.warning("Item Name already exist");
+            let item = this.formValues.supplierRates;
+            item[index].itemName = null;
+            item[index].rate = null;
+            item[index].discountedRate = null;
+            item[index].gstRate = null;
+            let list = item;
+            this.formValues.supplierRates = [...list];
             this.duplicateFlag = data["data"];
           }
         },
         (error) => {
         }
       );
+  
     }
+  }
+
+  onKeyUp(e, rowIndex, colIndex, colName) {
+    
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
@@ -356,17 +369,6 @@ export class AddEditSupplierRateComponent implements OnInit {
       this.formValues.supplierRates = [...list];
     }
   }
-
-  // hasDuplicates(arr) {
-  //   for(let i = 0;i<arr.length;++i){
-  //     for(let j=0;j<i;++j){
-  //       if(arr[i].itemName == arr[j].itemName){
-  //         return true;
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // }
 
   hasDuplicates(value:any[]){
 
