@@ -1,4 +1,3 @@
-
 <ng-container *ngIf="detailFlag">
     <nb-card class="nb-style mb-0">
         <nb-card-header class="nb-header">
@@ -30,7 +29,7 @@
                                         <div class="task-email-btn">
                                             <nb-icon icon="email-outline" class="email-task-complete"></nb-icon>
                                         </div>
-    
+
                                     </div>
                                 </div>
                             </div>
@@ -44,13 +43,15 @@
                                                 <div class="row">
                                                     <div class="col-md-12 col-12">
                                                         <div class="user-task pd-rl mr-bt-0">
-    
-                                                            <span class="title-value">{{taskDetail.firstName}} {{taskDetail.lastName}}</span>
-    
-                                                            <span class="title-value">{{taskDetail.departmentName}}</span>
+
+                                                            <span class="title-value">{{taskDetail.firstName}}
+                                                                {{taskDetail.lastName}}</span>
+
+                                                            <span
+                                                                class="title-value">{{taskDetail.departmentName}}</span>
                                                         </div>
                                                     </div>
-    
+
                                                     <div class="col-md-12 col-12">
                                                         <div class="task-name mr-tb pd-rl">
                                                             <label class="task-label">NAME</label>
@@ -63,60 +64,86 @@
                                                             <span class="taske-date-vlue">{{taskDetail.detail}}</span>
                                                         </div>
                                                     </div>
-    
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-12 pd-0">
                                             <div class="short-task-detail task-pop-label">
-    
+
                                                 <div class="container">
                                                     <div class="row">
                                                         <div class="col-md-12 col-12 pd-0">
-                                                            <div class="priority-dots mobile-left">
+                                                            <div class="priority-dots mobile-left"
+                                                                *ngIf="taskDetail.taskPriority==='p1'">
                                                                 <span class="p-dots-color rd-p" title="P1"></span>
+                                                                <span class="p-dots-color rd-p" title="P1"></span>
+                                                                <span class="p-dots-color rd-p" title="P1"></span>
+                                                                <span class="p-dots-color rd-p" title="P1"></span>
+                                                            </div>
+                                                            <div class="priority-dots mobile-left"
+                                                                *ngIf="taskDetail.taskPriority==='p2'">
                                                                 <span class="p-dots-color rd-o" title="P2"></span>
+                                                                <span class="p-dots-color rd-o" title="P2"></span>
+                                                                <span class="p-dots-color rd-o" title="P2"></span>
+                                                                <span class="p-dots-color rd-o" title="P2"></span>
+                                                            </div>
+                                                            <div class="priority-dots mobile-left"
+                                                                *ngIf="taskDetail.taskPriority==='p3'">
                                                                 <span class="p-dots-color rd-y" title="P3"></span>
+                                                                <span class="p-dots-color rd-y" title="P3"></span>
+                                                                <span class="p-dots-color rd-y" title="P3"></span>
+                                                                <span class="p-dots-color rd-y" title="P3"></span>
+                                                            </div>
+                                                            <div class="priority-dots mobile-left"
+                                                                *ngIf="taskDetail.taskPriority==='p4'">
+                                                                <span class="p-dots-color rd-g" title="P4"></span>
+                                                                <span class="p-dots-color rd-g" title="P4"></span>
+                                                                <span class="p-dots-color rd-g" title="P4"></span>
                                                                 <span class="p-dots-color rd-g" title="P4"></span>
                                                             </div>
                                                         </div>
-    
-    
+
+
                                                         <div class="col-md-12 col-3 pd-0">
                                                             <div class="type-task mr-tb">
                                                                 <label class="task-label">TYPE</label>
-                                                                <span class="taske-date-vlue">{{taskDetail.taskType}}</span>
+                                                                <span
+                                                                    class="taske-date-vlue">{{taskDetail.taskType}}</span>
                                                             </div>
                                                         </div>
-    
+
                                                         <div class="col-md-6 col-4 pd-0">
                                                             <div class="st-date-task mr-tb">
                                                                 <label class="task-label">START DATE</label>
-                                                                <span class="taske-date-vlue">{{taskDetail.startDate | date:'shortDate'}}</span>
+                                                                <span class="taske-date-vlue">{{taskDetail.startDate |
+                                                                    date:'shortDate'}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-4 pd-0">
                                                             <div class="end-date-task mr-tb">
                                                                 <label class="task-label">END DATE</label>
-                                                                <span class="taske-date-vlue">{{taskDetail.endDate | date:'shortDate'}}</span>
+                                                                <span class="taske-date-vlue">{{taskDetail.endDate |
+                                                                    date:'shortDate'}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-5 pd-0">
                                                             <div class="cd-task mr-tb">
                                                                 <label class="task-label">COMPILATION DAYS</label>
-                                                                <span class="taske-date-vlue">{{taskDetail.completedDays}}</span>
+                                                                <span
+                                                                    class="taske-date-vlue">{{taskDetail.completedDays}}</span>
                                                             </div>
                                                         </div>
-    
+
                                                     </div>
                                                 </div>
-    
+
                                             </div>
-    
+
                                         </div>
                                     </div>
                                 </div>
-    
+
                             </div>
                             <div class="task-main-1 border-bottom-color task-pop-label task-popup-bottom">
                                 <div class="container">
@@ -131,7 +158,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+
                                         </div>
                                         <div class="col-md-6 col-12 pd-0">
                                             <div class="first-border-left task-popup-left">
@@ -139,7 +166,8 @@
                                                     <div class="col-md-12 col-12">
                                                         <div class="task-name mr-tb pd-rl pd-tp-5">
                                                             <label class="task-label">REMARK</label>
-                                                            <span class="taske-date-vlue remark-ellips">{{taskDetail.remark}}</span>
+                                                            <span
+                                                                class="taske-date-vlue remark-ellips">{{taskDetail.remark}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,39 +175,40 @@
                                         </div>
                                     </div>
                                 </div>
-    
+
                             </div>
                             <div class="task-main-1 task-pop-label">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12 col-12 pd-0">
-    
+
                                             <div class="row">
                                                 <div class="col-md-12 col-12">
                                                     <div class="task-name mr-tb pd-rl pd-tp-5">
                                                         <label class="task-label">ATTACHMENT</label>
                                                         <span class="taske-date-vlue task-link mt-img-3">
-                                                            <div class="task-img" *ngFor="let img of taskDetail.taskImageList">
+                                                            <div class="task-img"
+                                                                *ngFor="let img of taskDetail.taskImageList">
                                                                 <img [src]="img.url">
                                                             </div>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
-    
+
                                         </div>
-    
+
                                     </div>
                                 </div>
                             </div>
-    
-    
+
+
                         </div>
                     </div>
-    
+
                 </div>
             </div>
-    
+
             <ng-container *ngIf="assign">
                 <div class="row">
                     <div class="container">
@@ -188,8 +217,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="required">Status</label>
-                                        <ng-select name="statusId" appendTo="body" [(ngModel)]="statusSelected" required #statusId1="ngModel" (change)="getStatus($event.target.value)" placeholder="Status Name" class="required-error-dropdown dropdown-name">
-                                            <ng-option *ngFor="let stat of status" [value]="stat.statusName">{{stat.statusName}}</ng-option>
+                                        <ng-select name="statusId" appendTo="body" [(ngModel)]="statusSelected" required
+                                            #statusId1="ngModel" (change)="getStatus($event.target.value)"
+                                            placeholder="Status Name" class="required-error-dropdown dropdown-name">
+                                            <ng-option *ngFor="let stat of status" [value]="stat.statusName">
+                                                {{stat.statusName}}</ng-option>
                                         </ng-select>
                                     </div>
                                 </div>
@@ -198,36 +230,40 @@
                                         <label>Remark</label>
                                         <input class="form-control" type="text" placeholder="Remark">
                                     </div>
-    
+
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Attachments</label>
-                                        <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                        <div class="custom-dropzone task-attach" ngx-dropzone [accept]="'image/*'"
+                                            (change)="onSelect($event)">
                                             <ngx-dropzone-label>
                                                 <div class="drop-task-attch">
                                                     <nb-icon icon="cloud-upload-outline"></nb-icon>
                                                     <p> Drop files to attach!</p>
                                                 </div>
                                             </ngx-dropzone-label>
-                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f of files" [file]="f" [removable]="true"
+                                                (removed)="onRemove(f)">
                                                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                                             </ngx-dropzone-image-preview>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mobile-btn-center text-btn-right">
-                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="updateDetail()">Submit</button>
+                                    <button class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                        (click)="updateDetail()">Submit</button>
                                 </div>
                             </div>
-    
+
                         </form>
                     </div>
                 </div>
-    
+
             </ng-container>
-    
-    
+
+
         </nb-card-body>
     </nb-card>
 </ng-container>
