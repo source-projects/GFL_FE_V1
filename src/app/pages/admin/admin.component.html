@@ -1,6 +1,6 @@
 <nb-card class="nb-style">
     <nb-card-body>
-        <nb-tabset fullWidth class="boiler-thermopack-tabheader fn-tab-title">
+        <nb-tabset fullWidth class="boiler-thermopack-tabheader fn-tab-title" (changeTab)="onTabClick($event.tabTitle)">
             <nb-tab tabTitle="Jet">
                 <!-- <form #advancePaymentForm="ngForm"> -->
                 <form #addJetData="ngForm">
@@ -404,7 +404,6 @@
 
             <!--Authorized-->
             <nb-tab tabTitle="Authorized">
-
                 <form #approveReceiveForm="ngForm">
                     <div class="row">
                         <div class="col-md-4">

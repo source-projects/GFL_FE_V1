@@ -123,22 +123,67 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllJetData();
+    // this.getAllJetData();
     //  this.getAllApproveByData();
-    this.getAllCompanyData();
-    this.getAllDepartment();
-    this.getAllQuality();
-    this.getAllDesignationData();
-    this.getAllMachineData();
-    this.getAllMachineCategoryData();
+    // this.getAllCompanyData();
+    //  this.getAllDepartment();
+    // this.getAllQuality();
+    // this.getAllDesignationData();
+    // this.getAllMachineData();
+    // this.getAllMachineCategoryData();
     this.getAddAcess();
     this.getDeleteAccess();
     this.getEditAccess();
-    this.getAllInvoiceSequenceData();
-    this.getAllBatchSequenceData();
+    // this.getAllInvoiceSequenceData();
+    // this.getAllBatchSequenceData();
     // this.getAllReceiveByData();
-    this.getAllPurchaseData();
-    this.getAllApproveReceiveByData();
+    // this.getAllPurchaseData();
+    // this.getAllApproveReceiveByData();
+  }
+
+  onTabClick(tabTitle) {
+    switch (tabTitle) {
+      case "Jet":
+        this.getAllJetData();
+        break;
+
+      case "Company":
+        this.getAllCompanyData();
+        break;
+
+      case "Department":
+        this.getAllDepartment();
+        break;
+
+      case "Quality":
+        this.getAllQuality();
+        break;
+
+      case "Machine":
+        this.getAllMachineData();
+        break;
+
+      case "Machine Category":
+        this.getAllMachineCategoryData();
+        break;
+
+      case "Designation":
+        this.getAllDesignationData();
+        break;
+
+      case "Authorized":
+        this.getAllApproveReceiveByData();
+        break;
+
+      case "Sequence":
+        this.getAllInvoiceSequenceData();
+        this.getAllBatchSequenceData();
+        break;
+
+      case "Purchase":
+        this.getAllPurchaseData();
+        break;
+    }
   }
 
   getAddAcess() {
