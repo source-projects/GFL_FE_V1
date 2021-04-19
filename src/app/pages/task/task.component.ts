@@ -15,18 +15,17 @@ import { TaskDetailComponent } from "./task-detail/task-detail.component";
   styleUrls: ["./task.component.scss"],
 })
 export class TaskComponent implements OnInit {
-
-  assignFlagForDetails:boolean = false;
+  assignFlagForDetails: boolean = false;
   userHeadId;
-  user = this.commonService.getUser().userId;;
+  user = this.commonService.getUser().userId;
   completedateStatusObj = {
-    id:null,
+    id: null,
     date: "",
     status: "Completed",
   };
 
   blockerdateStatusObj = {
-    id:null,
+    id: null,
     date: "",
     status: "Blocker",
   };
@@ -37,11 +36,10 @@ export class TaskComponent implements OnInit {
 
   radioSelect = 1;
   radioArray = [
-    { id: 1, value: "All"},
-    { id: 2, value: "Assigned by me"},
-    { id: 3, value: "Assigned by others"},
+    { id: 1, value: "All" },
+    { id: 2, value: "Assigned by me" },
+    { id: 3, value: "Assigned by others" },
   ];
-
 
   //card Status Flag
   allFlag: boolean = true;
@@ -86,7 +84,7 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
-    this.user = this.commonService.getUser().userId;  
+    this.user = this.commonService.getUser().userId;
     this.getAccess();
     this.recallAllCardDetail();
   }
@@ -119,15 +117,12 @@ export class TaskComponent implements OnInit {
 
     switch (event) {
       case 1:
-        
         break;
 
       case 2:
-        
         break;
 
       case 3:
-        
         break;
     }
   }
@@ -136,32 +131,33 @@ export class TaskComponent implements OnInit {
     const modalRef = this.modalService.open(AddEditTaskComponent, {
       size: "lg",
     });
-    modalRef.result.then((result) => {
-      if(result){
-        this.recallAllCardDetail();
-      }
-    }).catch((err) => {});
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          this.recallAllCardDetail();
+        }
+      })
+      .catch((err) => {});
   }
-  openDetail(id,type) {
+  openDetail(id, type) {
     this.assignFlagForDetails = false;
-  if(type == "assign")
-  {
-    this.assignFlagForDetails = true
-  }
+    if (type == "assign") {
+      this.assignFlagForDetails = true;
+    }
     const modelref = this.modalService.open(TaskDetailComponent);
     modelref.componentInstance.taskId = id;
     modelref.componentInstance.assign = this.assignFlagForDetails;
 
-    modelref.result.then((result) => {
-      if(result){
-        this.recallAllCardDetail();
-      }
-    }).catch((err) => {});
+    modelref.result
+      .then((result) => {
+        if (result) {
+          this.recallAllCardDetail();
+        }
+      })
+      .catch((err) => {});
   }
 
   showCardAccordingToStatus(value) {
-    
-
     switch (value) {
       case "all":
         this.allFlag = true;
@@ -171,17 +167,16 @@ export class TaskComponent implements OnInit {
         this.notApprovedFlag = false;
         this.blockerFlag = false;
 
-        
         break;
       case "assign":
-       // this.assignCardDetail = [];
+        // this.assignCardDetail = [];
         this.allFlag = false;
         this.assignFlag = true;
         this.completedFlag = false;
         this.approvedFlag = false;
         this.notApprovedFlag = false;
         this.blockerFlag = false;
-      
+
         break;
       case "complete":
         this.allFlag = false;
@@ -191,7 +186,6 @@ export class TaskComponent implements OnInit {
         this.notApprovedFlag = false;
         this.blockerFlag = false;
 
-       
         break;
       case "approved":
         this.allFlag = false;
@@ -201,7 +195,6 @@ export class TaskComponent implements OnInit {
         this.notApprovedFlag = false;
         this.blockerFlag = false;
 
-       
         break;
       case "notApproved":
         this.allFlag = false;
@@ -212,7 +205,6 @@ export class TaskComponent implements OnInit {
         this.blockerFlag = false;
         break;
 
-       
       case "blocker":
         this.allFlag = false;
         this.assignFlag = false;
@@ -221,7 +213,6 @@ export class TaskComponent implements OnInit {
         this.notApprovedFlag = false;
         this.blockerFlag = true;
 
-        
         break;
     }
   }
@@ -259,7 +250,7 @@ export class TaskComponent implements OnInit {
   //filter Data according to date
   filteredCardDetailByDate(event, value) {
     this.refreshPipeCount++;
-    if(this.refreshPipeCount > 10){
+    if (this.refreshPipeCount > 10) {
       this.refreshPipeCount = 0;
     }
     this.currentDate = event.target.value;
@@ -384,34 +375,28 @@ export class TaskComponent implements OnInit {
 
   getAllCardDetail() {
     this.allCardCount = 0;
-    if(this.userHeadId == 0){
-      this.taskService
-      .getAllTaskCard("")
-      .subscribe(
+    if (this.userHeadId == 0) {
+      this.taskService.getAllTaskCard("").subscribe(
         (data) => {
           this.allCardDetail = data["data"];
-          if(this.allCardDetail){
-          this.allCardCount = this.allCardDetail.length;
+          if (this.allCardDetail) {
+            this.allCardCount = this.allCardDetail.length;
           }
-        
         },
         (error) => {}
       );
-      
-    }
-    else{
+    } else {
       this.taskService
-      .getAllTaskCard(this.commonService.getUser().userId)
-      .subscribe(
-        (data) => {
-          this.allCardDetail = data["data"];
-          if(this.allCardDetail){
-          this.allCardCount = this.allCardDetail.length;
-          }
-        
-        },
-        (error) => {}
-      );
+        .getAllTaskCard(this.commonService.getUser().userId)
+        .subscribe(
+          (data) => {
+            this.allCardDetail = data["data"];
+            if (this.allCardDetail) {
+              this.allCardCount = this.allCardDetail.length;
+            }
+          },
+          (error) => {}
+        );
     }
   }
 
@@ -423,22 +408,20 @@ export class TaskComponent implements OnInit {
         (data) => {
           this.assignCardDetail = data["data"];
 
-          if(this.assignCardDetail){
-          this.assignedCardCount = this.assignCardDetail.length;
+          if (this.assignCardDetail) {
+            this.assignedCardCount = this.assignCardDetail.length;
           }
-         
         },
         (error) => {}
       );
   }
   getCompletetedList() {
     this.completedCardCount = 0;
-    if(this.userHeadId == 0){
+    if (this.userHeadId == 0) {
       this.completedateStatusObj.date = "";
       this.completedateStatusObj.status = "Completed";
       this.completedateStatusObj.id = null;
-    }
-    else{
+    } else {
       this.completedateStatusObj.date = "";
       this.completedateStatusObj.status = "Completed";
       this.completedateStatusObj.id = this.commonService.getUser().userId;
@@ -447,105 +430,99 @@ export class TaskComponent implements OnInit {
       .getDataAccordingToStatus(this.completedateStatusObj)
       .subscribe((data) => {
         this.completedCardDetail = data["data"];
-        if(this.completedCardDetail){
-        this.completedCardCount = this.completedCardDetail.length;
+        if (this.completedCardDetail) {
+          this.completedCardCount = this.completedCardDetail.length;
         }
-        
       });
   }
 
   getBlockerList() {
     this.blockerCardCount = 0;
-    
-    if(this.userHeadId == 0){
 
+    if (this.userHeadId == 0) {
       this.blockerdateStatusObj.id = null;
       this.blockerdateStatusObj.date = "";
-      this.blockerdateStatusObj.status = "Blocker"
-    
-      this.taskService
-      .getDataAccordingToStatus(this.blockerdateStatusObj)
-      .subscribe((data) => {
-        this.blockerCardDetail = data["data"];
-        if(this.blockerCardCount){
-          this.blockerCardCount = this.blockerCardDetail.length;
-        }
-      
-      });
-    }
-    else{
+      this.blockerdateStatusObj.status = "Blocker";
 
+      this.taskService
+        .getDataAccordingToStatus(this.blockerdateStatusObj)
+        .subscribe((data) => {
+          this.blockerCardDetail = data["data"];
+          if (this.blockerCardCount) {
+            this.blockerCardCount = this.blockerCardDetail.length;
+          }
+        });
+    } else {
       this.blockerdateStatusObj.id = this.commonService.getUser().userId;
       this.blockerdateStatusObj.date = "";
-      this.blockerdateStatusObj.status = "Blocker"
+      this.blockerdateStatusObj.status = "Blocker";
 
       this.taskService
-      .getDataAccordingToStatus(this.blockerdateStatusObj)
-      .subscribe((data) => {
-        this.blockerCardDetail = data["data"];
-        if(this.blockerCardCount){
-          this.blockerCardCount = this.blockerCardDetail.length;
-        }
-      
-      });
+        .getDataAccordingToStatus(this.blockerdateStatusObj)
+        .subscribe((data) => {
+          this.blockerCardDetail = data["data"];
+          if (this.blockerCardCount) {
+            this.blockerCardCount = this.blockerCardDetail.length;
+          }
+        });
     }
   }
 
   getApprovedList() {
     this.approvedCardCount = 0;
-    if(this.userHeadId == 0){
+    if (this.userHeadId == 0) {
       this.taskService
-      .getApprovedAndNotApprovedList("", true)
-      .subscribe((data) => {
-        this.approvedCardDetail = data["data"];
-        if(this.approvedCardDetail){
-          this.approvedCardCount = this.approvedCardDetail.length;
-        }
-      });
-    }
-    else{
+        .getApprovedAndNotApprovedList("", true)
+        .subscribe((data) => {
+          this.approvedCardDetail = data["data"];
+          if (this.approvedCardDetail) {
+            this.approvedCardCount = this.approvedCardDetail.length;
+          }
+        });
+    } else {
       this.taskService
-      .getApprovedAndNotApprovedList(this.commonService.getUser().userId, true)
-      .subscribe((data) => {
-        this.approvedCardDetail = data["data"];
-        if(this.approvedCardDetail){
-          this.approvedCardCount = this.approvedCardDetail.length;
-        }
-      });
+        .getApprovedAndNotApprovedList(
+          this.commonService.getUser().userId,
+          true
+        )
+        .subscribe((data) => {
+          this.approvedCardDetail = data["data"];
+          if (this.approvedCardDetail) {
+            this.approvedCardCount = this.approvedCardDetail.length;
+          }
+        });
     }
   }
 
   getNotApprovedList() {
     this.notApprovedCardCount = 0;
-    if(this.userHeadId == 0){
+    if (this.userHeadId == 0) {
       this.taskService
-      .getApprovedAndNotApprovedList("", false)
-      .subscribe((data) => {
-        this.notApprovedCardDetail = data["data"];
-        if(this.notApprovedCardDetail){
-          this.notApprovedCardCount = this.notApprovedCardDetail.length;
-        }
-       
-      });
-    }
-    else{
+        .getApprovedAndNotApprovedList("", false)
+        .subscribe((data) => {
+          this.notApprovedCardDetail = data["data"];
+          if (this.notApprovedCardDetail) {
+            this.notApprovedCardCount = this.notApprovedCardDetail.length;
+          }
+        });
+    } else {
       this.taskService
-      .getApprovedAndNotApprovedList(this.commonService.getUser().userId, false)
-      .subscribe((data) => {
-        this.notApprovedCardDetail = data["data"];
-        if(this.notApprovedCardDetail){
-          this.notApprovedCardCount = this.notApprovedCardDetail.length;
-        }
-       
-      });
+        .getApprovedAndNotApprovedList(
+          this.commonService.getUser().userId,
+          false
+        )
+        .subscribe((data) => {
+          this.notApprovedCardDetail = data["data"];
+          if (this.notApprovedCardDetail) {
+            this.notApprovedCardCount = this.notApprovedCardDetail.length;
+          }
+        });
     }
   }
 
-  onApprove(id){
-    this.taskService
-    .changeStatus(id, true)
-    .subscribe((data) => {
-      if(data["success"]){
+  onApprove(id) {
+    this.taskService.changeStatus(id, true).subscribe((data) => {
+      if (data["success"]) {
         this.toastr.success("Task approved successfully");
         this.getApprovedList();
         this.getNotApprovedList();
@@ -553,40 +530,34 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  deleteTask(id , type){
+  deleteTask(id, type) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
     });
     modalRef.result.then((result) => {
       if (result) {
-    this.taskService.deleteTask(id).subscribe(
-    (data) => {
-      if(data["success"]){
-        this.toastr.success("Task deleted successfully");
-        if(type == 'all'){
-          this.getAllCardDetail();
-        }else if(type == 'assign'){
-          this.getAssignCardDetail();
-          
-        }else if(type == 'approve'){
-          this.getApprovedList();
-          
-        }else if(type == 'notApprove'){
-          this.getNotApprovedList();
-          
-        }
-        else if(type == 'complete'){
-          this.getCompletetedList();
-          
-        }else if(type == 'block'){
-          this.getBlockerList();
-          
-        }
+        this.taskService.deleteTask(id).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success("Task deleted successfully");
+              if (type == "all") {
+                this.getAllCardDetail();
+              } else if (type == "assign") {
+                this.getAssignCardDetail();
+              } else if (type == "approve") {
+                this.getApprovedList();
+              } else if (type == "notApprove") {
+                this.getNotApprovedList();
+              } else if (type == "complete") {
+                this.getCompletetedList();
+              } else if (type == "block") {
+                this.getBlockerList();
+              }
+            }
+          },
+          (error) => {}
+        );
       }
-    },
-    (error) => {}
-    )
-  }
-})
+    });
   }
 }
