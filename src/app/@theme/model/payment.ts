@@ -6,6 +6,7 @@ export class Payment {
     cdAmt:number;
     rdAmt:number;
     netAmt:number;
+    taxAmt:number;
     otherDiff:number;
     rdDetail:string;
     cdDetail:string;
@@ -26,6 +27,7 @@ export class Payment {
         this.rdAmt = 0;
         this.otherDiff = 0;
         this.gstAmt = 0;
+        this.taxAmt = 0;
     }
 }
 export class Invoices{
