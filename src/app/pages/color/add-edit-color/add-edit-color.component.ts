@@ -18,10 +18,9 @@ import { NgSelectComponent } from "@ng-select/ng-select";
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
 export class AddEditColorComponent implements OnInit {
+  itemSelectedFlag: boolean = false;
 
-  itemSelectedFlag:boolean = false;
-
-  @ViewChildren('data') data: QueryList<NgSelectComponent>;
+  @ViewChildren("data") data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
   dateForPicker = new Date();
@@ -62,6 +61,13 @@ export class AddEditColorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+    this.getUpdateData();
+    this.getSupplierList();
+    this.setCurrentDate();
+  }
+
+  setCurrentDate() {
     this.maxDate = new Date(
       this.dateForPicker.getFullYear(),
       this.dateForPicker.getMonth(),
@@ -69,13 +75,9 @@ export class AddEditColorComponent implements OnInit {
       23,
       59
     );
-    this.getData();
-    this.getUpdateData();
-    this.getSupplierList();
     this.color.billDate = this.maxDate;
     this.color.chlDate = this.maxDate;
   }
-
   getData() {
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
@@ -161,7 +163,7 @@ export class AddEditColorComponent implements OnInit {
           );
       }
     } else {
-      this.supplierListRate = [];      
+      this.supplierListRate = [];
     }
     this.loading = false;
   }
@@ -207,9 +209,7 @@ export class AddEditColorComponent implements OnInit {
 
         this.data.changes.subscribe(() => {
           this.data.last.focus();
-        })
-
-        
+        });
       } else {
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -220,7 +220,6 @@ export class AddEditColorComponent implements OnInit {
         }, 10);
       }
     }
-    
   }
 
   calculateAmount(rowIndex) {
@@ -244,7 +243,7 @@ export class AddEditColorComponent implements OnInit {
     this.calculateAmount(rowIndex);
   }
 
-  reset(colorForm){
+  reset(colorForm) {
     colorForm.reset();
     this.color.colorDataList = [];
     this.color.colorDataList.push(new ColorDataList());
@@ -264,10 +263,11 @@ export class AddEditColorComponent implements OnInit {
           if (data["success"]) {
             this.reset(colorForm);
             this.disableButton = false;
-            this.toastr.success(data['msg']);
+            this.toastr.success(data["msg"]);
+            this.setCurrentDate();
             // this.disableButton=true;
           } else {
-            this.toastr.error(data['msg']);
+            this.toastr.error(data["msg"]);
           }
           this.disableButton = false;
         },
@@ -275,10 +275,8 @@ export class AddEditColorComponent implements OnInit {
           this.toastr.error(errorData.Serever_Error);
         }
       );
-    }
-    else{
+    } else {
       this.toastr.error("Fill empty fields");
- 
     }
     this.disableButton = false;
   }
@@ -307,9 +305,9 @@ export class AddEditColorComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/color"]);
-            this.toastr.success(data['msg']);
-          }else{
-            this.toastr.error(data['msg']);
+            this.toastr.success(data["msg"]);
+          } else {
+            this.toastr.error(data["msg"]);
           }
           this.loading = false;
         },

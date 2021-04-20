@@ -137,6 +137,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
             this.toastr.error(errorData.Internal_Error);
           }
         );
+
+      //clear master list
+      this.finishedMeterForm.masterId = null;
     } else {
       this.batchList = [];
       this.getAllBatchForFinishMtr();
@@ -224,6 +227,9 @@ export class AddEditFinishedMeterComponent implements OnInit {
           //this.toastr.error(errorData.Internal_Error);
         }
       );
+
+      //clear master list
+      this.finishedMeterForm.masterId = null;
     } else {
       this.finishedMeterForm.batchId = null;
       this.batchList = [];
@@ -253,6 +259,10 @@ export class AddEditFinishedMeterComponent implements OnInit {
           },
           (error) => {}
         );
+
+      //clear party and quality
+      this.finishedMeterForm.qualityId = null;
+      this.finishedMeterForm.partyId = null;
     } else {
       this.getAllParty();
     }
@@ -388,7 +398,7 @@ export class AddEditFinishedMeterComponent implements OnInit {
         if (allSequenceValid) {
           //split extra meters....
           this.splitExtraMeters();
-          
+
           this.finishedMeterService
             .addFinishedMeter(this.finishedMeterForm.batchData)
             .subscribe(
