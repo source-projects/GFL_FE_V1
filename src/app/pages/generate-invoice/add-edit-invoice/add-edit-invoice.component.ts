@@ -1,35 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import * as errorData from 'app/@theme/json/error.json';
-import { Invoice, invoiceobj } from "app/@theme/model/invoice";
-import { GenerateInvoiceService } from 'app/@theme/services/generate-invoice.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { keys } from 'lodash';
-import { ToastrService } from 'ngx-toastr';
-import { CommonService } from 'app/@theme/services/common.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PrintLayoutComponent } from '../print-Layout/print-layout.component';
+import * as errorData from "../../../@theme/json/error.json";
+import { Invoice, invoiceobj } from "../../../@theme/model/invoice";
+import { GenerateInvoiceService } from "../../../@theme/services/generate-invoice.service";
+import { JwtTokenService } from "../../../@theme/services/jwt-token.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { keys } from "lodash";
+import { ToastrService } from "ngx-toastr";
+import { CommonService } from "../../../@theme/services/common.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { PrintLayoutComponent } from "../print-Layout/print-layout.component";
 
 @Component({
-  selector: 'ngx-add-edit-invoice',
-  templateUrl: './add-edit-invoice.component.html',
-  styleUrls: ['./add-edit-invoice.component.scss']
+  selector: "ngx-add-edit-invoice",
+  templateUrl: "./add-edit-invoice.component.html",
+  styleUrls: ["./add-edit-invoice.component.scss"],
 })
 export class AddEditInvoiceComponent implements OnInit {
-
   flag: any;
   obj = {
-    "batchAndStockIdList": [],
-    "createdBy": null,
-    "invoiceNo": null,
-    "userHeadId": null
-  }
+    batchAndStockIdList: [],
+    createdBy: null,
+    invoiceNo: null,
+    userHeadId: null,
+  };
 
   invoiceObj = {
-    "batchAndStockIdList" : [],
-
-  }
+    batchAndStockIdList: [],
+  };
   finalcheckedrows = [];
   party: any[];
   batch: any[];
@@ -50,7 +48,7 @@ export class AddEditInvoiceComponent implements OnInit {
   Invoice: any[];
   userHeadId;
   merge = [];
-invoiceNo : any;
+  invoiceNo: any;
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
     private partyService: PartyService,
@@ -59,16 +57,15 @@ invoiceNo : any;
     private toastr: ToastrService,
     private jwt: JwtTokenService,
     private commonService: CommonService,
-    private modalService: NgbModal,
-  ) { }
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
     this.userHeadId = this.commonService.getUserHeadId().userHeadId;
     this.getPartyList();
     this.getUserId();
-    if (this.currentInvoiceId)
-      this.getUpdateData();
+    if (this.currentInvoiceId) this.getUpdateData();
   }
   public getUserId() {
     this.currentInvoiceId = this._route.snapshot.paramMap.get("id");
@@ -77,50 +74,53 @@ invoiceNo : any;
   getUpdateData() {
     this.loading = true;
     if (this.currentInvoiceId != null) {
-      this.generateInvoiceService.getDataByInvoiceNumber(this.currentInvoiceId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.invoiceValues.partyId = data["data"].partyId;
-            this.flag = data["data"].isSendToParty;
-            this.batch = data["data"].batchWithControlIdList;
-            this.finalbatch = [...this.batch];
-            this.merge = [...this.finalbatch];
-            this.generateInvoiceService.getBatchByParty(this.invoiceValues.partyId).subscribe(
-              (data) => {
-                if (data["success"]) {
-                  data["data"].forEach(element => {
-                    this.finalbatch.push(element)
-                  });
-                  this.merge = this.finalbatch;
-                  this.loading = false;
-                } else {
-                  this.loading = false;
-                }
-              },
-              (error) => {
-                this.loading = false;
-                this.merge = [];
-              }
-            );
-            this.loading = false;
-            this.disableButton = false;
-            this.selected = data["data"].batchWithControlIdList;
-            this.finalcheckedrows = [...this.selected];
-          } else {
+      this.generateInvoiceService
+        .getDataByInvoiceNumber(this.currentInvoiceId)
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.invoiceValues.partyId = data["data"].partyId;
+              this.flag = data["data"].isSendToParty;
+              this.batch = data["data"].batchWithControlIdList;
+              this.finalbatch = [...this.batch];
+              this.merge = [...this.finalbatch];
+              this.generateInvoiceService
+                .getBatchByParty(this.invoiceValues.partyId)
+                .subscribe(
+                  (data) => {
+                    if (data["success"]) {
+                      data["data"].forEach((element) => {
+                        this.finalbatch.push(element);
+                      });
+                      this.merge = this.finalbatch;
+                      this.loading = false;
+                    } else {
+                      this.loading = false;
+                    }
+                  },
+                  (error) => {
+                    this.loading = false;
+                    this.merge = [];
+                  }
+                );
+              this.loading = false;
+              this.disableButton = false;
+              this.selected = data["data"].batchWithControlIdList;
+              this.finalcheckedrows = [...this.selected];
+            } else {
+              this.loading = false;
+              this.disableButton = false;
+              this.merge = [];
+            }
+          },
+          (error) => {
             this.loading = false;
             this.disableButton = false;
             this.merge = [];
           }
-        },
-        (error) => {
-          this.loading = false;
-          this.disableButton = false;
-          this.merge = [];
-        }
-      );
+        );
     }
     this.disableButton = false;
-
   }
 
   getPartyList() {
@@ -144,66 +144,68 @@ invoiceNo : any;
     this.loading = true;
     if (event != undefined) {
       if (this.invoiceValues.partyId) {
-        this.generateInvoiceService.getBatchByParty(this.invoiceValues.partyId).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.finalbatch = data["data"];
-              this.finalbatch.forEach(ele=>{
-                ele.wt = ele.wt.toFixed(2);
-              })
-              this.merge = this.finalbatch;
-              this.finalcheckedrows = [];
-              this.selected = [];
+        this.generateInvoiceService
+          .getBatchByParty(this.invoiceValues.partyId)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.finalbatch = data["data"];
+                this.finalbatch.forEach((ele) => {
+                  ele.wt = ele.wt.toFixed(2);
+                });
+                this.merge = this.finalbatch;
+                this.finalcheckedrows = [];
+                this.selected = [];
+                this.loading = false;
+              } else {
+                this.loading = false;
+                this.merge = [];
+              }
+            },
+            (error) => {
               this.loading = false;
-            } else {
-              this.loading = false;
-              this.merge = []
+              this.merge = [];
             }
-          },
-          (error) => {
-            this.loading = false;
-            this.merge = [];
-          }
-        );
+          );
       }
-    }
-    else {
+    } else {
       this.loading = false;
     }
   }
-  
+
   final = [];
   selected = [];
 
   addInvoice(invoiceForm) {
-    if(this.finalcheckedrows.length <= 4){
+    if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
-    this.final = [];
-    if(this.finalcheckedrows.length > 0){
-      this.finalcheckedrows.map(ele => {
-        let obj: invoiceobj = new invoiceobj();
-        obj.batchId = ele.batchId;
-        obj.stockId = ele.controlId;
-        this.final.push(obj);
-      })
-      let obj = {
-        batchAndStockIdList: this.final,
-        createdBy: this.userId,
-        userHeadId: this.userHeadId,
-        cgst:null,
-        sgst:null,
-        discount:null,
-        taxAmt:null,
-        netAmt:null
-      }
-      const modalRef = this.modalService.open(PrintLayoutComponent,{size: "xl"});
-      modalRef.componentInstance.finalInvoice = obj;
-      modalRef.componentInstance.previewFlag = true;
-  
-      modalRef.result
-        .then((result) => {
-          console.log(result)
-          if(result){
+      this.final = [];
+      if (this.finalcheckedrows.length > 0) {
+        this.finalcheckedrows.map((ele) => {
+          let obj: invoiceobj = new invoiceobj();
+          obj.batchId = ele.batchId;
+          obj.stockId = ele.controlId;
+          this.final.push(obj);
+        });
+        let obj = {
+          batchAndStockIdList: this.final,
+          createdBy: this.userId,
+          userHeadId: this.userHeadId,
+          cgst: null,
+          sgst: null,
+          discount: null,
+          taxAmt: null,
+          netAmt: null,
+        };
+        const modalRef = this.modalService.open(PrintLayoutComponent, {
+          size: "xl",
+        });
+        modalRef.componentInstance.finalInvoice = obj;
+        modalRef.componentInstance.previewFlag = true;
+
+        modalRef.result.then((result) => {
+          console.log(result);
+          if (result) {
             obj.cgst = result.cgst;
             obj.sgst = result.sgst;
             obj.discount = result.discount;
@@ -211,116 +213,106 @@ invoiceNo : any;
             obj.taxAmt = result.taxAmt;
             if (invoiceForm.valid) {
               this.generateInvoiceService.addInvoicedata(obj).subscribe(
-                async data => {
-                  if (data['success']) {
+                async (data) => {
+                  if (data["success"]) {
                     this.invoiceNo = data["data"];
                     this.toastr.success(errorData.Add_Success);
                     this.merge = [];
                     this.disableButton = false;
-                    if(result === "print"){
+                    if (result === "print") {
                       this.print(this.invoiceNo);
                     }
-                  }
-                  else {
+                  } else {
                     this.disableButton = false;
-                    this.toastr.error(errorData.Add_Error)
+                    this.toastr.error(errorData.Add_Error);
                     this.merge = [];
                   }
                 },
-                error => {
+                (error) => {
                   this.disableButton = false;
-                  this.toastr.error(errorData.Serever_Error)
+                  this.toastr.error(errorData.Serever_Error);
                 }
-              )
-            }else{
+              );
+            } else {
               this.disableButton = false;
             }
-          }else{
+            //Clear selected party
+            this.invoiceValues.partyId = null;
+          } else {
             this.disableButton = false;
           }
-        })
-    }
-    }
-    else{
+        });
+      }
+    } else {
       this.toastr.warning("Select upto 4 batches only");
     }
-    
-      
   }
-   print(invoiceNo) {
+  print(invoiceNo) {
     const queryParams: any = {};
-   
-      queryParams.invoice = invoiceNo;
-      const navigationExtras: NavigationExtras = {
-        queryParams,
-      };
 
-      this.route.navigate(["/pages/generate_invoice/print"],navigationExtras
-      );
-    
+    queryParams.invoice = invoiceNo;
+    const navigationExtras: NavigationExtras = {
+      queryParams,
+    };
+
+    this.route.navigate(["/pages/generate_invoice/print"], navigationExtras);
   }
 
   updateInvoice(invoiceForm) {
-
-    if(this.finalcheckedrows.length <= 4){
+    if (this.finalcheckedrows.length <= 4) {
       this.disableButton = true;
       this.formSubmitted = true;
-  
+
       this.final = [];
-     
-      this.finalcheckedrows.map((ele,i) => {
+
+      this.finalcheckedrows.map((ele, i) => {
         let obj: invoiceobj = new invoiceobj();
         obj.batchId = ele.batchId;
         obj.stockId = ele.controlId;
         this.final.push(obj);
-        })
-     
-     
+      });
+
       let obj = {
         batchAndStockIdList: this.final,
         createdBy: this.userId,
         invoiceNo: this.currentInvoiceId,
-        updatedBy:this.userId
-      }
-  
+        updatedBy: this.userId,
+      };
+
       if (invoiceForm.valid) {
         this.generateInvoiceService.updateInvoice(obj).subscribe(
-          data => {
-            if (data['success']) {
+          (data) => {
+            if (data["success"]) {
               this.route.navigate(["/pages/generate_invoice"]);
               this.toastr.success(errorData.Update_Success);
               this.disableButton = false;
-            }
-            else {
+            } else {
               this.disableButton = false;
-              this.toastr.error(errorData.Update_Error)
+              this.toastr.error(errorData.Update_Error);
             }
           },
-          error => {
+          (error) => {
             this.disableButton = false;
-            this.toastr.error(errorData.Serever_Error)
+            this.toastr.error(errorData.Serever_Error);
           }
-        )
-      }else{
+        );
+      } else {
         this.disableButton = false;
       }
-  
-    }else{
-      this.toastr.warning("Select upto 4 batches only")
+      //Clear selected party
+      this.invoiceValues.partyId = null;
+    } else {
+      this.toastr.warning("Select upto 4 batches only");
     }
   }
 
   onSelect(value: any) {
-    
-    let arr: any[] =  value.selected;
-    if(arr.length <= 4){
-    }
-    else{
+    let arr: any[] = value.selected;
+    if (arr.length <= 4) {
+    } else {
       this.toastr.warning("Select upto 4 batches only");
-      
     }
 
     this.finalcheckedrows = arr;
-
   }
 }
