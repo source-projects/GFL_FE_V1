@@ -118,7 +118,7 @@ export class AddEditUserComponent implements OnInit {
     d: "",
     bf: "",
     ip: "",
-    ad: "",
+    ds:"",
     emp: "",
     attnds: "",
     po: "",
