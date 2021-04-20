@@ -10,7 +10,8 @@ import {
   AddQuality,
   AddInvoiceSequence,
   AddBatchSequence,
-  ReceiveBy
+  ReceiveBy,
+  AddApproveReceive,
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -34,6 +35,7 @@ export class AdminComponent implements OnInit {
   addDesignation: AddDesignation = new AddDesignation();
   approveBy: ApproveBy = new ApproveBy();
   receiveBy: ReceiveBy = new ReceiveBy();
+  addApproveReceive: AddApproveReceive = new AddApproveReceive();
   addMachine: AddMachine = new AddMachine();
   addMachineCategory: AddMachineCategory = new AddMachineCategory();
   addInvoiceSequence: AddInvoiceSequence = new AddInvoiceSequence();
@@ -43,6 +45,7 @@ export class AdminComponent implements OnInit {
   adddesignationArray: AddDesignation[] = [];
   approveByArray: ApproveBy[] = [];
   receiveByArray: ReceiveBy[] = [];
+  addApproveRecieveArray: AddApproveReceive[] = [];
   addMachineArray: AddMachine[] = [];
   addMachineCategoryArray: AddMachineCategory[] = [];
   addQualityArray: AddQuality[] = [];
@@ -55,6 +58,7 @@ export class AdminComponent implements OnInit {
   departmentList = [];
   approveByList = [];
   receiveByList = [];
+  approveReceiveByList = [];
   machineList = [];
   purchaseList = [];
   machineCategoryList = [];
@@ -73,6 +77,7 @@ export class AdminComponent implements OnInit {
   designationEditFlag = false;
   approveByEditFlag = false;
   receiveByEditFlag = false;
+  approveReceiveByEditFlag = false;
   sequenceByEditFlag = false;
   batchsequenceByEditFlag = false;
   machineEditFlag = false;
@@ -86,24 +91,26 @@ export class AdminComponent implements OnInit {
   hiddenDelete = false;
   approved = false;
 
-  ApprovedFlag:boolean = false;
-  RecieveFlag:boolean = false;
-  
+  ApprovedFlag: boolean = false;
+  RecieveFlag: boolean = false;
+
   items = [
     {
-      id:1,name:"Approved By"
+      id: "approve",
+      name: "Approved By",
     },
     {
-      id:2,name:"Recieved By"
-    }
+      id: "receive",
+      name: "Recieved By",
+    },
   ];
   selectedBy;
   constructor(
     private adminService: AdminService,
-    private purchseService : PurchaseNewService,
+    private purchseService: PurchaseNewService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private adminGuard : AdminGuard
+    private adminGuard: AdminGuard
   ) {
     this.addJetArray.push(this.addJet);
     this.addCompanyArray.push(this.addCompany);
@@ -116,49 +123,89 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllJetData();
-    this.getAllApproveByData();
-    this.getAllCompanyData();
-    this.getAllDepartment();
-    this.getAllQuality();
-    this.getAllDesignationData();
-    this.getAllMachineData();
-    this.getAllMachineCategoryData();
+    // this.getAllJetData();
+    //  this.getAllApproveByData();
+    // this.getAllCompanyData();
+    //  this.getAllDepartment();
+    // this.getAllQuality();
+    // this.getAllDesignationData();
+    // this.getAllMachineData();
+    // this.getAllMachineCategoryData();
     this.getAddAcess();
     this.getDeleteAccess();
     this.getEditAccess();
-    this.getAllInvoiceSequenceData();
-    this.getAllBatchSequenceData();
-    this.getAllReceiveByData();
-    this.getAllPurchaseData();
+    // this.getAllInvoiceSequenceData();
+    // this.getAllBatchSequenceData();
+    // this.getAllReceiveByData();
+    // this.getAllPurchaseData();
+    // this.getAllApproveReceiveByData();
+  }
+
+  onTabClick(tabTitle) {
+    switch (tabTitle) {
+      case "Jet":
+        this.getAllJetData();
+        break;
+
+      case "Company":
+        this.getAllCompanyData();
+        break;
+
+      case "Department":
+        this.getAllDepartment();
+        break;
+
+      case "Quality":
+        this.getAllQuality();
+        break;
+
+      case "Machine":
+        this.getAllMachineData();
+        break;
+
+      case "Machine Category":
+        this.getAllMachineCategoryData();
+        break;
+
+      case "Designation":
+        this.getAllDesignationData();
+        break;
+
+      case "Authorized":
+        this.getAllApproveReceiveByData();
+        break;
+
+      case "Sequence":
+        this.getAllInvoiceSequenceData();
+        this.getAllBatchSequenceData();
+        break;
+
+      case "Purchase":
+        this.getAllPurchaseData();
+        break;
+    }
   }
 
   getAddAcess() {
-    if (this.adminGuard.accessRights('add')) {
+    if (this.adminGuard.accessRights("add")) {
       this.disabled = false;
-    }
-    else {
+    } else {
       this.disabled = true;
     }
   }
 
   getDeleteAccess() {
-    if (this.adminGuard.accessRights('delete')) {
+    if (this.adminGuard.accessRights("delete")) {
       this.hiddenDelete = false;
-    }
-    else
-    {
+    } else {
       this.hiddenDelete = true;
     }
   }
 
-
   getEditAccess() {
-    if (this.adminGuard.accessRights('edit')) {
+    if (this.adminGuard.accessRights("edit")) {
       this.hiddenEdit = false;
-    }
-    else
-    {
+    } else {
       this.hiddenEdit = true;
     }
   }
@@ -179,29 +226,26 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getAllPurchaseData(){
+  getAllPurchaseData() {
     this.purchaseList = [];
     this.purchseService.updateStatus(this.approved).subscribe(
       (data) => {
         if (data["success"]) {
           this.purchaseList = data["data"];
-          this.purchaseList.forEach((element , i) => {
+          this.purchaseList.forEach((element, i) => {
             let tempBill = [];
             let tempMaterial = [];
-            element.materialPhotosList.forEach(ele => {
-              if(ele.type == "bill"){
+            element.materialPhotosList.forEach((ele) => {
+              if (ele.type == "bill") {
                 tempBill.push(ele);
-              }
-              else{
+              } else {
                 tempMaterial.push(ele);
               }
             });
-            this.billImages[i] = (tempBill);
-            this.materialImages[i] = (tempMaterial);
-          })
+            this.billImages[i] = tempBill;
+            this.materialImages[i] = tempMaterial;
+          });
 
-          
-          
           this.loading = false;
         } else {
           this.loading = false;
@@ -277,11 +321,11 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getAllApproveByData() {
-    this.adminService.getAllApproveByData().subscribe(
+  getAllApproveReceiveByData() {
+    this.adminService.getAllApproveReceiveData().subscribe(
       (data) => {
         if (data["success"]) {
-          this.approveByList = data["data"];
+          this.approveReceiveByList = data["data"];
           this.loading = false;
         } else {
           this.loading = false;
@@ -293,29 +337,44 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getAllReceiveByData() {
-    this.adminService.getAllReceiveByData().subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.receiveByList = data["data"];
-          this.loading = false;
-        } else {
-          this.loading = false;
-        }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
-  }
+  // getAllApproveByData() {
+  //   this.adminService.getAllApproveByData().subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         this.approveByList = data["data"];
+  //         this.loading = false;
+  //       } else {
+  //         this.loading = false;
+  //       }
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
 
+  // getAllReceiveByData() {
+  //   this.adminService.getAllReceiveByData().subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         this.receiveByList = data["data"];
+  //         this.loading = false;
+  //       } else {
+  //         this.loading = false;
+  //       }
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
 
   getAllInvoiceSequenceData() {
     this.adminService.getAllInvoiceSequence().subscribe(
       (data) => {
         if (data["success"]) {
-          this.addInvoiceSequence.sequence = data["data"]['sequence']
-          this.addInvoiceSequence.id = data["data"]['id'];
+          this.addInvoiceSequence.sequence = data["data"]["sequence"];
+          this.addInvoiceSequence.id = data["data"]["id"];
           this.loading = false;
         } else {
           this.saveHidden = false;
@@ -328,12 +387,12 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  getAllBatchSequenceData(){
-    this.adminService.getAllBatchSequence().subscribe(
+  getAllBatchSequenceData() {
+    this.adminService.getAllBatchSequence(false).subscribe(
       (data) => {
         if (data["success"]) {
-          this.addBatchSequence.sequence = data["data"]['sequence']
-          this.addBatchSequence.id = data["data"]['id'];
+          this.addBatchSequence.sequence = data["data"]["sequence"];
+          this.addBatchSequence.id = data["data"]["id"];
           this.loading = false;
         } else {
           this.batchSaveHidden = false;
@@ -500,91 +559,130 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  saveApproveBy(addApproveByData) {
+  saveApproveReceiveBy(addApproveReceivebyData) {
     this.formSubmitted = true;
-    if (addApproveByData.valid) {
-      if (this.approveByEditFlag == true) {
-        this.adminService.updateApproveByData(this.approveBy).subscribe(
-          (data) => {
+    if (addApproveReceivebyData.valid) {
+      if (this.approveReceiveByEditFlag == true) {
+        this.adminService
+          .updateApproveReceiveByData(this.addApproveReceive)
+          .subscribe((data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
-              this.getAllApproveByData();
-              this.onCancelApproveBy();
-              this.resetValue(addApproveByData);
+              this.getAllApproveReceiveByData();
+              this.onCancelApproveReceiveBy();
+              this.resetValue(addApproveReceivebyData);
               this.formSubmitted = false;
             } else {
               this.toastr.error(data["msg"]);
             }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
-        this.approveByEditFlag = false;
+          });
       } else {
-        this.adminService.saveApproveByData(this.approveBy).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Add_Success);
-              this.getAllApproveByData();
-              this.resetValue(addApproveByData);
-              this.formSubmitted = false;
-            } else {
-              this.toastr.error(data["msg"]);
+        this.adminService
+          .saveApproveReceiveByData(this.addApproveReceive)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Add_Success);
+                this.getAllApproveReceiveByData();
+                this.resetValue(addApproveReceivebyData);
+                this.formSubmitted = false;
+              } else {
+                this.toastr.error(data["msg"]);
+              }
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
             }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
+          );
       }
-    } else {
-      return;
     }
   }
 
-  saveReceiveBy(addReceiveByData) {
-    this.formSubmitted = true;
-    if (addReceiveByData.valid) {
-      if (this.receiveByEditFlag == true) {
-        this.adminService.updateReceiveByData(this.receiveBy).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Update_Success);
-              this.getAllReceiveByData();
-              this.onCancelReceiveBy();
-              this.resetValue(addReceiveByData);
-              this.formSubmitted = false;
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
-        this.receiveByEditFlag = false;
-      } else {
-        this.adminService.saveReceiveByData(this.receiveBy).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Add_Success);
-              this.getAllReceiveByData();
-              this.resetValue(addReceiveByData);
-              this.formSubmitted = false;
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
-      }
-    } else {
-      return;
-    }
-  }
+  // saveApproveBy(addApproveByData) {
+  //   this.formSubmitted = true;
+  //   if (addApproveByData.valid) {
+  //     if (this.approveByEditFlag == true) {
+  //       this.adminService.updateApproveByData(this.approveBy).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Update_Success);
+  //             this.getAllApproveByData();
+  //             this.onCancelApproveBy();
+  //             this.resetValue(addApproveByData);
+  //             this.formSubmitted = false;
+  //           } else {
+  //             this.toastr.error(data["msg"]);
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //       this.approveByEditFlag = false;
+  //     } else {
+  //       this.adminService.saveApproveByData(this.approveBy).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Add_Success);
+  //             this.getAllApproveByData();
+  //             this.resetValue(addApproveByData);
+  //             this.formSubmitted = false;
+  //           } else {
+  //             this.toastr.error(data["msg"]);
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+  // saveReceiveBy(addReceiveByData) {
+  //   this.formSubmitted = true;
+  //   if (addReceiveByData.valid) {
+  //     if (this.receiveByEditFlag == true) {
+  //       this.adminService.updateReceiveByData(this.receiveBy).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Update_Success);
+  //             this.getAllReceiveByData();
+  //             this.onCancelReceiveBy();
+  //             this.resetValue(addReceiveByData);
+  //             this.formSubmitted = false;
+  //           } else {
+  //             this.toastr.error(data["msg"]);
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //       this.receiveByEditFlag = false;
+  //     } else {
+  //       this.adminService.saveReceiveByData(this.receiveBy).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Add_Success);
+  //             this.getAllReceiveByData();
+  //             this.resetValue(addReceiveByData);
+  //             this.formSubmitted = false;
+  //           } else {
+  //             this.toastr.error(data["msg"]);
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // }
   saveDesignation(addDesignationData) {
     this.formSubmitted = true;
     if (addDesignationData.valid) {
@@ -750,34 +848,38 @@ export class AdminComponent implements OnInit {
   saveInvoiceSequence(addSequenceData) {
     this.formSubmitted = true;
     if (addSequenceData.valid) {
-      if(this.sequenceByEditFlag){
-        this.adminService.updateInvoiceSequence(this.addInvoiceSequence).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Update_Success);
-              this.getAllInvoiceSequenceData();
-              this.resetValue(addSequenceData);
-              this.saveHidden = true;
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {}
-        );
-      }else{
-        this.adminService.saveInvoiceSequence(this.addInvoiceSequence).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Add_Success);
-              this.getAllInvoiceSequenceData();
-              this.saveHidden = true;
-              // this.resetValue(addSequenceData);
-            } else {
-              this.toastr.error(data["msg"]);
-            }
-          },
-          (error) => {}
-        );
+      if (this.sequenceByEditFlag) {
+        this.adminService
+          .updateInvoiceSequence(this.addInvoiceSequence)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Update_Success);
+                this.getAllInvoiceSequenceData();
+                this.resetValue(addSequenceData);
+                this.saveHidden = true;
+              } else {
+                this.toastr.error(data["msg"]);
+              }
+            },
+            (error) => {}
+          );
+      } else {
+        this.adminService
+          .saveInvoiceSequence(this.addInvoiceSequence)
+          .subscribe(
+            (data) => {
+              if (data["success"]) {
+                this.toastr.success(errorData.Add_Success);
+                this.getAllInvoiceSequenceData();
+                this.saveHidden = true;
+                // this.resetValue(addSequenceData);
+              } else {
+                this.toastr.error(data["msg"]);
+              }
+            },
+            (error) => {}
+          );
       }
       // }
     } else {
@@ -786,11 +888,10 @@ export class AdminComponent implements OnInit {
     }
   }
 
-
   saveBatchSequence(addSequenceData) {
     this.formSubmitted = true;
     if (addSequenceData.valid) {
-      if(this.batchsequenceByEditFlag){
+      if (this.batchsequenceByEditFlag) {
         this.adminService.updateBatchSequence(this.addBatchSequence).subscribe(
           (data) => {
             if (data["success"]) {
@@ -804,7 +905,7 @@ export class AdminComponent implements OnInit {
           },
           (error) => {}
         );
-      }else{
+      } else {
         this.adminService.saveBatchSequence(this.addBatchSequence).subscribe(
           (data) => {
             if (data["success"]) {
@@ -825,7 +926,6 @@ export class AdminComponent implements OnInit {
       return;
     }
   }
-
 
   resetValue(FormName) {
     this.formSubmitted = false;
@@ -870,28 +970,38 @@ export class AdminComponent implements OnInit {
     this.addMachineCategory.name = null;
     this.machineCategoryEditFlag = false;
   }
-  onCancelApproveBy() {
-    this.approveBy.id = null;
-    this.approveBy.name = null;
-    this.approveBy.email = null;
-    this.approveBy.contact = null;
-    this.approveByEditFlag = false;
+
+  onCancelApproveReceiveBy() {
+    this.addApproveReceive.id = null;
+    this.addApproveReceive.name = null;
+    this.addApproveReceive.contact = null;
+    this.addApproveReceive.email = null;
+    this.addApproveReceive.type = null;
+    this.approveReceiveByEditFlag = false;
   }
 
-  onCancelReceiveBy() {
-    this.receiveBy.id = null;
-    this.receiveBy.name = null;
-    this.receiveBy.email = null;
-    this.receiveBy.contact = null;
-    this.receiveByEditFlag = false;
-  }
+  // onCancelApproveBy() {
+  //   this.approveBy.id = null;
+  //   this.approveBy.name = null;
+  //   this.approveBy.email = null;
+  //   this.approveBy.contact = null;
+  //   this.approveByEditFlag = false;
+  // }
 
-  onCancelSequence(){
+  // onCancelReceiveBy() {
+  //   this.receiveBy.id = null;
+  //   this.receiveBy.name = null;
+  //   this.receiveBy.email = null;
+  //   this.receiveBy.contact = null;
+  //   this.receiveByEditFlag = false;
+  // }
+
+  onCancelSequence() {
     this.saveHidden = true;
     this.getAllInvoiceSequenceData();
   }
 
-  onBatchCancelSequence(){
+  onBatchCancelSequence() {
     this.batchSaveHidden = true;
     this.getAllBatchSequenceData();
   }
@@ -942,7 +1052,6 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  
   removeMachineCategory(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -1058,17 +1167,17 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  removeApproveBy(id) {
+  removeApproveReceiveBy(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteApproveById(id).subscribe(
+        this.adminService.deleteApproveReceiveById(id).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
-              this.getAllApproveByData();
+              this.getAllApproveReceiveByData();
             } else {
               this.toastr.error("Can't delete this record");
             }
@@ -1080,29 +1189,51 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+  // removeApproveBy(id) {
+  //   const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+  //     size: "sm",
+  //   });
+  //   modalRef.result.then((result) => {
+  //     if (result) {
+  //       this.adminService.deleteApproveById(id).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Delete);
+  //             this.getAllApproveByData();
+  //           } else {
+  //             this.toastr.error("Can't delete this record");
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
 
-  removeReceiveBy(id) {
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
-      size: "sm",
-    });
-    modalRef.result.then((result) => {
-      if (result) {
-        this.adminService.deleteReceiveById(id).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Delete);
-              this.getAllReceiveByData();
-            } else {
-              this.toastr.error("Can't delete this record");
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
-      }
-    });
-  }
+  // removeReceiveBy(id) {
+  //   const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+  //     size: "sm",
+  //   });
+  //   modalRef.result.then((result) => {
+  //     if (result) {
+  //       this.adminService.deleteReceiveById(id).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.toastr.success(errorData.Delete);
+  //             this.getAllReceiveByData();
+  //           } else {
+  //             this.toastr.error("Can't delete this record");
+  //           }
+  //         },
+  //         (error) => {
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
   getjetEdit(id1) {
     this.jetEditFlag = true;
     this.jetList.forEach((element) => {
@@ -1171,103 +1302,107 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-  getapproveByEdit(id) {
-    this.approveByEditFlag = true;
-    this.approveByList.forEach((element) => {
+
+  getApproveReceiveByEdit(id) {
+    this.approveReceiveByEditFlag = true;
+    this.approveReceiveByList.forEach((element) => {
       if (element.id == id) {
-        this.approveBy.id = element.id;
-        this.approveBy.name = element.name;
-        this.approveBy.email = element.email;
-        this.approveBy.contact = element.contact;
+        this.addApproveReceive.id = element.id;
+        this.addApproveReceive.name = element.name;
+        this.addApproveReceive.email = element.email;
+        this.addApproveReceive.contact = element.contact;
+        this.addApproveReceive.type = element.type;
       }
     });
   }
+  // getapproveByEdit(id) {
+  //   this.approveByEditFlag = true;
+  //   this.approveByList.forEach((element) => {
+  //     if (element.id == id) {
+  //       this.approveBy.id = element.id;
+  //       this.approveBy.name = element.name;
+  //       this.approveBy.email = element.email;
+  //       this.approveBy.contact = element.contact;
+  //     }
+  //   });
+  // }
 
-  getReceiveByEdit(id) {
-    this.receiveByEditFlag = true;
-    this.receiveByList.forEach((element) => {
-      if (element.id == id) {
-        this.receiveBy.id = element.id;
-        this.receiveBy.name = element.name;
-        this.receiveBy.email = element.email;
-        this.receiveBy.contact = element.contact;
-      }
-    });
-  }
+  // getReceiveByEdit(id) {
+  //   this.receiveByEditFlag = true;
+  //   this.receiveByList.forEach((element) => {
+  //     if (element.id == id) {
+  //       this.receiveBy.id = element.id;
+  //       this.receiveBy.name = element.name;
+  //       this.receiveBy.email = element.email;
+  //       this.receiveBy.contact = element.contact;
+  //     }
+  //   });
+  // }
 
-  onEdit(){
+  onEdit() {
     this.saveHidden = false;
     this.sequenceByEditFlag = true;
-
   }
 
-  onBatchEdit(){
+  onBatchEdit() {
     this.batchSaveHidden = false;
     this.batchsequenceByEditFlag = true;
-
   }
 
-  onBillClick(row){
+  onBillClick(row) {
     this.billList = [];
-    row.forEach(element => {
-      if(element.type == "bill"){
+    row.forEach((element) => {
+      if (element.type == "bill") {
         this.billList.push(element);
       }
     });
 
-    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
-    
-      modalRef.componentInstance.billList = this.billList;
-      modalRef.componentInstance.materialList = null;
+    const modalRef = this.modalService.open(PreviewComponent, { size: "lg" });
 
-      modalRef.result
-      .then((result) => {
-        if (result) {
-          
-        }
-      })
-      
-   }
+    modalRef.componentInstance.billList = this.billList;
+    modalRef.componentInstance.materialList = null;
 
-   onMaterialClick(row){
+    modalRef.result.then((result) => {
+      if (result) {
+      }
+    });
+  }
+
+  onMaterialClick(row) {
     this.materialList = [];
-    row.forEach(element => {
-      if(element.type == "material"){
+    row.forEach((element) => {
+      if (element.type == "material") {
         this.materialList.push(element);
       }
     });
 
-    const modalRef = this.modalService.open(PreviewComponent , {size:"lg"});
+    const modalRef = this.modalService.open(PreviewComponent, { size: "lg" });
 
-      modalRef.componentInstance.billList = null;
-      modalRef.componentInstance.materialList = this.materialList;
-      modalRef.result
-      .then((result) => {
-        if (result) {}
-      })
-    
-   }
+    modalRef.componentInstance.billList = null;
+    modalRef.componentInstance.materialList = this.materialList;
+    modalRef.result.then((result) => {
+      if (result) {
+      }
+    });
+  }
 
-   updatePurchaseStatus(row , event)
-   {
-     this.purchseService.updatePurchaseStatus(row.id , event ).subscribe(
+  updatePurchaseStatus(row, event) {
+    this.purchseService.updatePurchaseStatus(row.id, event).subscribe(
       (data) => {
-        if(data["success"]){
+        if (data["success"]) {
           this.toastr.success(errorData.Update_Success);
           this.getAllPurchaseData();
         }
       },
-      (error) => {
+      (error) => {}
+    );
+  }
 
-      }
-     )
-   }
-
-   getApproved(){
+  getApproved() {
     this.getAllPurchaseData();
-   }
+  }
 
-   deletePurchase(id) {
+  deletePurchase(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
     });
@@ -1278,9 +1413,8 @@ export class AdminComponent implements OnInit {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
               this.getAllPurchaseData();
-
             } else {
-              this.toastr.error(data['msg']);
+              this.toastr.error(data["msg"]);
             }
           },
           (error) => {
@@ -1291,17 +1425,14 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  getApprovedOrRecieved(value){
-
-    if(value == 1){
+  getApprovedOrRecieved(value) {
+    if (value == 1) {
       this.ApprovedFlag = true;
       this.RecieveFlag = false;
-    }
-    else if(value == 2){
+    } else if (value == 2) {
       this.ApprovedFlag = false;
       this.RecieveFlag = true;
-    }
-    else{
+    } else {
       this.ApprovedFlag = false;
       this.RecieveFlag = false;
     }

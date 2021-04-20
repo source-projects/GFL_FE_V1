@@ -18,12 +18,36 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
-                            <label class="required">Enter employee id </label>
-                            <input type="number" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
+                            <ng-select appendTo="body" placeholder="Search by Name or Id" name="search" [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">Employee Name
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips">
+                                                Employee Id</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let emp of list" [value]="emp.empId">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{emp.name}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{emp.empId}}</div>
+                                        </div>
+                                    </div>    
+                                </ng-option>
+                             </ng-select>
+                            <!-- <label class="required">Enter employee id </label>
+                            <input type="text" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
 
                             <div class="input-required" *ngIf="empId1.invalid && (formSubmitted || empId1.touched)">
                                 <span>Employee Id is required</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -45,14 +69,14 @@
 
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
                         <div class="form-group mr-top-bt">
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="onSave()" >Submit</button>
 
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </form>
 

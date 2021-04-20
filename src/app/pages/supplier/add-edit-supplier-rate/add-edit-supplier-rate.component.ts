@@ -15,6 +15,7 @@ export class AddEditSupplierRateComponent implements OnInit {
 
   //data fatch supplier Name
   supplier: [];
+  duplicateFlag:boolean = false;
   itemTypeData = ["Color" , ]
   
   selectedType = 'Color';
@@ -177,10 +178,6 @@ export class AddEditSupplierRateComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
 
-      if (this.hasDuplicates(this.formValues.supplierRates)) {
-        this.toastr.warning("ItemName is Same");
-      }
-      else {
         this.formValues.supplierId = this.formValues.supplierRates[0].supplierId;
         this.formValues.supplierId = this.formValues.id;
   
@@ -216,7 +213,7 @@ export class AddEditSupplierRateComponent implements OnInit {
             this.toastr.error(errorData.Serever_Error);
           }
         );
-      }
+        
     } else {
       this.toastr.error("Fill empty fields");
 
@@ -242,7 +239,43 @@ export class AddEditSupplierRateComponent implements OnInit {
     }
   }
 
+  checkDuplicateLocally(ele,index){
+
+    this.duplicateFlag = false;
+    if(this.hasDuplicates(this.formValues.supplierRates)){
+      this.toastr.warning("Item Name exist in same Supplier");
+      let item = this.formValues.supplierRates;
+            item[index].itemName = null;
+            item[index].rate = null;
+            item[index].discountedRate = null;
+            item[index].gstRate = null;
+            let list = item;
+            this.formValues.supplierRates = [...list];
+    }
+    else{
+      this.supplierService.getDuplicateCheck(0,ele.target.value).subscribe(
+        (data) => {
+          if(data["data"]){
+            this.toastr.warning("Item Name already exist");
+            let item = this.formValues.supplierRates;
+            item[index].itemName = null;
+            item[index].rate = null;
+            item[index].discountedRate = null;
+            item[index].gstRate = null;
+            let list = item;
+            this.formValues.supplierRates = [...list];
+            this.duplicateFlag = data["data"];
+          }
+        },
+        (error) => {
+        }
+      );
+  
+    }
+  }
+
   onKeyUp(e, rowIndex, colIndex, colName) {
+    
     var keyCode = e.keyCode ? e.keyCode : e.which;
     if (keyCode == 13) {
       this.index = "supplierList" + (rowIndex + 1) + "-" + 0;
@@ -337,14 +370,23 @@ export class AddEditSupplierRateComponent implements OnInit {
     }
   }
 
-  hasDuplicates(arr) {
-    for(let i = 0;i<arr.length;++i){
-      for(let j=0;j<i;++j){
-        if(arr[i].itemName == arr[j].itemName){
-          return true;
+  hasDuplicates(value:any[]){
+
+    let itemNames = [];
+    value.forEach(ele=>{
+      itemNames.push(ele.itemName)
+    })
+    let sorted_arr = itemNames.slice().sort();
+    let results = [];
+    for (var i = 0; i < sorted_arr.length - 1; i++) {
+        if (sorted_arr[i + 1] === sorted_arr[i]) {
+            results.push(sorted_arr[i]);
         }
-      }
     }
+    if(results.length > 0){
+      return true;
+    } 
+    
     return false;
-  }
+  }    
 }

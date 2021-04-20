@@ -2,16 +2,17 @@ export class Payment {
     partyId: Number;
     id:Number;
     isSendToParty:boolean;
-    gstAmt:Number;
+    gstAmt:number;
     cdAmt:number;
     rdAmt:number;
+    netAmt:number;
     otherDiff:number;
     rdDetail:string;
     cdDetail:string;
     diffDetail:string;
     amtToPay:number;
-    amtPaid:Number;
-    totalBill:Number;
+    amtPaid:number;
+    totalBill:number;
     invoices:Invoices[];
     paymentData:PaymentData[];
     advancePayList:AdvancePayList[];
@@ -21,8 +22,10 @@ export class Payment {
         this.amtPaid = 0;
         this.amtToPay = 0;
         this.cdAmt = 0;
+        this.netAmt = 0;
         this.rdAmt = 0;
         this.otherDiff = 0;
+        this.gstAmt = 0;
     }
 }
 export class Invoices{

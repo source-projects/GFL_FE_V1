@@ -1,12 +1,12 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdvancePayList, Payment, PaymentData } from 'app/@theme/model/payment'
-import { CommonService } from 'app/@theme/services/common.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { PartyService } from 'app/@theme/services/party.service';
-import { PaymentService } from 'app/@theme/services/payment.service';
+import { AdvancePayList, Payment, PaymentData } from '../../../@theme/model/payment'
+import { CommonService } from '../../../@theme/services/common.service';
+import { JwtTokenService } from '../../../@theme/services/jwt-token.service';
+import { PartyService } from '../../../@theme/services/party.service';
+import { PaymentService } from '../../../@theme/services/payment.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from '../../../@theme/json/error.json';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -16,6 +16,8 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 export class BillPaymentComponent implements OnInit {
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
+
+  billBanks = [];
   userId: any;
   userHeadId: any;
   index: any;
@@ -24,6 +26,8 @@ export class BillPaymentComponent implements OnInit {
   currentPaymentId: string;
   //total:Number=0;
   totalAdvance = 0;
+  gstAmount = 0;
+  netAmount = 0;
   temp1: any;
   temp2: any;
   temp3: any;
@@ -64,8 +68,27 @@ export class BillPaymentComponent implements OnInit {
     this.getPartyList();
     this.getUserId();
     this.getPaymentType();
+    this.getBillBank();
+
     this.selected = [];
 
+  }
+
+  getBillBank(){
+    this.loading = true;
+    this.paymentService.getAllBillBank().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.billBanks = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   public getUserId() {
@@ -104,6 +127,7 @@ export class BillPaymentComponent implements OnInit {
               this.invoiceList = data["data"];
               this.loading = false;
             } else {
+              this.invoiceList = [];
               this.loading = false;
             }
           },
@@ -125,6 +149,7 @@ export class BillPaymentComponent implements OnInit {
               this.advancePaymentList = data["data"];
               this.loading = false;
             } else {
+              this.advancePaymentList = [];
               this.loading = false;
             }
           },
@@ -167,12 +192,19 @@ export class BillPaymentComponent implements OnInit {
     })
     this.paymentValues.invoices = inv;
     this.totalInvoice = 0;
+    this.gstAmount = 0;
+    this.netAmount = 0;
     event.selected.forEach(element => {
-      this.totalInvoice = this.totalInvoice + element.amt;
+      this.totalInvoice = this.totalInvoice + element.taxAmt;
+      this.gstAmount = this.gstAmount + element.cgst + element.sgst;
+      this.netAmount = this.netAmount + element.netAmt;
     });
     this.paymentValues.totalBill = this.totalInvoice;
-    this.paymentValues.amtToPay = this.totalInvoice;
-  }
+    this.paymentValues.gstAmt = this.gstAmount;
+    this.paymentValues.amtToPay = this.paymentValues.totalBill;
+    this.paymentValues.netAmt = this.netAmount;
+
+  } 
 
   advancePaymentSelected(event) {
     if(event.selected){
@@ -197,14 +229,14 @@ export class BillPaymentComponent implements OnInit {
     
   }
 
-  gstSelected(event) {
-    if (event.target.value || event.target.value == "") {
-      this.paymentValues.totalBill = this.totalInvoice;
-      this.paymentValues.amtToPay = this.totalInvoice;
-    }
-    let gst = Number(event.target.value);
-    this.paymentValues.amtToPay = this.totalInvoice - gst;
-  }
+  // gstSelected(event) {
+  //   if (event.target.value || event.target.value == "") {
+  //     this.paymentValues.totalBill = this.totalInvoice;
+  //     this.paymentValues.amtToPay = this.totalInvoice;
+  //   }
+  //   let gst = Number(event.target.value);
+  //   this.paymentValues.amtToPay = this.totalInvoice + gst;
+  // }
 
   getPaymentType() {
     this.paymentService.getAllPaymentType().subscribe(
@@ -354,6 +386,9 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.invoices = [];
     this.paymentValues.advancePayList = [];
     this.paymentValues.totalBill = 0;
+    this.paymentValues.gstAmt = 0;
+    this.paymentValues.netAmt = 0;
+    this.paymentValues.paymentData = [];
     this.invoiceList = [];
     this.advancePaymentList = [];
     this.paymentDataListArray.push(this.paymentDataList);
@@ -381,6 +416,14 @@ export class BillPaymentComponent implements OnInit {
         }
       )
     }
+  }
+
+  bankSelected(value,index,colName){
+    
+    if(colName == "bank"){
+      this.paymentValues.paymentData[index].bank = value.label;
+    }
+    this.billBanks.push({name:value.label});
   }
 
 }

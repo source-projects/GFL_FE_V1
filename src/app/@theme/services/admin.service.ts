@@ -46,6 +46,12 @@ export class AdminService {
     );
   }
 
+  getAllApproveReceiveData() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/authorize/all"
+    );
+  }
+
   getAllMachine() {
     return this.httpClient.get(this.commonService.envUrl() + "api/machine/all");
   }
@@ -68,9 +74,9 @@ export class AdminService {
     );
   }
 
-  getAllBatchSequence() {
+  getAllBatchSequence(id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/admin/get/batchSequence/"
+      this.commonService.envUrl() + "api/admin/get/batchSequence?update=" + id
     );
   }
 
@@ -80,7 +86,11 @@ export class AdminService {
     );
   }
 
-
+  getApproveRecieveDataById(id) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/admin/get/authorize?id=" + id
+    );
+  }
 
   saveMachine(data) {
     return this.httpClient.post(
@@ -144,6 +154,13 @@ export class AdminService {
     );
   }
 
+  saveApproveReceiveByData(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/admin/add/authorize",
+      data
+    );
+  }
+
   saveInvoiceSequence(data) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/admin/add/invoiceSequence/",
@@ -157,7 +174,6 @@ export class AdminService {
       data
     );
   }
-
 
   deleteJetById(id) {
     return this.httpClient.delete(
@@ -188,6 +204,12 @@ export class AdminService {
   deleteReceiveById(id) {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/admin/delete/receiver/" + id
+    );
+  }
+
+  deleteApproveReceiveById(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/admin/delete/authorize?id=" + id
     );
   }
 
@@ -245,6 +267,13 @@ export class AdminService {
   updateReceiveByData(data) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/admin/update/receiver/",
+      data
+    );
+  }
+
+  updateApproveReceiveByData(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/admin/update/authorize",
       data
     );
   }
