@@ -28,6 +28,7 @@ export class BillPaymentComponent implements OnInit {
   totalAdvance = 0;
   gstAmount = 0;
   netAmount = 0;
+  taxAmount = 0;
   temp1: any;
   temp2: any;
   temp3: any;
@@ -194,15 +195,16 @@ export class BillPaymentComponent implements OnInit {
     this.totalInvoice = 0;
     this.gstAmount = 0;
     this.netAmount = 0;
+    this.taxAmount = 0;
     event.selected.forEach(element => {
-      this.totalInvoice = this.totalInvoice + element.taxAmt;
+      this.totalInvoice = this.totalInvoice + element.netAmt;
       this.gstAmount = this.gstAmount + element.cgst + element.sgst;
-      this.netAmount = this.netAmount + element.netAmt;
+      this.taxAmount = this.taxAmount + element.taxAmt;
     });
     this.paymentValues.totalBill = this.totalInvoice;
     this.paymentValues.gstAmt = this.gstAmount;
     this.paymentValues.amtToPay = this.paymentValues.totalBill;
-    this.paymentValues.netAmt = this.netAmount;
+    this.paymentValues.taxAmt = this.taxAmount;
 
   } 
 
@@ -229,14 +231,6 @@ export class BillPaymentComponent implements OnInit {
     
   }
 
-  // gstSelected(event) {
-  //   if (event.target.value || event.target.value == "") {
-  //     this.paymentValues.totalBill = this.totalInvoice;
-  //     this.paymentValues.amtToPay = this.totalInvoice;
-  //   }
-  //   let gst = Number(event.target.value);
-  //   this.paymentValues.amtToPay = this.totalInvoice + gst;
-  // }
 
   getPaymentType() {
     this.paymentService.getAllPaymentType().subscribe(
@@ -388,6 +382,7 @@ export class BillPaymentComponent implements OnInit {
     this.paymentValues.totalBill = 0;
     this.paymentValues.gstAmt = 0;
     this.paymentValues.netAmt = 0;
+    this.paymentDataListArray = [];
     this.paymentValues.paymentData = [];
     this.invoiceList = [];
     this.advancePaymentList = [];

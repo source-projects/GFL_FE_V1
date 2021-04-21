@@ -56,11 +56,11 @@ export class AddEditTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addTask.startDate = new Date();
+    this.addTask.startDate = this.dateForPicker;
     this.minDate = new Date(
       this.dateForPicker.getFullYear(),
       this.dateForPicker.getMonth(),
-      this.dateForPicker.getDate(),
+      this.dateForPicker.getDate() - 1,
       23,
       59
     );

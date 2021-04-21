@@ -2,7 +2,7 @@ import {
   CdkDragDrop,
   CdkDropList,
   moveItemInArray,
-  transferArrayItem
+  transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -14,7 +14,10 @@ import { filter, map, takeUntil } from "rxjs/operators";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import * as errorData from "../../@theme/json/error.json";
 import { JetDataList, JetPlanning } from "../../@theme/model/jet-planning";
-import { ProductionBatchDetail, ProductionPlanning } from "../../@theme/model/production-planning";
+import {
+  ProductionBatchDetail,
+  ProductionPlanning,
+} from "../../@theme/model/production-planning";
 import { CommonService } from "../../@theme/services/common.service";
 import { JetPlanningService } from "../../@theme/services/jet-planning.service";
 import { PartyService } from "../../@theme/services/party.service";
@@ -25,7 +28,6 @@ import { ShadeService } from "../../@theme/services/shade.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
 import { AddShadeComponent } from "./add-shade/add-shade.component";
-
 
 @Component({
   selector: "ngx-production-planning",
@@ -317,7 +319,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       }
     });
 
-    const modalRef = this.modalService.open(AddShadeComponent, {size: "lg"});
+    const modalRef = this.modalService.open(AddShadeComponent, { size: "lg" });
     if (
       (this.productionPlanning.partyId && this.productionPlanning.qualityId) ==
       undefined
@@ -337,7 +339,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
         if (result) {
-          
           this.ngOnInit();
           this.productionPlanning.partyId = null;
           this.productionPlanning.qualityId = null;
@@ -402,6 +403,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     if (this.flipped) {
       this.getJetData();
     } else {
+      //clear party and quality on flip
+      this.productionPlanning.partyId = null;
+      this.productionPlanning.qualityId = null;
       this.getAllBatchData();
       this.plannedProductionListForDataTable();
     }
@@ -457,7 +461,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.detailsList = data['data'];
+            this.detailsList = data["data"];
 
             this.loading = false;
           } else {
@@ -603,11 +607,11 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   getAllDetailsOfBatch(event, batch) {
-    this.productionBatchDetail = {...batch};
+    this.productionBatchDetail = { ...batch };
   }
 
   resetDetailsOfBatch($event) {
-      this.productionBatchDetail = new ProductionBatchDetail();
+    this.productionBatchDetail = new ProductionBatchDetail();
   }
 
   drop(event: CdkDragDrop<any[]>, i) {
