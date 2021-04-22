@@ -124,6 +124,8 @@ export class PlanningSlipComponent implements OnInit {
   };
   qualityList = [];
   partyList = [];
+  @Input() additionalSlipId;
+  additionSavePrint = false;
 
   //dyeingData:DyeingSlipData = new DyeingSlipData();
   //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
@@ -389,7 +391,31 @@ export class PlanningSlipComponent implements OnInit {
   }
 
   getSlipDataFromBatch() {
-    this.planningSlipService
+    
+    if(this.additionalSlipId){
+      this.planningSlipService.getAlladditionSlipById(this.additionalSlipId, true).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.slipData = data["data"];
+            if (this.slipData) {
+              this.slipData.dyeingSlipDataList.forEach((element) => {
+                element.dyeingSlipItemData.forEach((element1) => {
+                  element1.qty = element1.qty
+                    ? element1.qty.toFixed(3)
+                    : element1.qty;
+                });
+              });
+              this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
+              if (this.isPrintDirect) this.printNOW();
+            }
+          } else {
+            //this.toastr.error(data["msg"]);
+          }
+        },
+        (error) => {}
+      );
+    }else{
+      this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
       .subscribe(
         (data) => {
@@ -412,6 +438,8 @@ export class PlanningSlipComponent implements OnInit {
         },
         (error) => {}
       );
+    }
+    
   }
 
   onKeyUp(e, rowIndex, colIndex, colName, parentDataIndex) {
@@ -611,11 +639,10 @@ export class PlanningSlipComponent implements OnInit {
           isColor: myForm.value.isColor,
           items: this.itemList,
         };
+        this.slipObj.print = this.additionSavePrint
         this.isSavedForPrint = true;
 
-        if (this.additionSlipSaveFlag) {
-          this.activeModal.close(this.slipObj);
-        }
+        this.activeModal.close(this.slipObj);
       } else if (this.directSlipFlag) {
         this.slipObj = {
           id: this.id,
@@ -694,19 +721,24 @@ export class PlanningSlipComponent implements OnInit {
       element.sequence = i + 1;
     });
   }
+
+  
   printSlip(myForm?) {
     //this.checkItemListAndValue();
     if ((myForm ? myForm.valid : true) && !this.quantityNullFlag) {
       this.isPrinting = false;
       if (!this.isPrintDirect) {
         this.approveByFlag = true;
+        if(this.additionSlipData){
+          this.additionSavePrint = true;
+        }
         this.saveSlipData(myForm);
       } else {
         this.isSavedForPrint = true;
         //this.getSlipDataFromBatch();
       }
 
-      if (!this.isPrintDirect) {
+      if (!this.isPrintDirect && !this.additionSlipData) {
         let interval1 = setInterval(() => {
           if (this.slipData && this.isSavedForPrint) {
             clearInterval(interval1);

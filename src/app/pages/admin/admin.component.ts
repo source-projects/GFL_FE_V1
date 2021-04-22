@@ -131,9 +131,9 @@ export class AdminComponent implements OnInit {
     // this.getAllDesignationData();
     // this.getAllMachineData();
     // this.getAllMachineCategoryData();
-    this.getAddAcess();
-    this.getDeleteAccess();
-    this.getEditAccess();
+    // this.getAddAcess();
+    // this.getDeleteAccess();
+    // this.getEditAccess();
     // this.getAllInvoiceSequenceData();
     // this.getAllBatchSequenceData();
     // this.getAllReceiveByData();

@@ -28,6 +28,7 @@
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
                                     <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
+                                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" [options]="{animation:{type:'zoom'}}" (click)="printDirect(row.id, row)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110">

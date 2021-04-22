@@ -62,17 +62,17 @@ export class PagesComponent implements OnInit {
     public waterJetGuard: WaterJetGuard,
     public invoiceGuard: InvoiceGuard,
     public paymentGuard: PaymentGuard,
-    public registrationGuard : EmployeeRegistrationGuard,
-    public attendanceGuard : AttndanceGuard,
+    public registrationGuard: EmployeeRegistrationGuard,
+    public attendanceGuard: AttndanceGuard,
     public finishedMeterGuard: FinishedMeterGuard,
     public inputDataGuard: InputDataGuard,
     public adminGuard: AdminGuard,
-    public purchaseGuard : PurchaseGuard,
+    public purchaseGuard: PurchaseGuard,
     private commonService: CommonService,
     private userService: UserService,
     private mergeGuard: MergeBatchGuard,
-    private reportGuard : ReportGuard,
-    private taskGuard : TaskGuard
+    private reportGuard: ReportGuard,
+    private taskGuard: TaskGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -94,25 +94,25 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
 
-                case "Merge-batch":
-                  this.view = this.mergeGuard.accessRights("view");
-                  this.view_all = this.mergeGuard.accessRights("view all");
-                  this.view_group = this.mergeGuard.accessRights("view group");
-                  if (
-                    this.view == false
-                    // this.view_all == false &&
-                    // this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
+              case "Merge-batch":
+                this.view = this.mergeGuard.accessRights("view");
+                this.view_all = this.mergeGuard.accessRights("view all");
+                this.view_group = this.mergeGuard.accessRights("view group");
+                if (
+                  this.view == false
+                  // this.view_all == false &&
+                  // this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
 
               case "Quality":
                 this.view = this.qualityGuard.accessRights("view");
@@ -124,7 +124,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -147,7 +147,7 @@ export class PagesComponent implements OnInit {
                     this.view_group == false
                   ) {
                     e.hidden = true;
-                  }else{
+                  } else {
                     e.hidden = false;
                   }
                 }
@@ -164,7 +164,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -193,7 +193,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -207,7 +207,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -221,7 +221,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -251,7 +251,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -266,7 +266,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -283,7 +283,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -302,7 +302,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -321,7 +321,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -351,7 +351,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -359,25 +359,25 @@ export class PagesComponent implements OnInit {
               case "Database":
                 if (
                   this.userData.id &&
-                  !this.userData.userHeadId && 
+                  !this.userData.userHeadId &&
                   !this.userData.superUserHeadId
                 ) {
                   e.hidden = false;
                 } else {
                   e.hidden = true;
-                // this.view = this.adminGuard.accessRights("view");
-                // this.view_all = this.adminGuard.accessRights("view all");
-                // this.view_group = this.adminGuard.accessRights("view group");
-                // if (
-                //   this.view == false &&
-                //   this.view_all == false &&
-                //   this.view_group == false
-                // ) {
-                //   e.hidden = true;
-                // }else{
-                //   e.hidden = false;
-                // }
-              }
+                  // this.view = this.adminGuard.accessRights("view");
+                  // this.view_all = this.adminGuard.accessRights("view all");
+                  // this.view_group = this.adminGuard.accessRights("view group");
+                  // if (
+                  //   this.view == false &&
+                  //   this.view_all == false &&
+                  //   this.view_group == false
+                  // ) {
+                  //   e.hidden = true;
+                  // }else{
+                  //   e.hidden = false;
+                  // }
+                }
                 break;
 
               case "Input Data":
@@ -392,7 +392,7 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
@@ -407,71 +407,75 @@ export class PagesComponent implements OnInit {
                   this.view_group == false
                 ) {
                   e.hidden = true;
-                }else{
+                } else {
                   e.hidden = false;
                 }
                 break;
 
-                case "Addition Slip":
-                  this.view = this.paymentGuard.accessRights("view");
-                  this.view_all = this.paymentGuard.accessRights("view all");
-                  this.view_group = this.paymentGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
+              case "Addition Slip":
+                this.view = this.paymentGuard.accessRights("view");
+                this.view_all = this.paymentGuard.accessRights("view all");
+                this.view_group = this.paymentGuard.accessRights("view group");
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
 
-                  case "Employee-Registration":
-                  this.view = this.registrationGuard.accessRights("view");
-                  this.view_all = this.registrationGuard.accessRights("view all");
-                  this.view_group = this.registrationGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
+              case "Employee-Registration":
+                this.view = this.registrationGuard.accessRights("view");
+                this.view_all = this.registrationGuard.accessRights("view all");
+                this.view_group = this.registrationGuard.accessRights(
+                  "view group"
+                );
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
 
-                  case "Attendance":
-                  this.view = this.attendanceGuard.accessRights("view");
-                  this.view_all = this.attendanceGuard.accessRights("view all");
-                  this.view_group = this.attendanceGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
+              case "Attendance":
+                this.view = this.attendanceGuard.accessRights("view");
+                this.view_all = this.attendanceGuard.accessRights("view all");
+                this.view_group = this.attendanceGuard.accessRights(
+                  "view group"
+                );
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
 
-                  case "Purchase":
-                  this.view = this.purchaseGuard.accessRights("view");
-                  this.view_all = this.purchaseGuard.accessRights("view all");
-                  this.view_group = this.purchaseGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
-
+              case "Purchase":
+                this.view = this.purchaseGuard.accessRights("view");
+                this.view_all = this.purchaseGuard.accessRights("view all");
+                this.view_group = this.purchaseGuard.accessRights("view group");
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
+                
                   case "Report":
                     if (
                       this.userData.id &&
@@ -496,20 +500,20 @@ export class PagesComponent implements OnInit {
                     }
                   break;
 
-                  case "Task":
-                  this.view = this.taskGuard.accessRights("view");
-                  this.view_all = this.taskGuard.accessRights("view all");
-                  this.view_group = this.taskGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  }else{
-                    e.hidden = false;
-                  }
-                  break;
+              case "Task":
+                this.view = this.taskGuard.accessRights("view");
+                this.view_all = this.taskGuard.accessRights("view all");
+                this.view_group = this.taskGuard.accessRights("view group");
+                if (
+                  this.view == false &&
+                  this.view_all == false &&
+                  this.view_group == false
+                ) {
+                  e.hidden = true;
+                } else {
+                  e.hidden = false;
+                }
+                break;
             }
           });
         }

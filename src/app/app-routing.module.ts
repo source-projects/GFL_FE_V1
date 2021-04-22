@@ -273,9 +273,9 @@ export const routes: Routes = [
         path: "admin",
         loadChildren: () =>
           import("./pages/admin/admin.module").then((m) => m.AdminModule),
-        canActivate: [AdminGuard],
-        canLoad: [AdminGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        // canActivate: [AdminGuard],
+        // canLoad: [AdminGuard],
+        // data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
         path: "task",

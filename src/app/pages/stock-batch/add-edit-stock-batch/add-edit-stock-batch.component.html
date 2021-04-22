@@ -191,8 +191,8 @@
                                                     <span>Batch id already exists</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-4 display-flex-end">
-                                                <nb-icon status="danger" [hidden]="production_flag[i]"
+                                            <div class="col-md-6 col-4 display-flex-end" *ngIf="!production_flag[i]">
+                                                <nb-icon status="danger"  
                                                     [options]="{animation:{type:'zoom'}}" icon="trash"
                                                     (click)="removeBatch(i);"></nb-icon>
                                             </div>
@@ -255,7 +255,7 @@
                                                                 <ng-template let-row="row" let-value="value"
                                                                     ngx-datatable-cell-template let-rowIndex="rowIndex">
                                                                     <nb-icon icon="trash" status="danger"
-                                                                        [hidden]="production_flag[i] || flag || row.isProductionPlanned"
+                                                                        [hidden]=" flag || row.isProductionPlanned"
                                                                         [options]="{ animation: { type: 'zoom' } }"
                                                                         (click)="removeItem(rowIndex,i)">
                                                                     </nb-icon>
