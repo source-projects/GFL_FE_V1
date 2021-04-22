@@ -306,6 +306,7 @@ export class AddEditStockBatchComponent implements OnInit {
       });
     }
     this.stockDataValues.forEach((batch, i) => {
+      this.production_flag[i] = false;
       this.stockBatch.batchData.forEach((x, j) => {
         if (x.batchId == batch.batchId) {
           batch.batchMW.push(
@@ -318,9 +319,11 @@ export class AddEditStockBatchComponent implements OnInit {
             )
           );
           //batch.isProductionPlanned = x.isProductionPlanned;
+          if(x.isProductionPlanned)
+            this.production_flag[i] = true;
         }
       });
-      this.production_flag[i] = batch.isProductionPlanned;
+      
     });
 
     this.reCalcMTWTValue();
@@ -671,6 +674,7 @@ export class AddEditStockBatchComponent implements OnInit {
               if (data["success"]) {
                 this.loading = false;
                 this.reset(myForm);
+                this.stockDataValues = [];
                 this.disableButton = false;
                 this.toastr.success(data["msg"]);
                 if (printDirect) {
