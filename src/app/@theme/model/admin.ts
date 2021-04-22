@@ -23,7 +23,7 @@ export class AddCompany {
 export class AddDepartment {
   id: number;
   name: string;
-  isMaster:boolean;
+  isMaster: boolean;
   constructor() {
     this.id = 0;
     this.name = null;
@@ -73,6 +73,21 @@ export class ReceiveBy {
   }
 }
 
+export class AddApproveReceive {
+  id: number;
+  name: string;
+  contact: string;
+  email: string;
+  type: string;
+  constructor() {
+    this.id = null;
+    this.name = null;
+    this.contact = null;
+    this.email = null;
+    this.type = null;
+  }
+}
+
 export class AddMachine {
   controlId: number;
   machineName: string;
@@ -94,12 +109,12 @@ export class AddMachineCategory {
 }
 
 export class AddInvoiceSequence {
-    id: number;
-    sequence: number;
-    constructor() {
-      this.id = null;
-      this.sequence = null;
-    }  
+  id: number;
+  sequence: number;
+  constructor() {
+    this.id = null;
+    this.sequence = null;
+  }
 }
 
 export class AddBatchSequence {
@@ -108,5 +123,5 @@ export class AddBatchSequence {
   constructor() {
     this.id = null;
     this.sequence = null;
-  }  
+  }
 }

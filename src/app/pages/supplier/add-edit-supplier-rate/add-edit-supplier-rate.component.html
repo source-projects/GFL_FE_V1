@@ -52,7 +52,7 @@
 
                         <ngx-datatable-column name="itemName" prop="itemName" [sortable]="false" [width]="300">
                             <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                <input class="tableForm line-height-subtable" type="text" (keyup)="onKeyUp($event,rowIndex,0,'itemName')" [id]="'supplierList'+rowIndex+'-0'" [(ngModel)]="row.itemName" #tableitem="ngModel" name='tableSupplierItemName{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableitem.invalid}">
+                                <input class="tableForm line-height-subtable" type="text" (keyup)="onKeyUp($event,rowIndex,0,'itemName')" (change)="checkDuplicateLocally($event,rowIndex)" [id]="'supplierList'+rowIndex+'-0'" [(ngModel)]="row.itemName" #tableitem="ngModel" name='tableSupplierItemName{{rowIndex}}' required [ngClass]="{'is-invalid': formSubmitted && tableitem.invalid}">
                                 <div class="input-required display-inlineblock" *ngIf="formSubmitted && (tableitem.invalid)">
                                     <span>Required</span>
                                 </div>

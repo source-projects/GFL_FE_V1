@@ -178,6 +178,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   updateAttendance(){
+    console.log(this.attendance.id)
     this.attendance.controlId = this.currentEmpId;
     this.attendance.updatedBy = this.user.userId;
     this.registrationService.updateAttendance(this.attendance).subscribe(

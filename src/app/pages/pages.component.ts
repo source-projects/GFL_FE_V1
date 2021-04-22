@@ -475,30 +475,30 @@ export class PagesComponent implements OnInit {
                   e.hidden = false;
                 }
                 break;
-
-              case "Report":
-                if (
-                  this.userData.id &&
-                  !this.userData.userHeadId &&
-                  !this.userData.superUserHeadId
-                ) {
-                  e.hidden = false;
-                } else {
-                  e.hidden = true;
-                  this.view = this.reportGuard.accessRights("view");
-                  this.view_all = this.reportGuard.accessRights("view all");
-                  this.view_group = this.reportGuard.accessRights("view group");
-                  if (
-                    this.view == false &&
-                    this.view_all == false &&
-                    this.view_group == false
-                  ) {
-                    e.hidden = true;
-                  } else {
-                    e.hidden = false;
-                  }
-                }
-                break;
+                
+                  case "Report":
+                    if (
+                      this.userData.id &&
+                      !this.userData.userHeadId && 
+                      !this.userData.superUserHeadId
+                    ) {
+                      e.hidden = false;
+                    } else {
+                      e.hidden = true;
+                      this.view = this.reportGuard.accessRights("view");
+                      this.view_all = this.reportGuard.accessRights("view all");
+                      this.view_group = this.reportGuard.accessRights("view group");
+                      if (
+                        this.view == false &&
+                        this.view_all == false &&
+                        this.view_group == false
+                      ) {
+                        e.hidden = true;
+                      }else{
+                        e.hidden = false;
+                      }
+                    }
+                  break;
 
               case "Task":
                 this.view = this.taskGuard.accessRights("view");
