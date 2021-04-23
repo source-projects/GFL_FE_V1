@@ -327,6 +327,10 @@ export class AdditionSlipComponent implements OnInit {
     });
   }
 
+  printDirect(row){
+
+  }
+
   batchSelected(event) {
     this.additionSlip.batchId = event.batchId;
     this.additionSlip.productionId = event.productionId;
@@ -356,7 +360,7 @@ export class AdditionSlipComponent implements OnInit {
             const modalRef = this.modalService.open(PlanningSlipComponent);
             modalRef.componentInstance.isPrintDirect = true;
             modalRef.componentInstance.batchId = this.directSlipBatchId;
-            modalRef.componentInstance.stockId = data["data"];
+            modalRef.componentInstance.stockId = data['data'];
             modalRef.componentInstance.additionSlipFlag = false;
 
             modalRef.result
@@ -368,35 +372,38 @@ export class AdditionSlipComponent implements OnInit {
           }
           this.ngOnInit();
         } else {
-          this.toastr.error(data["msg"]);
+          this.toastr.error(data['msg']);
         }
       },
       (error) => {}
     );
   }
 
-  editSlip(id) {
+  editSlip(id, printDirect?) {
+    let prodId, batchId;
     this.additionSlipList.forEach((element) => {
       if (element.id == id) {
-        this.additionSlip.productionId = element.productionId;
-        this.additionSlip.batchId = element.batchId;
+        prodId = element.productionId;
+        batchId = element.batchId;
+        this.additionSlip.batchId = batchId;
+        this.additionSlip.productionId = prodId;
       }
     });
-    this.getAdditionSlipDataById(
-      id,
-      this.additionSlip.batchId,
-      this.additionSlip.productionId
-    );
+    let print = false;
+    if(printDirect){
+      print = true;
+    }
+    this.getAdditionSlipDataById(id, batchId, prodId, print);
   }
 
-  getAdditionSlipDataById(id, batchId, prodId) {
+  getAdditionSlipDataById(id, batchId, prodId, printDirect?) {
     this.planningService.getAlladditionSlipById(id).subscribe(
       (data) => {
         if (data["success"]) {
           this.additionSlipData = data["data"];
           if (this.additionSlipData) {
             const modalRef = this.modalService.open(PlanningSlipComponent);
-            modalRef.componentInstance.isPrintDirect = false;
+            modalRef.componentInstance.isPrintDirect = printDirect;
             modalRef.componentInstance.batchId = batchId;
             modalRef.componentInstance.editAdditionFlag = true;
             modalRef.componentInstance.additionSlipFlag = true;
@@ -454,11 +461,7 @@ export class AdditionSlipComponent implements OnInit {
         if (data["success"]) {
           this.getAllAdditionSlip();
           this.toastr.success(errorData.Update_Success);
-
-          if (result.print) {
-            //call print direct planning-slip..
-            this.printDirect(this.additionSlip.id);
-          }
+          // this.disableButton=true;
         } else {
           this.toastr.error(errorData.Update_Error);
         }
@@ -466,23 +469,6 @@ export class AdditionSlipComponent implements OnInit {
       (error) => {}
     );
   }
-
-  printDirect(id, data?) {
-    if (data) {
-      let itm = this.additionSlipList.filter((f) => f.id == id);
-      if (itm && itm.length) {
-        this.additionSlip.batchId = itm[0].batchId;
-        this.additionSlip.productionId = itm[0].productionId;
-      }
-    }
-    const modalRef = this.modalService.open(PlanningSlipComponent);
-    modalRef.componentInstance.isPrintDirect = true;
-    modalRef.componentInstance.additionalSlipId = id;
-    modalRef.componentInstance.batchId = this.additionSlip.batchId;
-    modalRef.componentInstance.stockId = this.additionSlip.productionId;
-    modalRef.componentInstance.additionSlipFlag = true;
-  }
-
   saveAdditionSlip(result) {
     this.dyeingSlipData.holdTime = result.holdTime;
     this.dyeingSlipData.temp = result.temp;
@@ -516,6 +502,7 @@ export class AdditionSlipComponent implements OnInit {
         if (data["success"]) {
           this.additionSlipList = data["data"];
 
+
           this.addition = this.additionSlipList.map((element) => ({
             id: element.id,
             batchId: element.batchId,
@@ -524,7 +511,13 @@ export class AdditionSlipComponent implements OnInit {
             temp: element.dyeingSlipData.temp,
           }));
 
-          this.copyAdditionalSlip = JSON.parse(JSON.stringify(this.addition));
+          this.copyAdditionalSlip = this.additionSlipList.map((element) => ({
+            id: element.id,
+            batchId: element.batchId,
+            holdTime: element.dyeingSlipData.holdTime,
+            liquerRation: element.dyeingSlipData.liquerRation,
+            temp: element.dyeingSlipData.temp,
+          }));
         } else {
         }
         this.loading = false;
@@ -550,4 +543,5 @@ export class AdditionSlipComponent implements OnInit {
       }
     });
   }
+
 }
