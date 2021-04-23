@@ -30,8 +30,13 @@ export class PlanningSlipService {
 
   }
 
-  getAlladditionSlipById(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipBy/'+id);
+  getAlladditionSlipById(id, flag?){
+    if(flag){
+      return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipByForPrint?id='+id);
+    }else{
+      return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/getAdditionalDyeingSlipBy/'+id);
+    }
+    
 
   }
 
