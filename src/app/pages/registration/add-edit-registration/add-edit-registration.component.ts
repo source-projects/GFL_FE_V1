@@ -7,6 +7,7 @@ import {
 } from "@techiediaries/ngx-qrcode";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { ToastrService } from "ngx-toastr";
+import { UserService } from "../../../@theme/services/user.service";
 import * as errorData from "../../../@theme/json/error.json";
 import {
   EmployeeDocument,
@@ -20,13 +21,12 @@ import { RegistrationService } from "../../../@theme/services/registration.servi
   styleUrls: ["./add-edit-registration.component.scss"],
 })
 export class AddEditRegistrationComponent implements OnInit {
-
   docAdd = [];
   docUpdate = [];
   imageIndexFordocAdd = 0;
   imageIndexFordocUpdate = 0;
-  imagePreviewFordocAdd:boolean = false;
-  imagePreviewFordocUpdate:boolean = false;
+  imagePreviewFordocAdd: boolean = false;
+  imagePreviewFordocUpdate: boolean = false;
 
   imgLoading = false;
   processValue: number = 0;
@@ -65,6 +65,7 @@ export class AddEditRegistrationComponent implements OnInit {
   imgResultAfterCompress: string;
   localUrl;
   imageFile: File = null;
+  departmentList: any[];
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -72,7 +73,8 @@ export class AddEditRegistrationComponent implements OnInit {
     private toastr: ToastrService,
     private route: Router,
     private imageCompress: NgxImageCompressService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -81,11 +83,23 @@ export class AddEditRegistrationComponent implements OnInit {
     this.url = urls[0];
     this.uploadFlag = false;
     this.getUserId();
+    this.getAllDepartment();
     if (this.currentEmpId) {
       this.getCurrentEmpData();
     }
     this.imagePreviewFordocAdd = false;
+  }
 
+  getAllDepartment() {
+    this.userService.getAllDepartmentData().subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.departmentList = data["data"];
+          console.log(this.departmentList);
+        }
+      },
+      (error) => {}
+    );
   }
 
   public getUserId() {
@@ -105,13 +119,12 @@ export class AddEditRegistrationComponent implements OnInit {
           this.registration.employeeDocumentList.forEach((element) => {
             if (element.type == "profile") {
               this.imageUrl = element.url;
-            }else{
+            } else {
               this.docUpdate.push(element.url);
             }
           });
 
           this.imagePreviewFordocUpdate = true;
-
         }
       }),
       (error) => {
@@ -120,35 +133,42 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   compressFile(type): any {
-    if(type == "profile"){
-      this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
-        result => {
+    if (type == "profile") {
+      this.imageCompress
+        .compressFile(this.imageUrl, -1, 50, 50)
+        .then((result) => {
           this.imgResultAfterCompress = result;
           //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
-  
-          const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
-  
-          this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+
+          const imageBlob = this.dataURItoBlob(
+            this.imgResultAfterCompress.split(",")[1]
+          );
+
+          this.imageFile = new File([result], this.fileToUpload.name, {
+            type: "image/jpeg",
+          });
           //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
-        }
-      );
-    }
-    else{
-      this.imageCompress.compressFile(this.docUrl, -1, 50, 50).then(
-        result => {
+        });
+    } else {
+      this.imageCompress
+        .compressFile(this.docUrl, -1, 50, 50)
+        .then((result) => {
           this.imgResultAfterCompress = result;
           //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
-  
-          const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
-  
-          this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
+
+          const imageBlob = this.dataURItoBlob(
+            this.imgResultAfterCompress.split(",")[1]
+          );
+
+          this.imageFile = new File([result], this.fileToUpload.name, {
+            type: "image/jpeg",
+          });
           //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
-        }
-      );
+        });
     }
   }
 
@@ -218,28 +238,26 @@ export class AddEditRegistrationComponent implements OnInit {
           this.employeeDocumentArray.push(obj);
           this.docList.push(obj);
 
-          this.docList
-          .forEach(ele => {
+          this.docList.forEach((ele) => {
             if (!this.currentEmpId) {
               if (ele.type == "document") {
-                if(this.docAdd.indexOf(ele.url) == -1){
+                if (this.docAdd.indexOf(ele.url) == -1) {
                   this.docAdd.push(ele.url);
                 }
 
                 this.imageIndexFordocAdd = 0;
               }
               this.imagePreviewFordocAdd = true;
-            }
-            else {
+            } else {
               if (ele.type == "document") {
-                if(this.docUpdate.indexOf(ele.url) == -1){
+                if (this.docUpdate.indexOf(ele.url) == -1) {
                   this.docUpdate.push(ele.url);
                 }
-                
+
                 this.imageIndexFordocUpdate = 0;
               }
             }
-          })
+          });
           // this.imgLoading = false;
         }
       });
@@ -255,32 +273,29 @@ export class AddEditRegistrationComponent implements OnInit {
       this.uploadFlag = true;
     }
     this.fileToUpload = files.item(0);
-    if(this.uploadFlag){
-      this.document = this.fileToUpload.name; 
+    if (this.uploadFlag) {
+      this.document = this.fileToUpload.name;
     }
     this.docType = type;
     this.document = this.fileToUpload.name;
-    if(type == "profile"){
+    if (type == "profile") {
       const reader = new FileReader();
       reader.onload = () => {
-      this.imageUrl = reader.result as string;
-      this.compressFile(type);
-    }
-    reader.readAsDataURL(this.fileToUpload)
-    }
-    else{
-      for(let i=0;i<files.length;i++){
+        this.imageUrl = reader.result as string;
+        this.compressFile(type);
+      };
+      reader.readAsDataURL(this.fileToUpload);
+    } else {
+      for (let i = 0; i < files.length; i++) {
         this.fileToUpload = files.item(i);
         const reader = new FileReader();
         reader.onload = () => {
           this.docUrl = reader.result as string;
           this.compressFile(type);
-        }
-        reader.readAsDataURL(this.fileToUpload)
-    
+        };
+        reader.readAsDataURL(this.fileToUpload);
       }
     }
-    
   }
 
   reset(form) {
@@ -292,7 +307,7 @@ export class AddEditRegistrationComponent implements OnInit {
   updateEmployee(form) {
     this.formSubmitted = true;
     this.disableButton = true;
-    if(this.docUpdate.length){
+    if (this.docUpdate.length) {
       if (this.registration.name) {
         this.registration.id = this.currentEmpId;
         if (this.docList.length > 0) {
@@ -304,9 +319,9 @@ export class AddEditRegistrationComponent implements OnInit {
             }
           });
         }
-  
+
         this.registration.employeeDocumentList = this.docList;
-  
+
         this.registrationService.updateEmployee(this.registration).subscribe(
           (data) => {
             if (data["success"]) {
@@ -323,14 +338,12 @@ export class AddEditRegistrationComponent implements OnInit {
             this.toastr.error(errorData.Serever_Error);
           }
         );
-      }else {
+      } else {
         this.disableButton = false;
-      }  
-    }
-    else{
+      }
+    } else {
       this.disableButton = false;
     }
-    
   }
   downloadImage() {
     this.href = document.getElementsByTagName("img")[0].src;
@@ -376,7 +389,6 @@ export class AddEditRegistrationComponent implements OnInit {
     this.formSubmitted = true;
 
     if (form.valid) {
-
       this.loading = true;
 
       this.disableButton = true;
@@ -394,7 +406,6 @@ export class AddEditRegistrationComponent implements OnInit {
             this.processValue = 0;
             this.loading = false;
             this.qrFlag = true;
-
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -409,14 +420,12 @@ export class AddEditRegistrationComponent implements OnInit {
   }
 
   generateQR(empId) {
-
     this.value = this.url + "attendance/" + empId;
     this.addQR(this.value);
     this.fileUpload();
   }
 
   addQR(finalurl) {
-
     let obj = {
       id: null,
       name: this.emp_id,
@@ -429,7 +438,7 @@ export class AddEditRegistrationComponent implements OnInit {
       type: "qr",
       controlId: this.emp_id,
     };
-    this.employeeDocumentArray.push(obj)
+    this.employeeDocumentArray.push(obj);
     this.registrationService.addQr(qrData).subscribe(
       (data) => {
         if (data["success"]) {
@@ -450,69 +459,60 @@ export class AddEditRegistrationComponent implements OnInit {
 
   removeImage(type, index) {
     if (type == "docAdd") {
-      let rem = this.docAdd.splice(index,1);
-      this.docList.forEach((ele,index)=>{
-        if(ele.url == rem){
-          this.docList.splice(index,1)
+      let rem = this.docAdd.splice(index, 1);
+      this.docList.forEach((ele, index) => {
+        if (ele.url == rem) {
+          this.docList.splice(index, 1);
         }
-      })
-      if(this.docAdd.length == index){
-        this.imageIndexFordocAdd--;    
+      });
+      if (this.docAdd.length == index) {
+        this.imageIndexFordocAdd--;
       }
       this.docAdd = [...this.docAdd];
-    }
-    else if(type == "docUpdate"){
-      let rem = this.docUpdate.splice(index,1);
-      this.docList.forEach((ele,index)=>{
-        if(ele.url == rem){
-          this.docList.splice(index,1)
+    } else if (type == "docUpdate") {
+      let rem = this.docUpdate.splice(index, 1);
+      this.docList.forEach((ele, index) => {
+        if (ele.url == rem) {
+          this.docList.splice(index, 1);
         }
-      })
-      
-      if(this.docUpdate.length == index){
-        this.imageIndexFordocUpdate--;    
+      });
+
+      if (this.docUpdate.length == index) {
+        this.imageIndexFordocUpdate--;
       }
       this.docUpdate = [...this.docUpdate];
     }
   }
 
-  previous(type){
-
-    if(type == "docAdd"){
-      if(this.imageIndexFordocAdd){
+  previous(type) {
+    if (type == "docAdd") {
+      if (this.imageIndexFordocAdd) {
         this.imageIndexFordocAdd--;
-      }
-      else{
+      } else {
         this.imageIndexFordocAdd = this.docAdd.length - 1;
       }
-    }
-    else if(type == "docUpdate"){
-      if(this.imageIndexFordocUpdate){
+    } else if (type == "docUpdate") {
+      if (this.imageIndexFordocUpdate) {
         this.imageIndexFordocUpdate--;
-      }
-      else{
+      } else {
         this.imageIndexFordocUpdate = this.docUpdate.length - 1;
       }
     }
   }
 
-  next(type){
-
-    if(type == "docAdd"){
-      if(this.imageIndexFordocAdd < (this.docAdd.length - 1)){
+  next(type) {
+    if (type == "docAdd") {
+      if (this.imageIndexFordocAdd < this.docAdd.length - 1) {
         this.imageIndexFordocAdd++;
-      }
-      else{
+      } else {
         this.imageIndexFordocAdd = 0;
       }
-    }
-    else if(type == "docUpdate"){
-      if(this.imageIndexFordocUpdate < (this.docUpdate.length - 1)){
+    } else if (type == "docUpdate") {
+      if (this.imageIndexFordocUpdate < this.docUpdate.length - 1) {
         this.imageIndexFordocUpdate++;
-      }
-      else{
+      } else {
         this.imageIndexFordocUpdate = 0;
       }
     }
-   }
+  }
 }

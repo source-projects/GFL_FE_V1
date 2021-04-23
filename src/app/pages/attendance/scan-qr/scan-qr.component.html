@@ -4,7 +4,7 @@
 <nb-card class="nb-style">
     <nb-card-header class="nb-header">
         <div class="row">
-           
+
             <div class="col-md-7 col-5 display-flex-start max-width-device">
                 <div>
                     <h2 class="nb-text mobile-mr-lf-0">Scan</h2>
@@ -18,7 +18,8 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
-                            <ng-select appendTo="body" placeholder="Search by Name or Id" name="search" [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
+                            <input type="number" [(ngModel)]="employee" name="empid" class="form-control">
+                            <!-- <ng-select appendTo="body" placeholder="Search by Name or Id" name="search" [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -41,7 +42,7 @@
                                         </div>
                                     </div>    
                                 </ng-option>
-                             </ng-select>
+                             </ng-select> -->
                             <!-- <label class="required">Enter employee id </label>
                             <input type="text" [(ngModel)]="empId" name="empId" #empId1="ngModel" class="form-control size-small mobile-txt-center" fieldsize="small" nbinput placeholder="Enter Employee Id" />
 
@@ -67,6 +68,12 @@
                             <button mat-icon-button (click)="clearResult()">&times;</button>
                         </section>
 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="searchSelected(empForm)">SAVE</button>
                     </div>
                 </div>
                 <!-- <div class="row">
