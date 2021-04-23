@@ -28,6 +28,8 @@ import { ToastrModule } from "ngx-toastr";
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
 import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
 import { ShadeModule } from "./pages/shade/shade.module";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -54,6 +56,10 @@ import { ShadeModule } from "./pages/shade/shade.module";
       timeOut: 3000,
       closeButton: true,
       preventDuplicates: true,
+    }),
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production,
+      registrationStrategy: "registerImmediately",
     }),
   ],
   providers: [
