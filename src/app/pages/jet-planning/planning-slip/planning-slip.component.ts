@@ -107,15 +107,15 @@ export class PlanningSlipComponent implements OnInit {
           qty: null,
           supplierId: null,
           supplierName: null,
-          itemType:null,
+          itemType: null,
         },
       ],
     },
   ];
   shadeObj = {
-    partyShadeNo:null,
-    color:null
-  }
+    partyShadeNo: null,
+    color: null,
+  };
   slipObj: any;
   directSlipShadeObj = {
     partyId: null,
@@ -241,29 +241,29 @@ export class PlanningSlipComponent implements OnInit {
           .result.then(
             (result) => {
               let obj = {
-                shadeId:null,
-                batchId:null,
-                stockId:null
-              }
+                shadeId: null,
+                batchId: null,
+                stockId: null,
+              };
               obj.shadeId = this.directSlipShadeObj.shadeId;
               obj.batchId = this.batchId;
               obj.stockId = this.stockId;
-              this.planningSlipService.getItemListByShade(obj).subscribe(
-                (data)=>{
-                  if(data["success"]){
-                    this.itemList = data["data"]
+              this.planningSlipService
+                .getItemListByShade(obj)
+                .subscribe((data) => {
+                  if (data["success"]) {
+                    this.itemList = data["data"];
                   }
-                }
-              )
+                });
               this.shadeSelectedFlag = true;
-              this.shadeService.getCurrentShadeData(this.directSlipShadeObj.shadeId).subscribe(
-                (data)=>{
-                  if(data["success"]){
+              this.shadeService
+                .getCurrentShadeData(this.directSlipShadeObj.shadeId)
+                .subscribe((data) => {
+                  if (data["success"]) {
                     this.shadeObj.partyShadeNo = data["data"].partyShadeNo;
                     this.shadeObj.color = data["data"].colorTone;
                   }
-                }
-              )
+                });
               this.closeResult = `Closed with: ${result}`;
             },
             (reason) => {
@@ -402,9 +402,12 @@ export class PlanningSlipComponent implements OnInit {
                     ? element1.qty.toFixed(3)
                     : element1.qty;
                 });
+                this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
+                console.log(this.slipData);
+                if (this.isPrintDirect) this.printNOW();
               });
-              this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
-              if (this.isPrintDirect) this.printNOW();
+            } else {
+              //this.toastr.error(data["msg"]);
             }
           } else {
             //this.toastr.error(data["msg"]);
@@ -582,7 +585,6 @@ export class PlanningSlipComponent implements OnInit {
         this.itemList[index].supplierId = element.supplierId;
         this.itemList[index].supplierName = element.supplierName;
         this.itemList[index].itemType = element.itemType;
-
       }
     });
   }

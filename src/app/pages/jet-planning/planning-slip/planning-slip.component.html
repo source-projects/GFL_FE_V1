@@ -405,10 +405,11 @@
                                                         appendTo="body" [(ngModel)]="item.itemId" #itemId1="ngModel"
                                                         class="tableForm" (change)="itemSelected1($event,i1)" required
                                                         appendTo="body" class="ng-select-br-none" required>
-                                                        <ng-option *ngFor="let
+                                                        <ng-option
+                                                            *ngFor="let
                                                             item of
                                                             itemListArray | filterOutSelectedSupplier : itemList : item.itemId"
-                                                             [value]="item.itemId" placeholder="Select Item">
+                                                            [value]="item.itemId" placeholder="Select Item">
                                                             {{item.itemName}} -
                                                             {{item.supplierName}}</ng-option>
                                                     </ng-select>
@@ -455,7 +456,8 @@
                                                             <div class="col-md-1
                                                                 user-per-check-display">
                                                                 <button class="close
-                                                                    btn-foucs-none" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                                    btn-foucs-none" aria-label="Close"
+                                                                    (click)="modal.dismiss('Cross click')">
                                                                     <span aria-hidden="true"
                                                                         class="close-icon">&times;</span>
                                                                 </button>
@@ -679,11 +681,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span class="col-md-3">Color:</span>
-                                            <input style="width: 25%;"
-                                            [(colorPicker)]="shadeObj.color"
-                                            [style.background]="shadeObj.color"
-                                            disabled="true"
-                                            class="width-100" />
+                                            <input style="width: 25%;" [(colorPicker)]="shadeObj.color"
+                                                [style.background]="shadeObj.color" disabled="true" class="width-100" />
                                         </div>
                                     </div>
 
@@ -957,7 +956,7 @@
                                 </div>
                                 <div class="col-md-8 wth-50">
                                     <label class="font-25">Mc No:</label> <span style="color: red !important;"
-                                        class="slip-value rd-color">{{slipData.jetId}}</span>
+                                        class="slip-value rd-color">{{slipData.jetName}}</span>
                                 </div>
                             </div>
                         </div>
