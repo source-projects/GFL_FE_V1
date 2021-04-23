@@ -7,7 +7,8 @@
 
         <div class="row">
             <div class="col-md-5 col-7 display-flex-start max-width-device  mobile-pd-lf-0">
-                <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12" [routerLink]="['/pages/registration/view']">View
+                <button class="btn btn-md btn-design txt-ov-elips mobile-mr-lf-0 mob-font-12"
+                    [routerLink]="['/pages/registration/view']">View
                     Table</button>
 
             </div>
@@ -33,10 +34,14 @@
                         <div class="form-group text-center">
 
                             <div class="display-flex-center">
-                                <input type="file" name="profile" class="form-control size-small registration-document filepicker" id="profile" [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')'}" placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel" (change)="handleFileInput($event.target.files,'profile')"
-                                    style="position:relative;overflow:hidden; 
+                                <input type="file" name="profile"
+                                    class="form-control size-small registration-document filepicker" id="profile"
+                                    [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')'}"
+                                    placeholder="Upload profile" [(ngModel)]="profile" #profile1="ngModel"
+                                    (change)="handleFileInput($event.target.files,'profile')" style="position:relative;overflow:hidden; 
                                     background-color:#ffff; 
-                                    z-index:0;" accept="image/x-png,image/gif,image/jpeg" [crossOrigin]="'anonymous'" [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
+                                    z-index:0;" accept="image/x-png,image/gif,image/jpeg" [crossOrigin]="'anonymous'"
+                                    [ngClass]="{'is-invalid':(profile1.invalid) &&(formSubmitted || profile1.touched)}">
 
 
                                 <div class="input-required" *ngIf="profile1.invalid
@@ -53,7 +58,10 @@
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="required">Employee Name</label>
-                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name" class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name" [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}" required/>
+                            <input type="text" name="name" #name1="ngModel" [(ngModel)]="registration.name"
+                                class="form-control size-small" fieldsize="small" nbinput placeholder="Employee Name"
+                                [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched)}"
+                                required />
 
                             <div class="input-required" *ngIf="name1.invalid
                                 &&
@@ -66,9 +74,13 @@
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Phone No</label>
-                            <input type="number" class="form-control size-small" fieldsize="small" nbinput name="contact" [(ngModel)]="registration.contact" #contact1="ngModel" maxlength="10" minlength="10" ng-pattern-restrict="[A-Za-z]" pattern="[6-9]{1}[0-9]{9}" placeholder="Contact No"
+                            <input type="number" class="form-control size-small" fieldsize="small" nbinput
+                                name="contact" [(ngModel)]="registration.contact" #contact1="ngModel" maxlength="10"
+                                minlength="10" ng-pattern-restrict="[A-Za-z]" pattern="[6-9]{1}[0-9]{9}"
+                                placeholder="Contact No"
                                 [ngClass]="{'is-invalid': (contact1.invalid)&&(formSubmitted || contact1.touched)}" />
-                            <div class="input-required" *ngIf="(contact1.invalid) && (formSubmitted || contact1.touched)">
+                            <div class="input-required"
+                                *ngIf="(contact1.invalid) && (formSubmitted || contact1.touched)">
                                 Enter 10 digit valid contact
                             </div>
 
@@ -78,7 +90,8 @@
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Aadhar Card No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar" [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="aadhar"
+                                [(ngModel)]="registration.aadhaar" #aadhar1="ngModel" placeholder="Aadhar Card No" />
 
                         </div>
                     </div>
@@ -87,12 +100,20 @@
                         <div class="form-group">
                             <label class="required">Document</label>
                             <ng-container class="mar-left-for-prog" *ngIf="uploadFlag">
-                                <circle-progress [showInnerStroke]=false [percent]="processValue" [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6" [outerStrokeWidth]="2" [titleFontWeight]="900"
-                                    [unitsFontWeight]="900" [showSubtitle]=false></circle-progress>
+                                <circle-progress [showInnerStroke]=false [percent]="processValue"
+                                    [outerStrokeColor]="'#005ec2'" [innerStrokeColor]="'#C7E596'" [animation]="true"
+                                    [animationDuration]="300" [radius]="10" [titleFontSize]="6" [unitsFontSize]="6"
+                                    [outerStrokeWidth]="2" [titleFontWeight]="900" [unitsFontWeight]="900"
+                                    [showSubtitle]=false></circle-progress>
                             </ng-container>
 
-                            <input type="file" multiple name="document" class="form-control size-small registration-document" id="file" placeholder="Upload document" [(ngModel)]="document" #document1="ngModel" (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
-                                required [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}" accept="image/x-png,image/gif,image/jpeg">
+                            <input type="file" multiple name="document"
+                                class="form-control size-small registration-document" id="file"
+                                placeholder="Upload document" [(ngModel)]="document" #document1="ngModel"
+                                (change)="handleFileInput($event.target.files,'document')" style=" color: transparent; "
+                                required
+                                [ngClass]="{'is-invalid':(document1.invalid) &&(formSubmitted || document1.touched)}"
+                                accept="image/x-png,image/gif,image/jpeg">
 
                             <!-- <label *ngIf="document" class="no-file-choose-new file-left-text">{{document}}</label>
                             <label *ngIf="!document" class="no-file-choose-new file-left-text">No file chosen</label> -->
@@ -108,22 +129,33 @@
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label>Remark</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark" [(ngModel)]="registration.remark" #remark1="ngModel" placeholder="Remark" />
+                            <label>Department</label>
+                            <ng-select name="departmenty" appendTo="body" #department1="ngModel"
+                                [(ngModel)]="registration.departmentId" [items]="departmentList" bindLabel="name"
+                                bindValue="id" placeholder="Select Department" required
+                                [ngClass]="{'is-invalid': (department1.invalid)&&(formSubmitted || department1.touched)}"
+                                class="required-error-dropdown dropdown-name">
+                            </ng-select>
+                            <div class="input-required"
+                                *ngIf="(department1.invalid)&&(formSubmitted || department1.touched)">
+                                <span>Department is required.</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Remark2</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark2" [(ngModel)]="registration.remark2" #remark2="ngModel" placeholder="Remark" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark2"
+                                [(ngModel)]="registration.remark2" #remark2="ngModel" placeholder="Remark" />
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label>Remark3</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark3" [(ngModel)]="registration.remark3" #remark3="ngModel" placeholder="Remark" />
+                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="remark3"
+                                [(ngModel)]="registration.remark3" #remark3="ngModel" placeholder="Remark" />
                         </div>
                     </div>
 
@@ -131,9 +163,11 @@
                         <ng-container *ngIf="!currentEmpId">
                             <ng-container *ngIf="imagePreviewFordocAdd && docAdd.length">
                                 <div class="max-popup-purchase mobile-width-100">
-                                    <div *ngFor="let url of docAdd | imagePreviewPipe : imageIndexFordocAdd; let i = index" class="text-center mobile-100 display-flex-purchase-view">
+                                    <div *ngFor="let url of docAdd | imagePreviewPipe : imageIndexFordocAdd; let i = index"
+                                        class="text-center mobile-100 display-flex-purchase-view">
                                         <img [src]="url">
-                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('docAdd',imageIndexFordocAdd)"></nb-icon>
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img"
+                                            (click)="removeImage('docAdd',imageIndexFordocAdd)"></nb-icon>
                                     </div>
                                     <div class="next-previous-btn">
                                         <div class="back-btn">
@@ -149,8 +183,8 @@
                                     <div class="row text-center mt-3">
                                         <div class="col-md-12">
                                             <span class="bottom-count-img">
-                                          {{imageIndexFordocAdd + 1}} / {{docAdd.length}}
-                                         </span>
+                                                {{imageIndexFordocAdd + 1}} / {{docAdd.length}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -160,13 +194,16 @@
 
                             <ng-container *ngIf="imagePreviewFordocUpdate && docUpdate.length">
                                 <div class="max-popup-purchase mobile-width-100">
-                                    <div *ngFor="let url of docUpdate | imagePreviewPipe : imageIndexFordocUpdate; let i = index" class="text-center mobile-100 display-flex-purchase-view">
+                                    <div *ngFor="let url of docUpdate | imagePreviewPipe : imageIndexFordocUpdate; let i = index"
+                                        class="text-center mobile-100 display-flex-purchase-view">
                                         <img [src]="url">
-                                        <nb-icon icon="close-circle-outline" class="purchase-close-img" (click)="removeImage('docUpdate',imageIndexFordocUpdate)"></nb-icon>
+                                        <nb-icon icon="close-circle-outline" class="purchase-close-img"
+                                            (click)="removeImage('docUpdate',imageIndexFordocUpdate)"></nb-icon>
                                     </div>
                                     <div class="next-previous-btn">
                                         <div class="back-btn">
-                                            <nb-icon icon="arrow-back-outline" (click)="previous('docUpdate')"></nb-icon>
+                                            <nb-icon icon="arrow-back-outline" (click)="previous('docUpdate')">
+                                            </nb-icon>
                                         </div>
 
                                         <div class="next-btn">
@@ -178,8 +215,8 @@
                                     <div class="row text-center mt-3">
                                         <div class="col-md-12">
                                             <span class="bottom-count-img">
-                                              {{imageIndexFordocUpdate + 1}} / {{docUpdate.length}}
-                                             </span>
+                                                {{imageIndexFordocUpdate + 1}} / {{docUpdate.length}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +230,8 @@
 
                 <div *ngIf="qrFlag">
 
-                    <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value" cssClass="bshadow" class="text-center"></ngx-qrcode>
+                    <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value"
+                        cssClass="bshadow" class="text-center"></ngx-qrcode>
                     <div class="row">
                         <div class="col-md-12 col-12">
                             <div class="text-center">
@@ -206,7 +244,8 @@
 
                                     </div>
                                     <div class="share-qr">
-                                        <nb-icon icon="share-outline" class="icon-qr-wd-height" (click)="shareImage()"></nb-icon>
+                                        <nb-icon icon="share-outline" class="icon-qr-wd-height" (click)="shareImage()">
+                                        </nb-icon>
                                     </div>
                                 </div>
                             </div>
@@ -220,14 +259,22 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <div class="document-padding-bt-tp">
 
-                            <button *ngIf="!this.currentEmpId && !this.qrFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" (click)="reset(empForm)">CANCEL</button>
+                            <button *ngIf="!this.currentEmpId && !this.qrFlag"
+                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                (click)="reset(empForm)">CANCEL</button>
 
-                            <button *ngIf="this.currentEmpId && !this.qrFlag" class="btn btn-primary btn-sm btn-design-cancel" type="button" [routerLink]="['/pages/registration/view']">CANCEL</button>
+                            <button *ngIf="this.currentEmpId && !this.qrFlag"
+                                class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                                [routerLink]="['/pages/registration/view']">CANCEL</button>
 
 
-                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)" class="btn btn-primary btn-sm btn-design-save button-base ripple" [disabled]="disableButton">UPDATE</button>
+                            <button *ngIf="this.currentEmpId" type="button" (click)="updateEmployee(empForm)"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                [disabled]="disableButton">UPDATE</button>
 
-                            <button *ngIf="!this.currentEmpId && !this.qrFlag" type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
+                            <button *ngIf="!this.currentEmpId && !this.qrFlag" type="button"
+                                class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                (click)="addEmployee(empForm)" [disabled]="disableButton">SAVE</button>
 
 
                         </div>
