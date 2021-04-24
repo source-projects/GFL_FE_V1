@@ -75,7 +75,12 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   jetStatus: any;
   detailsFlag = false;
   showMenuFlag = false;
-  items: any[] = [];
+  items: any[] =  [
+    { title: "Complete" },
+    { title: "Remove" },
+    { title: "Print" },
+    { title: "Edit And Print" }
+  ];
   color = "red";
   allBatchList: any[] = [];
   jetData1 = {
@@ -436,23 +441,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
     //var detail = this.getBatchDetails();
-    this.items = [
-      { title: "Complete" },
-      // { title: "Pause" },
-      {
-        title: "Remove",
-      },
-      { title: "Print" },
-      { title: "Edit And Print" },
-      // {
-      //   title: "Details",
-      //   children: [
-      //     {
-      //       title: detail,
-      //     },
-      //   ],
-      // },
-    ];
+    
   }
 
   public getBatchDetails() {
