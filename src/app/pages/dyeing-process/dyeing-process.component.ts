@@ -53,7 +53,6 @@ export class DyeingProcessComponent implements OnInit {
             } else this.toastr.error(data["msg"]);
           },
           (error) => {
-            this.toastr.error("Internal server error");
           }
         );
       }

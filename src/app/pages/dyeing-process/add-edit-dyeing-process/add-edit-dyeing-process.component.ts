@@ -95,7 +95,6 @@ export class AddEditDyeingProcessComponent implements OnInit {
         }
       },
       (error) => {
-        this.toastr.error("Internal server error");
       }
     );
   }
@@ -205,7 +204,7 @@ export class AddEditDyeingProcessComponent implements OnInit {
     if (myForm.valid && !this.processNameExist) {
       if (this.addFlag) {
         if (this.dyeingProcessSteps.length != 0) {
-          this.dyeingProcess.userHeadId = this.commonService.getUserHeadId().userHeadId;
+          //this.dyeingProcess.userHeadId = this.commonService.getUserHeadId().userHeadId;
           this.dyeingProcess.createdBy = this.commonService.getUser().userId;
           this.dyeingProcess.dyeingProcessData = this.dyeingProcessSteps;
           this.dyeingProcessService
@@ -223,7 +222,6 @@ export class AddEditDyeingProcessComponent implements OnInit {
               },
               (error) => {
                 this.disableButton = false;
-                this.toastr.error("Internal server error");
               }
             );
         } else {
@@ -250,7 +248,6 @@ export class AddEditDyeingProcessComponent implements OnInit {
               },
               (error) => {
                 this.disableButton = false;
-                this.toastr.error("Internal server error");
               }
             );
         } else {
