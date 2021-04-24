@@ -524,7 +524,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.toastr.error("Internal Server Error");
       }
     );
   }
