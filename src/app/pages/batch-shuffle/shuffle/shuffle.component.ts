@@ -149,7 +149,7 @@ export class ShuffleComponent implements OnInit {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyList(0, "all").subscribe((data) => {
+    this.partyService.getAllPartyNameList().subscribe((data) => {
       if (data["success"]) {
         this.party = data["data"];
       }
@@ -157,7 +157,7 @@ export class ShuffleComponent implements OnInit {
   }
 
   getQualtiyList() {
-    this.qualityService.getallQuality(0, "all").subscribe((data) => {
+    this.qualityService.getAllQualityWithNameOnly().subscribe((data) => {
       if (data["success"]) {
         this.quality = data["data"];
       }

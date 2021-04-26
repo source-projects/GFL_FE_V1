@@ -83,6 +83,7 @@ export class ViewMergeBatchComponent implements OnInit {
           this.loading = false;
 
         }
+        this.loading=false;
       },
       (error) => {
         this.loading = false;
