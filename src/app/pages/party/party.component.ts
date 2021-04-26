@@ -84,30 +84,32 @@ export class PartyComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-
+ async ngOnInit(){
+  
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
-    this.getViewAccess();
-    this.getAddAcess();
+    await  this.getViewAccess();
+    await this.getAddAcess();
     // this.getAllParty(this.userId,"own");
-    this.getDeleteAccess();
-    this.getDeleteAccess1();
-    this.getEditAccess();
-    this.getEditAccess1();
+    await this.getDeleteAccess();
+    await this.getDeleteAccess1();
+    await this.getEditAccess();
+    await this.getEditAccess1();
     if (this.partyGuard.accessRights("view all")) {
       this.getAllParty(0, "all");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
       this.radioSelect = 3;
-    } else if (this.partyGuard.accessRights("view group")) {
+    } 
+     if (this.partyGuard.accessRights("view group")) {
       this.getAllParty(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.partyGuard.accessRights("view")) {
+    } else
+    if (this.partyGuard.accessRights("view")) {
       this.getAllParty(this.userId, "own");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
@@ -186,15 +188,21 @@ export class PartyComponent implements OnInit {
     if (this.partyGuard.accessRights("delete")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
+    }else{
+      this.ownDelete=this.hidden=true;
     }
 
     if (this.partyGuard.accessRights("delete group")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
+    }else{
+      this.groupDelete=this.hidden=true;
     }
     if (this.partyGuard.accessRights("delete all")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
+    }else{
+      this.allDelete=this.hidden=true
     }
   }
 
@@ -211,14 +219,20 @@ export class PartyComponent implements OnInit {
     if (this.partyGuard.accessRights("edit")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
+    }else{
+      this.ownEdit=this.hiddenEdit=true
     }
     if (this.partyGuard.accessRights("edit group")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
+    }else{
+      this.groupEdit=this.hiddenEdit=true
     }
     if (this.partyGuard.accessRights("edit all")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
+    }else{
+      this.allEdit=this.hiddenEdit=true;
     }
   }
   getEditAccess1() {
