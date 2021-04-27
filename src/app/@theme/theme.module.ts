@@ -19,8 +19,11 @@ import { NbSecurityModule } from "@nebular/security";
 import {
   FooterComponent,
   HeaderComponent,
+  ReadComponent,
   SearchInputComponent,
 } from "./components";
+
+
 import {
   CapitalizePipe,
   PluralPipe,
@@ -51,7 +54,6 @@ import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
 import { FilterSelectedSupplierPipe } from "./pipes/filter-selected-supplier.pipe";
 import { DesignationFilterPipe } from "./pipes/designation.pipe";
 import { TaskFilterPipe } from "./pipes/task-filter.pipe";
-
 const NB_MODULES = [
   NbLayoutModule,
   NbMenuModule,
@@ -68,11 +70,13 @@ const NB_MODULES = [
 ];
 const COMPONENTS = [
   HeaderComponent,
+  ReadComponent,
   FooterComponent,
   SearchInputComponent,
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  
 ];
 const PIPES = [
   CapitalizePipe,
