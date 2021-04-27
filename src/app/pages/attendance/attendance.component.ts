@@ -40,8 +40,11 @@ export class AttendanceComponent implements OnInit {
   date;
   todayDate;
   currentDate = new Date();
+  dateForPicker = new Date()
   employeeDetail: any;
   attendance: Attendance = new Attendance();
+  selectedDate
+  maxDate
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -52,6 +55,7 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
+   
   }
 
   public getUserId() {
@@ -62,12 +66,20 @@ export class AttendanceComponent implements OnInit {
     this.date = new Date(
       this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000
     ).toISOString();
-    this.attendance.date = this.date;
+    this.maxDate = new Date(
+      this.dateForPicker.getFullYear(),
+      this.dateForPicker.getMonth(),
+      this.dateForPicker.getDate(),
+      23,
+      59
+    );
+    this.attendance.date = this.maxDate;
+    this.selectedDate=this.maxDate
   }
 
   shiftChanged() {
     let obj = {
-      date: this.date,
+      date: this.selectedDate,
       shift: this.attendance.shift,
       id: this.currentEmpId,
     };
@@ -99,38 +111,105 @@ export class AttendanceComponent implements OnInit {
   }
 
   getEmployeeById() {
-    this.registrationService
-      .getAttendanceByEmployeeId(this.currentEmpId)
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.employeeDetail = data["data"].employeeMast;
-            this.attendance = data["data"].attendanceLatest;
+    let dateShiftObj={
+      date:this.date,
+      id:this.currentEmpId,
+      shift:false
+    }
+    this.registrationService.getAttendenceByEmpId(dateShiftObj).subscribe(
+      data=>{
+        if (data["success"]) {
+          this.employeeDetail = data["data"].employeeMast;
+          this.attendance = data["data"].attendanceLatest;
 
-            if (this.attendance.inTime) {
-              this.disableIn = true;
-            } else {
-              this.disableIn = false;
-            }
-            if (this.attendance.outTime) {
-              this.disableOut = true;
-            } else {
-              this.disableOut = false;
-            }
-
-            this.employeeDetail.employeeDocumentList.forEach((element) => {
-              if (element.type == "profile") {
-                this.profileUrl = element.url;
-              }
-            });
+          if (this.attendance.inTime) {
+            this.disableIn = true;
           } else {
-            this.toastr.error(data["msg"]);
+            this.disableIn = false;
           }
-        },
-        (error) => {
-          this.toastr.error(errorData.Serever_Error);
+          if (this.attendance.outTime) {
+            this.disableOut = true;
+          } else {
+            this.disableOut = false;
+          }
+
+          this.employeeDetail.employeeDocumentList.forEach((element) => {
+            if (element.type == "profile") {
+              this.profileUrl = element.url;
+            }
+          });
+        } else {
+          this.toastr.error(data["msg"]);
         }
-      );
+      }
+    )
+    // this.registrationService
+    //   .getAttendanceByEmployeeId(this.currentEmpId)
+    //   .subscribe(
+    //     (data) => {
+    //       if (data["success"]) {
+    //         this.employeeDetail = data["data"].employeeMast;
+    //         this.attendance = data["data"].attendanceLatest;
+
+    //         if (this.attendance.inTime) {
+    //           this.disableIn = true;
+    //         } else {
+    //           this.disableIn = false;
+    //         }
+    //         if (this.attendance.outTime) {
+    //           this.disableOut = true;
+    //         } else {
+    //           this.disableOut = false;
+    //         }
+
+    //         this.employeeDetail.employeeDocumentList.forEach((element) => {
+    //           if (element.type == "profile") {
+    //             this.profileUrl = element.url;
+    //           }
+    //         });
+    //       } else {
+    //         this.toastr.error(data["msg"]);
+    //       }
+    //     },
+    //     (error) => {
+    //       this.toastr.error(errorData.Serever_Error);
+    //     }
+    //   );
+  }
+
+  setSelectedDate(){
+    console.log(this.selectedDate)
+    let obj = {
+      date: this.selectedDate,
+      shift: !this.attendance.shift?false:this.attendance.shift,
+      id: this.currentEmpId,
+    };
+    console.log(obj)
+    this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
+      if (data["success"]) {
+        //this.employeeDetail = data['data'].employeeMast;
+        this.attendance = data["data"].attendanceLatest;
+        this.attendance.shift = obj.shift;
+        if (this.attendance.inTime) {
+          this.disableIn = true;
+        } else {
+          this.disableIn = false;
+        }
+        if (this.attendance.outTime) {
+          this.disableOut = true;
+        } else {
+          this.disableOut = false;
+        }
+
+        // this.employeeDetail.employeeDocumentList.forEach(element => {
+        //   if(element.type == "profile"){
+        //     this.profileUrl = element.url;
+        //   }
+        // });
+      } else {
+        this.toastr.error(data["msg"]);
+      }
+    });
   }
 
   inClick() {

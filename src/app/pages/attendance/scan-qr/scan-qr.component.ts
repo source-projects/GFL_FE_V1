@@ -10,6 +10,7 @@ import { RegistrationService } from "../../../@theme/services/registration.servi
   styleUrls: ["./scan-qr.component.scss"],
 })
 export class ScanQRComponent implements OnInit {
+  wrongEmpIdFlag:boolean=false
   loading = false;
   formSubmitted = false;
   empId: any;
@@ -66,6 +67,7 @@ export class ScanQRComponent implements OnInit {
           if (data["success"]) {
             if (data["data"]) {
               this.list = data["data"];
+              console.log(this.list)
             } else {
               this.toastr.error(data["msg"]);
             }
@@ -81,6 +83,7 @@ export class ScanQRComponent implements OnInit {
   }
 
   searchSelected(ele) {
+    // this.getEmployee(ele.value.empid)
     this.employee = ele.value.empid;
     this.route.navigate(["/pages/attendance/", this.employee]);
   }

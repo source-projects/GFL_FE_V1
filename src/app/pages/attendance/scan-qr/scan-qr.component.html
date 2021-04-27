@@ -19,6 +19,9 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group mobile-txt-center">
                             <input type="number" [(ngModel)]="employee" name="empid" class="form-control">
+                            <div class="input-required" *ngIf="wrongEmpIdFlag">
+                                Employee id does not exsist
+                            </div>
                             <!-- <ng-select appendTo="body" placeholder="Search by Name or Id" name="search" [(ngModel)]="employee" (change)="searchSelected($event)" (input)="getEmployee($event.target.value)">
                                 <ng-option disabled="true">
                                     <div class="row">
@@ -72,7 +75,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                        <button type="submit" class="btn btn-primary btn-sm btn-design-save button-base ripple"
                             (click)="searchSelected(empForm)">SAVE</button>
                     </div>
                 </div>
