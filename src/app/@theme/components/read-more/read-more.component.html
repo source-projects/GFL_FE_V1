@@ -1,3 +1,4 @@
+<ng-container *ngIf="addressFlag">
 <div *ngIf="showEllipsis; else noEllipsis" class="read-more-container">
   <div [ellipsis]="showMoreLabel"
        [ellipsis-content]="msg" (ellipsis-click-more)="showEllipsis = false;"
@@ -9,4 +10,4 @@
     <a href="javascript:void(0)" class="ngx-ellipsis-more" (click)="showEllipsis = true">{{showLessLabel}}</a>
   </div>
 </ng-template>
-
+</ng-container>

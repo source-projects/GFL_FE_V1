@@ -20,6 +20,7 @@ import { PartyService } from "../../@theme/services/party.service";
   styleUrls: ["./party.component.scss"],
 })
 export class PartyComponent implements OnInit {
+  info="helloo"
   public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
@@ -141,6 +142,7 @@ export class PartyComponent implements OnInit {
         if (data["success"]) {
           this.partyList = data["data"];
           this.rowData = this.partyList;
+        
           this.copyPartyList = data["data"];
           this.party = this.partyList.map((element) => ({
             id: element.id,

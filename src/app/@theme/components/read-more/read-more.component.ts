@@ -16,16 +16,26 @@ export class ReadComponent implements OnChanges {
     @ViewChild('content', { static: false }) content: ElementRef<HTMLDivElement>;
   
     @ViewChild('btn', { static: false }) btn: ElementRef<HTMLButtonElement>;
-    showEllipsis = true;
+    showEllipsis;
     elementHeight = this.maxLines * 20;
+    addressFlag:boolean=false
   
     constructor() {
-        console.log(this.msg)
+      
     }
   
     ngOnChanges(changes: SimpleChanges): void {
       if (changes.maxLines && changes.maxLines.currentValue) {
         this.elementHeight = this.maxLines * 20;
       }
+    }
+    ngOnInit(){
+      if(this.msg){
+        this.addressFlag=true
+        this.showEllipsis=true
+      }else{
+        this.addressFlag=false
+      }
+      console.log("init msg",this.msg)
     }
   }
