@@ -85,8 +85,8 @@ export class ColorComponent implements OnInit {
     this.getEditAccess1();
     if (this.colorGuard.accessRights("view all")) {
       this.getColor(0, "all");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.colorGuard.accessRights("view group")) {
       this.getColor(this.userId, "group");
@@ -95,8 +95,8 @@ export class ColorComponent implements OnInit {
       this.radioSelect = 2;
     } else if (this.colorGuard.accessRights("view")) {
       this.getColor(this.userId, "own");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
     }
   }

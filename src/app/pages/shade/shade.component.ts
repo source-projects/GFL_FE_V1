@@ -97,8 +97,8 @@ export class ShadeComponent implements OnInit {
     this.getEditAccess1();
     if (this.shadeGuard.accessRights("view all")) {
       this.getallShades(0, "all");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.shadeGuard.accessRights("view group")) {
       this.getallShades(this.userId, "group");
@@ -107,8 +107,8 @@ export class ShadeComponent implements OnInit {
       this.radioSelect = 2;
     } else if (this.shadeGuard.accessRights("view")) {
       this.getallShades(this.userId, "own");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
     }
   }
