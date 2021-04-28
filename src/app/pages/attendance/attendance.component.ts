@@ -45,6 +45,7 @@ export class AttendanceComponent implements OnInit {
   attendance: Attendance = new Attendance();
   selectedDate
   maxDate
+  modifiedToday: string;
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -62,24 +63,24 @@ export class AttendanceComponent implements OnInit {
     this.user = this.commonService.getUser();
     this.attendance.createdBy = this.user.userId;
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
+    
+    // this.date = new Date(
+    //   this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000
+    // ).toISOString();
+    this.maxDate = new Date();
+    var dd = String(this.maxDate.getDate()).padStart(2, "0");
+    var mm = String(this.maxDate.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = this.maxDate.getFullYear();
+    this.maxDate = yyyy + "-" + mm + "-" + dd;
+    this.modifiedToday = mm+ "-" + dd + "-" + yyyy;
+    this.attendance.date = new Date(this.modifiedToday);
+    this.selectedDate=this.modifiedToday
     this.getEmployeeById();
-    this.date = new Date(
-      this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000
-    ).toISOString();
-    this.maxDate = new Date(
-      this.dateForPicker.getFullYear(),
-      this.dateForPicker.getMonth(),
-      this.dateForPicker.getDate(),
-      23,
-      59
-    );
-    this.attendance.date = this.maxDate;
-    this.selectedDate=this.maxDate
   }
 
   shiftChanged() {
     let obj = {
-      date: this.selectedDate,
+      date: this.setTimeAndDateForInAndOut(),
       shift: this.attendance.shift,
       id: this.currentEmpId,
     };
@@ -112,7 +113,7 @@ export class AttendanceComponent implements OnInit {
 
   getEmployeeById() {
     let dateShiftObj={
-      date:this.date,
+      date:this.setTimeAndDateForInAndOut(),
       id:this.currentEmpId,
       shift:false
     }
@@ -178,9 +179,8 @@ export class AttendanceComponent implements OnInit {
   }
 
   setSelectedDate(){
-    console.log(this.selectedDate)
     let obj = {
-      date: this.selectedDate,
+      date: this.setTimeAndDateForInAndOut(),
       shift: !this.attendance.shift?false:this.attendance.shift,
       id: this.currentEmpId,
     };
@@ -212,18 +212,27 @@ export class AttendanceComponent implements OnInit {
     });
   }
 
-  inClick() {
+  setTimeAndDateForInAndOut(){
     let date = new Date();
-    this.attendance.date = date;
-    this.attendance.inTime = date;
+    date.setDate((new Date(this.selectedDate)).getDate());  
+    date.setMonth((new Date(this.selectedDate)).getMonth());  
+    date.setFullYear((new Date(this.selectedDate)).getFullYear());  
+    date.setHours(date.getHours());  
+    date.setMinutes(date.getMinutes());  
+    date.setSeconds(date.getSeconds()); 
+    return date
+  }
+
+  inClick() {
+    this.attendance.date=new Date(this.selectedDate)
+    this.attendance.inTime = this.setTimeAndDateForInAndOut()
     this.addAttendance();
     this.disableIn = true;
     this.route.navigate(["/pages/attendance/"]);
   }
 
   outClick() {
-    let date = new Date();
-    this.attendance.outTime = date;
+    this.attendance.outTime = this.setTimeAndDateForInAndOut();
     this.updateAttendance();
     this.disableOut = true;
     this.route.navigate(["/pages/attendance/"]);
@@ -234,7 +243,6 @@ export class AttendanceComponent implements OnInit {
     if (!this.attendance.shift) {
       this.attendance.shift = false;
     }
-
     this.registrationService.addAttendance(this.attendance).subscribe(
       (data) => {
         if (data["success"]) {
