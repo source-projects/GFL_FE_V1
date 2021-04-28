@@ -168,10 +168,12 @@
                                                 <div *ngFor="let item of finalGrList; let i = index">
                                                     <div class="example-box position-rel">
                                                         Meter: {{item.mtr}} Weight: {{item.wt}}
+                                                        <ng-container *ngIf="!item.isProductionPlanned">
                                                         <span>
                                                             <button class="close btn-foucs-none pd-18" aria-label="Close" (click)="crossClick(item , i)">
                                                             <span aria-hidden="true" class="close-icon">&times;</span>
                                                         </button></span>
+                                                    </ng-container>
                                                     </div>
                                                 </div>
 

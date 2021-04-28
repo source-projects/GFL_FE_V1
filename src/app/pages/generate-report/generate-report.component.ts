@@ -28,6 +28,7 @@ export class GenerateReportComponent implements OnInit {
   Production = true;
   notProduction = true;
   finished = true;
+  dropdownBatchList=[]
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
@@ -92,7 +93,7 @@ export class GenerateReportComponent implements OnInit {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
             //to remove duplicate batch
-            this.reportData =  this.reportData.reduce((unique, o) => {
+            this.dropdownBatchList =  this.reportData.reduce((unique, o) => {
               if(!unique.some(obj => obj.batchId === o.batchId )) {
                 unique.push(o);
               }
