@@ -59,17 +59,19 @@ export class ScanQRComponent implements OnInit {
   //   )
   // }
 
-  getEmployee(value) {
-    if (value.length >= 3) {
-      this.registrationService.empIdExistOrNot(value).subscribe(
+  searchSelected(ele) {
+    if (Number(ele.value.empid)) {
+      this.registrationService.empIdExistOrNot(ele.value.empid).subscribe(
         (data) => {
           if (data["success"]) {
-            if (data["data"]) {
-              this.list = data["data"];
+            if (data["data"][0]) {
+              this.route.navigate(["/pages/attendance/", this.employee]);
             } else {
-              this.toastr.error(data["msg"]);
+              this.employee=""
+              this.toastr.error("Employee does not exist");
             }
           } else {
+            
             this.toastr.error(data["msg"]);
           }
         },
@@ -78,10 +80,9 @@ export class ScanQRComponent implements OnInit {
         }
       );
     }
+    else{
+      console.log(ele.value.empid.length)
+    }
   }
 
-  searchSelected(ele) {
-    this.employee = ele.value.empid;
-    this.route.navigate(["/pages/attendance/", this.employee]);
-  }
 }

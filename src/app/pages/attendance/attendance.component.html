@@ -96,7 +96,18 @@
                                             <span class="view-title">Date: </span>
                                         </div>
                                         <div class="col-md-12 col-6 mobile-pdl-0">
-                                            <span class="view-ans">{{attendance.date | date : 'shortDate'}}</span>
+                                            <!-- <span class="view-ans">{{attendance.date | date : 'shortDate'}}</span> -->
+                                            <!-- <input name="date" class="form-control size-small" fieldsize="small" nbinput  [(ngModel)]="selectedDate" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"  
+                                            placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()">
+                                        <owl-date-time [pickerType]="'calendar'" #dt2 ></owl-date-time>
+                                         -->
+                                       
+                                         
+                                         <input id="datefield" name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
+                                #receiveDate1="ngModel" [(ngModel)]='selectedDate' [max]='modifiedToday' type="date" placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()"
+                              >
+                            <!-- <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time> -->
+
                                         </div>
 
                                     </div>

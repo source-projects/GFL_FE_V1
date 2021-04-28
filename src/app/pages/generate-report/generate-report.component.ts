@@ -28,6 +28,7 @@ export class GenerateReportComponent implements OnInit {
   Production = true;
   notProduction = true;
   finished = true;
+  dropdownBatchList=[]
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,
@@ -91,6 +92,13 @@ export class GenerateReportComponent implements OnInit {
         (data) => {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
+            //to remove duplicate batch
+            this.dropdownBatchList =  this.reportData.reduce((unique, o) => {
+              if(!unique.some(obj => obj.batchId === o.batchId )) {
+                unique.push(o);
+              }
+              return unique;
+          },[]);
             if(this.batchId){
               let data = [];
               this.reportData.forEach((ele) => {
@@ -99,6 +107,7 @@ export class GenerateReportComponent implements OnInit {
                 }
               })
               this.reportData = data;
+              console.log(this.reportData)
             }
             this.reportData.forEach(ele => {
               if(ele.isFinishMtrSave){

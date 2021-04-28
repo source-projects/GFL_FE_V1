@@ -27,8 +27,10 @@
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
                          [routerLink]="['/pages/merge-batch/edit',row.mergeBatchId]" [hidden]="hiddenEdit"></nb-icon>&nbsp;&nbsp;
-                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
+                   <ng-container *ngIf="!row.isProductionPlanned">
+                         <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" 
                         (click)="deleteMergeBatch(row.mergeBatchId)" [hidden]="hiddenDelete"></nb-icon>
+                    </ng-container>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Mergeed Batch Id" prop="mergeBatchId"></ngx-datatable-column>
