@@ -112,6 +112,11 @@ export class AttendanceComponent implements OnInit {
   }
 
   getEmployeeById() {
+    // let dateShiftObj={
+    //   date:this.setTimeAndDateForInAndOut(),
+    //   empId:this.currentEmpId,
+    //   saveFlag:false
+    // }
     let dateShiftObj={
       date:this.setTimeAndDateForInAndOut(),
       id:this.currentEmpId,

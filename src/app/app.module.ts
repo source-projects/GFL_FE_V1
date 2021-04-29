@@ -25,7 +25,7 @@ import {
   NbWindowModule,
 } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from "ng-pick-datetime";
 import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
 import { ShadeModule } from "./pages/shade/shade.module";
 import { ServiceWorkerModule } from "@angular/service-worker";

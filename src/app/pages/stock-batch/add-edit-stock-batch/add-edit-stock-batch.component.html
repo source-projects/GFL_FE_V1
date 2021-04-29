@@ -121,12 +121,12 @@
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
                             <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput
-                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required pattern="[A-Za-z0-9]*"
+                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required 
                                 [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
                             <div class="input-required"
                                 *ngIf="(formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)">
-                                <span>Challan no. is required and should not contain special characters</span>
+                                <span>Challan no. is required</span>
                             </div>
                         </div>
 

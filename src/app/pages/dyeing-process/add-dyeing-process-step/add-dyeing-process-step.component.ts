@@ -32,7 +32,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
   @Input() position;
   @Input() editStep;
   @Input() stepList: DyeingProcessData[] = [];
-
+  public byChemicalList=[{id:"L",value:"L"},{id:"W",value:"W"},{id:"F",value:"F"}]
   public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash"];
   constructor(
     public activeModal: NgbActiveModal,
