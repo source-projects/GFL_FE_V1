@@ -12,6 +12,7 @@ import { StockBatchService } from "../../../@theme/services/stock-batch.service"
 import { MergeBatchService } from "../../../@theme/services/merge-batch.service";
 import { ActivatedRoute } from "@angular/router";
 import { CommonService } from "../../../@theme/services/common.service";
+import { indexOf } from "lodash";
 
 @Component({
   selector: "ngx-merge-batch",
@@ -22,7 +23,7 @@ export class MergeBatchComponent implements OnInit {
   public filterDetails: MergeBatch[] = [];
   public partyList: any[];
   public qualityList: any = [];
-  public finalGrList: any = [];
+  public finalGrList: any= [];
   public DROP_LIST_IDS: any = [];
   public refreshCount = 0;
   public newBatchId = "";
@@ -194,6 +195,18 @@ export class MergeBatchComponent implements OnInit {
       this.refreshCount++;
     }
     // this.finalGrList = [];
+  }
+
+  //Add all Gr in Merge batch Bucket
+  addAllGrInMergeBatch(selectedBatchId){
+    this.filterDetails.forEach((element,index) => {
+      if(element.batchId==selectedBatchId){
+        element.grList.forEach((element1,index1) => {
+          this.finalGrList=[...this.finalGrList,element1]
+          this.filterDetails[index].grList.splice(index1,1)
+        });
+      }
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {

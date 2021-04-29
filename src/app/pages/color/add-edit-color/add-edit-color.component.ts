@@ -11,6 +11,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 import { NgSelectComponent } from "@ng-select/ng-select";
+import { DateTimeAdapter } from "ng-pick-datetime";
 @Component({
   selector: "ngx-add-edit-color",
   templateUrl: "./add-edit-color.component.html",
@@ -54,12 +55,13 @@ export class AddEditColorComponent implements OnInit {
     private supplierService: SupplierService,
     private colorService: ColorService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    dateTimeAdapter: DateTimeAdapter<any>
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
+    dateTimeAdapter.setLocale('en-IN');
   }
-
   ngOnInit(): void {
     this.getData();
     this.getUpdateData();
@@ -75,6 +77,11 @@ export class AddEditColorComponent implements OnInit {
       23,
       59
     );
+    // let yyyy=this.maxDate.getFullYear()
+    // let mm=this.maxDate.getMonth()
+    // let dd = this.maxDate.getDate()
+    // this.maxDate=dd+"/"+mm+"/"+yyyy
+    // console.log(this.maxDate)
     this.color.billDate = this.maxDate;
     this.color.chlDate = this.maxDate;
   }
