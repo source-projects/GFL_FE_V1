@@ -56,8 +56,7 @@
                         <span class="text-center or-style"><b>OR</b></span>
                     </div>
                     <div class="col-md-4 col-12 jus-con-center">
-
-
+                        <ng-container *ngIf="!permissionDenied">
                         <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
 
                         <section class="results" *ngIf="qrResultString">
@@ -67,6 +66,12 @@
                             </div>
                             <button mat-icon-button (click)="clearResult()">&times;</button>
                         </section>
+                    </ng-container>
+
+                    <ng-container *ngIf="permissionDenied">
+                        <a href="https://support.google.com/chrome/answer/2693767?co=GENIE.Platform%3DDesktop&hl=en">No Permission</a>
+
+                    </ng-container>
 
                     </div>
                 </div>
