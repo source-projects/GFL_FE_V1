@@ -71,58 +71,87 @@ export class AttendanceComponent implements OnInit {
     var dd = String(this.maxDate.getDate()).padStart(2, "0");
     var mm = String(this.maxDate.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = this.maxDate.getFullYear();
-    this.maxDate = yyyy + "-" + mm + "-" + dd;
+    this.maxDate = dd + "-" + mm + "-" + yyyy;
     this.modifiedToday = mm+ "-" + dd + "-" + yyyy;
     this.attendance.date = new Date(this.modifiedToday);
     this.selectedDate=this.modifiedToday
     this.getEmployeeById();
   }
 
-  shiftChanged() {
-    let obj = {
-      date: this.setTimeAndDateForInAndOut(),
-      shift: this.attendance.shift,
-      id: this.currentEmpId,
-    };
-    this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
-      if (data["success"]) {
-        //this.employeeDetail = data['data'].employeeMast;
-        this.attendance = data["data"].attendanceLatest;
-        this.attendance.shift = obj.shift;
-        if (this.attendance.inTime) {
-          this.disableIn = true;
-        } else {
-          this.disableIn = false;
-        }
-        if (this.attendance.outTime) {
-          this.disableOut = true;
-        } else {
-          this.disableOut = false;
-        }
+  // shiftChanged() {
+  //   let obj = {
+  //     date: this.setTimeAndDateForInAndOut(),
+  //     shift: this.attendance.shift,
+  //     id: this.currentEmpId,
+  //   };
+  //   this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
+  //     if (data["success"]) {
+  //       //this.employeeDetail = data['data'].employeeMast;
+  //       this.attendance = data["data"].attendanceLatest;
+  //       this.attendance.shift = obj.shift;
+  //       if (this.attendance.inTime) {
+  //         this.disableIn = true;
+  //       } else {
+  //         this.disableIn = false;
+  //       }
+  //       if (this.attendance.outTime) {
+  //         this.disableOut = true;
+  //       } else {
+  //         this.disableOut = false;
+  //       }
 
-        // this.employeeDetail.employeeDocumentList.forEach(element => {
-        //   if(element.type == "profile"){
-        //     this.profileUrl = element.url;
-        //   }
-        // });
-      } else {
-        this.toastr.error(data["msg"]);
-      }
-    });
-  }
+  //       // this.employeeDetail.employeeDocumentList.forEach(element => {
+  //       //   if(element.type == "profile"){
+  //       //     this.profileUrl = element.url;
+  //       //   }
+  //       // });
+  //     } else {
+  //       this.toastr.error(data["msg"]);
+  //     }
+  //   });
+  // }
+
+  // setSelectedDate(){
+  //   let obj = {
+  //     date: this.setTimeAndDateForInAndOut(),
+  //     shift: !this.attendance.shift?false:this.attendance.shift,
+  //     id: this.currentEmpId,
+  //   };
+  //   console.log(obj)
+  //   this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
+  //     if (data["success"]) {
+  //       //this.employeeDetail = data['data'].employeeMast;
+  //       this.attendance = data["data"].attendanceLatest;
+  //       this.attendance.shift = obj.shift;
+  //       if (this.attendance.inTime) {
+  //         this.disableIn = true;
+  //       } else {
+  //         this.disableIn = false;
+  //       }
+  //       if (this.attendance.outTime) {
+  //         this.disableOut = true;
+  //       } else {
+  //         this.disableOut = false;
+  //       }
+
+  //       // this.employeeDetail.employeeDocumentList.forEach(element => {
+  //       //   if(element.type == "profile"){
+  //       //     this.profileUrl = element.url;
+  //       //   }
+  //       // });
+  //     } else {
+  //       this.toastr.error(data["msg"]);
+  //     }
+  //   });
+  // }
 
   getEmployeeById() {
-    // let dateShiftObj={
-    //   date:this.setTimeAndDateForInAndOut(),
-    //   empId:this.currentEmpId,
-    //   saveFlag:false
-    // }
     let dateShiftObj={
       date:this.setTimeAndDateForInAndOut(),
-      id:this.currentEmpId,
-      shift:false
+      empId:this.currentEmpId,
+      saveFlag:false
     }
-    this.registrationService.getAttendenceByEmpId(dateShiftObj).subscribe(
+    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
       data=>{
         if (data["success"]) {
           this.employeeDetail = data["data"].employeeMast;
@@ -183,39 +212,6 @@ export class AttendanceComponent implements OnInit {
     //   );
   }
 
-  setSelectedDate(){
-    let obj = {
-      date: this.setTimeAndDateForInAndOut(),
-      shift: !this.attendance.shift?false:this.attendance.shift,
-      id: this.currentEmpId,
-    };
-    console.log(obj)
-    this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
-      if (data["success"]) {
-        //this.employeeDetail = data['data'].employeeMast;
-        this.attendance = data["data"].attendanceLatest;
-        this.attendance.shift = obj.shift;
-        if (this.attendance.inTime) {
-          this.disableIn = true;
-        } else {
-          this.disableIn = false;
-        }
-        if (this.attendance.outTime) {
-          this.disableOut = true;
-        } else {
-          this.disableOut = false;
-        }
-
-        // this.employeeDetail.employeeDocumentList.forEach(element => {
-        //   if(element.type == "profile"){
-        //     this.profileUrl = element.url;
-        //   }
-        // });
-      } else {
-        this.toastr.error(data["msg"]);
-      }
-    });
-  }
 
   setTimeAndDateForInAndOut(){
     let date = new Date();
@@ -238,17 +234,23 @@ export class AttendanceComponent implements OnInit {
 
   outClick() {
     this.attendance.outTime = this.setTimeAndDateForInAndOut();
-    this.updateAttendance();
+    this.addAttendance();
     this.disableOut = true;
     this.route.navigate(["/pages/attendance/"]);
   }
 
   addAttendance() {
-    this.attendance.controlId = this.currentEmpId;
-    if (!this.attendance.shift) {
-      this.attendance.shift = false;
+    // this.attendance.controlId = this.currentEmpId;
+    // if (!this.attendance.shift) {
+    //   this.attendance.shift = false;
+    // }
+    let dateShiftObj={
+      date:this.setTimeAndDateForInAndOut(),
+      empId:this.currentEmpId,
+      saveFlag:true,
+      url:"photoUrl"
     }
-    this.registrationService.addAttendance(this.attendance).subscribe(
+    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
@@ -263,16 +265,22 @@ export class AttendanceComponent implements OnInit {
     );
   }
 
-  updateAttendance() {
-    this.attendance.controlId = this.currentEmpId;
-    this.attendance.updatedBy = this.user.userId;
-    this.registrationService.updateAttendance(this.attendance).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.toastr.success(data["msg"]);
-        }
-      },
-      (error) => {}
-    );
-  }
+  // updateAttendance() {
+  //   // this.attendance.controlId = this.currentEmpId;
+  //   // this.attendance.updatedBy = this.user.userId;
+  //   let dateShiftObj={
+  //     date:this.setTimeAndDateForInAndOut(),
+  //     empId:this.currentEmpId,
+  //     saveFlag:true,
+  //     url:"photoUrl"
+  //   }
+  //   this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
+  //     (data) => {
+  //       if (data["success"]) {
+  //         this.toastr.success(data["msg"]);
+  //       }
+  //     },
+  //     (error) => {}
+  //   );
+  // }
 }
