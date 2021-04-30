@@ -22,7 +22,26 @@ export class ScanQRComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+//     navigator.permissions.query({name: 'microphone'})
+//  .then((permissionObj) => {
+//   console.log(permissionObj.state);
+//  })
+//  .catch((error) => {
+//   console.log('Got error :', error);
+//  })
+
+//  navigator.permissions.query({name: 'camera'})
+//  .then((permissionObj) => {
+//   console.log(permissionObj.state);
+//   if(permissionObj.state === 'denied'){
+//     alert("Please allow ")
+//   }
+//  })
+//  .catch((error) => {
+//   console.log('Got error :', error);
+//  })
+  }
 
   qrResultString: string;
 
