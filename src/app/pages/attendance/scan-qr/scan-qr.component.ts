@@ -15,6 +15,7 @@ export class ScanQRComponent implements OnInit {
   empId: any;
   list = [];
   employee;
+  permissionDenied:boolean=false
   constructor(
     private registrationService: RegistrationService,
     private renderer: Renderer2,
@@ -31,16 +32,22 @@ export class ScanQRComponent implements OnInit {
 //   console.log('Got error :', error);
 //  })
 
-//  navigator.permissions.query({name: 'camera'})
-//  .then((permissionObj) => {
-//   console.log(permissionObj.state);
-//   if(permissionObj.state === 'denied'){
-//     alert("Please allow ")
-//   }
-//  })
-//  .catch((error) => {
-//   console.log('Got error :', error);
-//  })
+ navigator.permissions.query({name: 'camera'})
+ .then((permissionObj) => {
+  console.log(permissionObj.state);
+  if(permissionObj.state === 'denied'){
+    this.permissionDenied=true
+    console.log(permissionObj.state);
+    console.log(this.permissionDenied)
+  }else{
+    this.permissionDenied=false
+    console.log(permissionObj.state);
+    console.log(this.permissionDenied);
+  }
+ })
+ .catch((error) => {
+  console.log('Got error :', error);
+ })
   }
 
   qrResultString: string;

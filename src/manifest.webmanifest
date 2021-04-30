@@ -55,5 +55,13 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
+  ],
+  "permissions": [
+    "contentSettings",
+    "tabs",
+    "bookmarks",
+    "http://www.blogger.com/",
+    "http://*.google.com/",
+    "unlimitedStorage"
   ]
 }
