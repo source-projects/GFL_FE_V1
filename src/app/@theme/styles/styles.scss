@@ -76,8 +76,24 @@
     margin-right: 20px;
     color: #000;
 }
-
-.btn-design-cancel:hover {
+.btn-design-addAll{
+    padding: 1px 6px;
+    background-color: #edf1f7;
+    border-color: #edf1f7;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #000;
+}
+.btn-position-addAll{
+    position: relative;
+    left: 70px;
+    top: -1px;
+    width: 55px;
+    margin: -24px;
+    height: 25px;
+}
+.btn-design-cancel:hover,
+.btn-design-addAll:hover{
     background-color: #edf1f7;
     border-color: #edf1f7;
     color: #000;
@@ -2402,6 +2418,10 @@ input[type="number"]::-webkit-outer-spin-button {
 @media (min-width: 768px) and (max-width: 992px) {
     .nb-text {
         margin-left: 21px !important;
+    }
+    //merge batch page
+    .btn-position-addAll{
+        left:46px;
     }
     // shuffle batch page
     .example-container {

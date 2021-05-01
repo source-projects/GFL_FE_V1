@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { SupplierGuard } from 'app/@theme/guards/supplier.guard';
-import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { SupplierService } from 'app/@theme/services/supplier.service';
+import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
+import { SupplierGuard } from '../../@theme/guards/supplier.guard';
+import * as errorData from '../../@theme/json/error.json';
+import { CommonService } from '../../@theme/services/common.service';
+import { ExportService } from '../../@theme/services/export.service';
+import { JwtTokenService } from '../../@theme/services/jwt-token.service';
+import { SupplierService } from '../../@theme/services/supplier.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -80,8 +80,8 @@ export class SupplierComponent implements OnInit {
     this.getEditAccess1();
     if(this.supplierGuard.accessRights('view all')){
       this.getSupplierList(0,"all");
-      this.hidden=this.ownDelete; 
-      this.hiddenEdit=this.ownEdit;
+      this.hidden=this.allDelete; 
+      this.hiddenEdit=this.allEdit;
       this.radioSelect=3;
     }
      else if(this.supplierGuard.accessRights('view group')){
@@ -92,8 +92,8 @@ export class SupplierComponent implements OnInit {
     }
     else if(this.supplierGuard.accessRights('view')){
       this.getSupplierList(this.userId,"own");
-      this.hidden=this.allDelete;
-      this.hiddenEdit=this.allEdit;
+      this.hidden=this.ownDelete;
+      this.hiddenEdit=this.ownEdit;
       this.radioSelect=1;
 
     }

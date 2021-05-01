@@ -101,11 +101,11 @@
                                             placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()">
                                         <owl-date-time [pickerType]="'calendar'" #dt2 ></owl-date-time>
                                          -->
-                                       
+                                       <label>{{maxDate}}</label>
                                          
-                                         <input id="datefield" name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
+                                         <!-- <input id="datefield" name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
                                 #receiveDate1="ngModel" [(ngModel)]='selectedDate' [max]='modifiedToday' type="date" placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()"
-                              >
+                              > -->
                             <!-- <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time> -->
 
                                         </div>
@@ -148,7 +148,7 @@
                             </div>
 
 
-                            <div class="col-md-3 col-12">
+                            <!-- <div class="col-md-3 col-12">
                                 <div class="pd-bt">
                                     <div class="row">
 
@@ -161,7 +161,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>

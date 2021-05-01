@@ -99,10 +99,10 @@ export class PartyComponent implements OnInit {
     await this.getEditAccess1();
     if (this.partyGuard.accessRights("view all")) {
       this.getAllParty(0, "all");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } 
+    } else
      if (this.partyGuard.accessRights("view group")) {
       this.getAllParty(this.userId, "group");
       this.hidden = this.groupDelete;
@@ -111,8 +111,8 @@ export class PartyComponent implements OnInit {
     } else
     if (this.partyGuard.accessRights("view")) {
       this.getAllParty(this.userId, "own");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
     }
   }

@@ -27,6 +27,7 @@ import { CommonService } from "../../..//@theme/services/common.service";
 import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { UpdateConfirmationDialogComponent } from "../../../@theme/components/update-confirmation-dialog/update-confirmation-dialog.component";
 import { JobCardComponent } from "../job-card/job-card.component";
+import { DateTimeAdapter } from "ng-pick-datetime";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -101,9 +102,12 @@ export class AddEditStockBatchComponent implements OnInit {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private renderer: Renderer2,
-    private modalService: NgbModal
-  ) {}
-
+    private modalService: NgbModal,
+    dateTimeAdapter: DateTimeAdapter<any>
+  ) {
+    dateTimeAdapter.setLocale('en-IN');
+  }
+ 
   async ngOnInit() {
     await this.getQualityList();
     await this.getPartyList();

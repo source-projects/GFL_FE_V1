@@ -81,8 +81,8 @@ export class QualityComponent implements OnInit {
     this.getEditAccess1();
     if (this.qualityGuard.accessRights("view all")) {
       this.getQualityList(0, "all");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
+      this.hidden = this.allDelete;
+      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.qualityGuard.accessRights("view group")) {
       this.getQualityList(this.userId, "group");
@@ -91,8 +91,8 @@ export class QualityComponent implements OnInit {
       this.radioSelect = 2;
     } else if (this.qualityGuard.accessRights("view")) {
       this.getQualityList(this.userId, "own");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
+      this.hidden = this.ownDelete;
+      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
     }
     this.page.pageNumber = 0;
