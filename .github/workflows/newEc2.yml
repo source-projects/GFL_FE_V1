@@ -19,7 +19,7 @@ jobs:
         run: |
           npm install
           #npm run build
-          ng build --prod --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer
+          npm run build --prod --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer
           ls -l    
           
       - name: copy file via ssh key
