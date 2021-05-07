@@ -38,4 +38,8 @@ getAllBoxes(){
 
 }
 
+issueColorBoxWithList(data){
+  return this.httpClient.post(this.commonService.envUrl()+'api/color/box/issueWithList',data);
+}
+
 }
