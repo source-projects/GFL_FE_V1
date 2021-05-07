@@ -37,13 +37,23 @@ export class IssueColorBoxComponent implements OnInit {
   }
 
   addToIssueBoxList(row, status: boolean) {
+    let boxAlreadyExist: boolean = false
     console.log(row)
     if (status) {
-      this.showSelectedBoxList.push(row)
-      this.listOfSelectedBoxId.push({ boxId: row.boxNo })
-      console.log(this.showSelectedBoxList)
-      console.log(this.listOfSelectedBoxId)
-      this.showSelectedBoxList = [...this.showSelectedBoxList]
+      if (this.showSelectedBoxList && this.showSelectedBoxList.length) {
+        this.showSelectedBoxList.forEach(element => {
+          if (element.boxno == row.boxno) {
+            boxAlreadyExist = true
+          }
+        });
+      }
+      if (!boxAlreadyExist) {
+        this.showSelectedBoxList.push(row)
+        this.listOfSelectedBoxId.push({ boxId: row.boxNo })
+        console.log(this.showSelectedBoxList)
+        console.log(this.listOfSelectedBoxId)
+        this.showSelectedBoxList = [...this.showSelectedBoxList]
+      }
     } else {
       this.showSelectedBoxList.forEach((element, index) => {
         if (element.boxNo == row.boxNo) {
