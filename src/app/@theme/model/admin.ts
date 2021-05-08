@@ -33,9 +33,11 @@ export class AddDepartment {
 export class AddQuality {
   id: number;
   qualityName: string;
+  rate:number
   constructor() {
     this.id = 0;
     this.qualityName = null;
+    this.rate = null;
   }
 }
 export class AddDesignation {
