@@ -365,20 +365,21 @@ export class PagesComponent implements OnInit {
                   e.hidden = false;
                 } else {
                   e.hidden = true;
-                  // this.view = this.adminGuard.accessRights("view");
-                  // this.view_all = this.adminGuard.accessRights("view all");
-                  // this.view_group = this.adminGuard.accessRights("view group");
-                  // if (
-                  //   this.view == false &&
-                  //   this.view_all == false &&
-                  //   this.view_group == false
-                  // ) {
-                  //   e.hidden = true;
-                  // }else{
-                  //   e.hidden = false;
-                  // }
                 }
                 break;
+
+              case "Dashboard":
+                if (
+                  this.userData.id &&
+                  !this.userData.userHeadId &&
+                  !this.userData.superUserHeadId
+                ) {
+                  e.hidden = false;
+                } else {
+                  e.hidden = true;
+                }
+                break;
+  
 
               case "Input Data":
                 this.view = this.inputDataGuard.accessRights("view");

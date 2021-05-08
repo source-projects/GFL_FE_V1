@@ -131,15 +131,15 @@ export class RegistrationComponent implements OnInit {
   generateQR(element,index){
 
     this.emp_id = index.empId;
-    // this.contact = index.contact;
-    // this.generateQRcode(this.emp_id);
     let doc = [];
-    doc = index.employeeDocumentList;
-    doc.forEach(ele=>{
-      if(ele.type == "qr"){
-        this.value = ele.url;
-      }
-    })
+    if(index.employeeDocumentList){
+      doc = index.employeeDocumentList;
+      doc.forEach(ele=>{
+        if(ele.type == "qr"){
+          this.value = ele.url;
+        }
+      })
+    }
     this.qrFlag = true;
   }
 
