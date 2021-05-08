@@ -42,7 +42,7 @@ export class IssueColorBoxComponent implements OnInit {
     if (status) {
       if (this.showSelectedBoxList && this.showSelectedBoxList.length) {
         this.showSelectedBoxList.forEach(element => {
-          if (element.boxno == row.boxno) {
+          if (element.boxNo == row.boxNo) {
             boxAlreadyExist = true
           }
         });
