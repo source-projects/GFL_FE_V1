@@ -112,7 +112,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
-    title: "Addition Slip",
+    title: "Other Slip",
     icon: "file-text-outline",
     link: "/pages/addition-slip",
     hidden: false,
