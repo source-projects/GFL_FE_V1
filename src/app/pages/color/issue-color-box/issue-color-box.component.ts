@@ -38,7 +38,6 @@ export class IssueColorBoxComponent implements OnInit {
 
   addToIssueBoxList(row, status: boolean) {
     let boxAlreadyExist: boolean = false
-    console.log(row)
     if (status) {
       if (this.showSelectedBoxList && this.showSelectedBoxList.length) {
         this.showSelectedBoxList.forEach(element => {
@@ -50,8 +49,6 @@ export class IssueColorBoxComponent implements OnInit {
       if (!boxAlreadyExist) {
         this.showSelectedBoxList.push(row)
         this.listOfSelectedBoxId.push({ boxId: row.boxNo })
-        console.log(this.showSelectedBoxList)
-        console.log(this.listOfSelectedBoxId)
         this.showSelectedBoxList = [...this.showSelectedBoxList]
       }
     } else {
@@ -63,7 +60,6 @@ export class IssueColorBoxComponent implements OnInit {
       });
       this.showSelectedBoxList = [...this.showSelectedBoxList]
     }
-    console.log(" status " + status);
   }
 
   filter(value: any) {
@@ -168,7 +164,6 @@ export class IssueColorBoxComponent implements OnInit {
 
   issueBox(form) {
     this.formSubmitted = true;
-    console.log(this.listOfSelectedBoxId)
     this.colorService.issueColorBoxWithList(this.listOfSelectedBoxId).subscribe(
       data => {
         if (data["success"]) {

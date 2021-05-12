@@ -28,6 +28,7 @@ import { ConfirmationDialogComponent } from "../../../@theme/components/confirma
 import { UpdateConfirmationDialogComponent } from "../../../@theme/components/update-confirmation-dialog/update-confirmation-dialog.component";
 import { JobCardComponent } from "../job-card/job-card.component";
 import { DateTimeAdapter } from "ng-pick-datetime";
+import { InputBatchComponent } from "../input-batch/input-batch.component";
 
 @Component({
   selector: "ngx-add-edit-stock-batch",
@@ -107,7 +108,7 @@ export class AddEditStockBatchComponent implements OnInit {
   ) {
     dateTimeAdapter.setLocale('en-IN');
   }
- 
+
   async ngOnInit() {
     await this.getQualityList();
     await this.getPartyList();
@@ -323,11 +324,11 @@ export class AddEditStockBatchComponent implements OnInit {
             )
           );
           //batch.isProductionPlanned = x.isProductionPlanned;
-          if(x.isProductionPlanned)
+          if (x.isProductionPlanned)
             this.production_flag[i] = true;
         }
       });
-      
+
     });
 
     this.reCalcMTWTValue();
@@ -766,6 +767,14 @@ export class AddEditStockBatchComponent implements OnInit {
       }
     } else {
       this.disableButton = false;
+    }
+  }
+
+  setViewJobValue(event) {
+    if (event === "view table") {
+      this.route.navigate(['/pages/stock-batch/view'])
+    } else if (event === "job card") {
+      const modalRef = this.modalService.open(InputBatchComponent)
     }
   }
 

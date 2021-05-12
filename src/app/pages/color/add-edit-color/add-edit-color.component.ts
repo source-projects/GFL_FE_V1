@@ -60,7 +60,6 @@ export class AddEditColorComponent implements OnInit {
   ) {
     this.colorDataListArray.push(this.colorDataList);
     this.color.colorDataList = this.colorDataListArray;
-    console.log(this.color)
     dateTimeAdapter.setLocale('en-IN');
   }
   ngOnInit(): void {

@@ -5,8 +5,14 @@
 
         <div class="row">
             <div class="col-md-5 col-6 display-flex-start max-width-device">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
-                    Table</button>
+                <select class="btn btn-md btn-design" (change)="setViewJobValue($event.target.value)"
+                    placeholder="Select">
+                    <option value="select">Select</option>
+                    <option value="view table">View Table</option>
+                    <option value="job card">Job Card</option>
+                </select>
+                <!-- <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
+                    Table</button> -->
             </div>
             <div class="col-md-7 col-6">
                 <div *ngIf="addFlag">
@@ -37,8 +43,7 @@
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
                                 (change)="setQualityByParty($event)" required
-                                [disabled]="stockDataValues && stockDataValues[0]"
-                                class="required-error-dropdown dropdown-name">
+                                [disabled]="stockDataValues && stockDataValues[0]">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -104,7 +109,7 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        
+
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Receive Date:</label>
                             <input name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
@@ -121,7 +126,7 @@
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
                             <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput
-                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required 
+                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required
                                 [ngClass]="{'is-invalid': (formSubmitted && chlNo1.invalid) || (chlNo1.invalid && chlNo1.touched)}"
                                 min="0">
                             <div class="input-required"
@@ -192,9 +197,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-4 display-flex-end" *ngIf="!production_flag[i]">
-                                                <nb-icon status="danger"  
-                                                    [options]="{animation:{type:'zoom'}}" icon="trash"
-                                                    (click)="removeBatch(i);"></nb-icon>
+                                                <nb-icon status="danger" [options]="{animation:{type:'zoom'}}"
+                                                    icon="trash" (click)="removeBatch(i);"></nb-icon>
                                             </div>
                                         </div>
                                     </div>

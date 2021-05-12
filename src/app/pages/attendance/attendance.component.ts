@@ -4,6 +4,8 @@ import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { RegistrationService } from "../../@theme/services/registration.service";
+import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { Observable, Subject } from "rxjs";
 
 export class Attendance {
   controlId: number;
@@ -46,24 +48,27 @@ export class AttendanceComponent implements OnInit {
   selectedDate
   maxDate
   modifiedToday: string;
+
+
+
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
     private registrationService: RegistrationService,
     private toastr: ToastrService,
     private route: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getUserId();
-   
+
   }
 
   public getUserId() {
     this.user = this.commonService.getUser();
     this.attendance.createdBy = this.user.userId;
     this.currentEmpId = this._route.snapshot.paramMap.get("id");
-    
+
     // this.date = new Date(
     //   this.currentDate.getTime() - this.currentDate.getTimezoneOffset() * 60000
     // ).toISOString();
@@ -72,9 +77,9 @@ export class AttendanceComponent implements OnInit {
     var mm = String(this.maxDate.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = this.maxDate.getFullYear();
     this.maxDate = dd + "-" + mm + "-" + yyyy;
-    this.modifiedToday = mm+ "-" + dd + "-" + yyyy;
+    this.modifiedToday = mm + "-" + dd + "-" + yyyy;
     this.attendance.date = new Date(this.modifiedToday);
-    this.selectedDate=this.modifiedToday
+    this.selectedDate = this.modifiedToday
     this.getEmployeeById();
   }
 
@@ -146,13 +151,13 @@ export class AttendanceComponent implements OnInit {
   // }
 
   getEmployeeById() {
-    let dateShiftObj={
-      date:this.setTimeAndDateForInAndOut(),
-      empId:this.currentEmpId,
-      saveFlag:false
+    let dateShiftObj = {
+      date: this.setTimeAndDateForInAndOut(),
+      empId: this.currentEmpId,
+      saveFlag: false
     }
     this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
-      data=>{
+      data => {
         if (data["success"]) {
           this.employeeDetail = data["data"].employeeMast;
           this.attendance = data["data"].attendanceLatest;
@@ -213,19 +218,19 @@ export class AttendanceComponent implements OnInit {
   }
 
 
-  setTimeAndDateForInAndOut(){
+  setTimeAndDateForInAndOut() {
     let date = new Date();
-    date.setDate((new Date(this.selectedDate)).getDate());  
-    date.setMonth((new Date(this.selectedDate)).getMonth());  
-    date.setFullYear((new Date(this.selectedDate)).getFullYear());  
-    date.setHours(date.getHours());  
-    date.setMinutes(date.getMinutes());  
-    date.setSeconds(date.getSeconds()); 
+    date.setDate((new Date(this.selectedDate)).getDate());
+    date.setMonth((new Date(this.selectedDate)).getMonth());
+    date.setFullYear((new Date(this.selectedDate)).getFullYear());
+    date.setHours(date.getHours());
+    date.setMinutes(date.getMinutes());
+    date.setSeconds(date.getSeconds());
     return date
   }
 
   inClick() {
-    this.attendance.date=new Date(this.selectedDate)
+    this.attendance.date = new Date(this.selectedDate)
     this.attendance.inTime = this.setTimeAndDateForInAndOut()
     this.addAttendance();
     this.disableIn = true;
@@ -244,11 +249,11 @@ export class AttendanceComponent implements OnInit {
     // if (!this.attendance.shift) {
     //   this.attendance.shift = false;
     // }
-    let dateShiftObj={
-      date:this.setTimeAndDateForInAndOut(),
-      empId:this.currentEmpId,
-      saveFlag:true,
-      url:"photoUrl"
+    let dateShiftObj = {
+      date: this.setTimeAndDateForInAndOut(),
+      empId: this.currentEmpId,
+      saveFlag: true,
+      url: "photoUrl"
     }
     this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
       (data) => {

@@ -9,15 +9,15 @@ export class StockBatchService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   isBatchIdExists(name, id) {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/stockBatch/isBatchExists/" +
-        name +
-        "/" +
-        id
+      "api/stockBatch/isBatchExists/" +
+      name +
+      "/" +
+      id
     );
   }
 
@@ -62,10 +62,10 @@ export class StockBatchService {
   getBatchById(p_id, q_id) {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/stockBatch/batch/ByQualityAndParty/" +
-        q_id +
-        "/" +
-        p_id
+      "api/stockBatch/batch/ByQualityAndParty/" +
+      q_id +
+      "/" +
+      p_id
     );
   }
   getAllBatchForAdditionSlip() {
@@ -74,9 +74,9 @@ export class StockBatchService {
     );
   }
 
-  getJobCardData(stockId, batchId) {
+  getJobCardData(batchId) {
     return this.httpClient.get(
-      `${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}&stockId=${stockId}`
+      `${this.commonService.envUrl()}api/stockBatch/get/getJobCardBy?batchId=${batchId}`
     );
   }
 
@@ -96,10 +96,10 @@ export class StockBatchService {
   getBatchesByPartyQuality(qId, pId) {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +
-        qId +
-        "/" +
-        pId
+      "api/stockBatch/batch/ByQualityAndPartyWithProductionPlan/" +
+      qId +
+      "/" +
+      pId
     );
   }
 
