@@ -58,7 +58,7 @@ export class AddEditInvoiceComponent implements OnInit {
     private jwt: JwtTokenService,
     private commonService: CommonService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
@@ -219,7 +219,7 @@ export class AddEditInvoiceComponent implements OnInit {
                     this.toastr.success(errorData.Add_Success);
                     this.merge = [];
                     this.disableButton = false;
-                    if (result === "print") {
+                    if (result.print === "print") {
                       this.print(this.invoiceNo);
                     }
                   } else {

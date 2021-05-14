@@ -30,8 +30,8 @@ export class PrintLayoutComponent implements OnInit {
   rowd = [{}, {}, {}];
   lotRowd = [{}, {}, {}, {}];
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
-  invoiceData =[];
-  copyType = ["Original","Duplicate","Triplicate"]
+  invoiceData = [];
+  copyType = ["Original", "Duplicate", "Triplicate"]
   constructor(
     private datePipe: DatePipe,
     private toastr: ToastrService,
@@ -40,51 +40,51 @@ export class PrintLayoutComponent implements OnInit {
     private _route: ActivatedRoute,
     public activeModal: NgbActiveModal,
 
-  ) {}
+  ) { }
 
-   ngOnInit() {
+  ngOnInit() {
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
     const invoiceNo = this._route.snapshot.queryParamMap.get("invoice");
-      if (myArray === null) {
-        this.invoiceIds = new Array<string>();
-      }else{
-        this.invoiceIds = JSON.parse(myArray);
-      }
-     
-    if(this.finalInvoice){
+    if (myArray === null) {
+      this.invoiceIds = new Array<string>();
+    } else {
+      this.invoiceIds = JSON.parse(myArray);
+    }
+
+    if (this.finalInvoice) {
       this.printService.getInvoiceByBatchAndStock(this.finalInvoice).subscribe(
         (data) => {
-          if(data["success"]){
+          if (data["success"]) {
             this.printInvoiceData = data["data"];
             this.start();
-          } 
+          }
         },
         (error) => {
 
         }
       )
-    }else{
-      if(invoiceNo){
+    } else {
+      if (invoiceNo) {
         this.printService.getInvoiceByNoToPrint(invoiceNo).subscribe(
           (data) => {
-            if(data["success"]){
+            if (data["success"]) {
               this.printInvoiceData = data["data"];
               this.start();
               this.print();
             }
           },
           (error) => {
-  
+
           }
         )
-      }else{
+      } else {
         this.start();
       }
 
     }
-   
+
   }
- 
+
 
   start() {
     if (this.invoiceIds.length > 0) {
@@ -108,19 +108,19 @@ export class PrintLayoutComponent implements OnInit {
                   );
                 }
                 this.printInvoiceData[index].batchWithGrList.forEach(element => {
-                  element.batchDataList.sort(function(obj1 , obj2){
+                  element.batchDataList.sort(function (obj1, obj2) {
                     return obj1.sequenceId - obj2.sequenceId;
                   })
 
                   element.batchDataList.forEach(ele => {
-                    if(ele.mtr == "0"){
+                    if (ele.mtr == "0") {
                       ele.mtr = "-"
-          
+
                     }
                   })
-                }); 
+                });
 
-                
+
               }
               //calculate total amount, mtr, f.mtr, pcs
               this.printInvoiceData[index].totalMtr = 0;
@@ -129,11 +129,11 @@ export class PrintLayoutComponent implements OnInit {
               this.printInvoiceData[index].totalFinishMtr = 0;
 
               this.printInvoiceData[index].qualityList.forEach((quality) => {
-                if(quality.totalMtr){
-                this.printInvoiceData[index].totalMtr += quality.totalMtr;
-                this.printInvoiceData[index].totalAmt += quality.amt;
-                this.printInvoiceData[index].totalPcs += quality.pcs;
-                this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
+                if (quality.totalMtr) {
+                  this.printInvoiceData[index].totalMtr += quality.totalMtr;
+                  this.printInvoiceData[index].totalAmt += quality.amt;
+                  this.printInvoiceData[index].totalPcs += quality.pcs;
+                  this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
                 }
               });
 
@@ -144,38 +144,37 @@ export class PrintLayoutComponent implements OnInit {
                 element.shrinkage = 0;
                 element.lotDataLength = element.batchDataList.length;
                 element.batchDataList.forEach(lot => {
-                  if(lot.mtr == "-"){
+                  if (lot.mtr == "-") {
                     lot.mtr = "0";
                   }
                   element.totalMtr += Number(lot.mtr);
                   element.totalFMtr += lot.finishMtr
-                  if(lot.mtr == "0"){
+                  if (lot.mtr == "0") {
                     lot.mtr = "-";
                   }
                 });
                 element.totalMtr = (element.totalMtr).toFixed(2);
                 element.totalFMtr = (element.totalFMtr).toFixed(2);
-                element.shrinkage = ( ( (element.totalMtr-element.totalFMtr) /element.totalMtr) * 100).toFixed(2);
+                element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
               });
 
               //for making 4 blocks
               let lengthOfLots = this.printInvoiceData[index].batchWithGrList.length;
-              for(let lotIndex = 0; lotIndex < 4-lengthOfLots; lotIndex++){
+              for (let lotIndex = 0; lotIndex < 4 - lengthOfLots; lotIndex++) {
                 this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
-              }            
-              if(!this.printInvoiceData[index].discount)
-              this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+              }
+              if (!this.printInvoiceData[index].discount)
+                this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
 
-              if(!this.printInvoiceData[index].sgst)
-              this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
-              
-              if(!this.printInvoiceData[index].taxAmt)
-              this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
-              
-              if(!this.printInvoiceData[index].netAmt)
-              {
-                this.printInvoiceData[index].netAmt = 
-                this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+              if (!this.printInvoiceData[index].sgst)
+                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+
+              if (!this.printInvoiceData[index].taxAmt)
+                this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
+
+              if (!this.printInvoiceData[index].netAmt) {
+                this.printInvoiceData[index].netAmt =
+                  this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
               }
               index++;
               if (index == this.invoiceIds.length) {
@@ -194,38 +193,38 @@ export class PrintLayoutComponent implements OnInit {
         );
         // this.getInvoiceDataToPrint();
       }
-    }else{
+    } else {
 
       this.myDate = new Date();
       this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
 
-      let arr = [];  
-     arr.push(this.printInvoiceData);
+      let arr = [];
+      arr.push(this.printInvoiceData);
       this.printInvoiceData = arr;
       let index = 0;
       this.printInvoiceData[index].batchWithGrList.forEach(element => {
-        element.batchDataList.sort(function(obj1 , obj2){
+        element.batchDataList.sort(function (obj1, obj2) {
           return obj1.sequenceId - obj2.sequenceId;
         })
 
         element.batchDataList.forEach(ele => {
-          if(ele.mtr == "0"){
+          if (ele.mtr == "0") {
             ele.mtr = "-"
 
           }
         })
-      }); 
+      });
       this.printInvoiceData[index].totalMtr = 0;
       this.printInvoiceData[index].totalAmt = 0;
       this.printInvoiceData[index].totalPcs = 0;
       this.printInvoiceData[index].totalFinishMtr = 0;
 
       this.printInvoiceData[index].qualityList.forEach((quality) => {
-        if(quality.totalMtr){
-        this.printInvoiceData[index].totalMtr += quality.totalMtr;
-        this.printInvoiceData[index].totalAmt += quality.amt;
-        this.printInvoiceData[index].totalPcs += quality.pcs;
-        this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
+        if (quality.totalMtr) {
+          this.printInvoiceData[index].totalMtr += quality.totalMtr;
+          this.printInvoiceData[index].totalAmt += quality.amt;
+          this.printInvoiceData[index].totalPcs += quality.pcs;
+          this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
         }
       });
 
@@ -236,45 +235,44 @@ export class PrintLayoutComponent implements OnInit {
         element.shrinkage = 0;
         element.lotDataLength = element.batchDataList.length;
         element.batchDataList.forEach(lot => {
-          if(lot.mtr == "-"){
+          if (lot.mtr == "-") {
             lot.mtr = "0";
           }
           element.totalMtr += Number(lot.mtr)
           element.totalFMtr += lot.finishMtr
-          if(lot.mtr == "0"){
+          if (lot.mtr == "0") {
             lot.mtr = "-";
           }
         });
         element.totalMtr = (element.totalMtr).toFixed(2);
         element.totalFMtr = (element.totalFMtr).toFixed(2);
-        element.shrinkage = ( ( (element.totalMtr-element.totalFMtr) /element.totalMtr) * 100).toFixed(2);
+        element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
       });
 
       //for making 4 blocks
       let lengthOfLots = this.printInvoiceData[index].batchWithGrList.length;
-      for(let lotIndex = 0; lotIndex < 4-lengthOfLots; lotIndex++){
+      for (let lotIndex = 0; lotIndex < 4 - lengthOfLots; lotIndex++) {
         this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
-      }            
+      }
 
-      if(!this.printInvoiceData[index].discount)
-      this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
-      
-      if(!this.printInvoiceData[index].sgst)
-      this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
-      
-      if(!this.printInvoiceData[index].taxAmt)
-      this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
-      
-      if(!this.printInvoiceData[index].netAmt)
-      {
-        this.printInvoiceData[index].netAmt = 
-        this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt; 
+      if (!this.printInvoiceData[index].discount)
+        this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+
+      if (!this.printInvoiceData[index].sgst)
+        this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+
+      if (!this.printInvoiceData[index].taxAmt)
+        this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
+
+      if (!this.printInvoiceData[index].netAmt) {
+        this.printInvoiceData[index].netAmt =
+          this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
       }
 
     }
   }
 
-  getInvoiceDataToPrint() {}
+  getInvoiceDataToPrint() { }
 
   print() {
     // if(this.printInvoiceFlag){
@@ -290,11 +288,11 @@ export class PrintLayoutComponent implements OnInit {
     );
 
     for (let i = 0; i < this.printInvoiceData.length; i++) {
-     let inter1 = setInterval(() => {
+      let inter1 = setInterval(() => {
         let data1 = <HTMLElement>document.getElementById("printpdf" + i);
         if (data1 != null) {
           doc.append(data1);
-         clearInterval(inter1);
+          clearInterval(inter1);
         }
       }, 10);
     }
@@ -305,24 +303,33 @@ export class PrintLayoutComponent implements OnInit {
     }, 1000);
   }
 
-  onCancel(){
+  onCancel() {
     this.activeModal.close(false);
   }
 
-  onPrint(){
-    this.activeModal.close("print");
+  onPrint() {
+    let obj = {};
+    obj = {
+      cgst: this.printInvoiceData[0].cgst,
+      discount: this.printInvoiceData[0].discount,
+      taxAmt: this.printInvoiceData[0].taxAmt,
+      sgst: this.printInvoiceData[0].sgst,
+      netAmt: this.printInvoiceData[0].netAmt,
+      print: "print"
+    }
+    this.activeModal.close(obj);
 
   }
 
-  onSave(){
+  onSave() {
     let obj = {};
-    if(this.printInvoiceData && this.printInvoiceData.length){
+    if (this.printInvoiceData && this.printInvoiceData.length) {
       obj = {
-        cgst:this.printInvoiceData[0].cgst,
-        discount:this.printInvoiceData[0].discount,
-        taxAmt:this.printInvoiceData[0].taxAmt,
-        sgst:this.printInvoiceData[0].sgst,
-        netAmt:this.printInvoiceData[0].netAmt
+        cgst: this.printInvoiceData[0].cgst,
+        discount: this.printInvoiceData[0].discount,
+        taxAmt: this.printInvoiceData[0].taxAmt,
+        sgst: this.printInvoiceData[0].sgst,
+        netAmt: this.printInvoiceData[0].netAmt
       }
     }
     this.activeModal.close(obj);
