@@ -109,6 +109,9 @@ export class AddEditPartyComponent implements OnInit {
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
       id: new FormControl(null),
+      paymentDays:new FormControl(null),
+      percentageDiscount:new FormControl(null),
+      creditLimit:new FormControl(null),
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
       partyAddress2: new FormControl(""),
@@ -189,6 +192,9 @@ export class AddEditPartyComponent implements OnInit {
           createdBy: this.currentParty.createdBy,
           updatedBy: this.currentParty.updatedBy,
           partyCode: this.currentParty.partyCode,
+          creditLimit:this.currentParty.creditLimit,
+          percentageDiscount:this.currentParty.percentageDiscount,
+          paymentDays:this.currentParty.paymentDays, 
         });
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;

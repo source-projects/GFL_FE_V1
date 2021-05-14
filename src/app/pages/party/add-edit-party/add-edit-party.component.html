@@ -126,6 +126,32 @@
                     </div>
 
                     <div class="form-group col-md-4">
+                        <label class="required">Payment Days</label>
+                        <input type="number" id="paymentDays" class="form-control size-small" nbinput fullwidth fieldsize="small" formControlName="paymentDays" placeholder="Payment Days" [ngClass]="{'is-invalid':(partyForm.get('paymentDays').invalid)&&(formSubmitted || partyForm.get('paymentDays').touched)}"
+                        />
+                        <div class="input-required" *ngIf="partyForm.get('paymentDays').errors?.required ">
+                            <span>Payments Days is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="required">Discount</label>
+                        <input type="number" id="percentageDiscount" class="form-control size-small" nbinput fullwidth fieldsize="small" formControlName="percentageDiscount" placeholder="Discount" [ngClass]="{'is-invalid':(partyForm.get('percentageDiscount').invalid)&&(formSubmitted || partyForm.get('percentageDiscount').touched)}"
+                        />
+                        <div class="input-required" *ngIf="partyForm.get('percentageDiscount').errors?.required ">
+                            <span>Discount is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="required">Credit Limit</label>
+                        <input type="number" id="creditLimit" class="form-control size-small" nbinput fullwidth fieldsize="small" formControlName="creditLimit" placeholder="Credit Limit" [ngClass]="{'is-invalid':(partyForm.get('creditLimit').invalid)&&(formSubmitted || partyForm.get('creditLimit').touched)}"
+                        />
+                        <div class="input-required" *ngIf="partyForm.get('creditLimit').errors?.required ">
+                            <span>Credit Limit is required</span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-4">
                         <label>Address 1</label>
                         <textarea class="form-control address-area" id=" partyAddress1" nbinput fullwidth formControlName="partyAddress1" placeholder="Address 1" (change)="checkAddress()" [ngClass]="{'is-invalid':(formSubmitted && partyAdressSetFlag) && !partyForm.get('partyAddress1').value }">
                                                     </textarea>

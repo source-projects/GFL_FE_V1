@@ -953,6 +953,7 @@ export class AdminComponent implements OnInit {
   onCancelQuality() {
     this.addQuality.id = null;
     this.addQuality.qualityName = null;
+    this.addQuality.rate = null;
     this.qualityEditFlag = false;
   }
   onCancelDesignation() {
@@ -1290,6 +1291,7 @@ export class AdminComponent implements OnInit {
       if (element.id == id) {
         this.addQuality.id = element.id;
         this.addQuality.qualityName = element.qualityName;
+        this.addQuality.rate = element.rate;
       }
     });
   }

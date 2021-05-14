@@ -29,7 +29,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group text-center">
-                                    
+
                                     <div class="profile-img">
                                         <img [src]="profileUrl" width="100" height="100">
                                     </div>
@@ -37,6 +37,7 @@
 
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -101,12 +102,12 @@
                                             placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()">
                                         <owl-date-time [pickerType]="'calendar'" #dt2 ></owl-date-time>
                                          -->
-                                       <label>{{maxDate}}</label>
-                                         
-                                         <!-- <input id="datefield" name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
+                                            <label>{{maxDate}}</label>
+
+                                            <!-- <input id="datefield" name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
                                 #receiveDate1="ngModel" [(ngModel)]='selectedDate' [max]='modifiedToday' type="date" placeholder="MM-DD-YYYY" (ngModelChange)="setSelectedDate()"
                               > -->
-                            <!-- <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time> -->
+                                            <!-- <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time> -->
 
                                         </div>
 
@@ -172,11 +173,13 @@
                                 <div class="display-space-evenly desktop-display-block">
                                     <div class="reg-inout">
 
-                                        <button (click)="inClick()" [disabled]="disableIn" class="btn-reg-inout btn btn-success">In</button>
+                                        <button (click)="inClick()" [disabled]="disableIn"
+                                            class="btn-reg-inout btn btn-success">In</button>
                                     </div>
 
                                     <div class="reg-inout">
-                                        <button (click)="outClick()" [disabled]="disableOut" class="btn-reg-inout btn btn-danger">Out</button>
+                                        <button (click)="outClick()" [disabled]="disableOut"
+                                            class="btn-reg-inout btn btn-danger">Out</button>
                                     </div>
                                 </div>
 
@@ -184,6 +187,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </form>
         </div>

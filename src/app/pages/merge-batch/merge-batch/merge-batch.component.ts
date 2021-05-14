@@ -23,7 +23,7 @@ export class MergeBatchComponent implements OnInit {
   public filterDetails: MergeBatch[] = [];
   public partyList: any[];
   public qualityList: any = [];
-  public finalGrList: any= [];
+  public finalGrList: any = [];
   public DROP_LIST_IDS: any = [];
   public refreshCount = 0;
   public newBatchId = "";
@@ -92,7 +92,7 @@ export class MergeBatchComponent implements OnInit {
           this.finalGrList = this.currentMergeBatch.batchDataList;
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -198,13 +198,14 @@ export class MergeBatchComponent implements OnInit {
   }
 
   //Add all Gr in Merge batch Bucket
-  addAllGrInMergeBatch(selectedBatchId){
-    this.filterDetails.forEach((element,index) => {
-      if(element.batchId==selectedBatchId){
-        element.grList.forEach((element1,index1) => {
-          this.finalGrList=[...this.finalGrList,element1]
-          this.filterDetails[index].grList.splice(index1,1)
-        });
+  addAllGrInMergeBatch(selectedBatchId) {
+    this.filterDetails.forEach((element, index) => {
+      if (element.batchId == selectedBatchId) {
+
+        this.finalGrList = [...this.finalGrList, ...element.grList]
+        // this.filterDetails[index].grList.splice(index1,1)
+        element.grList = []
+
       }
     });
   }

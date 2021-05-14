@@ -9,9 +9,9 @@
     </nb-card-header>
     <nb-card-body class="pd-tp-low">
         <div *ngIf="billList">
-            <div class="max-popup-purchase mobile-width-100">
+            <div style="max-height: 700px" class="max-popup-purchase mobile-width-100">
                 <div *ngFor="let bill of billList | imagePreviewPipe : imageIndex; let i = index" class="text-center mobile-100">
-                    <img [src]="bill.picUrl">
+                    <img width="500" height="700" [src]="bill.picUrl">
                 </div>
                 <div class="next-previous-btn">
                     <div class="back-btn">

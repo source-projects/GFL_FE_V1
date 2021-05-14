@@ -7,8 +7,9 @@ import { AddEditStockBatchComponent } from './add-edit-stock-batch/add-edit-stoc
 import { SharedModule } from 'app/@theme/shared.module';
 import { ThemeModule } from 'app/@theme/theme.module';
 import { JobCardComponent } from './job-card/job-card.component';
+import { InputBatchComponent } from './input-batch/input-batch.component';
 @NgModule({
-  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent],
+  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent],
   imports: [
     CommonModule,
     StockBatchRoutingModule,

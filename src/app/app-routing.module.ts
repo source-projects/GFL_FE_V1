@@ -320,9 +320,9 @@ export const routes: Routes = [
       {
         path: "purchase",
         loadChildren: () =>
-        import("./pages/purchase/purchase.module").then(
-          (m) => m.PurchaseModule
-        ),
+          import("./pages/purchase/purchase.module").then(
+            (m) => m.PurchaseModule
+          ),
         canActivate: [PurchaseGuard],
         canLoad: [PurchaseGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
@@ -336,7 +336,7 @@ export const routes: Routes = [
       },
       {
         path: "",
-        redirectTo: "dashboard",
+        redirectTo: "task",
         pathMatch: "full",
       },
       {
@@ -376,4 +376,4 @@ export const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

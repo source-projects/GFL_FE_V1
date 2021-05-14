@@ -191,7 +191,7 @@
             <nb-tab tabTitle="Quality">
                 <form #addQualityData="ngForm">
                     <div class="row">
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label>Quality Name</label>
                                 <input name="qualityName" type="text" class="form-control"
@@ -205,7 +205,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Quality Rate</label>
+                                <input name="rate" type="number" class="form-control"
+                                    placeholder="Enter Quality Rate." [(ngModel)]="addQuality.rate"
+                                    #rate="ngModel"
+                                    [ngClass]="{'is-invalid':(rate.invalid) &&(formSubmitted || rate.touched) }"
+                                    required>
+                                <div class="input-required"
+                                    *ngIf="(rate.invalid) && (formSubmitted || rate.touched)">
+                                    Company name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
                             <div class="mobile-btn-center text-btn-right">
                                 <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
                                     (click)="onCancelQuality()">CANCEL</button>
@@ -231,7 +245,10 @@
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="Name" prop="qualityName" [sortable]="false" [width]="300">
+                    </ngx-datatable-column> 
+                    <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
+
                 </ngx-datatable>
             </nb-tab>
 

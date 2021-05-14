@@ -30,6 +30,7 @@ import { CustomHttpInterceptor } from "./@theme/interceptor/httpInterceptor";
 import { ShadeModule } from "./pages/shade/shade.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
+import { WebcamModule } from 'ngx-webcam';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -61,6 +62,7 @@ import { environment } from "../environments/environment";
       enabled: environment.production,
       registrationStrategy: "registerImmediately",
     }),
+    WebcamModule,
   ],
   providers: [
     {
@@ -72,4 +74,4 @@ import { environment } from "../environments/environment";
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
