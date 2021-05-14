@@ -24,6 +24,7 @@ export class PrintLayoutComponent implements OnInit {
   public myDate;
   @Input() finalInvoice: any;
   @Input() previewFlag = false;
+  @Input() discount
 
   invoiceIds: string[];
   invoiceDetails: Promise<any>[];
@@ -164,7 +165,7 @@ export class PrintLayoutComponent implements OnInit {
                 this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
               }
               if (!this.printInvoiceData[index].discount)
-                this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+                this.printInvoiceData[index].discount = (this.printInvoiceData[index].totalAmt * this.discount) / 100;
 
               if (!this.printInvoiceData[index].sgst)
                 this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
@@ -256,7 +257,7 @@ export class PrintLayoutComponent implements OnInit {
       }
 
       if (!this.printInvoiceData[index].discount)
-        this.printInvoiceData[index].discount = this.printInvoiceData[index].totalAmt * 0.03;
+        this.printInvoiceData[index].discount = (this.printInvoiceData[index].totalAmt * this.discount) / 100;
 
       if (!this.printInvoiceData[index].sgst)
         this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
