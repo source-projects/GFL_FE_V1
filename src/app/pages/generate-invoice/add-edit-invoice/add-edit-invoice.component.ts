@@ -58,7 +58,7 @@ export class AddEditInvoiceComponent implements OnInit {
     private jwt: JwtTokenService,
     private commonService: CommonService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
@@ -177,6 +177,7 @@ export class AddEditInvoiceComponent implements OnInit {
   selected = [];
 
   addInvoice(invoiceForm) {
+    let temp = this.party.filter(f => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
       this.final = [];
@@ -202,6 +203,7 @@ export class AddEditInvoiceComponent implements OnInit {
         });
         modalRef.componentInstance.finalInvoice = obj;
         modalRef.componentInstance.previewFlag = true;
+        modalRef.componentInstance.discount = temp[0].percentageDiscount;
 
         modalRef.result.then((result) => {
           console.log(result);
@@ -219,7 +221,7 @@ export class AddEditInvoiceComponent implements OnInit {
                     this.toastr.success(errorData.Add_Success);
                     this.merge = [];
                     this.disableButton = false;
-                    if (result === "print") {
+                    if (result.print === "print") {
                       this.print(this.invoiceNo);
                     }
                   } else {

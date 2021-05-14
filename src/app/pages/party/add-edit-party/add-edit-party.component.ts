@@ -94,7 +94,7 @@ export class AddEditPartyComponent implements OnInit {
     private route: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.getData();
@@ -102,16 +102,16 @@ export class AddEditPartyComponent implements OnInit {
     this.currentPartyId = this._route.snapshot.paramMap.get("id");
     if (this.currentPartyId != null) this.getUpdateData();
   }
-  
+
   public getData() {
     this.loading = true;
     this.user = this.commonService.getUser();
     this.userHead = this.commonService.getUserHeadId();
     this.partyForm = new FormGroup({
       id: new FormControl(null),
-      paymentDays:new FormControl(null),
-      percentageDiscount:new FormControl(null),
-      creditLimit:new FormControl(null),
+      paymentDays: new FormControl(null),
+      percentageDiscount: new FormControl(null),
+      creditLimit: new FormControl(null),
       partyName: new FormControl(null, [Validators.required]),
       partyAddress1: new FormControl(""),
       partyAddress2: new FormControl(""),
@@ -141,7 +141,7 @@ export class AddEditPartyComponent implements OnInit {
       ]),
       partyCode: new FormControl(null, [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9]{4}$/),
+        Validators.pattern(/^[a-zA-Z0-9]{2,5}$/),
       ]),
       creditor: new FormControl(false),
       debtor: new FormControl(false),
@@ -192,9 +192,9 @@ export class AddEditPartyComponent implements OnInit {
           createdBy: this.currentParty.createdBy,
           updatedBy: this.currentParty.updatedBy,
           partyCode: this.currentParty.partyCode,
-          creditLimit:this.currentParty.creditLimit,
-          percentageDiscount:this.currentParty.percentageDiscount,
-          paymentDays:this.currentParty.paymentDays, 
+          creditLimit: this.currentParty.creditLimit,
+          percentageDiscount: this.currentParty.percentageDiscount,
+          paymentDays: this.currentParty.paymentDays,
         });
         this.creditor = this.partyForm.get("creditor").value;
         this.debtor = this.partyForm.get("debtor").value;
@@ -360,7 +360,7 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             this.partyNameExist = data["data"];
           },
-          (error) => {}
+          (error) => { }
         );
     }
   }
@@ -376,7 +376,7 @@ export class AddEditPartyComponent implements OnInit {
           (data) => {
             this.partyCodeExist = data["data"];
           },
-          (error) => {}
+          (error) => { }
         );
     }
   }
