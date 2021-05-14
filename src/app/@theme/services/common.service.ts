@@ -10,7 +10,7 @@ export class CommonService {
   // private broadCastMesaage=new BehaviorSubject<string>("Demo");
   // broadCast=this.broadCastMesaage.asObservable();
 
-  constructor(private token: StoreTokenService, private jwt: JwtTokenService) {}
+  constructor(private token: StoreTokenService, private jwt: JwtTokenService) { }
 
   // updateBrodCast(newMassge:string){
   //   this.broadCastMesaage.next(newMassge);
@@ -43,8 +43,9 @@ export class CommonService {
     } else if (hostName.includes("dyeingerp.gloryautotech.com")) {
       url = "https://api.dyeingerp.gloryautotech.com/";
     } else if (hostName == "15.206.179.225" || hostName == "localhost") {
-      url = "http://15.206.179.225:8080/";
-    } else {
+      url = "https://api.dyeingerp.gloryautotech.com/";
+    }
+    else {
       url = "http://103.137.194.167:8080/";
     }
     return url;
