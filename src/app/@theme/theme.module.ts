@@ -51,6 +51,8 @@ import { ImagePreviewPipe } from "./pipes/imagePreview.pipe";
 import { FilterSelectedSupplierPipe } from "./pipes/filter-selected-supplier.pipe";
 import { DesignationFilterPipe } from "./pipes/designation.pipe";
 import { TaskFilterPipe } from "./pipes/task-filter.pipe";
+import { PasswordDailogComponent } from "./components/password-dailog/password-dailog.component";
+import { FormsModule } from "@angular/forms";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -69,6 +71,7 @@ const NB_MODULES = [
 const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
+  PasswordDailogComponent,
   SearchInputComponent,
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
@@ -97,7 +100,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES],
+  imports: [CommonModule, ...NB_MODULES,FormsModule ],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

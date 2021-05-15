@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { CommonService } from "../../../@theme/services/common.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrintLayoutComponent } from "../print-Layout/print-layout.component";
+import { PasswordDailogComponent } from "../../../@theme/components/password-dailog/password-dailog.component";
 
 @Component({
   selector: "ngx-add-edit-invoice",
@@ -197,53 +198,117 @@ export class AddEditInvoiceComponent implements OnInit {
           discount: null,
           taxAmt: null,
           netAmt: null,
-        };
-        const modalRef = this.modalService.open(PrintLayoutComponent, {
-          size: "xl",
-        });
-        modalRef.componentInstance.finalInvoice = obj;
-        modalRef.componentInstance.previewFlag = true;
-        modalRef.componentInstance.discount = temp[0].percentageDiscount;
+          password:"",
+          passwordFlag:null
+          };
 
-        modalRef.result.then((result) => {
-          console.log(result);
-          if (result) {
-            obj.cgst = result.cgst;
-            obj.sgst = result.sgst;
-            obj.discount = result.discount;
-            obj.netAmt = result.netAmt;
-            obj.taxAmt = result.taxAmt;
-            if (invoiceForm.valid) {
-              this.generateInvoiceService.addInvoicedata(obj).subscribe(
-                async (data) => {
-                  if (data["success"]) {
-                    this.invoiceNo = data["data"];
-                    this.toastr.success(errorData.Add_Success);
-                    this.merge = [];
-                    this.disableButton = false;
-                    if (result.print === "print") {
-                      this.print(this.invoiceNo);
+          if(temp[0].pendingAmt > temp[0].creditLimit){
+
+            const modalRef = this.modalService.open(PasswordDailogComponent);
+            modalRef.result.then((res) =>{
+              if(res){
+                const modalRef = this.modalService.open(PrintLayoutComponent, {
+                  size: "xl",
+                });
+                modalRef.componentInstance.finalInvoice = obj;
+                modalRef.componentInstance.previewFlag = true;
+                modalRef.componentInstance.discount = temp[0].percentageDiscount;
+        
+                modalRef.result.then((result) => {
+                  console.log(result);
+                  if (result) {
+                    obj.cgst = result.cgst;
+                    obj.sgst = result.sgst;
+                    obj.discount = result.discount;
+                    obj.netAmt = result.netAmt;
+                    obj.taxAmt = result.taxAmt;
+                    obj.password = res;
+                    obj.passwordFlag = true;
+                    if (invoiceForm.valid) {
+                      this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                        async (data) => {
+                          if (data["success"]) {
+                            this.invoiceNo = data["data"];
+                            this.toastr.success(errorData.Add_Success);
+                            this.merge = [];
+                            this.disableButton = false;
+                            if (result.print === "print") {
+                              this.print(this.invoiceNo);
+                            }
+                          } else {
+                            this.disableButton = false;
+                            this.toastr.error(errorData.Add_Error);
+                            this.merge = [];
+                          }
+                        },
+                        (error) => {
+                          this.disableButton = false;
+                          this.toastr.error(errorData.Serever_Error);
+                        }
+                      );
+                    } else {
+                      this.disableButton = false;
                     }
+                    //Clear selected party
+                    this.invoiceValues.partyId = null;
                   } else {
                     this.disableButton = false;
-                    this.toastr.error(errorData.Add_Error);
-                    this.merge = [];
                   }
-                },
-                (error) => {
-                  this.disableButton = false;
-                  this.toastr.error(errorData.Serever_Error);
-                }
-              );
-            } else {
-              this.disableButton = false;
-            }
-            //Clear selected party
-            this.invoiceValues.partyId = null;
-          } else {
-            this.disableButton = false;
+                });    
+              }
+            })
           }
-        });
+          else{
+            const modalRef = this.modalService.open(PrintLayoutComponent, {
+              size: "xl",
+            });
+            modalRef.componentInstance.finalInvoice = obj;
+            modalRef.componentInstance.previewFlag = true;
+            modalRef.componentInstance.discount = temp[0].percentageDiscount;
+    
+            modalRef.result.then((result) => {
+              console.log(result);
+              if (result) {
+                obj.cgst = result.cgst;
+                obj.sgst = result.sgst;
+                obj.discount = result.discount;
+                obj.netAmt = result.netAmt;
+                obj.taxAmt = result.taxAmt;
+                obj.password = "";
+                obj.passwordFlag = false;
+                if (invoiceForm.valid) {
+                  this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                    async (data) => {
+                      if (data["success"]) {
+                        this.invoiceNo = data["data"];
+                        this.toastr.success(errorData.Add_Success);
+                        this.merge = [];
+                        this.disableButton = false;
+                        if (result.print === "print") {
+                          this.print(this.invoiceNo);
+                        }
+                      } else {
+                        this.disableButton = false;
+                        this.toastr.error(errorData.Add_Error);
+                        this.merge = [];
+                      }
+                    },
+                    (error) => {
+                      this.disableButton = false;
+                      this.toastr.error(errorData.Serever_Error);
+                    }
+                  );
+                } else {
+                  this.disableButton = false;
+                }
+                //Clear selected party
+                this.invoiceValues.partyId = null;
+              } else {
+                this.disableButton = false;
+              }
+            });
+          }
+        
       }
     } else {
       this.toastr.warning("Select upto 4 batches only");
@@ -260,53 +325,53 @@ export class AddEditInvoiceComponent implements OnInit {
     this.route.navigate(["/pages/generate_invoice/print"], navigationExtras);
   }
 
-  updateInvoice(invoiceForm) {
-    if (this.finalcheckedrows.length <= 4) {
-      this.disableButton = true;
-      this.formSubmitted = true;
+  // updateInvoice(invoiceForm) {
+  //   if (this.finalcheckedrows.length <= 4) {
+  //     this.disableButton = true;
+  //     this.formSubmitted = true;
 
-      this.final = [];
+  //     this.final = [];
 
-      this.finalcheckedrows.map((ele, i) => {
-        let obj: invoiceobj = new invoiceobj();
-        obj.batchId = ele.batchId;
-        obj.stockId = ele.controlId;
-        this.final.push(obj);
-      });
+  //     this.finalcheckedrows.map((ele, i) => {
+  //       let obj: invoiceobj = new invoiceobj();
+  //       obj.batchId = ele.batchId;
+  //       obj.stockId = ele.controlId;
+  //       this.final.push(obj);
+  //     });
 
-      let obj = {
-        batchAndStockIdList: this.final,
-        createdBy: this.userId,
-        invoiceNo: this.currentInvoiceId,
-        updatedBy: this.userId,
-      };
+  //     let obj = {
+  //       batchAndStockIdList: this.final,
+  //       createdBy: this.userId,
+  //       invoiceNo: this.currentInvoiceId,
+  //       updatedBy: this.userId,
+  //     };
 
-      if (invoiceForm.valid) {
-        this.generateInvoiceService.updateInvoice(obj).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.route.navigate(["/pages/generate_invoice"]);
-              this.toastr.success(errorData.Update_Success);
-              this.disableButton = false;
-            } else {
-              this.disableButton = false;
-              this.toastr.error(errorData.Update_Error);
-            }
-          },
-          (error) => {
-            this.disableButton = false;
-            this.toastr.error(errorData.Serever_Error);
-          }
-        );
-      } else {
-        this.disableButton = false;
-      }
-      //Clear selected party
-      this.invoiceValues.partyId = null;
-    } else {
-      this.toastr.warning("Select upto 4 batches only");
-    }
-  }
+  //     if (invoiceForm.valid) {
+  //       this.generateInvoiceService.updateInvoice(obj).subscribe(
+  //         (data) => {
+  //           if (data["success"]) {
+  //             this.route.navigate(["/pages/generate_invoice"]);
+  //             this.toastr.success(errorData.Update_Success);
+  //             this.disableButton = false;
+  //           } else {
+  //             this.disableButton = false;
+  //             this.toastr.error(errorData.Update_Error);
+  //           }
+  //         },
+  //         (error) => {
+  //           this.disableButton = false;
+  //           this.toastr.error(errorData.Serever_Error);
+  //         }
+  //       );
+  //     } else {
+  //       this.disableButton = false;
+  //     }
+  //     //Clear selected party
+  //     this.invoiceValues.partyId = null;
+  //   } else {
+  //     this.toastr.warning("Select upto 4 batches only");
+  //   }
+  // }
 
   onSelect(value: any) {
     let arr: any[] = value.selected;
