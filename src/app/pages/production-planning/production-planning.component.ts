@@ -106,15 +106,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService
   ) {
     this.productionBatchDetail = new ProductionBatchDetail();
-  }
-
-  ngOnInit(): void {
-    this.getCurrentId();
-    this.getPartyList();
-    this.getQualityList();
-    this.getAllBatchData();
-    this.plannedProductionListForDataTable();
-
     this.menuService
       .onItemClick()
       .pipe(
@@ -126,10 +117,16 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (title === "Print") this.generateSlip(true);
         else if (title === "Edit And Print") this.generateSlip(false);
         else if (title === "Complete") this.completeChangeStatus();
-        // else if (title === "Pause") this.pauseChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
-        //else if (title === "Details") this.getBatchDetails();
       });
+  }
+
+  ngOnInit(): void {
+    this.getCurrentId();
+    this.getPartyList();
+    this.getQualityList();
+    this.getAllBatchData();
+    this.plannedProductionListForDataTable();
   }
 
   getCurrentId() {
