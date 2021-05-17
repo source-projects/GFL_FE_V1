@@ -36,5 +36,9 @@ export class GenerateInvoiceService {
  
   }
 
+  checkPassword(password){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/get/passwordExist?password=' + password);
+  }
+
  
 }

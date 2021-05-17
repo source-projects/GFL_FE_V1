@@ -74,19 +74,33 @@ export class GenerateInvoiceComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.InvoiceList = data["data"];
+          this.InvoiceList.forEach(ele=>{
+            ele.netAmt = ele.netAmt.toFixed(2);
+          })
           this.copyInvoiceList = data["data"];
+          this.copyInvoiceList.forEach(ele=>{
+            ele.netAmt = ele.netAmt.toFixed(2);
+          })
           this.Invoice = this.InvoiceList.map((element) => ({
             date: element.date,
             id: element.id,
             invoiceNo: element.invoiceNo,
+            partyName: element.partyName,
             isSendToParty: element.isSendToParty,
+            netAmt:element.netAmt,
+            totalMtr:element.totalMtr,
+            finishMtr:element.finishMtr
           }));
           this.copyInvoiceList = this.InvoiceList.map((element) => ({
-            is:element.id,
+            id:element.id,
             date: element.date,
             invoiceNo: element.invoiceNo,
             partyName: element.partyName,
-            batchList: element.batchList,
+            isSendToParty: element.isSendToParty,
+            netAmt:element.netAmt,
+            totalMtr:element.totalMtr,
+            finishMtr:element.finishMtr
+
           }));
         } else {
         }
