@@ -29,7 +29,7 @@ export class GenerateInvoiceComponent implements OnInit {
     private generateInvoiceService: GenerateInvoiceService,
     private _NgbModal: NgbModal,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllInvoice();
@@ -39,31 +39,30 @@ export class GenerateInvoiceComponent implements OnInit {
     const val = value.toString().toLowerCase().trim();
     const keys = Object.keys(this.copyInvoiceList[0]);
     this.InvoiceList = this.copyInvoiceList.filter((item) => {
-        for (let i = 0; i < keys.length; i++) {
-          if(keys[i] == "batchList"){
-            for (let j =0; j < item[keys[i]].length; j++){
-              if((item[keys[i]][j].batchId &&
-                item[keys[i]][j].batchId.toString().toLowerCase().indexOf(val) !== -1) ||
-                !val)
-                {
-                  return true;
-                }
-
-            }
-            
-          }else{
-            if (
-              (item[keys[i]] &&
-                item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-              !val
-            ) {
+      for (let i = 0; i < keys.length; i++) {
+        if (keys[i] == "batchList") {
+          for (let j = 0; j < item[keys[i]].length; j++) {
+            if ((item[keys[i]][j].batchId &&
+              item[keys[i]][j].batchId.toString().toLowerCase().indexOf(val) !== -1) ||
+              !val) {
               return true;
             }
+
           }
-          
+
+        } else {
+          if (
+            (item[keys[i]] &&
+              item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
+            !val
+          ) {
+            return true;
+          }
         }
-      
-      
+
+      }
+
+
     });
   }
 
@@ -74,12 +73,12 @@ export class GenerateInvoiceComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.InvoiceList = data["data"];
-          this.InvoiceList.forEach(ele=>{
+          this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
           })
           this.copyInvoiceList = data["data"];
-          this.copyInvoiceList.forEach(ele=>{
-            ele.netAmt = ele.netAmt.toFixed(2);
+          this.copyInvoiceList.forEach(ele => {
+            ele.netAmt = Number(ele.netAmt).toFixed(2);
           })
           this.Invoice = this.InvoiceList.map((element) => ({
             date: element.date,
@@ -87,19 +86,19 @@ export class GenerateInvoiceComponent implements OnInit {
             invoiceNo: element.invoiceNo,
             partyName: element.partyName,
             isSendToParty: element.isSendToParty,
-            netAmt:element.netAmt,
-            totalMtr:element.totalMtr,
-            finishMtr:element.finishMtr
+            netAmt: element.netAmt,
+            totalMtr: element.totalMtr,
+            finishMtr: element.finishMtr
           }));
           this.copyInvoiceList = this.InvoiceList.map((element) => ({
-            id:element.id,
+            id: element.id,
             date: element.date,
             invoiceNo: element.invoiceNo,
             partyName: element.partyName,
             isSendToParty: element.isSendToParty,
-            netAmt:element.netAmt,
-            totalMtr:element.totalMtr,
-            finishMtr:element.finishMtr
+            netAmt: element.netAmt,
+            totalMtr: element.totalMtr,
+            finishMtr: element.finishMtr
 
           }));
         } else {
@@ -140,7 +139,7 @@ export class GenerateInvoiceComponent implements OnInit {
     });
   }
 
-  printCurrentInvoice($event, row){
+  printCurrentInvoice($event, row) {
     this.finalcheckedrows = [];
     this.finalcheckedrows.push(row.invoiceNo);
     this.print();
