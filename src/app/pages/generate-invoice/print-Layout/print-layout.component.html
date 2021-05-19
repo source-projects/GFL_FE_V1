@@ -28,11 +28,12 @@
                                         <div class="card-body display-flex-end">
                                             <div class="card-block">
                                                 <div class="row">
-                                                    <p class="col-sm-12 text-center font-30"><b>GLORY DYEING MILLS
+                                                    <p class="col-sm-12 text-center font-30">
+                                                        <b>GLORY DYEING MILLS
                                                             PVT.LTD.</b></p>
                                                 </div>
                                                 <div class="row">
-                                                    <p>
+                                                    <p class="text-center col-sm-12 font-18 formally">
                                                         FORMALLY KNOWN AS : MUKESH PROCESSORS PVT.LTD
 
                                                     </p>
@@ -65,34 +66,34 @@
                                     <div class="col-sm-6 border-dark">
                                         <div class="row">
                                             <div class="col-md-4 width-30">
-                                                <b class="display-between font-20"><span>Party Name</span> </b>
+                                                <b class="display-between font-18"><span>Party Name</span> </b>
                                             </div>
                                             <div class="col-md-4 width-10">
-                                                <b class="display-between font-20"> <span>:</span></b>
+                                                <b class="display-between font-18"> <span>:</span></b>
                                             </div>
-                                            <div class="col-md-4 border border-width font-20 width-60">
+                                            <div class="col-md-4 border border-width font-18 width-60">
                                                 {{invoice.partyName}}
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4 width-30">
-                                                <b class="display-between font-20"><span>Address</span> </b>
+                                                <b class="display-between font-18"><span>Address</span> </b>
                                             </div>
                                             <div class="col-md-4 width-10">
-                                                <b class="display-between font-20"> <span>:</span></b>
+                                                <b class="display-between font-18"> <span>:</span></b>
                                             </div>
-                                            <div class="col-md-4 border border-width font-20 width-60">
+                                            <div class="col-md-4 border border-width font-18 width-60">
                                                 {{invoice.address}}
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4 width-30">
-                                                <b class="display-between font-20"><span>GSTIN</span> </b>
+                                                <b class="display-between font-18"><span>GSTIN</span> </b>
                                             </div>
                                             <div class="col-md-4 width-10">
-                                                <b class="display-between font-20"> <span>:</span></b>
+                                                <b class="display-between font-18"> <span>:</span></b>
                                             </div>
-                                            <div class="col-md-4 border border-width font-20 width-60">
+                                            <div class="col-md-4 border border-width font-18 width-60">
                                                 {{invoice.gst}}
                                             </div>
                                         </div>
@@ -160,9 +161,9 @@
 
                                         <tr *ngFor="let quality of invoice.qualityList;let i=index;">
                                             <td>
-                                                {{i+1}}
+                                                <b>{{i+1}}</b>
                                             </td>
-                                            <td *ngIf="quality.qualityName">
+                                            <td *ngIf="quality.qualityName" class="text-left">
                                                 {{quality.qualityName}}
                                             </td>
                                             <td *ngIf="!quality.qualityName">
@@ -176,19 +177,19 @@
                                             <td>
                                                 {{quality.batchId}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{quality.totalMtr}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{quality.pcs}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{quality.finishMtr}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{quality.rate}}
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{quality.amt}}
                                             </td>
 
@@ -238,7 +239,7 @@
                                                         <b>Discount @{{invoice.percentageDiscount}}%</b>
                                                     </div>
                                                     <div class="col-sm-6 border">
-                                                        {{ invoice.discount | number : '1.2-2'}}
+                                                        <b>{{ invoice.discount | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -247,7 +248,7 @@
                                                             Taxable Amt</b>
                                                     </div>
                                                     <div class="col-sm-6 border border-width">
-                                                        {{ invoice.taxAmt | number : '1.2-2'}}
+                                                        <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -255,7 +256,7 @@
                                                         <b>CGST: @2.5%</b>
                                                     </div>
                                                     <div class="col-sm-6 border border-width">
-                                                        {{ invoice.cgst | number : '1.2-2'}}
+                                                        <b>{{ invoice.cgst | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -263,7 +264,7 @@
                                                         <b>SGST: @2.5%</b>
                                                     </div>
                                                     <div class="col-sm-6 border border-width">
-                                                        {{ invoice.sgst | number : '1.2-2'}}
+                                                        <b>{{ invoice.sgst | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -271,8 +272,7 @@
                                                         <b>Net Amt</b>
                                                     </div>
                                                     <div class="col-sm-6 border border-width">
-                                                        {{ invoice.netAmt | number : '1.0-0'}}
-
+                                                        <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
                                             </div>
@@ -308,8 +308,10 @@
 
                                                         <tr *ngFor="let grs of lots.batchDataList;let i = index;">
                                                             <td class="pd-top-bottom-1"> {{i + 1}}</td>
-                                                            <td class="pd-top-bottom-1">{{grs.mtr}}</td>
-                                                            <td class="pd-top-bottom-1">{{grs.finishMtr}}</td>
+                                                            <td class="pd-top-bottom-1">{{grs.mtr | number : '1.2-2'}}
+                                                            </td>
+                                                            <td class="pd-top-bottom-1">
+                                                                {{grs.finishMtr | number : '1.2-2'}}</td>
                                                         </tr>
                                                     </tbody>
                                                     <tfoot class="table-footer">
@@ -317,7 +319,7 @@
                                                             <th class="pd-top-bottom-0"><b>{{lots.lotDataLength}}</b>
                                                             </th>
                                                             <th class="pd-top-bottom-0"><b>{{lots.totalMtr}}</b></th>
-                                                            <th class="pd-top-bottom-0"><b>{{lots.totalFMtr}}</b></th>
+                                                            <th class="pd-top-bottom-0"><b>{{lots.totalFMtr }}</b></th>
 
                                                         </tr>
                                                         <tr>
@@ -337,13 +339,6 @@
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <div class="footer-bottom">
-                                                <div class="row">
-                                                    <p>
-
-                                                        FORMALLY KNOWN AS : MUKESH PROCESSORS PVT.LTD
-
-                                                    </p>
-                                                </div>
                                                 <div class="row">
 
                                                     <div class="col-sm-4">
@@ -396,8 +391,8 @@
                                     </div>
 
 
-                                    <div class="row">
-                                        <div class="col-sm-7">
+                                    <div class="row terms-print-fix">
+                                        <div class="col-sm-7 terms-border">
                                             <div class="border-top-none font-big">
 
                                                 <b>TERMS CONDITION :</b>
@@ -444,7 +439,7 @@
                     <div class="row">
 
                         <div class="top-print-head width-63">
-                            <b>TAX INVOICE CUM DELIVERY CHALLAN</b>
+                            <b>TAX INVOICE CUM DELIVERY CHALLANNNNNNN</b>
                         </div>
 
 
@@ -469,11 +464,9 @@
                                                 </p>
                                             </div>
                                             <div class="row">
-
-                                                <p>
+                                                <p class="text-center col-sm-12 font-18">
                                                     FORMALLY KNOWN AS : MUKESH PROCESSORS PVT.LTD
                                                 </p>
-
                                             </div>
                                             <div class="row">
                                                 <p class="text-center col-sm-12 font-20 p-mr-bt">A-31, Eco Textile Park,
@@ -709,7 +702,7 @@
                                                     <b>Net Amt</b>
                                                 </div>
                                                 <div class="col-sm-6 border border-width">
-                                                    {{ invoice.netAmt | number : '1.0-0'}}
+                                                    {{ invoice.netAmt | number : '1.0-0'}}.00
 
                                                 </div>
                                             </div>
@@ -773,11 +766,6 @@
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="footer-bottom">
-                                            <div class="row">
-                                                <p>
-                                                    FORMALLY KNOWN AS : MUKESH PROCESSORS PVT.LTD.
-                                                </p>
-                                            </div>
                                             <div class="row">
 
                                                 <div class="col-sm-4">
