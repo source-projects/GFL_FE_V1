@@ -535,6 +535,12 @@ export class AddEditPurchaseComponent implements OnInit {
       }
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/purchase/view']);
+    }
+  }
 }
 
 

@@ -5,12 +5,12 @@
 
         <div class="row">
             <div class="col-md-5 col-6 display-flex-start max-width-device">
-                <select class="btn btn-md btn-design" (change)="setViewJobValue($event.target.value)"
-                    placeholder="Select">
-                    <option value="select">Select</option>
-                    <option value="view table">View Table</option>
-                    <option value="job card">Job Card</option>
-                </select>
+                <ng-select class="btn btn-md" (change)="setViewJobValue($event)"
+                    placeholder="Select" [(ngModel)]="selectedTableChange">
+                    <!-- <ng-option value="select">Select</ng-option> -->
+                    <ng-option value="view table">View Table</ng-option>
+                    <ng-option value="job card">Job Card</ng-option>
+                </ng-select>
                 <!-- <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
                     Table</button> -->
             </div>

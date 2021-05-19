@@ -79,19 +79,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "layers-outline",
     link: "/pages/stock-batch",
     hidden: false,
+    children:[
+      {
+        title: "Stock-batch",
+        icon: "layers-outline",
+        link: "/pages/stock-batch",
+        hidden: false,
+      },
+      {
+        title: "Merge-batch",
+        icon: "shuffle-outline",
+        link: "/pages/merge-batch",
+        hidden: false,
+      },
+      {
+        title: "Batch-shuffle",
+        icon: "flip-2-outline",
+        link: "/pages/batch-shuffle",
+        hidden: false,
+      },
+    ]
   },
-  {
-    title: "Merge-batch",
-    icon: "shuffle-outline",
-    link: "/pages/merge-batch",
-    hidden: false,
-  },
-  {
-    title: "Batch-shuffle",
-    icon: "flip-2-outline",
-    link: "/pages/batch-shuffle",
-    hidden: false,
-  },
+  
   {
     title: "DyeingProcess",
     icon: "settings-2-outline",

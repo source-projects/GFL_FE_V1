@@ -177,9 +177,10 @@
                 <div class="form-group mb-0">
                     <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
                         class="example-list main-table-drag jet-plan">
-                        <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag>
+                        <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag 
+                        [style.background]="jetData.colorTone?jetData.colorTone:'#ffffff'" [style.color]="jetData.colorTone?'#ffffff':'#000000'">
                             <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
-                                class="btn-bg-color">
+                                class="btn-bg-color" [style.color]="jetData.colorTone?'#ffffff':'#000000'">
                                 {{jetData.batchId}}
                             </button>
                         </div>

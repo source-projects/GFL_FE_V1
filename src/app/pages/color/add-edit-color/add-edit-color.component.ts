@@ -328,4 +328,10 @@ export class AddEditColorComponent implements OnInit {
       this.disableButton = false;
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/color/view']);
+    }
+  }
 }

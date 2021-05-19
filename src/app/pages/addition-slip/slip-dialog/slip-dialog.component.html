@@ -1,0 +1,279 @@
+<nb-card class="nb-style pr-mr-0">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-11" *ngIf="additionSlipFlag">
+                <h2 class="nb-text">Generate slip</h2>
+            </div>
+            <div class="col-md-1 user-per-check-display">
+                <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
+                    <span aria-hidden="true" class="close-icon">&times;</span>
+                </button>
+            </div>
+
+        </div>
+
+    </nb-card-header>
+
+    <nb-card-body>
+        <div *ngIf="additionSlipFlag" id="addition-slip">
+            <nb-card-body class="pr-pd-0">
+                <div>
+                    <div class="container">
+                        <div>
+                            <form #myForm='ngForm'>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-12" *ngIf="additionSlipFlag">
+                                            <h3 class="name-print">Addition</h3>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required font-13">Temperature</label>
+                                            <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                                min="0" #temp1="ngModel" [(ngModel)]="temp" name="temp" [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted
+                                                || temp1.touched) }" required>
+    
+                                            <div class="required-class" *ngIf="(temp1.invalid)&&(formSubmitted
+                                                || temp1.touched)">
+                                                <span>Temperarture is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required font-13">Hold
+                                                Time</label>
+                                            <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                                min="0" #hTime1="ngModel" [(ngModel)]="holdTime" name="holdTime" [ngClass]="{'is-invalid':(hTime1.invalid)&&(formSubmitted
+                                                || hTime1.touched) }" required>
+                                            <div class="required-class" *ngIf="(hTime1.invalid)&&(formSubmitted
+                                                || hTime1.touched)">
+                                                <span>Hold Time is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required font-13">Liqure
+                                                Ratio</label>
+                                            <input type="number" class="form-control" (keypress)="numberOnly($event)"
+                                                min="0" #lRatio1="ngModel" [(ngModel)]="liquorRatio" name="liquorRatio"
+                                                [ngClass]="{'is-invalid':(lRatio1.invalid)&&(formSubmitted
+                                                || lRatio1.touched) }" required>
+                                            <div class="required-class" *ngIf="(lRatio1.invalid)&&(formSubmitted
+                                                || lRatio1.touched)">
+                                                <span>Liquor ratio is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3
+                                            display-flex-start">
+                                            <nb-checkbox class="status-basic
+                                                nb-transition" id="iscolor" [(ngModel)]="isColor" name="isColor">
+                                            </nb-checkbox>
+                                            &nbsp;<label class="font-13">Color</label>
+                                        </div>
+    
+                                        <div class="form-group col-md-12">
+                                            <table class="table table-bordered
+                                                table-striped table-process-fnt
+                                                text-center">
+                                                <tr>
+                                                    <th>Item name</th>
+                                                    <th>Quantity</th>
+    
+                                                    <th>Action</th>
+                                                </tr>
+    
+                                                <tr *ngFor='let item of itemList |
+                                                filterByIsColor : isColor : false;let
+                                                    i1=index;trackBy:trackByFn'>
+                                                    <td>
+                                                        <ng-select #data name="itemId{{item._id}}{{i1}}" itemId1="ngModel"
+                                                            appendTo="body" [(ngModel)]="item.itemId" #itemId1="ngModel"
+                                                            class="tableForm" (change)="itemSelected1($event,i1)" required
+                                                            appendTo="body" class="ng-select-br-none" required>
+                                                            <ng-option
+                                                                *ngFor="let
+                                                                item of
+                                                                itemListArray | filterOutSelectedSupplier : itemList : item.itemId"
+                                                                [value]="item.itemId" placeholder="Select Item">
+                                                                {{item.itemName}} -
+                                                                {{item.supplierName}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" #quantity1="ngModel"
+                                                            (keypress)="numberOnly($event)" name='qty{{item._id}}{{i1}}'
+                                                            class="tableForm
+                                                            line-height-subtable" [(ngModel)]="item.qty"
+                                                            (keyup)="onKeyUp1($event,i1,1,'quantity')"
+                                                            [id]="'itemList'+i1+'-1'" min="0" required>
+                                                    </td>
+    
+    
+    
+                                                    <td>
+                                                        <nb-icon icon="trash" status="danger" [options]="{ animation:
+                                                            { type: 'zoom' } }" (click)="removeItem1(i1)">
+                                                        </nb-icon>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mobile-btn-center
+                                        text-btn-right">
+    
+                                        <button class="btn btn-primary btn-sm
+                                            btn-design-cancel" type="button"
+                                            (click)="activeModal.close(false)">CANCEL</button>
+                                        <button type="button" class="btn btn-primary
+                                            btn-sm btn-design-save" (click)="additionSlipSaveFlag=
+                                            true;saveSlipData(myForm)">SAVE</button>
+                                        <button type="button" class="btn btn-primary
+                                            btn-sm btn-design-save" (click)="printSlip(myForm)">Save And
+                                            Print</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </div>
+    </nb-card-body>
+
+    <div id="print-slip" *ngIf="additionSlipFlag && !isPrinting && slipData" class="jet-slip size-A5">
+        <nb-card-body>
+            <div *ngIf="slipData">
+                <div *ngIf="slipData.dyeingSlipDataList">
+                    <div class="container print-container mr-bt-50">
+                        <div class="mb-1 print-text-center pd-bt-25">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Lot No:</label> <span
+                                        class="slip-value rd-color">{{slipData.batchId}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Mc No:</label> <span
+                                        class="slip-value rd-color">{{slipData.jetId}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-1 print-text-center pd-bt-25">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Lot Wt:</label> <span
+                                        class="slip-value">{{slipData.totalWt}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-1 print-text-center pd-bt-25">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">QualityId:</label>
+                                    <span class="slip-value">{{slipData.qualityId}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Party Shade No:</label>
+                                    <span class="slip-value">{{slipData.partyShadeNo}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-1 print-text-center pd-bt-25">
+                            <div class="row">
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Taka/Cone:</label>
+                                    <span class="slip-value">{{slipData.batchCount}}</span>
+                                </div>
+                                <div class="col-md-6 wth-50">
+                                    <label class="font-25">Color Tone:</label>
+                                    <span class="slip-value">{{slipData.colorTone}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="container print-container mr-bt-50
+                        jet-print-style-changes">
+
+                        <div class="row print-wth-100 background-c6daf0
+                            mr-top-bottom-15">
+                            <div class="col-md-12 width-100">
+                                <div class="form-group col-md-4 width-20
+                                    form-style-print">
+                                    <h3 class="font-30">Addition</h3>
+                                </div>
+
+                                <div class="form-group col-md-4 width-28
+                                    form-style-print">
+                                    <label class="mr-right font-25
+                                        font-weight-bold">Temperature:</label>&nbsp;
+                                    <div class="print-data width-30 color-000">
+                                        {{temp}}</div>&nbsp;
+
+                                </div>
+
+
+                                <div class="form-group col-md-4 width-25
+                                    form-style-print">
+                                    <label class="mr-right font-25
+                                        font-weight-bold">Hold
+                                        Time:</label>
+                                    <div class="print-data width-30 color-000">
+                                        {{holdTime}}</div>
+                                </div>
+                                <div class="form-group col-md-4 form-style-print
+                                    width-27">
+                                    <label class="mr-right font-25
+                                        font-weight-bold">Liquor
+                                        Ratio:</label>
+                                    <div class="print-data width-30 color-000
+                                        border-left-1px">
+                                        {{liquorRatio}}</div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+
+                                <table class="table table-bordered
+                                    table-process-fnt text-center
+                                    print-bg-transperent" id="border-table">
+                                    <tr>
+                                        <th class="font-25">Item name</th>
+                                        <th class="font-25">Quantity</th>
+                                        <th class="font-25">Supplier Name</th>
+                                    </tr>
+
+                                    <tr *ngFor='let item of itemList;let
+                                        i1=index;'>
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.itemName}}</p>
+                                        </td>
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.qty}}</p>
+                                        </td>
+                                        <td class="pd-bt mr-top-5">
+                                            <p class="font-25">{{item.supplierName}}</p>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </nb-card-body>
+    </div>
+</nb-card>

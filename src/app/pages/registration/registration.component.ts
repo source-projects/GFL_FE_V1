@@ -72,6 +72,7 @@ export class RegistrationComponent implements OnInit {
           this.empData = data["data"];
           this.copyEmpData = this.empData.map((element) => ({
             id: element.id,
+            empId:element.empId,
             name: element.name,
             contact: element.contact,
             aadhaar: element.aadhaar,
