@@ -810,7 +810,7 @@ export class AdminComponent implements OnInit {
   saveQuality(addQualityData) {
     this.formSubmitted = true;
     if (addQualityData.valid) {
-      if (this.departmentEditFlag == true) {
+      if (this.addQuality.id) {
         this.adminService.updateQuality(this.addQuality).subscribe(
           (data) => {
             if (data["success"]) {
