@@ -692,4 +692,10 @@ export class AddEditShadeComponent implements OnInit {
       this.disableButton = false;
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/shade/view']);
+    }
+  }
 }

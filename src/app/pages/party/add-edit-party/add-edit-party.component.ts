@@ -403,4 +403,10 @@ export class AddEditPartyComponent implements OnInit {
       this.partyForm.get("state").enable();
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/party/view']);
+    }
+  }
 }

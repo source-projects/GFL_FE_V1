@@ -515,4 +515,10 @@ export class AddEditRegistrationComponent implements OnInit {
       }
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/registration/view']);
+    }
+  }
 }
