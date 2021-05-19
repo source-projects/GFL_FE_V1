@@ -165,12 +165,10 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
     this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
       result => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
         const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
 
         this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
-        //console.log(this.imageFile);
         //return imageFile;
         this.fileUpload(type);
       }

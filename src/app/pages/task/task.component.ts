@@ -294,10 +294,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //           } else {
     //             assignCardDetailWithStatus.concat(data["data"]);
     //           }
-    //           console.log(element.status, data["data"]);
-    //           console.log(index, assignCardDetailWithStatus);
     //           this.assignCardDetail = assignCardDetailWithStatus;
-    //           console.log("filter assign", this.assignCardDetail);
     //         });
     //     });
 
@@ -314,7 +311,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     this.taskService
     //       .getDataAccordingToStatus(completeDateStatusObj)
     //       .subscribe((data) => {
-    //         console.log("complete filter", data["data"]);
     //         this.completedCardDetail = data["data"];
     //       });
     //     break;
@@ -330,7 +326,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     this.taskService
     //       .getDataAccordingToStatus(blockerDaeStatusObj)
     //       .subscribe((data) => {
-    //         console.log("blocker filter", data["data"]);
     //         this.blockerCardDetail = data["data"];
     //       });
     //     break;
@@ -344,7 +339,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     this.taskService
     //       .getDataAccordingToStatus(allDateStatusObj)
     //       .subscribe((data) => {
-    //         console.log("all filter", data["data"]);
     //         this.allCardDetail = data["data"];
     //       });
     //     break;
@@ -358,7 +352,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     //       this.taskService
     //         .getDataAccordingToStatus(approveDateStatusObj)
     //         .subscribe((data) => {
-    //           console.log("approve filter", data["data"]);
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;
@@ -372,7 +365,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     //       this.taskService
     //         .getDataAccordingToStatus(notApproveDateStatusObj)
     //         .subscribe((data) => {
-    //           console.log("Not approve filter", data["data"]);
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;

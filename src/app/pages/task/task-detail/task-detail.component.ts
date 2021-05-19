@@ -58,7 +58,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
     .getTaskMasterDatabyId(this.taskId)
     .subscribe(
       (data) => {
-        console.log(data["data"]);
         this.taskDetail = data["data"];
         this.detailFlag = true;
       },
@@ -90,7 +89,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
   }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
     this.uploadFileOnServer();
   }
@@ -107,7 +105,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
     });
   }
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -116,7 +113,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
       .compressFile(this.imageUrl, -1, 50, 50)
       .then((result) => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
         const imageBlob = this.dataURItoBlob(
           this.imgResultAfterCompress.split(",")[1]
@@ -125,7 +121,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
         this.imageFile = new File([result], this.fileToUpload.name, {
           type: "image/jpeg",
         });
-        //console.log(this.imageFile);
         //return imageFile;
         this.fileUpload();
       });

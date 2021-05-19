@@ -103,7 +103,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
-          console.log(this.departmentList);
+          (this.departmentList);
         }
       },
       (error) => {}
@@ -146,7 +146,6 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
         .compressFile(this.imageUrl, -1, 50, 50)
         .then((result) => {
           this.imgResultAfterCompress = result;
-          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
           const imageBlob = this.dataURItoBlob(
             this.imgResultAfterCompress.split(",")[1]
@@ -155,7 +154,6 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
           this.imageFile = new File([result], this.fileToUpload.name, {
             type: "image/jpeg",
           });
-          //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
         });
@@ -164,7 +162,6 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
         .compressFile(this.docUrl, -1, 50, 50)
         .then((result) => {
           this.imgResultAfterCompress = result;
-          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
           const imageBlob = this.dataURItoBlob(
             this.imgResultAfterCompress.split(",")[1]
@@ -173,7 +170,6 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
           this.imageFile = new File([result], this.fileToUpload.name, {
             type: "image/jpeg",
           });
-          //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
         });

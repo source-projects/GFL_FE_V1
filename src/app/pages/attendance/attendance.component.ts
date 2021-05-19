@@ -125,7 +125,6 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   //     shift: !this.attendance.shift?false:this.attendance.shift,
   //     id: this.currentEmpId,
   //   };
-  //   console.log(obj)
   //   this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
   //     if (data["success"]) {
   //       //this.employeeDetail = data['data'].employeeMast;

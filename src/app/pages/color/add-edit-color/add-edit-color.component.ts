@@ -89,7 +89,6 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
     // let mm=this.maxDate.getMonth()
     // let dd = this.maxDate.getDate()
     // this.maxDate=dd+"/"+mm+"/"+yyyy
-    // console.log(this.maxDate)
     this.color.billDate = this.maxDate;
     this.color.chlDate = this.maxDate;
   }

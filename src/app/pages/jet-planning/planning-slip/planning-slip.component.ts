@@ -410,8 +410,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
                     ? element1.qty.toFixed(3)
                     : element1.qty;
                 });
-                this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
-                console.log(this.slipData);
+                this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
                 if (this.isPrintDirect) this.printNOW();
               });
             } else {

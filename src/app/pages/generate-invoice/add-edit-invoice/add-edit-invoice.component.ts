@@ -223,7 +223,6 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 modalRef.componentInstance.discount = temp[0].percentageDiscount;
         
                 modalRef.result.then((result) => {
-                  console.log(result);
                   if (result) {
                     obj.cgst = result.cgst;
                     obj.sgst = result.sgst;
@@ -275,7 +274,6 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             modalRef.componentInstance.discount = temp[0].percentageDiscount;
     
             modalRef.result.then((result) => {
-              console.log(result);
               if (result) {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;

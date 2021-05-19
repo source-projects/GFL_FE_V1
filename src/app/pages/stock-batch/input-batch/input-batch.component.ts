@@ -25,7 +25,6 @@ export class InputBatchComponent implements OnInit, OnDestroy {
   }
 
   printJobCard() {
-    console.log(this.batchId)
     if (this.batchId) {
       this.disableButton = true
       this.isDirectPrintFlag = true;

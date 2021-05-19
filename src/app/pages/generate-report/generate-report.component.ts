@@ -115,7 +115,6 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
                 }
               })
               this.reportData = data;
-              console.log(this.reportData)
             }
             this.reportData.forEach(ele => {
               if(ele.isFinishMtrSave){

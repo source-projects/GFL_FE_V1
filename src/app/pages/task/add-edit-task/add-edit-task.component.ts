@@ -80,7 +80,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
       .compressFile(this.imageUrl, -1, 50, 50)
       .then((result) => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
         const imageBlob = this.dataURItoBlob(
           this.imgResultAfterCompress.split(",")[1]
@@ -89,7 +88,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
         this.imageFile = new File([result], this.fileToUpload.name, {
           type: "image/jpeg",
         });
-        //console.log(this.imageFile);
         //return imageFile;
         this.fileUpload();
       });
@@ -134,7 +132,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
     this.uploadFileOnServer();
   }
@@ -151,7 +148,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     });
   }
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
   setPriority(value: string) {
@@ -182,7 +178,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     });
   }
   getUserList(event) {
-    console.log(event);
     this.taskService.getUserList(event).subscribe(
       (data) => {
         this.userList = data["data"];
@@ -214,7 +209,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
         },
         (error) => {}
       );
-      console.log(this.addTask);
     } else {
       return;
     }

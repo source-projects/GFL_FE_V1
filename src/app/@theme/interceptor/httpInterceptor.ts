@@ -61,7 +61,6 @@ export class CustomHttpInterceptor implements HttpInterceptor {
           //   switch (err.status) {
           //     case 400:
                 
-          //       console.log(err.error["msg"])
           //       this.errorMessage = "Bad Request.";
           //       break;
           //     case 401:
