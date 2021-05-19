@@ -825,4 +825,10 @@ export class AddEditUserComponent implements OnInit {
       errorField.scrollIntoView();
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/user/view']);
+    }
+  }
 }

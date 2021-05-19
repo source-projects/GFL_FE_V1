@@ -382,4 +382,10 @@ export class AddEditInvoiceComponent implements OnInit {
 
     this.finalcheckedrows = arr;
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/generate_invoice/view']);
+    }
+  }
 }

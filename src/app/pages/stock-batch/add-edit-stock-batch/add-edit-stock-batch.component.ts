@@ -57,7 +57,7 @@ export class AddEditStockBatchComponent implements OnInit {
   currentStockBatchId;
   rearrangeStartIndex: any;
   dateForPicker = new Date();
-
+  selectedTableChange;
   deleteFlag = 0;
   validationCardRowIndex = 0;
   flag = 0;
@@ -774,6 +774,7 @@ export class AddEditStockBatchComponent implements OnInit {
     if (event === "view table") {
       this.route.navigate(['/pages/stock-batch/view'])
     } else if (event === "job card") {
+      this.selectedTableChange = null;
       const modalRef = this.modalService.open(InputBatchComponent)
     }
   }

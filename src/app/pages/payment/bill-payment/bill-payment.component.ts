@@ -421,4 +421,10 @@ export class BillPaymentComponent implements OnInit {
     this.billBanks.push({name:value.label});
   }
 
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/payment/payment']);
+    }
+  }
+
 }

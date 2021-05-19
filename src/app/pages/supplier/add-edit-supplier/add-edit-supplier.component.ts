@@ -202,4 +202,10 @@ export class AddEditSupplierComponent implements OnInit {
         );
     }
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.router.navigate(['/pages/supplier/view']);
+    }
+  }
 }

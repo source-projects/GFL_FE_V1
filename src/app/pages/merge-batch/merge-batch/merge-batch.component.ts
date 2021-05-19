@@ -10,7 +10,7 @@ import { MergeBatch } from "../../../@theme/model/merge-batch";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { StockBatchService } from "../../../@theme/services/stock-batch.service";
 import { MergeBatchService } from "../../../@theme/services/merge-batch.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "../../../@theme/services/common.service";
 import { indexOf } from "lodash";
 
@@ -41,7 +41,8 @@ export class MergeBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private mergeBatchService: MergeBatchService,
     private commonService: CommonService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private route: Router,
   ) {
     this.filterDetails.push(this._clone(new MergeBatch()));
     this.filterDetails.push(this._clone(new MergeBatch()));
@@ -330,5 +331,11 @@ export class MergeBatchComponent implements OnInit {
 
   updateMergedBatch(form) {
     this.saveMergedBatch(form);
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/merge-batch/view']);
+    }
   }
 }

@@ -286,4 +286,10 @@ export class AddEditDyeingProcessComponent implements OnInit {
     this.addFlag = true;
     this.updateFlag = false;
   }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/dyeing-process/view']);
+    }
+  }
 }
