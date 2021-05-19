@@ -1,8 +1,9 @@
+import { Subject } from 'rxjs';
 import {
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
-  Renderer2,
   ViewChild,
 } from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
@@ -24,7 +25,6 @@ import { PartyService } from "../../..//@theme/services/party.service";
 import { QualityService } from "../../..//@theme/services/quality.service";
 import { StockBatchService } from "../../..//@theme/services/stock-batch.service";
 import { CommonService } from "../../..//@theme/services/common.service";
-import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { UpdateConfirmationDialogComponent } from "../../../@theme/components/update-confirmation-dialog/update-confirmation-dialog.component";
 import { JobCardComponent } from "../job-card/job-card.component";
 import { DateTimeAdapter } from "ng-pick-datetime";
@@ -36,7 +36,7 @@ import { InputBatchComponent } from "../input-batch/input-batch.component";
   styleUrls: ["./add-edit-stock-batch.component.scss"],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
-export class AddEditStockBatchComponent implements OnInit {
+export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   @ViewChild("forFocus") searchElement: ElementRef;
   public loading = false;
   public disableButton = false;
@@ -94,6 +94,13 @@ export class AddEditStockBatchComponent implements OnInit {
   isDirectPrintFlag: boolean = false;
   currentBatchSequence: any = 0;
   currentBatchSeqId = 0;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private partyService: PartyService,
     private toastr: ToastrService,
@@ -102,7 +109,6 @@ export class AddEditStockBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private _route: ActivatedRoute,
     private commonService: CommonService,
-    private renderer: Renderer2,
     private modalService: NgbModal,
     dateTimeAdapter: DateTimeAdapter<any>
   ) {

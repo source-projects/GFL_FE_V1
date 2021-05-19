@@ -1,8 +1,7 @@
+import { Subject } from 'rxjs';
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
-import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -11,7 +10,6 @@ import { PartyGuard } from "../../@theme/guards/party.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { BtnCellRenderer } from "../../@theme/renderer/button-cell-renderer.component";
 import { CommonService } from "../../@theme/services/common.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { PartyService } from "../../@theme/services/party.service";
 
 @Component({
@@ -19,7 +17,7 @@ import { PartyService } from "../../@theme/services/party.service";
   templateUrl: "./party.component.html",
   styleUrls: ["./party.component.scss"],
 })
-export class PartyComponent implements OnInit {
+export class PartyComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
@@ -66,18 +64,20 @@ export class PartyComponent implements OnInit {
   rowModelType;
   serverSideStoreType;
   rowSelection;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  } 
+
   constructor(
     private partyService: PartyService,
-    private route: Router,
     private modalService: NgbModal,
     public partyGuard: PartyGuard,
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private commonService: CommonService,
-    //private exportService: ExportService,
-    private _NgbModal: NgbModal,
-    private jwtToken: JwtTokenService,
-    private http: HttpClient
   ) {
     this.frameworkComponents = {
       btnCellRenderer: BtnCellRenderer,

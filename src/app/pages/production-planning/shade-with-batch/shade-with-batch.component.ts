@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { JetPlanningService } from "../../../@theme/services/jet-planning.service";
 import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
-import { ShadeService } from "../../../@theme/services/shade.service";
 
 @Component({
   selector: "ngx-shade-with-batch",
   templateUrl: "./shade-with-batch.component.html",
   styleUrls: ["./shade-with-batch.component.scss"],
 })
-export class ShadeWithBatchComponent implements OnInit {
+export class ShadeWithBatchComponent implements OnInit, OnDestroy {
   allShade: any[];
   shade: any[];
   loading = false;
@@ -33,9 +33,15 @@ export class ShadeWithBatchComponent implements OnInit {
   //batch:any;
   color: any;
   weight: any;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private productionPlanningService: ProductionPlanningService,
-    private shadeService: ShadeService,
     private _NgbActiveModal: NgbActiveModal,
     private toastr: ToastrService,
     private jetService: JetPlanningService

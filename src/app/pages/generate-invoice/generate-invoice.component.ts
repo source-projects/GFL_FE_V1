@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { CommonService } from "../../@theme/services/common.service";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NavigationExtras, Router } from "@angular/router";
 
 // import { Invoice } from "app/@theme/model/invoice";
@@ -11,7 +10,7 @@ import { NavigationExtras, Router } from "@angular/router";
   templateUrl: "./generate-invoice.component.html",
   styleUrls: ["./generate-invoice.component.scss"],
 })
-export class GenerateInvoiceComponent implements OnInit {
+export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   checked = false;
   in: number = 2;
   public loading = false;
@@ -24,10 +23,14 @@ export class GenerateInvoiceComponent implements OnInit {
   hiddenEdit: boolean = true;
   hiddenView: boolean = true;
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
-    private commonService: CommonService,
     private generateInvoiceService: GenerateInvoiceService,
-    private _NgbModal: NgbModal,
     private router: Router
   ) { }
 

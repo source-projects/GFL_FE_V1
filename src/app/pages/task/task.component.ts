@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { DatePipe } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -14,7 +15,7 @@ import { TaskDetailComponent } from "./task-detail/task-detail.component";
   templateUrl: "./task.component.html",
   styleUrls: ["./task.component.scss"],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
   assignFlagForDetails: boolean = false;
   userHeadId;
   user = this.commonService.getUser().userId;
@@ -72,13 +73,18 @@ export class TaskComponent implements OnInit {
   datePipeString;
   refreshPipeCount = 0;
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private modalService: NgbModal,
     private taskGuard: TaskGuard,
     private taskService: TaskService,
     private commonService: CommonService,
     private toastr: ToastrService,
-    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -288,10 +294,7 @@ export class TaskComponent implements OnInit {
     //           } else {
     //             assignCardDetailWithStatus.concat(data["data"]);
     //           }
-    //           console.log(element.status, data["data"]);
-    //           console.log(index, assignCardDetailWithStatus);
     //           this.assignCardDetail = assignCardDetailWithStatus;
-    //           console.log("filter assign", this.assignCardDetail);
     //         });
     //     });
 
@@ -308,7 +311,6 @@ export class TaskComponent implements OnInit {
     //     this.taskService
     //       .getDataAccordingToStatus(completeDateStatusObj)
     //       .subscribe((data) => {
-    //         console.log("complete filter", data["data"]);
     //         this.completedCardDetail = data["data"];
     //       });
     //     break;
@@ -324,7 +326,6 @@ export class TaskComponent implements OnInit {
     //     this.taskService
     //       .getDataAccordingToStatus(blockerDaeStatusObj)
     //       .subscribe((data) => {
-    //         console.log("blocker filter", data["data"]);
     //         this.blockerCardDetail = data["data"];
     //       });
     //     break;
@@ -338,7 +339,6 @@ export class TaskComponent implements OnInit {
     //     this.taskService
     //       .getDataAccordingToStatus(allDateStatusObj)
     //       .subscribe((data) => {
-    //         console.log("all filter", data["data"]);
     //         this.allCardDetail = data["data"];
     //       });
     //     break;
@@ -352,7 +352,6 @@ export class TaskComponent implements OnInit {
     //       this.taskService
     //         .getDataAccordingToStatus(approveDateStatusObj)
     //         .subscribe((data) => {
-    //           console.log("approve filter", data["data"]);
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;
@@ -366,7 +365,6 @@ export class TaskComponent implements OnInit {
     //       this.taskService
     //         .getDataAccordingToStatus(notApproveDateStatusObj)
     //         .subscribe((data) => {
-    //           console.log("Not approve filter", data["data"]);
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;

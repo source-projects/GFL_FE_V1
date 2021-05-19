@@ -1,4 +1,5 @@
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   NgbDateAdapter,
@@ -18,7 +19,7 @@ import { DateTimeAdapter } from "ng-pick-datetime";
   styleUrls: ["./add-edit-color.component.scss"],
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }],
 })
-export class AddEditColorComponent implements OnInit {
+export class AddEditColorComponent implements OnInit, OnDestroy {
   itemSelectedFlag: boolean = false;
 
   @ViewChildren("data") data: QueryList<NgSelectComponent>;
@@ -49,6 +50,13 @@ export class AddEditColorComponent implements OnInit {
   convertedDate2: any;
 
   maxDate: any;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private _route: ActivatedRoute,
     private commonService: CommonService,
@@ -81,7 +89,6 @@ export class AddEditColorComponent implements OnInit {
     // let mm=this.maxDate.getMonth()
     // let dd = this.maxDate.getDate()
     // this.maxDate=dd+"/"+mm+"/"+yyyy
-    // console.log(this.maxDate)
     this.color.billDate = this.maxDate;
     this.color.chlDate = this.maxDate;
   }

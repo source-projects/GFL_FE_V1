@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
 import { ColorGuard } from "../@theme/guards/color.guard";
 import { PartyGuard } from "../@theme/guards/party.guard";
 import { ProgramGuard } from "../@theme/guards/program.guard";
@@ -13,8 +13,7 @@ import { ProductionPlanningGuard } from "../@theme/guards/production-planning.gu
 import { WaterJetGuard } from "../@theme/guards/water-jet.guard";
 import { InvoiceGuard } from "../@theme/guards/invoice.guard";
 import { PaymentGuard } from "../@theme/guards/payment.guard";
-import { AnyAaaaRecord } from "dns";
-import { BehaviorSubject, from } from "rxjs";
+import { Subject } from "rxjs";
 import { MENU_ITEMS } from "./pages-menu";
 import { FinishedMeterGuard } from "../@theme/guards/finished-meter.guard";
 import { InputDataGuard } from "../@theme/guards/input-data.guard";
@@ -24,8 +23,6 @@ import { AdminGuard } from "../@theme/guards/admin.guard";
 import { EmployeeRegistrationGuard } from "../@theme/guards/employee-registration.guard";
 import { AttndanceGuard } from "../@theme/guards/attendance.guard";
 import { PurchaseGuard } from "../@theme/guards/purchase.guard";
-import { JwtTokenService } from "../@theme/services/jwt-token.service";
-import { StoreTokenService } from "../@theme/services/store-token.service";
 import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
 import { ReportGuard } from "../@theme/guards/report.guard";
 import { TaskGuard } from "../@theme/guards/task.guard";
@@ -39,7 +36,7 @@ import { TaskGuard } from "../@theme/guards/task.guard";
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit, OnDestroy {
   menu = MENU_ITEMS;
   view: Boolean = true;
   view_all: Boolean = true;
@@ -47,6 +44,13 @@ export class PagesComponent implements OnInit {
   user: any;
   userHead: any;
   userData: any;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     public partyGuard: PartyGuard,
     public qualityGuard: QualityGuard,

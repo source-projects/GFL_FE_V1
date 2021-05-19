@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +12,7 @@ import { PurchaseNewService } from '../../@theme/services/purchase-new.service';
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.scss']
 })
-export class PurchaseComponent implements OnInit {
+export class PurchaseComponent implements OnInit, OnDestroy {
 
   loading = false;
   tableStyle = "bootstrap";
@@ -21,6 +22,13 @@ export class PurchaseComponent implements OnInit {
 
   purchaseArray = [];
   copyPurchaseArray = [];
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
   constructor(
     private purchseService : PurchaseNewService,
     private purchaseGuard : PurchaseGuard,

@@ -1,21 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
 import { SupplierGuard } from '../../@theme/guards/supplier.guard';
 import * as errorData from '../../@theme/json/error.json';
 import { CommonService } from '../../@theme/services/common.service';
-import { ExportService } from '../../@theme/services/export.service';
-import { JwtTokenService } from '../../@theme/services/jwt-token.service';
 import { SupplierService } from '../../@theme/services/supplier.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-supplier',
   templateUrl: './supplier.component.html',
   styleUrls: ['./supplier.component.scss']
 })
-export class SupplierComponent implements OnInit {
+export class SupplierComponent implements OnInit, OnDestroy {
   public loading = false;
   tableStyle = "bootstrap";
 
@@ -52,14 +49,16 @@ export class SupplierComponent implements OnInit {
   allEdit = true;
   groupEdit = true;
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private commonService: CommonService,
     private supplierService: SupplierService,
     public supplierGuard: SupplierGuard,
-    private jwtToken: JwtTokenService,
-    private router: Router,
-    private toastr: ToastrService,
-    private exportService: ExportService,
     private modalService: NgbModal,
 
   ) { }

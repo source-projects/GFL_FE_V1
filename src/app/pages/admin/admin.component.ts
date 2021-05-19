@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import * as errorData from "../../@theme/json/error.json";
 import {
   AddJet,
@@ -15,7 +16,7 @@ import {
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminGuard } from "../../@theme/guards/admin.guard";
@@ -27,7 +28,7 @@ import { PreviewComponent } from "./preview/preview.component";
   templateUrl: "./admin.component.html",
   styleUrls: ["./admin.component.scss"],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   addJet: AddJet = new AddJet();
   addCompany: AddCompany = new AddCompany();
   addDepartment: AddDepartment = new AddDepartment();
@@ -105,6 +106,8 @@ export class AdminComponent implements OnInit {
     },
   ];
   selectedBy;
+  public destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private adminService: AdminService,
     private purchseService: PurchaseNewService,
@@ -120,6 +123,11 @@ export class AdminComponent implements OnInit {
     this.addMachineArray.push(this.addMachine);
     this.addMachineCategoryArray.push(this.addMachineCategory);
     this.addQualityArray.push(this.addQuality);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { RegistrationService } from "../../../@theme/services/registration.service";
 import { AddTask, TaskImageList } from "../../../@theme/model/task";
@@ -14,7 +15,7 @@ import { DatePipe } from "@angular/common";
   templateUrl: "./add-edit-task.component.html",
   styleUrls: ["./add-edit-task.component.scss"],
 })
-export class AddEditTaskComponent implements OnInit {
+export class AddEditTaskComponent implements OnInit, OnDestroy {
 
   taskTypeOnceFlag:boolean = false;
   minDate;
@@ -39,6 +40,13 @@ export class AddEditTaskComponent implements OnInit {
   fileToUpload: File = null;
   formSubmitted: boolean = false;
   datepipestring;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private adminService: AdminService,
     private taskService: TaskService,
@@ -46,8 +54,7 @@ export class AddEditTaskComponent implements OnInit {
     private registrationService: RegistrationService,
     private commonService: CommonService,
     private activeModel: NgbActiveModal,
-    private toastrService: ToastrService,
-    private datepipe:DatePipe
+    private toastrService: ToastrService
 
   ) {
     this.taskImageListArray.push(this.taskImageList);
@@ -73,7 +80,6 @@ export class AddEditTaskComponent implements OnInit {
       .compressFile(this.imageUrl, -1, 50, 50)
       .then((result) => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
         const imageBlob = this.dataURItoBlob(
           this.imgResultAfterCompress.split(",")[1]
@@ -82,7 +88,6 @@ export class AddEditTaskComponent implements OnInit {
         this.imageFile = new File([result], this.fileToUpload.name, {
           type: "image/jpeg",
         });
-        //console.log(this.imageFile);
         //return imageFile;
         this.fileUpload();
       });
@@ -127,7 +132,6 @@ export class AddEditTaskComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
     this.uploadFileOnServer();
   }
@@ -144,7 +148,6 @@ export class AddEditTaskComponent implements OnInit {
     });
   }
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
   setPriority(value: string) {
@@ -175,7 +178,6 @@ export class AddEditTaskComponent implements OnInit {
     });
   }
   getUserList(event) {
-    console.log(event);
     this.taskService.getUserList(event).subscribe(
       (data) => {
         this.userList = data["data"];
@@ -207,7 +209,6 @@ export class AddEditTaskComponent implements OnInit {
         },
         (error) => {}
       );
-      console.log(this.addTask);
     } else {
       return;
     }
