@@ -5,15 +5,18 @@ import { SharedModule } from '../../@theme/shared.module';
 
 import { AdditionSlipRoutingModule } from './addition-slip-routing.module';
 import { AdditionSlipComponent } from './addition-slip.component';
+import { SlipDialogComponent } from './slip-dialog/slip-dialog.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 
 @NgModule({
-  declarations: [AdditionSlipComponent],
+  declarations: [AdditionSlipComponent, SlipDialogComponent],
   imports: [
     CommonModule,
     AdditionSlipRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ThemeModule
   ]
 })
 export class AdditionSlipModule { }
