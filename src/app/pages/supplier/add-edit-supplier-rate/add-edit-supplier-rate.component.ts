@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from "../../../@theme/services/common.service";
@@ -10,7 +11,7 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./add-edit-supplier-rate.component.html",
   styleUrls: ["./add-edit-supplier-rate.component.scss"],
 })
-export class AddEditSupplierRateComponent implements OnInit {
+export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
 
   //data fatch supplier Name
@@ -63,6 +64,12 @@ export class AddEditSupplierRateComponent implements OnInit {
   myForm: any;
 
   mySupplierRateId;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private commonService: CommonService,

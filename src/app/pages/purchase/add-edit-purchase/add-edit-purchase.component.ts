@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../../@theme/services/common.service';
@@ -15,7 +16,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
   templateUrl: './add-edit-purchase.component.html',
   styleUrls: ['./add-edit-purchase.component.scss']
 })
-export class AddEditPurchaseComponent implements OnInit {
+export class AddEditPurchaseComponent implements OnInit, OnDestroy {
 
   invurl = [];
   maturl = [];
@@ -55,6 +56,12 @@ export class AddEditPurchaseComponent implements OnInit {
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
   imageFile: File;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private commonService: CommonService,

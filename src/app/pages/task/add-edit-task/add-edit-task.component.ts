@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { RegistrationService } from "../../../@theme/services/registration.service";
 import { AddTask, TaskImageList } from "../../../@theme/model/task";
@@ -14,7 +15,7 @@ import { DatePipe } from "@angular/common";
   templateUrl: "./add-edit-task.component.html",
   styleUrls: ["./add-edit-task.component.scss"],
 })
-export class AddEditTaskComponent implements OnInit {
+export class AddEditTaskComponent implements OnInit, OnDestroy {
 
   taskTypeOnceFlag:boolean = false;
   minDate;
@@ -39,6 +40,13 @@ export class AddEditTaskComponent implements OnInit {
   fileToUpload: File = null;
   formSubmitted: boolean = false;
   datepipestring;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private adminService: AdminService,
     private taskService: TaskService,
@@ -46,8 +54,7 @@ export class AddEditTaskComponent implements OnInit {
     private registrationService: RegistrationService,
     private commonService: CommonService,
     private activeModel: NgbActiveModal,
-    private toastrService: ToastrService,
-    private datepipe:DatePipe
+    private toastrService: ToastrService
 
   ) {
     this.taskImageListArray.push(this.taskImageList);

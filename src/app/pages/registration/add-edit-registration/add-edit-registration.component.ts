@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   NgxQrcodeElementTypes,
@@ -20,7 +21,7 @@ import { RegistrationService } from "../../../@theme/services/registration.servi
   templateUrl: "./add-edit-registration.component.html",
   styleUrls: ["./add-edit-registration.component.scss"],
 })
-export class AddEditRegistrationComponent implements OnInit {
+export class AddEditRegistrationComponent implements OnInit, OnDestroy {
   docAdd = [];
   docUpdate = [];
   imageIndexFordocAdd = 0;
@@ -66,6 +67,13 @@ export class AddEditRegistrationComponent implements OnInit {
   localUrl;
   imageFile: File = null;
   departmentList: any[];
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,

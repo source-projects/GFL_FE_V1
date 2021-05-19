@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +13,7 @@ import { MergeBatchGuard } from '../../../@theme/guards/merge-batch.guard';
   templateUrl: './view-merge-batch.component.html',
   styleUrls: ['./view-merge-batch.component.scss']
 })
-export class ViewMergeBatchComponent implements OnInit {
+export class ViewMergeBatchComponent implements OnInit, OnDestroy {
 
   mergeList = [];
   tableStyle = "bootstrap";
@@ -21,6 +22,13 @@ export class ViewMergeBatchComponent implements OnInit {
   hiddenAdd: boolean = true;
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private toastr: ToastrService,
     private mergeBatchService: MergeBatchService,

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ColorService } from "../../../@theme/services/color.service";
@@ -9,7 +10,7 @@ import { SupplierService } from "../../../@theme/services/supplier.service";
   templateUrl: "./issue-color-box.component.html",
   styleUrls: ["./issue-color-box.component.scss"],
 })
-export class IssueColorBoxComponent implements OnInit {
+export class IssueColorBoxComponent implements OnInit, OnDestroy {
   itemList: any[] = [];
   colorBoxList: any[] = [];
   allBoxList = [];
@@ -24,6 +25,12 @@ export class IssueColorBoxComponent implements OnInit {
   notIssued = false;
   consolidated = false;
   list = [];
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   constructor(
     private supplierService: SupplierService,
     private colorService: ColorService,

@@ -1,11 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { RegistrationService } from "../../@theme/services/registration.service";
-import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 
 export class Attendance {
   controlId: number;
@@ -29,7 +28,7 @@ export class Attendance {
   templateUrl: "./attendance.component.html",
   styleUrls: ["./attendance.component.scss"],
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent implements OnInit, OnDestroy {
   user;
   currentEmpId;
   currentData;
@@ -48,7 +47,7 @@ export class AttendanceComponent implements OnInit {
   selectedDate
   maxDate
   modifiedToday: string;
-
+  destroy$ :Subject<void> = new Subject<void>();
 
 
   constructor(
@@ -61,7 +60,11 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserId();
+  }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getUserId() {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { PartyService } from "../../@theme/services/party.service";
 import { QualityService } from "../../@theme/services/quality.service";
@@ -9,7 +10,7 @@ import { ReportService } from "../../@theme/services/report.service";
   templateUrl: "./generate-report.component.html",
   styleUrls: ["./generate-report.component.scss"],
 })
-export class GenerateReportComponent implements OnInit {
+export class GenerateReportComponent implements OnInit, OnDestroy {
   partyName: any;
   partyId: any;
   qualityControlId: any;
@@ -29,6 +30,13 @@ export class GenerateReportComponent implements OnInit {
   notProduction = true;
   finished = true;
   dropdownBatchList=[]
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private partyService: PartyService,
     private qualityService: QualityService,

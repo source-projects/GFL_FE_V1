@@ -1,19 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { ToastrService } from "ngx-toastr";
-import { CommonService } from "../../../@theme/services/common.service";
 import { TaskImageList } from "../../../@theme/model/task";
 import { RegistrationService } from "../../../@theme/services/registration.service";
 import { TaskService } from "../../../@theme/services/task.service";
-// import { stat } from "node:fs";
-import { update } from "lodash";
 @Component({
   selector: "ngx-task-detail",
   templateUrl: "./task-detail.component.html",
   styleUrls: ["./task-detail.component.scss"],
 })
-export class TaskDetailComponent implements OnInit {
+export class TaskDetailComponent implements OnInit, OnDestroy {
   files: File[] = [];
   fileToUpload: File = null;
   imageUrl = "";
@@ -36,9 +34,16 @@ export class TaskDetailComponent implements OnInit {
     {id:4,statusName:"NotStarted"},
     {id:5,statusName:"Blocker"}
   ]
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(private activeModel: NgbActiveModal, private taskService: TaskService,
     private registrationService: RegistrationService,private imageCompress: NgxImageCompressService,
-    private commonService:CommonService,  private toastrService: ToastrService
+    private toastrService: ToastrService
 
     ) {}
 

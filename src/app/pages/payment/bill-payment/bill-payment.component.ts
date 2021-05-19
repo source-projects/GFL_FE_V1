@@ -1,4 +1,5 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdvancePayList, Payment, PaymentData } from '../../../@theme/model/payment'
 import { CommonService } from '../../../@theme/services/common.service';
@@ -14,7 +15,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   templateUrl: './bill-payment.component.html',
   styleUrls: ['./bill-payment.component.scss']
 })
-export class BillPaymentComponent implements OnInit {
+export class BillPaymentComponent implements OnInit, OnDestroy {
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
 
   billBanks = [];
@@ -49,6 +50,11 @@ export class BillPaymentComponent implements OnInit {
   // advancePaymentList: AdvancePayment = new AdvancePayment();
   paymentDataList: PaymentData = new PaymentData();
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private partyService: PartyService,

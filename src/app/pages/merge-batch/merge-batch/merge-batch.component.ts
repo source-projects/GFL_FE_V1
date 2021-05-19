@@ -1,9 +1,10 @@
+import { Subject } from 'rxjs';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, ElementRef, OnInit } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { PartyService } from "../../../@theme/services/party.service";
 import { MergeBatch } from "../../../@theme/model/merge-batch";
@@ -19,7 +20,7 @@ import { indexOf } from "lodash";
   templateUrl: "./merge-batch.component.html",
   styleUrls: ["./merge-batch.component.scss"],
 })
-export class MergeBatchComponent implements OnInit {
+export class MergeBatchComponent implements OnInit, OnDestroy {
   public filterDetails: MergeBatch[] = [];
   public partyList: any[];
   public qualityList: any = [];
@@ -34,6 +35,13 @@ export class MergeBatchComponent implements OnInit {
   userHead;
   currentId;
   currentMergeBatch;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private toastr: ToastrService,
     private partyService: PartyService,

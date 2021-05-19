@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -7,8 +7,6 @@ import { ColorGuard } from "../../@theme/guards/color.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { ColorService } from "../../@theme/services/color.service";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -16,7 +14,7 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./color.component.html",
   styleUrls: ["./color.component.scss"],
 })
-export class ColorComponent implements OnInit {
+export class ColorComponent implements OnInit, OnDestroy {
   public loading = false;
 
   public errorData: any = (errorData as any).default;
@@ -58,17 +56,20 @@ export class ColorComponent implements OnInit {
   allEdit = true;
   groupEdit = true;
   disabled = false;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   constructor(
     private colorService: ColorService,
 
-    private route: Router,
     private modalService: NgbModal,
 
     public colorGuard: ColorGuard,
-    private jwtToken: JwtTokenService,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {

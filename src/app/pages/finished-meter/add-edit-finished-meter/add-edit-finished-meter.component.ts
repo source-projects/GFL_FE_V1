@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
 import { BatchData, FinishedMeter } from "../../../@theme/model/finished-meter";
 import { CommonService } from "../../../@theme/services/common.service";
@@ -12,7 +13,7 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./add-edit-finished-meter.component.html",
   styleUrls: ["./add-edit-finished-meter.component.scss"],
 })
-export class AddEditFinishedMeterComponent implements OnInit {
+export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   currentFinishedMeter;
   user;
@@ -30,6 +31,12 @@ export class AddEditFinishedMeterComponent implements OnInit {
   public totalFinishMeter: any = 0;
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private commonService: CommonService,

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -13,7 +14,7 @@ import { QualityService } from "../../../@theme/services/quality.service";
   templateUrl: "./add-edit-quality.component.html",
   styleUrls: ["./add-edit-quality.component.scss"],
 })
-export class AddEditQualityComponent implements OnInit {
+export class AddEditQualityComponent implements OnInit, OnDestroy {
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -37,6 +38,13 @@ export class AddEditQualityComponent implements OnInit {
 
   //to store selected QualityId
   currentQualityId: any;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,

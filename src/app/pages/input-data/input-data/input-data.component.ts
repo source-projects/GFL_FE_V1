@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from 'app/@theme/model/log-sheet';
 import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
 import { LogSheetService } from 'app/@theme/services/log-sheet.service';
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './input-data.component.html',
   styleUrls: ['./input-data.component.scss']
 })
-export class InputDataComponent implements OnInit {
+export class InputDataComponent implements OnInit, OnDestroy {
   currentDate = new Date();
   checkCurrent: any;
   shiftselected: any = "day";
@@ -139,6 +140,12 @@ export class InputDataComponent implements OnInit {
   data: any;
 
   datePipeString: String;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(private jwt: JwtTokenService, private logsheet: LogSheetService, private datePipe: DatePipe, private toast: ToastrService, private router: Router) { }
 
