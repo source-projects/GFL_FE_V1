@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -16,7 +17,7 @@ import { JobCardComponent } from "./job-card/job-card.component";
   templateUrl: "./stock-batch.component.html",
   styleUrls: ["./stock-batch.component.scss"],
 })
-export class StockBatchComponent implements OnInit {
+export class StockBatchComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   public loading = false;
   stockList;
@@ -57,6 +58,13 @@ export class StockBatchComponent implements OnInit {
   ownEdit = true;
   allEdit = true;
   groupEdit = true;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,

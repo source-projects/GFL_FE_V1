@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
@@ -10,6 +11,7 @@ import { ProgramService } from "../../@theme/services/program.service";
 import { QualityService } from "../../@theme/services/quality.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
+import { SlipDialogComponent } from "./slip-dialog/slip-dialog.component";
 
 export class AdditionSlip {
   id: number;
@@ -54,7 +56,7 @@ export class DyeingSlipItemDatum {
   templateUrl: "./addition-slip.component.html",
   styleUrls: ["./addition-slip.component.scss"],
 })
-export class AdditionSlipComponent implements OnInit {
+export class AdditionSlipComponent implements OnInit, OnDestroy {
   batchNo: any;
   p_id: any;
   q_id: any;
@@ -91,6 +93,7 @@ export class AdditionSlipComponent implements OnInit {
   directSlipPartyId = null;
   directSlipQualityId = null;
   printNow = false;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private modalService: NgbModal,
@@ -102,13 +105,18 @@ export class AdditionSlipComponent implements OnInit {
     private route: Router,
     private toastr: ToastrService
   ) {}
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.getAllParty();
     this.getAllQuality();
     this.getAllBatch();
     this.getAllBatchData();
-    this.getAllAdditionSlip();
+    this.getAllAdditionSlip(()=>{});
   }
 
   getAllParty() {
@@ -335,7 +343,7 @@ export class AdditionSlipComponent implements OnInit {
     this.additionSlip.batchId = event.batchId;
     this.additionSlip.productionId = event.productionId;
 
-    const modalRef = this.modalService.open(PlanningSlipComponent);
+    const modalRef = this.modalService.open(SlipDialogComponent);
     modalRef.componentInstance.isPrintDirect = false;
 
     modalRef.componentInstance.additionSlipFlag = true;
@@ -402,7 +410,7 @@ export class AdditionSlipComponent implements OnInit {
         if (data["success"]) {
           this.additionSlipData = data["data"];
           if (this.additionSlipData) {
-            const modalRef = this.modalService.open(PlanningSlipComponent);
+            const modalRef = this.modalService.open(SlipDialogComponent);
             modalRef.componentInstance.isPrintDirect = printDirect;
             modalRef.componentInstance.batchId = batchId;
             modalRef.componentInstance.editAdditionFlag = true;
@@ -435,7 +443,7 @@ export class AdditionSlipComponent implements OnInit {
       if (result) {
         this.planningService.deleteAdditionSlip(id).subscribe(
           (data) => {
-            this.getAllAdditionSlip();
+            this.getAllAdditionSlip(()=>{});
             this.toastr.success(errorData.Delete);
           },
           (error) => {}
@@ -459,7 +467,7 @@ export class AdditionSlipComponent implements OnInit {
     this.planningService.updateAdditionDyeingSlip(this.additionSlip).subscribe(
       (data) => {
         if (data["success"]) {
-          this.getAllAdditionSlip();
+          this.getAllAdditionSlip(()=>{});
           this.toastr.success(errorData.Update_Success);
           // this.disableButton=true;
         } else {
@@ -484,7 +492,11 @@ export class AdditionSlipComponent implements OnInit {
         if (data["success"]) {
           this.route.navigate(["/pages/addition-slip"]);
           this.toastr.success(errorData.Add_Success);
-          this.getAllAdditionSlip();
+          this.getAllAdditionSlip(()=>{
+            if(result.printAlso){
+              this.editSlip(data['data'], true);
+            }
+          });
           this.getAllBatch();
           // this.disableButton=true;
         } else {
@@ -495,7 +507,7 @@ export class AdditionSlipComponent implements OnInit {
     );
   }
 
-  getAllAdditionSlip() {
+  getAllAdditionSlip(onSuccess = () => {}) {
     this.additionSlipList = [];
     this.planningService.getAlladditionSlip().subscribe(
       (data) => {
@@ -518,6 +530,7 @@ export class AdditionSlipComponent implements OnInit {
             liquerRation: element.dyeingSlipData.liquerRation,
             temp: element.dyeingSlipData.temp,
           }));
+          onSuccess();
         } else {
         }
         this.loading = false;

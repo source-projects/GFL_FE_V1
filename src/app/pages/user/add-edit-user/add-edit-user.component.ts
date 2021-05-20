@@ -1,4 +1,5 @@
-import { Component, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   NbGlobalPhysicalPosition,
@@ -18,7 +19,7 @@ import { PartyService } from "../../../@theme/services/party.service";
   templateUrl: "./add-edit-user.component.html",
   styleUrls: ["./add-edit-user.component.scss"],
 })
-export class AddEditUserComponent implements OnInit {
+export class AddEditUserComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   public loading = false;
   public disableButton = false;
@@ -141,6 +142,12 @@ export class AddEditUserComponent implements OnInit {
   disableViewAllDependentPermission: boolean = false;
   userNameExist = false;
   isHeadAvailable: boolean = false;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private route: Router,
@@ -823,6 +830,12 @@ export class AddEditUserComponent implements OnInit {
       this.disableButton = false;
       const errorField = this.renderer.selectRootElement("#target");
       errorField.scrollIntoView();
+    }
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/user/view']);
     }
   }
 }

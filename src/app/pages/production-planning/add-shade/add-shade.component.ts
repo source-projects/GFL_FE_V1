@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Router } from "@angular/router";
+import { Subject } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
@@ -13,7 +13,7 @@ import { ShadeService } from "../../../@theme/services/shade.service";
   templateUrl: "./add-shade.component.html",
   styleUrls: ["./add-shade.component.scss"],
 })
-export class AddShadeComponent implements OnInit {
+export class AddShadeComponent implements OnInit, OnDestroy {
   @Input("productionBatchDetail") productionBatchDetail: any;
   @Input("party") party: any;
   @Input("quality") quality: any;
@@ -53,15 +53,20 @@ export class AddShadeComponent implements OnInit {
     stockId: null,
     jetId: 0,
   };
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private _NgbActiveModal: NgbActiveModal,
     private adminService: AdminService,
     private shadeService: ShadeService,
     private productionPlanningService: ProductionPlanningService,
-    private modalService: NgbModal,
     private toastr: ToastrService,
     private jetPlanningService: JetPlanningService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {

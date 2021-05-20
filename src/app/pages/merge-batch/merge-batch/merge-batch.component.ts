@@ -1,16 +1,17 @@
+import { Subject } from 'rxjs';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, ElementRef, OnInit } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { PartyService } from "../../../@theme/services/party.service";
 import { MergeBatch } from "../../../@theme/model/merge-batch";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { StockBatchService } from "../../../@theme/services/stock-batch.service";
 import { MergeBatchService } from "../../../@theme/services/merge-batch.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "../../../@theme/services/common.service";
 import { indexOf } from "lodash";
 
@@ -19,7 +20,7 @@ import { indexOf } from "lodash";
   templateUrl: "./merge-batch.component.html",
   styleUrls: ["./merge-batch.component.scss"],
 })
-export class MergeBatchComponent implements OnInit {
+export class MergeBatchComponent implements OnInit, OnDestroy {
   public filterDetails: MergeBatch[] = [];
   public partyList: any[];
   public qualityList: any = [];
@@ -34,6 +35,13 @@ export class MergeBatchComponent implements OnInit {
   userHead;
   currentId;
   currentMergeBatch;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private toastr: ToastrService,
     private partyService: PartyService,
@@ -41,7 +49,8 @@ export class MergeBatchComponent implements OnInit {
     private stockBatchService: StockBatchService,
     private mergeBatchService: MergeBatchService,
     private commonService: CommonService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private route: Router,
   ) {
     this.filterDetails.push(this._clone(new MergeBatch()));
     this.filterDetails.push(this._clone(new MergeBatch()));
@@ -330,5 +339,11 @@ export class MergeBatchComponent implements OnInit {
 
   updateMergedBatch(form) {
     this.saveMergedBatch(form);
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/merge-batch/view']);
+    }
   }
 }

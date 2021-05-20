@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
@@ -14,7 +15,7 @@ import { PartyService } from "../../../@theme/services/party.service";
   styleUrls: ["./add-edit-supplier.component.scss"],
   providers: [Location],
 })
-export class AddEditSupplierComponent implements OnInit {
+export class AddEditSupplierComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
 
   //formName
@@ -37,8 +38,13 @@ export class AddEditSupplierComponent implements OnInit {
   public isSupplierNameExists: boolean = false;
   master: any[];
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
-    private location: Location,
     private commonService: CommonService,
     private supplierService: SupplierService,
     private router: Router,
@@ -200,6 +206,12 @@ export class AddEditSupplierComponent implements OnInit {
           },
           (error) => {}
         );
+    }
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.router.navigate(['/pages/supplier/view']);
     }
   }
 }

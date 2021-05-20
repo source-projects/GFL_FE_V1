@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
@@ -18,7 +18,6 @@ export class ScanQRComponent implements OnInit {
   permissionDenied:boolean=false
   constructor(
     private registrationService: RegistrationService,
-    private renderer: Renderer2,
     private route: Router,
     private toastr: ToastrService
   ) {}
@@ -26,27 +25,19 @@ export class ScanQRComponent implements OnInit {
   ngOnInit(): void {
 //     navigator.permissions.query({name: 'microphone'})
 //  .then((permissionObj) => {
-//   console.log(permissionObj.state);
 //  })
 //  .catch((error) => {
-//   console.log('Got error :', error);
 //  })
 
  navigator.permissions.query({name: 'camera'})
  .then((permissionObj) => {
-  console.log(permissionObj.state);
   if(permissionObj.state === 'denied'){
     this.permissionDenied=true
-    console.log(permissionObj.state);
-    console.log(this.permissionDenied)
   }else{
     this.permissionDenied=false
-    console.log(permissionObj.state);
-    console.log(this.permissionDenied);
   }
  })
  .catch((error) => {
-  console.log('Got error :', error);
  })
   }
 
@@ -107,7 +98,6 @@ export class ScanQRComponent implements OnInit {
       );
     }
     else{
-      console.log(ele.value.empid.length)
     }
   }
 

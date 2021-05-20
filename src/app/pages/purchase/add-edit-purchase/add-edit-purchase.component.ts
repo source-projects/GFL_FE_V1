@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../../@theme/services/common.service';
@@ -15,7 +16,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
   templateUrl: './add-edit-purchase.component.html',
   styleUrls: ['./add-edit-purchase.component.scss']
 })
-export class AddEditPurchaseComponent implements OnInit {
+export class AddEditPurchaseComponent implements OnInit, OnDestroy {
 
   invurl = [];
   maturl = [];
@@ -55,6 +56,12 @@ export class AddEditPurchaseComponent implements OnInit {
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
   imageFile: File;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private commonService: CommonService,
@@ -158,12 +165,10 @@ export class AddEditPurchaseComponent implements OnInit {
     this.imageCompress.compressFile(this.imageUrl, -1, 50, 50).then(
       result => {
         this.imgResultAfterCompress = result;
-        //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
         const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
 
         this.imageFile = new File([result], this.fileToUpload.name, { type: 'image/jpeg' });
-        //console.log(this.imageFile);
         //return imageFile;
         this.fileUpload(type);
       }
@@ -533,6 +538,12 @@ export class AddEditPurchaseComponent implements OnInit {
       else{
         this.imageIndexFormatUpdate = 0;
       }
+    }
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/purchase/view']);
     }
   }
 }

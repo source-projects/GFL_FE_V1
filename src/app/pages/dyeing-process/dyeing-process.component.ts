@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ConfirmationDialogComponent } from "app/@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { ExportPopupComponent } from "app/@theme/components/export-popup/export-popup.component";
-import { DyeingProcessService } from "app/@theme/services/dyeing-process.service";
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
+import { DyeingProcessService } from "../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -10,12 +11,18 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./dyeing-process.component.html",
   styleUrls: ["./dyeing-process.component.scss"],
 })
-export class DyeingProcessComponent implements OnInit {
+export class DyeingProcessComponent implements OnInit, OnDestroy {
   public dyeingProcessList: any[];
   flag:boolean = false;
   process=[];
   headers=["Name" ];
   module="dyeing process";
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private toastr: ToastrService,

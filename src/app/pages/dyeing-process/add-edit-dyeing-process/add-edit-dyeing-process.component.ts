@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -17,7 +18,7 @@ import { PartyService } from "../../../@theme/services/party.service";
   templateUrl: "./add-edit-dyeing-process.component.html",
   styleUrls: ["./add-edit-dyeing-process.component.scss"],
 })
-export class AddEditDyeingProcessComponent implements OnInit {
+export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   public dyeingProcess: DyeingProcess;
   public dyeingProcessSteps: DyeingProcessData[] = [];
   public formSubmitted: boolean = false;
@@ -30,6 +31,12 @@ export class AddEditDyeingProcessComponent implements OnInit {
   public itemList: any[];
   public master: any[];
   public loading: boolean = false;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private _modalService: NgbModal,
@@ -285,5 +292,11 @@ export class AddEditDyeingProcessComponent implements OnInit {
     this.dyeingProcessSteps = [];
     this.addFlag = true;
     this.updateFlag = false;
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/dyeing-process/view']);
+    }
   }
 }

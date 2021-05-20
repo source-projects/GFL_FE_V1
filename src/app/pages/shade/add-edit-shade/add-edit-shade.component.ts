@@ -1,5 +1,7 @@
+import { Subject } from 'rxjs';
 import {
   Component,
+  OnDestroy,
   OnInit,
   QueryList,
   Renderer2,
@@ -26,7 +28,7 @@ import { NgSelectComponent } from "@ng-select/ng-select";
   templateUrl: "./add-edit-shade.component.html",
   styleUrls: ["./add-edit-shade.component.scss"],
 })
-export class AddEditShadeComponent implements OnInit {
+export class AddEditShadeComponent implements OnInit, OnDestroy {
   @ViewChildren("data") data: QueryList<NgSelectComponent>;
   public loading = false;
   public disableButton = false;
@@ -57,7 +59,7 @@ export class AddEditShadeComponent implements OnInit {
   color: any = "";
   supplierListRate: any;
   partyList: any[];
-  categoryList = [{ name: "light" }, { name: "dark" }];
+  categoryList = [{ name: "LIGHT" }, { name: "MEDIUM" },{name : "DARK"},{name:"SPECIAL"}];
   refreshFlag: any = 0;
   totalAmount: any = 0;
   costKg: any = 0;
@@ -65,6 +67,13 @@ export class AddEditShadeComponent implements OnInit {
   amountArray: any[] = [];
   apcFlag: any = false;
   public wt100m: any = 0;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private _route: ActivatedRoute,
     private partyService: PartyService,
@@ -690,6 +699,12 @@ export class AddEditShadeComponent implements OnInit {
       }
     } else {
       this.disableButton = false;
+    }
+  }
+
+  tableChange(event){
+    if (event === "view table") {
+      this.route.navigate(['/pages/shade/view']);
     }
   }
 }

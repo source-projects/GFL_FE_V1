@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonService } from 'app/@theme/services/common.service';
 
 @Component({
   selector: 'ngx-finished-meter',
@@ -8,7 +7,7 @@ import { CommonService } from 'app/@theme/services/common.service';
 })
 export class FinishedMeterComponent implements OnInit {
 
-  constructor(private commonService:CommonService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

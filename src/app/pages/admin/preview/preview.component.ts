@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
   selector: 'ngx-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit {
-
+export class PreviewComponent implements OnInit, OnDestroy {
+    destroy$: Subject<void> = new Subject<void>();
   @Input("billList") billList : any;
   imageIndex = 0;
   @Input("materialList") materialList : any;
@@ -17,6 +17,11 @@ export class PreviewComponent implements OnInit {
     private _NgbActiveModal: NgbActiveModal,
 
   ) { }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
  
 
   ngOnInit(): void {    

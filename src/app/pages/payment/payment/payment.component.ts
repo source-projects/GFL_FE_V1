@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { PaymentGuard } from '../../../@theme/guards/payment.guard';
@@ -10,7 +11,7 @@ import { PaymentService } from '../../../@theme/services/payment.service';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
 
   public loading = false;
   
@@ -41,6 +42,13 @@ export class PaymentComponent implements OnInit {
   // ownEdit = true;
   // allEdit = true;
   // groupEdit = true;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,

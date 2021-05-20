@@ -1,4 +1,5 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +14,7 @@ import { PaymentService } from '../../../@theme/services/payment.service';
   templateUrl: './advance-payment.component.html',
   styleUrls: ['./advance-payment.component.scss']
 })
-export class AdvancePaymentComponent implements OnInit {
+export class AdvancePaymentComponent implements OnInit, OnDestroy {
 
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
 
@@ -33,6 +34,12 @@ export class AdvancePaymentComponent implements OnInit {
 
   advancePaymentValues: AdvancePayment = new AdvancePayment();
   advancePaymentArray: AdvancePayment[] = [];
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private partyService: PartyService,

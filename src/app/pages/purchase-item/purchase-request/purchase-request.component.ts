@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { PurchaseRequest } from "app/@theme/model/purchaseRequest";
-import { CommonService } from "app/@theme/services/common.service";
-import { PurchaseService } from "app/@theme/services/purchase.service";
-import { SupplierService } from "app/@theme/services/supplier.service";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { PurchaseRequest } from "../../../@theme/model/purchaseRequest";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PurchaseService } from "../../../@theme/services/purchase.service";
+import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -10,11 +11,16 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./purchase-request.component.html",
   styleUrls: ["./purchase-request.component.scss"],
 })
-export class PurchaseRequestComponent implements OnInit {
+export class PurchaseRequestComponent implements OnInit, OnDestroy {
   public supplierList: any[];
   public purchaseRequest: PurchaseRequest = new PurchaseRequest();
   public formSubmitted: boolean = false;
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private toastr: ToastrService,

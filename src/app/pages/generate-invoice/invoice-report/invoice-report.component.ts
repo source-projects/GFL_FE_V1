@@ -3,11 +3,10 @@ import {
   InvoiceDetailedReport,
   InvoiceReportRequest,
   InvoiceShortReport,
-} from "app/@theme/model/invoice";
-import { GenerateInvoiceService } from "app/@theme/services/generate-invoice.service";
-import { PartyService } from "app/@theme/services/party.service";
+} from "../../../@theme/model/invoice";
+import { GenerateInvoiceService } from "../../../@theme/services/generate-invoice.service";
+import { PartyService } from "../../../@theme/services/party.service";
 import * as wijmo from "@grapecity/wijmo";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "ngx-invoice-report",
@@ -27,7 +26,6 @@ export class InvoiceReportComponent implements OnInit {
   constructor(
     private invoiceService: GenerateInvoiceService,
     private partyService: PartyService,
-    private router: Router
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }

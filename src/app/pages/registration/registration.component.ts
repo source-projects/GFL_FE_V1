@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
@@ -12,7 +12,7 @@ import { RegistrationService } from '../../@theme/services/registration.service'
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   empData=[];
   copyEmpData = [];
@@ -29,12 +29,15 @@ export class RegistrationComponent implements OnInit {
   hiddenEdit: boolean = true;
   hiddenDelete: boolean = true;
 
-
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private registrationService : RegistrationService,
     private toastr: ToastrService,
-    private route: Router,
     private modalService: NgbModal,
     public registrationGuard: EmployeeRegistrationGuard,
 
@@ -72,6 +75,7 @@ export class RegistrationComponent implements OnInit {
           this.empData = data["data"];
           this.copyEmpData = this.empData.map((element) => ({
             id: element.id,
+            empId:element.empId,
             name: element.name,
             contact: element.contact,
             aadhaar: element.aadhaar,

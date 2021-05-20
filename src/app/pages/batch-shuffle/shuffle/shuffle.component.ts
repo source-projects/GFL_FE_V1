@@ -1,16 +1,16 @@
+import { Subject } from 'rxjs';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import { BatchByQualityPartyService } from "../../../@theme/services/batch-by-quality-party.service";
 import { BatchListService } from "../../../@theme/services/batch-list.service";
@@ -25,7 +25,7 @@ import { StockBatchService } from "../../../@theme/services/stock-batch.service"
   templateUrl: "./shuffle.component.html",
   styleUrls: ["./shuffle.component.scss"],
 })
-export class ShuffleComponent implements OnInit {
+export class ShuffleComponent implements OnInit, OnDestroy {
   public flag = 0;
   public rval = 1;
   public btnFlag = 0;
@@ -67,6 +67,11 @@ export class ShuffleComponent implements OnInit {
   index: number;
   currentBatchSequence;
   currentBatchSeqId;
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private partyService: PartyService,
@@ -75,7 +80,6 @@ export class ShuffleComponent implements OnInit {
     private toastr: ToastrService,
     private programService: ProgramService,
     private formBuilder: FormBuilder,
-    private route: Router,
     private batchByQualityPartyService: BatchByQualityPartyService,
     private batchList: BatchListService,
     private stockBatchService: StockBatchService
