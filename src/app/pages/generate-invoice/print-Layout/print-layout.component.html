@@ -238,7 +238,7 @@
                                                     <div class="col-sm-6 border border-width">
                                                         <b>Discount @{{invoice.percentageDiscount}}%</b>
                                                     </div>
-                                                    <div class="col-sm-6 border">
+                                                    <div class="col-sm-6 border text-right">
                                                         <b>{{ invoice.discount | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
@@ -247,7 +247,7 @@
                                                         <b>
                                                             Taxable Amt</b>
                                                     </div>
-                                                    <div class="col-sm-6 border border-width">
+                                                    <div class="col-sm-6 border border-width text-right">
                                                         <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
@@ -255,7 +255,7 @@
                                                     <div class="col-sm-6 border border-width">
                                                         <b>CGST: @2.5%</b>
                                                     </div>
-                                                    <div class="col-sm-6 border border-width">
+                                                    <div class="col-sm-6 border border-width text-right">
                                                         <b>{{ invoice.cgst | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
@@ -263,7 +263,7 @@
                                                     <div class="col-sm-6 border border-width">
                                                         <b>SGST: @2.5%</b>
                                                     </div>
-                                                    <div class="col-sm-6 border border-width">
+                                                    <div class="col-sm-6 border border-width text-right">
                                                         <b>{{ invoice.sgst | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
@@ -271,7 +271,7 @@
                                                     <div class="col-sm-6 border border-width">
                                                         <b>Net Amt</b>
                                                     </div>
-                                                    <div class="col-sm-6 border border-width">
+                                                    <div class="col-sm-6 border border-width text-right">
                                                         <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                     </div>
                                                 </div>
