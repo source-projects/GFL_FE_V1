@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
@@ -55,7 +56,7 @@ export class DyeingSlipItemDatum {
   templateUrl: "./addition-slip.component.html",
   styleUrls: ["./addition-slip.component.scss"],
 })
-export class AdditionSlipComponent implements OnInit {
+export class AdditionSlipComponent implements OnInit, OnDestroy {
   batchNo: any;
   p_id: any;
   q_id: any;
@@ -92,6 +93,7 @@ export class AdditionSlipComponent implements OnInit {
   directSlipPartyId = null;
   directSlipQualityId = null;
   printNow = false;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private modalService: NgbModal,
@@ -103,6 +105,11 @@ export class AdditionSlipComponent implements OnInit {
     private route: Router,
     private toastr: ToastrService
   ) {}
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.getAllParty();

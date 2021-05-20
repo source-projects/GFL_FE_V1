@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { CommonService } from "../../../@theme/services/common.service";
@@ -12,7 +13,7 @@ import { ShadeGuard } from '../../../@theme/guards/shade.guard';
   templateUrl: "./pending-apc.component.html",
   styleUrls: ["./pending-apc.component.scss"],
 })
-export class PendingApcComponent implements OnInit {
+export class PendingApcComponent implements OnInit, OnDestroy {
   apcList = [];
   copyApcList = [];
   tableStyle = "bootstrap";
@@ -23,6 +24,13 @@ export class PendingApcComponent implements OnInit {
   disabled = false;
   hiddenEdit = false;
   hiddenDelete = false;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
   constructor(
     private shadeService: ShadeService,
     private commonService: CommonService,

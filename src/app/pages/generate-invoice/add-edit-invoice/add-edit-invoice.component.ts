@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
 import { Invoice, invoiceobj } from "../../../@theme/model/invoice";
@@ -17,7 +18,7 @@ import { PasswordDailogComponent } from "../../../@theme/components/password-dai
   templateUrl: "./add-edit-invoice.component.html",
   styleUrls: ["./add-edit-invoice.component.scss"],
 })
-export class AddEditInvoiceComponent implements OnInit {
+export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   flag: any;
   obj = {
     batchAndStockIdList: [],
@@ -50,6 +51,13 @@ export class AddEditInvoiceComponent implements OnInit {
   userHeadId;
   merge = [];
   invoiceNo: any;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
     private partyService: PartyService,
@@ -215,7 +223,6 @@ export class AddEditInvoiceComponent implements OnInit {
                 modalRef.componentInstance.discount = temp[0].percentageDiscount;
         
                 modalRef.result.then((result) => {
-                  console.log(result);
                   if (result) {
                     obj.cgst = result.cgst;
                     obj.sgst = result.sgst;
@@ -267,7 +274,6 @@ export class AddEditInvoiceComponent implements OnInit {
             modalRef.componentInstance.discount = temp[0].percentageDiscount;
     
             modalRef.result.then((result) => {
-              console.log(result);
               if (result) {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;

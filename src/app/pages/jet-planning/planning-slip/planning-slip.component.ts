@@ -1,6 +1,8 @@
+import { Subject } from 'rxjs';
 import {
   Component,
   Input,
+  OnDestroy,
   OnInit,
   QueryList,
   TemplateRef,
@@ -35,7 +37,7 @@ import { PartyService } from "../../../@theme/services/party.service";
   styleUrls: ["./planning-slip.component.scss"],
   providers: [DatePipe],
 })
-export class PlanningSlipComponent implements OnInit {
+export class PlanningSlipComponent implements OnInit, OnDestroy {
   @ViewChildren("data") data: QueryList<NgSelectComponent>;
   count: any;
   supplierSelected = [];
@@ -127,6 +129,12 @@ export class PlanningSlipComponent implements OnInit {
 
   //dyeingData:DyeingSlipData = new DyeingSlipData();
   //dyeingSlipDataList:DyeingSlipDataList = new DyeingSlipDataList();
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -402,8 +410,7 @@ export class PlanningSlipComponent implements OnInit {
                     ? element1.qty.toFixed(3)
                     : element1.qty;
                 });
-                this.slipData.totalWt = this.slipData.totalWt.toFixed(3);
-                console.log(this.slipData);
+                this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
                 if (this.isPrintDirect) this.printNOW();
               });
             } else {

@@ -1,15 +1,11 @@
+import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DyeingChemicalData } from '../../../@theme/model/dyeing-process';
 import { DyeingProcessService } from '../../../@theme/services/dyeing-process.service';
-import { JetPlanningService } from '../../../@theme/services/jet-planning.service';
-import { PartyService } from '../../../@theme/services/party.service';
 import { PlanningSlipService } from '../../../@theme/services/planning-slip.service';
-import { ProductionPlanningService } from '../../../@theme/services/production-planning.service';
-import { QualityService } from '../../../@theme/services/quality.service';
-import { ShadeService } from '../../../@theme/services/shade.service';
 import * as wijmo from "@grapecity/wijmo";
 
 @Component({
@@ -17,7 +13,7 @@ import * as wijmo from "@grapecity/wijmo";
   templateUrl: './slip-dialog.component.html',
   styleUrls: ['./slip-dialog.component.scss']
 })
-export class SlipDialogComponent implements OnInit {
+export class SlipDialogComponent implements OnInit, OnDestroy {
 
   public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash", "Addition"];
   @Input() additionSlipFlag: boolean;
@@ -45,6 +41,7 @@ export class SlipDialogComponent implements OnInit {
   public liquorRatio;
   public index: string;
   public refreshPipe: number = 0;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -56,6 +53,11 @@ export class SlipDialogComponent implements OnInit {
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
     this.itemList.push(new DyeingChemicalData());
+  }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   async ngOnInit() {

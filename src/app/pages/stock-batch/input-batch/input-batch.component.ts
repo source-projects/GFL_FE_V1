@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JobCardComponent } from '../job-card/job-card.component';
 
@@ -7,17 +8,23 @@ import { JobCardComponent } from '../job-card/job-card.component';
   templateUrl: './input-batch.component.html',
   styleUrls: ['./input-batch.component.scss']
 })
-export class InputBatchComponent implements OnInit {
+export class InputBatchComponent implements OnInit, OnDestroy {
   batchId
   disableButton: boolean = false
   isDirectPrintFlag: boolean = false
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(private activeModal: NgbActiveModal, private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
   printJobCard() {
-    console.log(this.batchId)
     if (this.batchId) {
       this.disableButton = true
       this.isDirectPrintFlag = true;

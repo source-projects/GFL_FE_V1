@@ -1,5 +1,6 @@
+import { Subject } from 'rxjs';
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   NgxQrcodeElementTypes,
@@ -20,7 +21,7 @@ import { RegistrationService } from "../../../@theme/services/registration.servi
   templateUrl: "./add-edit-registration.component.html",
   styleUrls: ["./add-edit-registration.component.scss"],
 })
-export class AddEditRegistrationComponent implements OnInit {
+export class AddEditRegistrationComponent implements OnInit, OnDestroy {
   docAdd = [];
   docUpdate = [];
   imageIndexFordocAdd = 0;
@@ -66,6 +67,13 @@ export class AddEditRegistrationComponent implements OnInit {
   localUrl;
   imageFile: File = null;
   departmentList: any[];
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private commonService: CommonService,
     private _route: ActivatedRoute,
@@ -95,7 +103,7 @@ export class AddEditRegistrationComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
-          console.log(this.departmentList);
+          (this.departmentList);
         }
       },
       (error) => {}
@@ -138,7 +146,6 @@ export class AddEditRegistrationComponent implements OnInit {
         .compressFile(this.imageUrl, -1, 50, 50)
         .then((result) => {
           this.imgResultAfterCompress = result;
-          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
           const imageBlob = this.dataURItoBlob(
             this.imgResultAfterCompress.split(",")[1]
@@ -147,7 +154,6 @@ export class AddEditRegistrationComponent implements OnInit {
           this.imageFile = new File([result], this.fileToUpload.name, {
             type: "image/jpeg",
           });
-          //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
         });
@@ -156,7 +162,6 @@ export class AddEditRegistrationComponent implements OnInit {
         .compressFile(this.docUrl, -1, 50, 50)
         .then((result) => {
           this.imgResultAfterCompress = result;
-          //console.log('Size in bytes is now:', this.imageCompress.byteCount(result)/(1024*1024));
 
           const imageBlob = this.dataURItoBlob(
             this.imgResultAfterCompress.split(",")[1]
@@ -165,7 +170,6 @@ export class AddEditRegistrationComponent implements OnInit {
           this.imageFile = new File([result], this.fileToUpload.name, {
             type: "image/jpeg",
           });
-          //console.log(this.imageFile);
           //return imageFile;
           this.fileUpload();
         });

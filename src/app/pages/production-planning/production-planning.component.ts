@@ -5,7 +5,6 @@ import {
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
 import { NbMenuService } from "@nebular/theme";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
@@ -24,7 +23,6 @@ import { PartyService } from "../../@theme/services/party.service";
 import { ProductionPlanningService } from "../../@theme/services/production-planning.service";
 import { ProgramService } from "../../@theme/services/program.service";
 import { QualityService } from "../../@theme/services/quality.service";
-import { ShadeService } from "../../@theme/services/shade.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
 import { AddShadeComponent } from "./add-shade/add-shade.component";
@@ -91,17 +89,13 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   constructor(
     private partyService: PartyService,
-    private _route: ActivatedRoute,
     private qualityService: QualityService,
-    private route: Router,
     private productionPlanningService: ProductionPlanningService,
     private commonService: CommonService,
     private toastr: ToastrService,
     private stockBatchService: StockBatchService,
     private programService: ProgramService,
     private modalService: NgbModal,
-    private shadeService: ShadeService,
-    private router: Router,
     private jetService: JetPlanningService,
     private menuService: NbMenuService
   ) {

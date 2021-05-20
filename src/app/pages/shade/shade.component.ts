@@ -1,13 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { ShadeGuard } from "../../@theme/guards/shade.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -16,7 +14,7 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./shade.component.html",
   styleUrls: ["./shade.component.scss"],
 })
-export class ShadeComponent implements OnInit {
+export class ShadeComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
 
@@ -72,15 +70,19 @@ export class ShadeComponent implements OnInit {
   allEdit = true;
   groupEdit = true;
   disabled = false;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   constructor(
     private shadeService: ShadeService,
-    private route: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
-    private jwtToken: JwtTokenService,
     private commonService: CommonService,
-    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {

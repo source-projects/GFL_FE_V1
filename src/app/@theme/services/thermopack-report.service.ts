@@ -10,8 +10,6 @@ export class ThermopackReportService{
 
     constructor(private httpClient: HttpClient, private commonService: CommonService) { }
   private handleError(err: HttpErrorResponse) {
-    console.log("Handle Error Http call");
-    console.log(err.message);
   }
 
   getAllParameter(){

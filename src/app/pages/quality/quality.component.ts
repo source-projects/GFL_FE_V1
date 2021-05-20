@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
@@ -16,7 +17,7 @@ import { StoreTokenService } from "../../@theme/services/store-token.service";
   templateUrl: "./quality.component.html",
   styleUrls: ["./quality.component.scss"],
 })
-export class QualityComponent implements OnInit {
+export class QualityComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
@@ -57,6 +58,12 @@ export class QualityComponent implements OnInit {
   pageSelected: number = 1;
   @ViewChild(DatatableComponent, { static: false })
   DataTable: DatatableComponent;
+
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   constructor(
     private commonService: CommonService,

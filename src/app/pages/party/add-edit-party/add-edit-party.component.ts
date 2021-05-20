@@ -1,12 +1,12 @@
+import { Subject } from 'rxjs';
 import { Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
-import { UserService } from "../../../@theme/services/user.service";
 
 @Component({
   selector: "ngx-add-edit-party",
@@ -14,7 +14,7 @@ import { UserService } from "../../../@theme/services/user.service";
   styleUrls: ["./add-edit-party.component.scss"],
   providers: [Location],
 })
-export class AddEditPartyComponent implements OnInit {
+export class AddEditPartyComponent implements OnInit, OnDestroy {
   public loading = false;
   public disableButton = false;
   public errorData: any = (errorData as any).default;
@@ -87,9 +87,15 @@ export class AddEditPartyComponent implements OnInit {
   masterList = [];
   logInUserDetail: any;
 
+  public destroy$ : Subject<void> = new Subject<void>();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+
   constructor(
     private partyService: PartyService,
-    private userService: UserService,
     private commonService: CommonService,
     private route: Router,
     private _route: ActivatedRoute,
