@@ -59,7 +59,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
   color: any = "";
   supplierListRate: any;
   partyList: any[];
-  categoryList = [{ name: "light" }, { name: "dark" }];
+  categoryList = [{ name: "LIGHT" }, { name: "MEDIUM" },{name : "DARK"},{name:"SPECIAL"}];
   refreshFlag: any = 0;
   totalAmount: any = 0;
   costKg: any = 0;

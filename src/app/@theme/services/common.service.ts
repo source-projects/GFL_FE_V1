@@ -48,7 +48,9 @@ export class CommonService {
     else {
       url = "http://103.137.194.167:8080/";
     }
-    return url;
+  
+  return  "https://api.dyeingerp.gloryautotech.com/";
+
   }
 
   decToBin(n): any {
