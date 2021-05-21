@@ -33,7 +33,8 @@ export class AddDyeingProcessStepComponent implements OnInit {
   @Input() editStep;
   @Input() stepList: DyeingProcessData[] = [];
   public byChemicalList=[{id:"L",value:"L"},{id:"W",value:"W"},{id:"F",value:"F"}]
-  public processTypes = ["Scouring", "Dyeing", "RC", "Cold Wash"];
+  public processTypes = ["Scouring","Acid Wash", "Dyeing", "RC", "Cold Wash"];
+  public shadeTypeList = ["Default","Light","Midium","Dark","Special"];
   constructor(
     public activeModal: NgbActiveModal,
     private DyeingProcessService: DyeingProcessService,

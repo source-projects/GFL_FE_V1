@@ -116,6 +116,7 @@
                                                         <th>Supplier name</th>
                                                         <th>Concentration</th>
                                                         <th>By</th>
+                                                        <th>Shade type</th>
                                                     </tr>
 
                                                     <tr *ngFor='let chemical of step.dyeingChemicalData;let i=index;'>
@@ -129,6 +130,7 @@
                                                             {{chemical.concentration}}
                                                         </td>
                                                         <td>{{chemical.byChemical}}</td>
+                                                        <td>{{chemical.shadeType}}</td>
                                                     </tr>
                                                 </table>
                                             </div>
