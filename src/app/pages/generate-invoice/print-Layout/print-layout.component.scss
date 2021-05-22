@@ -992,6 +992,10 @@ tfoot.spacing-low tr:last-child {
     font-size: 30px;
 }
 
+.font-13 {
+    font-size: 13px;
+}
+
 .font-15 {
     font-size: 15px;
 }
@@ -1166,4 +1170,12 @@ tfoot.spacing-low tr:last-child {
 
 .terms-border {
     margin-bottom: -3px;
-}       
+} 
+
+.left-side{
+    text-align: left !important;
+}
+
+.right-side {
+    text-align: right !important;
+}

@@ -372,7 +372,7 @@
 
 
 
-            <nb-tab tabTitle="Designation">
+            <!-- <nb-tab tabTitle="Designation">
                 <form #addDesignationData="ngForm">
                     <div class="row">
                         <div class="col-md-6 col-12">
@@ -417,7 +417,7 @@
                     <ngx-datatable-column name="Designation" prop="designation" [sortable]="false" [width]="300">
                     </ngx-datatable-column>
                 </ngx-datatable>
-            </nb-tab>
+            </nb-tab> -->
 
             <!--Authorized-->
             <nb-tab tabTitle="Authorized">
@@ -472,6 +472,16 @@
                                 </ng-select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <ng-select name="department" appendTo="body"
+                                    [(ngModel)]="addApproveReceive.department" [items]="departmentList" bindLabel="name" bindValue="id"
+                                    placeholder="Select Department" 
+                                    class="required-error-dropdown dropdown-name">
+                                </ng-select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 mobile-btn-center text-btn-right">
@@ -481,6 +491,8 @@
                                 (click)="saveApproveReceiveBy(approveReceiveForm)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div>
+
+
                 </form>
 
                 <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveReceiveByList"
