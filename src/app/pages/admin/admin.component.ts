@@ -182,6 +182,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       case "Authorized":
         this.getAllApproveReceiveByData();
+        this.getAllDepartment();
         break;
 
       case "Sequence":
@@ -987,6 +988,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.addApproveReceive.contact = null;
     this.addApproveReceive.email = null;
     this.addApproveReceive.type = null;
+    this.addApproveReceive.department = null;
     this.approveReceiveByEditFlag = false;
   }
 
@@ -1323,6 +1325,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.addApproveReceive.email = element.email;
         this.addApproveReceive.contact = element.contact;
         this.addApproveReceive.type = element.type;
+        this.addApproveReceive.department = element.department;
       }
     });
   }

@@ -81,12 +81,14 @@ export class AddApproveReceive {
   contact: string;
   email: string;
   type: string;
+  department;
   constructor() {
     this.id = null;
     this.name = null;
     this.contact = null;
     this.email = null;
     this.type = null;
+    this.department = null;
   }
 }
 
