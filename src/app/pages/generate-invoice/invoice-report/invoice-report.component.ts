@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   InvoiceDetailedReport,
   InvoiceReportRequest,
@@ -7,13 +8,14 @@ import {
 import { GenerateInvoiceService } from "../../../@theme/services/generate-invoice.service";
 import { PartyService } from "../../../@theme/services/party.service";
 import * as wijmo from "@grapecity/wijmo";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "ngx-invoice-report",
   templateUrl: "./invoice-report.component.html",
   styleUrls: ["./invoice-report.component.scss"],
 })
-export class InvoiceReportComponent implements OnInit {
+export class InvoiceReportComponent implements OnInit, OnDestroy {
   public invoiceReportRequest: InvoiceReportRequest;
   public maxDate: any;
   public currentDate = new Date();
@@ -22,12 +24,17 @@ export class InvoiceReportComponent implements OnInit {
   public detailedReport: InvoiceDetailedReport[] = [];
   public masterList = [];
   public partyList = [];
+  private destroy$ = new Subject<void>();
 
   constructor(
     private invoiceService: GenerateInvoiceService,
     private partyService: PartyService,
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -43,7 +50,7 @@ export class InvoiceReportComponent implements OnInit {
   }
 
   getAllMasters() {
-    this.partyService.getAllMaster().subscribe(
+    this.partyService.getAllMaster().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.masterList = data["data"];
@@ -54,7 +61,7 @@ export class InvoiceReportComponent implements OnInit {
   }
 
   getAllParties() {
-    this.partyService.getAllPartyList(0, "all").subscribe(
+    this.partyService.getAllPartyList(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -69,7 +76,7 @@ export class InvoiceReportComponent implements OnInit {
     this.detailedReport = [];
     this.invoiceService
       .getShortInvoiceReport(this.invoiceReportRequest)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.shortReport = data["data"];
@@ -85,7 +92,7 @@ export class InvoiceReportComponent implements OnInit {
     this.detailedReport = [];
     this.invoiceService
       .getDetailedInvoiceReport(this.invoiceReportRequest)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.detailedReport = data["data"];

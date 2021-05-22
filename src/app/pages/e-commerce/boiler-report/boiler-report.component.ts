@@ -1,15 +1,17 @@
+import { takeUntil } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { BoilerReportService } from 'app/@theme/services/boiler-report.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BoilerReportService } from '../../../@theme/services/boiler-report.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-boiler-report',
   templateUrl: './boiler-report.component.html',
   styleUrls: ['./boiler-report.component.scss']
 })
-export class BoilerReportComponent implements OnInit {
+export class BoilerReportComponent implements OnInit, OnDestroy {
 
   public max;
   dateForPicker = new Date();
@@ -58,8 +60,13 @@ lineChartData: ChartDataSets[];
   BoilerChartFlag: boolean;
   data: any;
   jsonData: any;
+  private destroy$ = new Subject<void>();
 
   constructor( private datePipe: DatePipe,private boilerrep:BoilerReportService) { }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.max = new Date(this.dateForPicker.getFullYear(), this.dateForPicker.getMonth(), this.dateForPicker.getDate(), 23, 59);
@@ -67,7 +74,7 @@ lineChartData: ChartDataSets[];
   }
 
   // getAllParameter(){
-  //   this.data = this.boilerrep.getAllParameter().subscribe(
+  //   this.data = this.boilerrep.getAllParameter().pipe(takeUntil(this.destroy$)).pipe(takeUntil(this.destroy$)).subscribe(
   //     (res) => {
   //       this.parameters = res;
   //       this.parameters = this.parameters.data;
@@ -99,7 +106,7 @@ lineChartData: ChartDataSets[];
     this.lineChartData = [];
 
     let count;
-    this.data = this.boilerrep.getobjdata(this.obj).subscribe(
+    this.data = this.boilerrep.getobjdata(this.obj).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         if (res["success"]) {
 

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as errorData from "../../@theme/json/error.json";
 import {
@@ -220,7 +221,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllJetData() {
-    this.adminService.getAllJetData().subscribe(
+    this.adminService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
@@ -237,7 +238,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   getAllPurchaseData() {
     this.purchaseList = [];
-    this.purchseService.updateStatus(this.approved).subscribe(
+    this.purchseService.updateStatus(this.approved).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.purchaseList = data["data"];
@@ -267,7 +268,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllMachineData() {
-    this.adminService.getAllMachine().subscribe(
+    this.adminService.getAllMachine().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.machineList = data["data"];
@@ -283,7 +284,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllMachineCategoryData() {
-    this.adminService.getAllMachineCategory().subscribe(
+    this.adminService.getAllMachineCategory().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.machineCategoryList = data["data"];
@@ -299,7 +300,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllCompanyData() {
-    this.adminService.getAllCompanyData().subscribe(
+    this.adminService.getAllCompanyData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.companyList = data["data"];
@@ -315,7 +316,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllDesignationData() {
-    this.adminService.getAllDesignation().subscribe(
+    this.adminService.getAllDesignation().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.designationList = data["data"];
@@ -331,7 +332,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllApproveReceiveByData() {
-    this.adminService.getAllApproveReceiveData().subscribe(
+    this.adminService.getAllApproveReceiveData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.approveReceiveByList = data["data"];
@@ -347,7 +348,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   // getAllApproveByData() {
-  //   this.adminService.getAllApproveByData().subscribe(
+  //   this.adminService.getAllApproveByData().pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) {
   //         this.approveByList = data["data"];
@@ -363,7 +364,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   // }
 
   // getAllReceiveByData() {
-  //   this.adminService.getAllReceiveByData().subscribe(
+  //   this.adminService.getAllReceiveByData().pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) {
   //         this.receiveByList = data["data"];
@@ -379,7 +380,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   // }
 
   getAllInvoiceSequenceData() {
-    this.adminService.getAllInvoiceSequence().subscribe(
+    this.adminService.getAllInvoiceSequence().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.addInvoiceSequence.sequence = data["data"]["sequence"];
@@ -397,7 +398,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllBatchSequenceData() {
-    this.adminService.getAllBatchSequence(false).subscribe(
+    this.adminService.getAllBatchSequence(false).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.addBatchSequence.sequence = data["data"]["sequence"];
@@ -415,7 +416,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllDepartment() {
-    this.adminService.getAllDepartmentData().subscribe(
+    this.adminService.getAllDepartmentData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
@@ -426,7 +427,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAllQuality() {
-    this.adminService.getAllQualityData().subscribe(
+    this.adminService.getAllQualityData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -440,7 +441,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addJetData.valid) {
       if (this.jetEditFlag == true) {
-        this.adminService.updateJetData(this.addJet).subscribe(
+        this.adminService.updateJetData(this.addJet).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -456,7 +457,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         );
       } else {
-        this.adminService.saveJetData(this.addJet).subscribe(
+        this.adminService.saveJetData(this.addJet).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -484,7 +485,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addMachineData.valid) {
       if (this.machineEditFlag == true) {
-        this.adminService.updateMachine(this.addMachine).subscribe(
+        this.adminService.updateMachine(this.addMachine).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -501,7 +502,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         );
         this.machineEditFlag = false;
       } else {
-        this.adminService.saveMachine(this.addMachine).subscribe(
+        this.adminService.saveMachine(this.addMachine).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -528,7 +529,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.machineCategoryEditFlag == true) {
         this.adminService
           .updateMachineCategory(this.addMachineCategory)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Update_Success);
@@ -547,7 +548,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       } else {
         this.adminService
           .saveMachineCategory(this.addMachineCategory)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
@@ -574,7 +575,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.approveReceiveByEditFlag == true) {
         this.adminService
           .updateApproveReceiveByData(this.addApproveReceive)
-          .subscribe((data) => {
+          .pipe(takeUntil(this.destroy$)).subscribe((data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
               this.getAllApproveReceiveByData();
@@ -588,7 +589,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       } else {
         this.adminService
           .saveApproveReceiveByData(this.addApproveReceive)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
@@ -611,7 +612,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //   this.formSubmitted = true;
   //   if (addApproveByData.valid) {
   //     if (this.approveByEditFlag == true) {
-  //       this.adminService.updateApproveByData(this.approveBy).subscribe(
+  //       this.adminService.updateApproveByData(this.approveBy).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Update_Success);
@@ -629,7 +630,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //       );
   //       this.approveByEditFlag = false;
   //     } else {
-  //       this.adminService.saveApproveByData(this.approveBy).subscribe(
+  //       this.adminService.saveApproveByData(this.approveBy).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Add_Success);
@@ -654,7 +655,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //   this.formSubmitted = true;
   //   if (addReceiveByData.valid) {
   //     if (this.receiveByEditFlag == true) {
-  //       this.adminService.updateReceiveByData(this.receiveBy).subscribe(
+  //       this.adminService.updateReceiveByData(this.receiveBy).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Update_Success);
@@ -672,7 +673,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //       );
   //       this.receiveByEditFlag = false;
   //     } else {
-  //       this.adminService.saveReceiveByData(this.receiveBy).subscribe(
+  //       this.adminService.saveReceiveByData(this.receiveBy).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Add_Success);
@@ -696,7 +697,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addDesignationData.valid) {
       if (this.designationEditFlag == true) {
-        this.adminService.updateDesigntationData(this.addDesignation).subscribe(
+        this.adminService.updateDesigntationData(this.addDesignation).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -713,7 +714,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         );
       } else {
-        this.adminService.saveDesignationData(this.addDesignation).subscribe(
+        this.adminService.saveDesignationData(this.addDesignation).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -736,7 +737,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addCompanyData.valid) {
       if (this.companyEditFlag == true) {
-        this.adminService.updateCompanyData(this.addCompany).subscribe(
+        this.adminService.updateCompanyData(this.addCompany).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -755,7 +756,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         );
       } else {
-        this.adminService.saveCompanyData(this.addCompany).subscribe(
+        this.adminService.saveCompanyData(this.addCompany).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -782,7 +783,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addDepartmentData.valid) {
       if (this.departmentEditFlag == true) {
-        this.adminService.updateDepartmentData(this.addDepartment).subscribe(
+        this.adminService.updateDepartmentData(this.addDepartment).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -797,7 +798,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           (error) => {}
         );
       } else {
-        this.adminService.addDepartment(this.addDepartment).subscribe(
+        this.adminService.addDepartment(this.addDepartment).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -820,7 +821,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addQualityData.valid) {
       if (this.addQuality.id) {
-        this.adminService.updateQuality(this.addQuality).subscribe(
+        this.adminService.updateQuality(this.addQuality).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -835,7 +836,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           (error) => {}
         );
       } else {
-        this.adminService.saveQuality(this.addQuality).subscribe(
+        this.adminService.saveQuality(this.addQuality).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -860,7 +861,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.sequenceByEditFlag) {
         this.adminService
           .updateInvoiceSequence(this.addInvoiceSequence)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Update_Success);
@@ -876,7 +877,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       } else {
         this.adminService
           .saveInvoiceSequence(this.addInvoiceSequence)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
@@ -901,7 +902,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (addSequenceData.valid) {
       if (this.batchsequenceByEditFlag) {
-        this.adminService.updateBatchSequence(this.addBatchSequence).subscribe(
+        this.adminService.updateBatchSequence(this.addBatchSequence).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Update_Success);
@@ -915,7 +916,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           (error) => {}
         );
       } else {
-        this.adminService.saveBatchSequence(this.addBatchSequence).subscribe(
+        this.adminService.saveBatchSequence(this.addBatchSequence).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Add_Success);
@@ -1023,7 +1024,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteJetById(id).subscribe(
+        this.adminService.deleteJetById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1046,7 +1047,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteMachine(id).subscribe(
+        this.adminService.deleteMachine(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1069,7 +1070,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteMachineCategory(id).subscribe(
+        this.adminService.deleteMachineCategory(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1092,7 +1093,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteDesignationById(id).subscribe(
+        this.adminService.deleteDesignationById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1115,7 +1116,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteCompanyById(id).subscribe(
+        this.adminService.deleteCompanyById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1138,7 +1139,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteDepartmentById(id).subscribe(
+        this.adminService.deleteDepartmentById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1161,7 +1162,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteQualityById(id).subscribe(
+        this.adminService.deleteQualityById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1184,7 +1185,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.adminService.deleteApproveReceiveById(id).subscribe(
+        this.adminService.deleteApproveReceiveById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);
@@ -1206,7 +1207,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //   });
   //   modalRef.result.then((result) => {
   //     if (result) {
-  //       this.adminService.deleteApproveById(id).subscribe(
+  //       this.adminService.deleteApproveById(id).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Delete);
@@ -1229,7 +1230,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   //   });
   //   modalRef.result.then((result) => {
   //     if (result) {
-  //       this.adminService.deleteReceiveById(id).subscribe(
+  //       this.adminService.deleteReceiveById(id).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.toastr.success(errorData.Delete);
@@ -1400,7 +1401,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   updatePurchaseStatus(row, event) {
-    this.purchseService.updatePurchaseStatus(row.id, event).subscribe(
+    this.purchseService.updatePurchaseStatus(row.id, event).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Update_Success);
@@ -1421,7 +1422,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.purchseService.deletePurchase(id).subscribe(
+        this.purchseService.deletePurchase(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);

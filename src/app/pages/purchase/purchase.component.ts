@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -59,7 +60,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   getAllPurchase(){
     this.loading = true;
 
-    this.purchseService.getPurchase().subscribe(
+    this.purchseService.getPurchase().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data['success']){
           this.purchaseArray = data["data"];
@@ -105,7 +106,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.purchseService.deletePurchase(id).subscribe(
+        this.purchseService.deletePurchase(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);

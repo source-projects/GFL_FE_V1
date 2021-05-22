@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -155,7 +156,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
 
   getallShades(id, getBy) {
     this.loading = true;
-    this.shadeService.getShadeMastList(id, getBy).subscribe(
+    this.shadeService.getShadeMastList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"].length > 0) {
@@ -211,7 +212,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.shadeService.deleteShadeData(id).subscribe(
+        this.shadeService.deleteShadeData(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.onChange(this.radioSelect);

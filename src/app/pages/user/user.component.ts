@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -160,7 +161,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   getAllUser(id, getBy) {
     this.loading = true;
-    this.userService.getAllUser(id, getBy).subscribe(
+    this.userService.getAllUser(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.userList = data["data"];
@@ -197,7 +198,7 @@ export class UserComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.userService.deleteUserDetailsById(id).subscribe(
+        this.userService.deleteUserDetailsById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.onChange(this.radioSelect);
           },

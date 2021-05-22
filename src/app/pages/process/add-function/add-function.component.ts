@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as errorData from "../../../@theme/json/error.json";
 import {
@@ -13,13 +14,14 @@ import {
 import { ProcessService } from "../../../@theme/services/process.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "ngx-add-function",
   templateUrl: "./add-function.component.html",
   styleUrls: ["./add-function.component.scss"],
 })
-export class AddFunctionComponent implements OnInit {
+export class AddFunctionComponent implements OnInit, OnDestroy {
   public errorData: any = (errorData as any).default;
   @Input() position;
   @Input() functionList = [];
@@ -78,6 +80,8 @@ export class AddFunctionComponent implements OnInit {
   modalSubmitted: boolean = false;
   submitButton = "ADD";
   supplierList: any = [];
+  private destroy$ = new Subject<void>();
+
   constructor(
     public activeModal: NgbActiveModal,
     private supplierService: SupplierService,
@@ -85,6 +89,10 @@ export class AddFunctionComponent implements OnInit {
     private processService: ProcessService
   ) {
     this.chemicalSubRecord = new ChemicalReq();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -214,7 +222,7 @@ export class AddFunctionComponent implements OnInit {
   }
 
   getItemData() {
-    this.processService.getAllItemWithSupplier().subscribe(
+    this.processService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
@@ -243,7 +251,7 @@ export class AddFunctionComponent implements OnInit {
       this.dosing.doseWhileHeating = false;
     } else {
       if (!this.itemListArray.length) {
-        this.processService.getAllItemWithSupplier().subscribe(
+        this.processService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) this.itemListArray = data["data"];
           },

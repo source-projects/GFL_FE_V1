@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { GenerateInvoiceService } from '../../services/generate-invoice.service';
@@ -8,13 +10,18 @@ import { GenerateInvoiceService } from '../../services/generate-invoice.service'
   templateUrl: './password-dailog.component.html',
   styleUrls: ['./password-dailog.component.scss']
 })
-export class PasswordDailogComponent implements OnInit {
+export class PasswordDailogComponent implements OnInit, OnDestroy {
 
   passwordForInvoice = new Password();
+  private destroy$ = new Subject<void>();
   constructor( private _NgbActiveModal: NgbActiveModal,
     private invoiceService:GenerateInvoiceService,
     private toaster:ToastrService    
     ) { }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
   }
@@ -25,7 +32,7 @@ export class PasswordDailogComponent implements OnInit {
 
   generate(){
 
-    this.invoiceService.checkPassword(this.passwordForInvoice.password).subscribe(
+    this.invoiceService.checkPassword(this.passwordForInvoice.password).pipe(takeUntil(this.destroy$)).subscribe(
       (res)=>{
         if(res){
           if(res["data"]){

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -101,13 +102,13 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
   getUpdateData() {
     this.loading = true;
     if (this.currentColorId != null) {
-      this.colorService.getColorDataById(this.currentColorId).subscribe(
+      this.colorService.getColorDataById(this.currentColorId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.color = data["data"];
           //For Item Name List
           this.supplierService
             .getSupplierItemWithRateById(this.color.supplierId)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   this.supplierListRate = data["data"];
@@ -142,7 +143,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
 
   getSupplierList() {
     this.loading = true;
-    this.supplierService.getSupplierName(0, "all").subscribe(
+    this.supplierService.getSupplierName(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplierList = data["data"];
@@ -163,7 +164,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
       if (this.color.supplierId) {
         this.supplierService
           .getSupplierItemWithRateById(this.color.supplierId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.supplierListRate = data["data"];
@@ -221,7 +222,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
         list.push(obj);
         this.color.colorDataList = [...list];
 
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         });
       } else {
@@ -272,7 +273,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
     if (colorForm.valid) {
       this.color.userHeadId = this.userHead.userHeadId;
       this.color.createdBy = this.user.userId;
-      this.colorService.addColor(this.color).subscribe(
+      this.colorService.addColor(this.color).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.reset(colorForm);
@@ -315,7 +316,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (myForm.valid) {
       this.color.updatedBy = this.user.userId;
-      this.colorService.updateColor(this.color).subscribe(
+      this.colorService.updateColor(this.color).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/color"]);

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -69,7 +70,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   
   getAllEmployee(){
     this.loading = true;
-    this.registrationService.getAllEmployee().subscribe(
+    this.registrationService.getAllEmployee().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data["success"]){
           this.empData = data["data"];
@@ -115,7 +116,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.registrationService.deleteEmployee(id).subscribe(
+        this.registrationService.deleteEmployee(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);
@@ -166,7 +167,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     formData.append("cloud_name", "dpemsdha5");
     formData.append("file", this.href);
 
-    this.registrationService.uploadImage(formData).subscribe((response) => {
+    this.registrationService.uploadImage(formData).pipe(takeUntil(this.destroy$)).subscribe((response) => {
       if (response) {
         let obj = {
           id: null,

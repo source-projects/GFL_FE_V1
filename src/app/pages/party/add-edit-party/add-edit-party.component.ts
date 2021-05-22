@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Location } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -160,7 +161,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   public getMaster() {
     this.loading = true;
     this.master = [];
-    this.partyService.getAllMaster().subscribe(
+    this.partyService.getAllMaster().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
@@ -177,7 +178,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
 
   public getUpdateData() {
     this.loading = true;
-    this.partyService.getPartyDetailsById(this.currentPartyId).subscribe(
+    this.partyService.getPartyDetailsById(this.currentPartyId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         this.currentParty = data["data"];
 
@@ -254,7 +255,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
           this.partyForm.patchValue({
             createdBy: this.user.userId,
           });
-          this.partyService.saveParty(this.partyForm.value).subscribe(
+          this.partyService.saveParty(this.partyForm.value).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.currentParty = data["data"];
@@ -312,7 +313,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
             ...this.partyForm.value,
             id: this.currentPartyId,
           };
-          let obj = await this.partyService.updateParty(body).subscribe(
+          let obj = await this.partyService.updateParty(body).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(data["msg"]);
@@ -362,7 +363,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
       if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
       this.partyService
         .checkPartyNameExist(this.partyForm.get("partyName").value, id)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.partyNameExist = data["data"];
           },
@@ -378,7 +379,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
       if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
       this.partyService
         .getPartyCode(this.partyForm.get("partyCode").value, id)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.partyCodeExist = data["data"];
           },

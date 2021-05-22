@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as errorData from '../../../@theme/json/error.json';
@@ -10,6 +11,7 @@ import { PurchaseService } from '../../../@theme/services/purchase.service';
 import { ReportService } from '../../../@theme/services/report.service';
 import { WaterJetService } from '../../../@theme/services/water-jet.service';
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'ngx-report',
   templateUrl: './report.component.html',
@@ -88,6 +90,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   };
   lineChartPlugins = [];
   loading: boolean = false;
+  private destroy$ = new Subject<void>();
 
   constructor(private reportservice: ReportService, private toastr: ToastrService, private purchaseService: PurchaseService,
     private waterjetService: WaterJetService, private datePipe: DatePipe) {
@@ -103,6 +106,9 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.inter);
+    this.destroy$.next();
+    this.destroy$.complete();
+
   }
 
   change(value: any) {
@@ -119,7 +125,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
 
   getMachineCategory() {
-    this.data = this.reportservice.getAllMachinesCategory().subscribe(
+    this.data = this.reportservice.getAllMachinesCategory().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.machineCategory = res;
         this.machineCategory = this.machineCategory.data;
@@ -143,7 +149,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   getMachineDetails(id) {
-    this.reportservice.getMachineDataById(id).subscribe(
+    this.reportservice.getMachineDataById(id).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.machineData = res["data"].getAllMachineRecords;
         this.machineData.forEach((ele) => {
@@ -155,7 +161,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   getAllMachineByCategoryId(id: any) {
     this.loading = true;
-    this.data = this.reportservice.getMachineDataByCategoryId(id).subscribe(
+    this.data = this.reportservice.getMachineDataByCategoryId(id).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.machines = res['data'];
         this.MachineFlag = true;
@@ -205,7 +211,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.ChartFlag = false;
 
     let count;
-    this.data = this.reportservice.getobjdata(this.obj).subscribe(
+    this.data = this.reportservice.getobjdata(this.obj).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         if (res["success"]) {
 
@@ -251,7 +257,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.NoDataFlag = false;
     this.ChartFlag = false;
     let count;
-    this.data = this.reportservice.getobjdata(this.obj).subscribe(
+    this.data = this.reportservice.getobjdata(this.obj).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         if (res["success"]) {
 
@@ -335,7 +341,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   // getPurchaseRequestList() {
-  //   this.purchaseService.getAllRequests().subscribe(
+  //   this.purchaseService.getAllRequests().pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) {
   //         this.purchaseRequestList = data["data"];
@@ -346,7 +352,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   // }
   getWaterJetList() {
     this.loading = true;
-    this.waterjetService.getWaterJetList().subscribe(
+    this.waterjetService.getWaterJetList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.waterJetList = data["data"];
@@ -363,7 +369,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.purchaseRequestList[index].status = status;
     this.purchaseService
       .updateRequestStatus(this.purchaseRequestList[index])
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             if (status == 1) this.toastr.success("Request approved");

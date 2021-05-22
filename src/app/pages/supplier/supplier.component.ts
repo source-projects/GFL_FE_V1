@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -160,7 +161,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
   public getSupplierList(id, getBy) {
     this.loading = true;
-    this.supplierService.getAllSupplier(id, getBy).subscribe(
+    this.supplierService.getAllSupplier(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         if (data['success']) {
           if (data['data'].length > 0) {

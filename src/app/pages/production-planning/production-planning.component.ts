@@ -130,7 +130,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -147,7 +147,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -164,7 +164,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public getAllBatchData() {
     this.batchList = [];
-    this.stockBatchService.getAllBatch().subscribe(
+    this.stockBatchService.getAllBatch().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
@@ -184,7 +184,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       if (this.productionPlanning.partyId) {
         this.programService
           .getQualityByParty(this.productionPlanning.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.qualityList = data["data"].qualityDataList;
@@ -207,7 +207,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       if (this.productionPlanning.partyId) {
         this.programService
           .getBatchByParty(this.productionPlanning.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.batchList = data["data"];
@@ -256,7 +256,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         this.batchListCopy = [];
         this.programService
           .getBatchByQuality(this.productionPlanning.qualityEntryId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.batchList = data["data"];
@@ -345,7 +345,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   updateProduction(result) {
-    this.productionPlanningService.updateProductionPlan(result).subscribe(
+    this.productionPlanningService.updateProductionPlan(result).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Update_Success);
@@ -363,7 +363,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public plannedProductionListForDataTable(): any {
     this.plannedProductionList = [];
-    this.jetService.getAllProductionWithoutJetPlan().subscribe(
+    this.jetService.getAllProductionWithoutJetPlan().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.plannedProductionList = data["data"];
@@ -381,7 +381,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     let idCount = this.plannedProductionList.length;
     let item = this.plannedProductionList;
     let deleteId = this.plannedProductionList[index].id;
-    this.productionPlanningService.deleteProduction(deleteId).subscribe(
+    this.productionPlanningService.deleteProduction(deleteId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.ngOnInit();
@@ -412,7 +412,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   getJetData() {
     this.jet = [];
     this.loading = true;
-    this.jetService.getAllJetData().subscribe(
+    this.jetService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
@@ -438,7 +438,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public getBatchDetails() {
     this.jetService
       .getBatchedDetailByProductionId(this.sendSotckId, this.sendBatchId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.detailsList = data["data"];
@@ -494,7 +494,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   changeJetStatusApiCall(data: any) {
-    this.jetService.updateStatus(data).subscribe(
+    this.jetService.updateStatus(data).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
@@ -520,7 +520,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (result) {
           this.jetService
             .removeProductionFromJet(this.sendControlId, this.sendSotckId)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 this.toastr.success(errorData.Delete);
                 this.getJetData();
@@ -538,7 +538,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   getAllBatchWithShade() {
     this.loading = true;
     // let p_id;
-    this.productionPlanningService.getAllProductionPlan().subscribe(
+    this.productionPlanningService.getAllProductionPlan().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
@@ -614,7 +614,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         from: fromobj,
         to: toobj,
       };
-      this.jetService.updateJetData(obj).subscribe((data) => {
+      this.jetService.updateJetData(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
         }
@@ -640,7 +640,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         from: fromobj,
         to: toobj,
       };
-      this.jetService.updateJetData(obj).subscribe((data) => {
+      this.jetService.updateJetData(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
         }

@@ -1,26 +1,34 @@
-import { Component, OnInit } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { RegistrationService } from "../../../@theme/services/registration.service";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "ngx-scan-qr",
   templateUrl: "./scan-qr.component.html",
   styleUrls: ["./scan-qr.component.scss"],
 })
-export class ScanQRComponent implements OnInit {
+export class ScanQRComponent implements OnInit, OnDestroy {
   loading = false;
   formSubmitted = false;
   empId: any;
   list = [];
   employee;
-  permissionDenied:boolean=false
+  permissionDenied:boolean=false;
+  destroy$ = new Subject<void>();
+
   constructor(
     private registrationService: RegistrationService,
     private route: Router,
     private toastr: ToastrService
   ) {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
 //     navigator.permissions.query({name: 'microphone'})
@@ -53,7 +61,7 @@ export class ScanQRComponent implements OnInit {
   }
 
   // onSave() {
-  //   this.registrationService.getEmployeeById(this.employee).subscribe(
+  //   this.registrationService.getEmployeeById(this.employee).pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) {
   //         if (data["data"]) {
@@ -78,7 +86,7 @@ export class ScanQRComponent implements OnInit {
 
   searchSelected(ele) {
     if (Number(ele.value.empid)) {
-      this.registrationService.empIdExistOrNot(ele.value.empid).subscribe(
+      this.registrationService.empIdExistOrNot(ele.value.empid).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             if (data["data"][0]) {

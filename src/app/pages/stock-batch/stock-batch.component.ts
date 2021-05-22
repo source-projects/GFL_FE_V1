@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -160,7 +161,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
   getStockBatchList(id, getBy) {
     this.loading = true;
-    this.stockBatchService.getAllStockBatchList(id, getBy).subscribe(
+    this.stockBatchService.getAllStockBatchList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.stockList = data["data"];
@@ -202,7 +203,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.stockBatchService.deleteStockBatchById(id).subscribe(
+        this.stockBatchService.deleteStockBatchById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(errorData.Delete);

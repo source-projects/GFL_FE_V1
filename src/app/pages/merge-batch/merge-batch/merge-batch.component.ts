@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
   CdkDragDrop,
@@ -75,7 +76,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
   }
 
   getCurrentMergeBatchData() {
-    this.mergeBatchService.getMergeBatchById(this.currentId).subscribe(
+    this.mergeBatchService.getMergeBatchById(this.currentId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.currentMergeBatch = data["data"];
@@ -115,7 +116,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
 
   getAllParties() {
     this.partyList = [];
-    this.partyService.getAllPartyList(0, "all").subscribe((data) => {
+    this.partyService.getAllPartyList(0, "all").pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.partyList = data["data"];
       }
@@ -130,7 +131,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
     if (event) {
       this.qualityService
         .getQualityByParty(this.filterDetails[i].partyId)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.filterDetails[i].qualityList = data["data"]["qualityDataList"];
           }
@@ -153,7 +154,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
           this.filterDetails[i].qualityId,
           this.filterDetails[i].partyId
         )
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.filterDetails[i].batchList = data["data"];
           }
@@ -186,7 +187,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
       // });
       this.stockBatchService
         .getBatchGRById(this.filterDetails[i].batchId)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.filterDetails[i].grList = data["data"];
           }
@@ -260,7 +261,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
       if (count > 1) {
         //get Batch Sequence for new batchId...
         if (!this.currentId) {
-          this.stockBatchService.getBatchSequence(true).subscribe((data) => {
+          this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
             if (data["success"]) {
               this.newBatchId = data["data"]["sequence"];
             }
@@ -274,7 +275,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
                 mergeBatchId: this.newBatchId,
                 batchDataList: this.finalGrList,
               })
-              .subscribe(
+              .pipe(takeUntil(this.destroy$)).subscribe(
                 (data) => {
                   if (data["success"]) {
                     this.toastr.success(data["msg"]);
@@ -294,7 +295,7 @@ export class MergeBatchComponent implements OnInit, OnDestroy {
                 mergeBatchId: this.currentMergeBatch.mergeBatchId,
                 batchDataList: this.finalGrList,
               })
-              .subscribe(
+              .pipe(takeUntil(this.destroy$)).subscribe(
                 (data) => {
                   if (data["success"]) {
                     this.toastr.success(data["msg"]);

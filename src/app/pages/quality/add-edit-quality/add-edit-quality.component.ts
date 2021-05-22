@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -63,7 +64,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
   }
 
   getQualityNameList() {
-    this.adminService.getAllQualityData().subscribe(
+    this.adminService.getAllQualityData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityNameList = data["data"];
@@ -80,7 +81,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
         id = this.addEditQualityForm.get("id").value;
       this.qualityService
         .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.qulityIdExist = data["data"];
           },
@@ -135,7 +136,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.currentQualityId = this._route.snapshot.paramMap.get("id");
     if (this.currentQualityId != null) {
-      this.qualityService.getQualityById(this.currentQualityId).subscribe(
+      this.qualityService.getQualityById(this.currentQualityId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.qualityList = data["data"];
           this.addEditQualityForm.patchValue({
@@ -166,7 +167,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -213,7 +214,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
         this.addEditQualityForm.value.rate
       );
       this.setQualityName(this.addEditQualityForm.value.qualityNameId);
-      this.qualityService.addQuality(this.addEditQualityForm.value).subscribe(
+      this.qualityService.addQuality(this.addEditQualityForm.value).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.reset();
@@ -244,7 +245,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
       this.setQualityName(this.addEditQualityForm.value.qualityNameId);
       this.qualityService
         .updateQualityById(this.addEditQualityForm.value)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);

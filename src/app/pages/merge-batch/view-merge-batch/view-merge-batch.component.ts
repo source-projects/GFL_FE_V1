@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -76,7 +77,7 @@ export class ViewMergeBatchComponent implements OnInit, OnDestroy {
   getAllMergeBatch(){
     this.loading = true;
 
-    this.mergeBatchService.getAllMergeBatch().subscribe(
+    this.mergeBatchService.getAllMergeBatch().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data["success"]){
           this.mergeList = data["data"];
@@ -108,7 +109,7 @@ export class ViewMergeBatchComponent implements OnInit, OnDestroy {
     modalRef.result.then((result) => {
     if(result){
 
-    this.mergeBatchService.deleteMergeBatch(id).subscribe(
+    this.mergeBatchService.deleteMergeBatch(id).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data["success"]){
           this.toastr.success(data["msg"]);

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -92,7 +93,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   //     shift: this.attendance.shift,
   //     id: this.currentEmpId,
   //   };
-  //   this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
+  //   this.registrationService.getAttendenceByEmpId(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
   //     if (data["success"]) {
   //       //this.employeeDetail = data['data'].employeeMast;
   //       this.attendance = data["data"].attendanceLatest;
@@ -125,7 +126,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   //     shift: !this.attendance.shift?false:this.attendance.shift,
   //     id: this.currentEmpId,
   //   };
-  //   this.registrationService.getAttendenceByEmpId(obj).subscribe((data) => {
+  //   this.registrationService.getAttendenceByEmpId(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
   //     if (data["success"]) {
   //       //this.employeeDetail = data['data'].employeeMast;
   //       this.attendance = data["data"].attendanceLatest;
@@ -158,7 +159,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
       empId: this.currentEmpId,
       saveFlag: false
     }
-    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
+    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         if (data["success"]) {
           this.employeeDetail = data["data"].employeeMast;
@@ -187,7 +188,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
     )
     // this.registrationService
     //   .getAttendanceByEmployeeId(this.currentEmpId)
-    //   .subscribe(
+    //   .pipe(takeUntil(this.destroy$)).subscribe(
     //     (data) => {
     //       if (data["success"]) {
     //         this.employeeDetail = data["data"].employeeMast;
@@ -257,7 +258,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
       saveFlag: true,
       url: "photoUrl"
     }
-    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
+    this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
@@ -281,7 +282,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   //     saveFlag:true,
   //     url:"photoUrl"
   //   }
-  //   this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).subscribe(
+  //   this.registrationService.getAttendanceByDateAndSaveeFlag(dateShiftObj).pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) {
   //         this.toastr.success(data["msg"]);

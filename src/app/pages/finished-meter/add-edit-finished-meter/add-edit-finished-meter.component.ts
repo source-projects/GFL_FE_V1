@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
@@ -70,7 +71,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   //getAll party list
   getAllParty() {
-    this.partyService.getAllPartyWithNameOnly().subscribe(
+    this.partyService.getAllPartyWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -84,7 +85,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   //getAll quality list
   getAllQuality() {
-    this.qualityService.getAllQualityWithNameOnly().subscribe(
+    this.qualityService.getAllQualityWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -98,7 +99,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   //getAll master list
   getAllMasters() {
-    this.finishedMeterService.getAllUserHeads().subscribe(
+    this.finishedMeterService.getAllUserHeads().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.masterList = data["data"];
@@ -111,7 +112,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   }
 
   getAllBatchForFinishMtr() {
-    this.finishedMeterService.getAllBatchForFinishMeter().subscribe(
+    this.finishedMeterService.getAllBatchForFinishMeter().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
@@ -130,7 +131,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     if (event != undefined) {
       this.finishedMeterService
         .getAllQualityByParty(this.finishedMeterForm.partyId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.qualityList = data["data"].qualityDataList;
@@ -178,7 +179,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
       this.finishedMeterService
         .getBatchDataBybatchNo(this.finishedMeterForm.batchId, controlId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.finishedMeterForm.batchData = data["data"];
@@ -224,7 +225,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.finishedMeterService.getBatchesByPartyQuality(qid, pid).subscribe(
+      this.finishedMeterService.getBatchesByPartyQuality(qid, pid).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.batchList = data["data"];
@@ -258,7 +259,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       //get batch by masterId
       this.finishedMeterService
         .getBatchByMasterId(this.finishedMeterForm.masterId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.batchList = data["data"];
@@ -408,7 +409,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
           this.finishedMeterService
             .addFinishedMeter(this.finishedMeterForm.batchData)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   this.toastr.success(data["msg"]);

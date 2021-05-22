@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
@@ -136,7 +137,7 @@ export class PartyComponent implements OnInit, OnDestroy {
   getAllParty(id, getBy) {
     this.loading = true;
 
-    this.partyService.getAllPartyList(id, getBy).subscribe(
+    this.partyService.getAllPartyList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -288,7 +289,7 @@ export class PartyComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.partyService.deletePartyDetailsById(id).subscribe(
+        this.partyService.deletePartyDetailsById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.onChange(this.radioSelect);
