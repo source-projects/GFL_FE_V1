@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, Renderer2, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -182,7 +183,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
 
   getDesignation() {
     this.loading = true;
-    this.userService.getDesignation().subscribe(
+    this.userService.getDesignation().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.designationList = data["data"];
@@ -203,7 +204,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
   }
 
   getAllCompany() {
-    this.userService.getAllCompanyData().subscribe(
+    this.userService.getAllCompanyData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.companyList = data["data"];
@@ -214,7 +215,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
   }
 
   getAllDepartment() {
-    this.userService.getAllDepartmentData().subscribe(
+    this.userService.getAllDepartmentData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
@@ -226,7 +227,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
 
   getUserHeadList() {
     this.userHeadList = [];
-    this.userService.getAllHead().subscribe(
+    this.userService.getAllHead().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.userHeadList = data["data"] ? data["data"] : [];
@@ -243,7 +244,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
     this.userNameExist = false;
     let id: Number = 0;
     if (this.user.id) id = this.user.id;
-    this.userService.checkUserNameExist(this.user.userName, id).subscribe(
+    this.userService.checkUserNameExist(this.user.userName, id).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         this.userNameExist = data["data"];
       },
@@ -708,7 +709,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
   getCurrentUser() {
     this.loading = true;
     if (this.currentUserId != null) {
-      this.userService.getUserById(this.currentUserId).subscribe(
+      this.userService.getUserById(this.currentUserId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.user = data["data"];
@@ -747,7 +748,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
       } else {
         this.user.password = "";
       }
-      this.userService.updateUser(this.user).subscribe(
+      this.userService.updateUser(this.user).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/user"]);
@@ -807,7 +808,7 @@ export class AddEditUserComponent implements OnInit, OnDestroy {
       if (!this.user.isUserHead) {
         this.user.userHeadId = this.commonService.getUser().userId;
       }
-      this.userService.createUser(this.user).subscribe(
+      this.userService.createUser(this.user).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.reset(myForm);

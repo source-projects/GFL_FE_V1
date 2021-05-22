@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -92,7 +93,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
   }
 
   getUpdateData() {
-    this.supplierService.getAllSupplierById(this.mySupplierRateId).subscribe(
+    this.supplierService.getAllSupplierById(this.mySupplierRateId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.formValues = data["data"];
@@ -129,7 +130,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
 
   public getSupplierName() {
     this.user = this.commonService.getUser();
-    this.supplierService.getAllSupplier(0, "all").subscribe(
+    this.supplierService.getAllSupplier(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
@@ -158,7 +159,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
       });
 
       
-      this.supplierService.addSupplierRateInSystem(this.formValues).subscribe(
+      this.supplierService.addSupplierRateInSystem(this.formValues).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.router.navigate(["pages/supplier"]);
@@ -205,7 +206,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
 
       this.supplierService
         .updateSupplierRateInSystem(this.formValues)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.router.navigate(["pages/supplier"]);
@@ -260,7 +261,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
             this.formValues.supplierRates = [...list];
     }
     else{
-      this.supplierService.getDuplicateCheck(0,ele.target.value).subscribe(
+      this.supplierService.getDuplicateCheck(0,ele.target.value).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if(data["data"]){
             this.toastr.warning("Item Name already exist");

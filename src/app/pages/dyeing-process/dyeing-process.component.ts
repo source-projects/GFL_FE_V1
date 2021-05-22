@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -35,7 +36,7 @@ export class DyeingProcessComponent implements OnInit, OnDestroy {
   }
 
   getAllDyeingProcesses() {
-    this.dyeingProcessService.getAllDyeingProcessList().subscribe(
+    this.dyeingProcessService.getAllDyeingProcessList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.dyeingProcessList = data["data"];
@@ -51,7 +52,7 @@ export class DyeingProcessComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.dyeingProcessService.deleteDyeingProcess(id).subscribe(
+        this.dyeingProcessService.deleteDyeingProcess(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);

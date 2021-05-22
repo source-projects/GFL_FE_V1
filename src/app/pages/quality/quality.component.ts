@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
@@ -163,7 +164,7 @@ export class QualityComponent implements OnInit, OnDestroy {
 
   getQualityList(id, getBy) {
     this.loading = true;
-    this.qualityService.getallQuality(id, getBy).subscribe(
+    this.qualityService.getallQuality(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
   Component,
@@ -194,7 +195,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
 
   getAllJets() {
     this.jetList = [];
-    this.jetPlanningService.getAllJetData().subscribe(
+    this.jetPlanningService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
@@ -224,14 +225,14 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
 
   getAllPartyAndQuality() {
     //get all party...
-    this.partyService.getAllPartyList(0, "all").subscribe((data) => {
+    this.partyService.getAllPartyList(0, "all").pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.partyList = data["data"];
       }
     });
 
     //get all qualities...
-    this.qualityService.getallQuality(0, "all").subscribe((data) => {
+    this.qualityService.getallQuality(0, "all").pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.qualityList = data["data"];
       }
@@ -258,7 +259,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
               obj.stockId = this.stockId;
               this.planningSlipService
                 .getItemListByShade(obj)
-                .subscribe((data) => {
+                .pipe(takeUntil(this.destroy$)).subscribe((data) => {
                   if (data["success"]) {
                     this.itemList = data["data"];
                   }
@@ -266,7 +267,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
               this.shadeSelectedFlag = true;
               this.shadeService
                 .getCurrentShadeData(this.directSlipShadeObj.shadeId)
-                .subscribe((data) => {
+                .pipe(takeUntil(this.destroy$)).subscribe((data) => {
                   if (data["success"]) {
                     this.shadeObj.partyShadeNo = data["data"].partyShadeNo;
                     this.shadeObj.color = data["data"].colorTone;
@@ -289,7 +290,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
         this.qualityList = [];
         this.qualityService
           .getQualityByParty(this.directSlipShadeObj.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"])
                 this.qualityList = data["data"].qualityDataList;
@@ -309,7 +310,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
       this.shadeList = [];
       this.shadeService
         .getShadeFromPartyQuality(this.directSlipShadeObj.partyId, null)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.shadeList = data["data"];
           }
@@ -335,7 +336,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
             this.directSlipShadeObj.partyId,
             this.directSlipShadeObj.qualityId
           )
-          .subscribe((data) => {
+          .pipe(takeUntil(this.destroy$)).subscribe((data) => {
             if (data["success"]) {
               this.shadeList = data["data"];
             }
@@ -353,7 +354,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
     if (this.batchId && this.stockId) {
       this.productionPlanningService
         .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.weight = data["data"].totalwt;
           }
@@ -362,7 +363,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
   }
 
   getItemData() {
-    this.DyeingProcessService.getAllItemWithSupplier().subscribe(
+    this.DyeingProcessService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
@@ -379,7 +380,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
 
     this.shadeService
       .getShadesByQualityAndPartyId(this.partyId, this.qualityId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.shadeList = data["data"];
@@ -399,7 +400,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
   getSlipDataFromBatch() {
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
@@ -643,7 +644,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
           this.activeModal.close(this.slipObj);
         }
       } else {
-        this.planningSlipService.updateSlipData(this.slipData).subscribe(
+        this.planningSlipService.updateSlipData(this.slipData).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.isSavedForPrint = true;
@@ -827,7 +828,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
           this.dyeingChemicalData[index].qty
         ) {
           this.dyeingChemicalData.push(new DyeingChemicalData());
-          // this.data.changes.subscribe(() => {
+          // this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           //   this.data.last["nativeElement"].focus();
           // });
           let interval = setInterval(() => {

@@ -1,6 +1,8 @@
+import { takeUntil } from 'rxjs/operators';
 import {
   Component,
   Input,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
@@ -13,13 +15,14 @@ import {
 } from "../../../@theme/model/dyeing-process";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "ngx-add-dyeing-process-step",
   templateUrl: "./add-dyeing-process-step.component.html",
   styleUrls: ["./add-dyeing-process-step.component.scss"],
 })
-export class AddDyeingProcessStepComponent implements OnInit {
+export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   @ViewChildren("data") data: QueryList<NgSelectComponent>;
 
   public dyeingProcessStep: DyeingProcessData;
@@ -35,6 +38,8 @@ export class AddDyeingProcessStepComponent implements OnInit {
   public byChemicalList=[{id:"L",value:"L"},{id:"W",value:"W"},{id:"F",value:"F"}]
   public processTypes = ["Scouring","Acid Wash", "Dyeing", "RC", "Cold Wash"];
   public shadeTypeList = ["Default","Light","Midium","Dark","Special"];
+  private destroy$ = new Subject<void>();
+
   constructor(
     public activeModal: NgbActiveModal,
     private DyeingProcessService: DyeingProcessService,
@@ -43,6 +48,10 @@ export class AddDyeingProcessStepComponent implements OnInit {
     this.dyeingProcessStep = new DyeingProcessData();
     this.positionValues = [];
     this.dyeingChemicalData.push(new DyeingChemicalData());
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -99,7 +108,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
   }
 
   getItemData() {
-    this.DyeingProcessService.getAllItemWithSupplier().subscribe(
+    this.DyeingProcessService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
@@ -132,7 +141,7 @@ export class AddDyeingProcessStepComponent implements OnInit {
         //let list = this.dyeingChemicalData;
         this.dyeingChemicalData.push(obj);
 
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         });
       } else {

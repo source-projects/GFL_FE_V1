@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ShadeService } from "../../@theme/services/shade.service";
@@ -51,7 +52,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
 
   getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -67,7 +68,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
   }
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -96,7 +97,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
     this.notPlanned = [];
     this.reportService
       .getPartyQualityReportData(this.partyId, this.qualityControlId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.reportData = data["data"].batchDetailList;
@@ -146,7 +147,7 @@ export class GenerateReportComponent implements OnInit, OnDestroy {
       this.getReportData();
       this.loading = false;
     } else {
-      this.shadeService.getQualityFromParty(this.partyId).subscribe(
+      this.shadeService.getQualityFromParty(this.partyId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.qualityList = data["data"].qualityDataList;

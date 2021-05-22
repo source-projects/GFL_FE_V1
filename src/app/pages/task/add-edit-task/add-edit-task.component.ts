@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgxImageCompressService } from "ngx-image-compress";
@@ -102,7 +103,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
       data.append("file", this.fileToUpload);
       data.append("upload_preset", "gfl_upload");
       data.append("cloud_name", "dpemsdha5");
-      this.registrationService.uploadImage(data).subscribe((response) => {
+      this.registrationService.uploadImage(data).pipe(takeUntil(this.destroy$)).subscribe((response) => {
         if (response) {
           let obj = {
             id: null,
@@ -167,18 +168,18 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     }
   }
   getDeviceList() {
-    this.adminService.getAllDepartmentData().subscribe((data) => {
+    this.adminService.getAllDepartmentData().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.departmentList = data["data"];
     });
   }
 
   getReportList() {
-    this.taskService.getReportList().subscribe((data) => {
+    this.taskService.getReportList().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.reportList = data["data"];
     });
   }
   getUserList(event) {
-    this.taskService.getUserList(event).subscribe(
+    this.taskService.getUserList(event).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         this.userList = data["data"];
       },
@@ -202,7 +203,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
         this.addTask.endDate = this.addTask.startDate;
       }
 
-      this.taskService.addTask(this.addTask).subscribe(
+      this.taskService.addTask(this.addTask).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.toastrService.success("Task added successfully");
           this.activeModel.close(true);

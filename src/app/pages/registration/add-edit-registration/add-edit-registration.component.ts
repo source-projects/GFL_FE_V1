@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -99,7 +100,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
   }
 
   getAllDepartment() {
-    this.userService.getAllDepartmentData().subscribe(
+    this.userService.getAllDepartmentData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
@@ -120,7 +121,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
     this.docUpdate = [];
     this.registrationService
       .getEmployeeById(this.currentEmpId)
-      .subscribe((data) => {
+      .pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.registration = data["data"];
           this.docList = this.registration.employeeDocumentList;
@@ -212,7 +213,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
               observe: "events",
             }
           )
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (event) => {
               //send success response
               if (event) {
@@ -230,7 +231,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
           );
       }
 
-      this.registrationService.uploadImage(data).subscribe((response) => {
+      this.registrationService.uploadImage(data).pipe(takeUntil(this.destroy$)).subscribe((response) => {
         if (response) {
           let obj = {
             id: null,
@@ -326,7 +327,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
 
         this.registration.employeeDocumentList = this.docList;
 
-        this.registrationService.updateEmployee(this.registration).subscribe(
+        this.registrationService.updateEmployee(this.registration).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.formSubmitted = false;
@@ -360,7 +361,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
     formData.append("cloud_name", "dpemsdha5");
     formData.append("file", this.href);
 
-    this.registrationService.uploadImage(formData).subscribe((response) => {
+    this.registrationService.uploadImage(formData).pipe(takeUntil(this.destroy$)).subscribe((response) => {
       if (response) {
         let obj = {
           id: null,
@@ -398,7 +399,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
       this.disableButton = true;
       this.registration.id = 0;
       this.registration.employeeDocumentList = this.employeeDocumentArray;
-      this.registrationService.addEmployee(this.registration).subscribe(
+      this.registrationService.addEmployee(this.registration).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.emp_id = data["data"];
@@ -443,7 +444,7 @@ export class AddEditRegistrationComponent implements OnInit, OnDestroy {
       controlId: this.emp_id,
     };
     this.employeeDocumentArray.push(obj);
-    this.registrationService.addQr(qrData).subscribe(
+    this.registrationService.addQr(qrData).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.formSubmitted = false;

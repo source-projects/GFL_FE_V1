@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -66,7 +67,7 @@ export class AdvancePaymentComponent implements OnInit, OnDestroy {
 
   getAdvanceBillBank(){
     this.loading = true;
-    this.paymentService.getAllAdvancePaymentBanks().subscribe(
+    this.paymentService.getAllAdvancePaymentBanks().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.AdvancebillBanks = data["data"];
@@ -88,7 +89,7 @@ export class AdvancePaymentComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -104,7 +105,7 @@ export class AdvancePaymentComponent implements OnInit, OnDestroy {
   }
 
   getPaymentType() {
-    this.paymentService.getAllPaymentType().subscribe(
+    this.paymentService.getAllPaymentType().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.paymentTypeList = data["data"];
@@ -164,7 +165,7 @@ export class AdvancePaymentComponent implements OnInit, OnDestroy {
         this.advancePaymentArray = [...list];
         
         
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         })
       
@@ -229,7 +230,7 @@ export class AdvancePaymentComponent implements OnInit, OnDestroy {
       element.no = Number(element.no);
     })
 
-    this.paymentService.addAdvancePayment(this.advancePaymentArray).subscribe(
+    this.paymentService.addAdvancePayment(this.advancePaymentArray).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         if (data['success']) {
          // this.route.navigate(["/pages/payment/bill-payment"]);

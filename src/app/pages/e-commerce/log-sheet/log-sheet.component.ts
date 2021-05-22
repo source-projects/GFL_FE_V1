@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from 'app/@theme/model/log-sheet';
-import { LogSheetService } from 'app/@theme/services/log-sheet.service';
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from '../../../@theme/model/log-sheet';
+import { LogSheetService } from '../../../@theme/services/log-sheet.service';
 import { DatePipe } from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-log-sheet',
   templateUrl: './log-sheet.component.html',
   styleUrls: ['./log-sheet.component.scss']
 })
-export class LogSheetComponent implements OnInit {
+export class LogSheetComponent implements OnInit, OnDestroy {
 
   master: any;
   boiler: any;
@@ -81,9 +83,14 @@ export class LogSheetComponent implements OnInit {
   data: any;
 
   datePipeString: String;
-
+  private destroy$ = new Subject<void>();
 
   constructor(private logsheet: LogSheetService, private datePipe: DatePipe,private toast:ToastrService) {
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();  
   }
 
   ngOnInit(): void {
@@ -189,7 +196,7 @@ export class LogSheetComponent implements OnInit {
 
   saveBoilerData() {
 
-    this.logsheet.saveBoilerData(this.finalBoilerobj).subscribe(
+    this.logsheet.saveBoilerData(this.finalBoilerobj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data["success"]){
           this.toast.success("Added")
@@ -250,7 +257,7 @@ export class LogSheetComponent implements OnInit {
 
   saveThermoData() {
 
-    this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
+    this.logsheet.saveThermoData(this.finalThermoobj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if(data["success"]){
           this.toast.success("Added")
@@ -324,7 +331,7 @@ export class LogSheetComponent implements OnInit {
   }
 
   getMaster() {
-    this.data = this.logsheet.getAllMaster().subscribe(
+    this.data = this.logsheet.getAllMaster().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.master = res;
         this.master = this.master.data;
@@ -333,7 +340,7 @@ export class LogSheetComponent implements OnInit {
   }
 
   getBoiler() {
-    this.data = this.logsheet.getBoilerMachines().subscribe(
+    this.data = this.logsheet.getBoilerMachines().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.boiler = res;
         this.boiler = this.boiler.data;
@@ -342,7 +349,7 @@ export class LogSheetComponent implements OnInit {
   }
 
   getThermopack() {
-    this.data = this.logsheet.getThermopackMachines().subscribe(
+    this.data = this.logsheet.getThermopackMachines().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.thermopack = res;
         this.thermopack = this.thermopack.data;

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
   CdkDragDrop,
@@ -110,7 +111,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
   }
 
   getCurrentBatchSequence() {
-    this.stockBatchService.getBatchSequence(true).subscribe((data) => {
+    this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.currentBatchSequence = data["data"]["sequence"];
         this.currentBatchSeqId = data["data"]["id"];
@@ -153,7 +154,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
   }
 
   getPartyList() {
-    this.partyService.getAllPartyNameList().subscribe((data) => {
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.party = data["data"];
       }
@@ -161,7 +162,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
   }
 
   getQualtiyList() {
-    this.qualityService.getAllQualityWithNameOnly().subscribe((data) => {
+    this.qualityService.getAllQualityWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.quality = data["data"];
       }
@@ -196,7 +197,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
     }
 
     if (this.pId != null) {
-      this.qualityService.getQualityByParty(this.pId).subscribe(
+      this.qualityService.getQualityByParty(this.pId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.shuffleForm.controls["qualityName"].reset();
@@ -258,7 +259,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
 
     if (this.qId != null) {
       let temp;
-      this.programService.getPartyByQuality(this.qId).subscribe(
+      this.programService.getPartyByQuality(this.qId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             temp = data.data.partyName;
@@ -325,7 +326,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
   getQualityParty() {
     this.batchByQualityPartyService
       .getBatchById(this.qId, this.pId)
-      .subscribe((data) => {
+      .pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.qualityParty = data["data"];
 
@@ -446,7 +447,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
 
   getBatches(currentCId, currentbId) {
     if (this.shuffleForm.controls["batchName1"].valid && this.rval == 1) {
-      this.batchList.getBatchById(currentCId, currentbId).subscribe((data) => {
+      this.batchList.getBatchById(currentCId, currentbId).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.batches = data["data"];
           this.findmtrsum();
@@ -465,7 +466,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
         this.setBatchFlag = 1;
         this.batchList
           .getBatchById(currentCId, currentbId)
-          .subscribe((data) => {
+          .pipe(takeUntil(this.destroy$)).subscribe((data) => {
             if (data["success"]) {
               this.batches = data["data"];
               this.findmtrsum();
@@ -484,7 +485,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
 
   getBatches1(currentCId, currentbId) {
     if (this.shuffleForm.controls["batchName1"].valid && this.rval == 1) {
-      this.batchList.getBatchById(currentCId, currentbId).subscribe((data) => {
+      this.batchList.getBatchById(currentCId, currentbId).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.batches = data["data"];
           this.findmtrsum();
@@ -500,7 +501,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
       });
     } else if (this.rval == 2) {
       if (this.shuffleForm.controls["batchName2"].valid) {
-        this.batchList.getBatchById(currentCId, currentbId).subscribe(
+        this.batchList.getBatchById(currentCId, currentbId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.part2 = data["data"];
@@ -575,7 +576,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
 
           this.mergeArray.push(this.objectOfBatch1);
           this.mergeArray.push(this.objectOfBatch2);
-          this.shuffleService.updateBatchSplit(this.mergeArray).subscribe(
+          this.shuffleService.updateBatchSplit(this.mergeArray).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.reset();
@@ -648,7 +649,7 @@ export class ShuffleComponent implements OnInit, OnDestroy {
 
         this.mergeArray.push(this.objectOfBatch1);
         this.mergeArray.push(this.objectOfBatch2);
-        this.shuffleService.updateBatchMerge(this.mergeArray).subscribe(
+        this.shuffleService.updateBatchMerge(this.mergeArray).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               location.reload();

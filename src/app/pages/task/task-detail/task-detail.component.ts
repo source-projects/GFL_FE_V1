@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -56,7 +57,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
   getTaskMasterDetailById(){
     this.taskService
     .getTaskMasterDatabyId(this.taskId)
-    .subscribe(
+    .pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         this.taskDetail = data["data"];
         this.detailFlag = true;
@@ -69,7 +70,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
   getTaskDataDetailById(){
     this.taskService
     .getTaskDataDatabyId(this.taskId)
-    .subscribe(
+    .pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         this.taskDetailData = data["data"];
         this.statusSelected = this.taskDetailData.taskStatus;
@@ -146,7 +147,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
       data.append("file", this.fileToUpload);
       data.append("upload_preset", "gfl_upload");
       data.append("cloud_name", "dpemsdha5");
-      this.registrationService.uploadImage(data).subscribe((response) => {
+      this.registrationService.uploadImage(data).pipe(takeUntil(this.destroy$)).subscribe((response) => {
         if (response) {
           let obj = {
             id: null,
@@ -190,7 +191,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
       updateObj.taskCompletedDate = this.taskDetail.endDate;
       updateObj.reportUrl = this.taskDetail.urlName;
       updateObj.taskDataImageList = this.taskImageListArray;
-      this.taskService.updateTask(updateObj).subscribe(
+      this.taskService.updateTask(updateObj).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.toastrService.success("Updated successfully");
           this.activeModel.close(true);

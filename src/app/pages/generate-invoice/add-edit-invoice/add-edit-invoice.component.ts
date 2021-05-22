@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -85,7 +86,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (this.currentInvoiceId != null) {
       this.generateInvoiceService
         .getDataByInvoiceNumber(this.currentInvoiceId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.invoiceValues.partyId = data["data"].partyId;
@@ -95,7 +96,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               this.merge = [...this.finalbatch];
               this.generateInvoiceService
                 .getBatchByParty(this.invoiceValues.partyId)
-                .subscribe(
+                .pipe(takeUntil(this.destroy$)).subscribe(
                   (data) => {
                     if (data["success"]) {
                       data["data"].forEach((element) => {
@@ -134,7 +135,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -155,7 +156,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       if (this.invoiceValues.partyId) {
         this.generateInvoiceService
           .getBatchByParty(this.invoiceValues.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.finalbatch = data["data"];
@@ -232,7 +233,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                     obj.password = res;
                     obj.passwordFlag = true;
                     if (invoiceForm.valid) {
-                      this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                      this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
                         async (data) => {
                           if (data["success"]) {
                             this.invoiceNo = data["data"];
@@ -283,7 +284,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 obj.password = "";
                 obj.passwordFlag = false;
                 if (invoiceForm.valid) {
-                  this.generateInvoiceService.addInvoicedata(obj).subscribe(
+                  this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
                     async (data) => {
                       if (data["success"]) {
                         this.invoiceNo = data["data"];
@@ -353,7 +354,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   //     };
 
   //     if (invoiceForm.valid) {
-  //       this.generateInvoiceService.updateInvoice(obj).subscribe(
+  //       this.generateInvoiceService.updateInvoice(obj).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.route.navigate(["/pages/generate_invoice"]);

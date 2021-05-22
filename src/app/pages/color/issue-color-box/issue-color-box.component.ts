@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -86,7 +87,7 @@ export class IssueColorBoxComponent implements OnInit, OnDestroy {
   }
 
   getSupplierItemWithAvailableStock() {
-    this.supplierService.getItemWithSupplier().subscribe(
+    this.supplierService.getItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemList = data["data"];
@@ -101,7 +102,7 @@ export class IssueColorBoxComponent implements OnInit, OnDestroy {
     );
   }
   getAllBox() {
-    this.colorService.getAllBoxes().subscribe(
+    this.colorService.getAllBoxes().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.allBoxList = data["data"];
@@ -134,7 +135,7 @@ export class IssueColorBoxComponent implements OnInit, OnDestroy {
     if (event) {
       this.box = null;
       this.allBoxList = this.allBoxListCopy.filter((v) => v.itemId == event);
-      this.colorService.getColorBox(event, false).subscribe(
+      this.colorService.getColorBox(event, false).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.colorBoxList = data["data"];
@@ -171,7 +172,7 @@ export class IssueColorBoxComponent implements OnInit, OnDestroy {
 
   issueBox(form) {
     this.formSubmitted = true;
-    this.colorService.issueColorBoxWithList(this.listOfSelectedBoxId).subscribe(
+    this.colorService.issueColorBoxWithList(this.listOfSelectedBoxId).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         if (data["success"]) {
           this.showSelectedBoxList = []
@@ -190,7 +191,7 @@ export class IssueColorBoxComponent implements OnInit, OnDestroy {
       }
     )
     // if (form.valid) {
-    //   this.colorService.issueBox(form.value.boxNo).subscribe((data) => {
+    //   this.colorService.issueBox(form.value.boxNo).pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //     if (data["success"]) {
     //       this.formSubmitted = false;
     //       this.toastr.success(data["msg"]);

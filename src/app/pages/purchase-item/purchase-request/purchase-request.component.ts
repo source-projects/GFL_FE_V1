@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { PurchaseRequest } from "../../../@theme/model/purchaseRequest";
@@ -34,7 +35,7 @@ export class PurchaseRequestComponent implements OnInit, OnDestroy {
   }
 
   getSupplierList() {
-    this.supplierService.getItemWithSupplier().subscribe(
+    this.supplierService.getItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) this.supplierList = data["data"];
       },
@@ -69,7 +70,7 @@ export class PurchaseRequestComponent implements OnInit, OnDestroy {
       let userHead = this.commonService.getUserHeadId();
       this.purchaseRequest.createdBy = user.userId;
       this.purchaseRequest.userHeadId = userHead.userHeadId;
-      this.purchaseService.addPurchaseRequest(this.purchaseRequest).subscribe(
+      this.purchaseService.addPurchaseRequest(this.purchaseRequest).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) this.toastr.success("Item requested");
           this.formSubmitted = false;

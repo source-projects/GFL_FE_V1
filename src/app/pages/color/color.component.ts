@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -158,7 +159,7 @@ export class ColorComponent implements OnInit, OnDestroy {
 
   getColor(id, getBy) {
     this.loading = true;
-    this.colorService.getColor(id, getBy).subscribe(
+    this.colorService.getColor(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.colorList = data["data"];
@@ -209,7 +210,7 @@ export class ColorComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.colorService.deleteColorById(rowId).subscribe(
+        this.colorService.deleteColorById(rowId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete);

@@ -1,11 +1,12 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from 'app/@theme/model/log-sheet';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { LogSheetService } from 'app/@theme/services/log-sheet.service';
+import { Boiler, DayBoilerValues, DayThermopackValues, NightBoilerValues, NightThermopackValues, Thermopack } from '../../../@theme/model/log-sheet';
+import { JwtTokenService } from '../../../@theme/services/jwt-token.service';
+import { LogSheetService } from '../../../@theme/services/log-sheet.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
+import * as errorData from '../../../@theme/json/error.json';
 import { Router } from '@angular/router';
 
 @Component({
@@ -275,7 +276,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
       boilerMachineRecord: this.finalBoilerobj,
       jetRunning: this.jetRunning
     }
-    this.logsheet.saveBoilerData(obj).subscribe(
+    this.logsheet.saveBoilerData(obj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toast.success("Added");
@@ -376,7 +377,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
   }
 
   saveThermoData(value:any) {
-    this.logsheet.saveThermoData(this.finalThermoobj).subscribe(
+    this.logsheet.saveThermoData(this.finalThermoobj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toast.success("Added");
@@ -574,7 +575,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
       }
 
 
-      this.logsheet.fetchBoilerData(obj).subscribe(
+      this.logsheet.fetchBoilerData(obj).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.fetchedData = data["data"]
@@ -641,7 +642,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
         shift: this.shiftselected
       }
 
-      this.logsheet.fetchThermoData(obj).subscribe(
+      this.logsheet.fetchThermoData(obj).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.fetchedData = data["data"]
@@ -1151,7 +1152,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
     }
   }
   getBoiler() {
-    this.data = this.logsheet.getBoilerMachines().subscribe(
+    this.data = this.logsheet.getBoilerMachines().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.boiler = res;
         this.boiler = this.boiler.data;
@@ -1163,7 +1164,7 @@ export class InputDataComponent implements OnInit, OnDestroy {
   }
 
   getThermopack() {
-    this.data = this.logsheet.getThermopackMachines().subscribe(
+    this.data = this.logsheet.getThermopackMachines().pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
         this.thermopack = res;
         this.thermopack = this.thermopack.data;

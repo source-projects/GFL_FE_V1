@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { WaterJetRoutingModule } from './water-jet-routing.module';
 import { AddEditWaterJetComponent } from './add-edit-water-jet/add-edit-water-jet.component';
-import { SharedModule } from 'app/@theme/shared.module';
+import { SharedModule } from '../../@theme/shared.module';
 
 
 @NgModule({

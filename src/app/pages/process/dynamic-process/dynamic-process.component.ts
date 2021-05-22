@@ -1,5 +1,6 @@
+import { takeUntil } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as errorData from "../../../@theme/json/error.json";
@@ -21,13 +22,14 @@ import { ToastrService } from "ngx-toastr";
 import { PartyService } from "../../../@theme/services/party.service";
 import { AddFunctionComponent } from "../add-function/add-function.component";
 import { AddStepComponent } from "../add-step/add-step.component";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "ngx-dynamic-process",
   templateUrl: "./dynamic-process.component.html",
   styleUrls: ["./dynamic-process.component.scss"],
 })
-export class DynamicProcessComponent implements OnInit {
+export class DynamicProcessComponent implements OnInit, OnDestroy {
   //form values..
   processValue: ProcessValue = new ProcessValue();
   stepList: Step[] = [];
@@ -45,6 +47,8 @@ export class DynamicProcessComponent implements OnInit {
   currentProcessId: number;
   public errorData: any = (errorData as any).default;
   itemListArray: any;
+  private destroy$ = new Subject<void>();
+
   constructor(
     private commonService: CommonService,
     private processService: ProcessService,
@@ -54,6 +58,11 @@ export class DynamicProcessComponent implements OnInit {
     private router: ActivatedRoute
   ) {}
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   ngOnInit(): void {
     this.currentProcessId = parseInt(this.router.snapshot.paramMap.get("id"));
     this.processValue.steps = [];
@@ -62,7 +71,7 @@ export class DynamicProcessComponent implements OnInit {
   }
 
   getItemData() {
-    this.processService.getAllItemWithSupplier().subscribe(
+    this.processService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
@@ -77,7 +86,7 @@ export class DynamicProcessComponent implements OnInit {
   }
 
   getUpdateDataOfProcess() {
-    this.processService.getProcessById(this.currentProcessId).subscribe(
+    this.processService.getProcessById(this.currentProcessId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.processValue = data["data"];
@@ -366,7 +375,7 @@ export class DynamicProcessComponent implements OnInit {
         let user = this.commonService.getUser();
         this.processValue.userHeadId = userHead.userHeadId;
         this.processValue.createdBy = user.userId;
-        this.processService.saveProcess(this.processValue).subscribe(
+        this.processService.saveProcess(this.processValue).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.route.navigate(["/pages/process"]);
@@ -391,7 +400,7 @@ export class DynamicProcessComponent implements OnInit {
       this.convertFormAccordingToRequestObj(0);
       let user = this.commonService.getUser();
       this.processValue.updatedBy = user.userId;
-      this.processService.updateProcess(this.processValue).subscribe(
+      this.processService.updateProcess(this.processValue).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.toastr.success(errorData.Update_Success);

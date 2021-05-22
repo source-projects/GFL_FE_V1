@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DatePipe } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -288,7 +289,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     assignDateStatusObj.forEach((element, index) => {
     //       this.taskService
     //         .getDataAccordingToStatus(element)
-    //         .subscribe((data) => {
+    //         .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //           if (assignCardDetailWithStatus) {
     //             assignCardDetailWithStatus = data["data"];
     //           } else {
@@ -310,7 +311,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     };
     //     this.taskService
     //       .getDataAccordingToStatus(completeDateStatusObj)
-    //       .subscribe((data) => {
+    //       .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //         this.completedCardDetail = data["data"];
     //       });
     //     break;
@@ -325,7 +326,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     };
     //     this.taskService
     //       .getDataAccordingToStatus(blockerDaeStatusObj)
-    //       .subscribe((data) => {
+    //       .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //         this.blockerCardDetail = data["data"];
     //       });
     //     break;
@@ -338,7 +339,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //     };
     //     this.taskService
     //       .getDataAccordingToStatus(allDateStatusObj)
-    //       .subscribe((data) => {
+    //       .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //         this.allCardDetail = data["data"];
     //       });
     //     break;
@@ -351,7 +352,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //       };
     //       this.taskService
     //         .getDataAccordingToStatus(approveDateStatusObj)
-    //         .subscribe((data) => {
+    //         .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;
@@ -364,7 +365,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     //       };
     //       this.taskService
     //         .getDataAccordingToStatus(notApproveDateStatusObj)
-    //         .subscribe((data) => {
+    //         .pipe(takeUntil(this.destroy$)).subscribe((data) => {
     //           this.approvedCardDetail = data["data"];
     //         });
     //       break;
@@ -374,7 +375,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   getAllCardDetail() {
     this.allCardCount = 0;
     if (this.userHeadId == 0) {
-      this.taskService.getAllTaskCard("").subscribe(
+      this.taskService.getAllTaskCard("").pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.allCardDetail = data["data"];
           if (this.allCardDetail) {
@@ -386,7 +387,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     } else {
       this.taskService
         .getAllTaskCard(this.commonService.getUser().userId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.allCardDetail = data["data"];
             if (this.allCardDetail) {
@@ -402,7 +403,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.assignedCardCount = 0;
     this.taskService
       .getAssignCard(this.commonService.getUser().userId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           this.assignCardDetail = data["data"];
 
@@ -426,7 +427,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     }
     this.taskService
       .getDataAccordingToStatus(this.completedateStatusObj)
-      .subscribe((data) => {
+      .pipe(takeUntil(this.destroy$)).subscribe((data) => {
         this.completedCardDetail = data["data"];
         if (this.completedCardDetail) {
           this.completedCardCount = this.completedCardDetail.length;
@@ -444,7 +445,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
       this.taskService
         .getDataAccordingToStatus(this.blockerdateStatusObj)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.blockerCardDetail = data["data"];
           if (this.blockerCardCount) {
             this.blockerCardCount = this.blockerCardDetail.length;
@@ -457,7 +458,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
       this.taskService
         .getDataAccordingToStatus(this.blockerdateStatusObj)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.blockerCardDetail = data["data"];
           if (this.blockerCardCount) {
             this.blockerCardCount = this.blockerCardDetail.length;
@@ -471,7 +472,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     if (this.userHeadId == 0) {
       this.taskService
         .getApprovedAndNotApprovedList("", true)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.approvedCardDetail = data["data"];
           if (this.approvedCardDetail) {
             this.approvedCardCount = this.approvedCardDetail.length;
@@ -483,7 +484,7 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.commonService.getUser().userId,
           true
         )
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.approvedCardDetail = data["data"];
           if (this.approvedCardDetail) {
             this.approvedCardCount = this.approvedCardDetail.length;
@@ -497,7 +498,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     if (this.userHeadId == 0) {
       this.taskService
         .getApprovedAndNotApprovedList("", false)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.notApprovedCardDetail = data["data"];
           if (this.notApprovedCardDetail) {
             this.notApprovedCardCount = this.notApprovedCardDetail.length;
@@ -509,7 +510,7 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.commonService.getUser().userId,
           false
         )
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           this.notApprovedCardDetail = data["data"];
           if (this.notApprovedCardDetail) {
             this.notApprovedCardCount = this.notApprovedCardDetail.length;
@@ -519,7 +520,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   onApprove(id) {
-    this.taskService.changeStatus(id, true).subscribe((data) => {
+    this.taskService.changeStatus(id, true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.toastr.success("Task approved successfully");
         this.getApprovedList();
@@ -534,7 +535,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.taskService.deleteTask(id).subscribe(
+        this.taskService.deleteTask(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success("Task deleted successfully");

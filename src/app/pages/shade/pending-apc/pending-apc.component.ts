@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -100,7 +101,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
   getallShades(id, getBy) {
     let shadeList1 = [];
     this.loading = true;
-    this.shadeService.getAllPendingShade().subscribe(
+    this.shadeService.getAllPendingShade().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"].length > 0) {
@@ -134,7 +135,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.shadeService.deleteShadeData(id).subscribe(
+        this.shadeService.deleteShadeData(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.getallShades(this.userId, "all");

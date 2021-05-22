@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Location } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -61,7 +62,7 @@ export class AddEditSupplierComponent implements OnInit, OnDestroy {
   public getMaster() {
     this.loading = true;
     this.master = [];
-    this.partyService.getAllMaster().subscribe(
+    this.partyService.getAllMaster().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
@@ -103,7 +104,7 @@ export class AddEditSupplierComponent implements OnInit, OnDestroy {
     if (this.selectedSupplierId != null) {
       this.supplierService
         .getAllSupplierById(this.selectedSupplierId)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.currentSupplier = data["data"];
             this.addSupplier.patchValue({
@@ -136,7 +137,7 @@ export class AddEditSupplierComponent implements OnInit, OnDestroy {
       this.addSupplier.value.createdBy = this.user.userId;
       this.supplierService
         .addSupplierInSystem(this.addSupplier.value)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.toastr.success(data["msg"]);
@@ -170,7 +171,7 @@ export class AddEditSupplierComponent implements OnInit, OnDestroy {
         ...this.addSupplier.value,
         id: this.selectedSupplierId,
       };
-      this.supplierService.updateSupplierById(body).subscribe(
+      this.supplierService.updateSupplierById(body).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.toastr.success(data["msg"]);
@@ -198,7 +199,7 @@ export class AddEditSupplierComponent implements OnInit, OnDestroy {
       if (this.addSupplier.value.id) id = this.addSupplier.value.id;
       this.supplierService
         .isSupplierExists(this.addSupplier.value.supplierName, id)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.isSupplierNameExists = data["data"];

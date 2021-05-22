@@ -1,24 +1,32 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import * as wijmo from "@grapecity/wijmo";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { StockBatchService } from "../../../@theme/services/stock-batch.service";
+import { Subject } from 'rxjs';
 @Component({
   selector: "ngx-job-card",
   templateUrl: "./job-card.component.html",
   styleUrls: ["./job-card.component.scss"],
 })
-export class JobCardComponent implements OnInit {
+export class JobCardComponent implements OnInit, OnDestroy {
   @Input() isDirectPrintFlag;
   @Input() stockBatchData;
   @Input() stockId;
   @Input() batchId;
   public printBatchData = [];
   public tempGr: any = { sr: "", mtr: "", wt: "" };
+  private destroy$ = new Subject<void>();
 
   constructor(
     private activeModal: NgbActiveModal,
     private stockBatchService: StockBatchService
   ) { }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     if (this.isDirectPrintFlag) {
@@ -44,7 +52,7 @@ export class JobCardComponent implements OnInit {
     for (let batch of batchIds) {
       this.stockBatchService
         .getJobCardData(batch)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.printBatchData.push(data["data"]);
             if (this.printBatchData.length == batchIds.length) {

@@ -145,7 +145,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   }
 
   changeJetStatusApiCall(data: any) {
-    this.jetService.updateStatus(data).subscribe(
+    this.jetService.updateStatus(data).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
@@ -200,7 +200,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         if (result) {
           this.jetService
             .removeProductionFromJet(this.sendControlId, this.sendSotckId)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 this.toastr.success(errorData.Delete);
                 this.getJetData();
@@ -222,7 +222,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -241,7 +241,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
 
   public getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -272,7 +272,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   public getBatchDetails() {
     this.jetService
       .getBatchedDetailByProductionId(this.sendSotckId, this.sendBatchId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.detailsList =
@@ -332,7 +332,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
       if (this.productionPlanning.partyId) {
         this.programService
           .getQualityByParty(this.productionPlanning.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.qualityList = data["data"].qualityDataList;
@@ -395,7 +395,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   getAllBatchWithShade() {
     this.loading = true;
     // let p_id;
-    this.productionPlanningService.getAllProductionPlan().subscribe(
+    this.productionPlanningService.getAllProductionPlan().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
@@ -450,7 +450,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
 
   addJetData(arr) {
     let index;
-    this.jetService.saveJetData(arr).subscribe((data) => {
+    this.jetService.saveJetData(arr).pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.toastr.success(errorData.Add_Success);
         this.route.navigate(["/pages/jet-planning"]);
@@ -486,7 +486,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         from: fromobj,
         to: toobj,
       };
-      this.jetService.updateJetData(obj).subscribe((data) => {
+      this.jetService.updateJetData(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
         }
@@ -512,7 +512,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
         from: fromobj,
         to: toobj,
       };
-      this.jetService.updateJetData(obj).subscribe((data) => {
+      this.jetService.updateJetData(obj).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
         }
@@ -523,7 +523,7 @@ export class JetPlanningComponent implements OnInit, OnDestroy {
   getJetData() {
     this.jet = [];
     this.loading = true;
-    this.jetService.getAllJetData().subscribe(
+    this.jetService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];

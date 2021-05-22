@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { ProcessGuard } from 'app/@theme/guards/process.guard';
-import { ExportService } from 'app/@theme/services/export.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { ProcessService } from 'app/@theme/services/process.service';
+import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
+import { ProcessGuard } from '../../@theme/guards/process.guard';
+import { ExportService } from '../../@theme/services/export.service';
+import { JwtTokenService } from '../../@theme/services/jwt-token.service';
+import { ProcessService } from '../../@theme/services/process.service';
 import { ToastrService } from 'ngx-toastr';
-import * as errorData from 'app/@theme/json/error.json';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
+import * as errorData from '../../@theme/json/error.json';
+import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 
-import { CommonService } from 'app/@theme/services/common.service';
+import { CommonService } from '../../@theme/services/common.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'ngx-process',
   templateUrl: './process.component.html',
   styleUrls: ['./process.component.scss']
 })
-export class ProcessComponent implements OnInit {
+export class ProcessComponent implements OnInit, OnDestroy {
   processList;
   tablestyle : "bootstrap";
   process=[];
@@ -31,6 +33,7 @@ export class ProcessComponent implements OnInit {
   hiddenDelete:boolean=true;
   hiddenEdit:boolean=true;
   addButtonDisabled:boolean=false;
+  private destroy$ = new Subject<void>();
 
   constructor(private processService: ProcessService,
     private toastr: ToastrService,
@@ -39,6 +42,11 @@ export class ProcessComponent implements OnInit {
     private commonService: CommonService,
     private jwtToken: JwtTokenService,
     private exportService: ExportService) { }
+    
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.getProcessList();
@@ -46,7 +54,7 @@ export class ProcessComponent implements OnInit {
   }
 
   getProcessList(){
-    this.processService.getAllProcessList('all',0).subscribe(
+    this.processService.getAllProcessList('all',0).pipe(takeUntil(this.destroy$)).subscribe(
       data=>{
         if(data['success'])
           this.processList = data["data"];
@@ -94,7 +102,7 @@ export class ProcessComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       if (result) {
-    this.processService.deleteProcess(id).subscribe(
+    this.processService.deleteProcess(id).pipe(takeUntil(this.destroy$)).subscribe(
       (data)=>{
         if(data['success']){
           this.toastr.success(data['msg'])
