@@ -228,7 +228,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                     obj.cgst = result.cgst;
                     obj.sgst = result.sgst;
                     obj.discount = result.discount;
-                    obj.netAmt = result.netAmt;
+                    obj.netAmt = Math.round(result.netAmt);
                     obj.taxAmt = result.taxAmt;
                     obj.password = res;
                     obj.passwordFlag = true;
@@ -279,7 +279,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;
                 obj.discount = result.discount;
-                obj.netAmt = result.netAmt;
+                obj.netAmt = Math.round(result.netAmt);
                 obj.taxAmt = result.taxAmt;
                 obj.password = "";
                 obj.passwordFlag = false;

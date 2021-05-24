@@ -988,7 +988,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.addApproveReceive.contact = null;
     this.addApproveReceive.email = null;
     this.addApproveReceive.type = null;
-    this.addApproveReceive.department = null;
+    this.addApproveReceive.departmentId = null;
     this.approveReceiveByEditFlag = false;
   }
 
@@ -1325,7 +1325,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.addApproveReceive.email = element.email;
         this.addApproveReceive.contact = element.contact;
         this.addApproveReceive.type = element.type;
-        this.addApproveReceive.department = element.department;
+        this.addApproveReceive.departmentId = element.department;
       }
     });
   }
