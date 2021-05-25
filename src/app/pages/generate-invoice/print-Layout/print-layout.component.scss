@@ -478,16 +478,21 @@
         padding-top: 60px !important;
     }
 
-    // another css
-    .printpage {
-        background: white;
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-        // width: 31cm;
-        /* height: 29.7cm; */
-    }
+    @media print {
+        .printpage {
+        display:table;
+        table-layout:fixed;
+        padding-top:0.05cm;
+        // padding-bottom:1.5cm;
+        height:auto;
+         }
+     }
+
+     @media print {
+         .pad-print{
+             padding-top: 0.05cm;
+         }
+     }
 
     .print-in-border {
         border: 3px solid rgb(143, 143, 143);

@@ -203,8 +203,8 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       }
     } else {
 
-      this.myDate = new Date();
-      this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
+      // this.myDate = new Date();
+      // this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
 
       let arr = [];
       arr.push(this.printInvoiceData);
@@ -275,6 +275,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       if (!this.printInvoiceData[index].netAmt) {
         this.printInvoiceData[index].netAmt =
           this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+        this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
       }
 
     }
