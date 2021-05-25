@@ -37,7 +37,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   @Input() stepList: DyeingProcessData[] = [];
   public byChemicalList=[{id:"L",value:"L"},{id:"W",value:"W"},{id:"F",value:"F"}]
   public processTypes = ["Scouring","Acid Wash", "Dyeing", "RC", "Cold Wash"];
-  public shadeTypeList = ["Default","Light","Midium","Dark","Special"];
+  public shadeTypeList = ["DEFAULT","LIGHT","MEDIUM","DARK","SPECIAL"];
   private destroy$ = new Subject<void>();
 
   constructor(
