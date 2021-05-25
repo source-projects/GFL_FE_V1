@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -143,7 +144,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   getAllPaymentList() {
     this.loading = true;
-    this.payment.getAllPayment().subscribe(
+    this.payment.getAllPayment().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.paymentList = data["data"];
@@ -160,7 +161,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   //   });
   //   modalRef.result.then((result) => {
   //     if (result) {
-  //       this.payment.deleteStockBatchById(id).subscribe(
+  //       this.payment.deleteStockBatchById(id).pipe(takeUntil(this.destroy$)).subscribe(
   //         (data) => {
   //           if (data["success"]) {
   //             this.onChange(this.radioSelect);

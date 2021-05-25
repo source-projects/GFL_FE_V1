@@ -1,20 +1,22 @@
-import { Component, OnInit, QueryList, Renderer2, ViewChildren } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, QueryList, Renderer2, ViewChildren } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgSelectComponent } from "@ng-select/ng-select";
-import * as errorData from "app/@theme/json/error.json";
-import { Program, ProgramRecords } from "app/@theme/model/program";
-import { CommonService } from "app/@theme/services/common.service";
-import { PartyService } from "app/@theme/services/party.service";
-import { ProgramService } from "app/@theme/services/program.service";
-import { QualityService } from "app/@theme/services/quality.service";
-import { StockBatchService } from 'app/@theme/services/stock-batch.service';
+import * as errorData from "../../../@theme/json/error.json";
+import { Program, ProgramRecords } from "../../../@theme/model/program";
+import { CommonService } from "../../../@theme/services/common.service";
+import { PartyService } from "../../../@theme/services/party.service";
+import { ProgramService } from "../../../@theme/services/program.service";
+import { QualityService } from "../../../@theme/services/quality.service";
+import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
 @Component({
   selector: "ngx-add-edit-program",
   templateUrl: "./add-edit-program.component.html",
   styleUrls: ["./add-edit-program.component.scss"],
 })
-export class AddEditProgramComponent implements OnInit {
+export class AddEditProgramComponent implements OnInit, OnDestroy {
   //programValues
   @ViewChildren('data') data: QueryList<NgSelectComponent>;
   public loading = false;
@@ -52,6 +54,8 @@ export class AddEditProgramComponent implements OnInit {
   userHead;
   allBatchData: any[];
   partyQuality: any[];
+  private destroy$ = new Subject<void>();
+
   constructor(
     private partyService: PartyService,
     private _route: ActivatedRoute,
@@ -65,6 +69,10 @@ export class AddEditProgramComponent implements OnInit {
   ) {
     this.programRecordArray.push(this.programRecord);
     this.programValues.programRecords = this.programRecordArray;
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -86,7 +94,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   getAllStockBatchData() {
-    this.programService.getAllStockWithourProductionPlan().subscribe(
+    this.programService.getAllStockWithourProductionPlan().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) this.stockData = data["data"];
       },
@@ -95,7 +103,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   // getAllBatchData() {
-  //   this.programService.getAllBatch().subscribe(
+  //   this.programService.getAllBatch().pipe(takeUntil(this.destroy$)).subscribe(
   //     (data) => {
   //       if (data["success"]) this.batchData = data["data"];
   //     },
@@ -104,7 +112,7 @@ export class AddEditProgramComponent implements OnInit {
   // }
 
   getMasterList() {
-    this.programService.getAllMasters().subscribe(
+    this.programService.getAllMasters().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.masterList = data["data"];
@@ -118,7 +126,7 @@ export class AddEditProgramComponent implements OnInit {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -137,7 +145,7 @@ export class AddEditProgramComponent implements OnInit {
 
   public getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -156,7 +164,7 @@ export class AddEditProgramComponent implements OnInit {
 
   public getPartyShadeList() {
     this.loading = true;
-    this.programService.getShadeDetail().subscribe(
+    this.programService.getShadeDetail().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyShade = data["data"];
@@ -175,7 +183,7 @@ export class AddEditProgramComponent implements OnInit {
   }
 
   public getAllBatchData() {
-    this.stockBatchService.getAllBatch().subscribe(
+    this.stockBatchService.getAllBatch().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchData = data["data"];
@@ -189,12 +197,12 @@ export class AddEditProgramComponent implements OnInit {
 
   public getUpdateData() {
     this.loading = true;
-    this.programService.getProgramDetailsById(this.currentProgramId).subscribe(
+    this.programService.getProgramDetailsById(this.currentProgramId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.programValues = data["data"];
           this.programValues.createdBy = data["data"].createdBy;
-          this.qualityService.getallQuality(0, "all").subscribe(
+          this.qualityService.getallQuality(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               this.qualityList = data["data"];
               this.qualityList.forEach((element) => {
@@ -211,7 +219,7 @@ export class AddEditProgramComponent implements OnInit {
               if (this.batchData == null) {
                 this.programService
                   .getBatchDetailByQualityId(this.programValues.qualityEntryId)
-                  .subscribe(
+                  .pipe(takeUntil(this.destroy$)).subscribe(
                     (data) => {
                       if (data["success"]) this.batchData = data["data"];
                       this.loading = false;
@@ -228,7 +236,7 @@ export class AddEditProgramComponent implements OnInit {
               if (this.stockData == null) {
                 this.programService
                   .getStockQualityList(this.programValues.qualityEntryId)
-                  .subscribe(
+                  .pipe(takeUntil(this.destroy$)).subscribe(
                     (data) => {
                       if (data["success"]) {
                         this.stockData = data["data"];
@@ -305,7 +313,7 @@ export class AddEditProgramComponent implements OnInit {
       if (this.programValues.partyId) {
         this.programService
           .getQualityByParty(this.programValues.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.qualityList = data["data"].qualityDataList;
@@ -348,7 +356,7 @@ export class AddEditProgramComponent implements OnInit {
     this.loading = true;
     this.programService
       .getBatchDetailByQualityId(this.programValues.qualityEntryId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.batchData = data["data"];
@@ -366,7 +374,7 @@ export class AddEditProgramComponent implements OnInit {
     //to add stock data
     this.programService
       .getStockQualityList(this.programValues.qualityEntryId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.stockData = data["data"];
@@ -593,7 +601,7 @@ export class AddEditProgramComponent implements OnInit {
         list.push(obj);
         this.programValues.programRecords = [...list];
 
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         })
       } else {
@@ -634,7 +642,7 @@ export class AddEditProgramComponent implements OnInit {
     if (myForm.valid) {
       this.programValues.createdBy = this.user.userId;
       this.programValues.userHeadId = this.userHead.userHeadId;
-      this.programService.saveProgram(this.programValues).subscribe(
+      this.programService.saveProgram(this.programValues).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);
@@ -668,7 +676,7 @@ export class AddEditProgramComponent implements OnInit {
     this.formSubmitted = true;
     if (myForm.valid) {
       this.programValues.updatedBy = this.user.userId;
-      this.programService.updateProgram(this.programValues).subscribe(
+      this.programService.updateProgram(this.programValues).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.route.navigate(["/pages/program"]);

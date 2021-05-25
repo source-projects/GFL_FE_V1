@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -97,7 +98,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
   getCurrentPurchase() {
     this.invUpdateurl = [];
     this.matUpdateurl = []
-    this.purchseService.getPurchaseById(this.currentId).subscribe(
+    this.purchseService.getPurchaseById(this.currentId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.purchase = data["data"];
@@ -122,7 +123,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
   }
 
   getAllDepartment() {
-    this.userService.getAllDepartmentData().subscribe(
+    this.userService.getAllDepartmentData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.departmentList = data["data"];
@@ -135,7 +136,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
   getApproveBy() {
     this.loading = true;
 
-    this.adminService.getAllApproveByData().subscribe((data) => {
+    this.adminService.getAllApproveByData().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.approveByList = data["data"];
         this.loading = false;
@@ -150,7 +151,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
   getReceiveBy() {
     this.loading = true;
 
-    this.adminService.getAllReceiveByData().subscribe((data) => {
+    this.adminService.getAllReceiveByData().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.receiveByList = data["data"];
         this.loading = false;
@@ -204,7 +205,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
         reportProgress: true,
         observe: 'events'
       })
-        .subscribe(event => {
+        .pipe(takeUntil(this.destroy$)).subscribe(event => {
           //send success response
           if (event) {
             if (event.type === HttpEventType.UploadProgress) {
@@ -223,7 +224,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
         });
 
 
-      this.purchseService.uploadImage(data).subscribe((response) => {
+      this.purchseService.uploadImage(data).pipe(takeUntil(this.destroy$)).subscribe((response) => {
         if (response) {
           let obj = {
             id: null,
@@ -320,7 +321,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
 
       this.purchase.createdBy = this.user.userId;
       this.purchase.materialPhotosList = this.docList;
-      this.purchseService.addPurchase(this.purchase).subscribe(
+      this.purchseService.addPurchase(this.purchase).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.formSubmitted = false;
@@ -384,7 +385,7 @@ export class AddEditPurchaseComponent implements OnInit, OnDestroy {
   
   
   
-        this.purchseService.updatePurchase(this.purchase).subscribe(
+        this.purchseService.updatePurchase(this.purchase).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.formSubmitted = false;

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Component, OnDestroy, OnInit } from "@angular/core";
@@ -64,7 +65,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   public getMaster() {
     this.loading = true;
     this.master = [];
-    this.partyService.getAllMaster().subscribe(
+    this.partyService.getAllMaster().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.master = data["data"];
@@ -80,7 +81,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   }
 
   getItemList() {
-    this.dyeingProcessService.getAllItemWithSupplier().subscribe(
+    this.dyeingProcessService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemList = data["data"];
@@ -91,7 +92,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   }
 
   getDyeingProcessById(id) {
-    this.dyeingProcessService.getDyeingProcessById(id).subscribe(
+    this.dyeingProcessService.getDyeingProcessById(id).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.dyeingProcess = data["data"];
@@ -216,7 +217,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
           this.dyeingProcess.dyeingProcessData = this.dyeingProcessSteps;
           this.dyeingProcessService
             .saveDyeingProcess(this.dyeingProcess)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   //reset form and other values
@@ -242,7 +243,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
           this.dyeingProcess.dyeingProcessData = this.dyeingProcessSteps;
           this.dyeingProcessService
             .updateDyeingProcess(this.dyeingProcess)
-            .subscribe(
+            .pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   this.disableButton = false;
@@ -275,7 +276,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
       if (this.dyeingProcess.id) id = this.dyeingProcess.id;
       this.dyeingProcessService
         .isProcessNameExist(this.dyeingProcess.processName, id)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.processNameExist = data["data"];

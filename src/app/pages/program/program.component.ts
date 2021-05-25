@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from 'app/@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { ExportPopupComponent } from 'app/@theme/components/export-popup/export-popup.component';
-import { ProgramGuard } from 'app/@theme/guards/program.guard';
-import * as errorData from 'app/@theme/json/error.json';
-import { CommonService } from 'app/@theme/services/common.service';
-import { ExportService } from 'app/@theme/services/export.service';
-import { JwtTokenService } from 'app/@theme/services/jwt-token.service';
-import { ProgramService } from 'app/@theme/services/program.service';
+import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
+import { ProgramGuard } from '../../@theme/guards/program.guard';
+import * as errorData from '../../@theme/json/error.json';
+import { CommonService } from '../../@theme/services/common.service';
+import { ExportService } from '../../@theme/services/export.service';
+import { JwtTokenService } from '../../@theme/services/jwt-token.service';
+import { ProgramService } from '../../@theme/services/program.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.scss']
 })
-export class ProgramComponent implements OnInit {
+export class ProgramComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
   programList: any[];
@@ -52,6 +54,8 @@ export class ProgramComponent implements OnInit {
   allEdit = true;
   groupEdit = true;
   disabled = false;
+  private destroy$ = new Subject<void>();
+
   constructor(
     private commonService: CommonService,
     private programService: ProgramService,
@@ -62,6 +66,11 @@ export class ProgramComponent implements OnInit {
     private modalService: NgbModal,
     private exportService: ExportService
   ) { }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
 
@@ -158,7 +167,7 @@ export class ProgramComponent implements OnInit {
 
   public getProgramList(id, getBy) {
     this.loading = true;
-    this.programService.getProgramList(id, getBy).subscribe(
+    this.programService.getProgramList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         if (data['success']) {
           this.programList = data['data']
@@ -190,7 +199,7 @@ export class ProgramComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.programService.deleteProgramDetailsById(id).subscribe(
+        this.programService.deleteProgramDetailsById(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.onChange(this.radioSelect);
             this.toastr.success(errorData.Delete)

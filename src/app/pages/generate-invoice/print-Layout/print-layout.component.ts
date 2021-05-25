@@ -1,5 +1,6 @@
+import { takeUntil } from 'rxjs/operators';
 import { DatePipe } from "@angular/common";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as wijmo from "@grapecity/wijmo";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -7,14 +8,14 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrintInvoiceData, QualityList, BatchWithGrList } from "../../../@theme/model/printInvoice";
 import { PrintInvoiceService } from "../../../@theme/services/print-invoice.service";
 import { ToastrService } from "ngx-toastr";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 
 @Component({
   selector: "ngx-print-layout",
   templateUrl: "./print-layout.component.html",
   styleUrls: ["./print-layout.component.scss"],
 })
-export class PrintLayoutComponent implements OnInit {
+export class PrintLayoutComponent implements OnInit, OnDestroy {
   d: Subscription;
   doc: any;
   arrayOfValues: Array<string>;
@@ -33,6 +34,8 @@ export class PrintLayoutComponent implements OnInit {
   col = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   invoiceData = [];
   copyType = ["Original", "Duplicate", "Triplicate"]
+  private destroy$ = new Subject<void>();
+
   constructor(
     private datePipe: DatePipe,
     private toastr: ToastrService,
@@ -42,6 +45,10 @@ export class PrintLayoutComponent implements OnInit {
     public activeModal: NgbActiveModal,
 
   ) { }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit() {
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
@@ -53,7 +60,7 @@ export class PrintLayoutComponent implements OnInit {
     }
 
     if (this.finalInvoice) {
-      this.printService.getInvoiceByBatchAndStock(this.finalInvoice).subscribe(
+      this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.printInvoiceData = data["data"];
@@ -66,7 +73,7 @@ export class PrintLayoutComponent implements OnInit {
       )
     } else {
       if (invoiceNo) {
-        this.printService.getInvoiceByNoToPrint(invoiceNo).subscribe(
+        this.printService.getInvoiceByNoToPrint(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.printInvoiceData = data["data"];
@@ -97,7 +104,7 @@ export class PrintLayoutComponent implements OnInit {
       for (const ele of this.invoiceIds) {
         this.invoiceNo = ele;
 
-        this.printService.getInvoiceByNoToPrint(this.invoiceNo).subscribe(
+        this.printService.getInvoiceByNoToPrint(this.invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.printInvoiceData.push(new PrintInvoiceData());
@@ -196,8 +203,8 @@ export class PrintLayoutComponent implements OnInit {
       }
     } else {
 
-      this.myDate = new Date();
-      this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
+      // this.myDate = new Date();
+      // this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
 
       let arr = [];
       arr.push(this.printInvoiceData);
@@ -268,6 +275,7 @@ export class PrintLayoutComponent implements OnInit {
       if (!this.printInvoiceData[index].netAmt) {
         this.printInvoiceData[index].netAmt =
           this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+        this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
       }
 
     }

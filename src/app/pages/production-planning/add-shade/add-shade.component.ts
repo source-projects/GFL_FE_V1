@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -90,7 +91,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
 
     this.shadeService
       .getShadesByQualityAndPartyId(this.party, this.quality)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.shadeList = data["data"];
@@ -108,7 +109,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   getApproveBy() {
     this.loading = true;
 
-    this.adminService.getAllApproveByData().subscribe((data) => {
+    this.adminService.getAllApproveByData().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.approveByList = data["data"];
         this.loading = false;
@@ -132,7 +133,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     if (this.shadeId) {
       this.productionPlanningService
         .saveProductionPlan(this.productionData)
-        .subscribe(
+        .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.productionId = data["data"];
@@ -161,7 +162,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
 
   getAllJets() {
     this.jetList = [];
-    this.jetPlanningService.getAllJetData().subscribe(
+    this.jetPlanningService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
@@ -175,7 +176,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     if (this.batch && this.batchControl) {
       this.productionPlanningService
         .getWeightByStockIdAndBatchId(this.batch, this.batchControl)
-        .subscribe((data) => {
+        .pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             this.weight = data["data"].totalwt;
           }

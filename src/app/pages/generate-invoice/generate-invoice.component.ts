@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
@@ -72,7 +73,7 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   getAllInvoice() {
     this.loading = true;
 
-    this.generateInvoiceService.getAllDipatch().subscribe(
+    this.generateInvoiceService.getAllDipatch().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.InvoiceList = data["data"];

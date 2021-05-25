@@ -1,145 +1,182 @@
-<div class="modal-header nb-header">
-    <h4 class="modal-title nb-text" id="modal-basic-title">Add Step</h4>
-    <button type="button" class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
-        <span aria-hidden="true" class="close-icon">&times;</span>
-    </button>
-</div>
-<form #stepForm="ngForm">
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Process Type</label>
-                    <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
-                        name="processType" #processType1="ngModel"
-                        [ngClass]="{'is-invalid':(processType1.invalid)&&(modalSubmitted || processType1.touched)}"
-                        required>
-                        <ng-option *ngFor="let p of (processTypes | filterOutSelected : stepList)" [value]="p">{{p}}
-                        </ng-option>
-                    </ng-select>
-                    <div class="input-required"
-                        *ngIf="(processType1.invalid)&&(modalSubmitted || processType1.touched)">
-                        Process Type is required.
+<div>
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text" id="modal-basic-title">Add Step</h4>
+        <button type="button" class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <form #stepForm="ngForm">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Process Type</label>
+                        <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
+                            name="processType" #processType1="ngModel"
+                            [ngClass]="{'is-invalid':(processType1.invalid)&&(modalSubmitted || processType1.touched)}"
+                            required>
+                            <ng-option *ngFor="let p of (processTypes | filterOutSelected : stepList)" [value]="p">{{p}}
+                            </ng-option>
+                        </ng-select>
+                        <div class="input-required"
+                            *ngIf="(processType1.invalid)&&(modalSubmitted || processType1.touched)">
+                            Process Type is required.
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Step Sequence</label>
-                    <ng-select [disabled]="editStep" placeholder="Sequence No" [(ngModel)]="dyeingProcessStep.sequence"
-                        name="stepNo" #position1="ngModel"
-                        [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}" required>
-                        <ng-option *ngFor="let p of positionValues" [value]="p">{{p}}</ng-option>
-                    </ng-select>
-                    <div class="input-required" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
-                        Step Position is required.
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Step Sequence</label>
+                        <ng-select [disabled]="editStep" placeholder="Sequence No"
+                            [(ngModel)]="dyeingProcessStep.sequence" name="stepNo" #position1="ngModel"
+                            [ngClass]="{'is-invalid':(position1.invalid)&&(modalSubmitted || position1.touched)}"
+                            required>
+                            <ng-option *ngFor="let p of positionValues" [value]="p">{{p}}</ng-option>
+                        </ng-select>
+                        <div class="input-required" *ngIf="(position1.invalid)&&(modalSubmitted || position1.touched)">
+                            Step Position is required.
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Temprature</label>
-                    <input class="form-control input-group" type="number" min="0" name="temp"
-                        [(ngModel)]="dyeingProcessStep.temp" #temp1="ngModel"
-                        [ngClass]="{'is-invalid':(temp1.invalid)&&(modalSubmitted || temp1.touched)}" required
-                        placeholder="Temprature">
-                    <div class="input-required" *ngIf="(temp1.invalid)&&(modalSubmitted || temp1.touched)">
-                        Temprature is required.
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Temprature</label>
+                        <input class="form-control input-group" type="number" min="0" name="temp"
+                            [(ngModel)]="dyeingProcessStep.temp" #temp1="ngModel"
+                            [ngClass]="{'is-invalid':(temp1.invalid)&&(modalSubmitted || temp1.touched)}" required
+                            placeholder="Temprature">
+                        <div class="input-required" *ngIf="(temp1.invalid)&&(modalSubmitted || temp1.touched)">
+                            Temprature is required.
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Hold Time</label>
-                    <input class="form-control input-group" min="0" type="number" name="holdTime"
-                        [(ngModel)]="dyeingProcessStep.holdTime" #holdTime1="ngModel"
-                        [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}" required
-                        placeholder="Hold Time">
-                    <div class="input-required" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
-                        Hold Time is required.
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Hold Time</label>
+                        <input class="form-control input-group" min="0" type="number" name="holdTime"
+                            [(ngModel)]="dyeingProcessStep.holdTime" #holdTime1="ngModel"
+                            [ngClass]="{'is-invalid':(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)}"
+                            required placeholder="Hold Time">
+                        <div class="input-required" *ngIf="(holdTime1.invalid)&&(modalSubmitted || holdTime1.touched)">
+                            Hold Time is required.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="required">Liquor Ratio</label>
-                    <input class="form-control input-group" min="0" type="number" name="liquerRation"
-                        [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"
-                        (keypress)="numberOnly($event)"
-                        [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)}"
-                        required placeholder="Liquor ratio">
-                    <div class="input-required"
-                        *ngIf="(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)">
-                        Liquor ratio is required.
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Liquor Ratio</label>
+                        <input class="form-control input-group" min="0" type="number" name="liquerRation"
+                            [(ngModel)]="dyeingProcessStep.liquerRation" #liquerRation1="ngModel"
+                            (keypress)="numberOnly($event)"
+                            [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)}"
+                            required placeholder="Liquor ratio">
+                        <div class="input-required"
+                            *ngIf="(liquerRation1.invalid)&&(modalSubmitted || liquerRation1.touched)">
+                            Liquor ratio is required.
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-12">
-                <div class="required">
-                    <h5 class="nb-badges mr-0">Add Chemical List</h5>
-                </div>
-                <table class="table table-responsive table-bordered table-striped table-process-fnt">
-                    <tr>
-                        <th>Item name</th>
-                        <th>Supplier name</th>
-                        <th>Concentration</th>
-                        <th>By</th>
-                        <th>Action</th>
-                    </tr>
+                <div class="col-md-12">
+                    <div class="required">
+                        <h5 class="nb-badges mr-0">Add Chemical List</h5>
+                    </div>
+                    <table class="table table-responsive table-bordered table-striped table-process-fnt">
+                        <tr>
+                            <th>Item name</th>
+                            <th>Supplier name</th>
+                            <th>Concentration</th>
+                            <th>By</th>
+                            <th>Shade type</th>
+                            <th>Action</th>
+                        </tr>
 
-                    <tr *ngFor='let dc of dyeingChemicalData ;let i=index;trackBy:trackByFn'>
-                        <td class="width-70">
+                        <tr *ngFor='let dc of dyeingChemicalData ;let i=index;trackBy:trackByFn'>
+                            <td class="width-70">
 
-                            <ng-select #data name="itemId{{dc._id}}_{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
-                                #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)"
-                                [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none">
-                                <ng-option
-                                    *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) | filterItemSelected : dyeingChemicalData : i )"
-                                    [value]="item.itemId" placeholder="Select Item">
-                                    {{item.itemName}} - {{item.supplierName}}</ng-option>
-                            </ng-select>
-                        </td>
-                        <td class="width-20">
-                            <input class="tableForm line-height-subtable" type="text" #supplierName1="ngModel"
-                                name='supplierName{{dc._id}}_{{i}}' [(ngModel)]="dc.supplierName"
-                                (keyup)="onKeyUp($event,i,1,'supplierName')" [id]="'supplierList'+i+'-supplierName'"
-                                readonly>
-                        </td>
-                        <td class="width-5">
-                            <input type="number" #concentration1="ngModel" name='concentration{{dc._id}}_{{i}}'
-                                class="tableForm line-height-subtable" [(ngModel)]="dc.concentration"
-                                (keypress)="numberOnly($event)" (keyup)="onKeyUp($event,i,2,'concentration')"
-                                [id]="'supplierList'+i+'-concentration'" min="0">
-                        </td>
-                        <td class="width-5">
-                            <!-- <input type="text" #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}' [value]="'L'"
+                                <ng-select #data name="itemId{{dc._id}}_{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
+                                    #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)"
+                                    [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none">
+                                    <ng-option disabled="true">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips">Item</div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-center txt-ov-elips">Supplier
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option
+                                        *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) | filterItemSelected : dyeingChemicalData : i )"
+                                        [value]="item.itemId" placeholder="Select Item">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-left txt-ov-elips">{{item.itemName}}</div>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                                <div class="text-center txt-ov-elips">{{item.supplierName}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td class="width-20">
+                                <input class="tableForm line-height-subtable" type="text" #supplierName1="ngModel"
+                                    name='supplierName{{dc._id}}_{{i}}' [(ngModel)]="dc.supplierName"
+                                    (keyup)="onKeyUp($event,i,1,'supplierName')" [id]="'supplierList'+i+'-supplierName'"
+                                    readonly>
+                            </td>
+                            <td class="width-5">
+                                <input type="number" #concentration1="ngModel" name='concentration{{dc._id}}_{{i}}'
+                                    class="tableForm line-height-subtable" [(ngModel)]="dc.concentration"
+                                    (keypress)="numberOnly($event)" (keyup)="onKeyUp($event,i,2,'concentration')"
+                                    [id]="'supplierList'+i+'-concentration'" min="0">
+                            </td>
+                            <td class="width-5">
+                                <!-- <input type="text" #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}' [value]="'L'"
                                 class="tableForm line-height-subtable" [(ngModel)]="dc.byChemical"
                                 (keyup)="onKeyUp($event,i,3,'byChemical')" [id]="'supplierList'+i+'-byChemical'"
                                 min="0"> -->
-                            <ng-select  #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}' [value]="'L'"
-                            class="tableForm" [(ngModel)]="dc.byChemical"
-                            (keyup)="onKeyUp($event,i,3,'byChemical')" [id]="'supplierList'+i+'-byChemical'" required>
-                                <ng-option *ngFor="let by of byChemicalList" [value]="by.id">{{by.value}}</ng-option>
-                                
-                            </ng-select>
-                        </td>
-                        <td class="text-center width-1">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeItem(i)"></nb-icon>
-                        </td>
-                    </tr>
-                </table>
+                                <ng-select #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}' [value]="'L'"
+                                    class="tableForm" [(ngModel)]="dc.byChemical"
+                                    (keyup)="onKeyUp($event,i,3,'byChemical')" [id]="'supplierList'+i+'-byChemical'"
+                                    required>
+                                    <ng-option *ngFor="let by of byChemicalList" [value]="by.id">{{by.value}}
+                                    </ng-option>
+
+                                </ng-select>
+                            </td>
+                            <td class="width-70" style="width: 50px !important">
+                                <ng-select #shadeType name="shadeType{{dc._id}}_{{i}}" shadeType="ngModel" [(ngModel)]="dc.shadeType"
+                                    #itemId1="ngModel" class="tableForm" required 
+                                    [id]="'supplierList'+i+'-4'" appendTo="body" class="ng-select-br-none">
+                                    <ng-option
+                                        *ngFor="let type of shadeTypeList"
+                                        [value]="type" placeholder="Select Shade-type">
+                                        {{type}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td class="text-center width-1">
+                                <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                    (click)="removeItem(i)"></nb-icon>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm btn-design-save"
-            (click)="onCreate(stepForm)">{{submitButton}}</button>
-        <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
-            (click)="activeModal.close(false)">Cancel</button>
-    </div>
-</form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                (click)="onCreate(stepForm)">{{submitButton}}</button>
+            <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
+                (click)="activeModal.close(false)">Cancel</button>
+        </div>
+    </form>
+</div>

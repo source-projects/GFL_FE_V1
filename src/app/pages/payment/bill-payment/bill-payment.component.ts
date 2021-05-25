@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -83,7 +84,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
   getBillBank(){
     this.loading = true;
-    this.paymentService.getAllBillBank().subscribe(
+    this.paymentService.getAllBillBank().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.billBanks = data["data"];
@@ -103,7 +104,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   }
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.party = data["data"];
@@ -128,7 +129,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (event != undefined) {
       if (this.paymentValues.partyId) {
-        this.paymentService.getPendingBillByPartyId(this.paymentValues.partyId).subscribe(
+        this.paymentService.getPendingBillByPartyId(this.paymentValues.partyId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.invoiceList = data["data"];
@@ -150,7 +151,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (event != undefined) {
       if (this.paymentValues.partyId) {
-        this.paymentService.getAdvancePayment(this.paymentValues.partyId).subscribe(
+        this.paymentService.getAdvancePayment(this.paymentValues.partyId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.advancePaymentList = data["data"];
@@ -172,7 +173,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (event != undefined) {
       if (this.paymentValues.partyId) {
-        this.paymentService.getAdvancePayment(this.paymentValues.partyId).subscribe(
+        this.paymentService.getAdvancePayment(this.paymentValues.partyId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.paymentDetails = data["data"];
@@ -239,7 +240,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
 
   getPaymentType() {
-    this.paymentService.getAllPaymentType().subscribe(
+    this.paymentService.getAllPaymentType().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.paymentTypeList = data["data"];
@@ -316,7 +317,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
         list.push(obj);
         this.paymentValues.paymentData = [...list];
 
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         })
       } else {
@@ -401,7 +402,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
       this.toastr.error("amount to pay and amount paid are not equal");
     }
     else {
-      this.paymentService.savePayment(this.paymentValues).subscribe(
+      this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
         data => {
           if (data['success']) {
             this.route.navigate(["/pages/payment/bill-payment"]);

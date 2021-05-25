@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
@@ -76,7 +77,7 @@ export class SlipDialogComponent implements OnInit, OnDestroy {
   }
 
   getItemData() {
-    this.DyeingProcessService.getAllItemWithSupplier().subscribe(
+    this.DyeingProcessService.getAllItemWithSupplier().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.itemListArray = data["data"];
@@ -91,7 +92,7 @@ export class SlipDialogComponent implements OnInit, OnDestroy {
   getSlipDataFromBatch() {
     this.planningSlipService
       .getSlipDataByBatchStockId(this.batchId, this.stockId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.slipData = data["data"];
@@ -131,7 +132,7 @@ export class SlipDialogComponent implements OnInit, OnDestroy {
   //   if (this.batchId && this.stockId) {
   //     this.productionPlanningService
   //       .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
-  //       .subscribe((data) => {
+  //       .pipe(takeUntil(this.destroy$)).subscribe((data) => {
   //         if (data["success"]) {
   //           this.weight = data["data"].totalwt;
   //         }
@@ -295,7 +296,7 @@ export class SlipDialogComponent implements OnInit, OnDestroy {
           this.activeModal.close(this.slipObj);
         }
       } else {
-        this.planningSlipService.updateSlipData(this.slipData).subscribe(
+        this.planningSlipService.updateSlipData(this.slipData).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.isSavedForPrint = true;

@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
   Component,
@@ -140,7 +141,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   }
 
   getCurrentBatchSequence() {
-    this.stockBatchService.getBatchSequence(true).subscribe((data) => {
+    this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data["success"]) {
         this.currentBatchSequence = data["data"]["sequence"];
         this.currentBatchSeqId = data["data"]["id"];
@@ -152,7 +153,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -169,7 +170,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   }
   getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -192,7 +193,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         this.qualityList = [];
         this.qualityService
           .getQualityByParty(this.stockBatch.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"])
                 this.qualityList = data["data"].qualityDataList;
@@ -262,7 +263,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.stockBatchService
       .getStockBatchById(this.currentStockBatchId)
-      .subscribe(
+      .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.stockBatch.receiveDate = new Date(data["data"].receiveDate);
@@ -433,7 +434,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         itemList = _.sortBy(itemList, "batchId", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
         //call update sequence api.....
-        this.stockBatchService.getBatchSequence(true).subscribe((data) => {
+        this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
           if (data["success"]) {
             ob.batchId = data["data"].sequence;
             if (ob.batchId < this.currentBatchSequence) {
@@ -680,7 +681,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       this.stockBatch.batchData = this.stockBatchArray;
       if (this.stockBatch.wtPer100m == this.wtPer100mtrCopy) {
         if (this.addFlag) {
-          this.stockBatchService.addStockBatch(this.stockBatch).subscribe(
+          this.stockBatchService.addStockBatch(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.loading = false;
@@ -706,7 +707,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
           );
         } else {
           this.stockBatch.updatedBy = this.user.userId;
-          this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+          this.stockBatchService.updateStockBatch(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.toastr.success(data["msg"]);
@@ -744,7 +745,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         modalRef.result.then((result) => {
           if (result) {
             this.stockBatch.updatedBy = this.user.userId;
-            this.stockBatchService.updateStockBatch(this.stockBatch).subscribe(
+            this.stockBatchService.updateStockBatch(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   this.toastr.success(data["msg"]);

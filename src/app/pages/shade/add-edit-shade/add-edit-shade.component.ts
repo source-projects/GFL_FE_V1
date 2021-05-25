@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
   Component,
@@ -115,7 +116,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   public getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -132,7 +133,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getSupplierList() {
     this.loading = true;
-    this.supplierService.getAllSupplierRates().subscribe(
+    this.supplierService.getAllSupplierRates().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"] && data["data"].length > 0) {
@@ -159,7 +160,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getAllSupplier() {
     this.loading = true;
-    this.supplierService.getAllSupplier(0, "all").subscribe(
+    this.supplierService.getAllSupplier(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplierListRate = data["data"];
@@ -176,7 +177,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getProcessList() {
     this.loading = true;
-    this.shadeService.getAllDyeingProcess().subscribe(
+    this.shadeService.getAllDyeingProcess().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.processList = data["data"];
@@ -193,7 +194,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -210,7 +211,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getShadeById() {
     this.loading = true;
-    this.shadeService.getCurrentShadeData(this.currentShadeId).subscribe(
+    this.shadeService.getCurrentShadeData(this.currentShadeId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           let res = data["data"];
@@ -316,7 +317,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
       this.resetAmount();
       this.loading = false;
     } else {
-      this.shadeService.getQualityFromParty(this.shadeObj.partyId).subscribe(
+      this.shadeService.getQualityFromParty(this.shadeObj.partyId).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
             this.qualityList = data["data"].qualityDataList;
@@ -494,7 +495,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
         list.push(obj);
         this.shadeObj.shadeDataList = [...list];
 
-        this.data.changes.subscribe(() => {
+        this.data.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.data.last.focus();
         });
       } else {
@@ -546,7 +547,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           this.shadeObj.shadeDataList = [];
         }
 
-        this.shadeService.addShadeData(this.shadeObj).subscribe(
+        this.shadeService.addShadeData(this.shadeObj).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               shadeForm.reset();
@@ -582,7 +583,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
           this.shadeObj.createdBy = this.user.userId;
           this.shadeObj.userHeadId = this.userHead.userHeadId;
-          this.shadeService.addShadeData(this.shadeObj).subscribe(
+          this.shadeService.addShadeData(this.shadeObj).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 shadeForm.reset();
@@ -638,7 +639,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
     ) {
       if (shadeForm.valid) {
         this.shadeObj.updatedBy = this.user.userId;
-        this.shadeService.updateShadeData(this.shadeObj).subscribe(
+        this.shadeService.updateShadeData(this.shadeObj).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.route.navigate(["/pages/shade"]);
@@ -671,7 +672,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
             this.toastr.error('Fill all shade data')
           }
            else {
-            this.shadeService.updateShadeData(this.shadeObj).subscribe(
+            this.shadeService.updateShadeData(this.shadeObj).pipe(takeUntil(this.destroy$)).subscribe(
               (data) => {
                 if (data["success"]) {
                   this.route.navigate(["/pages/shade/pending-apc"]);

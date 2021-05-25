@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -121,7 +122,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
 
   getAllParty() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().subscribe(
+    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.partyList = data["data"];
@@ -138,7 +139,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
 
   getAllQuality() {
     this.loading = true;
-    this.qualityService.getQualityNameData().subscribe(
+    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.qualityList = data["data"];
@@ -154,7 +155,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
   }
 
   getAllBatch() {
-    this.batchService.getAllBatchForAdditionSlip().subscribe(
+    this.batchService.getAllBatchForAdditionSlip().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
@@ -171,7 +172,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
 
   public getAllBatchData() {
     this.directBatchList = [];
-    this.batchService.getAllBatch().subscribe(
+    this.batchService.getAllBatch().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.directBatchList = data["data"];
@@ -190,7 +191,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
       if (this.directSlip.partyId) {
         this.programService
           .getQualityByParty(this.directSlip.partyId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.qualityList = data["data"].qualityDataList;
@@ -210,7 +211,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
     if (event) {
       this.directBatchList = [];
       if (this.directSlip.partyId) {
-        this.programService.getBatchByParty(this.directSlip.partyId).subscribe(
+        this.programService.getBatchByParty(this.directSlip.partyId).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.directBatchList = data["data"];
@@ -257,7 +258,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
         this.batchList = [];
         this.programService
           .getBatchByQuality(this.directSlip.qualityEntryId)
-          .subscribe(
+          .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 this.directBatchList = data["data"];
@@ -358,7 +359,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
   }
 
   saveDirectSlip() {
-    this.planningService.saveDirectSlip(this.directSlip).subscribe(
+    this.planningService.saveDirectSlip(this.directSlip).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(errorData.Add_Success);
@@ -405,7 +406,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
   }
 
   getAdditionSlipDataById(id, batchId, prodId, printDirect?) {
-    this.planningService.getAlladditionSlipById(id).subscribe(
+    this.planningService.getAlladditionSlipById(id).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.additionSlipData = data["data"];
@@ -441,7 +442,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
     });
     modalRef.result.then((result) => {
       if (result) {
-        this.planningService.deleteAdditionSlip(id).subscribe(
+        this.planningService.deleteAdditionSlip(id).pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.getAllAdditionSlip(()=>{});
             this.toastr.success(errorData.Delete);
@@ -464,7 +465,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
     this.additionSlip.dyeingSlipData.id = result.id;
     this.additionSlip.dyeingSlipData.dyeingSlipItemData = result.items;
 
-    this.planningService.updateAdditionDyeingSlip(this.additionSlip).subscribe(
+    this.planningService.updateAdditionDyeingSlip(this.additionSlip).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.getAllAdditionSlip(()=>{});
@@ -487,7 +488,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
 
     this.additionSlip.dyeingSlipData = this.dyeingSlipData;
 
-    this.planningService.saveadditionSlip(this.additionSlip).subscribe(
+    this.planningService.saveadditionSlip(this.additionSlip).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.route.navigate(["/pages/addition-slip"]);
@@ -509,7 +510,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
 
   getAllAdditionSlip(onSuccess = () => {}) {
     this.additionSlipList = [];
-    this.planningService.getAlladditionSlip().subscribe(
+    this.planningService.getAlladditionSlip().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.additionSlipList = data["data"];

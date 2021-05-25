@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -60,7 +61,7 @@ export class ShadeWithBatchComponent implements OnInit, OnDestroy {
   getWeightByStockAndBatch() {
     this.productionPlanningService
       .getWeightByStockIdAndBatchId(this.batchId, this.stockId)
-      .subscribe((data) => {
+      .pipe(takeUntil(this.destroy$)).subscribe((data) => {
         if (data["success"]) {
           this.weight = data["data"].totalwt;
         }
@@ -68,7 +69,7 @@ export class ShadeWithBatchComponent implements OnInit, OnDestroy {
   }
 
   getAllStatus() {
-    this.jetService.getAllStatuses().subscribe(
+    this.jetService.getAllStatuses().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.status = data["data"];
@@ -83,7 +84,7 @@ export class ShadeWithBatchComponent implements OnInit, OnDestroy {
   }
   getJetData() {
     this.loading = true;
-    this.jetService.getAllJetData().subscribe(
+    this.jetService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
@@ -126,7 +127,7 @@ export class ShadeWithBatchComponent implements OnInit, OnDestroy {
       prodcutionId: this.productionId,
       status: this.jetStatus,
     };
-    this.jetService.updateStatus(obj).subscribe(
+    this.jetService.updateStatus(obj).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.toastr.success(data["msg"]);
