@@ -153,12 +153,12 @@
                                 </ng-select>
                             </td>
                             <td class="width-70" style="width: 50px !important">
-                                <ng-select #shadeType name="shadeType{{dc._id}}_{{i}}" shadeType="ngModel" [(ngModel)]="dc.shadeType"
+                                <ng-select placeholder="Select Shade-type" #shadeType name="shadeType{{dc._id}}_{{i}}" shadeType="ngModel" [(ngModel)]="dc.shadeType"
                                     #itemId1="ngModel" class="tableForm" required 
                                     [id]="'supplierList'+i+'-4'" appendTo="body" class="ng-select-br-none">
                                     <ng-option
                                         *ngFor="let type of shadeTypeList"
-                                        [value]="type" placeholder="Select Shade-type">
+                                        [value]="type" >
                                         {{type}}
                                     </ng-option>
                                 </ng-select>

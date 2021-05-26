@@ -32,7 +32,7 @@ export class DyeingProcess {
     qty: number;
     _id: string;
     itemType:string;
-    shadeType:string = "Default";
+    shadeType:string = "DEFAULT";
     constructor() {
       this._id = uuidv4();
     }
