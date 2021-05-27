@@ -112,7 +112,7 @@
                                         </div>
                                     </ng-option>
                                     <ng-option
-                                        *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) | filterItemSelected : dyeingChemicalData : i )"
+                                        *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) )"
                                         [value]="item.itemId" placeholder="Select Item">
                                         <div class="row">
                                             <div class="col-md-6 col-6">
