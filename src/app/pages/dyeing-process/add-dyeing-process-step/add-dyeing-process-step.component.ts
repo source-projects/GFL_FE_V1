@@ -1,4 +1,5 @@
 import { takeUntil } from 'rxjs/operators';
+import { uniqBy as _uniqBy} from 'lodash';
 import {
   Component,
   Input,
@@ -16,6 +17,7 @@ import {
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from 'rxjs';
+import { uniq } from 'lodash';
 
 @Component({
   selector: "ngx-add-dyeing-process-step",
@@ -188,13 +190,55 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  verify() {
+    if (
+      this.dyeingChemicalData && this.dyeingChemicalData.length
+    ) {
+      let a = _uniqBy(this.dyeingChemicalData, function (e) {
+        return e.itemId && e.shadeType;
+      });
+      if (this.dyeingChemicalData.length != a.length) {
+        // duplicate date error.
+        this.dyeingChemicalData.forEach((e) => {
+          let count = 0;
+          for (let date of this.dyeingChemicalData) {
+            if (
+              e.shadeType == date.shadeType &&
+              e.itemId == date.itemId
+            ) {
+              count++;
+              if (count > 1 && date.shadeType && date.itemId) {
+                date.duplicateError = true;
+              } else {
+                date.duplicateError = false;
+              }
+            }
+          }
+        });
+      } else {
+        this.dyeingChemicalData.map((m) => (m.duplicateError = false));
+      }
+    } else {
+      this.dyeingChemicalData.map((m) => (m.duplicateError = false));
+    }
+  }
   itemSelected(event, rowIndex) {
+
     this.itemListArray.forEach((e) => {
       if (e.itemId == this.dyeingChemicalData[rowIndex].itemId) {
         this.dyeingChemicalData[rowIndex].supplierName = e.supplierName;
         this.dyeingChemicalData[rowIndex].itemName = e.itemName;
       }
     });
+
+    this.verify();
+    if(this.dyeingChemicalData[rowIndex].duplicateError){
+      this.toastr.error("Same Item");
+      this.dyeingChemicalData.splice(rowIndex,1);
+    }
+
+
   }
 
   trackByFn(index: number, obj: any) {
