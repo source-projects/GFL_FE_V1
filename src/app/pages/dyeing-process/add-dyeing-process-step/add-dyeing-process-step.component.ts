@@ -234,7 +234,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
 
     this.verify();
     if(this.dyeingChemicalData[rowIndex].duplicateError){
-      this.toastr.error("Same Item");
+      this.toastr.error("Same Item and Shade Type present");
       this.dyeingChemicalData.splice(rowIndex,1);
     }
 
