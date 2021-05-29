@@ -43,6 +43,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   //Form Validation
   formSubmitted: boolean = false;
+  partyShadeNoExist:boolean = false;
   index: any;
   //to Store UserId
   user: any;
@@ -707,5 +708,29 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
     if (event === "view table") {
       this.route.navigate(['/pages/shade/view']);
     }
+  }
+
+  checkPartyShadeNo(){
+    this.partyShadeNoExist = false;
+    let id = 0
+    if (this.shadeObj.partyShadeNo) {
+      
+      if (this.currentShadeId) id = this.currentShadeId;
+      let checkObj = {
+        partyId:this.shadeObj.partyId,
+        qualityEntryId:this.shadeObj.qualityEntryId,
+        partyShadeNo:this.shadeObj.partyShadeNo,
+        shadeId:id
+      }
+      this.shadeService
+        .partyShadeNoCheck(checkObj)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            this.partyShadeNoExist = data["data"];
+          },
+          (error) => { }
+        );
+    }
+
   }
 }
