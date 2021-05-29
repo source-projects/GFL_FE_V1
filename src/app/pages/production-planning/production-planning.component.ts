@@ -33,6 +33,7 @@ import { AddShadeComponent } from "./add-shade/add-shade.component";
   styleUrls: ["./production-planning.component.scss"],
 })
 export class ProductionPlanningComponent implements OnInit, OnDestroy {
+
   public errorData: any = (errorData as any).default;
   user: any;
   userHead: any;
@@ -51,6 +52,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   plannedProductionList: any[];
   index: any;
   editProductionPlanFlag: boolean = false;
+  public autoScrollDownInterval;
+  public autoScrollUpInterval;
 
   public productionBatchDetail: ProductionBatchDetail;
 
@@ -472,6 +475,12 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    if(this.autoScrollDownInterval){
+      clearInterval(this.autoScrollDownInterval);
+    }
+    if(this.autoScrollUpInterval){
+      clearInterval(this.autoScrollUpInterval);
+    }
   }
 
   pauseChangeStatus() {
@@ -587,10 +596,23 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   getAllDetailsOfBatch(event, batch) {
     this.productionBatchDetail = { ...batch };
+
+    this.autoScrollDownInterval = setInterval(()=>{
+      var elem = document.getElementById('scroll-auto');
+      elem.scrollTop = elem.scrollHeight;
+    }, 2000);
+
+    this.autoScrollUpInterval = setInterval(() => {
+      var elem = document.getElementById('scroll-auto');
+      elem.scrollTop = 0;
+    }, 4000);
+    
   }
 
   resetDetailsOfBatch($event) {
     this.productionBatchDetail = new ProductionBatchDetail();
+    clearInterval(this.autoScrollDownInterval);
+    clearInterval(this.autoScrollUpInterval);
   }
 
   drop(event: CdkDragDrop<any[]>, i) {

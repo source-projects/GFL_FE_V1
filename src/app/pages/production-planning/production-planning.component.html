@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <div class="jus-con-flex-start">
+                                <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto" >
                                     <div class="col-md-7 col-12 pd-0">
                                         <div class="display-flex mr-0">
 
@@ -301,7 +301,7 @@
                                             <td>
                                                 <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
                                                     <div class="example-box trans-box-drop-1 border-jet" *ngFor="let index of j.jetDataList;let idx = index;" [style.background]="index.colorTone?index.colorTone:'#ffffff'" (click)="setIndexForSlip(index)" cdkDrag>
-                                                        <button nbContextMenuTag="my-context-menu" [style.color]="index.colorTone?'#ffffff':'#000000'" (mouseenter)="getAllDetailsOfBatch($event,index)" (mouseout)="resetDetailsOfBatch($event)" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
+                                                        <button (scroll)="scrollHandler($event)" nbContextMenuTag="my-context-menu" [style.color]="index.colorTone?'#ffffff':'#000000'" (mouseenter)="getAllDetailsOfBatch($event,index)" (mouseout)="resetDetailsOfBatch($event)" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
                                                             {{index.batchId}}
                                                         </button>
                                                     </div>
