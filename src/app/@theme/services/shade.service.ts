@@ -63,7 +63,7 @@ export class ShadeService {
   }
 
 
-  partyShadeNoCheck(obj){
-    return this.httpClient.post(this.commonService.envUrl() + "api/shade/exist",obj);
+  partyShadeNoCheck(id,qualityENtryId,partyShadeNo){
+    return this.httpClient.get(`${this.commonService.envUrl()}api/shade/exist?shadeId=${id}&qualityEntryId=${qualityENtryId}&partyShadeNo=${partyShadeNo}`);
   }
 }
