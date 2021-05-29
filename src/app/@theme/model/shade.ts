@@ -20,12 +20,14 @@ export class Shade {
   shadeDataList: ShadeDataList[];
   isExtraRate: boolean;
   extraRate: number;
+  id:number;
 
   constructor() {
     this.pending = false;
     this.partyShadeNo = null;
     this.isExtraRate = false;
     this.extraRate = 0;
+    this.id = null;
   }
 }
 

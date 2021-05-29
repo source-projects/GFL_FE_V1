@@ -151,7 +151,7 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
     private partyService: PartyService
   ) {
     this.myDate = new Date();
-    this.myDate = this.datePipe.transform(this.myDate, "dd-MM-yyyy");
+    this.myDate = this.datePipe.transform(this.myDate, "dd/MM/yyyy");
     this.itemList.push(new DyeingChemicalData());
   }
 

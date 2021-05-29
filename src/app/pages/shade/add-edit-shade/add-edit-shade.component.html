@@ -90,18 +90,23 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Party Shade No</label>
-                            <input type="text" class="form-control size-small" fieldsize="small" nbinput name="partyShadeNo" [(ngModel)]="shadeObj.partyShadeNo" #partyShadeNo1="ngModel" required [ngClass]="{
+                            <input type="text" class="form-control size-small" 
+                            fieldsize="small" nbinput name="partyShadeNo" [(ngModel)]="shadeObj.partyShadeNo" 
+                            #partyShadeNo1="ngModel" required [ngClass]="{
                                 'is-invalid':
                                 partyShadeNo1.invalid &&
                                 (formSubmitted || partyShadeNo1.touched) &&
-                                !shadeObj.pending
-                                }" placeholder="Party Shade No" />
+                                !shadeObj.pending || partyShadeNoExist
+                                }" placeholder="Party Shade No" (change)="checkPartyShadeNo()"/>
 
                             <div class="input-required" *ngIf="partyShadeNo1.invalid
                                 &&
                                 !shadeObj.pending &&
                                 (formSubmitted || partyShadeNo1.touched)">
                                 <span>Party Shade No is required</span>
+                            </div>
+                            <div class="input-required" *ngIf="partyShadeNoExist">
+                                <span>Party Code is already Exist </span>
                             </div>
                         </div>
                     </div>
