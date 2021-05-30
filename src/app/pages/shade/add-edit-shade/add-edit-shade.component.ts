@@ -327,6 +327,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
             this.shadeObj.qualityName = this.qualityList[0].qualityName;
             this.shadeObj.qualityType = this.qualityList[0].qualityType;
             this.shadeObj.qualityEntryId = this.qualityList[0].qualityEntryId;
+            this.shadeObj.qualityNameId = this.qualityList[0].qualityNameId;
             this.qualityList.forEach((e) => {
               e.partyName = data["data"].partyName;
               this.loading = false;
@@ -339,11 +340,19 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
                 this.shadeObj.qualityEntryId = element.qualityEntryId;
+                this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
               }
             });
             this.calculateTotalAmount(true);
             this.checkPartyShadeNo();
+            this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+              (res)=>{
+                if(res){
+                  this.supplierList = res["data"];
+                }
+              }
+            )
 
           } else {
             this.qualityList = null;
