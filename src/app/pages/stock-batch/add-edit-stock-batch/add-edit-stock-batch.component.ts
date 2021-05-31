@@ -197,7 +197,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
             (data) => {
               if (data["success"])
                 this.qualityList = data["data"].qualityDataList;
-              if (this.qualityList && !this.qualityList.length)
+              if (this.qualityList && this.qualityList.length)
                 this.stockBatch.qualityId = null;
             },
             (error) => {

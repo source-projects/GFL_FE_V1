@@ -251,6 +251,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
                 this.shadeObj.qualityEntryId = element.id;
+                this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
               }
             });
@@ -258,6 +259,14 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
               this.calculateAmount(index);
             });
           }
+          this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+            (res)=>{
+              if(res){
+                this.supplierList = res["data"];
+              }
+            }
+          )
+
           this.setProcessName(this.shadeObj.processId);
           this.loading = false;
           this.disableButton = false;
@@ -295,10 +304,19 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
           this.shadeObj.qualityEntryId = element.id;
+          this.shadeObj.qualityNameId = element.qualityNameId;
           this.wt100m = element.wtPer100m;
         }
       });
       this.calculateTotalAmount(true);
+      this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+        (res)=>{
+          if(res){
+            this.supplierList = res["data"];
+          }
+        }
+      )
+
     }
     this.checkPartyShadeNo();
   }
