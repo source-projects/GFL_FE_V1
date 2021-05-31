@@ -60,6 +60,12 @@ export class JetPlanningService {
     );
   }
 
+  startJetProcess(data){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/jet/start", data
+    );
+  }
+
   
 removeProductionFromJet(jetId, prodId){
   return this.httpClient.delete(

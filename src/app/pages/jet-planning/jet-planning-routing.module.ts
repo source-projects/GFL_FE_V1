@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { JetPlanningGuard } from 'app/@theme/guards/jet-planning.guard';
-import { JetPlanningComponent } from 'app/pages/jet-planning/jet-planning.component';
+import { JetPlanningGuard } from '../../@theme/guards/jet-planning.guard';
+import { JetPlanningComponent } from '../../pages/jet-planning/jet-planning.component';
 
 const routes: Routes = [
   {
