@@ -58,6 +58,17 @@ export class ShadeService {
       return this.httpClient.get(`${this.commonService.envUrl()}api/shade/all?partyId=${pId}&qualityId=${qId}`);
     }
     
+  
     
+  }
+
+
+  partyShadeNoCheck(id,qualityENtryId,partyShadeNo){
+    return this.httpClient.get(`${this.commonService.envUrl()}api/shade/exist?shadeId=${id}&qualityEntryId=${qualityENtryId}&partyShadeNo=${partyShadeNo}`);
+  }
+
+
+  getItemListFromQuality(qualityNameId){
+    return this.httpClient.get(`${this.commonService.envUrl()}api/supplier/rates/byQualityNameId?qualityNameId=${qualityNameId}&type=color`);
   }
 }

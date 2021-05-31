@@ -23,6 +23,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminGuard } from "../../@theme/guards/admin.guard";
 import { PurchaseNewService } from "../../@theme/services/purchase-new.service";
 import { PreviewComponent } from "./preview/preview.component";
+import { SupplierService } from '../../@theme/services/supplier.service';
 
 @Component({
   selector: "ngx-admin",
@@ -55,6 +56,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   addBatchSequenceArray: AddBatchSequence[] = [];
 
   jetList = [];
+  supplierList = [];
   designationList = [];
   companyList = [];
   departmentList = [];
@@ -107,6 +109,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     },
   ];
   selectedBy;
+  selectedSupplier;
   public destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -114,6 +117,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     private purchseService: PurchaseNewService,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private supplierService: SupplierService,
     private adminGuard: AdminGuard
   ) {
     this.addJetArray.push(this.addJet);
@@ -166,6 +170,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       case "Quality":
         this.getAllQuality();
+        this.getSupplierList();
         break;
 
       case "Machine":
@@ -818,6 +823,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   saveQuality(addQualityData) {
+    console.log("Quality Data:",addQualityData);
     this.formSubmitted = true;
     if (addQualityData.valid) {
       if (this.addQuality.id) {
@@ -964,6 +970,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.addQuality.id = null;
     this.addQuality.qualityName = null;
     this.addQuality.rate = null;
+    this.addQuality.supplierList = [];
+    this.selectedSupplier = null;
     this.qualityEditFlag = false;
   }
   onCancelDesignation() {
@@ -1156,6 +1164,23 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
   }
 
+  getSupplierList() {
+    this.loading = true;
+    this.supplierService.getSupplierName(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.supplierList = data["data"];
+        } else {
+        }
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
+    this.loading = false;
+  }
+
   removeQuality(id) {
     const modalRef = this.modalService.open(ConfirmationDialogComponent, {
       size: "sm",
@@ -1303,6 +1328,9 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.addQuality.id = element.id;
         this.addQuality.qualityName = element.qualityName;
         this.addQuality.rate = element.rate;
+        this.addQuality.supplierList = element.supplierList;
+        this.selectedSupplier = element.supplierList.map((ele)=>ele.id);
+        console.log(this.selectedSupplier);
       }
     });
   }
@@ -1450,5 +1478,20 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.ApprovedFlag = false;
       this.RecieveFlag = false;
     }
+  }
+
+  supplierChange(value:[]){
+
+    let temp = [];
+    if(value){
+      value.forEach(ele=>{
+        let obj = {
+          id:ele
+        }
+        temp.push(obj)
+      })
+      this.addQuality.supplierList = temp;
+    }
+    console.log(this.addQuality.supplierList)
   }
 }

@@ -219,15 +219,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
-                            <div class="mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                    (click)="onCancelQuality()">CANCEL</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="saveQuality(addQualityData)">SAVE</button>
-                            </div>
+                        <div class="form-group col-md-4">
+                            <label>Supplier Name</label>
+                            <ng-select id="supplierName1" name="supplierName1" multiple="true"  placeholder="Select supplier name" (change)="supplierChange($event)" [(ngModel)]="selectedSupplier">
+                                <ng-option *ngFor="let s of supplierList" [value]="s.id">
+                                    {{s.supplierName}}
+                                </ng-option>
+                            </ng-select>
                         </div>
+                        
                     </div>
+                    <div class="row">
+                            
+                            <div class="col-md-4 col-12">
+                                <div class="mobile-btn-center text-btn-right">
+                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
+                                        (click)="onCancelQuality()">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                                        (click)="saveQuality(addQualityData)">SAVE</button>
+                                </div>
+                            </div>
+    
+                        </div>
+
 
                 </form>
 

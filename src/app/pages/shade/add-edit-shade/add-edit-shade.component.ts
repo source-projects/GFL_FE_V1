@@ -43,6 +43,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   //Form Validation
   formSubmitted: boolean = false;
+  partyShadeNoExist:boolean = false;
   index: any;
   //to Store UserId
   user: any;
@@ -250,6 +251,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
                 this.shadeObj.qualityEntryId = element.id;
+                this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
               }
             });
@@ -257,6 +259,14 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
               this.calculateAmount(index);
             });
           }
+          this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+            (res)=>{
+              if(res){
+                this.supplierList = res["data"];
+              }
+            }
+          )
+
           this.setProcessName(this.shadeObj.processId);
           this.loading = false;
           this.disableButton = false;
@@ -294,11 +304,21 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
           this.shadeObj.qualityEntryId = element.id;
+          this.shadeObj.qualityNameId = element.qualityNameId;
           this.wt100m = element.wtPer100m;
         }
       });
       this.calculateTotalAmount(true);
+      this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+        (res)=>{
+          if(res){
+            this.supplierList = res["data"];
+          }
+        }
+      )
+
     }
+    this.checkPartyShadeNo();
   }
 
   getQualityFromParty(event) {
@@ -324,6 +344,8 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
             this.shadeObj.qualityId = this.qualityList[0].qualityId;
             this.shadeObj.qualityName = this.qualityList[0].qualityName;
             this.shadeObj.qualityType = this.qualityList[0].qualityType;
+            this.shadeObj.qualityEntryId = this.qualityList[0].qualityEntryId;
+            this.shadeObj.qualityNameId = this.qualityList[0].qualityNameId;
             this.qualityList.forEach((e) => {
               e.partyName = data["data"].partyName;
               this.loading = false;
@@ -335,11 +357,21 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
-                this.shadeObj.qualityEntryId = element.id;
+                this.shadeObj.qualityEntryId = element.qualityEntryId;
+                this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
               }
             });
             this.calculateTotalAmount(true);
+            this.checkPartyShadeNo();
+            this.shadeService.getItemListFromQuality(this.shadeObj.qualityNameId).subscribe(
+              (res)=>{
+                if(res){
+                  this.supplierList = res["data"];
+                }
+              }
+            )
+
           } else {
             this.qualityList = null;
             this.loading = false;
@@ -350,6 +382,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
         }
       );
     }
+
   }
 
 
@@ -562,7 +595,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
             this.disableButton = false;
           },
           (error) => {
-            this.toastr.error(errorData.Serever_Error);
+            // this.toastr.error(errorData.Serever_Error);
             this.disableButton = false;
           }
         );
@@ -707,5 +740,24 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
     if (event === "view table") {
       this.route.navigate(['/pages/shade/view']);
     }
+  }
+
+  checkPartyShadeNo(){
+    this.partyShadeNoExist = false;
+    let id = 0;
+    if (this.shadeObj.partyShadeNo && this.shadeObj.partyId && this.shadeObj.qualityEntryId) {
+      
+      if (this.currentShadeId) id = this.currentShadeId;
+      
+      this.shadeService
+        .partyShadeNoCheck(id,this.shadeObj.qualityEntryId,this.shadeObj.partyShadeNo)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            this.partyShadeNoExist = data["data"];
+          },
+          (error) => { }
+        );
+    }
+
   }
 }

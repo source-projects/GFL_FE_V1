@@ -5,6 +5,7 @@ export class Shade {
   qualityId: string;
   qualityEntryId: number;
   qualityName: string;
+  qualityNameId:number;
   qualityType: string;
   colorTone: string;
   labColorNo: string;
@@ -20,12 +21,14 @@ export class Shade {
   shadeDataList: ShadeDataList[];
   isExtraRate: boolean;
   extraRate: number;
+  id:number;
 
   constructor() {
     this.pending = false;
     this.partyShadeNo = null;
     this.isExtraRate = false;
     this.extraRate = 0;
+    this.id = null;
   }
 }
 
