@@ -12,14 +12,14 @@
                     <div class="mr-bt-5">
                         <div class="row">
                             <!-- Party name -->
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="border-right-batch">
                                     <div class="form-group mb-1">
                                         <div class="row">
                                             <div class="col-md-3 col-12 display-flex-start label-0">
                                                 <label>Party</label>
                                             </div>
-                                            <div class="col-md-8 col-12">
+                                            <div class="col-md-9 col-12">
                                                 <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
@@ -54,7 +54,7 @@
                                             <div class="col-md-3 col-12 display-flex-start label-0">
                                                 <label>Quality</label>
                                             </div>
-                                            <div class="col-md-8 col-12">
+                                            <div class="col-md-9 col-12">
                                                 <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
@@ -89,7 +89,7 @@
                                             <div class="col-md-3 col-12 display-flex-start label-0">
                                                 <label>Batch</label>
                                             </div>
-                                            <div class="col-md-8 col-12">
+                                            <div class="col-md-9 col-12">
                                                 <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
                                             </div>
                                         </div>
@@ -97,9 +97,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto" >
-                                    <div class="col-md-5 col-12 pd-0">
+                                    <div class="col-md-7 col-12 pd-0">
                                         <div class="display-flex mr-0">
 
 

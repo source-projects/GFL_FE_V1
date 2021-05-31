@@ -33,11 +33,13 @@ export class AddDepartment {
 export class AddQuality {
   id: number;
   qualityName: string;
-  rate:number
+  rate:number;
+  supplierList;
   constructor() {
     this.id = 0;
     this.qualityName = null;
     this.rate = null;
+    this.supplierList = [];
   }
 }
 export class AddDesignation {
