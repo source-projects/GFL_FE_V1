@@ -16,8 +16,8 @@ import {
   NbSelectModule, NbTabsetModule,
   NbUserModule
 } from '@nebular/theme';
-import { ThemeModule } from 'app/@theme/theme.module';
-import { SharedModule } from 'app/@theme/shared.module';
+import { ThemeModule } from '../../@theme/theme.module';
+import { SharedModule } from '../../@theme/shared.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
