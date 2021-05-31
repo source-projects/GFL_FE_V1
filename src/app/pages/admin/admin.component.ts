@@ -1329,7 +1329,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.addQuality.qualityName = element.qualityName;
         this.addQuality.rate = element.rate;
         this.addQuality.supplierList = element.supplierList;
-        this.selectedSupplier = element.supplierList;
+        this.selectedSupplier = element.supplierList.map((ele)=>ele.id);
         console.log(this.selectedSupplier);
       }
     });
