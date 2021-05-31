@@ -16,7 +16,7 @@ import {
 } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { SharedModule } from 'app/@theme/shared.module';
+import { SharedModule } from '../../@theme/shared.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ChartsModule } from 'ng2-charts';
 import { ThemeModule } from '../../@theme/theme.module';
