@@ -531,7 +531,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   startJet() {
     this.loading = true;
     let obj = {
-      controlId: this.sendControlId, //control Id
+      jetNo: this.sendControlId, //control Id
       productionId: this.sendSotckId, //Production Id
       //updatedBy: this.user.userId,
     };
