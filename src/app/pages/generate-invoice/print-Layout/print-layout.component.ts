@@ -174,11 +174,11 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               if (!this.printInvoiceData[index].discount)
                 this.printInvoiceData[index].discount = (this.printInvoiceData[index].totalAmt * this.discount) / 100;
 
-              if (!this.printInvoiceData[index].sgst)
-                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
-
               if (!this.printInvoiceData[index].taxAmt)
                 this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
+
+              if (!this.printInvoiceData[index].sgst)
+                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].taxAmt * 0.025;
 
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
