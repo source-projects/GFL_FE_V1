@@ -140,14 +140,18 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   machineSelected(event) {
-    let id = event;
-    this.getMachineDetails(id)
-    this.inter = setTimeout(() => {
+    if (event) {
+      let id = event;
       this.getMachineDetails(id);
-    }, 3000)
-
+      this.inter = setInterval(() => {
+        this.getMachineDetails(id);
+      }, 10000);
+    }else{
+      clearInterval(this.inter);
+      this.machineData = [];
+    }
   }
-
+  
   getMachineDetails(id) {
     this.reportservice.getMachineDataById(id).pipe(takeUntil(this.destroy$)).subscribe(
       (res) => {
