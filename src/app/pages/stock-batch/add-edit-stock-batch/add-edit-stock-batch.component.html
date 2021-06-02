@@ -34,9 +34,9 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Stock In Type</label>
-                            <input type="text" name="stockInType" #stockInType1="ngModel"
+                            <input type="text" name="stockInType"
                                 class="form-control size-small" fieldsize="small" nbinput
-                                [(ngModel)]='stockBatch.stockInType' required readonly>
+                                 value="Fabric" required readonly>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Party Name</label>
@@ -163,7 +163,7 @@
                         <div class="col-md-4 mobile-mr-bt">
                             <label>Wt / 100 mtrs:</label>
                             <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small"
-                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m'>
+                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m' [readOnly]="stockDataValues && stockDataValues[0]">
 
                         </div>
                         <div class="col-md-4">

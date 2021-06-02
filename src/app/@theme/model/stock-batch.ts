@@ -16,6 +16,10 @@ export class StockBatch {
   userHeadId: Number;
   batchData: BatchData[];
   isProductionPlanned: boolean;
+
+  constructor(){
+    this.stockInType = "Fabric";
+  }
 }
 export class BatchData {
   [x: string]: any;
