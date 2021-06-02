@@ -183,6 +183,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
                   this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
               }
               index++;
               if (index == this.invoiceIds.length) {
@@ -275,6 +276,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
                   this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
               }
 
     }
