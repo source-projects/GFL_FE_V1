@@ -141,6 +141,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   machineSelected(event) {
     if (event) {
+      clearInterval(this.inter);
       let id = event;
       this.getMachineDetails(id);
       this.inter = setInterval(() => {
