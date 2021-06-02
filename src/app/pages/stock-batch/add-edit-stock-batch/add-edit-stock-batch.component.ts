@@ -679,7 +679,6 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         }
       });
       this.stockBatch.batchData = this.stockBatchArray;
-      if (this.stockBatch.wtPer100m == this.wtPer100mtrCopy) {
         if (this.addFlag) {
           this.stockBatchService.addStockBatch(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
@@ -732,45 +731,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
             }
           );
           this.loading = false;
-        }
-      } else {
-        this.loading = false;
-
-        const modalRef = this.modalService.open(
-          UpdateConfirmationDialogComponent,
-          {
-            size: "sm",
-          }
-        );
-        modalRef.result.then((result) => {
-          if (result) {
-            this.stockBatch.updatedBy = this.user.userId;
-            this.stockBatchService.updateStockBatch(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
-              (data) => {
-                if (data["success"]) {
-                  this.toastr.success(data["msg"]);
-                  this.route.navigate(["/pages/stock-batch"]);
-                } else {
-                  this.disableButton = false;
-                  this.stockBatchArray = [];
-                  // this.toastr.error(data["msg"]);
-                }
-                this.loading = false;
-              },
-
-              (error) => {
-                this.stockBatchArray = [];
-                // this.toastr.error(errorData.Update_Error);
-                this.loading = false;
-                this.disableButton = false;
-                this.loading = false;
-              }
-            );
-            this.loading = false;
-          } else {
-            this.disableButton = false;
-          }
-        });
+        
       }
     } else {
       this.disableButton = false;
