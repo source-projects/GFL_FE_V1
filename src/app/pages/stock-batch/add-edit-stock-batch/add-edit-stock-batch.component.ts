@@ -1,6 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -111,7 +112,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private commonService: CommonService,
     private modalService: NgbModal,
-    dateTimeAdapter: DateTimeAdapter<any>
+    dateTimeAdapter: DateTimeAdapter<any>,
+    private ckd: ChangeDetectorRef
   ) {
     dateTimeAdapter.setLocale('en-IN');
   }
@@ -354,7 +356,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     if (keyCode == 13) {
       if (this.weightFlag) {
         this.index = "grData" + (rowIndex + 1) + "-" + 1 + "" + idx;
-      } else if (!this.weightFlag) {
+      } else {
         this.index = "grData" + (rowIndex + 1) + "-" + 0 + "" + idx;
       }
       if (rowIndex === this.stockDataValues[idx].batchMW.length - 1) {
@@ -380,12 +382,18 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         let list = this.stockDataValues[idx].batchMW;
         list.push({ ...obj });
         this.stockDataValues[idx].batchMW = [...list];
+        this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW,]
+        this.ckd.detectChanges();
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
           if (field != null) {
             field.focus();
             clearInterval(interval);
           }
+          let objDiv = document.querySelectorAll('.datatable-body');
+          if(objDiv && objDiv.length){
+            objDiv[idx].scrollTop = objDiv[idx].scrollHeight;
+          }          
         }, 10);
       } else {
         let interval = setInterval(() => {
