@@ -97,8 +97,18 @@
                                                     <b class=" font-15"> <span>:</span></b>
                                                 </div>
                                                 <div class="col-sm-8 border border-width font-15 ">
-                                                    <b>{{invoice.gst}}</b>
+                                                    <b class="col-sm-5">{{invoice.gst}}</b>
+                                                <div class="col-sm-3 border border-width font-15 ">
+                                                    <div class="col-sm-1 ">
+                                                        <b class="display-between font-15"><span>Phn No:</span> </b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <b>{{invoice.contactNo}}</b>
+                                                    </div>
+        
                                                 </div>
+        
+                                            </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 border-dark">
@@ -167,7 +177,7 @@
                                                     <b>{{i+1}}</b>
                                                 </td>
                                                 <td *ngIf="quality.qualityName" class="text-left">
-                                                    <b>{{quality.qualityName}}</b>
+                                                    <b>{{quality.qualityName | slice : 0 : 20}} - [{{quality.qualityId | slice : 0 : 20}}]</b>
                                                 </td>
                                                 <td *ngIf="!quality.qualityName">
                                                 </td>
@@ -571,8 +581,16 @@
                                         <div class="col-md-2 width-10">
                                             <b class="display-between font-15"> <span>:</span></b>
                                         </div>
-                                        <div class="col-md-8 border border-width font-15 width-60">
-                                            {{invoice.gst}}
+                                        <div class="col-sm-8 border border-width font-15 ">
+                                            <b class="col-sm-5">{{invoice.gst}}</b>
+                                        <div class="col-sm-3 border border-width font-15 ">
+                                            <div class="col-sm-1 ">
+                                                <b class="display-between font-15"><span>Phn No:</span> </b>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <b>{{invoice.contactNo}}</b>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -642,7 +660,7 @@
                                             {{i+1}}
                                         </td>
                                         <td *ngIf="quality.qualityName">
-                                            {{quality.qualityName}}
+                                            <b>{{quality.qualityName | slice : 0 : 20}} - [{{quality.qualityId | slice : 0 : 20}}]</b>
                                         </td>
                                         <td *ngIf="!quality.qualityName">
                                         </td>
