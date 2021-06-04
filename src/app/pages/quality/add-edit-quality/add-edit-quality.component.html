@@ -32,7 +32,7 @@
                 <div class="form-group col-md-4">
                     <label class="required">Party Name</label>
                     <ng-select name="partyId" appendTo="body" id="partyId" formControlName="partyId"
-                        (change)="setPartyCode()" class="dropdown-name"
+                        (change)="setPartyCode($event)" class="dropdown-name"
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('partyId').invalid)&&(formSubmitted || addEditQualityForm.get('partyId').touched)}"
                         placeholder="Party Name">
                         <ng-option disabled="true">
@@ -72,7 +72,7 @@
 
                 <div class="form-group col-md-4">
                     <label class="required">Quality ID</label>
-                    <input type="text" class="form-control size-small" id="qualityId" nbinput fieldsize="small" [disabled]="!addEditQualityForm.get('partyId')"
+                    <input type="text" class="form-control size-small" id="qualityId" nbinput fieldsize="small" [readonly]="disableQualityId"
                         (change)="checkQulityId()" required formControlName="qualityId" placeholder="Enter Quality ID"
                         [ngClass]="{'is-invalid':(addEditQualityForm.get('qualityId').invalid)&&(formSubmitted || addEditQualityForm.get('qualityId').touched) || qulityIdExist}" />
                     <div class="input-required" *ngIf="qulityIdExist">
