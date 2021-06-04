@@ -172,17 +172,18 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
                 this.printInvoiceData[index].batchWithGrList.push(new BatchWithGrList());
               }
               if (!this.printInvoiceData[index].discount)
-                this.printInvoiceData[index].discount = (this.printInvoiceData[index].totalAmt * this.discount) / 100;
-
-              if (!this.printInvoiceData[index].sgst)
-                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+                this.printInvoiceData[index].discount = Number(((this.printInvoiceData[index].totalAmt * this.discount) / 100).toFixed(2));
 
               if (!this.printInvoiceData[index].taxAmt)
-                this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
+                this.printInvoiceData[index].taxAmt = Number((this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount).toFixed(2));
+
+              if (!this.printInvoiceData[index].sgst)
+                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
 
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
                   this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
               }
               index++;
               if (index == this.invoiceIds.length) {
@@ -264,19 +265,19 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       }
 
       if (!this.printInvoiceData[index].discount)
-        this.printInvoiceData[index].discount = (this.printInvoiceData[index].totalAmt * this.discount) / 100;
+                this.printInvoiceData[index].discount = Number(((this.printInvoiceData[index].totalAmt * this.discount) / 100).toFixed(2));
 
-      if (!this.printInvoiceData[index].sgst)
-        this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = this.printInvoiceData[index].totalAmt * 0.025;
+              if (!this.printInvoiceData[index].taxAmt)
+                this.printInvoiceData[index].taxAmt = Number((this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount).toFixed(2));
 
-      if (!this.printInvoiceData[index].taxAmt)
-        this.printInvoiceData[index].taxAmt = this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount;
+              if (!this.printInvoiceData[index].sgst)
+                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
 
-      if (!this.printInvoiceData[index].netAmt) {
-        this.printInvoiceData[index].netAmt =
-          this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
-        this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
-      }
+              if (!this.printInvoiceData[index].netAmt) {
+                this.printInvoiceData[index].netAmt =
+                  this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
+              }
 
     }
   }
