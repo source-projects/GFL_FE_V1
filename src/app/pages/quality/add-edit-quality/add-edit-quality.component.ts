@@ -80,7 +80,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
       if (this.addEditQualityForm.get("id").value)
         id = this.addEditQualityForm.get("id").value;
       this.qualityService
-        .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, id)
+        .getQulityIdExist(this.addEditQualityForm.get("qualityId").value, this.addEditQualityForm.get("partyId").value, id)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             this.qulityIdExist = data["data"];
