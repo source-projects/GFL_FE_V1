@@ -259,6 +259,7 @@
                                                 <button nbButton size="small" class="jet-popup-box production-list-popup mr-left-10 border-radius" *ngFor="let b of plannedProductionList" [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" [style.background]="b.colorTone"
                                                     class="p-badge-design-production jet-popup-display" (click)="batchSelectedFromProductionList($event)">
                                                     {{b.batchId}} </button>
+                                                    <i class="fa fa-search"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -266,7 +267,7 @@
                             </nb-card>
                         </nb-card-front>
                         <nb-card-back>
-                            <nb-card class="pd-left-15">
+                            <nb-card class="pd-left-15" style="height: 400px;overflow-y: auto;">
                                 <div id="jetList">
                                     <div class="title-with-btn">
                                         <div class="row">

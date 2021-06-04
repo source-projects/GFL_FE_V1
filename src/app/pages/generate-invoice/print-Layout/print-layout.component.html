@@ -75,7 +75,7 @@
                                                         <span>:</span></b>
                                                 </div>
                                                 <div class="col-sm-8 border border-width font-15">
-                                                    <b>{{invoice.partyName}}</b>
+                                                   <b>{{invoice.partyName | uppercase }}</b> 
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -86,7 +86,7 @@
                                                     <h3><b class="font-15 "> :</b></h3>
                                                 </div>
                                                 <div class="col-sm-8 border border-width font-15 ">
-                                                    <b>{{invoice.address | slice : 0 : 45}}</b>
+                                                    {{invoice.address | slice : 0 : 45 | uppercase }}
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -97,18 +97,18 @@
                                                     <b class=" font-15"> <span>:</span></b>
                                                 </div>
                                                 <div class="col-sm-8 border border-width font-15 ">
-                                                    <b class="col-sm-5">{{invoice.gst}}</b>
-                                                <div class="col-sm-3 border border-width font-15 ">
-                                                    <div class="col-sm-1 ">
-                                                        <b class="display-between font-15"><span>Phn No:</span> </b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>{{invoice.contactNo}}</b>
-                                                    </div>
-        
+                                                    <!-- <div class="row col-sm-12"> -->
+                                                        <b class="col-sm-5" >{{invoice.gst}}</b>
+                                                        <div class="col-sm-7 border-left border-width font-15 ">
+                                                            <div class="col-sm-5 text-nowrap">
+                                                                <b class="display-between font-15"><span>Phn No:</span> </b>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                {{invoice.contactNo}}
+                                                            </div>
+                                                        </div>
+                                                    <!-- </div> -->
                                                 </div>
-        
-                                            </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 border-dark">
@@ -119,7 +119,7 @@
                                                 <div class="col-md-2 width-10">
                                                     <b class="display-between font-15"> <span>:</span></b>
                                                 </div>
-                                                <div class="col-md-8 border border-width font-15 width-60">
+                                                <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
                                                     {{invoice.invoiceNo}}
                                                 </div>
                                             </div>
@@ -130,7 +130,7 @@
                                                 <div class="col-md-2 width-10">
                                                     <b class="display-between font-15"> <span>:</span></b>
                                                 </div>
-                                                <div class="col-md-8 border border-width font-15 width-60">
+                                                <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
                                                     {{invoice.createdDate | date : 'dd/MM/yyyy'}}
                                                 </div>
                                             </div>
@@ -177,7 +177,7 @@
                                                     <b>{{i+1}}</b>
                                                 </td>
                                                 <td *ngIf="quality.qualityName" class="text-left">
-                                                    <b>{{quality.qualityName | slice : 0 : 20}} - [{{quality.qualityId | slice : 0 : 20}}]</b>
+                                                    <b>{{quality.qualityName | uppercase}} - [{{quality.qualityId | slice : 0 : 10 | uppercase}}]</b>
                                                 </td>
                                                 <td *ngIf="!quality.qualityName">
                                                 </td>
@@ -560,7 +560,7 @@
                                             <b class="display-between font-15"> <span>:</span></b>
                                         </div>
                                         <div class="col-md-8 border border-width font-15 width-60">
-                                            {{invoice.partyName}}
+                                            <b>{{invoice.partyName | uppercase}}</b>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -571,26 +571,28 @@
                                             <b class="display-between font-15"> <span>:</span></b>
                                         </div>
                                         <div class="col-md-8 border border-width font-15 width-60">
-                                            {{invoice.address}}
+                                            {{invoice.address | uppercase}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-2 width-30">
+                                        <div class="col-sm-3 ">
                                             <b class="display-between font-15"><span>GSTIN</span> </b>
                                         </div>
-                                        <div class="col-md-2 width-10">
-                                            <b class="display-between font-15"> <span>:</span></b>
+                                        <div class="col-sm-1 ">
+                                            <b class=" font-15"> <span>:</span></b>
                                         </div>
                                         <div class="col-sm-8 border border-width font-15 ">
-                                            <b class="col-sm-5">{{invoice.gst}}</b>
-                                        <div class="col-sm-3 border border-width font-15 ">
-                                            <div class="col-sm-1 ">
-                                                <b class="display-between font-15"><span>Phn No:</span> </b>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <b>{{invoice.contactNo}}</b>
-                                            </div>
-
+                                            <!-- <div class="row col-sm-12"> -->
+                                                <b class="col-sm-5" >{{invoice.gst}}</b>
+                                                <div class="col-sm-7 border-left border-width font-15 ">
+                                                    <div class="col-sm-5 text-nowrap">
+                                                        <b class="display-between font-15"><span>Phn No:</span> </b>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        {{invoice.contactNo}}
+                                                    </div>
+                                                </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -602,7 +604,7 @@
                                         <div class="col-md-2 width-10">
                                             <b class="display-between font-15"> <span>:</span></b>
                                         </div>
-                                        <div class="col-md-8 border border-width font-15 width-60">
+                                        <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
                                             {{invoice.invoiceNo}}
                                         </div>
                                     </div>
@@ -613,7 +615,7 @@
                                         <div class="col-md-2 width-10">
                                             <b class="display-between font-15"> <span>:</span></b>
                                         </div>
-                                        <div class="col-md-8 border border-width font-15 width-60">
+                                        <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
                                             {{myDate}}
                                         </div>
                                     </div>
@@ -660,7 +662,7 @@
                                             {{i+1}}
                                         </td>
                                         <td *ngIf="quality.qualityName">
-                                            <b>{{quality.qualityName | slice : 0 : 20}} - [{{quality.qualityId | slice : 0 : 20}}]</b>
+                                            {{quality.qualityName | uppercase}} - [{{quality.qualityId | slice : 0 : 10 | uppercase}}]
                                         </td>
                                         <td *ngIf="!quality.qualityName">
                                         </td>
@@ -774,7 +776,7 @@
                                         <table class="table  spacing-low table-bordered">
                                             <tr>
                                                 <td class="text-left">
-                                                    <b>Discount @{{invoice.percentageDiscount}}%</b>
+                                                    <span>Discount @{{invoice.percentageDiscount}}%</span>
                                                 </td>
                                                 <td class="text-right">
                                                     <b>{{ invoice.discount | number : '1.2-2'}}</b>
@@ -802,7 +804,7 @@
                                                     <b>SGST: @2.5%</b>
                                                 </td>
                                                 <td class="text-right">
-                                                    <b>{{ invoice.sgst | number : '1.2-2'}}</b>
+                                                    <span>{{ invoice.sgst | number : '1.2-2'}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
