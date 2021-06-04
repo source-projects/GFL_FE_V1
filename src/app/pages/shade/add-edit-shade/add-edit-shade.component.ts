@@ -306,6 +306,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           this.shadeObj.qualityEntryId = element.id;
           this.shadeObj.qualityNameId = element.qualityNameId;
           this.wt100m = element.wtPer100m;
+          this.shadeObj.processId = element.processId;
         }
       });
       this.calculateTotalAmount(true);
