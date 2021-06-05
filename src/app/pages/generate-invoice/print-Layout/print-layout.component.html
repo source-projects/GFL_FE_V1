@@ -365,7 +365,7 @@
     
                                                             <tr *ngFor="let grs of lots.batchDataList;let i = index;">
                                                                 <td class="pd-top-bottom-1 text-right"> {{i + 1}}</td>
-                                                                <td class="pd-top-bottom-1 text-right">{{grs.mtr | number : '1.2-2'}}</td>
+                                                                <td class="pd-top-bottom-1 text-right">{{(grs.mtr == '-')? '-' : grs.mtr | number : '1.2-2'}}</td>
                                                                 <td class="pd-top-bottom-1 text-right">
                                                                     {{grs.finishMtr | number : '1.2-2'}}</td>
                                                             </tr>

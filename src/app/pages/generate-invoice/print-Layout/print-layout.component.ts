@@ -123,7 +123,6 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
                   element.batchDataList.forEach(ele => {
                     if (ele.mtr == "0") {
                       ele.mtr = "-"
-
                     }
                   })
                 });
