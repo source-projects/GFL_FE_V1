@@ -44,6 +44,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   qualityList: any[];
   batchList: any[];
   batchListCopy = [];
+  deleteIcon:boolean = false;
 
   productionPlanning: ProductionPlanning = new ProductionPlanning();
   programValues: any;
@@ -664,6 +665,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   getAllDetailsOfBatch(event, batch) {
+    this.deleteIcon = true;
     this.productionBatchDetail = { ...batch };
 
     this.autoScrollDownInterval = setInterval(() => {
@@ -678,6 +680,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   resetDetailsOfBatch($event) {
+    this.deleteIcon = false;
     this.productionBatchDetail = new ProductionBatchDetail();
     clearInterval(this.autoScrollDownInterval);
     clearInterval(this.autoScrollUpInterval);
@@ -742,5 +745,26 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  remove(batch){
+
+    const modelRef = this.modalService.open(ConfirmationDialogComponent);
+    modelRef.result
+      .then((result) => {
+        if (result) {
+          this.jetService.removeBatchFromList(batch.batchId).pipe(takeUntil(this.destroy$))
+          .subscribe(
+            (data) => {
+              this.toastr.success(errorData.Delete);
+              this.plannedProductionListForDataTable();
+              this.getAllBatchData();
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+            }
+          );
+        }
+      })
   }
 }
