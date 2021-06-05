@@ -2,13 +2,14 @@ import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router"; 
 import { ToastrService } from "ngx-toastr";
 import * as errorData from "../../../@theme/json/error.json";
 import { AdminService } from "../../../@theme/services/admin.service";
 import { CommonService } from "../../../@theme/services/common.service";
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
+import { ShadeService } from "../../../@theme/services/shade.service";
 
 @Component({
   selector: "ngx-add-edit-quality",
@@ -30,6 +31,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
   //to store Quality Data
   qualityList: any;
   qualityNameList: any[];
+  processList = [];
   addEditQualityForm: FormGroup;
 
   //to store party info
@@ -54,14 +56,33 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private adminService: AdminService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private shadeService: ShadeService,
   ) {}
 
   async ngOnInit() {
     this.getData();
     this.getPartyList();
     this.getQualityNameList();
+    this.getProcessList();
     await this.getUpdateData();
+  }
+
+  getProcessList() {
+    this.loading = true;
+    this.shadeService.getAllDyeingProcess().pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.processList = data["data"];
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   getQualityNameList() {
@@ -130,12 +151,16 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
       billingUnit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
       mtrPerKg: new FormControl(null, Validators.required),
+      hsn: new FormControl(998821, Validators.required),
       partyId: new FormControl(null, Validators.required),
       rate: new FormControl(null, Validators.required),
+      processId:new FormControl(null,Validators.required),
       remark: new FormControl(null),
       partyCode: new FormControl(null),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
+      createdDate: new FormControl(null),
+      updatedDate: new FormControl(null),
       userHeadId: new FormControl(null),
       id: new FormControl(null),
     });
@@ -156,14 +181,20 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
               qualityName: this.qualityList.qualityName,
               qualityNameId: this.qualityList.qualityNameId,
               rate: this.qualityList.rate,
+              processId:this.qualityList.processId,
               qualityType: this.qualityList.qualityType,
               unit: this.qualityList.unit,
+              hsn: this.qualityList.hsn,
               billingUnit: this.qualityList.billingUnit,
               wtPer100m: this.qualityList.wtPer100m.toFixed(3),
               mtrPerKg: this.qualityList.mtrPerKg.toFixed(3),
+              partyCode: this.qualityList.partyCode,
               partyId: this.qualityList.partyId,
               remark: this.qualityList.remark,
               createdBy: this.qualityList.createdBy,
+              createdDate: this.qualityList.createdDate,
+              updatedDate: this.qualityList.updatedDate,
+              updatedBy: this.qualityList.updatedBy,
               id: this.qualityList.id,
             });
             this.setPartyCode(this.qualityList.partyId);
@@ -200,13 +231,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
     if (event) {
       this.disableQualityId = false;
       this.checkQulityId();
-      //setPartyCode...
-      let p = this.party.filter(
-        (party1) => party1.id === this.addEditQualityForm.get("partyId").value
-      );
-      this.addEditQualityForm.patchValue({
-        partyCode: p[0].partyCode,
-      });
+      
     } else {
       this.disableQualityId = true;
       // this.addEditQualityForm.get("qualityId").setValue("");

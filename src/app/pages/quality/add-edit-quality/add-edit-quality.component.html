@@ -193,6 +193,31 @@
                         <span>Rate is required</span>
                     </div>
                 </div>
+                <div class="form-group col-md-4">
+                    <label class="required">Process Name</label>
+                    <ng-select id="processName" appendTo="body" formControlName="processId"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('processId').invalid)&&(formSubmitted || addEditQualityForm.get('processId').touched)}"
+                         placeholder="Process Name" class="dropdown-name">
+                         <ng-option *ngFor="let p of processList" [value]="p.id">
+                            {{ p.dyeingProcessName }}
+                        </ng-option>
+                    </ng-select>
+                    <div class="input-required"
+                        *ngIf="(addEditQualityForm.get('processId').invalid)&&(formSubmitted || addEditQualityForm.get('processId').touched)">
+                        <span>Process Name is required.</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="required">HSN Number</label>
+                    <input type="text" (keypress)="numberOnly($event)" id="HSNNumber" class="form-control size-small" fieldsize="small" nbinput
+                        formControlName="hsn" placeholder="HSN Number"
+                        [ngClass]="{'is-invalid':(addEditQualityForm.get('hsn').invalid)&&(formSubmitted || addEditQualityForm.get('hsn').touched)}"
+                        min="0"  />
+                        <div class="input-required"
+                        *ngIf="(addEditQualityForm.get('hsn').invalid)&&(formSubmitted || addEditQualityForm.get('hsn').touched)">
+                        <span>HSN number is required</span>
+                    </div>
+                </div>
 
             </div>
             <div class="row">
