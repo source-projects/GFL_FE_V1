@@ -250,6 +250,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
+                this.shadeObj.processId = element.processId;
                 this.shadeObj.qualityEntryId = element.id;
                 this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
@@ -304,9 +305,9 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
           this.shadeObj.qualityEntryId = element.id;
+          this.shadeObj.processId = element.processId;
           this.shadeObj.qualityNameId = element.qualityNameId;
           this.wt100m = element.wtPer100m;
-          this.shadeObj.processId = element.processId;
         }
       });
       this.calculateTotalAmount(true);
@@ -358,6 +359,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
+                this.shadeObj.processId = element.processId;
                 this.shadeObj.qualityEntryId = element.qualityEntryId;
                 this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;

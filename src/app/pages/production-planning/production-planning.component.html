@@ -20,7 +20,9 @@
                                                 <label>Party</label>
                                             </div>
                                             <div class="col-md-9 col-12">
-                                                <ng-select name="partyId" appendTo="body" [(ngModel)]='productionPlanning.partyId' required placeholder="Party Name" (change)=partySelected($event)>
+                                                <ng-select name="partyId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.partyId' required
+                                                    placeholder="Party Name" (change)=partySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -55,7 +57,9 @@
                                                 <label>Quality</label>
                                             </div>
                                             <div class="col-md-9 col-12">
-                                                <ng-select name="qualityId" appendTo="body" [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID" (change)=qualitySelected($event)>
+                                                <ng-select name="qualityId" appendTo="body"
+                                                    [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID"
+                                                    (change)=qualitySelected($event)>
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -90,7 +94,10 @@
                                                 <label>Batch</label>
                                             </div>
                                             <div class="col-md-9 col-12">
-                                                <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required placeholder="Enter Batch">
+                                                <input type="text" #batchFilter1="ngModel"
+                                                    class="form-control size-small" fieldsize="small" nbinput
+                                                    name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required
+                                                    placeholder="Enter Batch">
                                             </div>
                                         </div>
 
@@ -98,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto" >
+                                <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto">
                                     <div class="col-md-7 col-12 pd-0">
                                         <div class="display-flex mr-0">
 
@@ -220,7 +227,8 @@
                                         </div>
                                         <div class="col-md-3 col-7 display-flex-end">
                                             <div class="jet-btn-production">
-                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" type="button" (click)="toggleView()">Jet planning</button>
+                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                    type="button" (click)="toggleView()">Jet planning</button>
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +239,10 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="batch-list-3line">
-                                                <button nbButton size="small" *ngFor="let b of batchList" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" (click)="onBatchSelect(b.batchId)" class="p-badge-design">
+                                                <button nbButton size="small" *ngFor="let b of batchList"
+                                                    (mouseenter)="getAllDetailsOfBatch($event,b)"
+                                                    (mouseout)="resetDetailsOfBatch($event)"
+                                                    (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
 
                                             </div>
@@ -256,10 +267,22 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group batch-list-3line">
-                                                <button nbButton size="small" class="jet-popup-box production-list-popup mr-left-10 border-radius" *ngFor="let b of plannedProductionList" [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)" (mouseout)="resetDetailsOfBatch($event)" [style.background]="b.colorTone"
-                                                    class="p-badge-design-production jet-popup-display" (click)="batchSelectedFromProductionList($event)">
-                                                    {{b.batchId}} </button>
-                                                    <i class="fa fa-search"></i>
+                                                <ng-container *ngFor="let b of plannedProductionList">
+                                                    <button nbButton size="small"
+                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius"
+                                                        [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)"
+                                                        (mouseout)="resetDetailsOfBatch($event)"
+                                                        [style.background]="b.colorTone"
+                                                        class="p-badge-design-production jet-popup-display"
+                                                        (click)="batchSelectedFromProductionList($event)">
+                                                        {{b.batchId}}
+                                                        <nb-icon class="icon-pposition" (click)="remove(b)" icon="close-circle-outline"></nb-icon>
+
+                                                    </button>
+
+
+                                                </ng-container>
+
                                             </div>
                                         </div>
                                     </div>
@@ -279,7 +302,8 @@
                                             <div class="col-md-3 col-7 display-flex-end">
                                                 <div class="jet-btn-production">
                                                     <div class="jet-btn-production text-right">
-                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2" (click)="toggleView()" type="button">Production
+                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                            (click)="toggleView()" type="button">Production
                                                             Plan</button>
                                                     </div>
 
@@ -300,9 +324,20 @@
                                             <td>{{j.name}}</td>
                                             <td>{{j.capacity}}</td>
                                             <td>
-                                                <div cdkDropList [cdkDropListData]="j.jetDataList" cdkDropListOrientation="horizontal" class="example-list main-table-drag" (cdkDropListDropped)="drop($event,i)">
-                                                    <div class="example-box trans-box-drop-1 border-jet" *ngFor="let index of j.jetDataList;let idx = index;" [style.background]="index.colorTone?index.colorTone:'#ffffff'" (click)="setIndexForSlip(index)" cdkDrag>
-                                                        <button nbContextMenuTag="my-context-menu" [style.color]="index.colorTone?'#ffffff':'#000000'" (mouseenter)="getAllDetailsOfBatch($event,index)" (mouseout)="resetDetailsOfBatch($event)" [nbContextMenu]="items" nbContextMenuTrigger="click" class="jet-btn-changes btn-changes-jet ">
+                                                <div cdkDropList [cdkDropListData]="j.jetDataList"
+                                                    cdkDropListOrientation="horizontal"
+                                                    class="example-list main-table-drag"
+                                                    (cdkDropListDropped)="drop($event,i)">
+                                                    <div class="example-box trans-box-drop-1 border-jet"
+                                                        *ngFor="let index of j.jetDataList;let idx = index;"
+                                                        [style.background]="index.colorTone?index.colorTone:'#ffffff'"
+                                                        (click)="setIndexForSlip(index)" cdkDrag>
+                                                        <button nbContextMenuTag="my-context-menu"
+                                                            [style.color]="index.colorTone?'#ffffff':'#000000'"
+                                                            (mouseenter)="getAllDetailsOfBatch($event,index)"
+                                                            (mouseout)="resetDetailsOfBatch($event)"
+                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                                            class="jet-btn-changes btn-changes-jet ">
                                                             {{index.batchId}}
                                                         </button>
                                                     </div>
