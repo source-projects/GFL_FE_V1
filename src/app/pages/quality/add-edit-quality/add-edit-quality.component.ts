@@ -151,6 +151,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
       billingUnit: new FormControl(null, Validators.required),
       wtPer100m: new FormControl(null, Validators.required),
       mtrPerKg: new FormControl(null, Validators.required),
+      hsn: new FormControl(998821, Validators.required),
       partyId: new FormControl(null, Validators.required),
       rate: new FormControl(null, Validators.required),
       processId:new FormControl(null,Validators.required),
@@ -158,6 +159,8 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
       partyCode: new FormControl(null),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
+      createdDate: new FormControl(null),
+      updatedDate: new FormControl(null),
       userHeadId: new FormControl(null),
       id: new FormControl(null),
     });
@@ -181,12 +184,17 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
               processId:this.qualityList.processId,
               qualityType: this.qualityList.qualityType,
               unit: this.qualityList.unit,
+              hsn: this.qualityList.hsn,
               billingUnit: this.qualityList.billingUnit,
               wtPer100m: this.qualityList.wtPer100m.toFixed(3),
               mtrPerKg: this.qualityList.mtrPerKg.toFixed(3),
+              partyCode: this.qualityList.partyCode,
               partyId: this.qualityList.partyId,
               remark: this.qualityList.remark,
               createdBy: this.qualityList.createdBy,
+              createdDate: this.qualityList.createdDate,
+              updatedDate: this.qualityList.updatedDate,
+              updatedBy: this.qualityList.updatedBy,
               id: this.qualityList.id,
             });
             this.setPartyCode(this.qualityList.partyId);
@@ -223,13 +231,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
     if (event) {
       this.disableQualityId = false;
       this.checkQulityId();
-      //setPartyCode...
-      let p = this.party.filter(
-        (party1) => party1.id === this.addEditQualityForm.get("partyId").value
-      );
-      this.addEditQualityForm.patchValue({
-        partyCode: p[0].partyCode,
-      });
+      
     } else {
       this.disableQualityId = true;
       // this.addEditQualityForm.get("qualityId").setValue("");
