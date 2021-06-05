@@ -9,7 +9,7 @@ export class JetPlanningService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   getAllJetData() {
     return this.httpClient.get(
@@ -53,23 +53,31 @@ export class JetPlanningService {
   getBatchedDetailByProductionId(p_id, b_id) {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/productionPlan/getBatchdDetailByProductionAndBatch/" +
-        p_id +
-        "/" +
-        b_id
+      "api/productionPlan/getBatchdDetailByProductionAndBatch/" +
+      p_id +
+      "/" +
+      b_id
     );
   }
 
-  startJetProcess(data){
+  startJetProcess(data) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/jet/start", data
     );
   }
 
-  
-removeProductionFromJet(jetId, prodId){
-  return this.httpClient.delete(
-    this.commonService.envUrl() + "api/jet/delete/removeProductionFromJet/"+jetId+"/"+prodId
-  );
-}
+
+  removeProductionFromJet(jetId, prodId) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/jet/delete/removeProductionFromJet/" + jetId + "/" + prodId
+    );
+  }
+
+  removeBatchFromList(batchId) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/productionPlan/removeBy?batchId=" + batchId
+    );
+  }
+
+
 }
