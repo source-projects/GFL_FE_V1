@@ -35,14 +35,14 @@
                                                         </p>
                                                     </div>
                                                     <div class="row">
-                                                        <p class="text-center col-sm-12 font-18 formally">
+                                                        <p class="text-center col-sm-12 font-10 formally">
                                                             FORMALLY KNOWN AS : MUKESH PROCESSORS PVT.LTD
     
                                                         </p>
                                                     </div>
                                                     <div class="row">
-                                                        <p class="text-center col-sm-12 font-20">A-31, Eco Textile Park,
-                                                            (Kala Ghoda), Palsana, Surat E-Mail : varun@gloryfab.com
+                                                        <p class="text-center col-sm-12 font-18">A-31, G.E.T.P,
+                                                            (Kala Ghoda), Palsana, Surat E-Mail : dyeing@gloryfab.com
                                                         </p>
                                                     </div>
                                                     <div class="row">
@@ -67,37 +67,26 @@
                                     <div class="row col-sm-12 pd-0 mr-0">
                                         <div class="col-sm-8 border-dark">
                                             <div class="row">
-                                                <div class=" col-sm-3">
+                                                <div class="col-sm-2 text-nowrap">
                                                     <b class="font-15"><span>Party Name</span> </b>
                                                 </div>
-                                                <div class=" col-sm-1">
-                                                    <b class="font-15">
-                                                        <span>:</span></b>
-                                                </div>
-                                                <div class="col-sm-8 border border-width font-15">
+                                                <div class="text-left col-sm-10 border border-width font-15">
                                                    <b>{{invoice.partyName | uppercase }}</b> 
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-3 ">
-                                                    <h3> <b class="display-between "><span>Address</span> </b></h3>
+                                                <div class="col-sm-2">
+                                                    <b class="font-15"><span>Address</span> </b>
                                                 </div>
-                                                <div class="col-sm-1 ">
-                                                    <h3><b class="font-15 "> :</b></h3>
-                                                </div>
-                                                <div class="col-sm-8 border border-width font-15 ">
-                                                    {{invoice.address | slice : 0 : 45 | uppercase }}
+                                                <div class="text-left col-sm-10 border border-width font-15 ">
+                                                    {{invoice.address| uppercase }}
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-3 ">
-                                                    <b class="display-between font-15"><span>GSTIN</span> </b>
+                                                <div class="col-sm-2">
+                                                    <b class="font-15"><span>GSTIN</span> </b>
                                                 </div>
-                                                <div class="col-sm-1 ">
-                                                    <b class=" font-15"> <span>:</span></b>
-                                                </div>
-                                                <div class="col-sm-8 border border-width font-15 ">
-                                                    <!-- <div class="row col-sm-12"> -->
+                                                <div class="text-left col-sm-10 border border-width font-15 ">
                                                         <b class="col-sm-5" >{{invoice.gst}}</b>
                                                         <div class="col-sm-7 border-left border-width font-15 ">
                                                             <div class="col-sm-5 text-nowrap">
@@ -113,24 +102,18 @@
                                         </div>
                                         <div class="col-sm-4 border-dark">
                                             <div class="row">
-                                                <div class="col-md-2 width-30">
+                                                <div class="col-md-2 width-33">
                                                     <b class="display-between font-15"><span>Invoice</span></b>
                                                 </div>
-                                                <div class="col-md-2 width-10">
-                                                    <b class="display-between font-15"> <span>:</span></b>
-                                                </div>
-                                                <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
-                                                    {{invoice.invoiceNo}}
+                                                <div style="font-size: 18px;" class="col-md-10 border-left border-bottom border-width width-65">
+                                                   <b>{{invoice.invoiceNo}}</b> 
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-2 width-30">
+                                                <div class="col-md-2 width-33">
                                                     <b class="display-between font-15"><span>Date</span></b>
                                                 </div>
-                                                <div class="col-md-2 width-10">
-                                                    <b class="display-between font-15"> <span>:</span></b>
-                                                </div>
-                                                <div style="font-size: 18px;" class="col-md-8 border border-width width-60">
+                                                <div style="font-size: 18px;" class="col-md-10 border-left border-bottom border-width width-65">
                                                     {{invoice.createdDate | date : 'dd/MM/yyyy'}}
                                                 </div>
                                             </div>
@@ -140,34 +123,34 @@
                                     <div class="border-dark font-15">
                                         <table class="table  spacing-low table-bordered ">
                                             <tr>
-                                                <th class="width-4px">
+                                                <th class="font-14 width-4px">
                                                     <b>Sr.</b>
                                                 </th>
-                                                <th class="width-30">
+                                                <th class="font-14 width-37">
                                                     <b>Quality</b>
                                                 </th>
-                                                <th class="width-3">
+                                                <th class="font-14 width-3">
                                                     <b>HSN</b>
                                                 </th>
-                                                <th>
+                                                <th class="font-14 width-10">
                                                     <b>P. Chl No</b>
                                                 </th>
-                                                <th>
+                                                <th class="font-14 width-8">
                                                     <b>Lot No</b>
                                                 </th>
-                                                <th class="width-9">
-                                                    <b>Grey Mtr/Kg</b>
+                                                <th class="font-14 width-13">
+                                                    <b>Grey </b><span>(Mtr/Kg)</span>
                                                 </th>
-                                                <th class="width-4">
+                                                <th class="font-14 width-4">
                                                     <b>PCs</b>
                                                 </th>
-                                                <th class="width-9">
-                                                    <b>Finish Mtr/Kg</b>
+                                                <th class="font-14 width-13">
+                                                    <b>Finish </b><span>(Mtr/Kg)</span>
                                                 </th>
-                                                <th>
+                                                <th class="font-14">
                                                     <b>Rate</b>
                                                 </th>
-                                                <th class="width-15">
+                                                <th class="font-14 width-15">
                                                     <b>Amount</b>
                                                 </th>
                                             </tr>
@@ -177,7 +160,7 @@
                                                     <b>{{i+1}}</b>
                                                 </td>
                                                 <td *ngIf="quality.qualityName" class="text-left">
-                                                    <b>{{quality.qualityName | uppercase}} - [{{quality.qualityId | slice : 0 : 10 | uppercase}}]</b>
+                                                    <b>{{quality.qualityName | uppercase}} - [{{quality.qualityId | slice : 0 : 8 | uppercase}}]</b>
                                                 </td>
                                                 <td *ngIf="!quality.qualityName">
                                                 </td>
@@ -200,7 +183,7 @@
                                                     <b>{{quality.finishMtr | number : '1.2-2'}}</b>
                                                 </td>
                                                 <td class="text-right">
-                                                    <b>{{quality.rate}}</b>
+                                                    <b>{{quality.rate | number : '1.2-2'}}</b>
                                                 </td>
                                                 <td class="text-right">
                                                     <b>{{quality.amt | number : '1.2-2'}}</b>
@@ -322,10 +305,10 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-left">
+                                                        <td class="text-left font-18">
                                                             <b>Net Amount</b>
                                                         </td>
-                                                        <td class="text-right">
+                                                        <td class="text-right font-18">
                                                             <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                         </td>
                                                     </tr>
