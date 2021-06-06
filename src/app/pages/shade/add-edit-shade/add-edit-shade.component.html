@@ -138,7 +138,7 @@
                         <div class="form-group">
                             <label [ngClass]="{ required: !shadeObj.pending }">Quality
                                 Id</label>
-                            <ng-select placeholder="Select Quality Id" name="qualityId" [(ngModel)]="shadeObj.qualityId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" required [ngClass]="{
+                            <ng-select placeholder="Select Quality Id" name="qualityId" [(ngModel)]="shadeObj.qualityEntryId" #qualityId1="ngModel" (change)="qualityIdSelected($event)" required [ngClass]="{
                                 'is-invalid':
                                 qualityId1.invalid &&
                                 (formSubmitted || qualityId1.touched) &&
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                 </ng-option>
-                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
+                                <ng-option *ngFor="let q of qualityList" [value]="q.qualityEntryId">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
                                             <div class="text-left txt-ov-elips">

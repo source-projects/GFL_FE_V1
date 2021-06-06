@@ -193,21 +193,32 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
     );
   }
 
-  getQualityList() {
+  async getQualityList() {
     this.loading = true;
-    this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.qualityList = data["data"];
-          this.loading = false;
-        } else {
+    return await new Promise((resolve,reject) => {
+      this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.qualityList = data["data"] || [];
+            if(this.qualityList && this.qualityList.length) {
+              this.qualityList.forEach(ele => {
+                ele['qualityEntryId'] = ele.id;
+              })
+            }
+            resolve(true);
+            this.loading = false;
+          } else {
+            resolve(true);
+            this.loading = false;
+          }
+        },
+        (error) => {
+          resolve(false);
           this.loading = false;
         }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      );
+    });
+   
   }
 
   getShadeById() {
@@ -234,10 +245,10 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           }
           let qualityIndex =
             this.qualityList && this.qualityList.length
-              ? this.qualityList.findIndex((v) => v.id == res.qualityEntryId)
+              ? this.qualityList.findIndex((v) => v.qualityEntryId == res.qualityEntryId)
               : -1;
           if (qualityIndex > -1) {
-            this.shadeObj.qualityId = this.qualityList[qualityIndex].qualityId;
+            this.shadeObj.qualityEntryId = this.qualityList[qualityIndex].qualityEntryId;
             this.shadeObj.qualityName = this.qualityList[
               qualityIndex
             ].qualityName;
@@ -245,13 +256,13 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
               qualityIndex
             ].qualityType;
             this.qualityList.forEach((element) => {
-              if (this.shadeObj.qualityId == element.qualityId) {
+              if (this.shadeObj.qualityEntryId == element.qualityEntryId) {
                 this.shadeObj.qualityId = element.qualityId;
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
                 this.shadeObj.processId = element.processId;
-                this.shadeObj.qualityEntryId = element.id;
+                this.shadeObj.qualityEntryId = element.qualityEntryId;
                 this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
               }
@@ -299,12 +310,12 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
       this.resetAmount();
     } else {
       this.qualityList.forEach((element) => {
-        if (this.shadeObj.qualityId == element.qualityId) {
+        if (this.shadeObj.qualityEntryId == element.qualityEntryId) {
           this.shadeObj.qualityId = element.qualityId;
           this.shadeObj.qualityName = element.qualityName;
           this.shadeObj.qualityType = element.qualityType;
           this.shadeObj.partyId = element.partyId;
-          this.shadeObj.qualityEntryId = element.id;
+          this.shadeObj.qualityEntryId = element.qualityEntryId;
           this.shadeObj.processId = element.processId;
           this.shadeObj.qualityNameId = element.qualityNameId;
           this.wt100m = element.wtPer100m;
@@ -354,7 +365,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
             });
             this.loading = false;
             this.qualityList.forEach((element) => {
-              if (this.shadeObj.qualityId == element.qualityId) {
+              if (this.shadeObj.qualityEntryId == element.qualityEntryId) {
                 this.shadeObj.qualityId = element.qualityId;
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
