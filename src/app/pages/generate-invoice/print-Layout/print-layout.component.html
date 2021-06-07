@@ -87,12 +87,12 @@
                                                     <b class="font-15"><span>GSTIN</span> </b>
                                                 </div>
                                                 <div class="text-left col-sm-10 border border-width font-15 ">
-                                                        <b class="col-sm-5" >{{invoice.gst}}</b>
+                                                        <b class="col-sm-5 pl-0" >{{invoice.gst}}</b>
                                                         <div class="col-sm-7 border-left border-width font-15 ">
-                                                            <div class="col-sm-5 text-nowrap">
+                                                            <div class="text-left col-sm-5 text-nowrap pl-0" style="border-right: 1px solid rgb(143, 143, 143);">
                                                                 <b class="display-between font-15"><span>Phn No:</span> </b>
                                                             </div>
-                                                            <div class="col-sm-7">
+                                                            <div class="col-sm-7 text-left">
                                                                 {{invoice.contactNo}}
                                                             </div>
                                                         </div>
@@ -270,7 +270,8 @@
                                                             <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                         </div>
                                                     </div> -->
-                                                <table class="table  spacing-low table-bordered">
+                                                <table class="table spacing-low table-bordered" > 
+                                                    <!-- style="width: 350px;" -->
                                                     <tr>
                                                         <td class="text-left">
                                                             <b>Discount @{{invoice.percentageDiscount}}%</b>
@@ -480,7 +481,7 @@
                     <div class="row">
 
                         <div class="top-print-head width-63">
-                            <b>TAX INVOICE CUM DELIVERY CHALLANNNNNNN</b>
+                            <b>TAX INVOICE CUM DELIVERY CHALLAN</b>
                         </div>
 
 
