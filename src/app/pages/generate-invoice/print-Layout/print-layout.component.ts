@@ -215,6 +215,14 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
           return obj1.sequenceId - obj2.sequenceId;
         })
 
+        for (let i = 0; i < 4; i++) {
+          if (!this.printInvoiceData[index].qualityList[i]) {
+            this.printInvoiceData[index].qualityList.push(
+              new QualityList()
+            );
+          }
+        }
+
         element.batchDataList.forEach(ele => {
           if (ele.mtr == "0") {
             ele.mtr = "-"
