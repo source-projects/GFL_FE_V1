@@ -126,27 +126,36 @@
             placeholder="Select Shade" class="required-error-dropdown">
             <ng-option disabled="true">
                 <div class="row">
-                    <div class="col-md-4 col-4">
+                    <div class="col-md-3 col-3">
                         <div class="text-left txt-ov-elips">Party Shade No</div>
                     </div>
-                    <div class="col-md-4 col-4">
+                    <div class="col-md-3 col-3">
                         <div class="text-center txt-ov-elips">Party Code
                         </div>
                     </div>
-                    <div class="col-md-4 col-4">
+                    <div class="col-md-3 col-3">
+                        <div class="text-center txt-ov-elips">Color Name
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-3">
                         <div class="text-right txt-ov-elips">Color Tone</div>
                     </div>
                 </div>
             </ng-option>
             <ng-option *ngFor="let s of shadeList" [value]="s.id">
                 <div class="row">
-                    <div class="col-md-4 col-4">
+                    <div class="col-md-3 col-3">
                         <div class="text-left txt-ov-elips"> {{s.partyShadeNo}}</div>
                     </div>
-                    <div class="col-md-4 col-4">
+                    <div class="col-md-3 col-3">
                         <div class="text-center txt-ov-elips"> {{s.partyCode}}</div>
                     </div>
-                    <div class="col-md-4 col-4 jus-con-center">
+
+                    <div class="col-md-3 col-3">
+                        <div class="text-center txt-ov-elips"> {{s.colorName}}</div>
+                    </div>
+
+                    <div class="col-md-3 col-3 jus-con-center">
                         <div class="text-right txt-ov-elips width-70">
                             <input [(colorPicker)]="s.colorTone" [style.background]="s.colorTone" [value]="s.colorTone"
                                 disabled="true" class="width-100" />

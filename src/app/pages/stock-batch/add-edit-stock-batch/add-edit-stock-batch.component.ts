@@ -96,6 +96,9 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   isDirectPrintFlag: boolean = false;
   currentBatchSequence: any = 0;
   currentBatchSeqId = 0;
+  totalGrs = 0;
+  totalMeters = 0;
+  totalWeights = 0;
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -259,6 +262,17 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         this.weight.push({ w: element.wt, meter: element.mtr });
       });
       this.calculateTotalMtrWt(this.stockBatch.unit, e);
+    });
+    //calculate total of everything to show on header..
+    this.totalMeters = 0;
+    this.totalWeights = 0;
+    this.totalGrs = 0;
+    this.stockDataValues.forEach(element => {
+      this.totalMeters += element.totalMt;
+      this.totalWeights += element.totalWt;
+      element.batchMW.forEach(element => {
+        this.totalGrs++;
+      });
     });
   }
   getStockBatchById() {
@@ -492,6 +506,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         Number(this.totalMtr).toFixed(2)
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
+    
     } else {
       this.MtWtIndex = i;
       this.weight[j] = {
@@ -506,6 +521,14 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         Number(this.totalWt).toFixed(2)
       );
     }
+    this.totalGrs = 0;
+      this.totalMeters = 0;
+      this.totalWeights = 0;
+      this.stockDataValues.forEach(element => {
+        this.totalMeters += element.totalMt;
+        this.totalWeights += element.totalWt;
+        this.totalGrs += element.batchMW.length;
+      });
   }
   calculateTotalMtrWt(MW, batchCard?): any {
     this.totalWt = 0;
@@ -558,6 +581,14 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         Number(this.totalWt).toFixed(2)
       );
     }
+    this.totalGrs = 0;
+      this.totalMeters = 0;
+      this.totalWeights = 0;
+      this.stockDataValues.forEach(element => {
+        this.totalMeters += element.totalMt;
+        this.totalWeights += element.totalWt;
+        this.totalGrs += element.batchMW.length;
+      });
   }
 
   checkValidation(myForm) {
