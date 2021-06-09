@@ -176,19 +176,19 @@
                 <div>
                     <header class="batch-header batch-card-margin">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h2 class="batch-heading display-inline">BATCH</h2>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="row totals">
                                     <div class="col-md-4 pt-2" >
-                                        <h6 style="color: white;">Total Mtr: {{totalMeters}}</h6>
+                                        <h6 style="color: white;">Total Mtr: {{totalMeters | number : '1.2-2'}}</h6>
                                     </div>
                                     <div class="col-md-4 pt-2">
-                                        <h6 style="color: white;">Total Wt : {{totalWeights}}</h6>
+                                        <h6 style="color: white;">Total Wt : {{totalWeights | number : '1.2-2'}}</h6>
                                     </div>
                                     <div class="col-md-4 pt-2">
-                                        <h6 style="color: white;">Total Gr : {{totalGrs}}</h6>
+                                        <h6 style="color: white;">Total Gr : {{totalGrs | number : '1.2-2'}}</h6>
                                     </div>
                                 </div>
                             </div>
