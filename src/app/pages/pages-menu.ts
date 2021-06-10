@@ -125,6 +125,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "file-text-outline",
     link: "/pages/addition-slip",
     hidden: false,
+    children: [
+      {
+        title: "Other Slip",
+        icon: "file-text-outline",
+        link: "/pages/addition-slip",
+      },
+      {
+        title: "Dyeing Slip",
+        icon: "file-text-outline",
+        link: "/pages/addition-slip/dyeingSlip",
+      },
+    ],
   },
   {
     title: "Supplier",
