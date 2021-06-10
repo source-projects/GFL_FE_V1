@@ -11,6 +11,12 @@ export class DyeingProcessService {
     private commonService: CommonService
   ) {}
 
+  getDyeingSlipData(){
+    return this.httpClient.get(
+      this.commonService.envUrl()+"api/dyeingSlip/all"
+    )
+  }
+
   getDyeingProcessById(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/dyeingProcess/" + id

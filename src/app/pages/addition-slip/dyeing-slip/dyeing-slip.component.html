@@ -1,0 +1,53 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card class="nb-style">
+            <nb-card-header class="nb-header">
+                <div class="row">
+                    <div class="col-md-9 col-9">
+                        <h2 class="nb-text">Dyeing Slip</h2>
+                    </div>
+
+                    <div class="col-md-2 col-1 display-flex-start desktop-justify-flexend">
+                        <button class="btn btn-md btn-design" (click)="open()">EXPORT</button>
+                    </div>
+                </div>
+            </nb-card-header>
+
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                    </div>
+                </div>
+                
+
+                    
+                <ngx-datatable [rows]="dyeingSlip" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
+                    <ngx-datatable-column name="Actions" sortable="false" props="id" [maxWidth]="90">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" (click)="printDyeingSlip($event, row)"   [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Quality Id" props="qualityId">
+                        <ng-template ngx-datatable-header-template let-value="value">
+                           Quality Id
+                            <div class="filter-icon" id="onclickFilter">
+                                <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
+                            </div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Party Shade No" props="partyShadeNo"></ngx-datatable-column>
+                    <ngx-datatable-column name="Color Name" props="colorName"></ngx-datatable-column>
+                    <ngx-datatable-column name="jetName" props="jetName"></ngx-datatable-column>
+                    <ngx-datatable-column name="Batch Id" props="batchId"></ngx-datatable-column>
+                </ngx-datatable>
+            </nb-card-body>
+
+
+        </nb-card>
+    </div>
+</div>

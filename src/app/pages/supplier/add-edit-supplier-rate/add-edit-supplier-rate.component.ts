@@ -6,6 +6,8 @@ import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from "../../../@theme/services/common.service";
 import { SupplierService } from "../../../@theme/services/supplier.service";
 import { ToastrService } from "ngx-toastr";
+import { ExportPopupComponent } from '../../../@theme/components/export-popup/export-popup.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "ngx-add-edit-supplier-rate",
@@ -28,6 +30,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
   userHead;
   disableButton = false;
 
+  supplierListPdf=[];
   //form field values
   formValues = {
     id: null,
@@ -63,9 +66,11 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
   supplierList;
   index: any;
   myForm: any;
+  flag=false;
 
   mySupplierRateId;
-
+  module = "supplier";
+  headers = ["Supplier Name","Item Name", "Rate","Discount Rate", "Rate with Gst"];
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -77,7 +82,8 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
     private supplierService: SupplierService,
     private router: Router,
     private _route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService:NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +91,15 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
     this.getData();
     if (this.mySupplierRateId != null) this.getUpdateData();
   }
+
+  open() {
+    this.flag = true;
+    const modalRef = this.modalService.open(ExportPopupComponent);
+    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.list = this.supplierListPdf;
+    modalRef.componentInstance.moduleName = this.module;
+  }
+
 
   getData() {
     this.user = this.commonService.getUser();
@@ -121,6 +136,13 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
           }
           this.discount = this.formValues.discountPercentage;
           this.gst = this.formValues.gstPercentage;
+          this.supplierListPdf=this.formValues.supplierRates.map((element)=>({
+            supplierName:this.formValues.supplierName,
+            itemName:element.itemName,
+            rate:element.rate,
+            discountRate:element.discountedRate,
+            gstRate:element.gstRate
+          }));
         } 
       },
       (error) => {

@@ -6,13 +6,16 @@
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/supplier/view']">View
                 Table</button>
             </div>
-            <div class="col-md-7 col-6">
+            <div class="col-md-5 col-5">
                 <div *ngIf="mySupplierRateId == null; else updateS">
                     <h2 class="nb-text">ADD SUPPLIER RATE</h2>
                 </div>
                 <ng-template #updateS>
                     <h2 class="nb-text">UPDATE SUPPLIER RATE</h2>
                 </ng-template>
+            </div>
+            <div class="col-md-2 col-1 display-flex-start desktop-justify-flexend">
+                <button class="btn btn-md btn-design" (click)="open()">EXPORT</button>
             </div>
         </div>
     </nb-card-header>
