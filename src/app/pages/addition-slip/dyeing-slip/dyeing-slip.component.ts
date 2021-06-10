@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import * as errorData from "../../../@theme/json/error.json";
 import { ExportPopupComponent } from '../../../@theme/components/export-popup/export-popup.component';
+import { PlanningSlipComponent } from '../../jet-planning/planning-slip/planning-slip.component';
 
 @Component({
   selector: 'ngx-dyeing-slip',
@@ -95,5 +96,21 @@ export class DyeingSlipComponent implements OnInit {
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.dyeSlip;
     modalRef.componentInstance.moduleName = this.module;
+  }
+
+  printDyeingSlip(event,row)
+  {
+    const modalRef = this.modalService.open(PlanningSlipComponent);
+    modalRef.componentInstance.isPrintDirect = true;
+    modalRef.componentInstance.batchId = row.batchId;
+    modalRef.componentInstance.stockId = row.productionId;
+    modalRef.componentInstance.additionSlipFlag = false;
+
+    modalRef.result
+      .then((result) => {
+        if (result) {
+        }
+      })
+      .catch((err) => {});
   }
 }

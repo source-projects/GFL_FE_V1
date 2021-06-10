@@ -28,9 +28,7 @@
                 <ngx-datatable [rows]="dyeingSlip" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Actions" sortable="false" props="id" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="print" [routerLink]="['/pages/party/edit',row.id]"></nb-icon>&nbsp;&nbsp;
-                            
+                            <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" (click)="printDyeingSlip($event, row)"   [options]="{ animation: { type: 'zoom' } }"></nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Quality Id" props="qualityId">
@@ -43,7 +41,6 @@
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Party Shade No" props="partyShadeNo"></ngx-datatable-column>
-                    <ngx-datatable-column name="Party Address1" props="partyAddress1"></ngx-datatable-column>
                     <ngx-datatable-column name="Color Name" props="colorName"></ngx-datatable-column>
                     <ngx-datatable-column name="jetName" props="jetName"></ngx-datatable-column>
                     <ngx-datatable-column name="Batch Id" props="batchId"></ngx-datatable-column>
