@@ -14,6 +14,7 @@ export class ProductionBatchDetail {
     partyShadeNo: string;
     totalWt: string;
     totalMtr: string;
+    batchId: string;
   
     constructor() {
       this.partyName = "-";
@@ -23,5 +24,6 @@ export class ProductionBatchDetail {
       this.partyShadeNo = "-";
       this.totalWt = "-";
       this.totalMtr = "-";
+      this.batchId= "-";
     }
   }
