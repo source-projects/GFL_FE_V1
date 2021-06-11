@@ -30,6 +30,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   indexOfBatchData: number = 1;
   sequenceArray: Array<number> = [];
   public totalFinishMeter: any = 0;
+  public selectedBatch: string = "";
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
@@ -276,6 +277,34 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     }
   }
 
+  numberOnly(evt) {
+    // Only ASCII charactar in that range allowed
+    var ASCIICode = evt.which ? evt.which : evt.keyCode;
+    if (ASCIICode == 46) return true;
+    if (
+      (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) ||
+      ASCIICode == 69
+    )
+      return false;
+    return true;
+  }
+
+  onKeyUpMeter(e?, rowIndex?, colIndex?, colName?){
+    if(this.finishedMeterForm.batchData.length > rowIndex + 1){
+      var keyCode = e.keyCode ? e.keyCode : e.which;
+      if (keyCode == 13 && (colIndex == 3 || colIndex == 4)) {
+        this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
+        let interval = setInterval(() => {
+          let field = document.getElementById(this.index);
+          if (field != null) {
+            field.focus();
+            clearInterval(interval);
+          }
+        }, 10);
+      }
+    }
+  }
+
   //On enter pressed -> check empty field, add new row
   onKeyUp(e?, rowIndex?, colIndex?, colName?) {
     //catculate total finish meter
@@ -416,6 +445,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
                   myForm.reset();
                   this.batchList = null;
                   this.isAddButtonClicked = false;
+                  this.finishedMeterForm = new FinishedMeter();
                   this.finishedMeterForm.batchData = null;
                   this.totalFinishMeter = 0;
                   this.getAllBatchForFinishMtr();

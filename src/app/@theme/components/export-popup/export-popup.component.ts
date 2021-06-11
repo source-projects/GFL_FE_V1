@@ -75,6 +75,7 @@ export class ExportPopupComponent implements OnInit {
     }
     else if(this.exportType=='pdf'){
       this.exportService.exportPdf(this.list1, this.fileName, this.headers);
+      this.list1 = [];
     }
     else{
       return;
