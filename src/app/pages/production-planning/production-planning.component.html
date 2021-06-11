@@ -208,6 +208,17 @@
                                                 <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
                                             </div>
                                         </div>
+                                        <div class="display-flex mr-0">
+
+
+                                            <div class="batch-p-color label-0 text-Left">
+                                                <label>Batch ID</label>
+                                            </div>
+
+                                            <div class="party-name-text text-center">
+                                                <h6 class="production-plan-text">{{productionBatchDetail.batchId}}</h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +280,7 @@
                                             <div class="form-group batch-list-3line">
                                                 <ng-container *ngFor="let b of plannedProductionList">
                                                     <button nbButton size="small"
-                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius"
+                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius" style="border: 1px solid black;"
                                                         [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)"
                                                         (mouseout)="resetDetailsOfBatch($event)"
                                                         [style.background]="b.colorTone"
