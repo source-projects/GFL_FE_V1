@@ -282,7 +282,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     var ASCIICode = evt.which ? evt.which : evt.keyCode;
     if (ASCIICode == 46) return true;
     if (
-      (ASCIICode > 31 && (ASCIICode <= 48 || ASCIICode > 57)) ||
+      (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) ||
       ASCIICode == 69
     )
       return false;
