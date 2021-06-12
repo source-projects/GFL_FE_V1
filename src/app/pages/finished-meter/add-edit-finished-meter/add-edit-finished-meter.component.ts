@@ -29,8 +29,11 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   index: string;
   indexOfBatchData: number = 1;
   sequenceArray: Array<number> = [];
-  public totalFinishMeter: any = 0;
+  public totalFinishMeter: number = 0;
+  public totalGrMeter: number = 0;
   public selectedBatch: string = "";
+  public searchBatchString: string = "";
+  public batchListCopy: Array<any> = [];
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
@@ -59,6 +62,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   //resetForm..
   resetAll(myForm) {
     this.batchList = [];
+    this.batchListCopy = [];
     this.getAllBatchForFinishMtr();
     this.finishedMeterForm.batchId = null;
     myForm.reset();
@@ -117,6 +121,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       (data) => {
         if (data["success"]) {
           this.batchList = data["data"];
+          this.batchListCopy = data["data"];
         } //else this.toastr.error(data["msg"]);
       },
       (error) => {
@@ -151,10 +156,16 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       this.finishedMeterForm.masterId = null;
     } else {
       this.batchList = [];
+      this.batchListCopy = [];
       this.getAllBatchForFinishMtr();
       this.getAllParty();
       this.getAllQuality();
     }
+  }
+
+  filterBySearchBatches(){
+    this.finishedMeterForm.batchId = null;
+    this.batchList = this.batchListCopy.filter(f => f.batchId.toString().includes(this.searchBatchString));
   }
 
   //get batch data from batchId...
@@ -189,6 +200,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
                 this.totalFinishMeter += Number(e.finishMtr);
                 if (e.mtr) e.sequenceId = e.id;
               });
+              this.CalculateTotalGrMtr();
               this.setSequenceNo(false);
               this.setArrayOfSequence();
               this.setfinishedSequenceAccordingToIdReverse();
@@ -207,6 +219,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     if (event != undefined) {
       this.finishedMeterForm.batchId = null;
       this.batchList = null;
+      this.batchListCopy = null;
       let pid;
       let qid;
 
@@ -230,6 +243,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.batchList = data["data"];
+            this.batchListCopy = data['data'];
           } //else this.toastr.error(data["msg"]);
         },
         (error) => {
@@ -242,6 +256,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     } else {
       this.finishedMeterForm.batchId = null;
       this.batchList = [];
+      this.batchListCopy = [];
       this.getAllQuality();
     }
   }
@@ -249,6 +264,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   //Master change event | get party and quality by masterId and batch list by masterId
   masterSelected(event) {
     this.batchList = null;
+    this.batchListCopy = null;
     this.finishedMeterForm.batchId = null;
     if (event != undefined) {
       this.qualityList.forEach((e) => {
@@ -264,6 +280,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.batchList = data["data"];
+              this.batchListCopy = data['data']
             } else this.toastr.error(data["msg"]);
           },
           (error) => {}
@@ -289,10 +306,18 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  CalculateTotalGrMtr(){
+    this.totalGrMeter = 0;
+    this.finishedMeterForm.batchData.forEach((element) => {
+      this.totalGrMeter += Number(element.mtr? element.mtr : 0);
+    });
+  }
+
   onKeyUpMeter(e?, rowIndex?, colIndex?, colName?){
-    if(this.finishedMeterForm.batchData.length > rowIndex + 1){
-      var keyCode = e.keyCode ? e.keyCode : e.which;
-      if (keyCode == 13 && (colIndex == 3 || colIndex == 4)) {
+    this.CalculateTotalGrMtr();
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if(keyCode == 13 && (colIndex == 2)){
+      if (this.finishedMeterForm.batchData.length > rowIndex + 1) {
         this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
           let field = document.getElementById(this.index);
@@ -353,6 +378,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     }
     //re calculate total finish meter.
     this.onKeyUp();
+    this.CalculateTotalGrMtr();
   }
 
   arrangeAllSequenceNo() {
@@ -444,6 +470,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
                   this.toastr.success(data["msg"]);
                   myForm.reset();
                   this.batchList = null;
+                  this.batchListCopy = null;
                   this.isAddButtonClicked = false;
                   this.finishedMeterForm = new FinishedMeter();
                   this.finishedMeterForm.batchData = null;
