@@ -231,9 +231,13 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
     if (event) {
       this.disableQualityId = false;
       this.checkQulityId();
-      
+      let list = this.party.filter(f => f.id == this.addEditQualityForm.get('partyId').value);
+      if(list && list.length){
+        this.addEditQualityForm.get('partyCode').setValue(list[0].partyCode)
+      }
     } else {
       this.disableQualityId = true;
+      this.addEditQualityForm.get('partyCode').setValue("");
       // this.addEditQualityForm.get("qualityId").setValue("");
     }
   }

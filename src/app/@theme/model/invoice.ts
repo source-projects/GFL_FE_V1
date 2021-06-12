@@ -20,14 +20,10 @@ export class Invoice {
 }
 
 export class InvoiceReportRequest{
-  userHeadId: number;
-  partyId: number;
   from: any;
   to: any;
 
   constructor(){
-    this.userHeadId = null;
-    this.partyId = null;
     this.from = "";
     this.to = "";
   }

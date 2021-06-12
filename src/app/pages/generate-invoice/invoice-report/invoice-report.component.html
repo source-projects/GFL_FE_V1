@@ -7,45 +7,40 @@
 
             <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
                 <button class="btn btn-md btn-design" [routerLink]="['/pages/generate_invoice/view']">View
-                Table</button>
+                    Table</button>
             </div>
         </div>
     </nb-card-header>
     <nb-card-body>
         <form #invoiceForm="ngForm">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Master</label>
-                        <ng-select name="masterId" [(ngModel)]='invoiceReportRequest.userHeadId' required #userHeadId1="ngModel" (change)=" null" placeholder="Select Master" class="required-error-dropdown" appendTo="body">
-                            <ng-option *ngFor="let head of masterList" [value]="head.id">{{head.firstName}} {{head.lastName}}
-                            </ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Party</label>
-                        <ng-select name="partyId" [(ngModel)]='invoiceReportRequest.partyId' required #partyId1="ngModel" (change)="null" placeholder="Select Party" class="required-error-dropdown" appendTo="body">
-                            <ng-option *ngFor="let p of partyList" [value]="p.id">{{p.partyName}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label>From date:</label>
-                        <input class="form-control" name="fromDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1" placeholder="Select Date">
+                        <label class="required">From date</label>
+                        <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
+                            [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1"
+                            [owlDateTime]="dtFrom1" placeholder="Select Date"
+                            [ngClass]="{'is-invalid':(from.invalid)&&(formSubmitted || from.touched)}">
                         <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
                         </owl-date-time>
                     </div>
+                    <div class="input-required" *ngIf="(from.invalid)&&(formSubmitted || from.touched)">
+                        <span>From date is required.</span>
+                    </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label>To date:</label>
-                        <input class="form-control" name="toDate" [max]="maxDate" [(ngModel)]="invoiceReportRequest.to" [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1" placeholder="Select Date">
+                        <label class="required">To date</label>
+                        <input class="form-control" #to="ngModel" required name="toDate" [max]="maxDate"
+                            [(ngModel)]="invoiceReportRequest.to" [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1"
+                            placeholder="Select Date"
+                            [ngClass]="{'is-invalid': (to.invalid)&&(formSubmitted || to.touched)}">
                         <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtTo1>
                         </owl-date-time>
+                    </div>
+                    <div class="input-required" *ngIf="(to.invalid)&&(formSubmitted || to.touched)">
+                        <span>To date is required.</span>
                     </div>
                 </div>
 
@@ -54,34 +49,52 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="getShortReport()" [disabled]="disableButton">Get
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="getShortReport(invoiceForm)" [disabled]="disableButton">Get
                             Report</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="getDetailedReport()" [disabled]="disableButton">Get
+                        <!-- <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="getDetailedReport()" [disabled]="disableButton">Get
                             Detailed
-                            Report</button>
+                            Report</button> -->
                     </div>
                 </div>
             </div>
 
-            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport">
-                <div *ngFor="let invoice of shortReport">
-                    <div class="print-layout-report">
-                        <h1 class="font-25">INVOICE REPORT</h1>
-                        <table class="table process-tb table-bordered table-striped table-process-fnt dying-table  width-100">
+            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
+                <div class="row report-header">
+                    <div class="col-md-12 print-layout-report">
+                        <span class="font-25">INVOICE REPORT</span>
+                        <span>{{currentDate | date : 'short'}}</span>
+                    </div>
+                </div>
+                <div *ngFor="let report of shortReport">
+                    <div class="print-body">
+                        <!-- print-layout-report -->
+                        <div class="invoice-no-heading">
+                            <h5>Invoice No: {{report.invoiceNo}}, {{report.createdDate | date : 'short'}}</h5>
+                        </div>
+                        <table
+                            class="print-layout-report table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
                             <tr>
-                                <th>Invoice No</th>
-                                <th>Party</th>
+                                <th>Lot No</th>
                                 <th>Master</th>
-                                <th>Total Mtr</th>
-                                <th>Total Finish Mtr</th>
+                                <th>Party</th>
+                                <th>Quality</th>
+                                <th>Pcs</th>
+                                <th>Grey Mtr</th>
+                                <th>Finish Mtr</th>
+                                <th>Rate</th>
                                 <th>Total Amount</th>
                             </tr>
-                            <tr>
-                                <td>{{invoice.invoiceNo}}</td>
-                                <td> {{invoice.partyName}}</td>
+                            <tr *ngFor="let invoice of report.consolidatedBillDataList; let i = index"
+                                [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
+                                <td>{{invoice.batchId}}</td>
                                 <td>{{invoice.headName}}</td>
-                                <td>{{invoice.totalBatchMtr}}</td>
+                                <td> {{invoice.partyName}}</td>
+                                <td>{{invoice.qualityName}}</td>
+                                <td>{{invoice.pcs}}</td>
+                                <td>{{invoice.totalMtr}}</td>
                                 <td>{{invoice.totalFinishMtr}}</td>
+                                <td>{{invoice.rate}}</td>
                                 <td>{{invoice.amt}}</td>
                             </tr>
 
@@ -90,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="container" *ngIf="detailedReport && detailedReport.length > 0" id="detailedReport" class="mr-top-left-50">
+            <!-- <div class="container" *ngIf="detailedReport && detailedReport.length > 0" id="detailedReport" class="mr-top-left-50">
                 <div *ngFor="let invoice of detailedReport">
                     <div class="row">
                         <div class="col-md-3 width-30 font-styles">
@@ -110,7 +123,7 @@
                         </div>
 
 
-                        <div *ngFor="let quality of invoice.qualityList" class="col-md-12 width-100 mr-bottom-55">
+                        <div class="col-md-12 width-100 mr-bottom-55">
                             <div class="width-90 text-center  ">
                                 <h1 class="font-25">Quality List</h1>
                                 <table class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
@@ -122,7 +135,7 @@
                                         <th>Rate</th>
                                         <th>Total Amount</th>
                                     </tr>
-                                    <tr>
+                                    <tr  *ngFor="let quality of invoice.qualityList">
                                         <td>{{quality.batchId}}</td>
                                         <td>{{quality.qulityId}}</td>
                                         <td>{{quality.totalMtr}}</td>
@@ -136,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </form>
     </nb-card-body>
 </nb-card>
