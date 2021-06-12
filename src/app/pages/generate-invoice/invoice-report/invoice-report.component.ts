@@ -25,6 +25,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public masterList = [];
   public partyList = [];
   private destroy$ = new Subject<void>();
+  public formSubmitted: boolean = false;
 
   constructor(
     private invoiceService: GenerateInvoiceService,
@@ -71,10 +72,12 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     );
   }
 
-  getShortReport() {
+  getShortReport(form) {
     this.shortReport = [];
-    this.detailedReport = [];
-    this.invoiceService
+    this.formSubmitted = true;
+
+    if(form.valid){
+      this.invoiceService
       .getShortInvoiceReport(this.invoiceReportRequest)
       .pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
@@ -85,22 +88,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
         },
         (error) => {}
       );
-  }
-
-  getDetailedReport() {
-    this.shortReport = [];
-    this.detailedReport = [];
-    this.invoiceService
-      .getDetailedInvoiceReport(this.invoiceReportRequest)
-      .pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.detailedReport = data["data"];
-            this.printReport("detailed");
-          }
-        },
-        (error) => {}
-      );
+    }
+    
   }
 
   printReport(type) {
@@ -117,12 +106,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
       '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
     );
     let inter1 = setInterval(() => {
-      let data1;
-      if (type == "detailed") {
-        data1 = <HTMLElement>document.getElementById("detailedReport");
-      } else {
-        data1 = <HTMLElement>document.getElementById("shortReport");
-      }
+      let data1 = <HTMLElement>document.getElementById("shortReport");
       if (data1 != null) {
         doc.append(data1);
         doc.print();
