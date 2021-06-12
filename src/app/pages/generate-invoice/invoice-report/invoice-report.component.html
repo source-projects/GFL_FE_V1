@@ -17,7 +17,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="required">From date:</label>
+                        <label class="required">From date</label>
                         <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
                             [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1"
                             [owlDateTime]="dtFrom1" placeholder="Select Date"
@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="required">To date:</label>
+                        <label class="required">To date</label>
                         <input class="form-control" #to="ngModel" required name="toDate" [max]="maxDate"
                             [(ngModel)]="invoiceReportRequest.to" [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1"
                             placeholder="Select Date"
