@@ -26,6 +26,9 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public partyList = [];
   private destroy$ = new Subject<void>();
   public formSubmitted: boolean = false;
+  totalFinishedMeter:number;
+  totalGrayMeter:number;
+  totalAmount:number;
 
   constructor(
     private invoiceService: GenerateInvoiceService,
@@ -73,6 +76,9 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   }
 
   getShortReport(form) {
+    this.totalAmount=0;
+    this.totalFinishedMeter=0;
+    this.totalGrayMeter=0;
     this.shortReport = [];
     this.formSubmitted = true;
 
@@ -83,6 +89,13 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
+              this.shortReport.forEach((element) => {
+                element.consolidatedBillDataList.forEach(billData => {
+                  this.totalFinishedMeter+=billData.totalFinishMtr;
+                  this.totalGrayMeter+=billData.totalMtr;
+                  this.totalAmount+=billData.amt
+                });
+              });
               this.printReport("short");
             }
           },
