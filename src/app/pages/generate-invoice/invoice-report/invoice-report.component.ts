@@ -57,7 +57,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           this.masterList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -68,7 +68,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           this.partyList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -76,20 +76,20 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     this.shortReport = [];
     this.formSubmitted = true;
 
-    if(form.valid){
+    if (form.valid) {
       this.invoiceService
-      .getShortInvoiceReport(this.invoiceReportRequest)
-      .pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.shortReport = data["data"];
-            this.printReport("short");
-          }
-        },
-        (error) => {}
-      );
+        .getShortInvoiceReport(this.invoiceReportRequest)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.shortReport = data["data"];
+              this.printReport("short");
+            }
+          },
+          (error) => { }
+        );
     }
-    
+
   }
 
   printReport(type) {
@@ -109,11 +109,13 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
       let data1 = <HTMLElement>document.getElementById("shortReport");
       if (data1 != null) {
         doc.append(data1);
-        doc.print();
         clearInterval(inter1);
-        this.shortReport = [];
-        this.detailedReport = [];
-        this.invoiceReportRequest = new InvoiceReportRequest();
+        setTimeout(() => {
+          doc.print();
+          this.shortReport = [];
+          this.detailedReport = [];
+          this.invoiceReportRequest = new InvoiceReportRequest();
+        }, 1000)
       }
     }, 10);
   }

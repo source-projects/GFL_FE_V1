@@ -62,15 +62,17 @@
             <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
                 <div class="row report-header">
                     <div class="col-md-12 print-layout-report">
-                        <span class="font-25">INVOICE REPORT</span>
-                        <span>{{currentDate | date : 'short'}}</span>
+                        <h4>
+                            <span class="font-25">INVOICE REPORT</span>
+                            <span>{{currentDate | date : 'short'}}</span>
+                        </h4>
                     </div>
                 </div>
                 <div *ngFor="let report of shortReport">
                     <div class="print-body">
                         <!-- print-layout-report -->
                         <div class="invoice-no-heading">
-                            <h5>Invoice No: {{report.invoiceNo}}, {{report.createdDate | date : 'short'}}</h5>
+                          <h5 class="bold-invoice" style="font-size: 18px;"> Invoice No: {{report.invoiceNo}}, {{report.createdDate | date : 'short'}}</h5>
                         </div>
                         <table
                             class="print-layout-report table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
