@@ -25,6 +25,10 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public masterList = [];
   public partyList = [];
   private destroy$ = new Subject<void>();
+  public formSubmitted: boolean = false;
+  totalFinishedMeter:number;
+  totalGrayMeter:number;
+  totalAmount:number;
 
   constructor(
     private invoiceService: GenerateInvoiceService,
@@ -56,7 +60,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           this.masterList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -67,40 +71,38 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           this.partyList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
-  getShortReport() {
+  getShortReport(form) {
+    this.totalAmount=0;
+    this.totalFinishedMeter=0;
+    this.totalGrayMeter=0;
     this.shortReport = [];
-    this.detailedReport = [];
-    this.invoiceService
-      .getShortInvoiceReport(this.invoiceReportRequest)
-      .pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.shortReport = data["data"];
-            this.printReport("short");
-          }
-        },
-        (error) => {}
-      );
-  }
+    this.formSubmitted = true;
 
-  getDetailedReport() {
-    this.shortReport = [];
-    this.detailedReport = [];
-    this.invoiceService
-      .getDetailedInvoiceReport(this.invoiceReportRequest)
-      .pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.detailedReport = data["data"];
-            this.printReport("detailed");
-          }
-        },
-        (error) => {}
-      );
+    if (form.valid) {
+      this.invoiceService
+        .getShortInvoiceReport(this.invoiceReportRequest)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.shortReport = data["data"];
+              this.shortReport.forEach((element) => {
+                element.consolidatedBillDataList.forEach(billData => {
+                  this.totalFinishedMeter+=billData.totalFinishMtr;
+                  this.totalGrayMeter+=billData.totalMtr;
+                  this.totalAmount+=billData.amt
+                });
+              });
+              this.printReport("short");
+            }
+          },
+          (error) => { }
+        );
+    }
+
   }
 
   printReport(type) {
@@ -117,19 +119,16 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
       '<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">'
     );
     let inter1 = setInterval(() => {
-      let data1;
-      if (type == "detailed") {
-        data1 = <HTMLElement>document.getElementById("detailedReport");
-      } else {
-        data1 = <HTMLElement>document.getElementById("shortReport");
-      }
+      let data1 = <HTMLElement>document.getElementById("shortReport");
       if (data1 != null) {
         doc.append(data1);
-        doc.print();
         clearInterval(inter1);
-        this.shortReport = [];
-        this.detailedReport = [];
-        this.invoiceReportRequest = new InvoiceReportRequest();
+        setTimeout(() => {
+          doc.print();
+          this.shortReport = [];
+          this.detailedReport = [];
+          this.invoiceReportRequest = new InvoiceReportRequest();
+        }, 1000)
       }
     }, 10);
   }
