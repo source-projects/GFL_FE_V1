@@ -96,7 +96,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                   this.totalAmount+=billData.amt
                 });
               });
-              this.printReport("short");
+              this.printReport(form);
             }
           },
           (error) => { }
@@ -105,7 +105,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
 
   }
 
-  printReport(type) {
+  printReport(form) {
     let doc = new wijmo.PrintDocument({
       title: "",
     });
@@ -128,6 +128,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           this.shortReport = [];
           this.detailedReport = [];
           this.invoiceReportRequest = new InvoiceReportRequest();
+          this.formSubmitted = false;
         }, 1000)
       }
     }, 10);
