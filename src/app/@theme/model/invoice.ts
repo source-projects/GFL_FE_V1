@@ -1,47 +1,43 @@
 export class Invoice {
-    partyId: Number;
-    batchId: string;
-    createdBy:Number;
-    createdDate:Date;
-    id:Number;
-    dispatchData:DispatchData[];
-    isSendToParty:boolean;
-    stockId:Number;
-    controlId:Number;
-    finishMtr:Number;
-    isBillGenrated:boolean;
-    isExtra:boolean;
-    isFinishMtrSave:boolean;
-    isProductionPlanned:boolean;
-    mtr:Number;
-    sequencedId:Number;
-    wt:Number;
-    invoiceNo:string;
+  partyId: Number;
+  batchId: string;
+  createdBy: Number;
+  createdDate: Date;
+  id: Number;
+  dispatchData: DispatchData[];
+  isSendToParty: boolean;
+  stockId: Number;
+  controlId: Number;
+  finishMtr: Number;
+  isBillGenrated: boolean;
+  isExtra: boolean;
+  isFinishMtrSave: boolean;
+  isProductionPlanned: boolean;
+  mtr: Number;
+  sequencedId: Number;
+  wt: Number;
+  invoiceNo: string;
 }
 
-export class InvoiceReportRequest{
-  userHeadId: number;
-  partyId: number;
+export class InvoiceReportRequest {
   from: any;
   to: any;
 
-  constructor(){
-    this.userHeadId = null;
-    this.partyId = null;
+  constructor() {
     this.from = "";
     this.to = "";
   }
 }
 export class DispatchData {
-    batchEntryId:Number;
-    controlId:Number;
-    id:Number;
+  batchEntryId: Number;
+  controlId: Number;
+  id: Number;
 
-    constructor(){
-      this.batchEntryId=0;
-      this.controlId=0;
-      this.id=0;
-    }
+  constructor() {
+    this.batchEntryId = 0;
+    this.controlId = 0;
+    this.id = 0;
+  }
 }
 
 export class invoiceobj{
@@ -74,13 +70,20 @@ export class QualityList {
 
 
 //short invoice report
-export class InvoiceShortReport{
+export class InvoiceShortReport {
   invoiceNo: string;
+  createdDate: string;
+  consolidatedBillDataList: ConsolidatedBillDataList[]
+}
+
+export class ConsolidatedBillDataList {
+  batchId: string;
+  invoiceDate: string;
   partyName: string;
-  partyId: number;
-  headName: string;
-  userHeadId: number;
-  amt: number;
+  qualityName: string
+  pcs: number;
+  totalMtr: number;
   totalFinishMtr: number;
-  totalBatchMtr: number;
+  rate: number;
+  amt: number;
 }

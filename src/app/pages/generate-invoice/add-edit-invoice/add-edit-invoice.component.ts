@@ -499,5 +499,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (event === "view table") {
       this.route.navigate(['/pages/generate_invoice/view']);
     }
+    else if(event === 'report'){
+      this.route.navigate(["/pages/generate_invoice/report"]);
+    }
   }
 }

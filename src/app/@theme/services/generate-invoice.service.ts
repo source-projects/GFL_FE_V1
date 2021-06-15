@@ -10,7 +10,7 @@ export class GenerateInvoiceService {
   constructor(private httpClient: HttpClient, private commonService: CommonService) { }
   
   getShortInvoiceReport(obj):any{
-    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/forConslidateBill',obj);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/report/forConslidateBill',obj);
   }
 
   getDetailedInvoiceReport(obj):any{
