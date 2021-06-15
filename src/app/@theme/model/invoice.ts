@@ -48,6 +48,7 @@ export class invoiceobj{
  
   batchId:Number;
   stockId:Number;
+  rate:number;
 }
 
 

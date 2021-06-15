@@ -28,6 +28,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
   @Input() discount
 
   invoiceIds: string[];
+  rate =[];
   invoiceDetails: Promise<any>[];
   rowd = [{}, {}, {}];
   lotRowd = [{}, {}, {}, {}];
@@ -60,6 +61,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
     }
 
     if (this.finalInvoice) {
+
+     this.rate = this.finalInvoice.batchAndStockIdList.map(element => {
+        return element.rate;
+      });
       this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
         (data) => {
           if (data["success"]) {
@@ -135,10 +140,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               this.printInvoiceData[index].totalPcs = 0;
               this.printInvoiceData[index].totalFinishMtr = 0;
 
-              this.printInvoiceData[index].qualityList.forEach((quality) => {
+              this.printInvoiceData[index].qualityList.forEach((quality,i) => {
                 if (quality.totalMtr) {
                   this.printInvoiceData[index].totalMtr += quality.totalMtr;
-                  this.printInvoiceData[index].totalAmt += quality.amt;
+                  this.printInvoiceData[index].totalAmt += quality.finishMtr*this.rate[i];
                   this.printInvoiceData[index].totalPcs += quality.pcs;
                   this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
                 }
@@ -235,10 +240,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       this.printInvoiceData[index].totalPcs = 0;
       this.printInvoiceData[index].totalFinishMtr = 0;
 
-      this.printInvoiceData[index].qualityList.forEach((quality) => {
+      this.printInvoiceData[index].qualityList.forEach((quality,i) => {
         if (quality.totalMtr) {
           this.printInvoiceData[index].totalMtr += quality.totalMtr;
-          this.printInvoiceData[index].totalAmt += quality.amt;
+          this.printInvoiceData[index].totalAmt += quality.finishMtr*this.rate[i];;
           this.printInvoiceData[index].totalPcs += quality.pcs;
           this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
         }
@@ -344,6 +349,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       obj = {
         cgst: this.printInvoiceData[0].cgst,
         discount: this.printInvoiceData[0].discount,
+        percentageDiscount:this.discount,
         taxAmt: this.printInvoiceData[0].taxAmt,
         sgst: this.printInvoiceData[0].sgst,
         netAmt: this.printInvoiceData[0].netAmt

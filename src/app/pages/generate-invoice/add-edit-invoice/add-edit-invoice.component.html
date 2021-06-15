@@ -44,6 +44,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group col-md-4" *ngIf="discountFlag">
+                    <label class="required">Discount %</label>
+                    <input type="number" id="percentageDiscount" class="form-control size-small" nbinput fullwidth
+                        fieldsize="small" name="percentageDiscount" [(ngModel)]="discountChange" placeholder="Discount" #disChange="ngModel"
+                        [ngClass]="{'is-invalid': (disChange.invalid)&&(formSubmitted || disChange.touched)}" />
+                    <div class="input-required" *ngIf="(formSubmitted && disChange.invalid) || (disChange.invalid && disChange.touched)">
+                        <span>Discount is required</span>
+                    </div>
+                </div>
             </div>
 
 
@@ -54,6 +64,20 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                 <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Id" prop="qualityId"></ngx-datatable-column>
+                <ngx-datatable-column name="Ouality Name" prop="qualityName"></ngx-datatable-column>
+                <ngx-datatable-column name="Rate" prop="rate">
+                    <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        <input type="number" #rateChnage="ngModel" name="rateChnage{{ rowIndex }}" class="tableForm line-height-subtable" id="rateChnage" [(ngModel)]="row.rate"
+                        [id]="'invoice' + rowIndex +
+                            '-rateChange'" min="0"/>
+
+                            <div class="input-required display-inlineblock" *ngIf="formSubmitted &&
+                            rateChnage.invalid">
+                                <span>Required</span>
+                            </div>
+                    </ng-template>
+                </ngx-datatable-column>
                 <ngx-datatable-column name="Total Finish Mtr" prop="totalFinishMtr"></ngx-datatable-column>
                 <ngx-datatable-column name="Total Pcs" prop="totalPcs"></ngx-datatable-column>
 
@@ -61,8 +85,8 @@
             <div class="row">
                 <div class="col-md-12 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="addInvoice(invoiceForm)"
+                        <button type="button" class="btn btn-primary btn-sm btn-design" style="margin-right:20px"
+                            (click)="currentInvoiceId == null ? addInvoice(invoiceForm) : updateInvoice(invoiceForm)"
                             [disabled]="disableButton">Generate
                             Invoice</button>
                     </div>

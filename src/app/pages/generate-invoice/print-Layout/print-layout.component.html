@@ -183,10 +183,10 @@
                                                     <b>{{quality.finishMtr | number : '1.2-2'}}</b>
                                                 </td>
                                                 <td class="text-right">
-                                                    <b>{{quality.rate | number : '1.2-2'}}</b>
+                                                    <b>{{rate[i] | number : '1.2-2'}}</b>
                                                 </td>
                                                 <td class="text-right">
-                                                    <b>{{quality.amt | number : '1.2-2'}}</b>
+                                                    <b>{{quality.finishMtr*rate[i] | number : '1.2-2'}}</b>
                                                 </td>
     
                                             </tr>
@@ -274,7 +274,7 @@
                                                     <!-- style="width: 350px;" -->
                                                     <tr>
                                                         <td class="text-left">
-                                                            <b>Discount @{{invoice.percentageDiscount}}%</b>
+                                                            <b>Discount @{{discount}}%</b>
                                                         </td>
                                                         <td class="text-right">
                                                             <b>{{ invoice.discount | number : '1.2-2'}}</b>
@@ -669,10 +669,10 @@
                                             {{quality.finishMtr | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{quality.rate}}
+                                            {{rate[i]}}
                                         </td>
                                         <td>
-                                            {{quality.amt}}
+                                            {{quality.finishMtr*rate[i]}}
                                         </td>
 
                                     </tr>
@@ -760,7 +760,7 @@
                                         <table class="table  spacing-low table-bordered">
                                             <tr>
                                                 <td class="text-left">
-                                                    <span>Discount @{{invoice.percentageDiscount}}%</span>
+                                                    <span>Discount @{{discount}}%</span>
                                                 </td>
                                                 <td class="text-right">
                                                     <b>{{ invoice.discount | number : '1.2-2'}}</b>
