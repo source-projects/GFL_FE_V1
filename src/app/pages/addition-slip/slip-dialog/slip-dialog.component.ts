@@ -8,6 +8,7 @@ import { DyeingChemicalData } from '../../../@theme/model/dyeing-process';
 import { DyeingProcessService } from '../../../@theme/services/dyeing-process.service';
 import { PlanningSlipService } from '../../../@theme/services/planning-slip.service';
 import * as wijmo from "@grapecity/wijmo";
+import { sortBy as _sortBy } from 'lodash';
 
 @Component({
   selector: 'ngx-slip-dialog',
@@ -106,6 +107,7 @@ export class SlipDialogComponent implements OnInit, OnDestroy {
                 this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
                 
               });
+              this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence');
               if(this.isPrintDirect){
                 this.printNOW();
               }
