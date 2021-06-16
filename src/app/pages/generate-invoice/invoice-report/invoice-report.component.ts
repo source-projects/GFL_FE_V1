@@ -9,6 +9,7 @@ import { GenerateInvoiceService } from "../../../@theme/services/generate-invoic
 import { PartyService } from "../../../@theme/services/party.service";
 import * as wijmo from "@grapecity/wijmo";
 import { Subject } from 'rxjs';
+import { sortBy as _sortBy } from 'lodash';
 
 @Component({
   selector: "ngx-invoice-report",
@@ -96,6 +97,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                   this.totalAmount+=billData.amt
                 });
               });
+              this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
               this.printReport(form);
             }
           },
