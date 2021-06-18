@@ -328,6 +328,11 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
             if (objDiv) {
               objDiv.scrollIntoView(true)
             }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
+            }
           }
         }, 10);
       }
@@ -359,6 +364,15 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
           if (field != null) {
             field.focus();
             clearInterval(interval);
+            let objDiv = document.getElementById(this.index);
+            if (objDiv) {
+              objDiv.scrollIntoView(true)
+            }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
+            }
           }
         }, 10);
       }
