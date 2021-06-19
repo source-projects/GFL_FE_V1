@@ -296,8 +296,21 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   }
 
   tableChange(event){
-    if (event === "view table") {
+    switch(event){
+      case "view table": 
       this.route.navigate(['/pages/dyeing-process/view']);
+      break;
+
+      case "add tag": 
+      this.route.navigate(['/pages/dyeing-process/tag']);
+      break;
+
+      case "show tag": 
+      this.route.navigate(['/pages/dyeing-process/tag/view']);
+      break;
+
+      default: break;
+
     }
   }
 }
