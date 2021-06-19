@@ -4,11 +4,12 @@
 
             <div class="row">
                 <div class="col-md-5 col-6 display-flex-start max-width-device">
-                    <ng-select class="btn btn-md" (change)="tableChange($event)"
+                    <ng-select class="btn btn-md" style="width: 175px;" (change)="tableChange($event)"
                         placeholder="Select">
                         <!-- <ng-option value="select">Select</ng-option> -->
                         <ng-option value="view table">View Table</ng-option>
-                        <!-- <ng-option value="job card">Job Card</ng-option> -->
+                        <ng-option value="add tag">Add New Tag</ng-option>
+                        <ng-option value="show tag">View Tags</ng-option>
                     </ng-select>
                     <!-- <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
                         Table</button> -->

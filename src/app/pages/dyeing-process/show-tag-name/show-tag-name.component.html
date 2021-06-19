@@ -1,0 +1,36 @@
+<div class="container">
+    <nb-card class="nb-style">
+        <nb-card-header class="nb-header">
+
+            <div class="row">
+                <div class="col-md-5 col-6 display-flex-start max-width-device">
+                    <ng-select class="btn btn-md" style="width: 175px;" (change)="tableChange($event)" placeholder="Select">
+                        <ng-option value="view table">View Dyeing Process Table</ng-option>
+                        <ng-option value="add process">Add Dyeing Process</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-3 col-3">
+                    <button type="button" class="btn btn-md btn-design" (click)="addProcessTag()">Add Process-Tag</button>
+                </div>
+                <div class="col-md-4 col-4">
+                    <h2 class="nb-text txt-ov-elips">Process Tags</h2>
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="tagList"
+                [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                        
+                        <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit" [routerLink]="['/pages/dyeing-process/tag/edit',row.id]"></nb-icon>&nbsp;&nbsp;
+                        <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' }
+                                        }" (click)="deleteTag(rowIndex)"></nb-icon>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Process-Tag Name" prop="tagProcessName"></ngx-datatable-column>
+            </ngx-datatable>
+        </nb-card-body>
+    </nb-card>
+</div>

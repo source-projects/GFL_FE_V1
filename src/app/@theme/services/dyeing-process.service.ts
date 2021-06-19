@@ -57,4 +57,42 @@ export class DyeingProcessService {
       data
     );
   }
+
+  // Tag APIs
+
+  checkUniqTag(id, name){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/dyeingProcess/exist/tagProcess?id="+id+"&name="+name
+    );
+  }
+
+  getAllTags(){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/dyeingProcess/all/tagProcess"
+    );
+  }
+
+  getTagNameById(id){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/dyeingProcess/get/tagProcess?id="+id,
+    );
+  }
+
+  addTagName(data){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/dyeingProcess/add/tagProcess", data
+    );
+  }
+
+  updateTagName(data){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/dyeingProcess/update/tagProcess", data
+    );
+  }
+
+  deleteProcessTag(id) {
+    return this.httpClient.delete(
+      this.commonService.envUrl() + "api/dyeingProcess/delete/tagProcess?id=" + id
+    );
+  }
 }

@@ -10,6 +10,18 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label>Process-Tag</label>
+                    <ng-select [(ngModel)]="selectedTagName" placeholder="Select Process-Tag"
+                            name="tagName" (change)="tagSelected($event)">
+                            <ng-option *ngFor="let tag of tagList" [value]="tag.id">{{tag.tagProcessName}}
+                            </ng-option>
+                    </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label class="required">Process Type</label>
                         <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
                             name="processType" #processType1="ngModel"
@@ -98,7 +110,7 @@
                             <td class="width-70">
 
                                 <ng-select #data name="itemId{{dc._id}}_{{i}}" itemId1="ngModel" [(ngModel)]="dc.itemId"
-                                    #itemId1="ngModel" class="tableForm" required (change)="itemSelected($event,i)"
+                                    #itemId1="ngModel" class="tableForm" required (change)="itemSelected(i)"
                                     [id]="'supplierList'+i+'-0'" appendTo="body" class="ng-select-br-none">
                                     <ng-option disabled="true">
                                         <div class="row">
@@ -143,7 +155,7 @@
                                 class="tableForm line-height-subtable" [(ngModel)]="dc.byChemical"
                                 (keyup)="onKeyUp($event,i,3,'byChemical')" [id]="'supplierList'+i+'-byChemical'"
                                 min="0"> -->
-                                <ng-select #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}' [value]="'L'"
+                                <ng-select #concentration1="ngModel" name='byChemical{{dc._id}}_{{i}}'
                                     class="tableForm" [(ngModel)]="dc.byChemical"
                                     (keyup)="onKeyUp($event,i,3,'byChemical')" [id]="'supplierList'+i+'-byChemical'"
                                     required>
