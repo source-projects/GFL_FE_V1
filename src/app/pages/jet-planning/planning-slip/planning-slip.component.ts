@@ -31,7 +31,7 @@ import { ProductionPlanningService } from "../../../@theme/services/production-p
 import { ShadeService } from "../../../@theme/services/shade.service";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { PartyService } from "../../../@theme/services/party.service";
-
+import { sortBy as _sortBy } from 'lodash';
 @Component({
   selector: "ngx-planning-slip",
   templateUrl: "./planning-slip.component.html",
@@ -411,6 +411,8 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
                     ? element1.qty.toFixed(3)
                     : element1.qty;
                 });
+                console.log(this.slipData)
+                this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence')
                 this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
                 if (this.isPrintDirect) this.printNOW();
               });

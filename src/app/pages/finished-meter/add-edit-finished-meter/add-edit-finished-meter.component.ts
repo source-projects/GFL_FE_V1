@@ -37,7 +37,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -49,7 +49,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private toastr: ToastrService,
     private finishedMeterService: FinishedMeterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -163,7 +163,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterBySearchBatches(){
+  filterBySearchBatches() {
     this.finishedMeterForm.batchId = null;
     this.batchList = this.batchListCopy.filter(f => f.batchId.toString().includes(this.searchBatchString));
   }
@@ -283,7 +283,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
               this.batchListCopy = data['data']
             } else this.toastr.error(data["msg"]);
           },
-          (error) => {}
+          (error) => { }
         );
 
       //clear party and quality
@@ -306,17 +306,17 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  CalculateTotalGrMtr(){
+  CalculateTotalGrMtr() {
     this.totalGrMeter = 0;
     this.finishedMeterForm.batchData.forEach((element) => {
-      this.totalGrMeter += Number(element.mtr? element.mtr : 0);
+      this.totalGrMeter += Number(element.mtr ? element.mtr : 0);
     });
   }
 
-  onKeyUpMeter(e?, rowIndex?, colIndex?, colName?){
+  onKeyUpMeter(e?, rowIndex?, colIndex?, colName?) {
     this.CalculateTotalGrMtr();
     var keyCode = e.keyCode ? e.keyCode : e.which;
-    if(keyCode == 13 && (colIndex == 2)){
+    if (keyCode == 13 && (colIndex == 2)) {
       if (this.finishedMeterForm.batchData.length > rowIndex + 1) {
         this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
@@ -324,6 +324,15 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
           if (field != null) {
             field.focus();
             clearInterval(interval);
+            let objDiv = document.getElementById(this.index);
+            if (objDiv) {
+              objDiv.scrollIntoView(true)
+            }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
+            }
           }
         }, 10);
       }
@@ -355,6 +364,15 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
           if (field != null) {
             field.focus();
             clearInterval(interval);
+            let objDiv = document.getElementById(this.index);
+            if (objDiv) {
+              objDiv.scrollIntoView(true)
+            }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
+            }
           }
         }, 10);
       }

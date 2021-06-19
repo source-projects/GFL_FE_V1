@@ -119,13 +119,13 @@
                     <nb-card-header class="nb-header w-100">
                         <div class="row nb-text">
                             <div class="col-md-4">
-                                <span>Total Grs: {{(finishedMeterForm.batchData)? finishedMeterForm.batchData[finishedMeterForm.batchData.length -1 ].seqNo : 0}}</span>
+                                <span>Total Grs: {{(finishedMeterForm.batchData)? finishedMeterForm.batchData[finishedMeterForm.batchData.length -1 ].seqNo : 0 | number : '1.2-2'}}</span>
                             </div>
                             <div class="col-md-4">
-                                <span>Total Gr Meter: {{totalGrMeter}}</span>
+                                <span>Total Gr Meter: {{totalGrMeter | number : '1.2-2' }}</span>
                             </div>
                             <div class="col-md-4">
-                                <span>Total Finish Meter: {{totalFinishMeter}}</span>
+                                <span>Total Finish Meter: {{totalFinishMeter | number : '1.2-2' }}</span>
                             </div>
                         </div>
                     </nb-card-header>

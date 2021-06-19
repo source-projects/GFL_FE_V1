@@ -13,6 +13,7 @@ import { QualityService } from '../../../@theme/services/quality.service';
 import { ShadeService } from '../../../@theme/services/shade.service';
 import { AdminService } from '../../../@theme/services/admin.service';
 import { ExportService } from '../../../@theme/services/export.service';
+import { sortBy as _sortBy } from 'lodash';
 
 @Component({
   selector: "ngx-invoice-report",
@@ -169,6 +170,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                   this.totalAmount += billData.amt
                 });
               });
+              this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
               this.printReport(form);
             }
           },

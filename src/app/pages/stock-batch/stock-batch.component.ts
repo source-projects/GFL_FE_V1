@@ -12,6 +12,7 @@ import { ExportService } from "../../@theme/services/export.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { JobCardComponent } from "./job-card/job-card.component";
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: "ngx-stock-batch",
@@ -145,18 +146,25 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
   filter(value: any) {
     const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyStockList[0]);
-    this.stockList = this.copyStockList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
-        }
-      }
-    });
+    if(val){
+      this.stockList = this.copyStockList.filter( f=>
+        this.matchString(f, 'partyName', val) ||
+        this.matchString(f, 'qualityName', val) ||
+        this.matchString(f, 'chlNo', val) ||
+        this.matchString(f, 'batchId', val) ||
+        this.matchString(f, 'stockInType', val)
+      );
+    }else{
+      this.stockList = cloneDeep(this.copyStockList); 
+    }
+  }
+
+  matchString(item, key, searchString){
+    if(key == 'batchId'){
+      return item['batchData'].filter(f => f.batchId.toLowerCase().includes(searchString)).length > 0
+    }else{
+      return item[key].toLowerCase().includes(searchString);
+    }
   }
 
   getStockBatchList(id, getBy) {
@@ -175,18 +183,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
             ).toDateString();
             index++;
           });
-          this.copyStockList = this.stockList;
-          this.stock = this.stockList.map((element) => ({
-            id: element.id,
-            stockInType: element.stockInType,
-            partyName: element.partyName,
-            billNo: element.billNo,
-            chlNo: element.chlNo,
-            batchData: element.batchData,
-            qualityName: element.qualityName,
-          }));
-          this.copyStockList = this.stockList.map((element)=>({id:element.id,stockInType:element.stockInType, partyName: element.partyName,
-            billNo: element.billNo, billDate:element.billDate, chlNo:element.chlNo, chlDate:element.chlDate }))
+          this.copyStockList = cloneDeep(this.stockList);
         }
 
         this.loading = false;
@@ -244,6 +241,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
       this.hidden = this.allDelete;
     }
   }
+
   getDeleteAccess1() {
     if (this.stockBatchGuard.accessRights("delete")) {
       this.ownDelete = false;
