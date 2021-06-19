@@ -22,6 +22,7 @@ import { PasswordDailogComponent } from "../../../@theme/components/password-dai
 export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   flag: any;
   discountChange;
+  remark;
   discountFlag: boolean = false;
   obj = {
     batchAndStockIdList: [],
@@ -39,6 +40,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   finalbatch = [];
   mtrList: any[];
   public disableButton = false;
+  public updateFlag;
   public errorData: any = (errorData as any).default;
   mtr = [];
   invoiceValues: Invoice = new Invoice();
@@ -217,12 +219,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           userHeadId: this.userHeadId,
           cgst: null,
           sgst: null,
-          percentageDiscount:null,
+          percentageDiscount:this.discountChange,
           discount: null,
           taxAmt: null,
           netAmt: null,
           password: "",
-          passwordFlag: null
+          passwordFlag: null,
+          remark:this.remark,
+          createFlag:true,
         };
 
         if (temp[0].pendingAmt > temp[0].creditLimit) {
@@ -236,13 +240,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               modalRef.componentInstance.finalInvoice = obj;
               modalRef.componentInstance.previewFlag = true;
               modalRef.componentInstance.discount = this.discountChange;
+              modalRef.componentInstance.remark = this.remark;
+              modalRef.componentInstance.updateFlag = false;
 
               modalRef.result.then((result) => {
                 if (result) {
                   obj.cgst = result.cgst;
                   obj.sgst = result.sgst;
                   obj.discount = result.discount;
-                  obj.percentageDiscount = result.percentageDiscount;
                   obj.netAmt = Math.round(result.netAmt);
                   obj.taxAmt = result.taxAmt;
                   obj.password = res;
@@ -274,7 +279,9 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                   }
                   //Clear selected party
                   this.invoiceValues.partyId = null;
+                  this.discountFlag = false;
                   this.discountChange = null;
+                  this.remark = "";
                 } else {
                   this.disableButton = false;
                 }
@@ -289,13 +296,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           modalRef.componentInstance.finalInvoice = obj;
           modalRef.componentInstance.previewFlag = true;
           modalRef.componentInstance.discount = this.discountChange;
+          modalRef.componentInstance.remark = this.remark;
+          modalRef.componentInstance.updateFlag = false;
 
           modalRef.result.then((result) => {
             if (result) {
               obj.cgst = result.cgst;
               obj.sgst = result.sgst;
               obj.discount = result.discount;
-              obj.percentageDiscount = result.percentageDiscount;
               obj.netAmt = Math.round(result.netAmt);
               obj.taxAmt = result.taxAmt;
               obj.password = "";
@@ -327,6 +335,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               }
               //Clear selected party
               this.invoiceValues.partyId = null;
+              this.discountFlag = false;
+              this.discountChange = null;
+              this.remark = "";
+
             } else {
               this.disableButton = false;
             }
@@ -372,12 +384,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         invoiceNo: this.currentInvoiceId,
         cgst: null,
         sgst: null,
-        percentageDiscount:null,
+        percentageDiscount:this.discountChange,
         discount: null,
         taxAmt: null,
         netAmt: null,
         password: "",
-        passwordFlag: null
+        passwordFlag: null,
+        remark:this.remark,
+        createFlag:false,
       };
 
       if (temp[0].pendingAmt > temp[0].creditLimit) {
@@ -391,13 +405,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             modalRef.componentInstance.finalInvoice = obj;
             modalRef.componentInstance.previewFlag = true;
             modalRef.componentInstance.discount = this.discountChange;
+            modalRef.componentInstance.remark = this.remark;
+            modalRef.componentInstance.updateFlag = true;
 
             modalRef.result.then((result) => {
               if (result) {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;
                 obj.discount = result.discount;
-                obj.percentageDiscount = result.percentageDiscount;
                 obj.netAmt = Math.round(result.netAmt);
                 obj.taxAmt = result.taxAmt;
                 obj.password = res;
@@ -426,6 +441,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 }
                 //Clear selected party
                 this.invoiceValues.partyId = null;
+                this.discountFlag = false;
+                this.discountChange = null;
+                this.remark = "";
+
               } else {
                 this.disableButton = false;
               }
@@ -440,13 +459,14 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         modalRef.componentInstance.finalInvoice = obj;
         modalRef.componentInstance.previewFlag = true;
         modalRef.componentInstance.discount = this.discountChange;
+        modalRef.componentInstance.remark = this.remark;
+        modalRef.componentInstance.updateFlag = true;
 
         modalRef.result.then((result) => {
           if (result) {
             obj.cgst = result.cgst;
             obj.sgst = result.sgst;
             obj.discount = result.discount;
-            obj.percentageDiscount = result.percentageDiscount;
             obj.netAmt = Math.round(result.netAmt);
             obj.taxAmt = result.taxAmt;
             obj.password = "";
@@ -473,6 +493,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             }
             //Clear selected party
             this.invoiceValues.partyId = null;
+            this.discountFlag = false;
+            this.discountChange = null;
+            this.remark = "";
+
           } else {
             this.disableButton = false;
           }

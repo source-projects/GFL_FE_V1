@@ -9,6 +9,10 @@ import { GenerateInvoiceService } from "../../../@theme/services/generate-invoic
 import { PartyService } from "../../../@theme/services/party.service";
 import * as wijmo from "@grapecity/wijmo";
 import { Subject } from 'rxjs';
+import { QualityService } from '../../../@theme/services/quality.service';
+import { ShadeService } from '../../../@theme/services/shade.service';
+import { AdminService } from '../../../@theme/services/admin.service';
+import { ExportService } from '../../../@theme/services/export.service';
 
 @Component({
   selector: "ngx-invoice-report",
@@ -23,16 +27,27 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public shortReport: InvoiceShortReport[] = [];
   public detailedReport: InvoiceDetailedReport[] = [];
   public masterList = [];
+  userHeadId;
+  qualityList: any[];
+  qualityEntryId;
   public partyList = [];
+  qualityNameList = [];
+  partyId;
+  qualityName;
+  headers;
   private destroy$ = new Subject<void>();
   public formSubmitted: boolean = false;
-  totalFinishedMeter:number;
-  totalGrayMeter:number;
-  totalAmount:number;
+  totalFinishedMeter: number;
+  totalGrayMeter: number;
+  totalAmount: number;
 
   constructor(
     private invoiceService: GenerateInvoiceService,
     private partyService: PartyService,
+    private qualityService: QualityService,
+    private shadeService: ShadeService,
+    private adminService: AdminService,
+    private exportService : ExportService
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }
@@ -51,6 +66,23 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     );
     this.getAllMasters();
     this.getAllParties();
+    this.getQualityList();
+    this.getQualityNameList();
+  }
+
+
+  getQualityNameList() {
+    this.adminService
+      .getAllQualityData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.qualityNameList = data["data"];
+          }
+        },
+        (error) => {}
+      );
   }
 
   getAllMasters() {
@@ -75,10 +107,51 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     );
   }
 
+  async getQualityList() {
+    return await new Promise((resolve, reject) => {
+      this.qualityService.getQualityNameData().pipe(takeUntil(this.destroy$)).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.qualityList = data["data"] || [];
+            if (this.qualityList && this.qualityList.length) {
+              this.qualityList.forEach(ele => {
+                ele['qualityEntryId'] = ele.id;
+              })
+            }
+          } else {
+          }
+        },
+        (error) => {
+        }
+      );
+    });
+
+  }
+
+
+  getQualityFromParty(event) {
+
+    this.shadeService.getQualityFromParty(this.invoiceReportRequest.partyId).pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.qualityList = data["data"].qualityDataList;
+          this.qualityList.forEach((e) => {
+            e.partyName = data["data"].partyName;
+          });
+
+        } else {
+          this.qualityList = null;
+        }
+      },
+      (error) => {
+      }
+    );
+  }
+
   getShortReport(form) {
-    this.totalAmount=0;
-    this.totalFinishedMeter=0;
-    this.totalGrayMeter=0;
+    this.totalAmount = 0;
+    this.totalFinishedMeter = 0;
+    this.totalGrayMeter = 0;
     this.shortReport = [];
     this.formSubmitted = true;
 
@@ -91,9 +164,9 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
               this.shortReport = data["data"];
               this.shortReport.forEach((element) => {
                 element.consolidatedBillDataList.forEach(billData => {
-                  this.totalFinishedMeter+=billData.totalFinishMtr;
-                  this.totalGrayMeter+=billData.totalMtr;
-                  this.totalAmount+=billData.amt
+                  this.totalFinishedMeter += billData.totalFinishMtr;
+                  this.totalGrayMeter += billData.totalMtr;
+                  this.totalAmount += billData.amt
                 });
               });
               this.printReport(form);
@@ -132,5 +205,29 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
         }, 1000)
       }
     }, 10);
+  }
+
+  downLoadExcel(form){
+
+    if (form.valid) {
+      this.invoiceService
+        .getShortInvoiceReport(this.invoiceReportRequest)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              let excelData = data["data"];
+              this.headers = Object.keys(excelData[0].consolidatedBillDataList[0]);
+              let list = [];
+              excelData.forEach(ele=>{
+                list.push(ele.consolidatedBillDataList[0])
+              })
+              this.exportService.exportExcel(list,"Invoice Report",this.headers)
+            }
+          },
+          (error) => { }
+        );
+    }
+
+
   }
 }

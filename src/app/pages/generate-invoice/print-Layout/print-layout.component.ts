@@ -25,10 +25,11 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
   public myDate;
   @Input() finalInvoice: any;
   @Input() previewFlag = false;
-  @Input() discount
+  @Input() discount;
+  @Input() remark: any;
+  @Input() updateFlag;
 
   invoiceIds: string[];
-  rate =[];
   invoiceDetails: Promise<any>[];
   rowd = [{}, {}, {}];
   lotRowd = [{}, {}, {}, {}];
@@ -60,42 +61,17 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       this.invoiceIds = JSON.parse(myArray);
     }
 
-    if (this.finalInvoice) {
-
-     this.rate = this.finalInvoice.batchAndStockIdList.map(element => {
-        return element.rate;
-      });
-      this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.printInvoiceData = data["data"];
-            this.start();
-          }
-        },
-        (error) => {
-
+    this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.printInvoiceData = data["data"];
+          this.start();
         }
-      )
-    } else {
-      if (invoiceNo) {
-        this.printService.getInvoiceByNoToPrint(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.printInvoiceData = data["data"];
-              this.start();
-              this.print();
-            }
-          },
-          (error) => {
+      },
+      (error) => {
 
-          }
-        )
-      } else {
-        this.start();
       }
-
-    }
-
+    );
   }
 
 
@@ -140,10 +116,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               this.printInvoiceData[index].totalPcs = 0;
               this.printInvoiceData[index].totalFinishMtr = 0;
 
-              this.printInvoiceData[index].qualityList.forEach((quality,i) => {
+              this.printInvoiceData[index].qualityList.forEach((quality, i) => {
                 if (quality.totalMtr) {
                   this.printInvoiceData[index].totalMtr += quality.totalMtr;
-                  this.printInvoiceData[index].totalAmt += quality.finishMtr*this.rate[i];
+                  this.printInvoiceData[index].totalAmt += quality.amt;
                   this.printInvoiceData[index].totalPcs += quality.pcs;
                   this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
                 }
@@ -187,7 +163,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
                   this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
-                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
+                this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
               }
               index++;
               if (index == this.invoiceIds.length) {
@@ -240,10 +216,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       this.printInvoiceData[index].totalPcs = 0;
       this.printInvoiceData[index].totalFinishMtr = 0;
 
-      this.printInvoiceData[index].qualityList.forEach((quality,i) => {
+      this.printInvoiceData[index].qualityList.forEach((quality, i) => {
         if (quality.totalMtr) {
           this.printInvoiceData[index].totalMtr += quality.totalMtr;
-          this.printInvoiceData[index].totalAmt += quality.finishMtr*this.rate[i];;
+          this.printInvoiceData[index].totalAmt += quality.amt;
           this.printInvoiceData[index].totalPcs += quality.pcs;
           this.printInvoiceData[index].totalFinishMtr += quality.finishMtr;
         }
@@ -277,19 +253,19 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       }
 
       if (!this.printInvoiceData[index].discount)
-                this.printInvoiceData[index].discount = Number(((this.printInvoiceData[index].totalAmt * this.discount) / 100).toFixed(2));
+        this.printInvoiceData[index].discount = Number(((this.printInvoiceData[index].totalAmt * this.discount) / 100).toFixed(2));
 
-              if (!this.printInvoiceData[index].taxAmt)
-                this.printInvoiceData[index].taxAmt = Number((this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount).toFixed(2));
+      if (!this.printInvoiceData[index].taxAmt)
+        this.printInvoiceData[index].taxAmt = Number((this.printInvoiceData[index].totalAmt - this.printInvoiceData[index].discount).toFixed(2));
 
-              if (!this.printInvoiceData[index].sgst)
-                this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
+      if (!this.printInvoiceData[index].sgst)
+        this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
 
-              if (!this.printInvoiceData[index].netAmt) {
-                this.printInvoiceData[index].netAmt =
-                  this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
-                  this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
-              }
+      if (!this.printInvoiceData[index].netAmt) {
+        this.printInvoiceData[index].netAmt =
+          this.printInvoiceData[index].sgst + this.printInvoiceData[index].cgst + this.printInvoiceData[index].taxAmt;
+        this.printInvoiceData[index].netAmt = Math.round(this.printInvoiceData[index].netAmt);
+      }
 
     }
   }
@@ -349,7 +325,6 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       obj = {
         cgst: this.printInvoiceData[0].cgst,
         discount: this.printInvoiceData[0].discount,
-        percentageDiscount:this.discount,
         taxAmt: this.printInvoiceData[0].taxAmt,
         sgst: this.printInvoiceData[0].sgst,
         netAmt: this.printInvoiceData[0].netAmt
