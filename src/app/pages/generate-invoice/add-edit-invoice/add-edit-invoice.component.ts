@@ -96,6 +96,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               this.invoiceValues.partyId = data["data"].partyId;
               this.discountFlag = true;
               this.discountChange = data["data"].percentageDiscount;
+              this.remark = data["data"].remark;
               this.flag = data["data"].isSendToParty;
               this.batch = data["data"].batchWithControlIdList;
               this.finalbatch = [...this.batch];
