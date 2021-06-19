@@ -284,7 +284,7 @@
                                                     <!-- style="width: 350px;" -->
                                                     <tr>
                                                         <td class="text-left">
-                                                            <b>Discount @{{discount}}%</b>
+                                                            <b>Discount @{{invoice.percentageDiscount}}%</b>
                                                         </td>
                                                         <td class="text-right">
                                                             <b>{{ invoice.discount | number : '1.2-2'}}</b>
@@ -780,7 +780,7 @@
                                         <table class="table  spacing-low table-bordered">
                                             <tr>
                                                 <td class="text-left">
-                                                    <b>Discount @{{discount}}%</b>
+                                                    <b>Discount @{{invoice.percentageDiscount}}%</b>
                                                 </td>
                                                 <td class="text-right">
                                                     <b>{{ invoice.discount | number : '1.2-2'}}</b>

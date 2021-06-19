@@ -1,5 +1,5 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
@@ -72,7 +72,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     private jwt: JwtTokenService,
     private commonService: CommonService,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
@@ -90,7 +90,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (this.currentInvoiceId != null) {
       this.generateInvoiceService
         .getDataByInvoiceNumber(this.currentInvoiceId)
-        .pipe(takeUntil(this.destroy$)).subscribe(
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           (data) => {
             if (data["success"]) {
               this.invoiceValues.partyId = data["data"].partyId;
@@ -142,24 +143,26 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.party = data["data"];
-          this.loading = false;
-        } else {
+    this.partyService
+      .getAllPartyNameList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.party = data["data"];
+            this.loading = false;
+          } else {
+            this.loading = false;
+          }
+        },
+        (error) => {
           this.loading = false;
         }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      );
   }
 
   getBatchList(event) {
-
-    this.party.forEach(ele => {
+    this.party.forEach((ele) => {
       if (ele.id == this.invoiceValues.partyId) {
         this.discountChange = ele.percentageDiscount;
       }
@@ -171,7 +174,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       if (this.invoiceValues.partyId) {
         this.generateInvoiceService
           .getBatchByParty(this.invoiceValues.partyId)
-          .pipe(takeUntil(this.destroy$)).subscribe(
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
             (data) => {
               if (data["success"]) {
                 this.finalbatch = data["data"];
@@ -202,7 +206,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   selected = [];
 
   addInvoice(invoiceForm) {
-    let temp = this.party.filter(f => f.id == this.invoiceValues.partyId);
+    let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
       this.final = [];
@@ -220,18 +224,17 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           userHeadId: this.userHeadId,
           cgst: null,
           sgst: null,
-          percentageDiscount:this.discountChange,
+          percentageDiscount: this.discountChange,
           discount: null,
           taxAmt: null,
           netAmt: null,
           password: "",
           passwordFlag: null,
-          remark:this.remark,
-          createFlag:true,
+          remark: this.remark,
+          createFlag: true,
         };
 
         if (temp[0].pendingAmt > temp[0].creditLimit) {
-
           const modalRef = this.modalService.open(PasswordDailogComponent);
           modalRef.result.then((res) => {
             if (res) {
@@ -254,27 +257,30 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                   obj.password = res;
                   obj.passwordFlag = true;
                   if (invoiceForm.valid) {
-                    this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
-                      async (data) => {
-                        if (data["success"]) {
-                          this.invoiceNo = data["data"];
-                          this.toastr.success(errorData.Add_Success);
-                          this.merge = [];
-                          this.disableButton = false;
-                          if (result.print === "print") {
-                            this.print(this.invoiceNo);
+                    this.generateInvoiceService
+                      .addInvoicedata(obj)
+                      .pipe(takeUntil(this.destroy$))
+                      .subscribe(
+                        async (data) => {
+                          if (data["success"]) {
+                            this.invoiceNo = data["data"];
+                            this.toastr.success(errorData.Add_Success);
+                            this.merge = [];
+                            this.disableButton = false;
+                            if (result.print === "print") {
+                              this.print(this.invoiceNo);
+                            }
+                          } else {
+                            this.disableButton = false;
+                            this.toastr.error(errorData.Add_Error);
+                            this.merge = [];
                           }
-                        } else {
+                        },
+                        (error) => {
                           this.disableButton = false;
-                          this.toastr.error(errorData.Add_Error);
-                          this.merge = [];
+                          this.toastr.error(errorData.Serever_Error);
                         }
-                      },
-                      (error) => {
-                        this.disableButton = false;
-                        this.toastr.error(errorData.Serever_Error);
-                      }
-                    );
+                      );
                   } else {
                     this.disableButton = false;
                   }
@@ -288,9 +294,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 }
               });
             }
-          })
-        }
-        else {
+          });
+        } else {
           const modalRef = this.modalService.open(PrintLayoutComponent, {
             size: "xl",
           });
@@ -310,27 +315,30 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               obj.password = "";
               obj.passwordFlag = false;
               if (invoiceForm.valid) {
-                this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
-                  async (data) => {
-                    if (data["success"]) {
-                      this.invoiceNo = data["data"];
-                      this.toastr.success(errorData.Add_Success);
-                      this.merge = [];
-                      this.disableButton = false;
-                      if (result.print === "print") {
-                        this.print(this.invoiceNo);
+                this.generateInvoiceService
+                  .addInvoicedata(obj)
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    async (data) => {
+                      if (data["success"]) {
+                        this.invoiceNo = data["data"];
+                        this.toastr.success(errorData.Add_Success);
+                        this.merge = [];
+                        this.disableButton = false;
+                        if (result.print === "print") {
+                          this.print(this.invoiceNo);
+                        }
+                      } else {
+                        this.disableButton = false;
+                        this.toastr.error(errorData.Add_Error);
+                        this.merge = [];
                       }
-                    } else {
+                    },
+                    (error) => {
                       this.disableButton = false;
-                      this.toastr.error(errorData.Add_Error);
-                      this.merge = [];
+                      this.toastr.error(errorData.Serever_Error);
                     }
-                  },
-                  (error) => {
-                    this.disableButton = false;
-                    this.toastr.error(errorData.Serever_Error);
-                  }
-                );
+                  );
               } else {
                 this.disableButton = false;
               }
@@ -339,13 +347,11 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               this.discountFlag = false;
               this.discountChange = null;
               this.remark = "";
-
             } else {
               this.disableButton = false;
             }
           });
         }
-
       }
     } else {
       this.toastr.warning("Select upto 4 batches only");
@@ -363,7 +369,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   }
 
   updateInvoice(invoiceForm) {
-    let temp = this.party.filter(f => f.id == this.invoiceValues.partyId);
+    let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.disableButton = true;
       this.formSubmitted = true;
@@ -374,7 +380,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         let obj: invoiceobj = new invoiceobj();
         obj.batchId = ele.batchId;
         obj.stockId = ele.controlId;
-        obj.rate = ele.rate
+        obj.rate = ele.rate;
         this.final.push(obj);
       });
 
@@ -385,18 +391,17 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         invoiceNo: this.currentInvoiceId,
         cgst: null,
         sgst: null,
-        percentageDiscount:this.discountChange,
+        percentageDiscount: this.discountChange,
         discount: null,
         taxAmt: null,
         netAmt: null,
         password: "",
         passwordFlag: null,
-        remark:this.remark,
-        createFlag:false,
+        remark: this.remark,
+        createFlag: false,
       };
 
       if (temp[0].pendingAmt > temp[0].creditLimit) {
-
         const modalRef = this.modalService.open(PasswordDailogComponent);
         modalRef.result.then((res) => {
           if (res) {
@@ -419,24 +424,26 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 obj.password = res;
                 obj.passwordFlag = true;
 
-
                 if (invoiceForm.valid) {
-                  this.generateInvoiceService.updateInvoice(obj).pipe(takeUntil(this.destroy$)).subscribe(
-                    (data) => {
-                      if (data["success"]) {
-                        this.route.navigate(["/pages/generate_invoice"]);
-                        this.toastr.success(errorData.Update_Success);
+                  this.generateInvoiceService
+                    .updateInvoice(obj)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(
+                      (data) => {
+                        if (data["success"]) {
+                          this.route.navigate(["/pages/generate_invoice"]);
+                          this.toastr.success(errorData.Update_Success);
+                          this.disableButton = false;
+                        } else {
+                          this.disableButton = false;
+                          this.toastr.error(errorData.Update_Error);
+                        }
+                      },
+                      (error) => {
                         this.disableButton = false;
-                      } else {
-                        this.disableButton = false;
-                        this.toastr.error(errorData.Update_Error);
+                        this.toastr.error(errorData.Serever_Error);
                       }
-                    },
-                    (error) => {
-                      this.disableButton = false;
-                      this.toastr.error(errorData.Serever_Error);
-                    }
-                  );
+                    );
                 } else {
                   this.disableButton = false;
                 }
@@ -445,15 +452,13 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 this.discountFlag = false;
                 this.discountChange = null;
                 this.remark = "";
-
               } else {
                 this.disableButton = false;
               }
             });
           }
-        })
-      }
-      else {
+        });
+      } else {
         const modalRef = this.modalService.open(PrintLayoutComponent, {
           size: "xl",
         });
@@ -473,22 +478,25 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             obj.password = "";
             obj.passwordFlag = false;
             if (invoiceForm.valid) {
-              this.generateInvoiceService.updateInvoice(obj).pipe(takeUntil(this.destroy$)).subscribe(
-                (data) => {
-                  if (data["success"]) {
-                    this.route.navigate(["/pages/generate_invoice"]);
-                    this.toastr.success(errorData.Update_Success);
+              this.generateInvoiceService
+                .updateInvoice(obj)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(
+                  (data) => {
+                    if (data["success"]) {
+                      this.route.navigate(["/pages/generate_invoice"]);
+                      this.toastr.success(errorData.Update_Success);
+                      this.disableButton = false;
+                    } else {
+                      this.disableButton = false;
+                      this.toastr.error(errorData.Update_Error);
+                    }
+                  },
+                  (error) => {
                     this.disableButton = false;
-                  } else {
-                    this.disableButton = false;
-                    this.toastr.error(errorData.Update_Error);
+                    this.toastr.error(errorData.Serever_Error);
                   }
-                },
-                (error) => {
-                  this.disableButton = false;
-                  this.toastr.error(errorData.Serever_Error);
-                }
-              );
+                );
             } else {
               this.disableButton = false;
             }
@@ -497,15 +505,12 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             this.discountFlag = false;
             this.discountChange = null;
             this.remark = "";
-
           } else {
             this.disableButton = false;
           }
         });
       }
-
-    }
-    else {
+    } else {
       this.toastr.warning("Select upto 4 batches only");
     }
   }
@@ -522,10 +527,26 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
   tableChange(event) {
     if (event === "view table") {
-      this.route.navigate(['/pages/generate_invoice/view']);
-    }
-    else if(event === 'report'){
+      this.route.navigate(["/pages/generate_invoice/view"]);
+    } else if (event === "report") {
       this.route.navigate(["/pages/generate_invoice/report"]);
+    }
+  }
+
+  enterClicked(rowIndex, e) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      if (rowIndex < this.merge.length) {
+        let id = "invoice" + (rowIndex + 1) + "-rateChange";
+        let inter = setInterval(() => {
+          const element = document.getElementById(id) as any;
+          if (element) {
+            element.focus();
+            element.select();
+            clearInterval(inter);
+          }
+        });
+      }
     }
   }
 }
