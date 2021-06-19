@@ -33,6 +33,12 @@ export class StockBatchService {
     );
   }
 
+  getAvailableStockBatchList(id, getBy): any {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/pending/all/" + getBy + "/" + id
+    );
+  }
+
   addStockBatch(myForm) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/stockBatch",

@@ -783,6 +783,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     } else if (event === "job card") {
       this.selectedTableChange = null;
       const modalRef = this.modalService.open(InputBatchComponent)
+    } else if(event === "pending"){
+      this.route.navigate(['/pages/stock-batch/pending'])
     }
   }
 
