@@ -61,17 +61,39 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       this.invoiceIds = JSON.parse(myArray);
     }
 
-    this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.printInvoiceData = data["data"];
-          this.start();
-        }
-      },
-      (error) => {
+    if (this.finalInvoice) {
 
-      }
-    );
+      
+       this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
+         (data) => {
+           if (data["success"]) {
+             this.printInvoiceData = data["data"];
+             this.start();
+           }
+         },
+         (error) => {
+ 
+         }
+       )
+     } else {
+       if (invoiceNo) {
+         this.printService.getInvoiceByNoToPrint(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
+           (data) => {
+             if (data["success"]) {
+               this.printInvoiceData = data["data"];
+               this.start();
+               this.print();
+             }
+           },
+           (error) => {
+ 
+           }
+         )
+       } else {
+         this.start();
+       }
+ 
+     }
   }
 
 
