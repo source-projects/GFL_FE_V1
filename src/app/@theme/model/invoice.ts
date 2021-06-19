@@ -22,6 +22,10 @@ export class Invoice {
 export class InvoiceReportRequest {
   from: any;
   to: any;
+  userHeadId: any;
+  partyId: any;
+  qualityNameId: any;
+  qualityEntryId: any;
 
   constructor() {
     this.from = "";
@@ -44,6 +48,7 @@ export class invoiceobj {
 
   batchId: Number;
   stockId: Number;
+  rate: number;
 }
 
 

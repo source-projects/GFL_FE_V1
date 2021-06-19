@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ExportService } from 'app/@theme/services/export.service';
+import { ExportService } from '../../../@theme/services/export.service';
 @Component({
   selector: 'ngx-export-popup',
   templateUrl: './export-popup.component.html',
