@@ -91,7 +91,7 @@
 
                 <div class="row">
                     <div class="col-md-12" id="fmtr-table">
-                        <ngx-datatable #table class="material common-table datatable-auto-height box-shadow-none box-mr-bt stock-table-body-height" [rows]="tagFormObject.dyeingTagDataList"
+                        <ngx-datatable #table class="material common-table datatable-auto-height box-shadow-none box-mr-bt tag-table-body-height" [rows]="tagFormObject.dyeingTagDataList"
                             [headerHeight]="31" [footerHeight]="31" [scrollbarV]="true">
 
                             <ngx-datatable-column name="Action" [sortable]="false" [maxWidth]="90">
@@ -103,13 +103,13 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Item Name" [sortable]="false">
+                            <ngx-datatable-column name="Item Name" [sortable]="false" [width]="500">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                     let-rowIndex="rowIndex">
-                                    <select style="width: 100%;" class="tableForm" #data="ngModel" name="itemId{{row._id}}_{{rowIndex}}"
+                                    <select style="width: 100%;" #data="ngModel" name="itemId{{row._id}}_{{rowIndex}}"
                                         itemId1="ngModel" [(ngModel)]="row.itemId" #itemId1="ngModel" required
                                         (change)="itemSelected(rowIndex)" [id]="'supplierList'+rowIndex+'-0'"
-                                        appendTo="body"
+                                        appendTo="body" class="tableForm"
                                         [ngClass]="{'is-invalid':(data.invalid)&&(formSubmitted || data.touched)}">
                                         <option disabled="true">
                                             <div class="row">
@@ -177,8 +177,8 @@
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                     let-rowIndex="rowIndex">
                                     <select style="width: 100%;" #byChemical="ngModel" name='byChemical{{row._id}}_{{rowIndex}}'
-                                        [(ngModel)]="row.byChemical"
-                                        [id]="'supplierList'+rowIndex+'-byChemical'" required class="tableForm"
+                                        [(ngModel)]="row.byChemical" class="tableForm"
+                                        [id]="'supplierList'+rowIndex+'-byChemical'" required 
                                         [ngClass]="{'is-invalid':(byChemical.invalid)&&(formSubmitted || byChemical.touched)}">
                                         <option *ngFor="let by of byChemicalList" [value]="by.id">{{by.value}}
                                         </option>
@@ -195,7 +195,7 @@
                                     let-rowIndex="rowIndex">
                                     <select style="width: 100%;" placeholder="Select Shade-type" #shadeType
                                         name="shadeType{{row._id}}_{{rowIndex}}" shadeType="ngModel"
-                                        [(ngModel)]="row.shadeType" #itemId1="ngModel" class="form-control" required
+                                        [(ngModel)]="row.shadeType" #itemId1="ngModel" required
                                         [id]="'supplierList'+rowIndex+'-4'" appendTo="body"
                                         class="tableForm"
                                         [ngClass]="{'is-invalid':(itemId1.invalid)&&(formSubmitted || itemId1.touched)}">
