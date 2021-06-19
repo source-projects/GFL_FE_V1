@@ -134,6 +134,8 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
         this.dyeingChemicalData = tag[0].dyeingTagDataList
         this.dyeingChemicalData.forEach((e, i)=>{
           this.itemSelected(i);
+          delete e.id;
+          delete e.controlId;
         })
         this.dyeingProcessStep.dyeingChemicalData = tag[0].dyeingTagDataList;
       }
