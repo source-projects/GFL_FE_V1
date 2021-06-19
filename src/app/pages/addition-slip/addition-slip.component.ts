@@ -549,7 +549,7 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
       for (let i = 0; i < keys.length; i++) {
         if (
           (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
+            item[keys[i]].toString().toLowerCase().includes(val)) ||
           !val
         ) {
           return true;

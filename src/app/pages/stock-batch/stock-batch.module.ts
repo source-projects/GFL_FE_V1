@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { StockBatchRoutingModule } from './stock-batch-routing.module';
 import { StockBatchComponent } from './stock-batch.component';
 import { AddEditStockBatchComponent } from './add-edit-stock-batch/add-edit-stock-batch.component';
-import { SharedModule } from 'app/@theme/shared.module';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { SharedModule } from '../../@theme/shared.module';
+import { ThemeModule } from '../../@theme/theme.module';
 import { JobCardComponent } from './job-card/job-card.component';
 import { InputBatchComponent } from './input-batch/input-batch.component';
+import { AvailableBatchesComponent } from './available-batches/available-batches.component';
 @NgModule({
-  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent],
+  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent, AvailableBatchesComponent],
   imports: [
     CommonModule,
     StockBatchRoutingModule,

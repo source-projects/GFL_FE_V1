@@ -46,26 +46,27 @@ export class DyeingSlipComponent implements OnInit {
           this.dyeingSlip=data["data"];
           this.rowData=this.dyeingSlip;
           this.copydyeingSlip=data["data"];
-          this.dyeSlip=this.dyeingSlip.map((element)=>({
-            totalWt:element.totalWt,
-            qualityId:element.qualityId,
-            partyShadeNo:element.partyShadeNo,
-            batchCount:element.batchCount,
-            colorTone:element.colorTone,
-            colorName:element.colorName,
-            jetName:element.jetName,
-            batchId:element.batchId
-          }));
-          this.copydyeingSlip=this.dyeingSlip.map((element)=>({
-            totalWt:element.totalWt,
-            qualityId:element.qualityId,
-            partyShadeNo:element.partyShadeNo,
-            batchCount:element.batchCount,
-            colorTone:element.colorTone,
-            colorName:element.colorName,
-            jetName:element.jetName,
-            batchId:element.batchId
-          }));
+          // this.dyeSlip=this.dyeingSlip.map((element)=>({
+          //   totalWt:element.totalWt,
+          //   qualityId:element.qualityId,
+          //   partyShadeNo:element.partyShadeNo,
+          //   batchCount:element.batchCount,
+          //   colorTone:element.colorTone,
+          //   colorName:element.colorName,
+          //   jetName:element.jetName,
+          //   batchId:element.batchId,
+          //   productionId: element.productionId
+          // }));
+          // this.copydyeingSlip=this.dyeingSlip.map((element)=>({
+          //   totalWt:element.totalWt,
+          //   qualityId:element.qualityId,
+          //   partyShadeNo:element.partyShadeNo,
+          //   batchCount:element.batchCount,
+          //   colorTone:element.colorTone,
+          //   colorName:element.colorName,
+          //   jetName:element.jetName,
+          //   batchId:element.batchId,
+          // }));
         }
       },
       error=>{}
@@ -74,18 +75,25 @@ export class DyeingSlipComponent implements OnInit {
 
   filter(value: any) {
     const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copydyeingSlip[0]);
-    this.dyeingSlip = this.copydyeingSlip.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
-        }
-      }
-    });
+    if(val){
+      this.dyeingSlip = this.copydyeingSlip.filter((item) => 
+      this.matchString(item, "qualityId", val) ||
+      this.matchString(item, "partyShadeNo", val) ||
+      this.matchString(item, "colorName", val) ||
+      this.matchString(item, "jetName", val) ||
+      this.matchString(item, "batchId", val)
+    );
+    }else{
+      this.dyeSlip = [...this.copydyeingSlip]
+    }
+    
+  }
+
+  matchString(item, key, string){
+    if(item[key])
+      return item[key].toLowerCase().includes(string)
+    else
+      return false
   }
 
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StockBatchGuard } from 'app/@theme/guards/stock-batch.guard';
+import { StockBatchGuard } from '../../@theme/guards/stock-batch.guard';
 import { AddEditStockBatchComponent } from './add-edit-stock-batch/add-edit-stock-batch.component';
+import { AvailableBatchesComponent } from './available-batches/available-batches.component';
 import { StockBatchComponent } from './stock-batch.component';
 
 const routes: Routes = [
@@ -19,7 +20,13 @@ const routes: Routes = [
     canLoad: [StockBatchGuard],
     data: { PermissionName: ['view','view group','view all']}
   },
- 
+  {
+    path: 'pending',
+    component: AvailableBatchesComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['view','view group','view all']}
+  },
   {
     path: 'edit/:id',
     component: AddEditStockBatchComponent,
