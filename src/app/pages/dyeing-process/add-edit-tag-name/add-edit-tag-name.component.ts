@@ -28,7 +28,7 @@ export class AddEditTagNameComponent implements OnInit, OnDestroy {
   public updateFlag: boolean = false;
   public loading: boolean = false;
   public formSubmitted: boolean = false;
-  public isTagUnique: boolean = true;
+  public isNotTagUnique: boolean = false;
   public currentTagId: number;
   public tagFormObject: TagCRUDObject;
   public itemListArray: any = [];
@@ -125,9 +125,7 @@ export class AddEditTagNameComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           (result) => {
-            if (result["success"]) {
-              this.isTagUnique = result["data"];
-            }
+            this.isNotTagUnique = result["data"];
             this.loading = false;
           },
           (erroe) => {
@@ -263,12 +261,12 @@ export class AddEditTagNameComponent implements OnInit, OnDestroy {
     form.reset();
     this.tagFormObject = new TagCRUDObject();
     this.formSubmitted = false;
-    this.isTagUnique = true;
+    this.isNotTagUnique = false;
   }
 
   submitForm(form) {
     this.formSubmitted = true;
-    if (form.valid && this.isTagUnique) {
+    if (form.valid && !this.isNotTagUnique) {
       //add ot edit...
       if (!this.updateFlag) {
         this.addNewTag(form);

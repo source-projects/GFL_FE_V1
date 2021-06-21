@@ -25,13 +25,13 @@
                                 <label class="required">Tag Name</label>
                                 <input class="form-control input-group" type="text" name="tagProcessName"
                                     [(ngModel)]="tagFormObject.tagProcessName" #tagProcessName="ngModel"
-                                    [ngClass]="{'is-invalid':(tagProcessName.invalid)&&(formSubmitted || tagProcessName.touched)}"
+                                    [ngClass]="{'is-invalid':(tagProcessName.invalid)&&(formSubmitted || tagProcessName.touched) || isNotTagUnique}"
                                     required placeholder="Tag Name" (change)="checkUniqTagName()">
                                 <div class="input-required"
                                     *ngIf="(tagProcessName.invalid)&&(formSubmitted || tagProcessName.touched)">
                                     Tag Name is required.
                                 </div>
-                                <div class="input-required" *ngIf="!isTagUnique">
+                                <div class="input-required" *ngIf="isNotTagUnique">
                                     Tag Name already exist.
                                 </div>
                             </div>
