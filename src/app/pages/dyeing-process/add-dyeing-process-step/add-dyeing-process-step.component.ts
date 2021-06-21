@@ -17,7 +17,7 @@ import {
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from 'rxjs';
-import { uniq } from 'lodash';
+import { TagCRUDObject } from '../../../@theme/model/tagName';
 
 @Component({
   selector: "ngx-add-dyeing-process-step",
@@ -32,6 +32,8 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   public index: string;
   itemListArray: any = [];
   public modalSubmitted: boolean = false;
+  public selectedTagName: number;
+  public tagList: TagCRUDObject[] = [];
   public positionValues: number[];
   public submitButton: string = "Add";
   @Input() position;
@@ -57,6 +59,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getAllTags();
     this.getItemData();
     if (!this.editStep) {
       if (this.position > 0) {
@@ -92,6 +95,17 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
     }
   }
 
+  getAllTags(){
+    this.DyeingProcessService.getAllTags().subscribe(
+      result=>{
+        if(result['success']){
+          this.tagList = result['data']
+        }
+      },error=>{
+      }
+    )
+  }
+
   onCreate(myForm) {
     this.modalSubmitted = true;
     if (myForm.valid) {
@@ -106,6 +120,31 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
       this.activeModal.close(obj);
     } else {
       this.toastr.error("Fill empty fields");
+    }
+  }
+
+  tagSelected($event){
+    if($event){
+      //set data according to selected tag
+      let tag = this.tagList.filter( f => f.id == this.selectedTagName)
+      if(tag && tag.length){
+        this.dyeingProcessStep.holdTime = tag[0].holdTime;
+        this.dyeingProcessStep.liquerRation = tag[0].liquerRation
+        this.dyeingProcessStep.temp = tag[0].temp
+        this.dyeingChemicalData = tag[0].dyeingTagDataList
+        this.dyeingChemicalData.forEach((e, i)=>{
+          this.itemSelected(i);
+          delete e.id;
+          delete e.controlId;
+        })
+        this.dyeingProcessStep.dyeingChemicalData = tag[0].dyeingTagDataList;
+      }
+    }else{
+      let seq = this.dyeingProcessStep.sequence;
+      this.dyeingProcessStep = new DyeingProcessData();
+      this.dyeingChemicalData = []
+      this.dyeingChemicalData.push(new DyeingChemicalData());
+      this.dyeingProcessStep.sequence = seq;
     }
   }
 
@@ -223,7 +262,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
       this.dyeingChemicalData.map((m) => (m.duplicateError = false));
     }
   }
-  itemSelected(event, rowIndex) {
+  itemSelected(rowIndex) {
 
     this.itemListArray.forEach((e) => {
       if (e.itemId == this.dyeingChemicalData[rowIndex].itemId) {

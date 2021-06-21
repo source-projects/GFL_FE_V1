@@ -320,13 +320,19 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       if (this.finishedMeterForm.batchData.length > rowIndex + 1) {
         this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
             let objDiv = document.getElementById(this.index);
             if (objDiv) {
               objDiv.scrollIntoView(true)
+            }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
             }
           }
         }, 10);
@@ -355,10 +361,20 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       if (keyCode == 13 && (colIndex == 3 || colIndex == 4)) {
         this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
+            let objDiv = document.getElementById(this.index);
+            if (objDiv) {
+              objDiv.scrollIntoView(true)
+            }
+          }else{
+            let objDiv = document.querySelector('datatable-scroller');
+            if(objDiv){
+              objDiv.scrollBy(0, 10)
+            }
           }
         }, 10);
       }

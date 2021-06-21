@@ -7,7 +7,7 @@
             <div class="col-md-5 col-6 display-flex-start max-width-device">
                 <ng-select class="btn btn-md" (change)="setViewJobValue($event)"
                     placeholder="Select" [(ngModel)]="selectedTableChange">
-                    <!-- <ng-option value="select">Select</ng-option> -->
+                    <ng-option value="pending">Pending batches</ng-option>
                     <ng-option value="view table">View Table</ng-option>
                     <ng-option value="job card">Job Card</ng-option>
                 </ng-select>

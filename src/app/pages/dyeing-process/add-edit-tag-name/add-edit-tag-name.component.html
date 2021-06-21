@@ -1,0 +1,225 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="container">
+    <nb-card class="nb-style">
+        <nb-card-header class="nb-header">
+
+            <div class="row">
+                <div class="col-md-5 col-6 display-flex-start max-width-device">
+                    <ng-select class="btn btn-md" style="width: 175px;" (change)="tableChange($event)" placeholder="Select">
+                        <ng-option value="view table">View Table</ng-option>
+                        <ng-option value="add process">Add Process</ng-option>
+                        <ng-option value="show tag">View Process-Tags</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-7 col-7">
+                    <h2 class="nb-text txt-ov-elips">{{updateFlag? 'Edit Process-Tag' : 'Add Process-Tag'}}</h2>
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <form #tagForm="ngForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="required">Tag Name</label>
+                                <input class="form-control input-group" type="text" name="tagProcessName"
+                                    [(ngModel)]="tagFormObject.tagProcessName" #tagProcessName="ngModel"
+                                    [ngClass]="{'is-invalid':(tagProcessName.invalid)&&(formSubmitted || tagProcessName.touched) || isNotTagUnique}"
+                                    required placeholder="Tag Name" (change)="checkUniqTagName()">
+                                <div class="input-required"
+                                    *ngIf="(tagProcessName.invalid)&&(formSubmitted || tagProcessName.touched)">
+                                    Tag Name is required.
+                                </div>
+                                <div class="input-required" *ngIf="isNotTagUnique">
+                                    Tag Name already exist.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="required">Temprature</label>
+                                <input class="form-control input-group" type="number" min="0" name="temp"
+                                    [(ngModel)]="tagFormObject.temp" #temp1="ngModel"
+                                    [ngClass]="{'is-invalid':(temp1.invalid)&&(formSubmitted || temp1.touched)}"
+                                    required placeholder="Temprature">
+                                <div class="input-required" *ngIf="(temp1.invalid)&&(formSubmitted || temp1.touched)">
+                                    Temprature is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="required">Hold Time</label>
+                                <input class="form-control input-group" min="0" type="number" name="holdTime"
+                                    [(ngModel)]="tagFormObject.holdTime" #holdTime1="ngModel"
+                                    [ngClass]="{'is-invalid':(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)}"
+                                    required placeholder="Hold Time">
+                                <div class="input-required"
+                                    *ngIf="(holdTime1.invalid)&&(formSubmitted || holdTime1.touched)">
+                                    Hold Time is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="required">Liquor Ratio</label>
+                                <input class="form-control input-group" min="0" type="number" name="liquerRation"
+                                    [(ngModel)]="tagFormObject.liquerRation" #liquerRation1="ngModel"
+                                    (keypress)="numberOnly($event)"
+                                    [ngClass]="{'is-invalid':(liquerRation1.invalid)&&(formSubmitted || liquerRation1.touched)}"
+                                    required placeholder="Liquor ratio">
+                                <div class="input-required"
+                                    *ngIf="(liquerRation1.invalid)&&(formSubmitted || liquerRation1.touched)">
+                                    Liquor ratio is required.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="required">
+                            <h5 class="nb-badges mr-0">Chemical List</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" id="fmtr-table">
+                        <ngx-datatable #table class="material common-table datatable-auto-height box-shadow-none box-mr-bt tag-table-body-height" [rows]="tagFormObject.dyeingTagDataList"
+                            [headerHeight]="31" [footerHeight]="31" [scrollbarV]="true">
+
+                            <ngx-datatable-column name="Action" [sortable]="false" [maxWidth]="90">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItem(rowIndex)">
+                                    </nb-icon>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="Item Name" [sortable]="false" [width]="500">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <select style="width: 100%;" #data="ngModel" name="itemId{{row._id}}_{{rowIndex}}"
+                                        itemId1="ngModel" [(ngModel)]="row.itemId" #itemId1="ngModel" required
+                                        (change)="itemSelected(rowIndex)" [id]="'supplierList'+rowIndex+'-0'"
+                                        appendTo="body" class="tableForm"
+                                        [ngClass]="{'is-invalid':(data.invalid)&&(formSubmitted || data.touched)}">
+                                        <option disabled="true">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">Item - </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-center txt-ov-elips">Supplier
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option
+                                            *ngFor="let item of ((itemListArray | showOnlyChemicalFilter : false) )"
+                                            [value]="item.itemId" placeholder="Select Item">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-left txt-ov-elips">{{item.itemName}} - </div>
+                                                </div>
+                                                <div class="col-md-6 col-6">
+                                                    <div class="text-center txt-ov-elips">{{item.supplierName}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </option>
+                                    </select>
+                                    <div class="input-required" *ngIf="(data.invalid)&&(formSubmitted || data.touched)">
+                                        Required
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="Supplier Name" [sortable]="false">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <input type="text" #supplierName1="ngModel" class="tableForm"
+                                        name='supplierName{{row._id}}_{{rowIndex}}' [(ngModel)]="row.supplierName"
+                                        (keyup)="onKeyUp($event,rowIndex,0,'supplierName')"
+                                        [id]="'supplierList'+rowIndex+'-supplierName'" readonly
+                                        [ngClass]="{'is-invalid':(supplierName1.invalid)&&(formSubmitted || supplierName1.touched)}">
+                                    <div class="input-required"
+                                        *ngIf="(supplierName1.invalid)&&(formSubmitted || supplierName1.touched)">
+                                        Required
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="Concentration" [sortable]="false">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <input type="number" #concentration1="ngModel"
+                                        name='concentration{{row._id}}_{{rowIndex}}' class="tableForm"
+                                        [(ngModel)]="row.concentration" (keypress)="numberOnly($event)"
+                                        (keyup)="onKeyUp($event,rowIndex,0,'concentration')"
+                                        [id]="'supplierList'+rowIndex+'-concentration'" min="0"
+                                        [ngClass]="{'is-invalid':(concentration1.invalid)&&(formSubmitted || concentration1.touched)}">
+                                    <div class="input-required"
+                                        *ngIf="(concentration1.invalid)&&(formSubmitted || concentration1.touched)">
+                                        Required
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="By" [sortable]="false">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <select style="width: 100%;" #byChemical="ngModel" name='byChemical{{row._id}}_{{rowIndex}}'
+                                        [(ngModel)]="row.byChemical" class="tableForm"
+                                        [id]="'supplierList'+rowIndex+'-byChemical'" required 
+                                        [ngClass]="{'is-invalid':(byChemical.invalid)&&(formSubmitted || byChemical.touched)}">
+                                        <option *ngFor="let by of byChemicalList" [value]="by.id">{{by.value}}
+                                        </option>
+                                    </select>
+                                    <div class="input-required"
+                                        *ngIf="(byChemical.invalid)&&(formSubmitted || byChemical.touched)">
+                                        Required
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="Shade type" [sortable]="false">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                    let-rowIndex="rowIndex">
+                                    <select style="width: 100%;" placeholder="Select Shade-type" #shadeType
+                                        name="shadeType{{row._id}}_{{rowIndex}}" shadeType="ngModel"
+                                        [(ngModel)]="row.shadeType" #itemId1="ngModel" required
+                                        [id]="'supplierList'+rowIndex+'-4'" appendTo="body"
+                                        class="tableForm"
+                                        [ngClass]="{'is-invalid':(itemId1.invalid)&&(formSubmitted || itemId1.touched)}">
+                                        <option *ngFor="let type of shadeTypeList" [value]="type">
+                                            {{type}}
+                                        </option>
+                                    </select>
+                                    <div class="input-required"
+                                        *ngIf="(itemId1.invalid)&&(formSubmitted || itemId1.touched)">
+                                        Required
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                        </ngx-datatable>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm btn-design-save"
+                        (click)="submitForm(tagForm)">Save</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
+                        (click)="cancelForm(tagForm)">Cancel</button>
+                </div>
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>

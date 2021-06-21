@@ -169,6 +169,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
               qualityName: element.qualityName,
               partyName: element.partyName,
               colorTone: element.colorTone,
+              colorName:element.colorName
             }));
             this.copyShadeList = this.shadeList.map((element) => ({
               id: element.id,
@@ -179,6 +180,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
               partyId: element.partyId,
               colorTone: element.colorTone,
               partyName: element.partyName,
+              colorName:element.colorName
             }));
           }
         }

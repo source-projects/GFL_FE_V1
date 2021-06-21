@@ -1,5 +1,5 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import * as errorData from "../../../@theme/json/error.json";
@@ -21,6 +21,9 @@ import { PasswordDailogComponent } from "../../../@theme/components/password-dai
 })
 export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   flag: any;
+  discountChange;
+  remark;
+  discountFlag: boolean = false;
   obj = {
     batchAndStockIdList: [],
     createdBy: null,
@@ -37,6 +40,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   finalbatch = [];
   mtrList: any[];
   public disableButton = false;
+  public updateFlag;
   public errorData: any = (errorData as any).default;
   mtr = [];
   invoiceValues: Invoice = new Invoice();
@@ -53,7 +57,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   merge = [];
   invoiceNo: any;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -86,33 +90,37 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (this.currentInvoiceId != null) {
       this.generateInvoiceService
         .getDataByInvoiceNumber(this.currentInvoiceId)
-        .pipe(takeUntil(this.destroy$)).subscribe(
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           (data) => {
             if (data["success"]) {
               this.invoiceValues.partyId = data["data"].partyId;
+              this.discountFlag = true;
+              this.discountChange = data["data"].percentageDiscount;
+              this.remark = data["data"].remark;
               this.flag = data["data"].isSendToParty;
               this.batch = data["data"].batchWithControlIdList;
               this.finalbatch = [...this.batch];
               this.merge = [...this.finalbatch];
-              this.generateInvoiceService
-                .getBatchByParty(this.invoiceValues.partyId)
-                .pipe(takeUntil(this.destroy$)).subscribe(
-                  (data) => {
-                    if (data["success"]) {
-                      data["data"].forEach((element) => {
-                        this.finalbatch.push(element);
-                      });
-                      this.merge = this.finalbatch;
-                      this.loading = false;
-                    } else {
-                      this.loading = false;
-                    }
-                  },
-                  (error) => {
-                    this.loading = false;
-                    this.merge = [];
-                  }
-                );
+              // this.generateInvoiceService
+              //   .getBatchByParty(this.invoiceValues.partyId)
+              //   .pipe(takeUntil(this.destroy$)).subscribe(
+              //     (data) => {
+              //       if (data["success"]) {
+              //         data["data"].forEach((element) => {
+              //           this.finalbatch.push(element);
+              //         });
+              //         this.merge = this.finalbatch;
+              //         this.loading = false;
+              //       } else {
+              //         this.loading = false;
+              //       }
+              //     },
+              //     (error) => {
+              //       this.loading = false;
+              //       this.merge = [];
+              //     }
+              //   );
               this.loading = false;
               this.disableButton = false;
               this.selected = data["data"].batchWithControlIdList;
@@ -135,28 +143,39 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
   getPartyList() {
     this.loading = true;
-    this.partyService.getAllPartyNameList().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.party = data["data"];
-          this.loading = false;
-        } else {
+    this.partyService
+      .getAllPartyNameList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.party = data["data"];
+            this.loading = false;
+          } else {
+            this.loading = false;
+          }
+        },
+        (error) => {
           this.loading = false;
         }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      );
   }
 
   getBatchList(event) {
+    this.party.forEach((ele) => {
+      if (ele.id == this.invoiceValues.partyId) {
+        this.discountChange = ele.percentageDiscount;
+      }
+    });
+    this.discountFlag = true;
+
     this.loading = true;
     if (event != undefined) {
       if (this.invoiceValues.partyId) {
         this.generateInvoiceService
           .getBatchByParty(this.invoiceValues.partyId)
-          .pipe(takeUntil(this.destroy$)).subscribe(
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
             (data) => {
               if (data["success"]) {
                 this.finalbatch = data["data"];
@@ -187,7 +206,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   selected = [];
 
   addInvoice(invoiceForm) {
-    let temp = this.party.filter(f => f.id == this.invoiceValues.partyId);
+    let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
       this.final = [];
@@ -196,6 +215,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           let obj: invoiceobj = new invoiceobj();
           obj.batchId = ele.batchId;
           obj.stockId = ele.controlId;
+          obj.rate = ele.rate;
           this.final.push(obj);
         });
         let obj = {
@@ -204,36 +224,43 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           userHeadId: this.userHeadId,
           cgst: null,
           sgst: null,
+          percentageDiscount: this.discountChange,
           discount: null,
           taxAmt: null,
           netAmt: null,
-          password:"",
-          passwordFlag:null
-          };
+          password: "",
+          passwordFlag: null,
+          remark: this.remark,
+          createFlag: true,
+        };
 
-          if(temp[0].pendingAmt > temp[0].creditLimit){
+        if (temp[0].pendingAmt > temp[0].creditLimit) {
+          const modalRef = this.modalService.open(PasswordDailogComponent);
+          modalRef.result.then((res) => {
+            if (res) {
+              const modalRef = this.modalService.open(PrintLayoutComponent, {
+                size: "xl",
+              });
+              modalRef.componentInstance.finalInvoice = obj;
+              modalRef.componentInstance.previewFlag = true;
+              modalRef.componentInstance.discount = this.discountChange;
+              modalRef.componentInstance.remark = this.remark;
+              modalRef.componentInstance.updateFlag = false;
 
-            const modalRef = this.modalService.open(PasswordDailogComponent);
-            modalRef.result.then((res) =>{
-              if(res){
-                const modalRef = this.modalService.open(PrintLayoutComponent, {
-                  size: "xl",
-                });
-                modalRef.componentInstance.finalInvoice = obj;
-                modalRef.componentInstance.previewFlag = true;
-                modalRef.componentInstance.discount = temp[0].percentageDiscount;
-        
-                modalRef.result.then((result) => {
-                  if (result) {
-                    obj.cgst = result.cgst;
-                    obj.sgst = result.sgst;
-                    obj.discount = result.discount;
-                    obj.netAmt = Math.round(result.netAmt);
-                    obj.taxAmt = result.taxAmt;
-                    obj.password = res;
-                    obj.passwordFlag = true;
-                    if (invoiceForm.valid) {
-                      this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
+              modalRef.result.then((result) => {
+                if (result) {
+                  obj.cgst = result.cgst;
+                  obj.sgst = result.sgst;
+                  obj.discount = result.discount;
+                  obj.netAmt = Math.round(result.netAmt);
+                  obj.taxAmt = result.taxAmt;
+                  obj.password = res;
+                  obj.passwordFlag = true;
+                  if (invoiceForm.valid) {
+                    this.generateInvoiceService
+                      .addInvoicedata(obj)
+                      .pipe(takeUntil(this.destroy$))
+                      .subscribe(
                         async (data) => {
                           if (data["success"]) {
                             this.invoiceNo = data["data"];
@@ -254,37 +281,44 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                           this.toastr.error(errorData.Serever_Error);
                         }
                       );
-                    } else {
-                      this.disableButton = false;
-                    }
-                    //Clear selected party
-                    this.invoiceValues.partyId = null;
                   } else {
                     this.disableButton = false;
                   }
-                });    
-              }
-            })
-          }
-          else{
-            const modalRef = this.modalService.open(PrintLayoutComponent, {
-              size: "xl",
-            });
-            modalRef.componentInstance.finalInvoice = obj;
-            modalRef.componentInstance.previewFlag = true;
-            modalRef.componentInstance.discount = temp[0].percentageDiscount;
-    
-            modalRef.result.then((result) => {
-              if (result) {
-                obj.cgst = result.cgst;
-                obj.sgst = result.sgst;
-                obj.discount = result.discount;
-                obj.netAmt = Math.round(result.netAmt);
-                obj.taxAmt = result.taxAmt;
-                obj.password = "";
-                obj.passwordFlag = false;
-                if (invoiceForm.valid) {
-                  this.generateInvoiceService.addInvoicedata(obj).pipe(takeUntil(this.destroy$)).subscribe(
+                  //Clear selected party
+                  this.invoiceValues.partyId = null;
+                  this.discountFlag = false;
+                  this.discountChange = null;
+                  this.remark = "";
+                } else {
+                  this.disableButton = false;
+                }
+              });
+            }
+          });
+        } else {
+          const modalRef = this.modalService.open(PrintLayoutComponent, {
+            size: "xl",
+          });
+          modalRef.componentInstance.finalInvoice = obj;
+          modalRef.componentInstance.previewFlag = true;
+          modalRef.componentInstance.discount = this.discountChange;
+          modalRef.componentInstance.remark = this.remark;
+          modalRef.componentInstance.updateFlag = false;
+
+          modalRef.result.then((result) => {
+            if (result) {
+              obj.cgst = result.cgst;
+              obj.sgst = result.sgst;
+              obj.discount = result.discount;
+              obj.netAmt = Math.round(result.netAmt);
+              obj.taxAmt = result.taxAmt;
+              obj.password = "";
+              obj.passwordFlag = false;
+              if (invoiceForm.valid) {
+                this.generateInvoiceService
+                  .addInvoicedata(obj)
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
                     async (data) => {
                       if (data["success"]) {
                         this.invoiceNo = data["data"];
@@ -305,17 +339,19 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                       this.toastr.error(errorData.Serever_Error);
                     }
                   );
-                } else {
-                  this.disableButton = false;
-                }
-                //Clear selected party
-                this.invoiceValues.partyId = null;
               } else {
                 this.disableButton = false;
               }
-            });
-          }
-        
+              //Clear selected party
+              this.invoiceValues.partyId = null;
+              this.discountFlag = false;
+              this.discountChange = null;
+              this.remark = "";
+            } else {
+              this.disableButton = false;
+            }
+          });
+        }
       }
     } else {
       this.toastr.warning("Select upto 4 batches only");
@@ -332,53 +368,160 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     this.route.navigate(["/pages/generate_invoice/print"], navigationExtras);
   }
 
-  // updateInvoice(invoiceForm) {
-  //   if (this.finalcheckedrows.length <= 4) {
-  //     this.disableButton = true;
-  //     this.formSubmitted = true;
+  updateInvoice(invoiceForm) {
+    let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
+    if (this.finalcheckedrows.length <= 4) {
+      this.disableButton = true;
+      this.formSubmitted = true;
 
-  //     this.final = [];
+      this.final = [];
 
-  //     this.finalcheckedrows.map((ele, i) => {
-  //       let obj: invoiceobj = new invoiceobj();
-  //       obj.batchId = ele.batchId;
-  //       obj.stockId = ele.controlId;
-  //       this.final.push(obj);
-  //     });
+      this.finalcheckedrows.map((ele, i) => {
+        let obj: invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
+        obj.stockId = ele.controlId;
+        obj.rate = ele.rate;
+        this.final.push(obj);
+      });
 
-  //     let obj = {
-  //       batchAndStockIdList: this.final,
-  //       createdBy: this.userId,
-  //       invoiceNo: this.currentInvoiceId,
-  //       updatedBy: this.userId,
-  //     };
+      let obj = {
+        batchAndStockIdList: this.final,
+        createdBy: this.userId,
+        userHeadId: this.userHeadId,
+        invoiceNo: this.currentInvoiceId,
+        cgst: null,
+        sgst: null,
+        percentageDiscount: this.discountChange,
+        discount: null,
+        taxAmt: null,
+        netAmt: null,
+        password: "",
+        passwordFlag: null,
+        remark: this.remark,
+        createFlag: false,
+      };
 
-  //     if (invoiceForm.valid) {
-  //       this.generateInvoiceService.updateInvoice(obj).pipe(takeUntil(this.destroy$)).subscribe(
-  //         (data) => {
-  //           if (data["success"]) {
-  //             this.route.navigate(["/pages/generate_invoice"]);
-  //             this.toastr.success(errorData.Update_Success);
-  //             this.disableButton = false;
-  //           } else {
-  //             this.disableButton = false;
-  //             this.toastr.error(errorData.Update_Error);
-  //           }
-  //         },
-  //         (error) => {
-  //           this.disableButton = false;
-  //           this.toastr.error(errorData.Serever_Error);
-  //         }
-  //       );
-  //     } else {
-  //       this.disableButton = false;
-  //     }
-  //     //Clear selected party
-  //     this.invoiceValues.partyId = null;
-  //   } else {
-  //     this.toastr.warning("Select upto 4 batches only");
-  //   }
-  // }
+      if (temp[0].pendingAmt > temp[0].creditLimit) {
+        const modalRef = this.modalService.open(PasswordDailogComponent);
+        modalRef.result.then((res) => {
+          if (res) {
+            const modalRef = this.modalService.open(PrintLayoutComponent, {
+              size: "xl",
+            });
+            modalRef.componentInstance.finalInvoice = obj;
+            modalRef.componentInstance.previewFlag = true;
+            modalRef.componentInstance.discount = this.discountChange;
+            modalRef.componentInstance.remark = this.remark;
+            modalRef.componentInstance.updateFlag = true;
+
+            modalRef.result.then((result) => {
+              if (result) {
+                obj.cgst = result.cgst;
+                obj.sgst = result.sgst;
+                obj.discount = result.discount;
+                obj.netAmt = Math.round(result.netAmt);
+                obj.taxAmt = result.taxAmt;
+                obj.password = res;
+                obj.passwordFlag = true;
+
+                if (invoiceForm.valid) {
+                  this.generateInvoiceService
+                    .updateInvoice(obj)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(
+                      (data) => {
+                        if (data["success"]) {
+                          this.invoiceNo = data["data"];
+                          if (result.print === "print") {
+                            this.print(this.invoiceNo);
+                          }
+                          // this.route.navigate(["/pages/generate_invoice"]);
+                          this.toastr.success(errorData.Update_Success);
+                          this.disableButton = false;
+                        } else {
+                          this.disableButton = false;
+                          this.toastr.error(errorData.Update_Error);
+                        }
+                      },
+                      (error) => {
+                        this.disableButton = false;
+                        this.toastr.error(errorData.Serever_Error);
+                      }
+                    );
+                } else {
+                  this.disableButton = false;
+                }
+                //Clear selected party
+                this.invoiceValues.partyId = null;
+                this.discountFlag = false;
+                this.discountChange = null;
+                this.remark = "";
+              } else {
+                this.disableButton = false;
+              }
+            });
+          }
+        });
+      } else {
+        const modalRef = this.modalService.open(PrintLayoutComponent, {
+          size: "xl",
+        });
+        modalRef.componentInstance.finalInvoice = obj;
+        modalRef.componentInstance.previewFlag = true;
+        modalRef.componentInstance.discount = this.discountChange;
+        modalRef.componentInstance.remark = this.remark;
+        modalRef.componentInstance.updateFlag = true;
+
+        modalRef.result.then((result) => {
+          if (result) {
+            obj.cgst = result.cgst;
+            obj.sgst = result.sgst;
+            obj.discount = result.discount;
+            obj.netAmt = Math.round(result.netAmt);
+            obj.taxAmt = result.taxAmt;
+            obj.password = "";
+            obj.passwordFlag = false;
+            if (invoiceForm.valid) {
+              this.generateInvoiceService
+                .updateInvoice(obj)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(
+                  (data) => {
+                    if (data["success"]) {
+                      this.invoiceNo = data["data"];
+                      if (result.print === "print") {
+                        this.print(this.invoiceNo);
+                      }
+                      // this.route.navigate(["/pages/generate_invoice"]);
+                      this.toastr.success(errorData.Update_Success);
+                      this.disableButton = false;
+                    } else {
+                      this.disableButton = false;
+                      this.toastr.error(errorData.Update_Error);
+                    }
+                  },
+                  (error) => {
+                    this.disableButton = false;
+                    this.toastr.error(errorData.Serever_Error);
+                  }
+                );
+            } else {
+              this.disableButton = false;
+            }
+            //Clear selected party
+            this.invoiceValues.partyId = null;
+            this.discountFlag = false;
+            this.discountChange = null;
+            this.remark = "";
+          } else {
+            this.disableButton = false;
+          }
+        });
+      }
+    } else {
+      this.toastr.warning("Select upto 4 batches only");
+    }
+  }
 
   onSelect(value: any) {
     let arr: any[] = value.selected;
@@ -390,12 +533,28 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     this.finalcheckedrows = arr;
   }
 
-  tableChange(event){
+  tableChange(event) {
     if (event === "view table") {
-      this.route.navigate(['/pages/generate_invoice/view']);
-    }
-    else if(event === 'report'){
+      this.route.navigate(["/pages/generate_invoice/view"]);
+    } else if (event === "report") {
       this.route.navigate(["/pages/generate_invoice/report"]);
+    }
+  }
+
+  enterClicked(rowIndex, e) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      if (rowIndex < this.merge.length) {
+        let id = "invoice" + (rowIndex + 1) + "-rateChange";
+        let inter = setInterval(() => {
+          const element = document.getElementById(id) as any;
+          if (element) {
+            element.focus();
+            element.select();
+            clearInterval(inter);
+          }
+        });
+      }
     }
   }
 }

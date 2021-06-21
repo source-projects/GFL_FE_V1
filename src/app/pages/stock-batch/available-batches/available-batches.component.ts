@@ -1,29 +1,29 @@
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ToastrService } from "ngx-toastr";
-import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { StockBatchGuard } from "../../@theme/guards/stock-batch.guard";
-import * as errorData from "../../@theme/json/error.json";
-import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
-import { StockBatchService } from "../../@theme/services/stock-batch.service";
-import { JobCardComponent } from "./job-card/job-card.component";
-import { cloneDeep } from 'lodash';
+import { StockBatchGuard } from '../../../@theme/guards/stock-batch.guard';
+import { CommonService } from '../../../@theme/services/common.service';
+import { StockBatchService } from '../../../@theme/services/stock-batch.service';
+import * as errorData from "../../../@theme/json/error.json";
+import {cloneDeep} from 'lodash';
+import { takeUntil } from 'rxjs/operators';
+import { JobCardComponent } from '../job-card/job-card.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { Router } from '@angular/router';
+import { InputBatchComponent } from '../input-batch/input-batch.component';
 
 @Component({
-  selector: "ngx-stock-batch",
-  templateUrl: "./stock-batch.component.html",
-  styleUrls: ["./stock-batch.component.scss"],
+  selector: 'ngx-available-batches',
+  templateUrl: './available-batches.component.html',
+  styleUrls: ['./available-batches.component.scss']
 })
-export class StockBatchComponent implements OnInit, OnDestroy {
+export class AvailableBatchesComponent implements OnInit {
   public errorData: any = (errorData as any).default;
   public loading = false;
   stockList;
   copyStockList = [];
+  selectedTableChange;
   stock = [];
   headers = [
     "Stock In Type",
@@ -68,13 +68,12 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private route: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
     public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
     private commonService: CommonService,
-    private exportService: ExportService,
-    private jwtToken: JwtTokenService
   ) {}
 
   ngOnInit(): void {
@@ -135,13 +134,25 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     }
   }
 
-  open() {
-    this.flag = true;
-
-    const modalRef = this.modalService.open(ExportPopupComponent);
-    modalRef.componentInstance.headers = this.headers;
-    modalRef.componentInstance.list = this.stock;
-    modalRef.componentInstance.moduleName = this.module;
+  deleteStockBatch(id) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.stockBatchService.deleteStockBatchById(id).pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(errorData.Delete);
+              this.onChange(this.radioSelect);
+            }
+          },
+          (error) => {
+            this.toastr.error(errorData.Internal_Error);
+          }
+        );
+      }
+    });
   }
 
   filter(value: any) {
@@ -169,7 +180,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
   getStockBatchList(id, getBy) {
     this.loading = true;
-    this.stockBatchService.getAllStockBatchList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
+    this.stockBatchService.getAvailableStockBatchList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.stockList = data["data"];
@@ -193,28 +204,6 @@ export class StockBatchComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  deleteStockBatch(id) {
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
-      size: "sm",
-    });
-    modalRef.result.then((result) => {
-      if (result) {
-        this.stockBatchService.deleteStockBatchById(id).pipe(takeUntil(this.destroy$)).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.toastr.success(errorData.Delete);
-              this.onChange(this.radioSelect);
-            }
-          },
-          (error) => {
-            this.toastr.error(errorData.Internal_Error);
-          }
-        );
-      }
-    });
-  }
-
   getViewAccess() {
     if (!this.stockBatchGuard.accessRights("view")) {
       this.radioArray[0].disabled = true;
@@ -283,5 +272,13 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
       })
+  }
+
+  setViewJobValue(event) {
+    if (event === "view table") {
+      this.route.navigate(['/pages/stock-batch/view'])
+    } else if (event === "add") {
+      this.route.navigate(['/pages/stock-batch'])
+    }
   }
 }
