@@ -72,7 +72,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     private jwt: JwtTokenService,
     private commonService: CommonService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.jwt.getDecodeToken("userId");
@@ -431,7 +431,11 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                     .subscribe(
                       (data) => {
                         if (data["success"]) {
-                          this.route.navigate(["/pages/generate_invoice"]);
+                          this.invoiceNo = data["data"];
+                          if (result.print === "print") {
+                            this.print(this.invoiceNo);
+                          }
+                          // this.route.navigate(["/pages/generate_invoice"]);
                           this.toastr.success(errorData.Update_Success);
                           this.disableButton = false;
                         } else {
@@ -484,7 +488,11 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 .subscribe(
                   (data) => {
                     if (data["success"]) {
-                      this.route.navigate(["/pages/generate_invoice"]);
+                      this.invoiceNo = data["data"];
+                      if (result.print === "print") {
+                        this.print(this.invoiceNo);
+                      }
+                      // this.route.navigate(["/pages/generate_invoice"]);
                       this.toastr.success(errorData.Update_Success);
                       this.disableButton = false;
                     } else {
