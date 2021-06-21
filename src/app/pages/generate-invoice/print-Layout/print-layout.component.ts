@@ -54,6 +54,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
+    
     const invoiceNo = this._route.snapshot.queryParamMap.get("invoice");
     if (myArray === null) {
       this.invoiceIds = new Array<string>();
