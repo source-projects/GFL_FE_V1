@@ -114,4 +114,24 @@ export class StockBatchService {
       this.commonService.envUrl() + "api/stockBatch/batch/" + bId + "/" + bId
     );
   }
+
+  //lot return...
+  returnLotPost(body){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/add/returnBatch", body
+    );
+  }
+
+  returnLotgetById(id){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/get/returnBatch?chlNo="+id
+    );
+  }
+
+  returnLotgetAll(){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/stockBatch/all/returnBatch"
+    );
+  }
+  
 }
