@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { elementAt, takeUntil } from "rxjs/operators";
@@ -9,7 +9,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { StockBatchService } from "../../../@theme/services/stock-batch.service";
 import { MergeBatchService } from "../../../@theme/services/merge-batch.service";
 import { PartyService } from "../../../@theme/services/party.service";
-import { cloneDeep, sortBy } from 'lodash'
+import { cloneDeep, sortBy } from "lodash";
 
 @Component({
   selector: "ngx-lot-return",
@@ -29,6 +29,10 @@ export class LotReturnComponent implements OnInit {
   public selectedParty;
   public selectedQuality;
   public selectedBatch;
+  public disableFields: boolean = false;
+  public formSubmitted: boolean = false;
+  public broker: string;
+  public tempoNo: string;
 
   public destroy$: Subject<void> = new Subject<void>();
 
@@ -45,7 +49,7 @@ export class LotReturnComponent implements OnInit {
     private route: Router,
     private finishedMeterService: FinishedMeterService,
     private qualityService: QualityService,
-    private partyService: PartyService,
+    private partyService: PartyService
   ) {}
 
   ngOnInit(): void {
@@ -57,16 +61,19 @@ export class LotReturnComponent implements OnInit {
 
   //getAll party list
   getAllParty() {
-    this.partyService.getAllPartyWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.partyList = data["data"];
-        } //else this.toastr.error(data["msg"]);
-      },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
-    );
+    this.partyService
+      .getAllPartyWithNameOnly()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.partyList = data["data"];
+          } //else this.toastr.error(data["msg"]);
+        },
+        (error) => {
+          //this.toastr.error(errorData.Internal_Error);
+        }
+      );
   }
 
   selectionChanges(event) {
@@ -78,6 +85,8 @@ export class LotReturnComponent implements OnInit {
       this.route.navigate(["/pages/stock-batch/pending"]);
     } else if (event == "add") {
       this.route.navigate(["/pages/stock-batch/pending"]);
+    } else if(event == "view"){
+      this.route.navigate(["/pages/stock-batch/return-lot/view"]);
     }
   }
 
@@ -170,7 +179,7 @@ export class LotReturnComponent implements OnInit {
   }
 
   batchSelected(event) {
-    this.selectedBatch=event;
+    this.selectedBatch = event;
     this.grList = [];
     this.stockBatchService
       .getBatchGRById(this.selectedBatch)
@@ -182,58 +191,87 @@ export class LotReturnComponent implements OnInit {
       });
   }
 
-  geSelected(event){
+  geSelected(event) {
     this.selectedGRListTemp = [];
-    this.selectedGRListTemp = event.selected
+    this.selectedGRListTemp = event.selected;
   }
 
-  onSelection(){
-    this.selectedGRListTemp.forEach(element => {
-      if(!this.selectedGRList.filter(f => f.id === element.id).length){
+  onSelection() {
+    this.selectedGRListTemp.forEach((element) => {
+      if (!this.selectedGRList.filter((f) => f.id === element.id).length) {
         this.selectedGRList.push(cloneDeep(element));
-      } 
-    });
-    this.selectedGRList = sortBy(this.selectedGRList, 'batchId')
-  }
-
-  removeFromSelectedGr(id){
-    this.selectedGRList = this.selectedGRList.filter(f=> f.id !== id);
-  }
-
-  saveReturnLot(){
-    if(this.selectedGRList.length){
-      this.loading = true;
-      let obj = {
-        batchDataList: []
       }
-      obj.batchDataList = this.selectedGRList.map(m => { return {id: m.id, controlId: m.controlId} });
-      this.stockBatchService.returnLotPost(obj).pipe(takeUntil(this.destroy$)).subscribe(
-        res=>{
-          if(res['success']){
-            this.toastr.success(res['msg']);
-            this.resetForm();
-          }else{
-            this.toastr.error(res['msg']);
-          }
-          this.loading = false;
-        }, error=>{
-          this.loading = false;
-        }
-      )
-    }else{
-      this.toastr.error("Select atleast 1 gr-data to return")
+    });
+    this.selectedGRList = sortBy(this.selectedGRList, "batchId");
+    if (!this.selectedGRList.length) {
+      this.disableFields = false;
+    } else {
+      this.disableFields = true;
     }
   }
 
-  resetForm(){
+  removeFromSelectedGr(id) {
+    this.selectedGRList = this.selectedGRList.filter((f) => f.id !== id);
+    this.selectedGRListTemp = this.selectedGRListTemp.filter(
+      (f) => f.id !== id
+    );
+    if (!this.selectedGRList.length) {
+      this.disableFields = false;
+    } else {
+      this.disableFields = true;
+    }
+  }
+
+  saveReturnLot(saveAndPrint?) {
+    this.formSubmitted = true;
+    if (this.selectedGRList.length && this.broker && this.tempoNo) {
+      this.loading = true;
+      let obj = {
+        broker: this.broker,
+        tempoNo: this.tempoNo,
+        createdBy: this.commonService.getUser().userId,
+        batchDataList: [],
+      };
+      obj.batchDataList = this.selectedGRList.map((m) => {
+        return { id: m.id, controlId: m.controlId };
+      });
+      this.stockBatchService
+        .returnLotPost(obj)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (res) => {
+            if (res["success"]) {
+              this.toastr.success(res["msg"]);
+              this.resetForm();
+              if (saveAndPrint) {
+                this.route.navigate([
+                  `pages/stock-batch/return-lot/print`],
+                  { queryParams: { chlNo: res['data'] } },
+                );
+              }
+            } else {
+              this.toastr.error(res["msg"]);
+            }
+            this.loading = false;
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
+    } else {
+      this.toastr.error("Select atleast one GR-data to return");
+    }
+  }
+
+  resetForm() {
     this.selectedGRList = [];
     this.selectedGRListTemp = [];
     this.batchList = [];
-    this.qualityList = [];
-    this.partyList = [];
     this.selectedBatch = null;
     this.selectedParty = null;
     this.selectedQuality = null;
     this.grList = [];
+    this.disableFields = false;
+    this.formSubmitted = false;
   }
 }

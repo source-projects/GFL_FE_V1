@@ -10,8 +10,10 @@ import { JobCardComponent } from './job-card/job-card.component';
 import { InputBatchComponent } from './input-batch/input-batch.component';
 import { AvailableBatchesComponent } from './available-batches/available-batches.component';
 import { LotReturnComponent } from './lot-return/lot-return.component';
+import { PrintLotReturnComponent } from './print-lot-return/print-lot-return.component';
+import { LotReturnViewComponent } from './lot-return-view/lot-return-view.component';
 @NgModule({
-  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent, AvailableBatchesComponent, LotReturnComponent],
+  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent, AvailableBatchesComponent, LotReturnComponent, PrintLotReturnComponent, LotReturnViewComponent],
   imports: [
     CommonModule,
     StockBatchRoutingModule,

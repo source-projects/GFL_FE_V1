@@ -6,8 +6,9 @@
                 <div class="row">
                     <div class="col-md-5 col-6 display-flex-start max-width-device">
                         <ng-select class="btn btn-md" (change)="selectionChanges($event)" placeholder="Select">
+                            <ng-option value="view">View Table</ng-option>
                             <ng-option value="add">Add Stock-batch</ng-option>
-                            <ng-option value="view table">View Table</ng-option>
+                            <ng-option value="view table">View Stock-batch</ng-option>
                             <ng-option value="job card">Job Card</ng-option>
                             <ng-option value="pending">Pending batches</ng-option>
                         </ng-select>
@@ -26,8 +27,9 @@
                                     <label>Party</label>
                                 </div>
                                 <div class="col-md-10 col-12">
-                                    <ng-select name="partyId" appendTo="body" [(ngModel)]='selectedParty'
-                                        #partyId1="ngModel" (change)="enableQuality($event)" placeholder="Select Party">
+                                    <ng-select name="partyId" [disabled]="disableFields" appendTo="body"
+                                        [(ngModel)]='selectedParty' #partyId1="ngModel" (change)="enableQuality($event)"
+                                        placeholder="Select Party">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -62,8 +64,8 @@
                                     <label>Quality</label>
                                 </div>
                                 <div class="col-md-10 col-12">
-                                    <ng-select name="qualityId" appendTo="body" [(ngModel)]='selectedQuality'
-                                        #qualityId1="ngModel" placeholder="Select Quality"
+                                    <ng-select name="qualityId" [disabled]="disableFields" appendTo="body"
+                                        [(ngModel)]='selectedQuality' #qualityId1="ngModel" placeholder="Select Quality"
                                         (change)="qualitySelected($event)">
                                         <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
                                             {{q.qualityId}}
@@ -75,6 +77,44 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Broker</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <input class="form-control" name="broker" [(ngModel)]="broker" #broker1="ngModel"
+                                        required placeholder="Enter broker"
+                                        [ngClass]="{'is-invalid': (formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)}">
+                                    <div class="input-required"
+                                        *ngIf="(formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)">
+                                        <span>Broker is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-12 display-flex-start label-0">
+                                    <label>Tempo No</label>
+                                </div>
+                                <div class="col-md-10 col-12">
+                                    <input class="form-control" name="tempo" [(ngModel)]="tempoNo" #tempo="ngModel"
+                                        required placeholder="Enter tempo no"
+                                        [ngClass]="{'is-invalid': (formSubmitted && tempo.invalid) || (tempo.invalid && tempo.touched)}">
+                                    <div class="input-required"
+                                        *ngIf="(formSubmitted && tempo.invalid) || (tempo.invalid && tempo.touched)">
+                                        <span>Tempo No is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
@@ -97,35 +137,36 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3" id="fmtr-table">
+                    <div class="col-md-3 pb-2" id="fmtr-table" style="border: 1px solid #c3c3c3;">
                         <ng-container>
                             <h5>GR List</h5>
                             <ngx-datatable [rows]="grList" [scrollbarV]="true"
-                            class="material common-table datatable-auto-height fm-table-body-height"
-                            style="height: 200px;"[selectionType]="'checkbox'" (select)="geSelected($event)"  [selected]="selectedGRListTemp">
-                                <ngx-datatable-column name="Meter" prop="mtr"
-                                    [headerCheckboxable]="true" [checkboxable]="true">
+                                class="material common-table datatable-auto-height fm-table-body-height"
+                                style="height: 200px;" [selectionType]="'checkbox'" (select)="geSelected($event)"
+                                [selected]="selectedGRListTemp">
+                                <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
+                                    [checkboxable]="true">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
                             </ngx-datatable>
                         </ng-container>
                     </div>
-                    <div class="col-md-3">
-                        <div>
+                    <div class="col-md-3 center">
+                        <div class="">
                             <button type="button"
-                            class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="onSelection()" >Transfer -></button>
+                                class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                                (click)="onSelection()">Transfer -></button>
                         </div>
                     </div>
-                    <div class="col-md-6"id="fmtr-table">
-                        <ng-container >
+                    <div class="col-md-6 pb-2" id="fmtr-table" style="border: 1px solid #c3c3c3">
+                        <ng-container>
                             <h5>Selected GR List</h5>
                             <ngx-datatable [rows]="selectedGRList" [scrollbarV]="true"
-                            class="material common-table datatable-auto-height fm-table-body-height"
-                            style="height: 200px;" >
-                                <ngx-datatable-column name="Action" sortable="false" [maxWidth]="40">
-                                    <ng-template let-row="row" let-value="value"
-                                        ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                class="material common-table datatable-auto-height fm-table-body-height"
+                                style="height: 200px;">
+                                <ngx-datatable-column name="Action" sortable="false" [maxWidth]="100">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                        let-rowIndex="rowIndex">
                                         <nb-icon icon="trash" status="danger"
                                             [options]="{ animation: { type: 'zoom' } }"
                                             (click)="removeFromSelectedGr(row.id)">
@@ -133,7 +174,7 @@
                                     </ng-template>
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Batch Id" prop="batchId"></ngx-datatable-column>
-                                <ngx-datatable-column name="Meter" prop="mtr" >
+                                <ngx-datatable-column name="Meter" prop="mtr">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
                             </ngx-datatable>
@@ -141,14 +182,17 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pt-2">
                     <div class="col-md-12 text-btn-right">
                         <button type="button"
-                                class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                                (click)="saveReturnLot()" >SAVE</button>
+                            class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                            (click)="saveReturnLot(false)">SAVE</button>
+                        <button type="button"
+                            class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                            (click)="saveReturnLot(true)">SAVE AND PRINT</button>
                     </div>
                 </div>
-                
+
 
             </nb-card-body>
         </nb-card>

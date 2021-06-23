@@ -128,7 +128,7 @@ export class StockBatchService {
     );
   }
 
-  returnLotgetAll(id){
+  returnLotgetAll(){
     return this.httpClient.get(
       this.commonService.envUrl() + "api/stockBatch/all/returnBatch"
     );

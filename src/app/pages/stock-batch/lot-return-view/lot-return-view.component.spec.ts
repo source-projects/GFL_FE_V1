@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LotReturnComponent } from './lot-return.component';
+import { LotReturnViewComponent } from './lot-return-view.component';
 
-describe('LotReturnComponent', () => {
-  let component: LotReturnComponent;
-  let fixture: ComponentFixture<LotReturnComponent>;
+describe('LotReturnViewComponent', () => {
+  let component: LotReturnViewComponent;
+  let fixture: ComponentFixture<LotReturnViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LotReturnComponent ]
+      declarations: [ LotReturnViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LotReturnComponent);
+    fixture = TestBed.createComponent(LotReturnViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
