@@ -1,0 +1,163 @@
+<ng-container *ngIf="lotReturnData && lotReturnData.chlNo">
+    <div id="printpdf" class="container" style="padding-right: 20px;">
+    <table class="margin-print"  style="width: 100%;border: 2px solid black;">
+        <tr class="border-dark">
+            <th>
+                <div class="row display-flex">
+                    <p class="col-sm-12 text-center font-30">
+                        <b>GLORY DYEING MILLS
+                            PVT. LTD.</b>
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="text-center col-sm-12 font-10 formally">
+                        FORMALLY KNOWN AS : MUKESH PROCESSORS PVT. LTD.
+
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="text-center col-sm-12 font-15">A-31, G.E.T.P,
+                        (Kala Ghoda), Palsana, Surat E-Mail : dyeing@gloryfab.com
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="text-center col-sm-12 font-15">GSTIN :- 24AAFCM5028A1Z1
+                        Place Of Supply : Surat</p>
+                </div>
+            </th>
+        </tr>
+        <tr class="border-dark">
+            <th class="display-flex">
+                <div class="row" style="width: 100%;">
+                    <p class="col-sm-12 text-center font-25">
+                        <b>!! GOODS RETURN CHALLAN !!</b>
+                    </p>
+                </div>
+            </th>
+        </tr>
+        <tr class="border-dark">
+            <th>
+                <div class="row">
+                <div class="col-sm-4" style="border-right: 1px solid rgb(143, 143, 143);">
+                    <p class="text-left col-sm-12 font-15">M/s. Party :</p>
+                    <p class="text-left col-sm-12 font-15">To. &nbsp;&nbsp;<b>{{lotReturnData.partyName}}</b></p>
+                    <p class="text-left col-sm-12 font-15">{{lotReturnData.address}}</p>
+                    <p class="text-left col-sm-12 font-15">GST NO.:{{lotReturnData.gst}}</p>
+                </div>
+                <div class="col-sm-4" style="border-right: 1px solid rgb(143, 143, 143);">
+                    <p class="text-left col-sm-12 font-15">Delivery Party :</p>
+                    <p class="text-left col-sm-12 font-15">To. &nbsp;&nbsp;<b>{{lotReturnData.partyName}}</b></p>
+                    <p class="text-left col-sm-12 font-15">{{lotReturnData.address}}</p>
+                    <p class="text-left col-sm-12 font-15">GST NO.:{{lotReturnData.gst}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <p class="text-left col-sm-12 font-15">Challan No &nbsp;: <b class="font-20">{{lotReturnData.chlNo}}</b>
+                    </p>
+                    <p class="text-left col-sm-12 font-15">Challan Date: {{lotReturnData.challanDate | date
+                        : 'short'}}</p>
+                    <p class="text-left col-sm-12 font-15">BROKER &nbsp;&nbsp;: <b>{{lotReturnData.broker}}</b></p>
+                    <p class="text-left col-sm-12 font-15">Tempo No &nbsp;&nbsp;: <b>{{lotReturnData.tempoNo}}</b></p>
+                </div>
+                </div>
+            </th>
+        </tr>
+        <tr class="border-dark">
+            <td>
+                <div class="row">
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <div class="col-sm-6">Sr.</div>
+                        <div class="col-sm-6">Meters.</div>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <div class="col-sm-6">Sr.</div>
+                        <div class="col-sm-6">Meters.</div>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <div class="col-sm-6">Sr.</div>
+                        <div class="col-sm-6">Meters.</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="col-sm-6">Sr.</div>
+                        <div class="col-sm-6">Meters.</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="border-dark">
+            <td>
+                <div class="row">
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <ng-container *ngFor="let m of list1; let i=index;">
+                            <div class="col-sm-6">{{m.idx}}</div>
+                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <ng-container *ngFor="let m of list2; let i=index;">
+                            <div class="col-sm-6">{{m.idx}}</div>
+                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                        <ng-container *ngFor="let m of list3; let i=index;">
+                            <div class="col-sm-6">{{m.idx}}</div>
+                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-3">
+                        <ng-container *ngFor="let m of list4; let i=index;">
+                            <div class="col-sm-6">{{m.idx}}</div>
+                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                        </ng-container>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="border-dark">
+            <td>
+                <div class="row">
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                            <div class="col-sm-6"><b>{{totalCount.list1 | number : '1.2-2'}}</b></div>
+                            <div class="col-sm-6"><b>{{totalMtr.list1 | number : '1.2-2'}}</b></div>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                            <div class="col-sm-6"><b>{{totalCount.list2 | number : '1.2-2'}}</b></div>
+                            <div class="col-sm-6"><b>{{totalMtr.list2 | number : '1.2-2'}}</b></div>
+                    </div>
+                    <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
+                            <div class="col-sm-6"><b>{{totalCount.list3 | number : '1.2-2'}}</b></div>
+                            <div class="col-sm-6"><b>{{totalMtr.list3 | number : '1.2-2'}}</b></div>
+                    </div>
+                    <div class="col-sm-3">
+                            <div class="col-sm-6"><b>{{totalCount.list4 | number : '1.2-2'}}</b></div>
+                            <div class="col-sm-6"><b>{{totalMtr.list4 | number : '1.2-2'}}</b></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="border-dark">
+            <td>
+                <div class="container">
+                <div class="row" style="margin-bottom: 60px;">
+                    <div class="col-sm-6 text-left">
+                        <p class="font-20"><b>Total Taka: {{totalCount.total}}&nbsp;&nbsp;Total Meters: {{totalMtr.total | number : '1.2-2'}}</b>
+                        </p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p class="font-20"><b>GLORY DYEING MILLS PVT. LTD</b></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <p class="font-20">Prepared & Checked By</p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p class="font-20">Authorised Signatory</p>
+                    </div>
+                </div>
+            </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</ng-container>

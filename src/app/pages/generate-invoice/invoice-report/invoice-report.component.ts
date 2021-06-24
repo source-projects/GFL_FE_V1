@@ -14,6 +14,7 @@ import { ShadeService } from '../../../@theme/services/shade.service';
 import { AdminService } from '../../../@theme/services/admin.service';
 import { ExportService } from '../../../@theme/services/export.service';
 import { sortBy as _sortBy } from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: "ngx-invoice-report",
@@ -157,6 +158,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
 
     if (form.valid) {
+      this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format(); 
+      this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format(); 
       this.invoiceService
         .getShortInvoiceReport(this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(

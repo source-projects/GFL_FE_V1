@@ -261,7 +261,6 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
                 this.shadeObj.qualityName = element.qualityName;
                 this.shadeObj.qualityType = element.qualityType;
                 this.shadeObj.partyId = element.partyId;
-                this.shadeObj.processId = element.processId;
                 this.shadeObj.qualityEntryId = element.qualityEntryId;
                 this.shadeObj.qualityNameId = element.qualityNameId;
                 this.wt100m = element.wtPer100m;
@@ -744,9 +743,11 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           const errorField = this.renderer.selectRootElement("#target");
           errorField.scrollIntoView();
         }
+        this.loading = false;
       }
     } else {
       this.disableButton = false;
+      this.loading = false;
     }
   }
 

@@ -232,9 +232,10 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         this.flag = 0;
         this.weightFlag = false;
         this.qualityList.forEach((element) => {
-          element.id ? (this.stockBatch.partyId = element.partyId) : null;
+          // element.id ? (t) : null;
           let id = element.id ? element.id : element.qualityEntryId;
           if (id == this.stockBatch.qualityId) {
+            this.stockBatch.partyId = element.partyId
             this.stockBatch.unit = element.unit;
             if (this.stockBatch.unit === "weight") {
               this.weightFlag = true;
@@ -242,6 +243,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
               this.weightFlag = false;
             }
             this.wtPer100mtrCopy = element.wtPer100m;
+            if(this.addFlag)
             this.stockBatch.wtPer100m = element.wtPer100m;
           }
         });
@@ -323,7 +325,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       this.qualityList.forEach((element) => {
         if (element.id == this.stockBatch.qualityId) {
           this.wtPer100mtrCopy = element.wtPer100m;
-          this.stockBatch.wtPer100m = element.wtPer100m;
+          if(this.addFlag)
+            this.stockBatch.wtPer100m = element.wtPer100m;
           this.stockBatch.unit = element.unit;
           if (this.stockBatch.unit === "weight") {
             this.weightFlag = true;
@@ -785,6 +788,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       const modalRef = this.modalService.open(InputBatchComponent)
     } else if(event === "pending"){
       this.route.navigate(['/pages/stock-batch/pending'])
+    } else if(event == "return"){
+      this.route.navigate(['/pages/stock-batch/return-lot'])
     }
   }
 
