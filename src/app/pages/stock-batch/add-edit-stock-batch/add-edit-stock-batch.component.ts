@@ -242,6 +242,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
               this.weightFlag = false;
             }
             this.wtPer100mtrCopy = element.wtPer100m;
+            if(this.addFlag)
             this.stockBatch.wtPer100m = element.wtPer100m;
           }
         });
@@ -323,7 +324,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       this.qualityList.forEach((element) => {
         if (element.id == this.stockBatch.qualityId) {
           this.wtPer100mtrCopy = element.wtPer100m;
-          this.stockBatch.wtPer100m = element.wtPer100m;
+          if(this.addFlag)
+            this.stockBatch.wtPer100m = element.wtPer100m;
           this.stockBatch.unit = element.unit;
           if (this.stockBatch.unit === "weight") {
             this.weightFlag = true;
