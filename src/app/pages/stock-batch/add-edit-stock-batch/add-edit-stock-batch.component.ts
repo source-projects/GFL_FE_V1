@@ -232,9 +232,10 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         this.flag = 0;
         this.weightFlag = false;
         this.qualityList.forEach((element) => {
-          element.id ? (this.stockBatch.partyId = element.partyId) : null;
+          // element.id ? (t) : null;
           let id = element.id ? element.id : element.qualityEntryId;
           if (id == this.stockBatch.qualityId) {
+            this.stockBatch.partyId = element.partyId
             this.stockBatch.unit = element.unit;
             if (this.stockBatch.unit === "weight") {
               this.weightFlag = true;
