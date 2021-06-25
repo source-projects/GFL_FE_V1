@@ -49,7 +49,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private shadeService: ShadeService,
     private adminService: AdminService,
-    private exportService : ExportService
+    private exportService: ExportService
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }
@@ -83,7 +83,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
             this.qualityNameList = data["data"];
           }
         },
-        (error) => {}
+        (error) => { }
       );
   }
 
@@ -158,8 +158,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
 
     if (form.valid) {
-      this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format(); 
-      this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format(); 
+      this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format();
+      this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format();
       this.invoiceService
         .getShortInvoiceReport(this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
@@ -212,7 +212,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     }, 10);
   }
 
-  downLoadExcel(form){
+  downLoadExcel(form) {
 
     if (form.valid) {
       this.invoiceService
@@ -221,12 +221,34 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               let excelData = data["data"];
-              this.headers = Object.keys(excelData[0].consolidatedBillDataList[0]);
+              this.headers = ["Invoice_No","BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs","Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
+            "C_GST","S_GST","GST_Amt","Total_Amt"]
               let list = [];
-              excelData.forEach(ele=>{
-                list.push(ele.consolidatedBillDataList[0])
+              excelData.forEach(ele => {
+                ele.consolidatedBillDataList.forEach(col => {
+                  let y = {
+                    Invoice_No:col.invoiceNo,
+                    BatchId: col.batchId,
+                    Total_Meter: col.totalMtr,
+                    Total_Pcs: col.greyPcs,
+                    Total_Finish_Meter: col.totalFinishMtr,
+                    Total_Finish_Pcs:col.pcs,
+                    Rate: col.rate,
+                    Amount: col.amt,
+                    Discount_Percentage: col.percentageDiscount,
+                    Discount_Amt: col.discount,
+                    Taxable_Amt: col.taxAmt,
+                    C_GST: col.cgst,
+                    S_GST: col.sgst,
+                    GST_Amt: col.gstAmt,
+                    Total_Amt: col.netAmt
+                  }
+                  list.push(y);
+                })
+
+
               })
-              this.exportService.exportExcel(list,"Invoice Report",this.headers)
+              this.exportService.exportExcel(list, "Invoice Report", this.headers)
             }
           },
           (error) => { }
