@@ -54,9 +54,11 @@
                     <p class="text-left col-sm-12 font-15">Challan No &nbsp;: <b class="font-20">{{lotReturnData.chlNo}}</b>
                     </p>
                     <p class="text-left col-sm-12 font-15">Challan Date: {{lotReturnData.challanDate | date
-                        : 'short'}}</p>
-                    <p class="text-left col-sm-12 font-15">BROKER &nbsp;&nbsp;: <b>{{lotReturnData.broker}}</b></p>
+                        : 'dd/MM/yyyy'}}</p>
+                    <p class="text-left col-sm-12 font-15">Delivery Person: <b>{{lotReturnData.broker}}</b></p>
                     <p class="text-left col-sm-12 font-15">Tempo No &nbsp;&nbsp;: <b>{{lotReturnData.tempoNo}}</b></p>
+                    <p class="text-left col-sm-12 font-15">Quality &nbsp;: <b>{{lotReturnData.qualityId}}</b></p>
+                    <p class="text-left col-sm-12 font-15">Party Chl No&nbsp;: <b>{{lotReturnData.pChallanNo}}</b></p>
                 </div>
                 </div>
             </th>
