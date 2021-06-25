@@ -49,7 +49,7 @@ export class CommonService {
       url = "http://103.137.194.167:8080/";
     }
   
-  return  "http://localhost:8080/";;  
+  return  url;  
 
   }
 

@@ -82,11 +82,11 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2 col-12 display-flex-start label-0">
-                                    <label>Broker</label>
+                                    <label>Delivery Person</label>
                                 </div>
                                 <div class="col-md-10 col-12">
                                     <input class="form-control" name="broker" [(ngModel)]="broker" #broker1="ngModel"
-                                        required placeholder="Enter broker"
+                                        required placeholder="Enter delivery person"
                                         [ngClass]="{'is-invalid': (formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)}">
                                     <div class="input-required"
                                         *ngIf="(formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)">
