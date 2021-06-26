@@ -19,14 +19,11 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
+                <form #myForm="ngForm">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-1">
-                            <div class="row">
-                                <div class="col-md-2 col-12 display-flex-start label-0">
                                     <label>Party</label>
-                                </div>
-                                <div class="col-md-10 col-12">
                                     <ng-select name="partyId" [disabled]="disableFields" appendTo="body"
                                         [(ngModel)]='selectedParty' #partyId1="ngModel" (change)="enableQuality($event)"
                                         placeholder="Select Party">
@@ -53,17 +50,11 @@
                                             </div>
                                         </ng-option>
                                     </ng-select>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-2 col-12 display-flex-start label-0">
                                     <label>Quality</label>
-                                </div>
-                                <div class="col-md-10 col-12">
                                     <ng-select name="qualityId" [disabled]="disableFields" appendTo="body"
                                         [(ngModel)]='selectedQuality' #qualityId1="ngModel" placeholder="Select Quality"
                                         (change)="qualitySelected($event)">
@@ -72,19 +63,13 @@
                                         </ng-option>
                                     </ng-select>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-2 col-12 display-flex-start label-0">
-                                    <label>Delivery Person</label>
-                                </div>
-                                <div class="col-md-10 col-12">
+                                    <label class="required">Delivery Person</label>
                                     <input class="form-control" name="broker" [(ngModel)]="broker" #broker1="ngModel"
                                         required placeholder="Enter delivery person"
                                         [ngClass]="{'is-invalid': (formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)}">
@@ -92,17 +77,11 @@
                                         *ngIf="(formSubmitted && broker1.invalid) || (broker1.invalid && broker1.touched)">
                                         <span>Broker is required</span>
                                     </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-2 col-12 display-flex-start label-0">
-                                    <label>Tempo No</label>
-                                </div>
-                                <div class="col-md-10 col-12">
+                                    <label class="required">Tempo No</label>
                                     <input class="form-control" name="tempo" [(ngModel)]="tempoNo" #tempo="ngModel"
                                         required placeholder="Enter tempo no"
                                         [ngClass]="{'is-invalid': (formSubmitted && tempo.invalid) || (tempo.invalid && tempo.touched)}">
@@ -110,7 +89,50 @@
                                         *ngIf="(formSubmitted && tempo.invalid) || (tempo.invalid && tempo.touched)">
                                         <span>Tempo No is required</span>
                                     </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"  style="margin: auto">
+                        <div class="form-group">
+                            <nb-checkbox class="user-all-check" [(ngModel)]="isDiffParty">
+                                Is Delivery-Party Different
+                            </nb-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4" *ngIf="isDiffParty">
+                        <div class="form-group">
+                            <label class="required">Party Name</label>
+                            <input class="form-control" name="diffPartyName" [(ngModel)]="diffPartyName"
+                                #diffPartyName1="ngModel" required placeholder="Party Name"
+                                [ngClass]="{'is-invalid': (formSubmitted && diffPartyName1.invalid) || (diffPartyName1.invalid && diffPartyName1.touched)}">
+                            <div class="input-required"
+                                *ngIf="(formSubmitted && diffPartyName1.invalid) || (diffPartyName1.invalid && diffPartyName1.touched)">
+                                <span>Party name is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="isDiffParty">
+                        <div class="form-group">
+                            <label class="required">Party Address</label>
+                            <input class="form-control" name="diffPartyAddr" [(ngModel)]="diffPartyAddr"
+                                #diffPartyAddr1="ngModel" required placeholder="Party Name"
+                                [ngClass]="{'is-invalid': (formSubmitted && diffPartyAddr1.invalid) || (diffPartyAddr1.invalid && diffPartyAddr1.touched)}">
+                            <div class="input-required"
+                                *ngIf="(formSubmitted && diffPartyAddr1.invalid) || (diffPartyAddr1.invalid && diffPartyAddr1.touched)">
+                                <span>Party address is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="isDiffParty">
+                        <div class="form-group">
+                            <label>Gst</label>
+                            <input class="form-control" [pattern]="pattern" name="diffPartyGst" [(ngModel)]="diffPartyGst"
+                                #diffPartyGst1="ngModel" placeholder="Gst"
+                                [ngClass]="{'is-invalid': (diffPartyGst && formSubmitted && diffPartyGst1.invalid)}">
+                            <div class="input-required" *ngIf="(diffPartyGst && formSubmitted && diffPartyGst1.invalid)">
+                                <span>Please enter valid gst number</span>
                             </div>
                         </div>
                     </div>
@@ -160,7 +182,7 @@
                     </div>
                     <div class="col-md-6 pb-2" id="fmtr-table" style="border: 1px solid #c3c3c3">
                         <ng-container>
-                            <h5>Selected GR List</h5>
+                            <h5 class="required">Selected GR List</h5>
                             <ngx-datatable [rows]="selectedGRList" [scrollbarV]="true"
                                 class="material common-table datatable-auto-height fm-table-body-height"
                                 style="height: 200px;">
@@ -186,14 +208,13 @@
                     <div class="col-md-12 text-btn-right">
                         <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="saveReturnLot(false)">SAVE</button>
+                            (click)="saveReturnLot(false, myForm)">SAVE</button>
                         <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="saveReturnLot(true)">SAVE AND PRINT</button>
+                            (click)="saveReturnLot(true, myForm)">SAVE AND PRINT</button>
                     </div>
                 </div>
-
-
+            </form>
             </nb-card-body>
         </nb-card>
     </div>

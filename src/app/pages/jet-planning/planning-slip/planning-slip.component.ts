@@ -413,9 +413,9 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
                 });
                 console.log(this.slipData)
                 this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence')
-                this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
-                if (this.isPrintDirect) this.printNOW();
+                this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3); 
               });
+              if (this.isPrintDirect) this.printNOW();
             } else {
               //this.toastr.error(data["msg"]);
             }
@@ -755,11 +755,9 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
       if (element) {
         doc.append(element);
         doc.print();
-        // this.printFlag = true;
         tempFlag = true;
         clearInterval(inter);
         this.activeModal.close(this.slipObj);
-        //this.activeModal.close();
       }
     }, 10);
   }

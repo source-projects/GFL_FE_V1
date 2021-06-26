@@ -44,11 +44,17 @@
                     <p class="text-left col-sm-12 font-15">{{lotReturnData.address}}</p>
                     <p class="text-left col-sm-12 font-15">GST NO.:{{lotReturnData.gst}}</p>
                 </div>
-                <div class="col-sm-4" style="border-right: 1px solid rgb(143, 143, 143);">
+                <div class="col-sm-4" *ngIf="!lotReturnData.diffDeliveryParty" style="border-right: 1px solid rgb(143, 143, 143);">
                     <p class="text-left col-sm-12 font-15">Delivery Party :</p>
                     <p class="text-left col-sm-12 font-15">To. &nbsp;&nbsp;<b>{{lotReturnData.partyName}}</b></p>
                     <p class="text-left col-sm-12 font-15">{{lotReturnData.address}}</p>
                     <p class="text-left col-sm-12 font-15">GST NO.:{{lotReturnData.gst}}</p>
+                </div>
+                <div class="col-sm-4" *ngIf="lotReturnData.diffDeliveryParty" style="border-right: 1px solid rgb(143, 143, 143);">
+                    <p class="text-left col-sm-12 font-15">Delivery Party :</p>
+                    <p class="text-left col-sm-12 font-15">To. &nbsp;&nbsp;<b>{{lotReturnData.diffPartyName}}</b></p>
+                    <p class="text-left col-sm-12 font-15">{{lotReturnData.diffPartyAddress}}</p>
+                    <p class="text-left col-sm-12 font-15">GST NO.:{{lotReturnData.diffGst}}</p>
                 </div>
                 <div class="col-sm-4">
                     <p class="text-left col-sm-12 font-15">Challan No &nbsp;: <b class="font-20">{{lotReturnData.chlNo}}</b>
