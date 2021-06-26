@@ -37,6 +37,7 @@ export class LotReturnComponent implements OnInit {
   public diffPartyName: string;
   public diffPartyAddr: string;
   public diffPartyGst: string;
+  public pattern = /^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/;
 
   public destroy$: Subject<void> = new Subject<void>();
 
@@ -226,10 +227,11 @@ export class LotReturnComponent implements OnInit {
     }
   }
 
-  saveReturnLot(saveAndPrint?) {
+  saveReturnLot(saveAndPrint, myForm) {
     this.formSubmitted = true;
     if (this.selectedGRList.length && this.broker && this.tempoNo) {
-      this.loading = true;
+      if(myForm.valid){
+        this.loading = true;
       let obj = {
         broker: this.broker,
         tempoNo: this.tempoNo,
@@ -250,7 +252,7 @@ export class LotReturnComponent implements OnInit {
           (res) => {
             if (res["success"]) {
               this.toastr.success(res["msg"]);
-              this.resetForm();
+              this.resetForm(myForm);
               if (saveAndPrint) {
                 this.route.navigate([
                   `pages/stock-batch/return-lot/print`],
@@ -266,12 +268,13 @@ export class LotReturnComponent implements OnInit {
             this.loading = false;
           }
         );
+      }
     } else {
       this.toastr.error("Select atleast one GR-data to return");
     }
   }
 
-  resetForm() {
+  resetForm(myForm) {
     this.selectedGRList = [];
     this.selectedGRListTemp = [];
     this.batchList = [];
@@ -287,5 +290,6 @@ export class LotReturnComponent implements OnInit {
     this.diffPartyAddr = null;
     this.diffPartyName = null;
     this.isDiffParty = null;
+    myForm.reset();
   }
 }

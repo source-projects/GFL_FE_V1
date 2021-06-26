@@ -19,6 +19,7 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
+                <form #myForm="ngForm">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-1">
@@ -127,8 +128,12 @@
                     <div class="col-md-4" *ngIf="isDiffParty">
                         <div class="form-group">
                             <label>Gst</label>
-                            <input class="form-control" name="diffPartyGst" [(ngModel)]="diffPartyGst"
-                                #diffPartyGst1="ngModel" required placeholder="Gst">
+                            <input class="form-control" [pattern]="pattern" name="diffPartyGst" [(ngModel)]="diffPartyGst"
+                                #diffPartyGst1="ngModel" placeholder="Gst"
+                                [ngClass]="{'is-invalid': (diffPartyGst && formSubmitted && diffPartyGst1.invalid)}">
+                            <div class="input-required" *ngIf="(diffPartyGst && formSubmitted && diffPartyGst1.invalid)">
+                                <span>Please enter valid gst number</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,14 +208,13 @@
                     <div class="col-md-12 text-btn-right">
                         <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="saveReturnLot(false)">SAVE</button>
+                            (click)="saveReturnLot(false, myForm)">SAVE</button>
                         <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="saveReturnLot(true)">SAVE AND PRINT</button>
+                            (click)="saveReturnLot(true, myForm)">SAVE AND PRINT</button>
                     </div>
                 </div>
-
-
+            </form>
             </nb-card-body>
         </nb-card>
     </div>
