@@ -5,6 +5,7 @@ import { LayoutService } from "../../../@core/utils";
 import { Subject } from "rxjs";
 import { CommonService } from '../../../@theme/services/common.service';
 import { event } from 'jquery';
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "ngx-one-column-layout",
@@ -31,6 +32,7 @@ export class OneColumnLayoutComponent implements OnDestroy{
   isTablet: boolean;
   isMobile: boolean;
   unSubscribe$:any;
+  destory$ = new Subject<void>();
   constructor(
     private menu: NbMenuService,
     private layoutService: LayoutService,
@@ -40,16 +42,19 @@ export class OneColumnLayoutComponent implements OnDestroy{
     this.formatDevice();
     if (this.isMobile == true) {
       this.unSubscribe$ = this.menu.onItemClick().subscribe(() => {
-          this.sidebarService.toggle(true, "menu-sidebar");
-          this.layoutService.changeLayoutSize();
-          return false;
-        
+        this.sidebarService.compact('menu-sidebar');
       });
+    }else{
+      this.menu.onItemClick().pipe(takeUntil(this.destory$)).subscribe(() => {
+        this.sidebarService.compact('menu-sidebar');
+    });
     }
   }
   ngOnDestroy() {
     if(this.unSubscribe$)
       this.unSubscribe$.unsubscribe();
+    this.destory$.next();
+    this.destory$.complete();
    }
 
   formatDevice() {

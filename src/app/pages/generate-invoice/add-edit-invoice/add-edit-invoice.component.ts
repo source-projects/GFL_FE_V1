@@ -538,6 +538,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.route.navigate(["/pages/generate_invoice/view"]);
     } else if (event === "report") {
       this.route.navigate(["/pages/generate_invoice/report"]);
+    } else if(event == 'sign'){
+      this.route.navigate(["/pages/generate_invoice/sign"]);
+    } else if(event == 'received'){
+      this.route.navigate(["/pages/generate_invoice/sign/view"]);
     }
   }
 

@@ -8,9 +8,11 @@ import { AddEditInvoiceComponent } from './add-edit-invoice/add-edit-invoice.com
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { PrintLayoutComponent } from './print-Layout/print-layout.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReceivedInvoiceComponent } from './received-invoice/received-invoice.component';
+import { SignInvoiceComponent } from './sign-invoice/sign-invoice.component';
 
 @NgModule({
-  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent],
+  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent, ReceivedInvoiceComponent, SignInvoiceComponent],
   imports: [
     CommonModule,
     GenerateInvoiceRoutingModule,

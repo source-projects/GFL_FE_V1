@@ -31,8 +31,12 @@ export class LotReturnComponent implements OnInit {
   public selectedBatch;
   public disableFields: boolean = false;
   public formSubmitted: boolean = false;
+  public isDiffParty: boolean = false;
   public broker: string;
   public tempoNo: string;
+  public diffPartyName: string;
+  public diffPartyAddr: string;
+  public diffPartyGst: string;
 
   public destroy$: Subject<void> = new Subject<void>();
 
@@ -231,6 +235,10 @@ export class LotReturnComponent implements OnInit {
         tempoNo: this.tempoNo,
         createdBy: this.commonService.getUser().userId,
         batchDataList: [],
+        diffDeliveryParty: this.isDiffParty,
+        diffPartyName: this.diffPartyName,
+        diffPartyAddress: this.diffPartyAddr,
+        diffGst: this.diffPartyGst
       };
       obj.batchDataList = this.selectedGRList.map((m) => {
         return { id: m.id, controlId: m.controlId };
@@ -273,5 +281,11 @@ export class LotReturnComponent implements OnInit {
     this.grList = [];
     this.disableFields = false;
     this.formSubmitted = false;
+    this.broker = null;
+    this.tempoNo = null;
+    this.diffPartyGst = null;
+    this.diffPartyAddr = null;
+    this.diffPartyName = null;
+    this.isDiffParty = null;
   }
 }

@@ -17,8 +17,18 @@ export class GenerateInvoiceService {
     return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/getBill',obj);
   }
 
-  getAllDipatch(){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getAll');
+  saveNewSignedInvoice(data){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/signByParty',data);
+  }
+
+  getAllDipatch(by?: string){
+    let getBy = '';
+    if(by == "signed"){
+      getBy = 'true';
+    }else if(by == "unsigned"){
+      getBy = 'false';
+    }
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getAll?signByParty='+getBy);
   }
   getBatchByParty(id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getBatchByParty/'+id);
