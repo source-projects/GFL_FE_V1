@@ -59,19 +59,19 @@ export class PrintLotReturnComponent implements OnInit, OnDestroy {
             this.totalCount.total = this.lotReturnData.batchReturnList.length
             for(let i = 1; i <= 48 ; i++){
               if(i <= 12){
-                this.list1.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{})
+                this.list1.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{mtr:''})
                 this.list1[this.list1.length-1]['idx']=this.lotReturnData.batchReturnList[i-1]?i:''
               }
               if(i <= 24 && i >= 13){
-                this.list2.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{})
+                this.list2.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{mtr:''})
                 this.list2[this.list2.length-1]['idx']=this.lotReturnData.batchReturnList[i-1]?i:''
               }
               if(i <= 36 && i >= 25){
-                this.list3.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{})
+                this.list3.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{mtr:''})
                 this.list3[this.list3.length-1]['idx']=this.lotReturnData.batchReturnList[i-1]?i:''
               }
               if(i <= 48 && i >= 37){
-                this.list4.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{})
+                this.list4.push(this.lotReturnData.batchReturnList[i-1]?this.lotReturnData.batchReturnList[i-1]:{mtr:''})
                 this.list4[this.list4.length-1]['idx']=this.lotReturnData.batchReturnList[i-1]?i:''
               }
             }
