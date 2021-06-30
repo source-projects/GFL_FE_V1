@@ -14,6 +14,7 @@ import { ShadeService } from '../../../@theme/services/shade.service';
 import { AdminService } from '../../../@theme/services/admin.service';
 import { ExportService } from '../../../@theme/services/export.service';
 import { sortBy as _sortBy } from 'lodash';
+import { DatePipe } from '@angular/common'
 import * as moment from 'moment';
 
 @Component({
@@ -49,7 +50,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private shadeService: ShadeService,
     private adminService: AdminService,
-    private exportService: ExportService
+    private exportService: ExportService,
+    public datepipe: DatePipe
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }
@@ -221,13 +223,24 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               let excelData = data["data"];
-              this.headers = ["Invoice_No","BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs","Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
+              this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
+              "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
+              "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
             "C_GST","S_GST","GST_Amt","Total_Amt"]
               let list = [];
               excelData.forEach(ele => {
                 ele.consolidatedBillDataList.forEach(col => {
+                  let latest_date =this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
                   let y = {
                     Invoice_No:col.invoiceNo,
+                    InvoiceDate:latest_date,
+                    PartyName:col.partyName,
+                    PartyAddress1:col.PartyAddress1,
+                    PartyAddress2:col.PartyAddress2,
+                    City:col.city,
+                    State:col.state,
+                    GSTIN:col.gstin,
+                    PhoneNumber:col.contactNo,
                     BatchId: col.batchId,
                     Total_Meter: col.totalMtr,
                     Total_Pcs: col.greyPcs,
