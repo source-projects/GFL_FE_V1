@@ -56,6 +56,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   userHeadId;
   merge = [];
   invoiceNo: any;
+  invoiceLotLimit:number = 4;
+  limitError = false;
 
   public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -206,6 +208,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   selected = [];
 
   addInvoice(invoiceForm) {
+    if(this.limitError){
+      this.toastr.error("Gr limit exceeds");
+      return;
+    }
     let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
@@ -270,6 +276,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                             if (result.print === "print") {
                               this.print(this.invoiceNo);
                             }
+                            this.limitError = false;
+                            this.invoiceLotLimit = 4;
                           } else {
                             this.disableButton = false;
                             this.toastr.error(errorData.Add_Error);
@@ -325,6 +333,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                         this.toastr.success(errorData.Add_Success);
                         this.merge = [];
                         this.disableButton = false;
+                        this.limitError = false;
+                        this.invoiceLotLimit = 4;
                         if (result.print === "print") {
                           this.print(this.invoiceNo);
                         }
@@ -369,6 +379,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   }
 
   updateInvoice(invoiceForm) {
+    if(this.limitError){
+      this.toastr.error("Gr limit exceeds");
+      return;
+    }
     let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.disableButton = true;
@@ -435,6 +449,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                           if (result.print === "print") {
                             this.print(this.invoiceNo);
                           }
+                          this.limitError = false;
+                          this.invoiceLotLimit = 4;
                           // this.route.navigate(["/pages/generate_invoice"]);
                           this.toastr.success(errorData.Update_Success);
                           this.disableButton = false;
@@ -492,6 +508,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                       if (result.print === "print") {
                         this.print(this.invoiceNo);
                       }
+                      this.limitError = false;
+                      this.invoiceLotLimit = 4;
                       // this.route.navigate(["/pages/generate_invoice"]);
                       this.toastr.success(errorData.Update_Success);
                       this.disableButton = false;
@@ -524,13 +542,50 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   }
 
   onSelect(value: any) {
-    let arr: any[] = value.selected;
-    if (arr.length <= 4) {
+    this.limitError = false;
+    this.finalcheckedrows = [];
+    this.invoiceLotLimit = 4;
+    if (value.selected.length <= 4) {
+      value.selected.forEach((e)=>{
+        if(e.totalPcs <= 30){
+          if(this.invoiceLotLimit > 0){
+            this.finalcheckedrows.push(e);
+            this.invoiceLotLimit--;
+          }else{
+            this.limitError = true;
+          }
+        }
+        else if(e.totalPcs > 30 && e.totalPcs <= 60){
+          if(this.invoiceLotLimit > 1){
+            this.finalcheckedrows.push(e);
+            this.invoiceLotLimit -= 2;
+          }else{
+            this.limitError = true;
+          }
+        }
+        else if(e.totalPcs > 60 && e.totalPcs <= 90){
+          if(this.invoiceLotLimit > 2){
+            this.finalcheckedrows.push(e);
+            this.invoiceLotLimit -= 3;
+          }else{
+            this.limitError = true;
+          }
+        }else if(e.totalPcs > 90 && e.totalPcs <= 120){
+          if(this.invoiceLotLimit > 3){
+            this.finalcheckedrows.push(e);
+            this.invoiceLotLimit -= 4;
+          }else{
+            this.limitError = true;
+          }
+        }
+      });
+      if(this.limitError){
+        this.toastr.error("Gr limit exceeds");
+      }
     } else {
+      this.limitError = true;
       this.toastr.warning("Select upto 4 batches only");
     }
-
-    this.finalcheckedrows = arr;
   }
 
   tableChange(event) {

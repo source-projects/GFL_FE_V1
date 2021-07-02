@@ -150,23 +150,61 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
               //calculating shrinkage, total mtr, total finish mtr...
               this.printInvoiceData[index].batchWithGrList.forEach(element => {
-                element.totalMtr = 0;
-                element.totalFMtr = 0;
-                element.shrinkage = 0;
-                element.lotDataLength = element.batchDataList.length;
-                element.batchDataList.forEach(lot => {
-                  if (lot.mtr == "-") {
-                    lot.mtr = "0";
+                let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.batchId == element.batchId && !f.calculationDone)
+                if(list.length > 1){
+                  let totalMtr = 0;
+                  let totalFMtr = 0;
+                  let shrinkage = 0;
+                  let lotDataLength = 0;
+                  let srNo = 0;
+                  list.forEach(e => {
+                    e.calculationDone = true;
+                    e.batchDataList.forEach(lot => {
+                      if (lot.mtr == "-") {
+                        lot.mtr = "0";
+                      }
+                      totalMtr += Number(lot.mtr)
+                      totalFMtr += lot.finishMtr
+                      if (lot.mtr == "0") {
+                        lot.mtr = "-";
+                      }
+                      lot.srNo = ++srNo;
+                    });
+                    lotDataLength += e.batchDataList.length;
+                    e.totalFMtr = '-';
+                    e.totalMtr = '-';
+                    e.shrinkage = '-';
+                    e.lotDataLength = '-';
+                  });
+                  totalMtr = (totalMtr).toFixed(2) as any;
+                  totalFMtr = (totalFMtr).toFixed(2) as any;
+                  shrinkage = (((totalMtr - totalFMtr) / totalMtr) * 100).toFixed(2) as any;
+                  list[list.length - 1].totalMtr = totalMtr;
+                  list[list.length - 1].totalFMtr = totalFMtr;
+                  list[list.length - 1].shrinkage = shrinkage;
+                  list[list.length - 1].lotDataLength = lotDataLength;
+                }else{
+                  if(!element.calculationDone){
+                    element.calculationDone = true;
+                    element.totalMtr = 0;
+                    element.totalFMtr = 0;
+                    element.shrinkage = 0;
+                    element.lotDataLength = element.batchDataList.length;
+                    element.batchDataList.forEach(lot => {
+                      if (lot.mtr == "-") {
+                        lot.mtr = "0";
+                      }
+                      element.totalMtr += Number(lot.mtr)
+                      element.totalFMtr += lot.finishMtr
+                      if (lot.mtr == "0") {
+                        lot.mtr = "-";
+                      }
+                    });
+                    element.totalMtr = (element.totalMtr).toFixed(2);
+                    element.totalFMtr = (element.totalFMtr).toFixed(2);
+                    element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
                   }
-                  element.totalMtr += Number(lot.mtr);
-                  element.totalFMtr += lot.finishMtr
-                  if (lot.mtr == "0") {
-                    lot.mtr = "-";
-                  }
-                });
-                element.totalMtr = (element.totalMtr).toFixed(2);
-                element.totalFMtr = (element.totalFMtr).toFixed(2);
-                element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
+                }
               });
 
               //for making 4 blocks
@@ -250,23 +288,61 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
       //calculating shrinkage, total mtr, total finish mtr...
       this.printInvoiceData[index].batchWithGrList.forEach(element => {
-        element.totalMtr = 0;
-        element.totalFMtr = 0;
-        element.shrinkage = 0;
-        element.lotDataLength = element.batchDataList.length;
-        element.batchDataList.forEach(lot => {
-          if (lot.mtr == "-") {
-            lot.mtr = "0";
+        let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.batchId == element.batchId && !f.calculationDone)
+        if(list.length > 1){
+          let totalMtr = 0;
+          let totalFMtr = 0;
+          let shrinkage = 0;
+          let lotDataLength = 0;
+          let srNo = 0;
+          list.forEach(e => {
+            e.calculationDone = true;
+            e.batchDataList.forEach(lot => {
+              if (lot.mtr == "-") {
+                lot.mtr = "0";
+              }
+              totalMtr += Number(lot.mtr)
+              totalFMtr += lot.finishMtr
+              if (lot.mtr == "0") {
+                lot.mtr = "-";
+              }
+              lot.srNo = ++srNo;
+            });
+            lotDataLength += e.batchDataList.length;
+            e.totalFMtr = '-';
+            e.totalMtr = '-';
+            e.shrinkage = '-';
+            e.lotDataLength = '-';
+          });
+          totalMtr = (totalMtr).toFixed(2) as any;
+          totalFMtr = (totalFMtr).toFixed(2) as any;
+          shrinkage = (((totalMtr - totalFMtr) / totalMtr) * 100).toFixed(2) as any;
+          list[list.length - 1].totalMtr = totalMtr;
+          list[list.length - 1].totalFMtr = totalFMtr;
+          list[list.length - 1].shrinkage = shrinkage;
+          list[list.length - 1].lotDataLength = lotDataLength;
+        }else{
+          if(!element.calculationDone){
+            element.calculationDone = true;
+            element.totalMtr = 0;
+            element.totalFMtr = 0;
+            element.shrinkage = 0;
+            element.lotDataLength = element.batchDataList.length;
+            element.batchDataList.forEach(lot => {
+              if (lot.mtr == "-") {
+                lot.mtr = "0";
+              }
+              element.totalMtr += Number(lot.mtr)
+              element.totalFMtr += lot.finishMtr
+              if (lot.mtr == "0") {
+                lot.mtr = "-";
+              }
+            });
+            element.totalMtr = (element.totalMtr).toFixed(2);
+            element.totalFMtr = (element.totalFMtr).toFixed(2);
+            element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
           }
-          element.totalMtr += Number(lot.mtr)
-          element.totalFMtr += lot.finishMtr
-          if (lot.mtr == "0") {
-            lot.mtr = "-";
-          }
-        });
-        element.totalMtr = (element.totalMtr).toFixed(2);
-        element.totalFMtr = (element.totalFMtr).toFixed(2);
-        element.shrinkage = (((element.totalMtr - element.totalFMtr) / element.totalMtr) * 100).toFixed(2);
+        }
       });
 
       //for making 4 blocks
