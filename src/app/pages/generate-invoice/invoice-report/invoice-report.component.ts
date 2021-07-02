@@ -172,7 +172,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                 element.consolidatedBillDataList.forEach(billData => {
                   this.totalFinishedMeter += billData.totalFinishMtr;
                   this.totalGrayMeter += billData.totalMtr;
-                  this.totalAmount += billData.amt
+                  this.totalAmount += billData.discountAmt;
                 });
               });
               this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
@@ -235,8 +235,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     Invoice_No:col.invoiceNo,
                     InvoiceDate:latest_date,
                     PartyName:col.partyName,
-                    PartyAddress1:col.PartyAddress1,
-                    PartyAddress2:col.PartyAddress2,
+                    PartyAddress1:col.partyAddress1,
+                    PartyAddress2:col.partyAddress2,
                     City:col.city,
                     State:col.state,
                     GSTIN:col.gstin,
