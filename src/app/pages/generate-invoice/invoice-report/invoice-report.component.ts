@@ -168,13 +168,15 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
-              this.shortReport.forEach((element) => {
-                element.consolidatedBillDataList.forEach(billData => {
-                  this.totalFinishedMeter += billData.totalFinishMtr;
-                  this.totalGrayMeter += billData.totalMtr;
-                  this.totalAmount += billData.discountAmt;
+              if(this.shortReport){
+                this.shortReport.forEach((element) => {
+                  element.consolidatedBillDataList.forEach(billData => {
+                    this.totalFinishedMeter += billData.totalFinishMtr;
+                    this.totalGrayMeter += billData.totalMtr;
+                    this.totalAmount += billData.discountAmt;
+                  });
                 });
-              });
+              }
               this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
               this.printReport(form);
             }

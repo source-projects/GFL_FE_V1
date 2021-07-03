@@ -50,7 +50,6 @@ export class CommonService {
     }
   
   return  url;
-
   }
 
   decToBin(n): any {
