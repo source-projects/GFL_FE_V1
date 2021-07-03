@@ -136,6 +136,37 @@
                                                 </table>
                                             </div>
                                         </div>
+
+                                        <div *ngIf="step.processType == 'Dyeing'">
+                                            <table class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
+                                                <tr>
+                                                    <th>Attribute</th>
+                                                    <th>L</th>
+                                                    <th>M</th>
+                                                    <th>D</th>
+                                                    <th>S</th>
+                                                    
+                                                </tr>
+                                                    
+                                                <tr *ngFor="let att of attributesArray;let i = index">
+                                                    <td>
+                                                        {{att}}
+                                                    </td>
+                                                    <td>
+                                                        {{step.dyeingplcMast.dyeingplcDataList[i].l}}
+                                                    </td>
+                                                    <td>
+                                                        {{step.dyeingplcMast.dyeingplcDataList[i].m}}
+                                                    </td>
+                                                    <td>
+                                                        {{step.dyeingplcMast.dyeingplcDataList[i].d}}
+                                                    </td>
+                                                    <td>
+                                                        {{step.dyeingplcMast.dyeingplcDataList[i].s}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </nb-accordion-item-body>
                                 </nb-accordion-item>
                             </nb-accordion>
