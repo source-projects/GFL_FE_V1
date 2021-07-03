@@ -32,6 +32,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   public itemList: any[];
   public master: any[];
   public loading: boolean = false;
+  attributesArray =[];
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -54,6 +55,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getAllAttributes();
     this.currentDyeingProcessId = this.currentRoute.snapshot.paramMap.get("id");
     if (this.currentDyeingProcessId) {
       this.getDyeingProcessById(this.currentDyeingProcessId);
@@ -89,6 +91,18 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
       },
       (error) => {}
     );
+  }
+
+  getAllAttributes() {
+    this.dyeingProcessService.getAttributes().subscribe(
+      result => {
+        if (result['success']) {
+          this.attributesArray = result['data'];
+          
+        }
+      }, error => {
+      }
+    )
   }
 
   getDyeingProcessById(id) {
@@ -141,6 +155,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
       size: "lg",
     });
     modalRef.componentInstance.position = step.sequence;
+    modalRef.componentInstance.id = this.dyeingProcess.id;
     modalRef.componentInstance.stepList = JSON.parse(
       JSON.stringify(this.dyeingProcessSteps)
     );
@@ -156,6 +171,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
         this.dyeingProcessSteps[step.sequence - 1].holdTime = result.holdTime;
         this.dyeingProcessSteps[step.sequence - 1].temp = result.temp;
         this.dyeingProcessSteps[step.sequence - 1].sequence = result.position;
+        this.dyeingProcessSteps[step.sequence - 1].dyeingplcMast = result.dyeingplcMast?result.dyeingplcMast:null;
       }
     });
   }
@@ -192,6 +208,7 @@ export class AddEditDyeingProcessComponent implements OnInit, OnDestroy {
           step.dyeingChemicalData = result.chemicalList;
           step.temp = result.temp;
           step.holdTime = result.holdTime;
+          step.dyeingplcMast = result.dyeingplcMast?result.dyeingplcMast:null;
           // step.functionList = [];
           if (
             !this.dyeingProcessSteps.length ||
