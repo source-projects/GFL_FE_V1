@@ -49,7 +49,9 @@ export class CommonService {
       url = "http://103.137.194.167:8080/";
     }
   
+  
   return  url;
+
   }
 
   decToBin(n): any {
