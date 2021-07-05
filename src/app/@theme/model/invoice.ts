@@ -90,4 +90,5 @@ export class ConsolidatedBillDataList {
   totalFinishMtr: number;
   rate: number;
   amt: number;
+  discountAmt:number;
 }

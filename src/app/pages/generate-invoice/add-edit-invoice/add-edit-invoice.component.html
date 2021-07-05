@@ -16,10 +16,7 @@
                 <ng-template #updateS>
                     <h2 class="nb-text">Update Invoice</h2>
                 </ng-template>
-
             </div>
-
-
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -72,7 +69,7 @@
                 <ngx-datatable-column name="MTR" prop="mtr"></ngx-datatable-column>
                 <ngx-datatable-column name="WT" prop="wt"></ngx-datatable-column>
                 <ngx-datatable-column name="Quality Id" prop="qualityId"></ngx-datatable-column>
-                <ngx-datatable-column name="Ouality Name" prop="qualityName"></ngx-datatable-column>
+                <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
                 <ngx-datatable-column name="Rate" prop="rate">
                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                         <input type="number" #rateChnage="ngModel" name="rateChnage{{ rowIndex }}"

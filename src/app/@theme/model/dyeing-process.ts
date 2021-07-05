@@ -18,6 +18,36 @@ export class DyeingProcess {
     liquerRation: number;
     sequence: number;
     temp: number;
+    dyeingplcMast?:DyeingplcMastClass
+  }
+
+  export class DyeingplcMastClass{
+    id:number;
+    dyeingProcessMastId:number;
+    dyeingplcDataList:dyeingplcDataListClass[];
+
+    constructor(){
+      this.id = null;
+      this.dyeingProcessMastId = null;
+      this.dyeingplcDataList = [];
+    }
+  }
+
+  export class dyeingplcDataListClass{
+    id:number;
+    controlId:number;
+    plcName:string;
+    l:number;
+    m:number;
+    d:number;
+    s:number;
+
+    constructor(){
+      this.l = null;
+      this.m = null;
+      this.d = null;
+      this.s = null;
+    }
   }
   
   export class DyeingChemicalData {

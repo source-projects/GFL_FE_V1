@@ -25,6 +25,7 @@ export class PrintInvoiceData {
     totalFMtr:any = 0
     shrinkage:any = 0
     lotDataLength:any = 0
+    calculationDone: boolean = false;
   }
   
   export class BatchDataList {
@@ -39,6 +40,7 @@ export class PrintInvoiceData {
     mtr: string
     sequenceId: number
     wt: number
+    srNo:number = 0;
   }
   
   export class QualityList {

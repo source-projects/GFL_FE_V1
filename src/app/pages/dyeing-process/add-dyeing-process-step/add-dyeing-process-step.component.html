@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label class="required">Process Type</label>
                         <ng-select [(ngModel)]="dyeingProcessStep.processType" placeholder="Select Process-type"
-                            name="processType" #processType1="ngModel"
+                            name="processType" #processType1="ngModel" (change)="processChange($event)"
                             [ngClass]="{'is-invalid':(processType1.invalid)&&(modalSubmitted || processType1.touched)}"
                             required>
                             <ng-option *ngFor="let p of (processTypes | filterOutSelected : stepList)" [value]="p">{{p}}
@@ -183,6 +183,39 @@
                     </table>
                 </div>
             </div>
+            <div class="container">
+                <div class="row" *ngIf="dyeingFlag">
+                    <table class="table table-responsive table-bordered table-striped table-process-fnt">
+                        <tr>
+                            <th>Attribute</th>
+                            <th>L</th>
+                            <th>M</th>
+                            <th>D</th>
+                            <th>S</th>
+                            
+                        </tr>
+                            
+                        <tr *ngFor="let att of attributesArray;let i = index">
+                            <td>
+                                {{att}}
+                            </td>
+                            <td>
+                                <input type="number" min="0" [(ngModel)]="dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].l" name="{{att}}L-{{i}}" [id]="'attL-'+i" class="form-control" (keyup)="onKeyUpForTable($event,i,att,'L')">
+                            </td>
+                            <td>
+                                <input type="number" min="0" [(ngModel)]="dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].m" name="{{att}}M-{{i}}" [id]="'attM-'+i" class="form-control" (keyup)="onKeyUpForTable($event,i,att,'M')">
+                            </td>
+                            <td>
+                                <input type="number" min="0" [(ngModel)]="dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].d" name="{{att}}D-{{i}}" [id]="'attD-'+i" class="form-control" (keyup)="onKeyUpForTable($event,i,att,'D')">
+                            </td>
+                            <td>
+                                <input type="number" min="0" [(ngModel)]="dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].s" name="{{att}}S-{{i}}" [id]="'attS-'+i" class="form-control" (keyup)="onKeyUpForTable($event,i,att,'S')">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary btn-sm btn-design-save"

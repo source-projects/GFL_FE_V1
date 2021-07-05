@@ -168,13 +168,15 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
-              this.shortReport.forEach((element) => {
-                element.consolidatedBillDataList.forEach(billData => {
-                  this.totalFinishedMeter += billData.totalFinishMtr;
-                  this.totalGrayMeter += billData.totalMtr;
-                  this.totalAmount += billData.amt
+              if(this.shortReport){
+                this.shortReport.forEach((element) => {
+                  element.consolidatedBillDataList.forEach(billData => {
+                    this.totalFinishedMeter += billData.totalFinishMtr;
+                    this.totalGrayMeter += billData.totalMtr;
+                    this.totalAmount += billData.discountAmt;
+                  });
                 });
-              });
+              }
               this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
               this.printReport(form);
             }
@@ -225,7 +227,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
               let excelData = data["data"];
               this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
               "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
-              "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
+              "Rate","Amount","Discount_Percentage","Discount_Amt",//"Taxable_Amt",
             "C_GST","S_GST","GST_Amt","Total_Amt"]
               let list = [];
               excelData.forEach(ele => {
@@ -235,8 +237,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     Invoice_No:col.invoiceNo,
                     InvoiceDate:latest_date,
                     PartyName:col.partyName,
-                    PartyAddress1:col.PartyAddress1,
-                    PartyAddress2:col.PartyAddress2,
+                    PartyAddress1:col.partyAddress1,
+                    PartyAddress2:col.partyAddress2,
                     City:col.city,
                     State:col.state,
                     GSTIN:col.gstin,
@@ -249,8 +251,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     Rate: col.rate,
                     Amount: col.amt,
                     Discount_Percentage: col.percentageDiscount,
-                    Discount_Amt: col.discount,
-                    Taxable_Amt: col.taxAmt,
+                    Discount_Amt: col.discountAmt,
+                    //Taxable_Amt: col.taxAmt,
                     C_GST: col.cgst,
                     S_GST: col.sgst,
                     GST_Amt: col.gstAmt,

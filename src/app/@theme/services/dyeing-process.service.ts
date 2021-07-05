@@ -95,4 +95,10 @@ export class DyeingProcessService {
       this.commonService.envUrl() + "api/dyeingProcess/delete/tagProcess?id=" + id
     );
   }
+
+  getAttributes(){
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/dyeingProcess/getPlcNameList"
+    );
+  }
 }
