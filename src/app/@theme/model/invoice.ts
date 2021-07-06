@@ -91,4 +91,5 @@ export class ConsolidatedBillDataList {
   rate: number;
   amt: number;
   discountAmt:number;
+  taxAmt:number;
 }

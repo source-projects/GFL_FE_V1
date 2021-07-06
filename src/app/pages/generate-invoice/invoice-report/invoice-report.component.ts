@@ -173,7 +173,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                   element.consolidatedBillDataList.forEach(billData => {
                     this.totalFinishedMeter += billData.totalFinishMtr;
                     this.totalGrayMeter += billData.totalMtr;
-                    this.totalAmount += billData.discountAmt;
+                    this.totalAmount += billData.taxAmt;
                   });
                 });
               }
