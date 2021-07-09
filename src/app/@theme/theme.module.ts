@@ -53,6 +53,7 @@ import { DesignationFilterPipe } from "./pipes/designation.pipe";
 import { TaskFilterPipe } from "./pipes/task-filter.pipe";
 import { PasswordDailogComponent } from "./components/password-dailog/password-dailog.component";
 import { FormsModule } from "@angular/forms";
+import { SearchInTablePipe } from "./pipes/search-in-table.pipe";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -96,7 +97,8 @@ const PIPES = [
   TaskFilterPipe,
   DisableStockBatchPipe,
   FilterSelectedItemPipe,
-  ImagePreviewPipe
+  ImagePreviewPipe,
+  SearchInTablePipe,
 ];
 
 @NgModule({

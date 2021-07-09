@@ -5,6 +5,7 @@ import { ColorRoutingModule } from './color-routing.module';
 import { ColorComponent } from './color.component';
 import { AddEditColorComponent } from './add-edit-color/add-edit-color.component';
 import { SharedModule } from '../../@theme/shared.module';
+import { ThemeModule } from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [ColorComponent, AddEditColorComponent],
@@ -12,7 +13,8 @@ import { SharedModule } from '../../@theme/shared.module';
     CommonModule,
     ColorRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ThemeModule
   ]
 })
 export class ColorModule { }

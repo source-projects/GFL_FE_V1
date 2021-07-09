@@ -60,6 +60,9 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   ownEdit = true;
   allEdit = true;
   groupEdit = true;
+  
+  searchANDCondition = false;
+  searchStr = "";
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -105,6 +108,11 @@ export class StockBatchComponent implements OnInit, OnDestroy {
       this.radioSelect = 1;
     }
   }
+
+  conditionChanged(){
+    this.filter();
+  }
+
   getAddAcess() {
     if (this.stockBatchGuard.accessRights("add")) {
       this.disabled = false;
@@ -144,16 +152,34 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
+  filter() {
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
     if(val){
       this.stockList = this.copyStockList.filter( f=>
-        this.matchString(f, 'partyName', val) ||
-        this.matchString(f, 'qualityName', val) ||
-        this.matchString(f, 'chlNo', val) ||
-        this.matchString(f, 'batchId', val) ||
-        this.matchString(f, 'stockInType', val)
+        {
+          let hit = 0;
+          for(let v of searchStrings){
+            if(
+              this.matchString(f, 'partyName', v.val) ||
+              this.matchString(f, 'qualityName', v.val) ||
+              this.matchString(f, 'chlNo', v.val) ||
+              this.matchString(f, 'batchId', v.val) ||
+              this.matchString(f, 'stockInType', v.val)
+            ){
+              v.matched = true;
+              hit++;
+              if(!this.searchANDCondition){
+                return true; 
+              }
+            }
+          }
+          if(this.searchANDCondition && hit == searchStrings.length){
+            return true;
+          }
+        }
       );
+      
     }else{
       this.stockList = cloneDeep(this.copyStockList); 
     }

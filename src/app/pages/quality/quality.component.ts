@@ -60,6 +60,9 @@ export class QualityComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent, { static: false })
   DataTable: DatatableComponent;
 
+  searchStr = "";
+  searchANDCondition = false;
+
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -106,28 +109,54 @@ export class QualityComponent implements OnInit, OnDestroy {
     this.page.pageNumber = 0;
     this.page.size = 10;
   }
+
+  conditionChanged(){
+    this.filter();
+  }
+
+  filter() {
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({matched: false, val: m}));
+    this.qualityList = this.copyQualityList.filter((f) => 
+    {
+      let hit = 0;
+      for(let v of searchStrings){
+        if(
+          this.matchString(f, 'qualityId', v.val) ||
+          this.matchString(f, 'qualityName', v.val) ||
+          this.matchString(f, 'partyName', v.val) ||
+          this.matchString(f, 'partyCode', v.val) ||
+          this.matchString(f, 'wtPer100m', v.val) ||
+          this.matchString(f, 'rate', v.val)
+        ){
+          v.matched = true;
+          hit++;
+          if(!this.searchANDCondition){
+            return true; 
+          }
+        }
+      }
+      if(this.searchANDCondition && hit == searchStrings.length){
+        return true;
+      }
+    }
+    );
+  }
+
+  matchString(item, key, searchString){
+    if(item[key]){
+      return item[key].toString().toLowerCase().includes(searchString);
+    }else{
+      return false;
+    }
+  }
+
   getAddAcess() {
     if (this.qualityGuard.accessRights("add")) {
       this.disabled = false;
     } else {
       this.disabled = true;
     }
-  }
-
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyQualityList[0]);
-    this.qualityList = this.copyQualityList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
-        }
-      }
-    });
   }
 
   onChange(event) {

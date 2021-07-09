@@ -32,6 +32,8 @@ export class PartyComponent implements OnInit, OnDestroy {
   headers = ["Party Name", "Party Address1", "Contact No", "City", "State"];
   module = "party";
   flag = false;
+  searchStr = "";
+  searchANDCondition = false;
   radioSelect = 0;
   radioArray = [
     { id: 1, value: "View Own", disabled: false },
@@ -118,20 +120,44 @@ export class PartyComponent implements OnInit, OnDestroy {
     }
   }
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyPartyList[0]);
-    this.partyList = this.copyPartyList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
+  conditionChanged(){
+    this.filter();
+  }
+
+  filter() {
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({matched: false, val: m}));
+    this.partyList = this.copyPartyList.filter((f) => 
+    {
+      let hit = 0;
+      for(let v of searchStrings){
+        if(
+          this.matchString(f, 'partyName', v.val) ||
+          this.matchString(f, 'partyCode', v.val) ||
+          this.matchString(f, 'partyAddress1', v.val) ||
+          this.matchString(f, 'contactNo', v.val) ||
+          this.matchString(f, 'city', v.val) ||
+          this.matchString(f, 'masterName', v.val) 
+        ){
+          v.matched = true;
+          hit++;
+          if(!this.searchANDCondition){
+            return true; 
+          }
         }
       }
+      if(this.searchANDCondition && hit == searchStrings.length){
+        return true;
+      }
     });
+  }
+
+  matchString(item, key, searchString){
+    if(item[key]){
+      return item[key].toLowerCase().includes(searchString);
+    }else{
+      return false;
+    }
   }
 
   getAllParty(id, getBy) {
