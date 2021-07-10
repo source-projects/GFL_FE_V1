@@ -1,5 +1,5 @@
 import { takeUntil } from 'rxjs/operators';
-import { uniqBy as _uniqBy} from 'lodash';
+import { uniqBy as _uniqBy } from 'lodash';
 import {
   Component,
   Input,
@@ -12,6 +12,8 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectComponent } from "@ng-select/ng-select";
 import {
   DyeingChemicalData,
+  dyeingplcDataListClass,
+  DyeingplcMastClass,
   DyeingProcessData,
 } from "../../../@theme/model/dyeing-process";
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
@@ -39,10 +41,14 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   @Input() position;
   @Input() editStep;
   @Input() stepList: DyeingProcessData[] = [];
-  public byChemicalList=[{id:"L",value:"L"},{id:"W",value:"W"},{id:"F",value:"F"}]
-  public processTypes = ["Scouring","Acid Wash", "Dyeing", "RC", "Cold Wash"];
-  public shadeTypeList = ["DEFAULT","LIGHT","MEDIUM","DARK","SPECIAL"];
+  @Input() id;
+  public byChemicalList = [{ id: "L", value: "L" }, { id: "W", value: "W" }, { id: "F", value: "F" }]
+  public processTypes = ["Scouring", "Acid Wash", "Dyeing", "RC", "Cold Wash"];
+  public shadeTypeList = ["DEFAULT", "LIGHT", "MEDIUM", "DARK", "SPECIAL"];
   private destroy$ = new Subject<void>();
+
+  attributesArray = [];
+  dyeingFlag: boolean = false;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -61,6 +67,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllTags();
     this.getItemData();
+
     if (!this.editStep) {
       if (this.position > 0) {
         this.dyeingProcessStep.sequence = this.position;
@@ -91,55 +98,149 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
         for (let i = 1; i <= this.stepList.length; i++) {
           this.positionValues.push(i);
         }
+        if (this.dyeingProcessStep.processType == "Dyeing") {
+
+          this.getAllAttributes();
+
+          this.dyeingFlag = true;
+        }
       }
     }
   }
 
-  getAllTags(){
+  getAllTags() {
     this.DyeingProcessService.getAllTags().subscribe(
-      result=>{
-        if(result['success']){
+      result => {
+        if (result['success']) {
           this.tagList = result['data']
         }
-      },error=>{
+      }, error => {
+      }
+    )
+  }
+
+  getData() {
+    this.dyeingProcessStep.dyeingplcMast.id = this.stepList[this.position - 1].dyeingplcMast.id;
+    this.dyeingProcessStep.dyeingplcMast.dyeingProcessMastId = this.stepList[this.position - 1].dyeingplcMast.dyeingProcessMastId;
+
+    this.stepList[
+      this.position - 1
+    ].dyeingplcMast.dyeingplcDataList.forEach((e, i) => {
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].plcName = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].plcName;;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].id = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].id;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].controlId = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].controlId;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].l = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].l;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].m = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].m;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].d = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].d;
+      this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].s = this.stepList[
+        this.position - 1
+      ].dyeingplcMast.dyeingplcDataList[i].s;
+    });
+  }
+  getAllAttributes() {
+    this.DyeingProcessService.getAttributes().subscribe(
+      result => {
+        if (result['success']) {
+          this.attributesArray = result['data'];
+          this.dyeingProcessStep.dyeingplcMast = new DyeingplcMastClass();
+          this.attributesArray.forEach((e, i) => {
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList.push(new dyeingplcDataListClass());
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].plcName = e;
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].l = null;
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].m = null;
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].d = null;
+            this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList[i].s = null;
+
+          });
+          if (this.editStep && this.stepList[this.position - 1].dyeingplcMast) {
+            this.getData();
+          }
+          else if (this.editStep && !this.stepList[this.position - 1].dyeingplcMast) {
+            this.dyeingProcessStep.dyeingplcMast.dyeingProcessMastId = this.id;
+          }
+        }
+      }, error => {
       }
     )
   }
 
   onCreate(myForm) {
+    let invalid;
     this.modalSubmitted = true;
     if (myForm.valid) {
-      let obj = {
-        processType: this.dyeingProcessStep.processType,
-        position: this.dyeingProcessStep.sequence,
-        temp: this.dyeingProcessStep.temp,
-        holdTime: this.dyeingProcessStep.holdTime,
-        liquerRation: this.dyeingProcessStep.liquerRation,
-        chemicalList: this.dyeingChemicalData,
-      };
-      this.activeModal.close(obj);
+
+      if(this.dyeingProcessStep && this.dyeingProcessStep.dyeingplcMast && this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList){
+        this.dyeingProcessStep.dyeingplcMast.dyeingplcDataList.forEach(ele => {
+          if (ele.l == null || ele.m == null || ele.d == null || ele.s == null) {
+            invalid = true;
+            return;
+          }
+        })
+        if (invalid) {
+          this.toastr.warning("Enter all fields in PLC Table");
+        }
+        else {
+          let obj = {
+            processType: this.dyeingProcessStep.processType,
+            position: this.dyeingProcessStep.sequence,
+            temp: this.dyeingProcessStep.temp,
+            holdTime: this.dyeingProcessStep.holdTime,
+            liquerRation: this.dyeingProcessStep.liquerRation,
+            chemicalList: this.dyeingChemicalData,
+            dyeingplcMast: this.dyeingFlag ? (this.dyeingProcessStep.dyeingplcMast ? this.dyeingProcessStep.dyeingplcMast : null) : null
+          };
+          this.activeModal.close(obj);
+        }
+      }
+      else{
+       
+          let obj = {
+            processType: this.dyeingProcessStep.processType,
+            position: this.dyeingProcessStep.sequence,
+            temp: this.dyeingProcessStep.temp,
+            holdTime: this.dyeingProcessStep.holdTime,
+            liquerRation: this.dyeingProcessStep.liquerRation,
+            chemicalList: this.dyeingChemicalData,
+          };
+          this.activeModal.close(obj);
+      }
+      
+      
+
     } else {
       this.toastr.error("Fill empty fields");
     }
   }
 
-  tagSelected($event){
-    if($event){
+  tagSelected($event) {
+    if ($event) {
       //set data according to selected tag
-      let tag = this.tagList.filter( f => f.id == this.selectedTagName)
-      if(tag && tag.length){
+      let tag = this.tagList.filter(f => f.id == this.selectedTagName)
+      if (tag && tag.length) {
         this.dyeingProcessStep.holdTime = tag[0].holdTime;
         this.dyeingProcessStep.liquerRation = tag[0].liquerRation
         this.dyeingProcessStep.temp = tag[0].temp
         this.dyeingChemicalData = tag[0].dyeingTagDataList
-        this.dyeingChemicalData.forEach((e, i)=>{
+        this.dyeingChemicalData.forEach((e, i) => {
           this.itemSelected(i);
           delete e.id;
           delete e.controlId;
         })
         this.dyeingProcessStep.dyeingChemicalData = tag[0].dyeingTagDataList;
       }
-    }else{
+    } else {
       let seq = this.dyeingProcessStep.sequence;
       this.dyeingProcessStep = new DyeingProcessData();
       this.dyeingChemicalData = []
@@ -156,7 +257,7 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
         } else {
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -272,9 +373,9 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
     });
 
     this.verify();
-    if(this.dyeingChemicalData[rowIndex].duplicateError){
+    if (this.dyeingChemicalData[rowIndex].duplicateError) {
       this.toastr.error("Same Item and Shade Type present");
-      this.dyeingChemicalData.splice(rowIndex,1);
+      this.dyeingChemicalData.splice(rowIndex, 1);
     }
 
 
@@ -282,5 +383,29 @@ export class AddDyeingProcessStepComponent implements OnInit, OnDestroy {
 
   trackByFn(index: number, obj: any) {
     return obj ? obj["_id"] || obj : index;
+  }
+
+  processChange(value) {
+    if (value == "Dyeing") {
+      this.getAllAttributes();
+      this.dyeingFlag = true;
+    }
+    else {
+      this.dyeingFlag = false;
+    }
+  }
+
+  onKeyUpForTable(e, rowIndex, att, colName) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode == 13) {
+      this.index = "att" + colName + "-" +(rowIndex + 1);
+      let interval = setInterval(() => {
+        let field = document.getElementById(this.index);
+        if (field != null) {
+          field.focus();
+          clearInterval(interval);
+        }
+      }, 10);
+    }
   }
 }

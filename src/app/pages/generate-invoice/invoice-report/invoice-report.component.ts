@@ -173,7 +173,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                   element.consolidatedBillDataList.forEach(billData => {
                     this.totalFinishedMeter += billData.totalFinishMtr;
                     this.totalGrayMeter += billData.totalMtr;
-                    this.totalAmount += billData.discountAmt;
+                    this.totalAmount += billData.taxAmt;
                   });
                 });
               }
@@ -251,7 +251,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     Rate: col.rate,
                     Amount: col.amt,
                     Discount_Percentage: col.percentageDiscount,
-                    Discount_Amt: col.discount,
+                    Discount_Amt: col.discountAmt,
                     Taxable_Amt: col.taxAmt,
                     C_GST: col.cgst,
                     S_GST: col.sgst,

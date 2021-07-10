@@ -24,6 +24,21 @@
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
+
+        <div class="row pos-fix" *ngIf="averageFlag">
+            <div class="col-md-6">
+                <label for="avgWeight"><b>Average Costing/weight:</b></label>
+                <span class="value-red">
+                    <b>{{avgCostPerWeight}}</b>
+                </span>
+            </div>
+            <div class="col-md-6">
+                <label for="avgWeight"><b>Average Costing/meter:</b></label>
+                <span class="value-red">
+                    <b>{{avgCostPerMeter}}</b>
+                </span>
+            </div>
+        </div>
         <!--  ngx- DataTable  -->
         <ngx-datatable [rows]="shadeList" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
             <ngx-datatable-column name="Action" prop="id" *ngIf="!hiddenEdit || !hidden" sortable="false" [maxWidth]="90">
@@ -37,6 +52,8 @@
             <ngx-datatable-column name="Process Name" prop="processName"></ngx-datatable-column>
             <ngx-datatable-column name="Quality ID" prop="qualityId"></ngx-datatable-column>
             <ngx-datatable-column name="Party Name" prop="partyName"></ngx-datatable-column>
+            <ngx-datatable-column name="Cost/weight" prop="costPerWeight"></ngx-datatable-column>
+            <ngx-datatable-column name="Cost/meter" prop="costPerMeter"></ngx-datatable-column>
             <ngx-datatable-column name="Color Tone " prop="colorTone">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <input [(colorPicker)]="row.colorTone" [style.background]="row.colorTone" [value]="row.colorTone" disabled="true" class="width-100" />
