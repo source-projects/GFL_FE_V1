@@ -61,8 +61,9 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   allEdit = true;
   groupEdit = true;
   
-  searchANDCondition = false;
+  public tableHeaders = ["stockInType","partyName", "qualityName", "batchList","chlNo"];
   searchStr = "";
+  searchANDCondition = false;
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {

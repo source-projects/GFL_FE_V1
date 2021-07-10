@@ -60,6 +60,7 @@ export class QualityComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent, { static: false })
   DataTable: DatatableComponent;
 
+  public tableHeaders = ["qualityId","qualityName", "partyName", "partyCode","wtPer100m","rate"];
   searchStr = "";
   searchANDCondition = false;
 

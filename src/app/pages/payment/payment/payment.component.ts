@@ -45,6 +45,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
   // groupEdit = true;
 
   public destroy$ : Subject<void> = new Subject<void>();
+
+  public tableHeaders = ["id","partyName", "amtPaid", "createdDate", "aadhaar"];
+  searchStr = "";
+  searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

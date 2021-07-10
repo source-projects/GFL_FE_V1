@@ -144,36 +144,36 @@ export class ColorComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  filter() {
-    const val = this.searchStr.toString().toLowerCase().trim();
-    const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
-    this.colorList = this.copyColorList.filter((f) => 
-    {
-      let hit = 0;
-      for(let v of searchStrings){
-        if(
-          this.tableHeaders.filter(m => this.matchString(f, m, v.val)).length
-        ){
-          v.matched = true;
-          hit++;
-          if(!this.searchANDCondition){
-            return true; 
-          }
-        }
-      }
-      if(this.searchANDCondition && hit == searchStrings.length){
-        return true;
-      }
-    });
-  }
+  // filter() {
+  //   const val = this.searchStr.toString().toLowerCase().trim();
+  //   const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
+  //   this.colorList = this.copyColorList.filter((f) => 
+  //   {
+  //     let hit = 0;
+  //     for(let v of searchStrings){
+  //       if(
+  //         this.tableHeaders.filter(m => this.matchString(f, m, v.val)).length
+  //       ){
+  //         v.matched = true;
+  //         hit++;
+  //         if(!this.searchANDCondition){
+  //           return true; 
+  //         }
+  //       }
+  //     }
+  //     if(this.searchANDCondition && hit == searchStrings.length){
+  //       return true;
+  //     }
+  //   });
+  // }
 
-  matchString(item, key, searchString){
-    if(item[key]){
-      return item[key].toString().toLowerCase().includes(searchString);
-    }else{
-      return false;
-    }
-  }
+  // matchString(item, key, searchString){
+  //   if(item[key]){
+  //     return item[key].toString().toLowerCase().includes(searchString);
+  //   }else{
+  //     return false;
+  //   }
+  // }
 
   getColor(id, getBy) {
     this.loading = true;

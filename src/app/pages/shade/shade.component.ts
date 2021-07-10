@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -9,6 +9,7 @@ import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
+import { CdkRow } from '@angular/cdk/table';
 
 @Component({
   selector: "ngx-shade",
@@ -18,7 +19,9 @@ import { ToastrService } from "ngx-toastr";
 export class ShadeComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
-
+  searchStr = "";
+  searchANDCondition = false;
+  public tableHeaders = ["partyShadeNo", "colorName", "processName", "qualityId", "partyName", "costPerWeight", "costPerMeter", "colorTone"];
   tableStyle = "bootstrap";
   shadeList = [];
   copyShadeList = [];
@@ -90,6 +93,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
     private commonService: CommonService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -223,23 +227,28 @@ export class ShadeComponent implements OnInit, OnDestroy {
     );
   }
 
-  filter(value: any) {
+  filter() {
 
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyShadeList[0]);
-    this.shadeList = this.copyShadeList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({ matched: false, val: m }));
+    this.shadeList = this.copyShadeList.filter((f) => {
+      let hit = 0;
+      for (let v of searchStrings) {
         if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
+          this.tableHeaders.filter(m => this.matchString(f, m, v.val)).length
         ) {
-          return true;
+          v.matched = true;
+          hit++;
+          if (!this.searchANDCondition) {
+            return true;
+          }
         }
       }
+      if (this.searchANDCondition && hit == searchStrings.length) {
+        return true;
+      }
     });
-    if (value) {
-      console.log("ififif");
+    if (this.searchStr) {
       let sumWeight = 0;
       let sumMeter = 0;
       let count = 0;
@@ -250,18 +259,33 @@ export class ShadeComponent implements OnInit, OnDestroy {
           count = i;
 
         });
-        this.avgCostPerWeight = (sumWeight / count).toFixed(2);
-        this.avgCostPerMeter = (sumMeter / count).toFixed(2);
+        if(count == 0){
+          this.avgCostPerWeight = sumWeight.toFixed(2);
+          this.avgCostPerMeter = sumMeter.toFixed(2); 
+        }
+        else{
+          this.avgCostPerWeight = (sumWeight / count).toFixed(2);
+          this.avgCostPerMeter = (sumMeter / count).toFixed(2);  
+        }
         this.averageFlag = true;
       }
     }
     else {
-      console.log("elselese");
       this.avgCostPerMeter = 0;
       this.avgCostPerWeight = 0;
       this.averageFlag = false;
     }
 
+    this.cdr.detectChanges();
+    
+  }
+
+  matchString(item, key, searchString) {
+    if (item[key]) {
+      return item[key].toString().toLowerCase().includes(searchString);
+    } else {
+      return false;
+    }
   }
 
   deleteShade(id) {
@@ -344,5 +368,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
     } else {
       this.hiddenEdit = true;
     }
+  }
+
+  toggleChange(){
+    this.filter();
   }
 }

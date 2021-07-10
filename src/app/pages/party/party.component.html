@@ -29,18 +29,18 @@
                             <div class="col-md-4">
                                 <div style="display: flex;">
                                     <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                                    <nb-toggle status="primary" (change)="conditionChanged()" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                                    <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
                                     <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                            aria-describedby="basic-addon1" [(ngModel)]="searchStr" (keyup)="filter()">
+                            aria-describedby="basic-addon1" [(ngModel)]="searchStr">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="ng-filter-main-popup display-none">
+                <!-- <div class="ng-filter-main-popup display-none">
 
                     <div class="popup-ng">
                         <div class="popup-header text-center">
@@ -115,8 +115,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <ngx-datatable [rows]="partyList" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
+                </div> -->
+                <ngx-datatable [rows]="partyList | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" props="id" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
@@ -127,9 +127,9 @@
                     <ngx-datatable-column name="Party Name" props="partyName">
                         <ng-template ngx-datatable-header-template let-value="value">
                             Party Name
-                            <div class="filter-icon" id="onclickFilter">
+                            <!-- <div class="filter-icon" id="onclickFilter">
                                 <nb-icon icon="menu-outline" class="nb-icon-filter"></nb-icon>
-                            </div>
+                            </div> -->
 
                         </ng-template>
                     </ngx-datatable-column>

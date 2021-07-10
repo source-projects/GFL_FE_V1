@@ -31,6 +31,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   hiddenDelete: boolean = true;
 
   public destroy$ : Subject<void> = new Subject<void>();
+
+  public tableHeaders = ["empId", "name", "contact", "aadhaar"];
+  searchStr = "";
+  searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

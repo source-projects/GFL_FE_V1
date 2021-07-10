@@ -6,7 +6,8 @@ export class SearchInTablePipe implements PipeTransform {
   transform(actualList: Array<any>, valaue: string, andCondition: boolean, columnArray: Array<any>): Array<any> {
       const val = valaue.toString().toLowerCase().trim();
       const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
-      return actualList.filter((f) => 
+      if(actualList && actualList.length){
+        return actualList.filter((f) => 
       {
         let hit = 0;
         for(let v of searchStrings){
@@ -24,11 +25,13 @@ export class SearchInTablePipe implements PipeTransform {
           return true;
         }
       });
+      }
+      
   }
 
   matchString(item, key, searchString){
-    if(key == "batchId"){
-
+    if(key == "batchList" && item[key]){
+      return item[key].filter(f => f.batchId?f.batchId.toString().toLowerCase().includes(searchString) : ''.toString().toLowerCase().includes(searchString)).length > 0
     }else{
       if(item[key]){
         return item[key].toString().toLowerCase().includes(searchString);

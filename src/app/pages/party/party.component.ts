@@ -32,8 +32,6 @@ export class PartyComponent implements OnInit, OnDestroy {
   headers = ["Party Name", "Party Address1", "Contact No", "City", "State"];
   module = "party";
   flag = false;
-  searchStr = "";
-  searchANDCondition = false;
   radioSelect = 0;
   radioArray = [
     { id: 1, value: "View Own", disabled: false },
@@ -69,6 +67,10 @@ export class PartyComponent implements OnInit, OnDestroy {
   rowSelection;
 
   public destroy$ : Subject<void> = new Subject<void>();
+
+  public tableHeaders = ["partyName","partyCode", "partyAddress1", "contactNo","city","masterName"];
+  searchStr = "";
+  searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

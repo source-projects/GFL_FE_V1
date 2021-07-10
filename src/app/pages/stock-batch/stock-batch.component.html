@@ -33,18 +33,18 @@
                             <div class="col-md-4">
                                 <div style="display: flex;">
                                     <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                                    <nb-toggle status="primary" (change)="conditionChanged()" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                                    <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
                                     <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                            aria-describedby="basic-addon1" [(ngModel)]="searchStr" (keyup)="filter()">
+                            aria-describedby="basic-addon1" [(ngModel)]="searchStr">
                             </div>
                         </div>
                     </div>
                 </div>
-                <ngx-datatable [rows]="stockList" [ngClass]="tablestyle" [headerHeight]="31"
+                <ngx-datatable [rows]="stockList | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tablestyle" [headerHeight]="31"
                     class="material  table-responsive" [footerHeight]="40">
                     <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id"
                         [maxWidth]="90">

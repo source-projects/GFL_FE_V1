@@ -6,6 +6,7 @@ import { BillPaymentComponent } from './bill-payment/bill-payment.component';
 import { AdvancePaymentComponent } from './advance-payment/advance-payment.component';
 import { SharedModule } from '../../@theme/shared.module';
 import { PaymentComponent } from './payment/payment.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { PaymentComponent } from './payment/payment.component';
   imports: [
     CommonModule,
     PaymentRoutingModule,
-    SharedModule
+    SharedModule,
+    ThemeModule
   ]
 })
 export class PaymentModule { }

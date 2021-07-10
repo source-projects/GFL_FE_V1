@@ -53,7 +53,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   disabled = false;
 
-  searchStr ="";
+  public tableHeaders = ["userName","firstName", "lastName", "company","designation","department"];
+  searchStr = "";
   searchANDCondition = false;
 
   public destroy$ : Subject<void> = new Subject<void>();
