@@ -32,6 +32,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
     "Color Tone",
   ];
   module = "shade";
+  avgCostPerWeight;
+  avgCostPerMeter;
+
 
   radioSelect = 0;
   flag = false;
@@ -72,7 +75,10 @@ export class ShadeComponent implements OnInit, OnDestroy {
   groupEdit = true;
   disabled = false;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  averageFlag: boolean = false;
+  totalAmount;
+
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -84,7 +90,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
     private commonService: CommonService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -161,6 +167,27 @@ export class ShadeComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           if (data["data"].length > 0) {
             this.shadeList = data["data"];
+            this.totalAmount = 0;
+            this.shadeList.forEach(ele => {
+              if (ele.shadeDataList && ele.shadeDataList.length) {
+                ele.shadeDataList.forEach((e) => {
+                  if (e.amount) this.totalAmount += e.amount;
+                });
+                let costKg = null;
+                let costMtr = null;
+                // this.totalAmount = this.totalAmount.toFixed(2);
+                if (ele.wtPer100m) {
+                  if (ele.qualityId) {
+                    costKg = (this.totalAmount / 100).toFixed(2);
+                    let A = 100 / ele.wtPer100m;
+                    costMtr = (costKg / A).toFixed(2);
+                    ele["costPerWeight"] = costKg;
+                    ele["costPerMeter"] = costMtr;
+                  }
+                }
+              }
+            })
+
             this.shade = this.shadeList.map((element) => ({
               id: element.id,
               partyShadeNo: element.partyShadeNo,
@@ -169,7 +196,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
               qualityName: element.qualityName,
               partyName: element.partyName,
               colorTone: element.colorTone,
-              colorName:element.colorName
+              colorName: element.colorName,
+              costPerWeight: element.costPerWeight,
+              costPerMeter: element.costPerMeter
             }));
             this.copyShadeList = this.shadeList.map((element) => ({
               id: element.id,
@@ -180,7 +209,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
               partyId: element.partyId,
               colorTone: element.colorTone,
               partyName: element.partyName,
-              colorName:element.colorName
+              colorName: element.colorName,
+              costPerWeight: element.costPerWeight,
+              costPerMeter: element.costPerMeter
             }));
           }
         }
@@ -193,6 +224,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
   }
 
   filter(value: any) {
+
     const val = value.toString().toLowerCase().trim();
     const keys = Object.keys(this.copyShadeList[0]);
     this.shadeList = this.copyShadeList.filter((item) => {
@@ -206,6 +238,30 @@ export class ShadeComponent implements OnInit, OnDestroy {
         }
       }
     });
+    if (value) {
+      console.log("ififif");
+      let sumWeight = 0;
+      let sumMeter = 0;
+      let count = 0;
+      if (this.shadeList && this.shadeList.length) {
+        this.shadeList.forEach((ele, i) => {
+          sumWeight = sumWeight + Number(ele.costPerWeight);
+          sumMeter = sumMeter + Number(ele.costPerMeter);
+          count = i;
+
+        });
+        this.avgCostPerWeight = (sumWeight / count).toFixed(2);
+        this.avgCostPerMeter = (sumMeter / count).toFixed(2);
+        this.averageFlag = true;
+      }
+    }
+    else {
+      console.log("elselese");
+      this.avgCostPerMeter = 0;
+      this.avgCostPerWeight = 0;
+      this.averageFlag = false;
+    }
+
   }
 
   deleteShade(id) {
