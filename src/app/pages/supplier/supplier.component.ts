@@ -16,6 +16,8 @@ import { SupplierService } from '../../@theme/services/supplier.service';
 export class SupplierComponent implements OnInit, OnDestroy {
   public loading = false;
   tableStyle = "bootstrap";
+  public tableHeaders = ["supplierName", "discountPercentage", "gstPercentage", "paymentTerms", "remark"];
+
 
   public errorData: any = (errorData as any).default;
 
@@ -49,6 +51,9 @@ export class SupplierComponent implements OnInit, OnDestroy {
   ownEdit = true;
   allEdit = true;
   groupEdit = true;
+
+  searchStr = "";
+  searchANDCondition = false;
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {

@@ -1,15 +1,12 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { UserGuard } from "../../@theme/guards/user.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
-import { ExportService } from "../../@theme/services/export.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { UserService } from "../../@theme/services/user.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -56,6 +53,10 @@ export class UserComponent implements OnInit, OnDestroy {
 
   disabled = false;
 
+  public tableHeaders = ["userName","firstName", "lastName", "company","designation","department"];
+  searchStr = "";
+  searchANDCondition = false;
+
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -63,15 +64,11 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private route: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private userService: UserService,
     private commonService: CommonService,
-    private exportService: ExportService,
-
     public userGuard: UserGuard,
-    private jwtToken: JwtTokenService
   ) {}
 
   ngOnInit(): void {
@@ -143,20 +140,44 @@ export class UserComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyUserList[0]);
-    this.userList = this.copyUserList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
+  conditionChanged(){
+    this.filter();
+  }
+
+  filter() {
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
+    this.userList = this.copyUserList.filter((f) => 
+    {
+      let hit = 0;
+      for(let v of searchStrings){
+        if(
+          this.matchString(f, 'partyName', v.val) ||
+          this.matchString(f, 'partyCode', v.val) ||
+          this.matchString(f, 'partyAddress1', v.val) ||
+          this.matchString(f, 'contactNo', v.val) ||
+          this.matchString(f, 'city', v.val) ||
+          this.matchString(f, 'masterName', v.val) 
+        ){
+          v.matched = true;
+          hit++;
+          if(!this.searchANDCondition){
+            return true; 
+          }
         }
       }
+      if(this.searchANDCondition && hit == searchStrings.length){
+        return true;
+      }
     });
+  }
+
+  matchString(item, key, searchString){
+    if(item[key]){
+      return item[key].toLowerCase().includes(searchString);
+    }else{
+      return false;
+    }
   }
 
   getAllUser(id, getBy) {

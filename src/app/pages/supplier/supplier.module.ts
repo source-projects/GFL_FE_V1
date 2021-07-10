@@ -8,6 +8,7 @@ import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.
 import { ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AddEditSupplierRateComponent } from './add-edit-supplier-rate/add-edit-supplier-rate.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 
 
@@ -18,6 +19,7 @@ import { AddEditSupplierRateComponent } from './add-edit-supplier-rate/add-edit-
     SharedModule,
     SupplierRoutingModule,
     ReactiveFormsModule,
+    ThemeModule
   ],
   // schemas: [
   //   CUSTOM_ELEMENTS_SCHEMA,
