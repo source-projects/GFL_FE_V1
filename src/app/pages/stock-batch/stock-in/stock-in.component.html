@@ -1,0 +1,202 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div id="target"></div>
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+
+        <div class="row">
+            <div class="col-md-12 col-6">
+                <h2 class="nb-text txt-ov-elips">Stock In</h2>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <form #myForm="ngForm">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label class="required">Stock In Type</label>
+                            <input type="text" name="stockInType" class="form-control size-small" fieldsize="small"
+                                nbinput value="Fabric" required readonly>
+                        </div>
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label class="required">Party Name</label>
+                            <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
+                                [disabled]="true">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">Party Name
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips">
+                                                Party Code</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let party of partyList" [value]="party.id">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{party.partyName}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{party.partyCode}}</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="required">Quality:</label>
+                            <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
+                                #qualityId1="ngModel"
+                                [disabled]="true">
+                                <ng-option disabled="true">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips">Quality Id</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips">Quality Name</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                                <ng-option *ngFor="let q of qualityList" [value]="q.id?q.id:q.qualityEntryId">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-left txt-ov-elips"> {{q.qualityId}}</div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="text-right txt-ov-elips"> {{q.qualityName}}</div>
+                                        </div>
+                                    </div>
+                                </ng-option>
+                            </ng-select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label class="required">Receive Date:</label>
+                            <input name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
+                                #receiveDate1="ngModel" [(ngModel)]='stockBatch.receiveDate' [owlDateTimeTrigger]="dt2"
+                                [owlDateTime]="dt2" placeholder="MM-DD-YYYY"
+                                [disabled]="true">
+                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="required">Challan No</label>
+                            <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput
+                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required
+                                [disabled]="true" min="0">
+                        </div>
+
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label class="required">Challan Date:</label>
+                            <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput
+                                #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1"
+                                [owlDateTime]="dt1" placeholder="MM-DD-YYYY"
+                                [disabled]="true">
+                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label>Unit:</label>
+                            <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput
+                                readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
+
+                        </div>
+                        <div class="col-md-4 mobile-mr-bt">
+                            <label>Wt / 100 mtrs:</label>
+                            <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small"
+                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m'
+                                [readOnly]="true">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label>Remark</label>
+                            <input type="text" name="remark" class="form-control" #remark1="ngModel"
+                                [(ngModel)]='stockBatch.remark' [disabled]="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin: 3px 3px;">
+                    <div class="col-md-5 capsule-list-container">
+                        <div class="batch-list-3line">
+                            <button type="button" style="z-index: 999;"
+                                [ngClass]="{'active-button' : (b.pchallanRef == selectedPChallan), 'inactive-button':(b.pchallanRef != selectedPChallan), 'disabled': b.productionPlanned}"
+                                nbButton size="small" *ngFor="let b of stockDataValues"
+                                (click)="batchPChallanSelected(b.pchallanRef)" class="p-badge-design"
+                                [disabled]="b.productionPlanned" [value]="b.pchallanRef">
+                                {{b.pchallanRef}} </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5 capsule-list-container">
+                        <button type="button" style="z-index: 999;"
+                        [ngClass]="{'active-button' : (b.batchId == selectedBatch), 'inactive-button':(b.batchId != selectedBatch), 'disabled': b.productionPlanned}"
+                        nbButton size="small" *ngFor="let b of finalStockDataValues"
+                        (click)="batchSelected(b.batchId)" class="p-badge-design"
+                        [disabled]="b.productionPlanned" [value]="b.pchallanRef">
+                        {{b.batchId}} </button>
+                            <a class="link-fab linkedin" media="Linkedin">
+                                <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addBatch($event)"
+                                    icon="plus" class="add-icon display-inline" style="height: 30px !important; width: 30px !important">
+                                </nb-icon>
+                            </a>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <ng-container>
+                            <ngx-datatable [rows]="selectedChallanList.batchMW" [scrollbarV]="true"
+                                class="material common-table datatable-auto-height fm-table-body-height"
+                                style="height: 200px;" [selectionType]="'checkbox'" (select)="onChallanSelection($event)">
+                                <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
+                                    [checkboxable]="true">
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
+                            </ngx-datatable>
+                        </ng-container>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" (click)="transferClicked()">Transfer</button>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-container>
+                            <ngx-datatable [rows]="finalStockDataValues" [scrollbarV]="true"
+                                class="material common-table datatable-auto-height fm-table-body-height"
+                                style="height: 200px;" [selectionType]="'checkbox'">
+                                <ngx-datatable-column name="Meter" prop="mtr">
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
+                                <ngx-datatable-column name="Action" prop="id">
+                                    <ng-template let-row="row" let-value="value"
+                                    ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                    <nb-icon icon="trash" status="danger"
+                                        [hidden]="row.isProductionPlanned"
+                                        [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="removeItemFromBatchList(rowIndex)">
+                                    </nb-icon>
+                                </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </ng-container>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

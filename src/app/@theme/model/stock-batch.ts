@@ -28,6 +28,7 @@ export class BatchData {
   totalWt: number;
   totalMt: number;
   batchId: number;
+  pchallanRef: number;
   isProductionPlanned:boolean;
 }
 
@@ -48,7 +49,7 @@ export class BatchMrtWt {
 }
 
 export class BatchCard {
-
+  pchallanRef: number;
   batchId: number;
   totalWt: number;
   totalMt: number;
