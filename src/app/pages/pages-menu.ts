@@ -32,49 +32,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
-    title: "User",
-    icon: "people-outline",
-    link: "/pages/user",
-    hidden: false,
-  },
-  {
-    title: "Color",
-    icon: "color-palette-outline",
-    link: "/pages/color",
-    hidden: false,
-    children: [
-      {
-        title: "Color-Stock",
-        icon: "file-text-outline",
-        link: "/pages/color",
-      },
-      {
-        title: "Issue-Color-Box",
-        icon: "file-text-outline",
-        link: "/pages/color/issue-color-box",
-      },
-    ],
-  },
-  {
-    title: "Shade",
-    icon: "brush-outline",
-    link: "/pages/shade",
-    hidden: false,
-    children: [
-      {
-        title: "Shade",
-        icon: "brush-outline",
-        link: "/pages/shade",
-      },
-      {
-        title: "Pending APC",
-        icon: "file-text-outline",
-        link: "/pages/shade/pending-apc",
-      },
-    ],
-  },
-
-  {
     title: "Stock-batch",
     icon: "layers-outline",
     link: "/pages/stock-batch",
@@ -100,18 +57,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ]
   },
-  
+  {
+    title: "Shade",
+    icon: "brush-outline",
+    link: "/pages/shade",
+    hidden: false,
+    children: [
+      {
+        title: "Shade",
+        icon: "brush-outline",
+        link: "/pages/shade",
+      },
+      {
+        title: "Pending APC",
+        icon: "file-text-outline",
+        link: "/pages/shade/pending-apc",
+      },
+    ],
+  },
   {
     title: "DyeingProcess",
     icon: "settings-2-outline",
     link: "/pages/dyeing-process",
-    hidden: false,
-  },
-
-  {
-    title: "Finished Meter",
-    icon: "bar-chart-outline",
-    link: "/pages/finishedMeter",
     hidden: false,
   },
   {
@@ -139,9 +106,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: "Supplier",
-    icon: "car-outline",
-    link: "/pages/supplier",
+    title: "Finished Meter",
+    icon: "bar-chart-outline",
+    link: "/pages/finishedMeter",
     hidden: false,
   },
   {
@@ -150,6 +117,37 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: "/pages/generate_invoice",
     hidden: false,
   },
+  {
+    title: "User",
+    icon: "people-outline",
+    link: "/pages/user",
+    hidden: false,
+  },
+  {
+    title: "Color",
+    icon: "color-palette-outline",
+    link: "/pages/color",
+    hidden: false,
+    children: [
+      {
+        title: "Color-Stock",
+        icon: "file-text-outline",
+        link: "/pages/color",
+      },
+      {
+        title: "Issue-Color-Box",
+        icon: "file-text-outline",
+        link: "/pages/color/issue-color-box",
+      },
+    ],
+  },
+  {
+    title: "Supplier",
+    icon: "car-outline",
+    link: "/pages/supplier",
+    hidden: false,
+  },
+  
   {
     title: "Input Data",
     icon: "edit-2-outline",

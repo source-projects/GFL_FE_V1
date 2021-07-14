@@ -8,9 +8,9 @@ import { AddEditPartyComponent } from './add-edit-party/add-edit-party.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule} from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { ThemeModule } from '../../@theme/theme.module';
 import { AgGridModule } from 'ag-grid-angular';
-import { BtnCellRenderer } from 'app/@theme/renderer/button-cell-renderer.component';
+import { BtnCellRenderer } from '../../@theme/renderer/button-cell-renderer.component';
 
 //import {ExportService} from '../../@theme/services/export.service';
 @NgModule({

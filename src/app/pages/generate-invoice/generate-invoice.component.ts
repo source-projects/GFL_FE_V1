@@ -24,6 +24,9 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   hiddenEdit: boolean = true;
   hiddenView: boolean = true;
 
+  public tableHeaders = ["invoiceNo", "partyName", "batchList", "totalMtr", "finishMtr","netAmt","date"];
+  searchStr = "";
+  searchANDCondition = false;
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();

@@ -1,5 +1,5 @@
 <nb-card class="nb-style">
-    
+
     <nb-card-body>
 
         <nb-tabset fullWidth class="boiler-thermopack-tabheader">
@@ -10,32 +10,52 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="required">Batch No:</label>
-                                    <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo' #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown" (change)="batchSelected($event)">
+                                    <ng-select appendTo="body" appendTo="body" name="batchNo" [(ngModel)]='batchNo'
+                                        #batchNo1="ngModel" placeholder="Batch No" class="required-error-dropdown"
+                                        (change)="batchSelected($event)">
                                         <ng-option *ngFor="let batch of batchList" [value]="batch">{{batch.batchId}}
                                         </ng-option>
                                     </ng-select>
 
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label>Search:</label>
-                                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                            <div class="col-md-8" style="position: relative;top: 26px;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div style="display: flex;">
+                                            <p style="margin-top: 4px;margin-right: 2px;">OR</p>
+                                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                                            <p style="margin-top: 4px;margin-left: 2px;">AND</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                                    aria-describedby="basic-addon1" [(ngModel)]="searchStr">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <ngx-datatable [rows]="addition" [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
+                        <ngx-datatable
+                            [rows]="addition | searchInTable : searchStr : searchANDCondition : tableHeaders"
+                            [ngClass]="tableStyle" class="material" [headerHeight]="31" [footerHeight]="40">
                             <ngx-datatable-column name="Action" sortable="false" [maxWidth]="90" prop="id">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" (click)="editSlip(row.id)"></nb-icon>
-                                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}" (click)="deleteSlip(row.id)"></nb-icon>
-                                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" [options]="{animation:{type:'zoom'}}" (click)="editSlip(row.id, true)"></nb-icon>
+                                    <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }"
+                                        (click)="editSlip(row.id)"></nb-icon>
+                                    <nb-icon icon="trash" status="danger" [options]="{animation:{type:'zoom'}}"
+                                        (click)="deleteSlip(row.id)"></nb-icon>
+                                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary"
+                                        status="danger" [options]="{animation:{type:'zoom'}}"
+                                        (click)="editSlip(row.id, true)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Batch No." prop="batchId" [maxWidth]="110">
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Hold Time" prop="holdTime">
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Liquor Ratio" prop="liquerRation" [maxWidth]="120"></ngx-datatable-column>
+                            <ngx-datatable-column name="Liquor Ratio" prop="liquerRation" [maxWidth]="120">
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Temperature" prop="temp" [maxWidth]="115">
                             </ngx-datatable-column>
 
@@ -55,8 +75,10 @@
 
 
                                     <label class="required">Party Name</label>
-                                    <ng-select appendTo="body" placeholder="Select Party Name" name="partyId" [(ngModel)]='directSlip.partyId' #partyId1="ngModel" [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }" (change)="partySelected($event)"
-                                        class="required-error-dropdown dropdown-name">
+                                    <ng-select appendTo="body" placeholder="Select Party Name" name="partyId"
+                                        [(ngModel)]='directSlip.partyId' #partyId1="ngModel"
+                                        [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
+                                        (change)="partySelected($event)" class="required-error-dropdown dropdown-name">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -90,8 +112,11 @@
                             <div class="col-md-4 mobile-mr-bt">
                                 <div class="form-group">
                                     <label class="required">Quality Name</label>
-                                    <ng-select appendTo="body" placeholder="Select Quality Name" name="qualityId" [(ngModel)]='directSlip.qualityEntryId' #qualityId1="ngModel" [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched) }" (change)="qualitySelected($event)"
-                                         class="required-error-dropdown dropdown-name">
+                                    <ng-select appendTo="body" placeholder="Select Quality Name" name="qualityId"
+                                        [(ngModel)]='directSlip.qualityEntryId' #qualityId1="ngModel"
+                                        [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched) }"
+                                        (change)="qualitySelected($event)"
+                                        class="required-error-dropdown dropdown-name">
                                         <ng-option disabled="true">
                                             <div class="row">
                                                 <div class="col-md-6 col-6">
@@ -122,7 +147,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="addition-direct-batch">
-                                    <button nbButton size="small" *ngFor="let b of directBatchList" (click)="onBatchSelect(b)" class="p-badge-design">
+                                    <button nbButton size="small" *ngFor="let b of directBatchList"
+                                        (click)="onBatchSelect(b)" class="p-badge-design">
                                         {{b.batchId}} </button>
 
                                 </div>

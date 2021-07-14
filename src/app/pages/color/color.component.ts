@@ -19,7 +19,7 @@ export class ColorComponent implements OnInit, OnDestroy {
   public loading = false;
 
   public errorData: any = (errorData as any).default;
-
+  public tableHeaders = ["supplierName", "billNo", "billDate", "chlNo", "chlDate", "billAmount"];
   tableStyle = "bootstrap";
   colorList = [];
   copyColorList = [];
@@ -57,6 +57,9 @@ export class ColorComponent implements OnInit, OnDestroy {
   allEdit = true;
   groupEdit = true;
   disabled = false;
+
+  searchStr = "";
+  searchANDCondition = false;
 
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
@@ -141,21 +144,36 @@ export class ColorComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyColorList[0]);
-    this.colorList = this.copyColorList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
-        if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
-        ) {
-          return true;
-        }
-      }
-    });
-  }
+  // filter() {
+  //   const val = this.searchStr.toString().toLowerCase().trim();
+  //   const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
+  //   this.colorList = this.copyColorList.filter((f) => 
+  //   {
+  //     let hit = 0;
+  //     for(let v of searchStrings){
+  //       if(
+  //         this.tableHeaders.filter(m => this.matchString(f, m, v.val)).length
+  //       ){
+  //         v.matched = true;
+  //         hit++;
+  //         if(!this.searchANDCondition){
+  //           return true; 
+  //         }
+  //       }
+  //     }
+  //     if(this.searchANDCondition && hit == searchStrings.length){
+  //       return true;
+  //     }
+  //   });
+  // }
+
+  // matchString(item, key, searchString){
+  //   if(item[key]){
+  //     return item[key].toString().toLowerCase().includes(searchString);
+  //   }else{
+  //     return false;
+  //   }
+  // }
 
   getColor(id, getBy) {
     this.loading = true;

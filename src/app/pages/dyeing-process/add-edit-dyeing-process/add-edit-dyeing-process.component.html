@@ -137,7 +137,7 @@
                                             </div>
                                         </div>
 
-                                        <div *ngIf="step.processType == 'Dyeing'">
+                                        <div *ngIf="step.processType == 'Dyeing' && step.dyeingplcMast && step.dyeingplcMast.dyeingplcDataList && step.dyeingplcMast.dyeingplcDataList.length">
                                             <table class="table process-tb table-bordered table-striped table-process-fnt dying-table width-100">
                                                 <tr>
                                                     <th>Attribute</th>

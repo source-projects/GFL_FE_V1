@@ -16,16 +16,22 @@
 
             <nb-card-body>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div style="display: flex;">
+                            <p style="margin-top: 4px;margin-right: 2px;">OR</p>
+                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                            <p style="margin-top: 4px;margin-left: 2px;">AND</p>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" [(ngModel)]="searchStr">
                     </div>
                 </div>
                 
 
                     
-                <ngx-datatable [rows]="dyeingSlip" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
+                <ngx-datatable [rows]="dyeingSlip  | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tablestyle" class="material" [headerHeight]="31" [footerHeight]="31">
                     <ngx-datatable-column name="Actions" sortable="false" props="id" [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" (click)="printDyeingSlip($event, row)"   [options]="{ animation: { type: 'zoom' } }"></nb-icon>
