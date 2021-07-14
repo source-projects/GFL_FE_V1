@@ -7,6 +7,7 @@ import { LotReturnViewComponent } from './lot-return-view/lot-return-view.compon
 import { LotReturnComponent } from './lot-return/lot-return.component';
 import { PrintLotReturnComponent } from './print-lot-return/print-lot-return.component';
 import { StockBatchComponent } from './stock-batch.component';
+import { StockInComponent } from './stock-in/stock-in.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,13 @@ const routes: Routes = [
     canActivate: [StockBatchGuard],
     canLoad: [StockBatchGuard],
     data: { PermissionName: ['edit','edit group','edit all']}
+  },
+  {
+    path: 'stock-in',
+    component: StockInComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['add']}
   }
 ];
 

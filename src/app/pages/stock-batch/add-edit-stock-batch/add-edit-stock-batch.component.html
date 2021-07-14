@@ -205,14 +205,19 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6 col-8">
-                                                <label>Batch No</label>
-                                                <input [attr.id]="'batchNo'+i" required type="number"
-                                                    [(ngModel)]='block.batchId' [disabled]="true"
+                                                <label>PChallan No</label>
+                                                <input [attr.id]="'pchallanRef'+i" required type="number"
+                                                    [(ngModel)]='block.pchallanRef' [disabled]="!addFlag && block.old"
+                                                    (change)="checkPChallanUniq(i)"
                                                     class="form-control size-small" fieldsize="small" nbinput
-                                                    name="batchNo{{i}}" min="0" (click)="batchInsertCheck()">
+                                                    name="pchallanRef{{i}}" min="0" (click)="batchInsertCheck()">
                                                 <div class="input-required" style="display: block !important;"
                                                     *ngIf="block.isNotUnique">
-                                                    <span>Batch id already exists</span>
+                                                    <span>Pchallan already exists</span>
+                                                </div>
+                                                <div class="input-required" style="display: block !important;"
+                                                    *ngIf="formSubmitted && !block.pchallanRef">
+                                                    <span>Pchallan is required</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-4 display-flex-end" *ngIf="!production_flag[i]">
@@ -348,7 +353,7 @@
                             <button type="button"
                                 class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="addUpdateStockBatch(myForm, true)" [disabled]="disableButton">SAVE &
-                                PRINT</button>
+                                NEXT</button>
 
 
                         </div>
