@@ -96,6 +96,9 @@ export class AdditionSlipComponent implements OnInit, OnDestroy {
   printNow = false;
   private destroy$: Subject<void> = new Subject<void>();
 
+  public tableHeaders = ["batchId","holdTime", "liquerRation", "temp"];
+  searchStr = "";
+  searchANDCondition = false;
   constructor(
     private modalService: NgbModal,
     private batchService: StockBatchService,

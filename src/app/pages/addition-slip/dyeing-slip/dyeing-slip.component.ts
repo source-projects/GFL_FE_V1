@@ -25,6 +25,10 @@ export class DyeingSlipComponent implements OnInit {
   public destroy$ : Subject<void> = new Subject<void>();
   rowData: any;
   dyeSlip: any=[];
+
+  public tableHeaders = ["qualityId","partyShadeNo", "colorName", "jetName","batchId"];
+  searchStr = "";
+  searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

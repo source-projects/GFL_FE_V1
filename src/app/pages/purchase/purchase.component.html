@@ -13,12 +13,20 @@
     </nb-card-header>
     <nb-card-body>
         <div class="row">
-            <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+            <div class="col-md-4">
+                <div style="display: flex;">
+                    <p style="margin-top: 4px;margin-right: 2px;">OR</p>
+                    <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                    <p style="margin-top: 4px;margin-left: 2px;">AND</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" [(ngModel)]="searchStr">
             </div>
         </div>
         <!--  ngx- DataTable -->
-        <ngx-datatable [rows]="purchaseArray" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
+        <ngx-datatable [rows]="purchaseArray | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="40">
             <ngx-datatable-column name="Action" sortable="false" prop="id" [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon icon="edit" status="primary" [options]="{ animation: { type: 'zoom' } }" [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="row.checked || hiddenEdit"></nb-icon>&nbsp;&nbsp;

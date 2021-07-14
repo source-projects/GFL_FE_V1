@@ -10,6 +10,7 @@ import { PrintLayoutComponent } from './print-Layout/print-layout.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReceivedInvoiceComponent } from './received-invoice/received-invoice.component';
 import { SignInvoiceComponent } from './sign-invoice/sign-invoice.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent, ReceivedInvoiceComponent, SignInvoiceComponent],
@@ -17,7 +18,8 @@ import { SignInvoiceComponent } from './sign-invoice/sign-invoice.component';
     CommonModule,
     GenerateInvoiceRoutingModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    ThemeModule,
   ],
   providers: [
     NgbActiveModal,
