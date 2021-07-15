@@ -25,12 +25,12 @@
                     <div class="col-md-4">
                         <div style="display: flex;">
                             <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                            <nb-toggle status="primary" labelPosition="start" name="shift" (checkedChange)="toggleChange()" [(ngModel)]="searchANDCondition"></nb-toggle>
+                            <nb-toggle status="primary" labelPosition="start" name="shift" (checkedChange)="toggleChange($event)" [(ngModel)]="searchANDCondition"></nb-toggle>
                             <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" [(ngModel)]="searchStr" (keyup)="filter()">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" [(ngModel)]="searchStr" (input)="filter()">
                     </div>
                 </div>
             </div>

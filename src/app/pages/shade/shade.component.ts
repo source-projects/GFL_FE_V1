@@ -171,8 +171,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           if (data["data"].length > 0) {
             this.shadeList = data["data"];
-            this.totalAmount = 0;
+            
             this.shadeList.forEach(ele => {
+              this.totalAmount = 0;
               if (ele.shadeDataList && ele.shadeDataList.length) {
                 ele.shadeDataList.forEach((e) => {
                   if (e.amount) this.totalAmount += e.amount;
@@ -370,7 +371,13 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleChange(){
+  toggleChange(value){
+    if(value){
+      this.searchANDCondition = true;
+    }
+    else{
+      this.searchANDCondition = false;
+    }
     this.filter();
   }
 }
