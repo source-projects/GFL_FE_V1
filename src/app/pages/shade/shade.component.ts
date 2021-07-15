@@ -371,7 +371,13 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleChange(){
+  toggleChange(value){
+    if(value){
+      this.searchANDCondition = true;
+    }
+    else{
+      this.searchANDCondition = false;
+    }
     this.filter();
   }
 }
