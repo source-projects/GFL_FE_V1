@@ -171,7 +171,6 @@ export class ShadeComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           if (data["data"].length > 0) {
             this.shadeList = data["data"];
-
             this.shadeList.forEach(ele => {
               this.totalAmount = 0;
               if (ele.shadeDataList && ele.shadeDataList.length) {
