@@ -174,7 +174,8 @@ export class StockInComponent implements OnInit, OnDestroy {
   batchPChallanSelected(pchallanRef){
     this.selectedPChallan = pchallanRef;
     this.checkedChallanList = [];
-    this.selectedChallanList = this.stockDataValues.filter(f => f.pchallanRef == pchallanRef)[0];
+    this.selectedChallanList = this.stockDataValues.filter(f => f.pchallanRef == this.selectedPChallan)[0];
+    console.log(this.selectedChallanList)
   }
 
   batchSelected(batchId){

@@ -19,7 +19,7 @@ export class PrintInvoiceData {
   
   export class BatchWithGrList {
     batchDataList: BatchDataList[]
-    batchId: string
+    pchallanRef: string //changed batchId with pchallanRef
     controlId: number
     totalMtr:any = 0
     totalFMtr:any = 0
@@ -29,7 +29,7 @@ export class PrintInvoiceData {
   }
   
   export class BatchDataList {
-    batchId: string
+    pchallanRef: string //changed batchId with pchallanRef
     controlId: number
     finishMtr: number
     id: number
@@ -45,7 +45,7 @@ export class PrintInvoiceData {
   
   export class QualityList {
     amt: number
-    batchId: string
+    pchallanRef: string //changed batchId with pchallanRef
     finishMtr: number
     hsn: string
     pcs: number

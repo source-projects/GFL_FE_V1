@@ -756,7 +756,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
                 if (next) {
                   //this.printJobCard(myForm, data["data"]);
                   localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
-                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
+                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:this.stockBatch.id}});
                 }
               } else {
                 this.loading = false;
@@ -778,7 +778,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
                 this.toastr.success(data["msg"]);
                 if (next) {
                   localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
-                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
+                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:this.stockBatch.id}});
                 }else{
                   this.route.navigate(["/pages/stock-batch"]);
                 }
