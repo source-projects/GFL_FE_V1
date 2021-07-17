@@ -257,7 +257,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
         this.shadeList.forEach((ele, i) => {
           sumWeight = sumWeight + Number(ele.costPerWeight);
           sumMeter = sumMeter + Number(ele.costPerMeter);
-          count = i;
+          count++;
 
         });
         if(count == 0){
