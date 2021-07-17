@@ -6,6 +6,7 @@ import { AvailableBatchesComponent } from './available-batches/available-batches
 import { LotReturnViewComponent } from './lot-return-view/lot-return-view.component';
 import { LotReturnComponent } from './lot-return/lot-return.component';
 import { PrintLotReturnComponent } from './print-lot-return/print-lot-return.component';
+import { ReportComponent } from './report/report.component';
 import { StockBatchComponent } from './stock-batch.component';
 
 const routes: Routes = [
@@ -26,6 +27,13 @@ const routes: Routes = [
   {
     path: 'pending',
     component: AvailableBatchesComponent,
+    canActivate: [StockBatchGuard],
+    canLoad: [StockBatchGuard],
+    data: { PermissionName: ['view','view group','view all']}
+  },
+  {
+    path: 'report',
+    component: ReportComponent,
     canActivate: [StockBatchGuard],
     canLoad: [StockBatchGuard],
     data: { PermissionName: ['view','view group','view all']}

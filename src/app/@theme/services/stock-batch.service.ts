@@ -39,6 +39,15 @@ export class StockBatchService {
     );
   }
 
+  getShortStockReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/report/forConslidateBill',obj);
+  }
+
+  getDetailedStockReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/getBill',obj);
+  }
+
+
   addStockBatch(myForm) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/stockBatch",

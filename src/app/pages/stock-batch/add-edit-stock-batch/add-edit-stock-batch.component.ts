@@ -791,6 +791,9 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     } else if(event == "return"){
       this.route.navigate(['/pages/stock-batch/return-lot'])
     }
+    else if(event == "report"){
+      this.route.navigate(['/pages/stock-batch/report'])
+    }
   }
 
   printJobCard(form, data) {
