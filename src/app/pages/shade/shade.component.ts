@@ -256,7 +256,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
         this.shadeList.forEach((ele, i) => {
           sumWeight = sumWeight + Number(ele.costPerWeight);
           sumMeter = sumMeter + Number(ele.costPerMeter);
-          count = i;
+          count++;
 
         });
         if (count == 0) {
@@ -374,8 +374,8 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleChange(val) {
-    if(val){
+  toggleChange(value){
+    if(value){
       this.searchANDCondition = true;
     }
     else{
