@@ -50,8 +50,7 @@
                         <div class="col-md-4">
                             <label class="required">Quality:</label>
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
-                                #qualityId1="ngModel"
-                                [disabled]="true">
+                                #qualityId1="ngModel" [disabled]="true">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -84,23 +83,20 @@
                             <label class="required">Receive Date:</label>
                             <input name="receiveDate" class="form-control size-small" fieldsize="small" nbinput
                                 #receiveDate1="ngModel" [(ngModel)]='stockBatch.receiveDate' [owlDateTimeTrigger]="dt2"
-                                [owlDateTime]="dt2" placeholder="MM-DD-YYYY"
-                                [disabled]="true">
+                                [owlDateTime]="dt2" placeholder="MM-DD-YYYY" [disabled]="true">
                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                         </div>
                         <div class="col-md-4">
                             <label class="required">Challan No</label>
                             <input type="text" name="chlNo" class="form-control size-small" fieldsize="small" nbinput
-                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required
-                                [disabled]="true" min="0">
+                                #chlNo1="ngModel" [(ngModel)]='stockBatch.chlNo' required [disabled]="true" min="0">
                         </div>
 
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Challan Date:</label>
                             <input name="chlDate" class="form-control size-small" fieldsize="small" fullwidth nbinput
                                 #chlDate1="ngModel" [(ngModel)]='stockBatch.chlDate' [owlDateTimeTrigger]="dt1"
-                                [owlDateTime]="dt1" placeholder="MM-DD-YYYY"
-                                [disabled]="true">
+                                [owlDateTime]="dt1" placeholder="MM-DD-YYYY" [disabled]="true">
                             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                         </div>
 
@@ -118,8 +114,7 @@
                         <div class="col-md-4 mobile-mr-bt">
                             <label>Wt / 100 mtrs:</label>
                             <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small"
-                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m'
-                                [readOnly]="true">
+                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m' [readOnly]="true">
 
                         </div>
                         <div class="col-md-4">
@@ -143,58 +138,68 @@
                     </div>
                     <div class="col-md-2"></div>
                     <div class="col-md-5 capsule-list-container">
-                        <button type="button" style="z-index: 999;"
-                        [ngClass]="{'active-button' : (b.batchId == selectedBatch), 'inactive-button':(b.batchId != selectedBatch), 'disabled': b.productionPlanned}"
-                        nbButton size="small" *ngFor="let b of finalStockDataValues"
-                        (click)="batchSelected(b.batchId)" class="p-badge-design"
-                        [disabled]="b.productionPlanned" [value]="b.pchallanRef">
-                        {{b.batchId}} </button>
-                            <a class="link-fab linkedin" media="Linkedin">
-                                <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addBatch($event)"
-                                    icon="plus" class="add-icon display-inline" style="height: 30px !important; width: 30px !important">
-                                </nb-icon>
-                            </a>
-
+                            <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addBatch($event)" icon="plus"
+                                class="add-icon" style="position: relative">
+                            </nb-icon>
+                        <button type="button" style="margin-top: -5px;"
+                            [ngClass]="{'active-button' : (b.batchId == selectedBatch), 'inactive-button':(b.batchId != selectedBatch), 'disabled': b.productionPlanned}"
+                            nbButton size="small" *ngFor="let b of finalStockDataValues; let i = index;"
+                            (click)="batchSelected(b.batchId, i)" class="p-badge-design"
+                            [disabled]="b.productionPlanned" [value]="b.pchallanRef">
+                            {{b.batchId}}
+                            <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)" icon="close-circle-outline">
+                            </nb-icon>
+                        </button>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-5 ">
-                        <ng-container>
+                    <div class="col-md-5" id="fmtr-table">
+                        <ng-container >
                             <ngx-datatable [rows]="selectedChallanList.batchMW" [scrollbarV]="true"
-                                class="material common-table datatable-auto-height fm-table-body-height"
-                                style="height: 200px;" [selectionType]="'checkbox'" (select)="onChallanSelection($event)">
+                                class="material common-table datatable-auto-height fm-table-body-height" (select)="challanGRSelected($event)"
+                                style="height: 200px;" [selectionType]="'checkbox'" [selected]="checkedChallanList">
                                 <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
                                     [checkboxable]="true">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
-                                <ngx-datatable-column name = "Is Production Planned" prop ="isProductionPlanned"></ngx-datatable-column>
+                                <ngx-datatable-column name="Is Production Planned" prop="isProductionPlanned">
+                                </ngx-datatable-column>
                             </ngx-datatable>
                         </ng-container>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary" (click)="transferClicked()">Transfer</button>
+                    <div class="col-md-2  text-center mt-3">
+                        <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="transferClicked()">Transfer</button>
                     </div>
-                    <div class="col-md-5">
-                        <ng-container>
-                            <ngx-datatable [rows]="finalStockDataValues" [scrollbarV]="true"
+                    <div class="col-md-5" id="fmtr-table">
+                        <ng-container *ngIf="selectedBatchIndex > -1">
+                            <ngx-datatable [rows]="finalStockDataValues[selectedBatchIndex].batchMW" [scrollbarV]="true"
                                 class="material common-table datatable-auto-height fm-table-body-height"
-                                style="height: 200px;" [selectionType]="'checkbox'">
+                                style="height: 200px;">
                                 <ngx-datatable-column name="Meter" prop="mtr">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
                                 <ngx-datatable-column name="Action" prop="id">
-                                    <ng-template let-row="row" let-value="value"
-                                    ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                    <nb-icon icon="trash" status="danger"
-                                        [hidden]="row.isProductionPlanned"
-                                        [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItemFromBatchList(rowIndex)">
-                                    </nb-icon>
-                                </ng-template>
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                        let-rowIndex="rowIndex">
+                                        <nb-icon icon="trash" status="danger" [hidden]="row.isProductionPlanned"
+                                            [options]="{ animation: { type: 'zoom' } }"
+                                            (click)="removeItemFromBatchList(rowIndex)">
+                                        </nb-icon>
+                                    </ng-template>
                                 </ngx-datatable-column>
                             </ngx-datatable>
                         </ng-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mobile-btn-center text-btn-right mt-50">
+                        <button type="button"
+                            class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                            (click)="addUpdateStockBatch(myForm, false)" [disabled]="loading">SAVE</button>
+                            <button type="button"
+                            class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                            (click)="addUpdateStockBatch(myForm, true)" [disabled]="loading">SAVE & PRINT</button>
                     </div>
                 </div>
             </form>
