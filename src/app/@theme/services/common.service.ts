@@ -50,7 +50,7 @@ export class CommonService {
     }
   
   
-  return  "http://192.168.29.11:8080/";
+  return  url;
 
   }
 
