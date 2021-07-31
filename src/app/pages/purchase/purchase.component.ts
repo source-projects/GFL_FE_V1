@@ -25,6 +25,10 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   copyPurchaseArray = [];
 
   public destroy$ : Subject<void> = new Subject<void>();
+
+  public tableHeaders = ["amt","approvedName", "departmentName", "receiverName"];
+  searchStr = "";
+  searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

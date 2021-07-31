@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -9,6 +9,7 @@ import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
+import { CdkRow } from '@angular/cdk/table';
 
 @Component({
   selector: "ngx-shade",
@@ -18,7 +19,9 @@ import { ToastrService } from "ngx-toastr";
 export class ShadeComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorData: any = (errorData as any).default;
-
+  searchStr = "";
+  searchANDCondition = false;
+  public tableHeaders = ["partyShadeNo", "colorName", "processName", "qualityId", "partyName", "costPerWeight", "costPerMeter", "colorTone"];
   tableStyle = "bootstrap";
   shadeList = [];
   copyShadeList = [];
@@ -32,6 +35,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
     "Color Tone",
   ];
   module = "shade";
+  avgCostPerWeight;
+  avgCostPerMeter;
+
 
   radioSelect = 0;
   flag = false;
@@ -72,7 +78,10 @@ export class ShadeComponent implements OnInit, OnDestroy {
   groupEdit = true;
   disabled = false;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  averageFlag: boolean = false;
+  totalAmount;
+
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -84,7 +93,8 @@ export class ShadeComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public shadeGuard: ShadeGuard,
     private commonService: CommonService,
-  ) {}
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.commonService.getUser();
@@ -161,6 +171,28 @@ export class ShadeComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           if (data["data"].length > 0) {
             this.shadeList = data["data"];
+            
+            this.shadeList.forEach(ele => {
+              this.totalAmount = 0;
+              if (ele.shadeDataList && ele.shadeDataList.length) {
+                ele.shadeDataList.forEach((e) => {
+                  if (e.amount) this.totalAmount += e.amount;
+                });
+                let costKg = null;
+                let costMtr = null;
+                // this.totalAmount = this.totalAmount.toFixed(2);
+                if (ele.wtPer100m) {
+                  if (ele.qualityId) {
+                    costKg = (this.totalAmount / 100).toFixed(2);
+                    let A = 100 / ele.wtPer100m;
+                    costMtr = (costKg / A).toFixed(2);
+                    ele["costPerWeight"] = costKg;
+                    ele["costPerMeter"] = costMtr;
+                  }
+                }
+              }
+            })
+
             this.shade = this.shadeList.map((element) => ({
               id: element.id,
               partyShadeNo: element.partyShadeNo,
@@ -169,7 +201,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
               qualityName: element.qualityName,
               partyName: element.partyName,
               colorTone: element.colorTone,
-              colorName:element.colorName
+              colorName: element.colorName,
+              costPerWeight: element.costPerWeight,
+              costPerMeter: element.costPerMeter
             }));
             this.copyShadeList = this.shadeList.map((element) => ({
               id: element.id,
@@ -180,7 +214,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
               partyId: element.partyId,
               colorTone: element.colorTone,
               partyName: element.partyName,
-              colorName:element.colorName
+              colorName: element.colorName,
+              costPerWeight: element.costPerWeight,
+              costPerMeter: element.costPerMeter
             }));
           }
         }
@@ -192,20 +228,65 @@ export class ShadeComponent implements OnInit, OnDestroy {
     );
   }
 
-  filter(value: any) {
-    const val = value.toString().toLowerCase().trim();
-    const keys = Object.keys(this.copyShadeList[0]);
-    this.shadeList = this.copyShadeList.filter((item) => {
-      for (let i = 0; i < keys.length; i++) {
+  filter() {
+
+    const val = this.searchStr.toString().toLowerCase().trim();
+    const searchStrings = val.split("+").map(m => ({ matched: false, val: m }));
+    this.shadeList = this.copyShadeList.filter((f) => {
+      let hit = 0;
+      for (let v of searchStrings) {
         if (
-          (item[keys[i]] &&
-            item[keys[i]].toString().toLowerCase().indexOf(val) !== -1) ||
-          !val
+          this.tableHeaders.filter(m => this.matchString(f, m, v.val)).length
         ) {
-          return true;
+          v.matched = true;
+          hit++;
+          if (!this.searchANDCondition) {
+            return true;
+          }
         }
       }
+      if (this.searchANDCondition && hit == searchStrings.length) {
+        return true;
+      }
     });
+    if (this.searchStr) {
+      let sumWeight = 0;
+      let sumMeter = 0;
+      let count = 0;
+      if (this.shadeList && this.shadeList.length) {
+        this.shadeList.forEach((ele, i) => {
+          sumWeight = sumWeight + Number(ele.costPerWeight);
+          sumMeter = sumMeter + Number(ele.costPerMeter);
+          count++;
+
+        });
+        if(count == 0){
+          this.avgCostPerWeight = sumWeight.toFixed(2);
+          this.avgCostPerMeter = sumMeter.toFixed(2); 
+        }
+        else{
+          this.avgCostPerWeight = (sumWeight / count).toFixed(2);
+          this.avgCostPerMeter = (sumMeter / count).toFixed(2);  
+        }
+        this.averageFlag = true;
+      }
+    }
+    else {
+      this.avgCostPerMeter = 0;
+      this.avgCostPerWeight = 0;
+      this.averageFlag = false;
+    }
+
+    this.cdr.detectChanges();
+    
+  }
+
+  matchString(item, key, searchString) {
+    if (item[key]) {
+      return item[key].toString().toLowerCase().includes(searchString);
+    } else {
+      return false;
+    }
   }
 
   deleteShade(id) {
@@ -288,5 +369,15 @@ export class ShadeComponent implements OnInit, OnDestroy {
     } else {
       this.hiddenEdit = true;
     }
+  }
+
+  toggleChange(value){
+    if(value){
+      this.searchANDCondition = true;
+    }
+    else{
+      this.searchANDCondition = false;
+    }
+    this.filter();
   }
 }
