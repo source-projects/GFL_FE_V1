@@ -688,16 +688,24 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   }
 
   checkPChallanUniq(i){
-    this.stockBatchService.isPchallanExists(this.stockBatch.partyId, this.stockDataValues[i].pchallanRef).pipe(takeUntil(this.destroy$)).subscribe(
-      res => {
-        if(res['success']){
-          this.stockDataValues[i].isNotUnique = res['data'];
-        }
-      }, err=> {
-
+    let checked = false;
+    this.stockDataValues.forEach((element, index) => {
+      if(index != i && this.stockDataValues[i].pchallanRef == element.pchallanRef){
+        this.stockDataValues[i].isNotUnique = true;
+        checked = true;
       }
-    )
-    
+    });
+    if(!checked){
+      this.stockBatchService.isPchallanExists(this.stockBatch.partyId, this.stockDataValues[i].pchallanRef).pipe(takeUntil(this.destroy$)).subscribe(
+        res => {
+          if(res['success']){
+            this.stockDataValues[i].isNotUnique = res['data'];
+          }
+        }, err=> {
+  
+        }
+      )
+    }    
   }
 
   addUpdateStockBatch(myForm, next?) {
@@ -755,7 +763,6 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
                 this.toastr.success(data["msg"]);
                 if (next) {
                   //this.printJobCard(myForm, data["data"]);
-                  localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
                   this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
                 }
               } else {
@@ -777,7 +784,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
               if (data["success"]) {
                 this.toastr.success(data["msg"]);
                 if (next) {
-                  localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
+                  // localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
                   this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
                 }else{
                   this.route.navigate(["/pages/stock-batch"]);

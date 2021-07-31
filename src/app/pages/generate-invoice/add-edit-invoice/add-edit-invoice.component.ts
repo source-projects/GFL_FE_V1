@@ -91,7 +91,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (this.currentInvoiceId != null) {
       this.generateInvoiceService
-        .getDataByInvoiceNumber(this.currentInvoiceId)
+        .getDataByInvoiceNumberByChallan(this.currentInvoiceId)
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           (data) => {
@@ -163,7 +163,50 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       );
   }
 
-  getBatchList(event) {
+  // getBatchList(event) {
+  //   this.party.forEach((ele) => {
+  //     if (ele.id == this.invoiceValues.partyId) {
+  //       this.discountChange = ele.percentageDiscount;
+  //     }
+  //   });
+  //   this.discountFlag = true;
+
+  //   this.loading = true;
+  //   if (event != undefined) {
+  //     if (this.invoiceValues.partyId) {
+  //       this.generateInvoiceService
+  //         .getBatchByParty(this.invoiceValues.partyId)
+  //         .pipe(takeUntil(this.destroy$))
+  //         .subscribe(
+  //           (data) => {
+  //             if (data["success"]) {
+  //               this.finalbatch = data["data"];
+  //               this.finalbatch.forEach((ele) => {
+  //                 ele.wt = ele.wt.toFixed(2);
+  //               });
+  //               this.merge = this.finalbatch;
+  //               this.finalcheckedrows = [];
+  //               this.selected = [];
+  //               this.loading = false;
+  //             } else {
+  //               this.loading = false;
+  //               this.merge = [];
+  //             }
+  //           },
+  //           (error) => {
+  //             this.loading = false;
+  //             this.merge = [];
+  //           }
+  //         );
+  //     }
+  //   } else {
+  //     this.loading = false;
+  //   }
+  // }
+
+  //changing batchList with pchallan No
+
+  getPChallanList(event) {
     this.party.forEach((ele) => {
       if (ele.id == this.invoiceValues.partyId) {
         this.discountChange = ele.percentageDiscount;
@@ -175,7 +218,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (event != undefined) {
       if (this.invoiceValues.partyId) {
         this.generateInvoiceService
-          .getBatchByParty(this.invoiceValues.partyId)
+          .getPChallanByParty(this.invoiceValues.partyId)
           .pipe(takeUntil(this.destroy$))
           .subscribe(
             (data) => {
@@ -219,7 +262,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       if (this.finalcheckedrows.length > 0) {
         this.finalcheckedrows.map((ele) => {
           let obj: invoiceobj = new invoiceobj();
-          obj.batchId = ele.batchId;
+          obj.pchallanRef = ele.pchallanRef;
           obj.stockId = ele.controlId;
           obj.rate = ele.rate;
           this.final.push(obj);
@@ -264,7 +307,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                   obj.passwordFlag = true;
                   if (invoiceForm.valid) {
                     this.generateInvoiceService
-                      .addInvoicedata(obj)
+                      .addInvoicedataWithPchallan(obj) //changed addInvoicedataWithPchallan from addInvoicedata
                       .pipe(takeUntil(this.destroy$))
                       .subscribe(
                         async (data) => {
@@ -324,7 +367,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               obj.passwordFlag = false;
               if (invoiceForm.valid) {
                 this.generateInvoiceService
-                  .addInvoicedata(obj)
+                  .addInvoicedataWithPchallan(obj) //changed addInvoicedataWithPchallan from addInvoicedata
                   .pipe(takeUntil(this.destroy$))
                   .subscribe(
                     async (data) => {
@@ -392,7 +435,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
       this.finalcheckedrows.map((ele, i) => {
         let obj: invoiceobj = new invoiceobj();
-        obj.batchId = ele.batchId;
+        obj.pchallanRef = ele.pchallanRef;
         obj.stockId = ele.controlId;
         obj.rate = ele.rate;
         this.final.push(obj);
@@ -440,7 +483,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
                 if (invoiceForm.valid) {
                   this.generateInvoiceService
-                    .updateInvoice(obj)
+                    .updateInvoiceWithPchallan(obj) // changed updateInvoiceWithPchallan from updateInvoice
                     .pipe(takeUntil(this.destroy$))
                     .subscribe(
                       (data) => {
@@ -499,7 +542,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             obj.passwordFlag = false;
             if (invoiceForm.valid) {
               this.generateInvoiceService
-                .updateInvoice(obj)
+                .updateInvoiceWithPchallan(obj) // changed updateInvoiceWithPchallan from updateInvoice
                 .pipe(takeUntil(this.destroy$))
                 .subscribe(
                   (data) => {
