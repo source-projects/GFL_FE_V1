@@ -4,6 +4,13 @@
     height: 115px;
     max-height: 115px;
 }
+.capsule-data-container {
+  border: 1px solid !important;
+  overflow-y: scroll !important;
+  height: 400px !important;
+  max-height: 400px !important;
+  width: 100% !important;
+}
 
 .list-container {
     overflow-y: scroll;
@@ -35,4 +42,11 @@
   margin-left: 0px !important;
   margin-right: 12px !important;
   margin-top: 5px !important;
+}
+
+.inside_value{
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
 }

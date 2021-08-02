@@ -126,78 +126,105 @@
                 </div>
 
                 <div class="row" style="margin: 3px 3px;">
-                    <div class="col-md-5 capsule-list-container">
-                        <div class="batch-list-3line">
-                            <button type="button" style="z-index: 999;"
-                                [ngClass]="{'active-button' : (b.pchallanRef == selectedPChallan), 'inactive-button':(b.pchallanRef != selectedPChallan), 'disabled': b.productionPlanned}"
-                                nbButton size="small" *ngFor="let b of stockDataValues"
-                                (click)="batchPChallanSelected(b.pchallanRef)" class="p-badge-design"
-                                [disabled]="b.productionPlanned" [value]="b.pchallanRef">
-                                {{b.pchallanRef}} </button>
+                    <div class="col-md-5" id="fmtr-table">
+                        <div class="capsule-data-container">
+                            <ng-container *ngFor="let value of stockDataValues">
+                                <ngx-datatable [rows]="value.batchMW" [scrollbarV]="true"
+                                    [selectionType]="SelectionType.multiClick" [rowClass]="getRowClass"
+                                    class="material common-table datatable-auto-height fm-table-body-height"
+                                    (select)="challanGRSelected($event)" style="height: 200px;"
+                                    [selectionType]="'checkbox'" [selected]="checkedChallanList">
+                                    <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
+                                        [checkboxable]="true">
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div *ngIf="!row.color">
+                                                {{value}}
+                                            </div>
+                                            <div *ngIf="row.color" class="inside_value"
+                                                [ngStyle]="{'background-color' : row.color}">
+                                                {{value}}
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [ngStyle]="{'background-color' : value.batchMW.color}"
+                                        name="Weight" prop="wt">
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div *ngIf="!row.color">
+                                                {{value}}
+                                            </div>
+                                            <div *ngIf="row.color" class="inside_value"
+                                                [ngStyle]="{'background-color' : row.color}">
+                                                {{value}}
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <!-- <ngx-datatable-column [ngStyle]="{'background-color' : color}" name="Is Production Planned" prop="isProductionPlanned">
+                                    </ngx-datatable-column> -->
+                                </ngx-datatable>
+                            </ng-container>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5 capsule-list-container">
+                    <div class="col-md-2  text-center mt-3">
+                        <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                            (click)="transferClicked()">Transfer</button>
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="capsule-list-container">
                             <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addBatch($event)" icon="plus"
                                 class="add-icon" style="position: relative">
                             </nb-icon>
-                        <button type="button" style="margin-top: -5px;"
-                            [ngClass]="{'active-button' : (b.batchId == selectedBatch), 'inactive-button':(b.batchId != selectedBatch), 'disabled': b.productionPlanned}"
-                            nbButton size="small" *ngFor="let b of finalStockDataValues; let i = index;"
-                            (click)="batchSelected(b.batchId, i)" class="p-badge-design"
-                            [disabled]="b.productionPlanned" [value]="b.pchallanRef">
-                            {{b.batchId}}
-                            <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)" icon="close-circle-outline">
-                            </nb-icon>
-                        </button>
+                            <button type="button" style="margin-top: -5px;"
+                                [ngClass]="{'active-button' : (b.batchId == selectedBatch)}"
+                                [ngStyle]="{'background-color' : b.backColor}" nbButton size="small"
+                                *ngFor="let b of finalStockDataValues; let i = index;"
+                                (click)="batchSelected(b.batchId, i)" class="p-badge-design"
+                                [disabled]="b.productionPlanned" [value]="b.pchallanRef">
+                                {{b.batchId}}
+                                <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)" icon="close-circle-outline">
+                                </nb-icon>
+                            </button>
+                        </div>
+                        <div id="fmtr-table">
+                            <ng-container *ngIf="selectedBatchIndex > -1">
+                                <ngx-datatable [rows]="finalStockDataValues[selectedBatchIndex].batchMW"
+                                    [scrollbarV]="true"
+                                    class="material common-table datatable-auto-height fm-table-body-height"
+                                    style="height: 200px;">
+                                    <ngx-datatable-column name="Meter" prop="mtr">
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Action" prop="id">
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
+                                            let-rowIndex="rowIndex">
+                                            <nb-icon icon="trash" status="danger" [hidden]="row.isProductionPlanned"
+                                                [options]="{ animation: { type: 'zoom' } }"
+                                                (click)="removeItemFromBatchList(rowIndex)">
+                                            </nb-icon>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-5" id="fmtr-table">
-                        <ng-container >
-                            <ngx-datatable [rows]="selectedChallanList.batchMW" [scrollbarV]="true"
-                                class="material common-table datatable-auto-height fm-table-body-height" (select)="challanGRSelected($event)"
-                                style="height: 200px;" [selectionType]="'checkbox'" [selected]="checkedChallanList">
-                                <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
-                                    [checkboxable]="true">
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
-                                <ngx-datatable-column name="Is Production Planned" prop="isProductionPlanned">
-                                </ngx-datatable-column>
-                            </ngx-datatable>
-                        </ng-container>
+                <!-- <div class="row">
+                    <div class="col-md-5">
+
                     </div>
-                    <div class="col-md-2  text-center mt-3">
-                        <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple" (click)="transferClicked()">Transfer</button>
+
+                    <div class="col-md-5">
+
                     </div>
-                    <div class="col-md-5" id="fmtr-table">
-                        <ng-container *ngIf="selectedBatchIndex > -1">
-                            <ngx-datatable [rows]="finalStockDataValues[selectedBatchIndex].batchMW" [scrollbarV]="true"
-                                class="material common-table datatable-auto-height fm-table-body-height"
-                                style="height: 200px;">
-                                <ngx-datatable-column name="Meter" prop="mtr">
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
-                                <ngx-datatable-column name="Action" prop="id">
-                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                        let-rowIndex="rowIndex">
-                                        <nb-icon icon="trash" status="danger" [hidden]="row.isProductionPlanned"
-                                            [options]="{ animation: { type: 'zoom' } }"
-                                            (click)="removeItemFromBatchList(rowIndex)">
-                                        </nb-icon>
-                                    </ng-template>
-                                </ngx-datatable-column>
-                            </ngx-datatable>
-                        </ng-container>
-                    </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right mt-50">
                         <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                             (click)="addUpdateStockBatch(myForm, false)" [disabled]="loading">SAVE</button>
-                            <button type="button"
+                        <button type="button"
                             class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                             (click)="addUpdateStockBatch(myForm, true)" [disabled]="loading">SAVE & PRINT</button>
                     </div>

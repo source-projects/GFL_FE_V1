@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sortBy } from 'lodash';
 import { Subject } from 'rxjs';
@@ -10,6 +10,7 @@ import { QualityService } from '../../../@theme/services/quality.service';
 import { ToastrService } from 'ngx-toastr';
 import { JobCardComponent } from '../job-card/job-card.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SelectionType } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'ngx-stock-in',
@@ -22,7 +23,7 @@ export class StockInComponent implements OnInit, OnDestroy {
   public currentStockId: number;
   private unsubscribe$ = new Subject<void>();
   public stockDataValues = [];
-  public finalStockDataValues:any = [];
+  public finalStockDataValues: any = [];
   public stockBatch: StockBatch = new StockBatch();
   public partyList = [];
   public qualityList = [];
@@ -32,10 +33,12 @@ export class StockInComponent implements OnInit, OnDestroy {
   public selectedBatch;
   public selectedBatchIndex;
   public selectedBatchList = [];
-  public selectedChallanList:any = [];
+  public selectedChallanList: any = [];
   public checkedChallanList = [];
   public chlListToTransfer = [];
   currentBatchSequence = 0;
+  SelectionType = SelectionType;
+
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -45,6 +48,7 @@ export class StockInComponent implements OnInit, OnDestroy {
     private stockBatchService: StockBatchService,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private cdr:ChangeDetectorRef,
   ) { }
 
   ngOnDestroy(): void {
@@ -56,15 +60,15 @@ export class StockInComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentStockId = Number(this.activeRoute.snapshot.queryParamMap.get('id'));
     // if(localStorage.getItem('stockdata')){
-      this.getPartyList();
-      this.getQualityList();
-      this.getStockBatchById();
+    this.getPartyList();
+    this.getQualityList();
+    this.getStockBatchById();
     // }else if(this.currentStockId){
     //   this.router.navigate(["/pages/stock-batch/edit",this.currentStockId]);
     // }else{
     //   this.router.navigate(["/pages/stock-batch"]);
     // }
-    
+
   }
 
   getPartyList() {
@@ -166,8 +170,8 @@ export class StockInComponent implements OnInit, OnDestroy {
               x.controlId
             )
           );
-          batch.batchMW[batch.batchMW.length-1]['batchId'] = x.batchId;
-          batch.batchMW[batch.batchMW.length-1]['pchallanRef'] = x.pchallanRef;
+          batch.batchMW[batch.batchMW.length - 1]['batchId'] = x.batchId;
+          batch.batchMW[batch.batchMW.length - 1]['pchallanRef'] = x.pchallanRef;
           if (x.isProductionPlanned)
             this.production_flag[i] = true;
         }
@@ -177,13 +181,13 @@ export class StockInComponent implements OnInit, OnDestroy {
 
     //for edit.....
     data.batchData.forEach(element => {
-      if(!this.finalStockDataValues){
+      if (!this.finalStockDataValues) {
         this.finalStockDataValues = [];
       }
-      if(this.finalStockDataValues && element.batchId){
+      if (this.finalStockDataValues && element.batchId) {
         let index = this.finalStockDataValues.findIndex(f => f.batchId == element.batchId);
-        if(index > -1){
-          if(this.finalStockDataValues[index].batchMW && !this.finalStockDataValues[index].batchMW.length){
+        if (index > -1) {
+          if (this.finalStockDataValues[index].batchMW && !this.finalStockDataValues[index].batchMW.length) {
             this.finalStockDataValues[index].batchMW = [];
           }
           this.finalStockDataValues[index].batchMW.push(new BatchMrtWt(
@@ -195,9 +199,9 @@ export class StockInComponent implements OnInit, OnDestroy {
           ));
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
-        }else{
-          if(!this.finalStockDataValues.length){
-            this.finalStockDataValues.push({batchId: element.batchId, batchMW: []})
+        } else {
+          if (!this.finalStockDataValues.length) {
+            this.finalStockDataValues.push({ batchId: element.batchId, batchMW: [] })
           }
           let idx = this.finalStockDataValues.length - 1;
           this.finalStockDataValues[idx].batchMW.push(new BatchMrtWt(
@@ -215,18 +219,18 @@ export class StockInComponent implements OnInit, OnDestroy {
     console.log(this.finalStockDataValues)
   }
 
-  batchPChallanSelected(pchallanRef){
+  batchPChallanSelected(pchallanRef) {
     this.selectedPChallan = pchallanRef;
     this.checkedChallanList = [];
     this.selectedChallanList = this.stockDataValues.filter(f => f.pchallanRef == this.selectedPChallan)[0];
   }
 
-  batchSelected(batchId, i){
+  batchSelected(batchId, i) {
     this.selectedBatch = batchId;
     this.selectedBatchIndex = i;
   }
 
-  addBatch(e){
+  addBatch(e) {
     var ob = new BatchCard();
     // ob.batchMW.push();
     if (this.finalStockDataValues.length) {
@@ -238,7 +242,7 @@ export class StockInComponent implements OnInit, OnDestroy {
         itemList = sortBy(itemList, "pchallanRef", "asc");
         let nextBatchId = itemList[itemList.length - 1].batchId;
         //call update sequence api.....
-            
+
         this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.unsubscribe$)).subscribe((data) => {
           if (data["success"]) {
             ob.batchId = data["data"].sequence;
@@ -247,13 +251,15 @@ export class StockInComponent implements OnInit, OnDestroy {
               this.selectedBatch = this.currentBatchSequence;
               this.selectedBatchIndex = this.finalStockDataValues.length - 1;
             }
-        this.finalStockDataValues.push({ ...ob });
-        const className = "collapsible-panel--expanded";
-        if (e.target.classList.contains(className)) {
-          e.target.classList.remove(className);
-        } else {
-          e.target.classList.add(className);
-        }
+            this.getRandomColor(ob);
+            this.finalStockDataValues.push({ ...ob });
+           
+            const className = "collapsible-panel--expanded";
+            if (e.target.classList.contains(className)) {
+              e.target.classList.remove(className);
+            } else {
+              e.target.classList.add(className);
+            }
           }
         });
       }
@@ -261,6 +267,7 @@ export class StockInComponent implements OnInit, OnDestroy {
       this.finalStockDataValues = [];
       var ob = new BatchCard();
       // ob.batchMW.push(new BatchMrtWt());
+      this.getRandomColor(ob);
       this.finalStockDataValues.push({ ...ob });
       this.getCurrentBatchSequence();
       this.finalStockDataValues[0].batchId = this.currentBatchSequence;
@@ -275,27 +282,29 @@ export class StockInComponent implements OnInit, OnDestroy {
         this.currentBatchSequence = data["data"]["sequence"];
         if (this.finalStockDataValues && this.finalStockDataValues[0])
           this.finalStockDataValues[0].batchId = this.currentBatchSequence;
-          this.selectedBatch = this.currentBatchSequence;
-          this.selectedBatchIndex = this.finalStockDataValues.length -1;
+        this.selectedBatch = this.currentBatchSequence;
+        this.selectedBatchIndex = this.finalStockDataValues.length - 1;
       }
     });
   }
 
-  challanGRSelected(event){
+  challanGRSelected(event) {
     this.checkedChallanList = event.selected
   }
 
-  removeItemFromBatchList(index){
+  removeItemFromBatchList(index) {
     let removed = this.finalStockDataValues[this.selectedBatchIndex].batchMW.splice(index, 1);
-    if(removed && removed[0] && removed[0].pchallanRef){
+    if (removed && removed[0] && removed[0].pchallanRef) {
       let idx = this.stockDataValues.findIndex(f => f.pchallanRef == removed[0].pchallanRef);
       removed[0]['batchId'] = null;
+      removed[0].color = '';
       this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, removed[0]]
       console.log(removed, this.stockDataValues[idx])
+      this.cdr.detectChanges();
     }
   }
 
-  deleteBatch(batch, i){
+  deleteBatch(batch, i) {
     batch.batchMW.forEach(element => {
       element.batchId = null;
       let idx = this.stockDataValues.findIndex(f => f.pchallanRef == element.pchallanRef);
@@ -307,52 +316,56 @@ export class StockInComponent implements OnInit, OnDestroy {
     this.selectedBatchIndex = -1;
   }
 
-  transferClicked(){
-    if(this.checkedChallanList && this.checkedChallanList.length){
-      if(this.finalStockDataValues.length && this.selectedBatch){
+  transferClicked() {
+    if (this.checkedChallanList && this.checkedChallanList.length) {
+      if (this.finalStockDataValues.length && this.selectedBatch) {
         let index = this.finalStockDataValues.findIndex(f => f.batchId == this.selectedBatch);
         this.checkedChallanList.forEach(e => {
-          this.finalStockDataValues[index].batchMW.push([e].map(m => ({...m, batchId: this.selectedBatch, pchallanRef: this.selectedPChallan}))[0])
-          this.selectedChallanList.batchMW = this.selectedChallanList.batchMW.filter(f => f.id != e.id);
-          this.selectedChallanList.batchMW = [...this.selectedChallanList.batchMW,]
+          this.finalStockDataValues[index].batchMW.push([e].map(m => ({ ...m, batchId: this.selectedBatch, pchallanRef: this.selectedPChallan }))[0])
+          // this.selectedChallanList.batchMW = this.selectedChallanList.batchMW.filter(f => f.id != e.id);
+          // this.selectedChallanList.batchMW = [...this.selectedChallanList.batchMW,]
+          let i = this.stockDataValues.findIndex(item => item.pchallanRef == e.pchallanRef);
+          let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
+          this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
+          this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
         })
         this.checkedChallanList = [];
         this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
-      }else{
+      } else {
         this.toastr.error("Select Batch first");
       }
-    }else {
+    } else {
       this.toastr.error("Select challan grs first");
     }
   }
 
-  addUpdateStockBatch(myForm, print?){
-    if(this.finalStockDataValues && this.finalStockDataValues.length){
+  addUpdateStockBatch(myForm, print?) {
+    if (this.finalStockDataValues && this.finalStockDataValues.length) {
       this.stockBatch.batchData = [];
-      for(let batch of this.finalStockDataValues){
-        if(batch.batchMW && batch.batchMW){
+      for (let batch of this.finalStockDataValues) {
+        if (batch.batchMW && batch.batchMW) {
           batch.batchMW.forEach(element => {
-            this.stockBatch.batchData.push({...element});  
+            this.stockBatch.batchData.push({ ...element });
           });
-        }else{
+        } else {
           this.toastr.error(`${batch.batchId} GRs are empty`);
           return false;
         }
       }
       this.loading = true;
       this.stockBatchService.updateStockBatch(this.stockBatch).pipe(takeUntil(this.unsubscribe$)).subscribe(
-        res=> {
-          if(res['success']){
+        res => {
+          if (res['success']) {
             this.toastr.success(res['msg']);
-            if(print){
+            if (print) {
               this.printJobCard(myForm, res['data']);
             }
             this.router.navigate(['pages/stock-batch']);
-          }else{
+          } else {
             this.toastr.error(res['msg']);
           }
           this.loading = false;
-        }, err=>{
+        }, err => {
           this.loading = false;
         }
       )
@@ -367,5 +380,16 @@ export class StockInComponent implements OnInit, OnDestroy {
     modalRef.result.then((result) => {
     });
   }
+
+  getRandomColor(ob) {
+    let color = '#';
+    let letters = '0123456789ABCDEF';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    ob.backColor = color;
+  }
+
 
 }

@@ -38,6 +38,8 @@ export class BatchMrtWt {
   wt: number;
   isProductionPlanned: boolean;
   controlId:number;
+  batchId:number;
+  color:string;
 
   constructor(m?, w?, d?,id?,controlId?) {
     controlId ? (this.controlId = controlId) : this.controlId = null;
@@ -45,6 +47,8 @@ export class BatchMrtWt {
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;
     d? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
+    this.batchId = null;
+    this.color = '';
   }
 }
 
@@ -56,10 +60,12 @@ export class BatchCard {
   isNotUnique: boolean;
   batchMW: BatchMrtWt[];
   isProductionPlanned:boolean;
+  backColor:string
 
   constructor(batchId?) {
     this.isNotUnique = false;
     batchId ? (this.batchId = batchId) : (this.batchId = null);
     this.batchMW = [];
+    this.backColor = '';
   }
 }
