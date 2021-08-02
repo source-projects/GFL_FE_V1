@@ -3,6 +3,10 @@ import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
 import { NavigationExtras, Router } from "@angular/router";
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { NbDialogService, NbToastComponent } from '@nebular/theme';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 // import { Invoice } from "app/@theme/model/invoice";
 
@@ -35,7 +39,9 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
 
   constructor(
     private generateInvoiceService: GenerateInvoiceService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -150,5 +156,28 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
     this.finalcheckedrows = [];
     this.finalcheckedrows.push(row.invoiceNo);
     this.print();
+  }
+
+  deleteInvoice(invoiceNo){
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result.then((result) => {
+      if (result) {
+        this.loading = true;
+        this.generateInvoiceService.deleteByInvoiceNo(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success("Deleted Successfully.");
+              this.getAllInvoice();
+              this.loading = false;
+            }
+            else{
+              this.loading = false;
+            }
+          },
+        );
+      }
+    });
   }
 }
