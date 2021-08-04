@@ -3,6 +3,7 @@
     overflow-y: scroll;
     height: 115px;
     max-height: 115px;
+    width: 100% !important;
 }
 .capsule-data-container {
   border: 1px solid !important;
@@ -17,8 +18,8 @@
     height: 130px;
 }
 
-.active-button {
-    background-color: #274fc4 !important;
+.active-button, .active-button:active {
+  box-shadow: 4px 7px 10px black !important;
   }
   
   .inactive-button {

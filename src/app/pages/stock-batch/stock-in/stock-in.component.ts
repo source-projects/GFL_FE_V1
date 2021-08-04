@@ -48,7 +48,7 @@ export class StockInComponent implements OnInit, OnDestroy {
     private stockBatchService: StockBatchService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private cdr:ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnDestroy(): void {
@@ -253,7 +253,7 @@ export class StockInComponent implements OnInit, OnDestroy {
             }
             this.getRandomColor(ob);
             this.finalStockDataValues.push({ ...ob });
-           
+
             const className = "collapsible-panel--expanded";
             if (e.target.classList.contains(className)) {
               e.target.classList.remove(className);
@@ -298,8 +298,12 @@ export class StockInComponent implements OnInit, OnDestroy {
       let idx = this.stockDataValues.findIndex(f => f.pchallanRef == removed[0].pchallanRef);
       removed[0]['batchId'] = null;
       removed[0].color = '';
-      this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, removed[0]]
-      console.log(removed, this.stockDataValues[idx])
+
+      let value = this.stockDataValues[idx].batchMW.findIndex(v => v.id == removed[0].id);
+      // this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, removed[0]]
+      this.stockDataValues[idx].batchMW[value].color = '';
+      this.stockDataValues[idx].batchMW[value].batchId = null;
+      this.finalStockDataValues[this.selectedBatchIndex].batchMW = [...this.finalStockDataValues[this.selectedBatchIndex].batchMW];
       this.cdr.detectChanges();
     }
   }
@@ -320,17 +324,25 @@ export class StockInComponent implements OnInit, OnDestroy {
     if (this.checkedChallanList && this.checkedChallanList.length) {
       if (this.finalStockDataValues.length && this.selectedBatch) {
         let index = this.finalStockDataValues.findIndex(f => f.batchId == this.selectedBatch);
+        let invalid = false;
         this.checkedChallanList.forEach(e => {
-          this.finalStockDataValues[index].batchMW.push([e].map(m => ({ ...m, batchId: this.selectedBatch, pchallanRef: this.selectedPChallan }))[0])
-          // this.selectedChallanList.batchMW = this.selectedChallanList.batchMW.filter(f => f.id != e.id);
-          // this.selectedChallanList.batchMW = [...this.selectedChallanList.batchMW,]
-          let i = this.stockDataValues.findIndex(item => item.pchallanRef == e.pchallanRef);
-          let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
-          this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
-          this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
-        })
+          if (e.color) {
+            invalid = true;
+            return;
+          }
+          else {
+            this.finalStockDataValues[index].batchMW.push([e].map(m => ({ ...m, batchId: this.selectedBatch, pchallanRef: e.pchallanRef }))[0])
+            let i = this.stockDataValues.findIndex(item => item.pchallanRef == e.pchallanRef);
+            let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
+            this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
+            this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
+            this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
+          }
+        });
+        if(invalid){
+          this.toastr.error("Selected GR already exist in batch");
+        }
         this.checkedChallanList = [];
-        this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
       } else {
         this.toastr.error("Select Batch first");
       }
