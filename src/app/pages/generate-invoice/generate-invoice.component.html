@@ -2,7 +2,8 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-2 col-3 display-flex-start max-width-device">
-                <button [routerLink]="['/pages/generate_invoice']" class="btn btn-primary btn-md btn-design txt-ov-elips">Generate
+                <button [routerLink]="['/pages/generate_invoice']"
+                    class="btn btn-primary btn-md btn-design txt-ov-elips">Generate
                     Invoice</button>
             </div>
             <div class="col-md-8 col-3">
@@ -23,23 +24,32 @@
                     <div class="col-md-4">
                         <div style="display: flex;">
                             <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                            <nb-toggle status="primary" labelPosition="start" name="shift"
+                                [(ngModel)]="searchANDCondition"></nb-toggle>
                             <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                    aria-describedby="basic-addon1" [(ngModel)]="searchStr">
+                            aria-describedby="basic-addon1" [(ngModel)]="searchStr">
                     </div>
                 </div>
             </div>
         </div>
-        <ngx-datatable [rows]="InvoiceList | searchInTable : searchStr : searchANDCondition : tableHeaders" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
-            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true" prop="id" [maxWidth]="110">
+        <ngx-datatable [rows]="InvoiceList | searchInTable : searchStr : searchANDCondition : tableHeaders"
+            class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'"
+            (select)="onSelect($event)" let index>
+            <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true" [checkboxable]="true"
+                prop="id" [maxWidth]="110">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" (click)="printCurrentInvoice($event, row)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
-                    <nb-icon icon="edit" *ngIf="!row.signByParty" status="primary" [options]="{ animation: { type: 'zoom' } }"
-                        [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>&nbsp;&nbsp;
+                    <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger"
+                        (click)="printCurrentInvoice($event, row)" [options]="{ animation: { type: 'zoom' } }">
+                    </nb-icon>
+                    <nb-icon icon="edit" *ngIf="!row.signByParty" status="primary"
+                        [options]="{ animation: { type: 'zoom' } }"
+                        [routerLink]="['/pages/generate_invoice/edit',row.invoiceNo]"></nb-icon>
+                    <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                        (click)="deleteInvoice(row.invoiceNo)"></nb-icon>
                 </ng-template>
             </ngx-datatable-column>
 

@@ -70,5 +70,9 @@ export class GenerateInvoiceService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/get/passwordExist?password=' + password);
   }
 
+  deleteByInvoiceNo(invoiceNo):any{
+    return this.httpClient.delete(this.commonService.envUrl() + 'api/dispatch/delete?invoiceNo=' + invoiceNo);
+ 
+  }
  
 }
