@@ -1108,7 +1108,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .p-badge-design {
-    background-color: #5e5b5e ;
+    background-color: #5e5b5e !important;
+    border-color: #5e5b5e !important;
+    color: #ffffff !important;
+    border-radius: 68px !important;
+    padding: 5px 18px !important;
+    margin-top: 5px;
+    margin-right: 9px;
+}
+
+.badge-design-stock-in {
+    background-color: #5e5b5e;
     border-color: #5e5b5e !important;
     color: #ffffff !important;
     border-radius: 68px !important;

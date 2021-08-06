@@ -15,34 +15,44 @@
 
                 <div class="row" style="margin: 3px 3px;">
                     <div class="col-md-8" id="fmtr-table">
-                        <div class="capsule-data-container">
-                            <ng-container class="col-md-3" *ngFor="let value of stockDataValues">
-                                <ngx-datatable [rows]="value.batchMW" [scrollbarV]="true"
-                                    [selectionType]="SelectionType.multiClick" [rowClass]="getRowClass"
-                                    class="material common-table datatable-auto-height fm-table-body-height"
-                                    (select)="challanGRSelected($event)" style="height: 200px;"
-                                    [selectionType]="'checkbox'" [selected]="checkedChallanList">
-                                    <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
-                                        [checkboxable]="true">
-                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
-                                            let-value="value" let-row="row">
-                                            <div *ngIf="!row.color">
-                                                {{value}}
-                                            </div>
-                                            <div *ngIf="row.color" class="inside_value"
-                                                [ngStyle]="{'background-color' : row.color}">
-                                                {{value}}
-                                            </div>
-                                        </ng-template>
-                                    </ngx-datatable-column>
-                                </ngx-datatable>
-                            </ng-container>
+                        <div class="capsule-data-container right-border">
+                            <div class="row">
+                                <div class="col-md-4" *ngFor="let value of stockDataValues">
+                                    <div class="row" style="padding-left: 18px">
+                                        PChallan Ref: {{value.pchallanRef}}
+                                    </div>
+                                    <div>
+                                        <ngx-datatable [rows]="value.batchMW" [scrollbarV]="true"
+                                        [selectionType]="SelectionType.multiClick"
+                                        class="material common-table datatable-auto-height fm-table-body-height"
+                                        (select)="challanGRSelected($event)" style="height: 200px;"
+                                        [selectionType]="'checkbox'" [selected]="checkedChallanList">
+                                        <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
+                                            [checkboxable]="true">
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                let-value="value" let-row="row">
+                                                <div *ngIf="!row.color">
+                                                    {{value}}
+                                                </div>
+                                                <div *ngIf="row.color" class="inside_value"
+                                                    [ngStyle]="{'background-color' : row.color}">
+                                                    {{value}}
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <ng-container class="col-md-3" *ngFor="let value of stockDataValues"> -->
+
+                            <!-- </ng-container> -->
                         </div>
                     </div>
                     <div class="col-md-4 mt-3">
                         <div class="row">
                             <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple"
-                            (click)="transferClicked()">Transfer</button>
+                                (click)="transferClicked()">Transfer</button>
                         </div>
                         <div class="row">
                             <div class="capsule-list-container">
@@ -53,10 +63,11 @@
                                     [ngClass]="{'active-button' : (b.batchId == selectedBatch)}"
                                     [ngStyle]="{'background-color' : b.backColor}" nbButton size="small"
                                     *ngFor="let b of finalStockDataValues; let i = index;"
-                                    (click)="batchSelected(b.batchId, i)" class="p-badge-design"
+                                    (click)="batchSelected(b.batchId, i)" class="badge-design-stock-in"
                                     [disabled]="b.productionPlanned" [value]="b.pchallanRef">
                                     {{b.batchId}}
-                                    <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)" icon="close-circle-outline">
+                                    <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)"
+                                        icon="close-circle-outline" *ngIf="!b.isProductionPlanned">
                                     </nb-icon>
                                 </button>
                             </div>
@@ -83,8 +94,8 @@
                             </div>
                         </div>
                     </div>
-    
-                        
+
+
 
                 </div>
 

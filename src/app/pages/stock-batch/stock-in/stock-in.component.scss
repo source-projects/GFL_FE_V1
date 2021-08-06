@@ -6,11 +6,16 @@
     width: 100% !important;
 }
 .capsule-data-container {
-  border: 1px solid !important;
-  overflow-y: scroll !important;
+  border: 1px solid;
   height: 400px !important;
   max-height: 400px !important;
   width: 100% !important;
+}
+
+.right-border{
+  border: none;
+  overflow-x: scroll;
+  border-right: 1px solid !important;
 }
 
 .list-container {

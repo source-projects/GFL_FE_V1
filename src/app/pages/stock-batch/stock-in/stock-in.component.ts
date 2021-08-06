@@ -160,7 +160,7 @@ export class StockInComponent implements OnInit, OnDestroy {
     this.stockDataValues.forEach((batch, i) => {
       this.production_flag[i] = false;
       this.stockBatch.batchData.forEach((x, j) => {
-        if (x.pchallanRef == batch.pchallanRef && !x.batchId) {
+        if (x.pchallanRef == batch.pchallanRef) {
           batch.batchMW.push(
             new BatchMrtWt(
               x.mtr,
@@ -199,11 +199,21 @@ export class StockInComponent implements OnInit, OnDestroy {
           ));
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
-        } else {
-          if (!this.finalStockDataValues.length) {
-            this.finalStockDataValues.push({ batchId: element.batchId, batchMW: [] })
+          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id &&  m.pchallanRef == element.pchallanRef && !m.color).length);
+          if(i > -1){
+            let rowIndex = this.stockDataValues[i].batchMW.findIndex(f =>  f.id == element.id && f.pchallanRef == element.pchallanRef && !f.color);
+            if(rowIndex > -1){
+              this.stockDataValues[i].batchMW[rowIndex].color = this.finalStockDataValues[index].backColor;
+            }
           }
+        } else {
+          if (!this.finalStockDataValues) {
+            this.finalStockDataValues = [];
+          }
+          this.finalStockDataValues.push({ batchId: element.batchId, batchMW: [] })
           let idx = this.finalStockDataValues.length - 1;
+          this.getRandomColor(this.finalStockDataValues[idx]);
+
           this.finalStockDataValues[idx].batchMW.push(new BatchMrtWt(
             element.mtr,
             element.wt,
@@ -213,10 +223,24 @@ export class StockInComponent implements OnInit, OnDestroy {
           ));
           this.finalStockDataValues[idx].batchMW[this.finalStockDataValues[idx].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[idx].batchMW[this.finalStockDataValues[idx].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
+          // this.stockDataValues[i].batchMW[rowindex].color
+          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id &&  m.pchallanRef == element.pchallanRef && !m.color).length);
+          if(i > -1){
+            let rowIndex = this.stockDataValues[i].batchMW.findIndex(f => f.id == element.id && f.pchallanRef == element.pchallanRef && !f.color);
+            if(rowIndex > -1){
+              this.stockDataValues[i].batchMW[rowIndex].color = this.finalStockDataValues[idx].backColor;
+            }
+          }
         }
       }
     });
-    console.log(this.finalStockDataValues)
+
+    //set isProductionFlag..
+    this.finalStockDataValues.forEach(element => {
+      if(element.batchMW.filter(f => f.isProductionPlanned).length){
+        element['isProductionPlanned'] = true;
+      }
+    });
   }
 
   batchPChallanSelected(pchallanRef) {
@@ -310,9 +334,18 @@ export class StockInComponent implements OnInit, OnDestroy {
 
   deleteBatch(batch, i) {
     batch.batchMW.forEach(element => {
+      // element.batchId = null;
+      
+      let idx = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.batchId == element.batchId && m.batchId).length);
+      // this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, element]
+      if(idx > -1){
+        let rowIndex = this.stockDataValues[idx].batchMW.findIndex(f => f.batchId == element.batchId && f.batchId);
+        if(rowIndex > -1){
+          this.stockDataValues[idx].batchMW[rowIndex].batchId = null;
+          this.stockDataValues[idx].batchMW[rowIndex].color = '';
+        }
+      }
       element.batchId = null;
-      let idx = this.stockDataValues.findIndex(f => f.pchallanRef == element.pchallanRef);
-      this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, element]
       console.log(element, this.stockDataValues[idx])
     });
     let removed = this.finalStockDataValues.splice(i, 1);

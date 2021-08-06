@@ -827,6 +827,12 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     }
   }
 
+  gotoNextPage(){
+    if(this.currentStockBatchId){
+      this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:this.currentStockBatchId}});
+    }
+  }
+
   printJobCard(form, data) {
     this.isDirectPrintFlag = true;
     const modalRef = this.modalService.open(JobCardComponent);
