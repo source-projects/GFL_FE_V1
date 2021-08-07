@@ -202,6 +202,14 @@ export class StockBatchComponent implements OnInit, OnDestroy {
           this.stockList = data["data"];
           let index = 0;
           this.stockList.forEach((element) => {
+            if(element.batchData && element.batchData.length ){
+              element.batchData.forEach(e => {
+                if(e.batchId){
+                  element['showPrint'] = true;
+                }
+              });
+            }
+            
             this.stockList[index].billDate = new Date(
               element.billDate
             ).toDateString();

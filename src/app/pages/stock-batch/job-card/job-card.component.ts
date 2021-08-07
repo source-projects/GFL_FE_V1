@@ -42,8 +42,8 @@ export class JobCardComponent implements OnInit, OnDestroy {
     batchListArray.push(String(this.batchId))
     if (this.batchId) {
       batchIds = batchListArray
-
     } else {
+      this.stockBatchData.batchData = this.stockBatchData.batchData.filter(f => f.batchId);
       batchIds = this.stockBatchData.batchData
         .map((item) => item.batchId)
         .filter((value, index, self) => self.indexOf(value) === index);

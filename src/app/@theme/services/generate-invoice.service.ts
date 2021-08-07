@@ -33,16 +33,36 @@ export class GenerateInvoiceService {
   getBatchByParty(id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getBatchByParty/'+id);
   }
+  // GET PCHALLAN BY PARTY ID
+  getPChallanByParty(id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPChallanByParty/'+id);
+  }
 
   addInvoicedata(invoiceData): any {
     return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/',invoiceData);
   }
 
+  // addInvoice with pchaalan No
+  addInvoicedataWithPchallan(invoiceData): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/add',invoiceData);
+  }
+
   updateInvoice(invoiceData): any {
     return this.httpClient.put(this.commonService.envUrl() + 'api/dispatch/updateDispatch/', invoiceData);
   }
+
+  // update with pchallan no
+  updateInvoiceWithPchallan(invoiceData): any {
+    return this.httpClient.put(this.commonService.envUrl() + 'api/dispatch/update', invoiceData);
+  }
   getDataByInvoiceNumber(id):any{
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getDispatch/byInvoiceNumber/'+id);
+ 
+  }
+
+  //get updated data by invoice number for pchallan no
+  getDataByInvoiceNumberByChallan(id):any{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getDispatchWithPChallan/byInvoiceNumber/'+id);
  
   }
 

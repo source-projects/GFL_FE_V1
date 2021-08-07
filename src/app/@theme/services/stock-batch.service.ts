@@ -21,6 +21,27 @@ export class StockBatchService {
     );
   }
 
+  isPchallanExists(party, pchallan) {
+    return this.httpClient.get(
+      this.commonService.envUrl() +
+      `api/stockBatch/exist/pchallan?partyId=${party}&pchallanRef=${pchallan}`
+    );
+  }
+
+  addPchallan(data) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/add/pchallan",
+      data
+    );
+  }
+
+  updatePchallan(data) {
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/stockBatch/update/pchallan",
+      data
+    );
+  }
+
   deleteStockBatchById(id): any {
     return this.httpClient.delete(
       this.commonService.envUrl() + "api/stockBatch/" + id
