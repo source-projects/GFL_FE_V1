@@ -46,7 +46,7 @@ export class DispatchData {
 
 export class invoiceobj {
 
-  batchId: Number;
+  pchallanRef: Number; //changed from batchId to pchallanRef
   stockId: Number;
   rate: number;
 }
@@ -64,7 +64,7 @@ export class InvoiceDetailedReport {
 
 export class QualityList {
   amt: number;
-  batchId: string;
+  pchallanRef: string; //changed from batchId to pchallanRef
   qualityEntryId: number;
   qulityId: string;
   rate: number;

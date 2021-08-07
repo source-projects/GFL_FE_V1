@@ -45,9 +45,12 @@ export class PrintInvoiceService {
   getInvoiceByNoToPrint(id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPartyWithQualityDispatchBy/'+id);
   }
-
+// with pchallan
+  getInvoiceByNoToPrintWithPchallan(id){
+    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPChallanPartyWithQualityDispatchBy/'+id);
+  }
   getInvoiceByBatchAndStock(batchStockData): any{
-    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/get/receipt/getPartyWithQualityDispatchByBatchesAndStock/' ,  batchStockData);
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/get/receipt/getPartyWithQualityDispatchByPChallanAndStock/' ,  batchStockData);
 
   }
 }

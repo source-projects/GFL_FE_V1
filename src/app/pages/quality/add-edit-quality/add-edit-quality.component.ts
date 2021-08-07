@@ -274,6 +274,7 @@ export class AddEditQualityComponent implements OnInit, OnDestroy {
               this.reset();
               this.disableButton = false;
               this.toastr.success(data["msg"]);
+              this.getData();
             } else {
               this.toastr.error(data["msg"]);
             }

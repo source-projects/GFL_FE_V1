@@ -171,7 +171,6 @@ export class ShadeComponent implements OnInit, OnDestroy {
         if (data["success"]) {
           if (data["data"].length > 0) {
             this.shadeList = data["data"];
-            
             this.shadeList.forEach(ele => {
               this.totalAmount = 0;
               if (ele.shadeDataList && ele.shadeDataList.length) {
@@ -260,15 +259,19 @@ export class ShadeComponent implements OnInit, OnDestroy {
           count++;
 
         });
-        if(count == 0){
+        if (count == 0) {
           this.avgCostPerWeight = sumWeight.toFixed(2);
-          this.avgCostPerMeter = sumMeter.toFixed(2); 
+          this.avgCostPerMeter = sumMeter.toFixed(2);
         }
-        else{
+        else {
           this.avgCostPerWeight = (sumWeight / count).toFixed(2);
-          this.avgCostPerMeter = (sumMeter / count).toFixed(2);  
+          this.avgCostPerMeter = (sumMeter / count).toFixed(2);
         }
         this.averageFlag = true;
+      }
+      else {
+        this.avgCostPerMeter = 0;
+        this.avgCostPerWeight = 0;
       }
     }
     else {
@@ -278,7 +281,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
 
     this.cdr.detectChanges();
-    
+
   }
 
   matchString(item, key, searchString) {

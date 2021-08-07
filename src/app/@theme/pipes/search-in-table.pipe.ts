@@ -33,7 +33,7 @@ export class SearchInTablePipe implements PipeTransform {
     if(key == "batchList" && item[key]){
       return item[key].filter(f => f.batchId?f.batchId.toString().toLowerCase().includes(searchString) : ''.toString().toLowerCase().includes(searchString)).length > 0
     }
-    else if(key == "batchId"){
+    else if(key == "batchId" && item["batchData"]){
       return item["batchData"].filter(f => f.batchId?f.batchId.toString().toLowerCase().includes(searchString) : ''.toString().toLowerCase().includes(searchString)).length > 0
     }else{
       if(item[key]){
