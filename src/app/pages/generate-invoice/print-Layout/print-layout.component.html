@@ -7,21 +7,21 @@
                     <div class="border-margin">
                         <div class="container">
                             <div class="row">
-    
+
                                 <div class="top-print-head width-63">
                                     <b>TAX INVOICE CUM DELIVERY CHALLAN</b>
                                 </div>
-    
-    
+
+
                                 <div class="top-print-head border-width width-37">
                                     <strong class="border duplicate-border">{{item}}</strong>
                                 </div>
-    
-    
+
+
                             </div>
                         </div>
                         <div class="print-in-border">
-    
+
                             <div class="container">
                                 <div class="border-dark row  pd-0">
                                     <div class="col-sm-10">
@@ -37,7 +37,7 @@
                                                     <div class="row">
                                                         <p class="text-center col-sm-12 font-10 formally">
                                                             FORMALLY KNOWN AS : MUKESH PROCESSORS PVT. LTD.
-    
+
                                                         </p>
                                                     </div>
                                                     <div class="row">
@@ -46,7 +46,8 @@
                                                         </p>
                                                     </div>
                                                     <div class="row">
-                                                        <p class="text-center col-sm-12 font-20">GSTIN :- 24AAFCM5028A1Z1
+                                                        <p class="text-center col-sm-12 font-20">GSTIN :-
+                                                            24AAFCM5028A1Z1
                                                             Place Of Supply : Surat</p>
                                                     </div>
                                                 </div>
@@ -55,13 +56,13 @@
                                     </div>
                                     <div class="col-sm-2 jus-con-center">
                                         <div class="invoice-logo jus-con-center">
-    
+
                                             <img src="../../../../assets/GLORY SYMBOL.png" class="print-logo-style">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="content">
                                 <div class="invoice">
                                     <div class="row col-sm-12 pd-0 mr-0">
@@ -71,7 +72,7 @@
                                                     <b class="font-15"><span>Party Name</span> </b>
                                                 </div>
                                                 <div class="text-left col-sm-10 border border-width font-15">
-                                                   <b>{{invoice.partyName | uppercase }}</b> 
+                                                    <b>{{invoice.partyName | uppercase }}</b>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -87,15 +88,16 @@
                                                     <b class="font-15"><span>GSTIN</span> </b>
                                                 </div>
                                                 <div class="text-left col-sm-10 border border-width font-15 ">
-                                                        <b class="col-sm-5 pl-0" >{{invoice.gst}}</b>
-                                                        <div class="col-sm-7 border-left border-width font-15 ">
-                                                            <div class="text-left col-sm-5 text-nowrap pl-0" style="border-right: 1px solid rgb(143, 143, 143);">
-                                                                <b class="display-between font-15"><span>Phn No:</span> </b>
-                                                            </div>
-                                                            <div class="col-sm-7 text-left">
-                                                                {{invoice.contactNo}}
-                                                            </div>
+                                                    <b class="col-sm-5 pl-0">{{invoice.gst}}</b>
+                                                    <div class="col-sm-7 border-left border-width font-15 ">
+                                                        <div class="text-left col-sm-5 text-nowrap pl-0"
+                                                            style="border-right: 1px solid rgb(143, 143, 143);">
+                                                            <b class="display-between font-15"><span>Phn No:</span> </b>
                                                         </div>
+                                                        <div class="col-sm-7 text-left">
+                                                            {{invoice.contactNo}}
+                                                        </div>
+                                                    </div>
                                                     <!-- </div> -->
                                                 </div>
                                             </div>
@@ -105,21 +107,23 @@
                                                 <div class="col-md-2 width-33">
                                                     <b class="display-between font-15"><span>Invoice</span></b>
                                                 </div>
-                                                <div style="font-size: 18px;" class="col-md-10 border-left border-bottom border-width width-65">
-                                                   <b>{{invoice.invoiceNo}}</b> 
+                                                <div style="font-size: 18px;"
+                                                    class="col-md-10 border-left border-bottom border-width width-65">
+                                                    <b>{{invoice.invoiceNo}}</b>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-2 width-33">
                                                     <b class="display-between font-15"><span>Date</span></b>
                                                 </div>
-                                                <div style="font-size: 18px;" class="col-md-10 border-left border-bottom border-width width-65">
+                                                <div style="font-size: 18px;"
+                                                    class="col-md-10 border-left border-bottom border-width width-65">
                                                     {{invoice.createdDate | date : 'dd/MM/yyyy'}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-    
+
                                     <div class="border-dark font-15">
                                         <table class="table  spacing-low table-bordered ">
                                             <tr>
@@ -154,7 +158,7 @@
                                                     <b>Amount</b>
                                                 </th>
                                             </tr>
-    
+
                                             <tr *ngFor="let quality of invoice.qualityList;let i=index;">
                                                 <td>
                                                     <b>{{i+1}}</b>
@@ -188,9 +192,9 @@
                                                 <td class="text-right">
                                                     <b>{{quality.amt | number : '1.2-2'}}</b>
                                                 </td>
-    
+
                                             </tr>
-    
+
                                             <tr class="font-bold">
                                                 <td>
                                                 </td>
@@ -200,7 +204,7 @@
                                                 </td>
                                                 <td>
                                                 </td>
-    
+
                                                 <td>
                                                     TOTAL
                                                 </td>
@@ -214,7 +218,7 @@
                                                     {{invoice.totalFinishMtr | number : '1.2-2'}}
                                                 </td>
                                                 <td>
-    
+
                                                 </td>
                                                 <td class="text-right">
                                                     {{invoice.totalAmt | number : '1.2-2'}}
@@ -222,8 +226,8 @@
                                             </tr>
                                         </table>
                                     </div>
-    
-    
+
+
                                     <div class="border-dark disc-style">
                                         <div class="row ">
                                             <div class="col-sm-4">
@@ -280,7 +284,7 @@
                                                             <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                         </div>
                                                     </div> -->
-                                                <table class="table spacing-low table-bordered" > 
+                                                <table class="table spacing-low table-bordered">
                                                     <!-- style="width: 350px;" -->
                                                     <tr>
                                                         <td class="text-left">
@@ -323,18 +327,18 @@
                                                             <b>{{ invoice.netAmt | number : '1.2-2'}}</b>
                                                         </td>
                                                     </tr>
-    
+
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-    
-    
+
+
                                     <!-- batch Grey mtr data list -->
                                     <div class="row main-invoice-row">
                                         <div class="col-md-3" *ngFor="let lots of invoice.batchWithGrList">
                                             <div>
-    
+
                                                 <table class="table lot-border">
                                                     <tr>
                                                         <th class="text-left">
@@ -342,35 +346,46 @@
                                                         </th>
                                                     </tr>
                                                 </table>
-    
-    
+
+
                                                 <div id="invoice-table">
                                                     <table
                                                         class="table print-invoice-table border-bootom-none table-bordered">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" class="pd-top-bottom-2"><b>Cops</b></th>
-                                                                <th scope="col" class="pd-top-bottom-2"><b>GryMtr</b></th>
-                                                                <th scope="col" class="pd-top-bottom-2"><b>FinMtr</b></th>
-    
+                                                                <th *ngIf="lots.billingUnit == 'meter' || !lots.billingUnit" scope="col"
+                                                                    class="pd-top-bottom-2"><b>GryMtr</b></th>
+                                                                <th *ngIf="lots.billingUnit == 'weight'" scope="col"
+                                                                    class="pd-top-bottom-2"><b>GryWt</b></th>
+                                                                <th *ngIf="lots.billingUnit == 'meter' || !lots.billingUnit" scope="col"
+                                                                    class="pd-top-bottom-2"><b>FinMtr</b></th>
+                                                                <th *ngIf="lots.billingUnit == 'weight'" scope="col"
+                                                                    class="pd-top-bottom-2"><b>FinWt</b></th>
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-    
+
                                                             <tr *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                                <td class="pd-top-bottom-1 text-right"> {{grs.srNo? grs.srNo : i + 1}}</td>
-                                                                <td class="pd-top-bottom-1 text-right">{{(grs.mtr == '-')? '-' : grs.mtr | number : '1.2-2'}}</td>
+                                                                <td class="pd-top-bottom-1 text-right"> {{grs.srNo?
+                                                                    grs.srNo : i + 1}}</td>
+                                                                <td class="pd-top-bottom-1 text-right">{{(grs.mtr ==
+                                                                    '-')? '-' : grs.mtr | number : '1.2-2'}}</td>
                                                                 <td class="pd-top-bottom-1 text-right">
                                                                     {{grs.finishMtr | number : '1.2-2'}}</td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot class="table-footer">
                                                             <tr>
-                                                                <th class="pd-top-bottom-0"><b>{{lots.lotDataLength}}</b>
+                                                                <th class="pd-top-bottom-0">
+                                                                    <b>{{lots.lotDataLength}}</b>
                                                                 </th>
-                                                                <th class="pd-top-bottom-0"><b>{{lots.totalMtr}}</b></th>
-                                                                <th class="pd-top-bottom-0"><b>{{lots.totalFMtr }}</b></th>
-    
+                                                                <th class="pd-top-bottom-0"><b>{{lots.totalMtr}}</b>
+                                                                </th>
+                                                                <th class="pd-top-bottom-0"><b>{{lots.totalFMtr }}</b>
+                                                                </th>
+
                                                             </tr>
                                                             <tr>
                                                                 <th colspan="3" class="pd-top-bottom-0"><b>Sh_% :
@@ -379,18 +394,18 @@
                                                         </tfoot>
                                                     </table>
                                                 </div>
-    
-    
+
+
                                             </div>
                                         </div>
-    
+
                                     </div>
                                     <div class="footer-border">
                                         <div class="row">
                                             <div class="col-sm-7">
                                                 <div class="footer-bottom">
                                                     <div class="row">
-    
+
                                                         <div class="col-sm-4">
                                                             <div class="font-big">
                                                                 <b>BANK NAME</b>
@@ -401,8 +416,8 @@
                                                                 : HDFC BANK LTD..
                                                             </div>
                                                         </div>
-    
-    
+
+
                                                         <div class="col-sm-4">
                                                             <div class="font-big">
                                                                 <b> A/c No.</b>
@@ -413,7 +428,7 @@
                                                                 : 59227111222333
                                                             </div>
                                                         </div>
-    
+
                                                         <div class="col-sm-4">
                                                             <div class="font-big">
                                                                 <b>Branch IFS Code</b>
@@ -426,34 +441,35 @@
                                                         </div>
                                                     </div>
                                                 </div>
-    
+
                                             </div>
-    
-    
+
+
                                             <div class="col-sm-5">
-    
+
                                                 <div class="company-ltd text-center">
                                                     <b>GLORY DYEING MILLS PVT. LTD.</b>
                                                 </div>
-    
+
                                             </div>
-    
+
                                         </div>
-    
-    
+
+
                                         <div class="row terms-print-fix">
                                             <div class="col-sm-7 terms-border">
                                                 <div class="border-top-none font-big">
-    
+
                                                     <b>TERMS CONDITION :</b>
                                                     <ul class="terms-cond">
                                                         <li> 1. Goods once sold will not be taken back .</li>
-                                                        <li> 2. Our responsibility ceases once the goods is delivered to the
+                                                        <li> 2. Our responsibility ceases once the goods is delivered to
+                                                            the
                                                             carrier.
                                                         </li>
                                                         <li> 3. GST Payable on Reverse Charge : No</li>
                                                     </ul>
-    
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
@@ -463,14 +479,14 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <!-- Footer -->
-    
+
                         </div>
-    
+
                     </div>
                 </section>
-                
+
             </div>
         </section>
     </div>
@@ -577,15 +593,15 @@
                                         </div>
                                         <div class="col-sm-8 border border-width font-15 ">
                                             <!-- <div class="row col-sm-12"> -->
-                                                <b class="col-sm-5" >{{invoice.gst}}</b>
-                                                <div class="col-sm-7 border-left border-width font-15 ">
-                                                    <div class="col-sm-5 text-nowrap">
-                                                        <b class="display-between font-15"><span>Phn No:</span> </b>
-                                                    </div>
-                                                    <div class="col-sm-7">
-                                                        {{invoice.contactNo}}
-                                                    </div>
+                                            <b class="col-sm-5">{{invoice.gst}}</b>
+                                            <div class="col-sm-7 border-left border-width font-15 ">
+                                                <div class="col-sm-5 text-nowrap">
+                                                    <b class="display-between font-15"><span>Phn No:</span> </b>
                                                 </div>
+                                                <div class="col-sm-7">
+                                                    {{invoice.contactNo}}
+                                                </div>
+                                            </div>
                                             <!-- </div> -->
                                         </div>
                                     </div>
@@ -845,16 +861,22 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" class="pd-top-bottom-2"><b>Cops</b></th>
-                                                        <th scope="col" class="pd-top-bottom-2"><b>GryMtr</b></th>
-                                                        <th scope="col" class="pd-top-bottom-2"><b>FinMtr</b></th>
+                                                        <th *ngIf="lots.billingUnit == 'meter' || !lots.billingUnit" scope="col"
+                                                            class="pd-top-bottom-2"><b>GryMtr</b></th>
+                                                        <th *ngIf="lots.billingUnit == 'weight'" scope="col"
+                                                            class="pd-top-bottom-2"><b>GryWt</b></th>
+                                                        <th *ngIf="lots.billingUnit == 'meter' || !lots.billingUnit" scope="col"
+                                                            class="pd-top-bottom-2"><b>FinMtr</b></th>
+                                                        <th *ngIf="lots.billingUnit == 'weight'" scope="col"
+                                                            class="pd-top-bottom-2"><b>FinWt</b></th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody style="height: 184mm;">
 
-                                                    <tr
-                                                        *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                        <td class="pd-top-bottom-1 text-right"> {{grs.srNo? grs.srNo : i + 1}}</td>
+                                                    <tr *ngFor="let grs of lots.batchDataList;let i = index;">
+                                                        <td class="pd-top-bottom-1 text-right"> {{grs.srNo? grs.srNo : i
+                                                            + 1}}</td>
                                                         <td class="pd-top-bottom-1 text-right">{{grs.mtr}}</td>
                                                         <td class="pd-top-bottom-1 text-right">{{grs.finishMtr}}</td>
                                                     </tr>
@@ -961,7 +983,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div>
 

@@ -199,10 +199,10 @@ export class StockInComponent implements OnInit, OnDestroy {
           ));
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
-          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id &&  m.pchallanRef == element.pchallanRef && !m.color).length);
-          if(i > -1){
-            let rowIndex = this.stockDataValues[i].batchMW.findIndex(f =>  f.id == element.id && f.pchallanRef == element.pchallanRef && !f.color);
-            if(rowIndex > -1){
+          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id && m.pchallanRef == element.pchallanRef && !m.color).length);
+          if (i > -1) {
+            let rowIndex = this.stockDataValues[i].batchMW.findIndex(f => f.id == element.id && f.pchallanRef == element.pchallanRef && !f.color);
+            if (rowIndex > -1) {
               this.stockDataValues[i].batchMW[rowIndex].color = this.finalStockDataValues[index].backColor;
             }
           }
@@ -224,10 +224,10 @@ export class StockInComponent implements OnInit, OnDestroy {
           this.finalStockDataValues[idx].batchMW[this.finalStockDataValues[idx].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[idx].batchMW[this.finalStockDataValues[idx].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
           // this.stockDataValues[i].batchMW[rowindex].color
-          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id &&  m.pchallanRef == element.pchallanRef && !m.color).length);
-          if(i > -1){
+          let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id && m.pchallanRef == element.pchallanRef && !m.color).length);
+          if (i > -1) {
             let rowIndex = this.stockDataValues[i].batchMW.findIndex(f => f.id == element.id && f.pchallanRef == element.pchallanRef && !f.color);
-            if(rowIndex > -1){
+            if (rowIndex > -1) {
               this.stockDataValues[i].batchMW[rowIndex].color = this.finalStockDataValues[idx].backColor;
             }
           }
@@ -237,7 +237,7 @@ export class StockInComponent implements OnInit, OnDestroy {
 
     //set isProductionFlag..
     this.finalStockDataValues.forEach(element => {
-      if(element.batchMW.filter(f => f.isProductionPlanned).length){
+      if (element.batchMW.filter(f => f.isProductionPlanned).length) {
         element['isProductionPlanned'] = true;
       }
     });
@@ -335,12 +335,12 @@ export class StockInComponent implements OnInit, OnDestroy {
   deleteBatch(batch, i) {
     batch.batchMW.forEach(element => {
       // element.batchId = null;
-      
+
       let idx = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.batchId == element.batchId && m.batchId).length);
       // this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW, element]
-      if(idx > -1){
+      if (idx > -1) {
         let rowIndex = this.stockDataValues[idx].batchMW.findIndex(f => f.batchId == element.batchId && f.batchId);
-        if(rowIndex > -1){
+        if (rowIndex > -1) {
           this.stockDataValues[idx].batchMW[rowIndex].batchId = null;
           this.stockDataValues[idx].batchMW[rowIndex].color = '';
         }
@@ -354,34 +354,48 @@ export class StockInComponent implements OnInit, OnDestroy {
   }
 
   transferClicked() {
-    if (this.checkedChallanList && this.checkedChallanList.length) {
-      if (this.finalStockDataValues.length && this.selectedBatch) {
-        let index = this.finalStockDataValues.findIndex(f => f.batchId == this.selectedBatch);
-        let invalid = false;
-        this.checkedChallanList.forEach(e => {
-          if (e.color) {
-            invalid = true;
-            return;
-          }
-          else {
-            this.finalStockDataValues[index].batchMW.push([e].map(m => ({ ...m, batchId: this.selectedBatch, pchallanRef: e.pchallanRef }))[0])
-            let i = this.stockDataValues.findIndex(item => item.pchallanRef == e.pchallanRef);
-            let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
-            this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
-            this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
-            this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
-          }
-        });
-        if(invalid){
-          this.toastr.error("Selected GR already exist in batch");
+    if (this.selectedBatch) {
+      let batch = this.finalStockDataValues.filter(v => v.batchId == this.selectedBatch);
+      if (batch && batch.length && batch[0]) {
+        if (batch[0].isProductionPlanned) {
+          this.toastr.error("Production planned for this batch!");
         }
-        this.checkedChallanList = [];
-      } else {
-        this.toastr.error("Select Batch first");
+        else {
+          if (this.checkedChallanList && this.checkedChallanList.length) {
+            if (this.finalStockDataValues.length && this.selectedBatch) {
+              let index = this.finalStockDataValues.findIndex(f => f.batchId == this.selectedBatch);
+              let invalid = false;
+              this.checkedChallanList.forEach(e => {
+                if (e.color) {
+                  invalid = true;
+                  return;
+                }
+                else {
+                  this.finalStockDataValues[index].batchMW.push([e].map(m => ({ ...m, batchId: this.selectedBatch, pchallanRef: e.pchallanRef }))[0])
+                  let i = this.stockDataValues.findIndex(item => item.pchallanRef == e.pchallanRef);
+                  let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
+                  this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
+                  this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
+                  this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
+                }
+              });
+              if (invalid) {
+                this.toastr.error("Selected GR already exist in batch");
+              }
+              this.checkedChallanList = [];
+            } else {
+              this.toastr.error("Select Batch first");
+            }
+          } else {
+            this.toastr.error("Select challan grs first");
+          }
+        }
       }
-    } else {
-      this.toastr.error("Select challan grs first");
     }
+    else{
+      this.toastr.error("Select Batch first");
+    }
+
   }
 
   addUpdateStockBatch(myForm, print?) {

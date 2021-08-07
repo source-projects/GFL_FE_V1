@@ -230,7 +230,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
               this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
               "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
               "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
-            "C_GST","S_GST","GST_Amt","Total_Amt"]
+            "C_GST","S_GST","GST_Amt","Total_Amt","Billing Unit","Inward Unit"]
               let list = [];
               excelData.forEach(ele => {
                 ele.consolidatedBillDataList.forEach(col => {
@@ -258,7 +258,9 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     C_GST: col.cgst,
                     S_GST: col.sgst,
                     GST_Amt: col.gstAmt,
-                    Total_Amt: col.netAmt
+                    Total_Amt: col.netAmt,
+                    BillingUnit:col.billingUnit,
+                    InwardUnit:col.inwardUnit,
                   }
                   list.push(y);
                 })
