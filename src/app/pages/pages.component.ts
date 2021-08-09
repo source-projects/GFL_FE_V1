@@ -1,31 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
-import { ColorGuard } from "../@theme/guards/color.guard";
-import { PartyGuard } from "../@theme/guards/party.guard";
-import { ProgramGuard } from "../@theme/guards/program.guard";
-import { QualityGuard } from "../@theme/guards/quality.guard";
-import { ShadeGuard } from "../@theme/guards/shade.guard";
-import { StockBatchGuard } from "../@theme/guards/stock-batch.guard";
-import { SupplierGuard } from "../@theme/guards/supplier.guard";
-import { UserGuard } from "../@theme/guards/user.guard";
-import { DyeingProcessGuard } from "../@theme/guards/dyeing-process.guard";
-import { JetPlanningGuard } from "../@theme/guards/jet-planning.guard";
-import { ProductionPlanningGuard } from "../@theme/guards/production-planning.guard";
-import { WaterJetGuard } from "../@theme/guards/water-jet.guard";
-import { InvoiceGuard } from "../@theme/guards/invoice.guard";
-import { PaymentGuard } from "../@theme/guards/payment.guard";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subject } from "rxjs";
-import { MENU_ITEMS } from "./pages-menu";
-import { FinishedMeterGuard } from "../@theme/guards/finished-meter.guard";
-import { InputDataGuard } from "../@theme/guards/input-data.guard";
+import { CommonGuard } from "../@theme/guards/common.guard";
 import { CommonService } from "../@theme/services/common.service";
 import { UserService } from "../@theme/services/user.service";
-import { AdminGuard } from "../@theme/guards/admin.guard";
-import { EmployeeRegistrationGuard } from "../@theme/guards/employee-registration.guard";
-import { AttndanceGuard } from "../@theme/guards/attendance.guard";
-import { PurchaseGuard } from "../@theme/guards/purchase.guard";
-import { MergeBatchGuard } from "../@theme/guards/merge-batch.guard";
-import { ReportGuard } from "../@theme/guards/report.guard";
-import { TaskGuard } from "../@theme/guards/task.guard";
+import { MENU_ITEMS } from "./pages-menu";
 @Component({
   selector: "ngx-pages",
   styleUrls: ["pages.component.scss"],
@@ -52,31 +30,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    public partyGuard: PartyGuard,
-    public qualityGuard: QualityGuard,
-    public userGuard: UserGuard,
-    public supplierGuard: SupplierGuard,
-    public colorGuard: ColorGuard,
-    public shadeGuard: ShadeGuard,
-    public stockBatchGuard: StockBatchGuard,
-    public programGuard: ProgramGuard,
-    public dyeingProcessGuard: DyeingProcessGuard,
-    public jetPlanningGuard: JetPlanningGuard,
-    public productionPlanningGuard: ProductionPlanningGuard,
-    public waterJetGuard: WaterJetGuard,
-    public invoiceGuard: InvoiceGuard,
-    public paymentGuard: PaymentGuard,
-    public registrationGuard: EmployeeRegistrationGuard,
-    public attendanceGuard: AttndanceGuard,
-    public finishedMeterGuard: FinishedMeterGuard,
-    public inputDataGuard: InputDataGuard,
-    public adminGuard: AdminGuard,
-    public purchaseGuard: PurchaseGuard,
+    
     private commonService: CommonService,
     private userService: UserService,
-    private mergeGuard: MergeBatchGuard,
-    private reportGuard: ReportGuard,
-    private taskGuard: TaskGuard
+    private commonGuard : CommonGuard
   ) {}
   ngOnInit(): void {
     this.user = this.commonService.getUser();
@@ -89,9 +46,9 @@ export class PagesComponent implements OnInit, OnDestroy {
           this.menu.forEach((e) => {
             switch (e.title) {
               case "Party":
-                this.view = this.partyGuard.accessRights("view");
-                this.view_all = this.partyGuard.accessRights("view all");
-                this.view_group = this.partyGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","party");
+                this.view_all = this.commonService.accessRights("view all","party");
+                this.view_group = this.commonService.accessRights("view group","party");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -104,9 +61,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Merge-batch":
-                this.view = this.mergeGuard.accessRights("view");
-                this.view_all = this.mergeGuard.accessRights("view all");
-                this.view_group = this.mergeGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","mergeBatch");
+                this.view_all = this.commonService.accessRights("view all","mergeBatch");
+                this.view_group = this.commonService.accessRights("view group","mergeBatch");
                 if (
                   this.view == false
                   // this.view_all == false &&
@@ -119,9 +76,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Quality":
-                this.view = this.qualityGuard.accessRights("view");
-                this.view_all = this.qualityGuard.accessRights("view all");
-                this.view_group = this.qualityGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","quality");
+                this.view_all = this.commonService.accessRights("view all","quality");
+                this.view_group = this.commonService.accessRights("view group","quality");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -142,9 +99,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                   e.hidden = true;
                 } else {
                   e.hidden = false;
-                  this.view = this.userGuard.accessRights("view");
-                  this.view_all = this.userGuard.accessRights("view all");
-                  this.view_group = this.userGuard.accessRights("view group");
+                  this.view = this.commonService.accessRights("view","user");
+                  this.view_all = this.commonService.accessRights("view all","user");
+                  this.view_group = this.commonService.accessRights("view group","user");
                   if (
                     this.view == false &&
                     this.view_all == false &&
@@ -159,9 +116,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Color":
-                this.view = this.colorGuard.accessRights("view");
-                this.view_all = this.colorGuard.accessRights("view all");
-                this.view_group = this.colorGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","color");
+                this.view_all = this.commonService.accessRights("view all","color");
+                this.view_group = this.commonService.accessRights("view group","color");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -186,10 +143,10 @@ export class PagesComponent implements OnInit, OnDestroy {
               //   break;
 
               case "Stock-batch":
-                this.view = this.stockBatchGuard.accessRights("view");
-                this.view_all = this.stockBatchGuard.accessRights("view all");
-                this.view_group = this.stockBatchGuard.accessRights(
-                  "view group"
+                this.view = this.commonService.accessRights("view","stockBatch");
+                this.view_all = this.commonService.accessRights("view all","stockBatch");
+                this.view_group = this.commonService.accessRights(
+                  "view group","stockBatch"
                 );
                 if (
                   this.view == false &&
@@ -202,9 +159,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 }
                 break;
               case "Shade":
-                this.view = this.shadeGuard.accessRights("view");
-                this.view_all = this.shadeGuard.accessRights("view all");
-                this.view_group = this.shadeGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","shade");
+                this.view_all = this.commonService.accessRights("view all","shade");
+                this.view_group = this.commonService.accessRights("view group","shade");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -216,9 +173,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 }
                 break;
               case "Supplier":
-                this.view = this.supplierGuard.accessRights("view");
-                this.view_all = this.supplierGuard.accessRights("view all");
-                this.view_group = this.supplierGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","supplier");
+                this.view_all = this.commonService.accessRights("view all","supplier");
+                this.view_group = this.commonService.accessRights("view group","supplier");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -242,12 +199,12 @@ export class PagesComponent implements OnInit, OnDestroy {
               //   }
               //   break;
               case "DyeingProcess":
-                this.view = this.dyeingProcessGuard.accessRights("view");
-                this.view_all = this.dyeingProcessGuard.accessRights(
-                  "view all"
+                this.view = this.commonService.accessRights("view","process");
+                this.view_all = this.commonService.accessRights(
+                  "view all","process"
                 );
-                this.view_group = this.dyeingProcessGuard.accessRights(
-                  "view group"
+                this.view_group = this.commonService.accessRights(
+                  "view group","process"
                 );
                 if (
                   this.view == false &&
@@ -261,9 +218,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Issue-Color-Box":
-                this.view = this.colorGuard.accessRights("view");
-                this.view_all = this.colorGuard.accessRights("view all");
-                this.view_group = this.colorGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","color");
+                this.view_all = this.commonService.accessRights("view all","color");
+                this.view_group = this.commonService.accessRights("view group","color");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -276,10 +233,10 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Batch-shuffle":
-                this.view = this.stockBatchGuard.accessRights("view");
-                this.view_all = this.stockBatchGuard.accessRights("view all");
-                this.view_group = this.stockBatchGuard.accessRights(
-                  "view group"
+                this.view = this.commonService.accessRights("view","stockBatch");
+                this.view_all = this.commonService.accessRights("view all","stockBatch");
+                this.view_group = this.commonService.accessRights(
+                  "view group","stockBatch"
                 );
                 if (
                   this.view == false &&
@@ -293,12 +250,12 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Finished Meter":
-                this.view = this.finishedMeterGuard.accessRights("view");
-                this.view_all = this.finishedMeterGuard.accessRights(
-                  "view all"
+                this.view = this.commonService.accessRights("view","batch");
+                this.view_all = this.commonService.accessRights(
+                  "view all","batch"
                 );
-                this.view_group = this.finishedMeterGuard.accessRights(
-                  "view group"
+                this.view_group = this.commonService.accessRights(
+                  "view group","batch"
                 );
                 if (
                   this.view == false &&
@@ -312,12 +269,12 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Production Planning":
-                this.view = this.productionPlanningGuard.accessRights("view");
-                this.view_all = this.productionPlanningGuard.accessRights(
-                  "view all"
+                this.view = this.commonService.accessRights("view","productionPlanning");
+                this.view_all = this.commonService.accessRights(
+                  "view all","productionPlanning"
                 );
-                this.view_group = this.productionPlanningGuard.accessRights(
-                  "view group"
+                this.view_group = this.commonService.accessRights(
+                  "view group","productionPlanning"
                 );
                 if (
                   this.view == false &&
@@ -346,9 +303,9 @@ export class PagesComponent implements OnInit, OnDestroy {
               //   break;
 
               case "Generate Invoice":
-                this.view = this.invoiceGuard.accessRights("view");
-                this.view_all = this.invoiceGuard.accessRights("view all");
-                this.view_group = this.invoiceGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","dispatch");
+                this.view_all = this.commonService.accessRights("view all","dispatch");
+                this.view_group = this.commonService.accessRights("view group","dispatch");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -386,10 +343,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   
 
               case "Input Data":
-                this.view = this.inputDataGuard.accessRights("view");
-                this.view_all = this.inputDataGuard.accessRights("view all");
-                this.view_group = this.inputDataGuard.accessRights(
-                  "view group"
+                this.view = this.commonService.accessRights("view","machine");
+                this.view_all = this.commonService.accessRights("view all","machine");
+                this.view_group = this.commonService.accessRights(
+                  "view group","machine"
                 );
                 if (
                   this.view == false &&
@@ -403,9 +360,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Payment":
-                this.view = this.paymentGuard.accessRights("view");
-                this.view_all = this.paymentGuard.accessRights("view all");
-                this.view_group = this.paymentGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","payment");
+                this.view_all = this.commonService.accessRights("view all","payment");
+                this.view_group = this.commonService.accessRights("view group","payment");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -418,9 +375,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Addition Slip":
-                this.view = this.paymentGuard.accessRights("view");
-                this.view_all = this.paymentGuard.accessRights("view all");
-                this.view_group = this.paymentGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","dyeingSlip");
+                this.view_all = this.commonService.accessRights("view all","dyeingSlip");
+                this.view_group = this.commonService.accessRights("view group","dyeingSlip");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -433,10 +390,10 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Employee-Registration":
-                this.view = this.registrationGuard.accessRights("view");
-                this.view_all = this.registrationGuard.accessRights("view all");
-                this.view_group = this.registrationGuard.accessRights(
-                  "view group"
+                this.view = this.commonService.accessRights("view","employee");
+                this.view_all = this.commonService.accessRights("view all","employee");
+                this.view_group = this.commonService.accessRights(
+                  "view group","employee"
                 );
                 if (
                   this.view == false &&
@@ -450,10 +407,10 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Attendance":
-                this.view = this.attendanceGuard.accessRights("view");
-                this.view_all = this.attendanceGuard.accessRights("view all");
-                this.view_group = this.attendanceGuard.accessRights(
-                  "view group"
+                this.view = this.commonService.accessRights("view","attendence");
+                this.view_all = this.commonService.accessRights("view all","attendence");
+                this.view_group = this.commonService.accessRights(
+                  "view group","attendence"
                 );
                 if (
                   this.view == false &&
@@ -467,9 +424,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                 break;
 
               case "Purchase":
-                this.view = this.purchaseGuard.accessRights("view");
-                this.view_all = this.purchaseGuard.accessRights("view all");
-                this.view_group = this.purchaseGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","purchase");
+                this.view_all = this.commonService.accessRights("view all","purchase");
+                this.view_group = this.commonService.accessRights("view group","purchase");
                 if (
                   this.view == false &&
                   this.view_all == false &&
@@ -490,9 +447,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                       e.hidden = false;
                     } else {
                       e.hidden = true;
-                      this.view = this.reportGuard.accessRights("view");
-                      this.view_all = this.reportGuard.accessRights("view all");
-                      this.view_group = this.reportGuard.accessRights("view group");
+                      this.view = this.commonService.accessRights("view","report");
+                      this.view_all = this.commonService.accessRights("view all","report");
+                      this.view_group = this.commonService.accessRights("view group","report");
                       if (
                         this.view == false &&
                         this.view_all == false &&
@@ -506,9 +463,9 @@ export class PagesComponent implements OnInit, OnDestroy {
                   break;
 
               case "Task":
-                this.view = this.taskGuard.accessRights("view");
-                this.view_all = this.taskGuard.accessRights("view all");
-                this.view_group = this.taskGuard.accessRights("view group");
+                this.view = this.commonService.accessRights("view","task");
+                this.view_all = this.commonService.accessRights("view all","task");
+                this.view_group = this.commonService.accessRights("view group","task");
                 if (
                   this.view == false &&
                   this.view_all == false &&

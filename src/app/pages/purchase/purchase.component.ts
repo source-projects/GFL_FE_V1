@@ -1,11 +1,12 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { PurchaseGuard } from '../../@theme/guards/purchase.guard';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CommonService } from '../../@theme/services/common.service';
 import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import { PurchaseNewService } from '../../@theme/services/purchase-new.service';
 
 @Component({
@@ -36,9 +37,10 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   
   constructor(
     private purchseService : PurchaseNewService,
-    private purchaseGuard : PurchaseGuard,
+    private commonGuard : CommonGuard,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private commonService : CommonService,
     private route: Router,
 
   ) { }
@@ -50,13 +52,13 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
 
   getAccess() {
-    if (this.purchaseGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","purchase")) {
       this.hiddenAdd = false;
     }
-    if (this.purchaseGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","purchase")) {
       this.hiddenDelete = false;
     }
-    if (this.purchaseGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","purchase")) {
       this.hiddenEdit = false;
     }
   }

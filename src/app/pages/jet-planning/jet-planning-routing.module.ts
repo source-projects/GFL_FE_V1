@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { JetPlanningGuard } from '../../@theme/guards/jet-planning.guard';
+import { RouterModule, Routes } from '@angular/router';
 import { JetPlanningComponent } from '../../pages/jet-planning/jet-planning.component';
 
 const routes: Routes = [
   {
     path:'',
     component:JetPlanningComponent,
-    canActivate:[JetPlanningGuard],
-    canLoad:[JetPlanningGuard],
-    data: { PermissionName: ['view','view group','view all',]}
+    // canActivate:[JetPlanningGuard],
+    // canLoad:[JetPlanningGuard],
+    data: { PermissionName: ['view','view group','view all'],compName:"jetPlanning"}
   },
   {
     path:':id',
     component:JetPlanningComponent,
-    canActivate:[JetPlanningGuard],
-    canLoad:[JetPlanningGuard],
-    data: { PermissionName: ['view','view group','view all']}
+    // canActivate:[JetPlanningGuard],
+    // canLoad:[JetPlanningGuard],
+    data: { PermissionName: ['view','view group','view all'],compName:"jetPlanning"}
 
   },
  

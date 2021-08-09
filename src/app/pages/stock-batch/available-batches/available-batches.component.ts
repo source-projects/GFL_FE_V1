@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { cloneDeep } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { StockBatchGuard } from '../../../@theme/guards/stock-batch.guard';
+import { takeUntil } from 'rxjs/operators';
+import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { CommonGuard } from '../../../@theme/guards/common.guard';
+import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from '../../../@theme/services/common.service';
 import { StockBatchService } from '../../../@theme/services/stock-batch.service';
-import * as errorData from "../../../@theme/json/error.json";
-import {cloneDeep} from 'lodash';
-import { takeUntil } from 'rxjs/operators';
 import { JobCardComponent } from '../job-card/job-card.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { Router } from '@angular/router';
-import { InputBatchComponent } from '../input-batch/input-batch.component';
 
 @Component({
   selector: 'ngx-available-batches',
@@ -71,7 +70,7 @@ export class AvailableBatchesComponent implements OnInit {
     private route: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public stockBatchGuard: StockBatchGuard,
+    public commonGuard: CommonGuard,
     private stockBatchService: StockBatchService,
     private commonService: CommonService,
   ) {}
@@ -87,17 +86,17 @@ export class AvailableBatchesComponent implements OnInit {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.stockBatchGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","stockBatch")) {
       this.getStockBatchList(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } else if (this.stockBatchGuard.accessRights("view group")) {
+    } else if (this.commonService.accessRights("view group","stockBatch")) {
       this.getStockBatchList(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.stockBatchGuard.accessRights("view")) {
+    } else if (this.commonService.accessRights("view","stockBatch")) {
       this.getStockBatchList(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -105,7 +104,7 @@ export class AvailableBatchesComponent implements OnInit {
     }
   }
   getAddAcess() {
-    if (this.stockBatchGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","stockBatch")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -205,34 +204,34 @@ export class AvailableBatchesComponent implements OnInit {
     );
   }
   getViewAccess() {
-    if (!this.stockBatchGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","stockBatch")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
-    if (!this.stockBatchGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","stockBatch")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
-    if (!this.stockBatchGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","stockBatch")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.stockBatchGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","stockBatch")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }
-    if (this.stockBatchGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","stockBatch")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }
-    if (this.stockBatchGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","stockBatch")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }
   }
 
   getDeleteAccess1() {
-    if (this.stockBatchGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","stockBatch")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -241,22 +240,22 @@ export class AvailableBatchesComponent implements OnInit {
   }
 
   getEditAccess() {
-    if (this.stockBatchGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","stockBatch")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }
-    if (this.stockBatchGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","stockBatch")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }
-    if (this.stockBatchGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","stockBatch")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }
   }
 
   getEditAccess1() {
-    if (this.stockBatchGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","stockBatch")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {

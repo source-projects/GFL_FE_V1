@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { PaymentGuard } from '../../../@theme/guards/payment.guard';
 import { CommonService } from '../../../@theme/services/common.service';
 import { PaymentService } from '../../../@theme/services/payment.service';
 
@@ -58,7 +57,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private commonService: CommonService,
-    private paymentGuard:PaymentGuard,
     private payment:PaymentService,
   ) {}
 

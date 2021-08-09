@@ -1,13 +1,12 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CommonService } from '../../../@theme/services/common.service';
 import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { CommonGuard } from '../../../@theme/guards/common.guard';
 import { MergeBatchService } from '../../../@theme/services/merge-batch.service';
-import { MergeBatchGuard } from '../../../@theme/guards/merge-batch.guard';
 
 @Component({
   selector: 'ngx-view-merge-batch',
@@ -34,7 +33,8 @@ export class ViewMergeBatchComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private mergeBatchService: MergeBatchService,
     private modalService : NgbModal,
-    private mergeBatchGuard : MergeBatchGuard,
+    private commonGuard : CommonGuard,
+    private commonService:CommonService
 
 
   ) { }
@@ -47,13 +47,13 @@ export class ViewMergeBatchComponent implements OnInit, OnDestroy {
   }
 
   getAccess() {
-    if (this.mergeBatchGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","mergeBatch")) {
       this.hiddenAdd = false;
     }
-    if (this.mergeBatchGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","mergeBatch")) {
       this.hiddenDelete = false;
     }
-    if (this.mergeBatchGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","mergeBatch")) {
       this.hiddenEdit = false;
     }
   }

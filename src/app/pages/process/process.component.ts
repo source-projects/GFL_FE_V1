@@ -1,17 +1,17 @@
-import { takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
-import { ProcessGuard } from '../../@theme/guards/process.guard';
+import { CommonGuard } from '../../@theme/guards/common.guard';
+import * as errorData from '../../@theme/json/error.json';
+import { CommonService } from '../../@theme/services/common.service';
 import { ExportService } from '../../@theme/services/export.service';
 import { JwtTokenService } from '../../@theme/services/jwt-token.service';
 import { ProcessService } from '../../@theme/services/process.service';
-import { ToastrService } from 'ngx-toastr';
-import * as errorData from '../../@theme/json/error.json';
-import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 
-import { CommonService } from '../../@theme/services/common.service';
-import { Subject } from 'rxjs';
 @Component({
   selector: 'ngx-process',
   templateUrl: './process.component.html',
@@ -37,7 +37,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
 
   constructor(private processService: ProcessService,
     private toastr: ToastrService,
-    public processGuard: ProcessGuard,
+    public commonGuard: CommonGuard,
     private modalService: NgbModal,
     private commonService: CommonService,
     private jwtToken: JwtTokenService,
@@ -71,7 +71,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
     )
   }
   getAccessPermissions(){
-    if(this.processGuard.accessRights('edit')){
+    if(this.commonService.accessRights('edit',"process")){
       
       this.hiddenEdit=false;
     }
@@ -79,7 +79,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
       this.hiddenEdit=true;
     }
 
-    if(this.processGuard.accessRights('delete')){
+    if(this.commonService.accessRights('delete',"process")){
       
       this.hiddenDelete=false;
     }
@@ -87,7 +87,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
       this.hiddenDelete=true;
     }
 
-    if(this.processGuard.accessRights('add')){
+    if(this.commonService.accessRights('add',"process")){
       
       this.addButtonDisabled=false;
     }

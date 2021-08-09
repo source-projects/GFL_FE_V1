@@ -1,13 +1,13 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { PartyGuard } from "../../@theme/guards/party.guard";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import { BtnCellRenderer } from "../../@theme/renderer/button-cell-renderer.component";
 import { CommonService } from "../../@theme/services/common.service";
@@ -79,7 +79,7 @@ export class PartyComponent implements OnInit, OnDestroy {
   constructor(
     private partyService: PartyService,
     private modalService: NgbModal,
-    public partyGuard: PartyGuard,
+    public commonGuard: CommonGuard,
     public changeRef: ChangeDetectorRef,
     private toastr: ToastrService,
     private commonService: CommonService,
@@ -102,19 +102,19 @@ export class PartyComponent implements OnInit, OnDestroy {
     await this.getDeleteAccess1();
     await this.getEditAccess();
     await this.getEditAccess1();
-    if (this.partyGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","party")) {
       this.getAllParty(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else
-     if (this.partyGuard.accessRights("view group")) {
+     if (this.commonService.accessRights("view group","party")) {
       this.getAllParty(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else
-    if (this.partyGuard.accessRights("view")) {
+    if (this.commonService.accessRights("view","party")) {
       this.getAllParty(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -200,34 +200,34 @@ export class PartyComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.partyGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","party")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
 
-    if (!this.partyGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","party")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
 
-    if (!this.partyGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","party")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.partyGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","party")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }else{
       this.ownDelete=this.hidden=true;
     }
 
-    if (this.partyGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","party")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }else{
       this.groupDelete=this.hidden=true;
     }
-    if (this.partyGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","party")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }else{
@@ -236,7 +236,7 @@ export class PartyComponent implements OnInit, OnDestroy {
   }
 
   getDeleteAccess1() {
-    if (this.partyGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","party")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -245,19 +245,19 @@ export class PartyComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.partyGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","party")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }else{
       this.ownEdit=this.hiddenEdit=true
     }
-    if (this.partyGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","party")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }else{
       this.groupEdit=this.hiddenEdit=true
     }
-    if (this.partyGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","party")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }else{
@@ -265,7 +265,7 @@ export class PartyComponent implements OnInit, OnDestroy {
     }
   }
   getEditAccess1() {
-    if (this.partyGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","party")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {
@@ -273,7 +273,7 @@ export class PartyComponent implements OnInit, OnDestroy {
     }
   }
   getAddAcess() {
-    if (this.partyGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","party")) {
       this.disabled = false;
     } else {
       this.disabled = true;

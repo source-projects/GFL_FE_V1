@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DyeingSlipGuard } from '../../@theme/guards/dyeing-slip.guard';
+import { RouterModule, Routes } from '@angular/router';
 import { AdditionSlipComponent } from './addition-slip.component';
 import { DyeingSlipComponent } from './dyeing-slip/dyeing-slip.component';
 const routes: Routes = [
   {
     path:'',
     component:AdditionSlipComponent,
-    canActivate:[DyeingSlipGuard],
-    canLoad:[DyeingSlipGuard],
-    data: { PermissionName: ['view','view group','view all',]}
+    // canActivate:[DyeingSlipGuard],
+    // canLoad:[DyeingSlipGuard],
+    data: { PermissionName: ['view','view group','view all',],compName:"dyeingSlip"}
   },
   {
     path:'dyeingSlip',
     component:DyeingSlipComponent,
-    canActivate:[DyeingSlipGuard],
-    canLoad:[DyeingSlipGuard],
-    data: { PermissionName: ['view','view group','view all',]}
+    // canActivate:[DyeingSlipGuard],
+    // canLoad:[DyeingSlipGuard],
+    data: { PermissionName: ['view','view group','view all'],compName:"dyeingSlip"}
   }
 ];
 

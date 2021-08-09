@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../@theme/shared.module';
-import { AdminGuard } from '../../@theme/guards/admin.guard';
 import { AdminComponent } from './admin.component';
 const routes: Routes = [
   {
@@ -9,7 +8,7 @@ const routes: Routes = [
     component:AdminComponent,
     //  canActivate:[AdminGuard],
     // canLoad:[AdminGuard],
-    // data: { PermissionName: ['view','view group','view all',]}
+    data: { PermissionName: ['view','view group','view all',],compName:"admin"}
    },
 ];
 

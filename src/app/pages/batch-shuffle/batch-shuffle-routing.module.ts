@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProgramGuard } from 'app/@theme/guards/program.guard';
+import { RouterModule, Routes } from '@angular/router';
 import { ShuffleComponent } from "./shuffle/shuffle.component";
 const routes: Routes = [
   {

@@ -1,37 +1,13 @@
 import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./@theme/guards/auth.guard";
-import { ColorGuard } from "./@theme/guards/color.guard";
-import { PartyGuard } from "./@theme/guards/party.guard";
-import { ProgramGuard } from "./@theme/guards/program.guard";
-import { QualityGuard } from "./@theme/guards/quality.guard";
-import { ShadeGuard } from "./@theme/guards/shade.guard";
-import { StockBatchGuard } from "./@theme/guards/stock-batch.guard";
+import { CommonGuard } from "./@theme/guards/common.guard";
 import { StopAuthGuard } from "./@theme/guards/stop-auth.guard";
-import { SupplierGuard } from "./@theme/guards/supplier.guard";
-import { UserGuard } from "./@theme/guards/user.guard";
-import { DyeingProcessGuard } from "./@theme/guards/dyeing-process.guard";
-import { JetPlanningGuard } from "./@theme/guards/jet-planning.guard";
-import { ProductionPlanningGuard } from "./@theme/guards/production-planning.guard";
-import { WaterJetGuard } from "./@theme/guards/water-jet.guard";
-import { InvoiceGuard } from "./@theme/guards/invoice.guard";
-import { PaymentGuard } from "./@theme/guards/payment.guard";
-
 import { ECommerceComponent } from "./pages/e-commerce/e-commerce.component";
 import { InputDataComponent } from "./pages/input-data/input-data/input-data.component";
 import { NotFoundComponent } from "./pages/miscellaneous/not-found/not-found.component";
 import { PagesComponent } from "./pages/pages.component";
-import { FinishedMeterGuard } from "./@theme/guards/finished-meter.guard";
-import { InputDataGuard } from "./@theme/guards/input-data.guard";
-import { DyeingSlipGuard } from "./@theme/guards/dyeing-slip.guard";
-import { AdminGuard } from "./@theme/guards/admin.guard";
-import { EmployeeRegistrationGuard } from "./@theme/guards/employee-registration.guard";
-import { AttendanceComponent } from "./pages/attendance/attendance.component";
-import { AttndanceGuard } from "./@theme/guards/attendance.guard";
-import { PurchaseGuard } from "./@theme/guards/purchase.guard";
-import { MergeBatchGuard } from "./@theme/guards/merge-batch.guard";
-import { ReportGuard } from "./@theme/guards/report.guard";
-import { TaskGuard } from "./@theme/guards/task.guard";
+
 
 export const routes: Routes = [
   {
@@ -54,33 +30,33 @@ export const routes: Routes = [
         path: "party",
         loadChildren: () =>
           import("./pages/party/party.module").then((m) => m.PartyModule),
-        canActivate: [PartyGuard],
-        canLoad: [PartyGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"party"},
       },
       {
         path: "quality",
         loadChildren: () =>
           import("./pages/quality/quality.module").then((m) => m.QualityModule),
-        canActivate: [QualityGuard],
-        canLoad: [QualityGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"quality"},
       },
       {
         path: "user",
         loadChildren: () =>
           import("./pages/user/user.module").then((m) => m.UserModule),
-        canActivate: [UserGuard],
-        canLoad: [UserGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"user"},
       },
       {
         path: "color",
         loadChildren: () =>
           import("./pages/color/color.module").then((m) => m.ColorModule),
-        canActivate: [ColorGuard],
-        canLoad: [ColorGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"color"},
       },
       // {
       //   path: 'program',
@@ -96,25 +72,25 @@ export const routes: Routes = [
           import("./pages/dyeing-process/dyeing-process.module").then(
             (m) => m.DyeingProcessModule
           ),
-        canActivate: [DyeingProcessGuard],
-        canLoad: [DyeingProcessGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"process"},
       },
-      {
-        path: "process",
-        loadChildren: () =>
-          import("./pages/process/process.module").then((m) => m.ProcessModule),
-        canActivate: [ProgramGuard],
-        canLoad: [ProgramGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
-      },
+      // {
+      //   path: "process",
+      //   loadChildren: () =>
+      //     import("./pages/process/process.module").then((m) => m.ProcessModule),
+      //   canActivate: [ProgramGuard],
+      //   canLoad: [ProgramGuard],
+      //   data: { PermissionName: ["view", "view group", "view all"] , compName:"quality"},
+      // },
       {
         path: "shade",
         loadChildren: () =>
           import("./pages/shade/shade.module").then((m) => m.ShadeModule),
-        canActivate: [ShadeGuard],
-        canLoad: [ShadeGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"shade"},
       },
 
       {
@@ -123,9 +99,9 @@ export const routes: Routes = [
           import("./pages/generate-invoice/generate-invoice.module").then(
             (m) => m.GenerateInvoiceModule
           ),
-        canActivate: [InvoiceGuard],
-        canLoad: [InvoiceGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"dispatch"},
       },
       // {
       //   path: 'waterJet',
@@ -142,9 +118,9 @@ export const routes: Routes = [
           import("./pages/water-jet/water-jet.module").then(
             (m) => m.WaterJetModule
           ),
-        canActivate: [WaterJetGuard],
-        canLoad: [WaterJetGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"waterJet"},
       },
       {
         path: "supplier",
@@ -152,9 +128,9 @@ export const routes: Routes = [
           import("./pages/supplier/supplier.module").then(
             (m) => m.SupplierModule
           ),
-        canActivate: [SupplierGuard],
-        canLoad: [SupplierGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"supplier"},
       },
       {
         path: "purchaseItem",
@@ -164,7 +140,7 @@ export const routes: Routes = [
           ),
         // canActivate: [PurchaseGuard],
         // canLoad: [PurchaseGuard],
-        // data: { PermissionName: ['view']}
+        data: { compName: "purchase"}
       },
       {
         path: "finishedMeter",
@@ -172,9 +148,9 @@ export const routes: Routes = [
           import("./pages/finished-meter/finished-meter.module").then(
             (m) => m.FinishedMeterModule
           ),
-        canActivate: [FinishedMeterGuard],
-        canLoad: [FinishedMeterGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"batch"},
       },
       {
         path: "batch-shuffle",
@@ -182,9 +158,9 @@ export const routes: Routes = [
           import("./pages/batch-shuffle/batch-shuffle.module").then(
             (m) => m.BatchShuffleModule
           ),
-        canActivate: [StockBatchGuard],
-        canLoad: [StockBatchGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"stockBatch"},
       },
       {
         path: "stock-batch",
@@ -192,9 +168,9 @@ export const routes: Routes = [
           import("./pages/stock-batch/stock-batch.module").then(
             (m) => m.StockBatchModule
           ),
-        canActivate: [StockBatchGuard],
-        canLoad: [StockBatchGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"stockBatch"},
       },
       {
         path: "merge-batch",
@@ -202,9 +178,9 @@ export const routes: Routes = [
           import("./pages/merge-batch/merge-batch.module").then(
             (m) => m.MergeBatchModule
           ),
-        canActivate: [MergeBatchGuard],
-        canLoad: [MergeBatchGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"mergeBatch"},
       },
       {
         path: "report",
@@ -212,9 +188,9 @@ export const routes: Routes = [
           import("./pages/generate-report/generate-report.module").then(
             (m) => m.GenerateReportModule
           ),
-        canActivate: [ReportGuard],
-        canLoad: [ReportGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"report"},
       },
       {
         path: "issue-color-box",
@@ -222,9 +198,9 @@ export const routes: Routes = [
           import("./pages/color/issue-color-box/issue-color-box.module").then(
             (m) => m.IssueColorBoxModule
           ),
-        canActivate: [ColorGuard],
-        canLoad: [ColorGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"color"},
       },
       // {
       //   path: 'pending-apc',
@@ -240,9 +216,9 @@ export const routes: Routes = [
           import("./pages/production-planning/production-planning.module").then(
             (m) => m.ProductionPlanningModule
           ),
-        canActivate: [ProductionPlanningGuard],
-        canLoad: [ProductionPlanningGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"productionPlanning"},
       },
       {
         path: "jet-planning",
@@ -250,24 +226,24 @@ export const routes: Routes = [
           import("./pages/jet-planning/jet-planning.module").then(
             (m) => m.JetPlanningModule
           ),
-        canActivate: [JetPlanningGuard],
-        canLoad: [JetPlanningGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"jetPlanning"},
       },
       {
         path: "input-data",
         component: InputDataComponent,
-        canActivate: [InputDataGuard],
-        canLoad: [InputDataGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"machine"},
       },
       {
         path: "payment",
         loadChildren: () =>
           import("./pages/payment/payment.module").then((m) => m.PaymentModule),
-        canActivate: [PaymentGuard],
-        canLoad: [PaymentGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"payment"},
       },
       {
         path: "admin",
@@ -275,15 +251,15 @@ export const routes: Routes = [
           import("./pages/admin/admin.module").then((m) => m.AdminModule),
         // canActivate: [AdminGuard],
         // canLoad: [AdminGuard],
-        // data: { PermissionName: ["view", "view group", "view all"] },
+        data: {compName:"admin"},
       },
       {
         path: "task",
         loadChildren: () =>
           import("./pages/task/task.module").then((m) => m.TaskModule),
-        canActivate: [TaskGuard],
-        canLoad: [TaskGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"task"},
       },
 
       {
@@ -292,9 +268,9 @@ export const routes: Routes = [
           import("./pages/addition-slip/addition-slip.module").then(
             (m) => m.AdditionSlipModule
           ),
-        canActivate: [DyeingSlipGuard],
-        canLoad: [DyeingSlipGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"dyeingSlip"},
       },
 
       {
@@ -303,9 +279,9 @@ export const routes: Routes = [
           import("./pages/registration/registration.module").then(
             (m) => m.RegistrationModule
           ),
-        canActivate: [EmployeeRegistrationGuard],
-        canLoad: [EmployeeRegistrationGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"employee"},
       },
       {
         path: "attendance",
@@ -313,9 +289,9 @@ export const routes: Routes = [
           import("./pages/attendance/attendance.module").then(
             (m) => m.AttendanceModule
           ),
-        canActivate: [AttndanceGuard],
-        canLoad: [AttndanceGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"attendance"},
       },
       {
         path: "purchase",
@@ -323,9 +299,9 @@ export const routes: Routes = [
           import("./pages/purchase/purchase.module").then(
             (m) => m.PurchaseModule
           ),
-        canActivate: [PurchaseGuard],
-        canLoad: [PurchaseGuard],
-        data: { PermissionName: ["view", "view group", "view all"] },
+        canActivate: [CommonGuard],
+        canLoad: [CommonGuard],
+        data: { PermissionName: ["view", "view group", "view all"] , compName:"purchase"},
       },
       {
         path: "miscellaneous",

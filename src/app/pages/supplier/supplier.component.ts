@@ -1,9 +1,9 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ExportPopupComponent } from '../../@theme/components/export-popup/export-popup.component';
-import { SupplierGuard } from '../../@theme/guards/supplier.guard';
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from '../../@theme/json/error.json';
 import { CommonService } from '../../@theme/services/common.service';
 import { SupplierService } from '../../@theme/services/supplier.service';
@@ -64,7 +64,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   constructor(
     private commonService: CommonService,
     private supplierService: SupplierService,
-    public supplierGuard: SupplierGuard,
+    public commonGuard: CommonGuard,
     private modalService: NgbModal,
 
   ) { }
@@ -83,19 +83,19 @@ export class SupplierComponent implements OnInit, OnDestroy {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if(this.supplierGuard.accessRights('view all')){
+    if(this.commonService.accessRights('view all',"supplier")){
       this.getSupplierList(0,"all");
       this.hidden=this.allDelete; 
       this.hiddenEdit=this.allEdit;
       this.radioSelect=3;
     }
-     else if(this.supplierGuard.accessRights('view group')){
+     else if(this.commonService.accessRights('view group',"supplier")){
       this.getSupplierList(this.userId,"group");
       this.hidden=this.groupDelete;
       this.hiddenEdit=this.groupEdit;
       this.radioSelect=2;
     }
-    else if(this.supplierGuard.accessRights('view')){
+    else if(this.commonService.accessRights('view',"supplier")){
       this.getSupplierList(this.userId,"own");
       this.hidden=this.ownDelete;
       this.hiddenEdit=this.ownEdit;
@@ -104,7 +104,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     }
   }
   getAddAcess() {
-    if (this.supplierGuard.accessRights('add')) {
+    if (this.commonService.accessRights('add',"supplier")) {
       this.disabled = false;
     }
     else {
@@ -192,17 +192,17 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.supplierGuard.accessRights('view')) {
+    if (!this.commonService.accessRights('view',"supplier")) {
       this.radioArray[0].disabled = true;
     }
     else
       this.radioArray[0].disabled = false;
-    if (!this.supplierGuard.accessRights('view group')) {
+    if (!this.commonService.accessRights('view group',"supplier")) {
       this.radioArray[1].disabled = true;
     }
     else
       this.radioArray[1].disabled = false;
-    if (!this.supplierGuard.accessRights('view all')) {
+    if (!this.commonService.accessRights('view all',"supplier")) {
       this.radioArray[2].disabled = true;
     }
     else
@@ -211,21 +211,21 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   getDeleteAccess() {
-    if (this.supplierGuard.accessRights('delete')) {
+    if (this.commonService.accessRights('delete',"supplier")) {
       this.ownDelete = false;
       this.hidden=this.ownDelete;
     }
-    if (this.supplierGuard.accessRights('delete group')) {
+    if (this.commonService.accessRights('delete group',"supplier")) {
       this.groupDelete = false;
       this.hidden=this.groupDelete;
     }
-    if (this.supplierGuard.accessRights('delete all')) {
+    if (this.commonService.accessRights('delete all',"supplier")) {
       this.allDelete = false;
       this.hidden=this.allDelete;
     }
   }
   getDeleteAccess1() {
-    if (this.supplierGuard.accessRights('delete')) {
+    if (this.commonService.accessRights('delete',"supplier")) {
       this.ownDelete = false;
       this.hidden=this.ownDelete;
     }
@@ -235,22 +235,22 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.supplierGuard.accessRights('edit')) {
+    if (this.commonService.accessRights('edit',"supplier")) {
       this.ownEdit = false;
       this.hiddenEdit=this.ownEdit;
     }
-    if (this.supplierGuard.accessRights('edit group')) {
+    if (this.commonService.accessRights('edit group',"supplier")) {
       this.groupEdit = false;
       this.hiddenEdit=this.groupEdit;
 
     }
-    if (this.supplierGuard.accessRights('edit all')) {
+    if (this.commonService.accessRights('edit all',"supplier")) {
       this.allEdit = false;
       this.hiddenEdit=this.allEdit;
     }
   }
   getEditAccess1() {
-    if (this.supplierGuard.accessRights('edit')) {
+    if (this.commonService.accessRights('edit',"supplier")) {
       this.ownEdit = false;
       this.hiddenEdit=this.ownEdit;
     }

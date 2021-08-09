@@ -4,11 +4,11 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { ColorGuard } from "../../@theme/guards/color.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { ColorService } from "../../@theme/services/color.service";
 import { CommonService } from "../../@theme/services/common.service";
 import { ToastrService } from "ngx-toastr";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 
 @Component({
   selector: "ngx-color",
@@ -68,10 +68,8 @@ export class ColorComponent implements OnInit, OnDestroy {
   }
   constructor(
     private colorService: ColorService,
-
+    private commonGuard : CommonGuard,
     private modalService: NgbModal,
-
-    public colorGuard: ColorGuard,
     private toastr: ToastrService,
     private commonService: CommonService,
   ) {}
@@ -88,17 +86,17 @@ export class ColorComponent implements OnInit, OnDestroy {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.colorGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","color")) {
       this.getColor(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } else if (this.colorGuard.accessRights("view group")) {
+    } else if (this.commonService.accessRights("view group","color")) {
       this.getColor(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.colorGuard.accessRights("view")) {
+    } else if (this.commonService.accessRights("view","color")) {
       this.getColor(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -106,7 +104,7 @@ export class ColorComponent implements OnInit, OnDestroy {
     }
   }
   getAddAcess() {
-    if (this.colorGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","color")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -242,33 +240,33 @@ export class ColorComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.colorGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","color")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
-    if (!this.colorGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","color")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
-    if (!this.colorGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","color")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.colorGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","color")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }
-    if (this.colorGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","color")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }
-    if (this.colorGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","color")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }
   }
   getDeleteAccess1() {
-    if (this.colorGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","color")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -277,21 +275,21 @@ export class ColorComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.colorGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","color")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }
-    if (this.colorGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","color")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }
-    if (this.colorGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","color")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }
   }
   getEditAccess1() {
-    if (this.colorGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","color")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {

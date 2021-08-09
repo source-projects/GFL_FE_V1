@@ -1,10 +1,11 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CommonService } from '../../@theme/services/common.service';
 import { ConfirmationDialogComponent } from '../../@theme/components/confirmation-dialog/confirmation-dialog.component';
-import { EmployeeRegistrationGuard } from '../../@theme/guards/employee-registration.guard';
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import { RegistrationService } from '../../@theme/services/registration.service';
 
@@ -44,7 +45,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private registrationService : RegistrationService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    public registrationGuard: EmployeeRegistrationGuard,
+    public commonGuard: CommonGuard,
+    private commonService:CommonService
 
 
   ) { }
@@ -60,13 +62,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   }
   getAccess() {
-    if (this.registrationGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","employee")) {
       this.hiddenAdd = false;
     }
-    if (this.registrationGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","employee")) {
       this.hiddenDelete = false;
     }
-    if (this.registrationGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","employee")) {
       this.hiddenEdit = false;
     }
   }

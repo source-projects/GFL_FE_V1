@@ -1,15 +1,14 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { ShadeGuard } from "../../@theme/guards/shade.guard";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { ShadeService } from "../../@theme/services/shade.service";
-import { ToastrService } from "ngx-toastr";
-import { CdkRow } from '@angular/cdk/table';
 
 @Component({
   selector: "ngx-shade",
@@ -91,7 +90,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     private shadeService: ShadeService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public shadeGuard: ShadeGuard,
+    public commonGuard: CommonGuard,
     private commonService: CommonService,
     private cdr: ChangeDetectorRef
   ) { }
@@ -108,17 +107,17 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.shadeGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","shade")) {
       this.getallShades(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } else if (this.shadeGuard.accessRights("view group")) {
+    } else if (this.commonService.accessRights("view group","shade")) {
       this.getallShades(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.shadeGuard.accessRights("view")) {
+    } else if (this.commonService.accessRights("view","shade")) {
       this.getallShades(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -126,7 +125,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
   }
   getAddAcess() {
-    if (this.shadeGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","shade")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -316,33 +315,33 @@ export class ShadeComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.shadeGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","shade")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
-    if (!this.shadeGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","shade")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
-    if (!this.shadeGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","shade")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.shadeGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","shade")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }
-    if (this.shadeGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","shade")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }
-    if (this.shadeGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","shade")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }
   }
   getDeleteAccess1() {
-    if (this.shadeGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","shade")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -351,22 +350,22 @@ export class ShadeComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.shadeGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","shade")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }
-    if (this.shadeGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","shade")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }
-    if (this.shadeGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","shade")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }
   }
 
   getEditAccess1() {
-    if (this.shadeGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","shade")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {

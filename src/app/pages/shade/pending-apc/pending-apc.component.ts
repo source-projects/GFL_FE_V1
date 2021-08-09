@@ -1,13 +1,13 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { CommonGuard } from '../../../@theme/guards/common.guard';
+import * as errorData from "../../../@theme/json/error.json";
 import { CommonService } from "../../../@theme/services/common.service";
 import { ShadeService } from "../../../@theme/services/shade.service";
-import { ToastrService } from "ngx-toastr";
-import * as errorData from "../../../@theme/json/error.json";
-import { ShadeGuard } from '../../../@theme/guards/shade.guard';
 
 @Component({
   selector: "ngx-pending-apc",
@@ -37,7 +37,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
     private commonService: CommonService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public shadeGuard: ShadeGuard,
+    public commonGuard: CommonGuard,
 
   ) {}
 
@@ -53,7 +53,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
   }
 
   getAddAcess() {
-    if (this.shadeGuard.accessRights('add')) {
+    if (this.commonService.accessRights('add',"shade")) {
       this.disabled = false;
     }
     else {
@@ -62,7 +62,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
   }
 
   getDeleteAccess() {
-    if (this.shadeGuard.accessRights('delete')) {
+    if (this.commonService.accessRights('delete',"shade")) {
       this.hiddenDelete = false;
     }
     else
@@ -73,7 +73,7 @@ export class PendingApcComponent implements OnInit, OnDestroy {
 
 
   getEditAccess() {
-    if (this.shadeGuard.accessRights('edit')) {
+    if (this.commonService.accessRights('edit',"shade")) {
       this.hiddenEdit = false;
     }
     else

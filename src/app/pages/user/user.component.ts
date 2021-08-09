@@ -1,14 +1,14 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { UserGuard } from "../../@theme/guards/user.guard";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { UserService } from "../../@theme/services/user.service";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-user",
@@ -68,7 +68,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private userService: UserService,
     private commonService: CommonService,
-    public userGuard: UserGuard,
+    public commonGuard: CommonGuard,
   ) {}
 
   ngOnInit(): void {
@@ -84,17 +84,17 @@ export class UserComponent implements OnInit, OnDestroy {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.userGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","user")) {
       this.getAllUser(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } else if (this.userGuard.accessRights("view group")) {
+    } else if (this.commonService.accessRights("view group","user")) {
       this.getAllUser(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.userGuard.accessRights("view")) {
+    } else if (this.commonService.accessRights("view","user")) {
       this.getAllUser(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -102,7 +102,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
   getAddAcess() {
-    if (this.userGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","user")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -232,33 +232,33 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.userGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","user")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
-    if (!this.userGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","user")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
-    if (!this.userGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","user")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.userGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","user")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }
-    if (this.userGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","user")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }
-    if (this.userGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","user")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }
   }
   getDeleteAccess1() {
-    if (this.userGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","user")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -267,22 +267,22 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.userGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","user")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }
-    if (this.userGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","user")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }
-    if (this.userGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","user")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }
   }
 
   getEditAccess1() {
-    if (this.userGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","user")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {

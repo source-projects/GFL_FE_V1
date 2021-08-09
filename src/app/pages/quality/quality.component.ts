@@ -1,12 +1,12 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
-import { QualityGuard } from "../../@theme/guards/quality.guard";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import { Page } from "../../@theme/model/page";
 import { CommonService } from "../../@theme/services/common.service";
@@ -72,7 +72,7 @@ export class QualityComponent implements OnInit, OnDestroy {
 
   constructor(
     private commonService: CommonService,
-    public qualityGuard: QualityGuard,
+    public commonGuard: CommonGuard,
     private qualityService: QualityService,
     private toastr: ToastrService,
     private jwtToken: JwtTokenService,
@@ -91,17 +91,17 @@ export class QualityComponent implements OnInit, OnDestroy {
     this.getDeleteAccess1();
     this.getEditAccess();
     this.getEditAccess1();
-    if (this.qualityGuard.accessRights("view all")) {
+    if (this.commonService.accessRights("view all","quality")) {
       this.getQualityList(0, "all");
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
-    } else if (this.qualityGuard.accessRights("view group")) {
+    } else if (this.commonService.accessRights("view group","quality")) {
       this.getQualityList(this.userId, "group");
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
-    } else if (this.qualityGuard.accessRights("view")) {
+    } else if (this.commonService.accessRights("view","quality")) {
       this.getQualityList(this.userId, "own");
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
@@ -153,7 +153,7 @@ export class QualityComponent implements OnInit, OnDestroy {
   }
 
   getAddAcess() {
-    if (this.qualityGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","quality")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -228,33 +228,33 @@ export class QualityComponent implements OnInit, OnDestroy {
   }
 
   getViewAccess() {
-    if (!this.qualityGuard.accessRights("view")) {
+    if (!this.commonService.accessRights("view","quality")) {
       this.radioArray[0].disabled = true;
     } else this.radioArray[0].disabled = false;
-    if (!this.qualityGuard.accessRights("view group")) {
+    if (!this.commonService.accessRights("view group","quality")) {
       this.radioArray[1].disabled = true;
     } else this.radioArray[1].disabled = false;
-    if (!this.qualityGuard.accessRights("view all")) {
+    if (!this.commonService.accessRights("view all","quality")) {
       this.radioArray[2].disabled = true;
     } else this.radioArray[2].disabled = false;
   }
 
   getDeleteAccess() {
-    if (this.qualityGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","quality")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     }
-    if (this.qualityGuard.accessRights("delete group")) {
+    if (this.commonService.accessRights("delete group","quality")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
     }
-    if (this.qualityGuard.accessRights("delete all")) {
+    if (this.commonService.accessRights("delete all","quality")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
     }
   }
   getDeleteAccess1() {
-    if (this.qualityGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","quality")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
     } else {
@@ -263,21 +263,21 @@ export class QualityComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.qualityGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","quality")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     }
-    if (this.qualityGuard.accessRights("edit group")) {
+    if (this.commonService.accessRights("edit group","quality")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
     }
-    if (this.qualityGuard.accessRights("edit all")) {
+    if (this.commonService.accessRights("edit all","quality")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
     }
   }
   getEditAccess1() {
-    if (this.qualityGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","quality")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
     } else {

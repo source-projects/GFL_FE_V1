@@ -1,29 +1,42 @@
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from "ngx-toastr";
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CommonService } from "../../@theme/services/common.service";
+import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import * as errorData from "../../@theme/json/error.json";
 import {
-  AddJet,
-  AddCompany,
-  AddDesignation,
-  ApproveBy,
-  AddDepartment,
+  AddApproveReceive, AddBatchSequence, AddCompany,
+
+
+  AddDepartment, AddDesignation,
+
+
+
+
+
+  AddInvoiceSequence, AddJet,
+
+
+
+
   AddMachine,
   AddMachineCategory,
-  AddQuality,
-  AddInvoiceSequence,
-  AddBatchSequence,
-  ReceiveBy,
-  AddApproveReceive,
+  AddQuality, ApproveBy,
+
+
+
+
+
+
+  ReceiveBy
 } from "../../@theme/model/admin";
 import { AdminService } from "../../@theme/services/admin.service";
-import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AdminGuard } from "../../@theme/guards/admin.guard";
 import { PurchaseNewService } from "../../@theme/services/purchase-new.service";
-import { PreviewComponent } from "./preview/preview.component";
 import { SupplierService } from '../../@theme/services/supplier.service';
+import { PreviewComponent } from "./preview/preview.component";
 
 @Component({
   selector: "ngx-admin",
@@ -118,7 +131,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private supplierService: SupplierService,
-    private adminGuard: AdminGuard
+    private commonGuard : CommonGuard,
+    private commonService:CommonService
   ) {
     this.addJetArray.push(this.addJet);
     this.addCompanyArray.push(this.addCompany);
@@ -202,7 +216,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getAddAcess() {
-    if (this.adminGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","admin")) {
       this.disabled = false;
     } else {
       this.disabled = true;
@@ -210,7 +224,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getDeleteAccess() {
-    if (this.adminGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","admin")) {
       this.hiddenDelete = false;
     } else {
       this.hiddenDelete = true;
@@ -218,7 +232,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   getEditAccess() {
-    if (this.adminGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","admin")) {
       this.hiddenEdit = false;
     } else {
       this.hiddenEdit = true;

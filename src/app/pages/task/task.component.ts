@@ -1,11 +1,10 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { DatePipe } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { TaskGuard } from "../../@theme/guards/task.guard";
+import { CommonGuard } from '../../@theme/guards/common.guard';
 import { CommonService } from "../../@theme/services/common.service";
 import { TaskService } from "../../@theme/services/task.service";
 import { AddEditTaskComponent } from "./add-edit-task/add-edit-task.component";
@@ -82,7 +81,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: NgbModal,
-    private taskGuard: TaskGuard,
+    private commonGuard: CommonGuard,
     private taskService: TaskService,
     private commonService: CommonService,
     private toastr: ToastrService,
@@ -107,13 +106,13 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   getAccess() {
-    if (this.taskGuard.accessRights("add")) {
+    if (this.commonService.accessRights("add","task")) {
       this.hiddenAdd = false;
     }
-    if (this.taskGuard.accessRights("delete")) {
+    if (this.commonService.accessRights("delete","task")) {
       this.hiddenDelete = false;
     }
-    if (this.taskGuard.accessRights("edit")) {
+    if (this.commonService.accessRights("edit","task")) {
       this.hiddenEdit = false;
     }
   }
