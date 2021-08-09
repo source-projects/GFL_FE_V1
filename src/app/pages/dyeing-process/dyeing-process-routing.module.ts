@@ -9,47 +9,29 @@ const routes: Routes = [
   { 
     path: "", 
     component: AddEditDyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['add'],compName:"dyeingProcess"}
-  },
+    },
   { 
     path: "view", 
     component: DyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"dyeingProcess"}
-  },
+    },
   {
     path: "edit/:id",
      component: AddEditDyeingProcessComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"dyeingProcess"}
-  },
+     },
   { 
     path: "tag", 
     component: AddEditTagNameComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['add'],compName:"dyeingProcess"}
-  },
+   },
 
   { 
     path: "tag/view", 
     component: ShowTagNameComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"dyeingProcess"}
-  },
+   },
  
   {
     path: "tag/edit/:id",
      component: AddEditTagNameComponent,
-    // canActivate:[DyeingProcessGuard],
-    // canLoad:[DyeingProcessGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"dyeingProcess"}
-  }
+    }
 ];
 
 @NgModule({

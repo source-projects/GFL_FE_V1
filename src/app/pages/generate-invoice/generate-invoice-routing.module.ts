@@ -12,38 +12,23 @@ const routes: Routes = [
   { 
     path: '', 
     component: AddEditInvoiceComponent,
-    // canActivate:[InvoiceGuard],
-    // canLoad:[InvoiceGuard],
-    data: { PermissionName: ['add'],compName:"dispatch"} 
   },
   {
       path:'view',
       component:GenerateInvoiceComponent,
-      // canActivate:[InvoiceGuard],
-      // canLoad:[InvoiceGuard],
-      data: { PermissionName: ['view','view group','view all'],compName:"dispatch"} 
     },
     {
       path:'sign/view',
       component:ReceivedInvoiceComponent,
-      // canActivate:[InvoiceGuard],
-      // canLoad:[InvoiceGuard],
-      data: { PermissionName: ['view','view group','view all'],compName:"dispatch"} 
-    },
+   },
   {
     path:'edit/:id',
     component:AddEditInvoiceComponent,
-    // canActivate:[InvoiceGuard],
-    // canLoad:[InvoiceGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"dispatch"} 
   },
   {
     path:'sign',
     component:SignInvoiceComponent,
-    // canActivate:[InvoiceGuard],
-    // canLoad:[InvoiceGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"dispatch"} 
-  },
+ },
   {
     path:'report',
     component:InvoiceReportComponent,

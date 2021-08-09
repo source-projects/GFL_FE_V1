@@ -7,9 +7,6 @@ const routes: Routes = [
   { 
   path: '', 
   component: TaskComponent,
-  // canActivate: [TaskGuard],
-  // canLoad: [TaskGuard],
-  data: { PermissionName: ['view','view group','view all'],compName:"task"}
   }];
 
 @NgModule({

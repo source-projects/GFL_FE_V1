@@ -7,40 +7,23 @@ const routes: Routes = [
   {
     path:'',
     component:AddEditSupplierComponent,
-    // canActivate:[SupplierGuard],
-    // canLoad:[SupplierGuard],
-    data: { PermissionName: ['add'],compName:"supplier"}
-  },
+ },
   {
     path:'view',
     component:SupplierComponent,
-    // canActivate:[SupplierGuard],
-    // canLoad:[SupplierGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"supplier"}
   },
   
   {
     path:'addSupplierRate',
     component:AddEditSupplierRateComponent,
-    // canActivate:[SupplierRateGuard],
-    // canLoad:[SupplierRateGuard],
-    data: { PermissionName: ['add'],compName:"supplier"}
-
-  },
+ },
   {
     path:'editSupplierRate/:id',
     component:AddEditSupplierRateComponent,
-    // canActivate:[SupplierRateGuard],
-    // canLoad:[SupplierRateGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"supplier"}
-
-  },
+ },
   {
     path:'edit/:id',
     component:AddEditSupplierComponent,
-    // canActivate:[SupplierGuard],
-    // canLoad:[SupplierGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"supplier"}
   }
 ];
 

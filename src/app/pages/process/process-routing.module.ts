@@ -8,24 +8,15 @@ const routes: Routes = [
   {
     path: "",
     component: ProcessComponent,
-    // canActivate: [ProcessGuard],
-    // canLoad: [ProcessGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"process"}
-  },
+ },
   {
     path: 'edit/:id',
     component: DynamicProcessComponent,
-    // canActivate: [ProcessGuard],
-    // canLoad: [ProcessGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"process"}
-  },
+ },
   {
     path: 'add-dynamic-process',
     component: DynamicProcessComponent,
-    // canActivate: [ProcessGuard],
-    // canLoad: [ProcessGuard],
-    data: { PermissionName: ['add'],compName:"process"}
-  }
+ }
 ];
 
 @NgModule({

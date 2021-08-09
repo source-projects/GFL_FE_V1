@@ -7,26 +7,17 @@ const routes: Routes = [
   { 
     path:'',
     component:AddEditPartyComponent,
-    // canActivate:[PartyGuard],
-    // canLoad:[PartyGuard],
-    data: { PermissionName: ['add'],compName:"party"}
   },
   
   { 
     path:'view',
     component:PartyComponent,
-    // canActivate:[PartyGuard],
-    // canLoad:[PartyGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"party"}
   },
   
  
   {
     path:'edit/:id',
     component:AddEditPartyComponent,
-    // canActivate: [PartyGuard],
-    // canLoad: [PartyGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"party"} 
   }
   
 ];

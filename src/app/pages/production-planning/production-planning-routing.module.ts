@@ -6,10 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: ProductionPlanningComponent,
-    // canActivate:[ProductionPlanningGuard],
-    // canLoad:[ProductionPlanningGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"productionPlanning"}
-  }]
+ }]
   
 
 @NgModule({

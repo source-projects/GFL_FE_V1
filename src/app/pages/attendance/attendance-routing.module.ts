@@ -7,17 +7,11 @@ const routes: Routes = [
   {
     path:':id',
     component:AttendanceComponent,
-    // canActivate:[AttndanceGuard],
-    // canLoad:[AttndanceGuard],
-    data: { PermissionName: ['view','view all','view group'],compName:"attendence"}
-  },
+     },
   {
     path:'',
     component:ScanQRComponent,
-    // canActivate:[AttndanceGuard],
-    // canLoad:[AttndanceGuard],
-    data: { PermissionName: ['view','view all','view group'],compName:"attendence"}
-  },
+   },
 ];
 
 @NgModule({

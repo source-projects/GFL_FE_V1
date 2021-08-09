@@ -5,17 +5,11 @@ const routes: Routes = [
   {
     path:'',
     component:AddEditWaterJetComponent,
-    // canActivate:[WaterJetGuard],
-    // canLoad:[WaterJetGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"waterJet"}
-  },
+ },
   {
     path:'waterjet',
     component:AddEditWaterJetComponent,
-    // canActivate:[WaterJetGuard],
-    // canLoad:[WaterJetGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"waterJet"}
-  }
+ }
 ];
 
 @NgModule({

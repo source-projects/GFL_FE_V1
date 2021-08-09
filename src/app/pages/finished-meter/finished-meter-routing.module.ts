@@ -7,11 +7,7 @@ const routes: Routes = [
   {
     path:'',
     component:AddEditFinishedMeterComponent,
-    // canActivate:[FinishedMeterGuard],
-    // canLoad:[FinishedMeterGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"batch"}
 
-    
   }
 ];
 

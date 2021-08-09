@@ -6,10 +6,7 @@ const routes: Routes = [
   {
     path:'',
     component:AdminComponent,
-    //  canActivate:[AdminGuard],
-    // canLoad:[AdminGuard],
-    data: { PermissionName: ['view','view group','view all',],compName:"admin"}
-   },
+    },
 ];
 
 @NgModule({

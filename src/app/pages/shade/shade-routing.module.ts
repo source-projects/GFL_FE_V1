@@ -8,30 +8,18 @@ const routes: Routes = [
   {
     path:'',
     component:AddEditShadeComponent,
-    // canActivate:[ShadeGuard],
-    // canLoad:[ShadeGuard],
-    data: { PermissionName: ['add'],compName:"shade"}
-  },
+ },
   {
     path:'view',
     component:ShadeComponent,
-    // canActivate:[ShadeGuard],
-    // canLoad:[ShadeGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"shade"}
-  },
+ },
   {
     path:'edit/:id',
     component:AddEditShadeComponent,
-    // canActivate:[ShadeGuard],
-    // canLoad:[ShadeGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"shade"}
-  },
+ },
   {
     path:'pending-apc',
     component:PendingApcComponent,
-    // canActivate:[ShadeGuard],
-    // canLoad:[ShadeGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"shade"}
   }
 ];
 

@@ -7,25 +7,15 @@ const routes: Routes = [
   { 
     path:'',
     component:MergeBatchComponent,
-    // canActivate:[MergeBatchGuard],
-    // canLoad:[MergeBatchGuard],
-    data: { PermissionName: ['add'],compName:"mergeBatch"}
   },
   { 
     path:'view',
     component:ViewMergeBatchComponent,
-    // canActivate:[MergeBatchGuard],
-    // canLoad:[MergeBatchGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"mergeBatch"}
   },
   { 
     path:'edit/:id',
     component:MergeBatchComponent,
-    // canActivate:[MergeBatchGuard],
-    // canLoad:[MergeBatchGuard],
-    data: { PermissionName: ['edit','edit group','edit all'],compName:"mergeBatch"}
-    
-  }  
+ }  
 ];
 
 @NgModule({

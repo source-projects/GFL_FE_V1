@@ -8,26 +8,14 @@ const routes: Routes = [
   {
     path: 'bill-payment',
     component: BillPaymentComponent,
-    // canActivate:[PaymentGuard],
-    // canLoad:[PaymentGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"payment"}
-    
   },
   {
     path: 'advance-payment',
     component: AdvancePaymentComponent,
-    // canActivate:[PaymentGuard],
-    // canLoad:[PaymentGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"payment"}
-    
   },
   {
     path: 'payment',
     component: PaymentComponent,
-    // canActivate:[PaymentGuard],
-    // canLoad:[PaymentGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"payment"}
-    
   },
 ];
 

@@ -6,17 +6,10 @@ const routes: Routes = [
   {
     path:'',
     component:JetPlanningComponent,
-    // canActivate:[JetPlanningGuard],
-    // canLoad:[JetPlanningGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"jetPlanning"}
   },
   {
     path:':id',
     component:JetPlanningComponent,
-    // canActivate:[JetPlanningGuard],
-    // canLoad:[JetPlanningGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"jetPlanning"}
-
   },
  
 ];

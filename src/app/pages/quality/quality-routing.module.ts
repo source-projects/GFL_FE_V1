@@ -7,23 +7,14 @@ const routes: Routes = [
   { 
     path:'',
     component:AddEditQualityComponent,
-    // canActivate:[QualityGuard],
-    // canLoad:[QualityGuard],
-    data: { PermissionName: ['add'],compName:"quality"}
   },
   { 
     path:'view',
     component:QualityComponent,
-    // canActivate:[QualityGuard],
-    // canLoad:[QualityGuard],
-    data: { PermissionName: ['view','view group','view all'],compName:"quality"}
-  },
+ },
   {
     path: 'edit/:id',
     component: AddEditQualityComponent,
-    // canActivate: [QualityGuard],
-    // canLoad: [QualityGuard],
-    data: { PermissionName: ['edit','edit group','edit all'] ,compName:"quality"}
   }
 ];
 
