@@ -273,6 +273,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           userHeadId: this.userHeadId,
           cgst: null,
           sgst: null,
+          igst:null,
           percentageDiscount: this.discountChange,
           discount: null,
           taxAmt: null,
@@ -300,6 +301,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 if (result) {
                   obj.cgst = result.cgst;
                   obj.sgst = result.sgst;
+                  obj.igst = result.igst;
                   obj.discount = result.discount;
                   obj.netAmt = Math.round(result.netAmt);
                   obj.taxAmt = result.taxAmt;
@@ -360,6 +362,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             if (result) {
               obj.cgst = result.cgst;
               obj.sgst = result.sgst;
+              obj.igst = result.igst;
               obj.discount = result.discount;
               obj.netAmt = Math.round(result.netAmt);
               obj.taxAmt = result.taxAmt;
@@ -448,6 +451,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         invoiceNo: this.currentInvoiceId,
         cgst: null,
         sgst: null,
+        igst:null,
         percentageDiscount: this.discountChange,
         discount: null,
         taxAmt: null,
@@ -475,6 +479,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               if (result) {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;
+                obj.igst = result.igst;
                 obj.discount = result.discount;
                 obj.netAmt = Math.round(result.netAmt);
                 obj.taxAmt = result.taxAmt;
@@ -535,6 +540,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           if (result) {
             obj.cgst = result.cgst;
             obj.sgst = result.sgst;
+            obj.igst = result.igst;
             obj.discount = result.discount;
             obj.netAmt = Math.round(result.netAmt);
             obj.taxAmt = result.taxAmt;
