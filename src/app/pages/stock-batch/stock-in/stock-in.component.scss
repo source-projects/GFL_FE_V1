@@ -5,18 +5,18 @@
     max-height: 115px;
     width: 100% !important;
     margin-top: 10px !important;
+    padding: 1px;
 }
 .capsule-data-container {
   border: 1px solid;
-  height: 400px !important;
-  max-height: 400px !important;
+  height: 440px !important;
+  max-height: 440px !important;
   width: 100% !important;
 }
 
-.right-border{
-  border: none;
+.cap-border{
   overflow-x: scroll;
-  border-right: 1px solid !important;
+  border: 1px solid !important;
 }
 
 .list-container {
@@ -56,4 +56,13 @@
   text-align: center;
   color: white;
   font-weight: bold;
+}
+
+.batchFont{
+  font-size: 20px !important;
+}
+
+.iconSize{
+  width: 20px !important;
+  height: 20px !important;
 }

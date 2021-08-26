@@ -303,7 +303,7 @@
                                                             <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr *ngIf="invoice.state == 'Gujarat'">
                                                         <td class="text-left">
                                                             <b>CGST: @2.5%</b>
                                                         </td>
@@ -311,12 +311,20 @@
                                                             <b>{{ invoice.cgst | number : '1.2-2'}}</b>
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr *ngIf="invoice.state == 'Gujarat'">
                                                         <td class="text-left">
                                                             <b>SGST: @2.5%</b>
                                                         </td>
                                                         <td class="text-right">
                                                             <b>{{ invoice.sgst | number : '1.2-2'}}</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="invoice.state !== 'Gujarat'">
+                                                        <td class="text-left">
+                                                            <b>IGST: @5%</b>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <b>{{ invoice.igst | number : '1.2-2'}}</b>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -811,7 +819,7 @@
                                                     <b>{{ invoice.taxAmt | number : '1.2-2'}}</b>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr *ngIf="invoice.state == 'Gujarat'">
                                                 <td class="text-left">
                                                     <b>CGST: @2.5%</b>
                                                 </td>
@@ -819,12 +827,20 @@
                                                     <b>{{ invoice.cgst | number : '1.2-2'}}</b>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr *ngIf="invoice.state == 'Gujarat'">
                                                 <td class="text-left">
                                                     <b>SGST: @2.5%</b>
                                                 </td>
                                                 <td class="text-right">
                                                     <span>{{ invoice.sgst | number : '1.2-2'}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="invoice.state !== 'Gujarat'">
+                                                <td class="text-left">
+                                                    <b>IGST: @5%</b>
+                                                </td>
+                                                <td class="text-right">
+                                                    <b>{{ invoice.igst | number : '1.2-2'}}</b>
                                                 </td>
                                             </tr>
                                             <tr>

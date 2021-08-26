@@ -54,7 +54,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const myArray = this._route.snapshot.queryParamMap.get("myArray");
-    
+
     const invoiceNo = this._route.snapshot.queryParamMap.get("invoice");
     if (myArray === null) {
       this.invoiceIds = new Array<string>();
@@ -64,37 +64,37 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
     if (this.finalInvoice) {
 
-      
-       this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
-         (data) => {
-           if (data["success"]) {
-             this.printInvoiceData = data["data"];
-             this.start();
-           }
-         },
-         (error) => {
- 
-         }
-       )
-     } else {
-       if (invoiceNo) {
-         this.printService.getInvoiceByNoToPrintWithPchallan(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
-           (data) => {
-             if (data["success"]) {
-               this.printInvoiceData = data["data"];
-               this.start();
-               this.print();
-             }
-           },
-           (error) => {
- 
-           }
-         )
-       } else {
-         this.start();
-       }
- 
-     }
+
+      this.printService.getInvoiceByBatchAndStock(this.finalInvoice).pipe(takeUntil(this.destroy$)).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.printInvoiceData = data["data"];
+            this.start();
+          }
+        },
+        (error) => {
+
+        }
+      )
+    } else {
+      if (invoiceNo) {
+        this.printService.getInvoiceByNoToPrintWithPchallan(invoiceNo).pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.printInvoiceData = data["data"];
+              this.start();
+              this.print();
+            }
+          },
+          (error) => {
+
+          }
+        )
+      } else {
+        this.start();
+      }
+
+    }
   }
 
 
@@ -151,7 +151,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
               //calculating shrinkage, total mtr, total finish mtr...
               this.printInvoiceData[index].batchWithGrList.forEach(element => {
                 let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.pchallanRef == element.pchallanRef && !f.calculationDone)
-                if(list.length > 1){
+                if (list.length > 1) {
                   let totalMtr = 0;
                   let totalFMtr = 0;
                   let shrinkage = 0;
@@ -183,8 +183,8 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
                   list[list.length - 1].totalFMtr = totalFMtr;
                   list[list.length - 1].shrinkage = shrinkage;
                   list[list.length - 1].lotDataLength = lotDataLength;
-                }else{
-                  if(!element.calculationDone){
+                } else {
+                  if (!element.calculationDone) {
                     element.calculationDone = true;
                     element.totalMtr = 0;
                     element.totalFMtr = 0;
@@ -220,6 +220,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
               if (!this.printInvoiceData[index].sgst)
                 this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
+
+              if (!this.printInvoiceData[index].igst) {
+                this.printInvoiceData[index].igst = this.printInvoiceData[index].cgst + this.printInvoiceData[index].sgst;
+              }
 
               if (!this.printInvoiceData[index].netAmt) {
                 this.printInvoiceData[index].netAmt =
@@ -289,7 +293,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       //calculating shrinkage, total mtr, total finish mtr...
       this.printInvoiceData[index].batchWithGrList.forEach(element => {
         let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.pchallanRef == element.pchallanRef && !f.calculationDone)
-        if(list.length > 1){
+        if (list.length > 1) {
           let totalMtr = 0;
           let totalFMtr = 0;
           let shrinkage = 0;
@@ -321,8 +325,8 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
           list[list.length - 1].totalFMtr = totalFMtr;
           list[list.length - 1].shrinkage = shrinkage;
           list[list.length - 1].lotDataLength = lotDataLength;
-        }else{
-          if(!element.calculationDone){
+        } else {
+          if (!element.calculationDone) {
             element.calculationDone = true;
             element.totalMtr = 0;
             element.totalFMtr = 0;
@@ -359,6 +363,10 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
       if (!this.printInvoiceData[index].sgst)
         this.printInvoiceData[index].sgst = this.printInvoiceData[index].cgst = Number((this.printInvoiceData[index].taxAmt * 0.025).toFixed(2));
+
+      if (!this.printInvoiceData[index].igst) {
+        this.printInvoiceData[index].igst = this.printInvoiceData[index].cgst + this.printInvoiceData[index].sgst;
+      }
 
       if (!this.printInvoiceData[index].netAmt) {
         this.printInvoiceData[index].netAmt =
@@ -412,6 +420,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
       taxAmt: this.printInvoiceData[0].taxAmt,
       sgst: this.printInvoiceData[0].sgst,
       netAmt: this.printInvoiceData[0].netAmt,
+      igst: this.printInvoiceData[0].igst,
       print: "print"
     }
     this.activeModal.close(obj);
@@ -426,7 +435,8 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
         discount: this.printInvoiceData[0].discount,
         taxAmt: this.printInvoiceData[0].taxAmt,
         sgst: this.printInvoiceData[0].sgst,
-        netAmt: this.printInvoiceData[0].netAmt
+        netAmt: this.printInvoiceData[0].netAmt,
+        igst: this.printInvoiceData[0].igst
       }
     }
     this.activeModal.close(obj);
