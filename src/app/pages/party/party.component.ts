@@ -66,15 +66,15 @@ export class PartyComponent implements OnInit, OnDestroy {
   serverSideStoreType;
   rowSelection;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
 
-  public tableHeaders = ["partyName","partyCode", "partyAddress1", "contactNo","city","masterName"];
+  public tableHeaders = ["partyName", "partyCode", "partyAddress1", "contactNo", "city", "masterName"];
   searchStr = "";
   searchANDCondition = false;
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  } 
+  }
 
   constructor(
     private partyService: PartyService,
@@ -89,13 +89,13 @@ export class PartyComponent implements OnInit, OnDestroy {
     };
   }
 
- async ngOnInit(){
-  
+  async ngOnInit() {
+
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
     this.userHeadId = this.userHeadId["userHeadId"];
-    await  this.getViewAccess();
+    await this.getViewAccess();
     await this.getAddAcess();
     // this.getAllParty(this.userId,"own");
     await this.getDeleteAccess();
@@ -108,56 +108,55 @@ export class PartyComponent implements OnInit, OnDestroy {
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else
-     if (this.partyGuard.accessRights("view group")) {
-      this.getAllParty(this.userId, "group");
-      this.hidden = this.groupDelete;
-      this.hiddenEdit = this.groupEdit;
-      this.radioSelect = 2;
-    } else
-    if (this.partyGuard.accessRights("view")) {
-      this.getAllParty(this.userId, "own");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
-      this.radioSelect = 1;
-    }
+      if (this.partyGuard.accessRights("view group")) {
+        this.getAllParty(this.userId, "group");
+        this.hidden = this.groupDelete;
+        this.hiddenEdit = this.groupEdit;
+        this.radioSelect = 2;
+      } else
+        if (this.partyGuard.accessRights("view")) {
+          this.getAllParty(this.userId, "own");
+          this.hidden = this.ownDelete;
+          this.hiddenEdit = this.ownEdit;
+          this.radioSelect = 1;
+        }
   }
 
-  conditionChanged(){
+  conditionChanged() {
     this.filter();
   }
 
   filter() {
     const val = this.searchStr.toString().toLowerCase().trim();
-    const searchStrings = val.split("+").map(m => ({matched: false, val: m}));
-    this.partyList = this.copyPartyList.filter((f) => 
-    {
+    const searchStrings = val.split("+").map(m => ({ matched: false, val: m }));
+    this.partyList = this.copyPartyList.filter((f) => {
       let hit = 0;
-      for(let v of searchStrings){
-        if(
+      for (let v of searchStrings) {
+        if (
           this.matchString(f, 'partyName', v.val) ||
           this.matchString(f, 'partyCode', v.val) ||
           this.matchString(f, 'partyAddress1', v.val) ||
           this.matchString(f, 'contactNo', v.val) ||
           this.matchString(f, 'city', v.val) ||
-          this.matchString(f, 'masterName', v.val) 
-        ){
+          this.matchString(f, 'masterName', v.val)
+        ) {
           v.matched = true;
           hit++;
-          if(!this.searchANDCondition){
-            return true; 
+          if (!this.searchANDCondition) {
+            return true;
           }
         }
       }
-      if(this.searchANDCondition && hit == searchStrings.length){
+      if (this.searchANDCondition && hit == searchStrings.length) {
         return true;
       }
     });
   }
 
-  matchString(item, key, searchString){
-    if(item[key]){
+  matchString(item, key, searchString) {
+    if (item[key]) {
       return item[key].toLowerCase().includes(searchString);
-    }else{
+    } else {
       return false;
     }
   }
@@ -217,21 +216,21 @@ export class PartyComponent implements OnInit, OnDestroy {
     if (this.partyGuard.accessRights("delete")) {
       this.ownDelete = false;
       this.hidden = this.ownDelete;
-    }else{
-      this.ownDelete=this.hidden=true;
+    } else {
+      this.ownDelete = this.hidden = true;
     }
 
     if (this.partyGuard.accessRights("delete group")) {
       this.groupDelete = false;
       this.hidden = this.groupDelete;
-    }else{
-      this.groupDelete=this.hidden=true;
+    } else {
+      this.groupDelete = this.hidden = true;
     }
     if (this.partyGuard.accessRights("delete all")) {
       this.allDelete = false;
       this.hidden = this.allDelete;
-    }else{
-      this.allDelete=this.hidden=true
+    } else {
+      this.allDelete = this.hidden = true
     }
   }
 
@@ -248,20 +247,20 @@ export class PartyComponent implements OnInit, OnDestroy {
     if (this.partyGuard.accessRights("edit")) {
       this.ownEdit = false;
       this.hiddenEdit = this.ownEdit;
-    }else{
-      this.ownEdit=this.hiddenEdit=true
+    } else {
+      this.ownEdit = this.hiddenEdit = true
     }
     if (this.partyGuard.accessRights("edit group")) {
       this.groupEdit = false;
       this.hiddenEdit = this.groupEdit;
-    }else{
-      this.groupEdit=this.hiddenEdit=true
+    } else {
+      this.groupEdit = this.hiddenEdit = true
     }
     if (this.partyGuard.accessRights("edit all")) {
       this.allEdit = false;
       this.hiddenEdit = this.allEdit;
-    }else{
-      this.allEdit=this.hiddenEdit=true;
+    } else {
+      this.allEdit = this.hiddenEdit = true;
     }
   }
   getEditAccess1() {
@@ -305,11 +304,11 @@ export class PartyComponent implements OnInit, OnDestroy {
   open() {
     this.flag = true;
     let headerArray = Object.keys(this.party[0]);
-    this.headers = headerArray.map(ele=>{
-      ele.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); })
+    headerArray.forEach(ele => {
+      ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
     });
     const modalRef = this.modalService.open(ExportPopupComponent);
-    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.headers = headerArray;
     modalRef.componentInstance.list = this.party;
     modalRef.componentInstance.moduleName = this.module;
   }
