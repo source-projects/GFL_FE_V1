@@ -14,10 +14,10 @@
             <form #myForm="ngForm">
 
                 <div class="row" style="margin: 3px 3px;">
-                    <div class="col-md-8" id="fmtr-table">
+                    <div class="col-md-7" id="fmtr-table">
                         <div class="capsule-data-container cap-border">
                             <div class="row">
-                                <div class="col-md-4" style="padding-left: 25px;
+                                <div class="col-md-6" style="padding-left: 25px;
                                 margin-right: -15px;" *ngFor="let value of stockDataValues">
                                     <div class="row" style="padding-left:20px;padding-top: 10px;">
                                         PChallan Ref: <b>{{value.pchallanRef}}</b>
@@ -32,10 +32,11 @@
                                             [selectionType]="SelectionType.multiClick"
                                             class="material common-table datatable-auto-height fm-table-body-height"
                                             (select)="challanGRSelected($event)"
-                                            style="height: 400px;width: 215px;" [footerHeight]="80"
+                                            style="height: 400px" [footerHeight]="80"
                                             [selectionType]="'checkbox'" [selected]="checkedChallanList">
-                                            <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
-                                                [checkboxable]="true">
+                                            <ngx-datatable-column name="Sr No." prop="sequence" [headerCheckboxable]="true"
+                                            [checkboxable]="true"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Mtr" prop="mtr" >
                                                 <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                                                     let-value="value" let-row="row">
                                                     <div *ngIf="!row.color">
@@ -47,7 +48,7 @@
                                                     </div>
                                                 </ng-template>
                                             </ngx-datatable-column>
-                                            <ngx-datatable-column name="Weight" prop="wt">
+                                            <ngx-datatable-column name="Wt" prop="wt">
                                                 <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                                                     let-value="value" let-row="row">
                                                     <div *ngIf="!row.color">
@@ -91,7 +92,7 @@
                             <!-- </ng-container> -->
                         </div>
                     </div>
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-5 mt-3">
                         <div class="row">
                             <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="transferClicked()">Transfer</button>
@@ -127,15 +128,19 @@
 
                                 </button>
                             </div>
-                            <div id="fmtr-table">
+                            <div id="fmtr-table" style="width: 100%;">
                                 <ng-container *ngIf="selectedBatchIndex > -1">
                                     <ngx-datatable [rows]="finalStockDataValues[selectedBatchIndex].batchMW"
                                         [scrollbarV]="true" 
                                         class="material common-table datatable-auto-height fm-table-body-height"
                                         style="height: 242px;">
-                                        <ngx-datatable-column name="Meter" prop="mtr">
+                                        <ngx-datatable-column name="PChallan" prop="pchallanRef">
                                         </ngx-datatable-column>
-                                        <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Sr No." prop="sequence">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Mtr" prop="mtr">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Wt" prop="wt"></ngx-datatable-column>
                                         <ngx-datatable-column name="Action" prop="id">
                                             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                                 let-rowIndex="rowIndex">

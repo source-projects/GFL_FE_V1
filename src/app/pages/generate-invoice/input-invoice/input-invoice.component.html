@@ -1,0 +1,33 @@
+<nb-card class="nbStyle">
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="nb-text txt-ov-elips">Print Invoice</h2>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Invoice No</label>
+                    <input type="number" class="form-control" name=invoice [(ngModel)]="invoiceNo" id="invoice">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 mobile-btn-center text-btn-right mt-50">
+
+
+                <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
+                    (click)="closeModal()">CANCEL</button>
+
+                <button type="button" class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
+                    (click)="printInvoice()">OK</button>
+
+
+            </div>
+
+        </div>
+    </nb-card-body>
+</nb-card>

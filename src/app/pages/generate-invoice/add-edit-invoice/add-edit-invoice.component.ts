@@ -13,6 +13,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrintLayoutComponent } from "../print-Layout/print-layout.component";
 import { PasswordDailogComponent } from "../../../@theme/components/password-dailog/password-dailog.component";
+import { InputInvoiceComponent } from "../input-invoice/input-invoice.component";
 
 @Component({
   selector: "ngx-add-edit-invoice",
@@ -646,6 +647,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.route.navigate(["/pages/generate_invoice/sign"]);
     } else if(event == 'received'){
       this.route.navigate(["/pages/generate_invoice/sign/view"]);
+    }else if(event == 'print'){
+      const modalRef = this.modalService.open(InputInvoiceComponent);
     }
   }
 

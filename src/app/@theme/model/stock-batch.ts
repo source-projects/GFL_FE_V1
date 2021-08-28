@@ -40,6 +40,7 @@ export class BatchMrtWt {
   controlId:number;
   batchId:number;
   color:string;
+  sequence:number;
 
   constructor(m?, w?, d?,id?,controlId?) {
     controlId ? (this.controlId = controlId) : this.controlId = null;
@@ -49,6 +50,7 @@ export class BatchMrtWt {
     d? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
     this.batchId = null;
     this.color = '';
+    this.sequence = null;
   }
 }
 

@@ -29,7 +29,7 @@ export class PartyComponent implements OnInit, OnDestroy {
   filteredPartyList = [];
   party = [];
   testingData = [];
-  headers = ["Party Name", "Party Address1", "Contact No", "City", "State"];
+  headers = [];
   module = "party";
   flag = false;
   radioSelect = 0;
@@ -304,7 +304,10 @@ export class PartyComponent implements OnInit, OnDestroy {
 
   open() {
     this.flag = true;
-
+    let headerArray = Object.keys(this.party[0]);
+    this.headers = headerArray.map(ele=>{
+      ele.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); })
+    });
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.party;
