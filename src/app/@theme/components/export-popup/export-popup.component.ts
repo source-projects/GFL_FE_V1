@@ -15,8 +15,6 @@ export class ExportPopupComponent implements OnInit {
 @Input('moduleName') moduleName: any;
 
   fileName = "export";
-  startRow: number;
-  endRow: number;
   exportType = "";
   toEmail = "";
   subjectEmail = "";
@@ -42,39 +40,32 @@ export class ExportPopupComponent implements OnInit {
   emailSendClick(){
     let modalData={
       exportType:"",
-      fromRow:null,
       moduleName:"",
       sendText:"",
       subjectEmail:"",
       toEmail:"",
-      toRow:null
     }
       modalData.exportType = this.exportType;
-      modalData.fromRow = this.startRow,
       modalData.moduleName = this.moduleName,
       //modalData.sendText = 
       modalData.subjectEmail = this.subjectEmail;
       modalData.toEmail = this.toEmail;
-      modalData.toRow = this.endRow;
       this.exportService.sendMail(modalData);
 
     }
   
   onDownloadClick(){
    
-    for( let i = this.startRow ; i <= this.endRow; i++){
-      this.list1.push(this.list[i-1]);
-    }
     if(this.exportType=='excel')
     {
-      this.exportService.exportExcel(this.list1, this.fileName, this.headers);
+      this.exportService.exportExcel(this.list, this.fileName, this.headers);
     }
     else if(this.exportType=='text')
     {
-      this.exportService.exportText(this.list1, this.fileName, this.headers);
+      this.exportService.exportText(this.list, this.fileName, this.headers);
     }
     else if(this.exportType=='pdf'){
-      this.exportService.exportPdf(this.list1, this.fileName, this.headers);
+      this.exportService.exportPdf(this.list, this.fileName, this.headers);
       this.list1 = [];
     }
     else{

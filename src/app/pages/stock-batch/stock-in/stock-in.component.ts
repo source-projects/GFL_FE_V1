@@ -173,9 +173,11 @@ export class StockInComponent implements OnInit, OnDestroy {
 
           let totatmtr = 0;
           let totalwt = 0;
-          batch.batchMW.forEach(item => {
+          batch.batchMW.forEach((item,con) => {
             totatmtr += item.mtr;
             totalwt += item.wt;
+            item.sequence = con + 1;
+            item["pchallanRef"] = x.pchallanRef;
           });
           batch["totalMtr"] = totatmtr;
           batch["totalWt"] = totalwt;

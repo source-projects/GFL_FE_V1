@@ -54,12 +54,12 @@
                     <div class="form-group col-md-4">
                         <label class="required">Party Code</label>
                         <input type="text" id="partyCode" nbinput fieldsize="small" class="form-control size-small"
-                            formControlName="partyCode" placeholder="Party Code" (change)="checkPartyCode()"
+                            formControlName="partyCode" placeholder="Party Code"
                             (keypress)="resetFlag($event)" required
-                            [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched) || !partyCodeExist}" />
-                        <div class="input-required" *ngIf="!partyCodeExist">
+                            [ngClass]="{'is-invalid':(partyForm.get('partyCode').invalid)&&(formSubmitted || partyForm.get('partyCode').touched)}" />
+                        <!-- <div class="input-required" *ngIf="!partyCodeExist">
                             <span>Party Code is already Exist </span>
-                        </div>
+                        </div> -->
                         <div class="input-required" *ngIf="partyForm.get('partyCode').errors?.required ">
                             <span>Party Code is required</span>
                         </div>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="required">State</label>
-                        <ng-select name="state" appendTo="body" id="state" formControlName="state"
+                        <ng-select name="state" appendTo="body" id="state" (change)="stateChange()" formControlName="state"
                             [ngClass]="{'is-invalid':(partyForm.get('state').invalid)&&(formSubmitted || partyForm.get('state').touched )}"
                             placeholder="Select State" class="dropdown-name" required [items]="stateList"
                             bindLabel="name" bindValue="name">

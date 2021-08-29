@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { GenerateInvoiceService } from '../../services/generate-invoice.service';
@@ -12,6 +12,7 @@ import { GenerateInvoiceService } from '../../services/generate-invoice.service'
 })
 export class PasswordDailogComponent implements OnInit, OnDestroy {
 
+  @Input() title;
   passwordForInvoice = new Password();
   private destroy$ = new Subject<void>();
   constructor( private _NgbActiveModal: NgbActiveModal,

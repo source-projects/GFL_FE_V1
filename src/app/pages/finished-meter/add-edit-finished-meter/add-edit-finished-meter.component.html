@@ -89,8 +89,9 @@
                                     <label>Batch Filter</label>
                                 </div>
                                 <div class="col-md-10 col-12">
-                                    <input type="text" name="searchBatch" class="form-control" [(ngModel)]="searchBatchString" (keyup)="filterBySearchBatches()"
-                                    placeholder="Search By Batch-Id">
+                                    <input type="text" name="searchBatch" class="form-control"
+                                        [(ngModel)]="searchBatchString" (keyup)="filterBySearchBatches()"
+                                        placeholder="Search By Batch-Id">
                                 </div>
                             </div>
                         </div>
@@ -106,8 +107,10 @@
                                             nbButton size="small" *ngFor="let b of batchList"
                                             (click)="batchSelected($event)" class="p-badge-design"
                                             [disabled]="!b.productionPlanned" [value]="b.batchId">
-                                            {{b.batchId}} </button>
-
+                                            {{b.batchId}}
+                                            <nb-icon class="icon-pposition" (click)="remove(b);$event.stopPropagation();"
+                                                icon="close-circle-outline"></nb-icon>
+                                        </button>
                                     </div>
 
                                 </div>
@@ -118,10 +121,15 @@
                 <div class="row" *ngIf="finishedMeterForm.batchId">
                     <nb-card-header class="nb-header w-100">
                         <div class="row nb-text">
-                            <div class="col-md-4">
-                                <span>Total Grs: {{(finishedMeterForm.batchData)? finishedMeterForm.batchData[finishedMeterForm.batchData.length -1 ].seqNo : 0 | number : '1.2-2'}}</span>
+                            <div class="col-md-2">
+                                <span>Total Grs: {{(finishedMeterForm.batchData)?
+                                    finishedMeterForm.batchData[finishedMeterForm.batchData.length -1 ].seqNo : 0 |
+                                    number : '1.2-2'}}</span>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <span>Total Weight: {{totalWeight | number : '1.2-2' }}</span>
+                            </div>
+                            <div class="col-md-3">
                                 <span>Total Gr Meter: {{totalGrMeter | number : '1.2-2' }}</span>
                             </div>
                             <div class="col-md-4">
@@ -131,8 +139,8 @@
                     </nb-card-header>
                     <div class="col-md-12" id="fmtr-table">
                         <ngx-datatable #table class="material common-table datatable-auto-height fm-table-body-height"
-                            style="height: 200px;"
-                            [rows]="finishedMeterForm.batchData" [headerHeight]="31" [scrollbarV]="true">
+                            style="height: 200px;" [rows]="finishedMeterForm.batchData" [headerHeight]="31"
+                            [scrollbarV]="true">
                             <ngx-datatable-column name="Action" sortable="false" prop="mtr">
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                     let-rowIndex="rowIndex">
@@ -154,16 +162,17 @@
                                 [width]="200">
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Weight" prop="wt" [sortable]="false"
-                                [width]="200">
+                            <ngx-datatable-column name="Weight" prop="wt" [sortable]="false" [width]="200">
                             </ngx-datatable-column>
 
                             <ngx-datatable-column name="Gr Meter" prop="mtr" [sortable]="false" [width]="200">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm" type="number" #tableMeter12="ngModel" [min]="1"
-                                        name='tableMeter{{rowIndex}}' [(ngModel)]="row.mtr" (keypress)="numberOnly($event)"
-                                        (keyup)="onKeyUpMeter($event,rowIndex,2,'Meter')" [id]="'batchData'+rowIndex+'-2'"
-                                        required [ngClass]="{'is-invalid': formSubmitted && tableMeter12.invalid}">
+                                        name='tableMeter{{rowIndex}}' [(ngModel)]="row.mtr"
+                                        (keypress)="numberOnly($event)"
+                                        (keyup)="onKeyUpMeter($event,rowIndex,2,'Meter')"
+                                        [id]="'batchData'+rowIndex+'-2'" required
+                                        [ngClass]="{'is-invalid': formSubmitted && tableMeter12.invalid}">
                                     <div class="input-required display-inlineblock"
                                         *ngIf="formSubmitted && (tableMeter12.invalid )">
                                         <span>Required</span>

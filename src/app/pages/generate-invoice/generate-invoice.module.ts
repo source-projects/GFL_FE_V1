@@ -11,9 +11,10 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReceivedInvoiceComponent } from './received-invoice/received-invoice.component';
 import { SignInvoiceComponent } from './sign-invoice/sign-invoice.component';
 import { ThemeModule } from '../../@theme/theme.module';
+import { InputInvoiceComponent } from './input-invoice/input-invoice.component';
 
 @NgModule({
-  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent, ReceivedInvoiceComponent, SignInvoiceComponent],
+  declarations: [GenerateInvoiceComponent, AddEditInvoiceComponent, PrintLayoutComponent, InvoiceReportComponent, ReceivedInvoiceComponent, SignInvoiceComponent, InputInvoiceComponent],
   imports: [
     CommonModule,
     GenerateInvoiceRoutingModule,
