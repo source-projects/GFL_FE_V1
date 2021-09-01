@@ -14,33 +14,76 @@
             <form #myForm="ngForm">
 
                 <div class="row" style="margin: 3px 3px;">
-                    <div class="col-md-8" id="fmtr-table">
-                        <div class="capsule-data-container right-border">
+                    <div class="col-md-7" id="fmtr-table">
+                        <div class="capsule-data-container cap-border">
                             <div class="row">
-                                <div class="col-md-4" *ngFor="let value of stockDataValues">
-                                    <div class="row" style="padding-left: 18px">
-                                        PChallan Ref: {{value.pchallanRef}}
+                                <div class="col-md-6" style="padding-left: 25px;
+                                margin-right: -15px;" *ngFor="let value of stockDataValues">
+                                    <div class="row" style="padding-left:20px;padding-top: 10px;">
+                                        PChallan Ref: <b>{{value.pchallanRef}}</b>
                                     </div>
+                                    <!-- <div class="row">
+                                        <div class="col-md-2">
+                                            {{checkedChallanList.length}}
+                                        </div>
+                                    </div> -->
                                     <div>
                                         <ngx-datatable [rows]="value.batchMW" [scrollbarV]="true"
-                                        [selectionType]="SelectionType.multiClick"
-                                        class="material common-table datatable-auto-height fm-table-body-height"
-                                        (select)="challanGRSelected($event)" style="height: 200px;"
-                                        [selectionType]="'checkbox'" [selected]="checkedChallanList">
-                                        <ngx-datatable-column name="Meter" prop="mtr" [headerCheckboxable]="true"
-                                            [checkboxable]="true">
-                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
-                                                let-value="value" let-row="row">
-                                                <div *ngIf="!row.color">
-                                                    {{value}}
-                                                </div>
-                                                <div *ngIf="row.color" class="inside_value"
-                                                    [ngStyle]="{'background-color' : row.color}">
-                                                    {{value}}
-                                                </div>
-                                            </ng-template>
-                                        </ngx-datatable-column>
-                                    </ngx-datatable>
+                                            [selectionType]="SelectionType.multiClick"
+                                            class="material common-table datatable-auto-height fm-table-body-height"
+                                            (select)="challanGRSelected($event)"
+                                            style="height: 400px" [footerHeight]="80"
+                                            [selectionType]="'checkbox'" [selected]="checkedChallanList">
+                                            <ngx-datatable-column name="Sr No." prop="sequence" [headerCheckboxable]="true"
+                                            [checkboxable]="true"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Mtr" prop="mtr" >
+                                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                    let-value="value" let-row="row">
+                                                    <div *ngIf="!row.color">
+                                                        {{value}}
+                                                    </div>
+                                                    <div *ngIf="row.color" class="inside_value"
+                                                        [ngStyle]="{'background-color' : row.color}">
+                                                        {{value}}
+                                                    </div>
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="Wt" prop="wt">
+                                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                    let-value="value" let-row="row">
+                                                    <div *ngIf="!row.color">
+                                                        {{value}}
+                                                    </div>
+                                                    <div *ngIf="row.color" class="inside_value"
+                                                        [ngStyle]="{'background-color' : row.color}">
+                                                        {{value}}
+                                                    </div>
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-footer>
+                                                <ng-template ngx-datatable-footer-template
+                                                    let-rowCount="rowCount" let-row="row">
+                                                    <div class="col-md-4">
+                                                        <div class="toal-finish-mtr">
+                                                            Total GR: {{rowCount}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="toal-finish-mtr">
+                                                            Total mtr: {{value.totalMtr | number :
+                                                            '1.2-2'}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="toal-finish-mtr">
+                                                            Total wt: {{value.totalWt | number :
+                                                            '1.2-2'}}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </ng-template>
+                                            </ngx-datatable-footer>
+                                        </ngx-datatable>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +92,7 @@
                             <!-- </ng-container> -->
                         </div>
                     </div>
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-5 mt-3">
                         <div class="row">
                             <button class="btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="transferClicked()">Transfer</button>
@@ -59,27 +102,45 @@
                                 <nb-icon [options]="{animation:{type:'zoom'}}" (click)="addBatch($event)" icon="plus"
                                     class="add-icon" style="position: relative">
                                 </nb-icon>
-                                <button type="button" style="margin-top: -5px;"
+                                <button type="button" style="margin-top: 2px;"
                                     [ngClass]="{'active-button' : (b.batchId == selectedBatch)}"
                                     [ngStyle]="{'background-color' : b.backColor}" nbButton size="small"
                                     *ngFor="let b of finalStockDataValues; let i = index;"
                                     (click)="batchSelected(b.batchId, i)" class="badge-design-stock-in"
                                     [disabled]="b.productionPlanned" [value]="b.pchallanRef">
-                                    {{b.batchId}}
-                                    <nb-icon class="icon-pposition" (click)="deleteBatch(b, i)"
+                                    <b [ngClass]="{'batchFont' : (totalObj[b.batchId] && b.batchId == selectedBatch)}">{{b.batchId}}</b>
+                                    <nb-icon [ngClass]="{'iconSize' : (totalObj[b.batchId] && b.batchId == selectedBatch)}" class="icon-pposition" (click)="deleteBatch(b, i)"
                                         icon="close-circle-outline" *ngIf="!b.isProductionPlanned">
                                     </nb-icon>
+                                    <div style="display: grid;font-size: 10.5px;" *ngIf="totalObj[b.batchId] && b.batchId == selectedBatch">
+                                        <span>
+                                            Mtr: {{totalObj[b.batchId].mtr | number : '1.2-2'}}
+                                        </span>
+
+                                        <span>
+                                            Wt: {{totalObj[b.batchId].wt | number : '1.2-2'}}
+                                        </span>
+
+                                        <span>
+                                            Pcs: {{totalObj[b.batchId].pcs}}
+                                        </span>
+                                    </div>
+
                                 </button>
                             </div>
-                            <div id="fmtr-table">
+                            <div id="fmtr-table" style="width: 100%;">
                                 <ng-container *ngIf="selectedBatchIndex > -1">
                                     <ngx-datatable [rows]="finalStockDataValues[selectedBatchIndex].batchMW"
-                                        [scrollbarV]="true"
+                                        [scrollbarV]="true" 
                                         class="material common-table datatable-auto-height fm-table-body-height"
-                                        style="height: 200px;">
-                                        <ngx-datatable-column name="Meter" prop="mtr">
+                                        style="height: 242px;">
+                                        <ngx-datatable-column name="PChallan" prop="pchallanRef">
                                         </ngx-datatable-column>
-                                        <ngx-datatable-column name="Weight" prop="wt"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Sr No." prop="sequence">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Mtr" prop="mtr">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Wt" prop="wt"></ngx-datatable-column>
                                         <ngx-datatable-column name="Action" prop="id">
                                             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                                 let-rowIndex="rowIndex">
@@ -89,6 +150,7 @@
                                                 </nb-icon>
                                             </ng-template>
                                         </ngx-datatable-column>
+                                        
                                     </ngx-datatable>
                                 </ng-container>
                             </div>

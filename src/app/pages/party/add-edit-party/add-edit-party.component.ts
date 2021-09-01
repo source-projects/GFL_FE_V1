@@ -79,7 +79,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   debtor: boolean = false;
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
-  partyCodeExist: boolean = true;
+  // partyCodeExist: boolean = true;
   partyNameExist: boolean = false;
   adminFlag = false;
   masterFlag = false;
@@ -214,7 +214,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   }
 
   resetFlag(event) {
-    this.partyCodeExist = true;
+    // this.partyCodeExist = true;
     const charCode = event.which ? event.which : event.keyCode;
     return (
       (charCode >= 48 && charCode <= 57) ||
@@ -227,7 +227,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   reset() {
     this.partyForm.reset();
     this.formSubmitted = false;
-    this.partyCodeExist = true;
+    // this.partyCodeExist = true;
     this.partyNameExist = false;
   }
 
@@ -238,8 +238,8 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     if (this.partyForm.valid) {
       if (
         (this.creditor || this.debtor) &&
-        !this.partyNameExist &&
-        this.partyCodeExist
+        !this.partyNameExist 
+        // && this.partyCodeExist
       ) {
         this.partyForm.value.createdBy = this.user.userId;
 
@@ -294,8 +294,8 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     if (this.partyForm.valid) {
       if (
         (this.creditor || this.debtor) &&
-        !this.partyNameExist &&
-        this.partyCodeExist
+        !this.partyNameExist 
+        // && this.partyCodeExist
       ) {
         if (
           (this.debtor == true &&
@@ -372,21 +372,21 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkPartyCode() {
-    this.partyCodeExist = true;
-    if (this.partyForm.get("partyCode").value) {
-      let id = 0;
-      if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
-      this.partyService
-        .getPartyCode(this.partyForm.get("partyCode").value, id)
-        .pipe(takeUntil(this.destroy$)).subscribe(
-          (data) => {
-            this.partyCodeExist = data["data"];
-          },
-          (error) => { }
-        );
-    }
-  }
+  // checkPartyCode() {
+  //   this.partyCodeExist = true;
+  //   if (this.partyForm.get("partyCode").value) {
+  //     let id = 0;
+  //     if (this.partyForm.get("id").value) id = this.partyForm.get("id").value;
+  //     this.partyService
+  //       .getPartyCode(this.partyForm.get("partyCode").value, id)
+  //       .pipe(takeUntil(this.destroy$)).subscribe(
+  //         (data) => {
+  //           this.partyCodeExist = data["data"];
+  //         },
+  //         (error) => { }
+  //       );
+  //   }
+  // }
 
   checkAddress() {
     if (this.partyForm.get("partyAddress1").value != "") {
@@ -395,7 +395,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   }
 
   setState() {
-    if (this.partyForm.get("gstin").value != "") {
+    if (this.partyForm.get("gstin").value != "" && this.partyForm.get("gstin").value.length == 15) {
       let tempGstNo = this.partyForm.get("gstin").value;
       let stateDigit = tempGstNo.slice(0, 2);
       this.stateList.forEach((element) => {
@@ -405,7 +405,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
           });
         }
       });
-      this.partyForm.get("state").disable();
+      // this.partyForm.get("state").disable();
     } else {
       this.partyForm.get("state").enable();
     }
@@ -415,5 +415,9 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     if (event === "view table") {
       this.route.navigate(['/pages/party/view']);
     }
+  }
+
+  stateChange(){
+    this.partyForm.get("gstin").value == "";
   }
 }

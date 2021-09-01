@@ -1,12 +1,11 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
 import { NavigationExtras, Router } from "@angular/router";
-import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
-import { NbDialogService, NbToastComponent } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PasswordDailogComponent } from '../../@theme/components';
+import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
 
 // import { Invoice } from "app/@theme/model/invoice";
 
@@ -159,9 +158,10 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   }
 
   deleteInvoice(invoiceNo){
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+    const modalRef = this.modalService.open(PasswordDailogComponent, {
       size: "sm",
     });
+    modalRef.componentInstance.title = "Delete Invoice"
     modalRef.result.then((result) => {
       if (result) {
         this.loading = true;

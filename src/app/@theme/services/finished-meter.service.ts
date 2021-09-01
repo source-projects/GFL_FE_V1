@@ -61,4 +61,12 @@ export class FinishedMeterService {
       this.commonService.envUrl() + "api/stockBatch/getAllBatchForFinishMtr"
     );
   }
+
+  removeBatch(id){
+    return this.httpClient.delete(
+      this.commonService.envUrl() +
+      "api/batch/removeBy?productionId=" +
+      id
+    );
+  }
 }

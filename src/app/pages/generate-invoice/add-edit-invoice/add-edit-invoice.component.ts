@@ -13,6 +13,7 @@ import { CommonService } from "../../../@theme/services/common.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PrintLayoutComponent } from "../print-Layout/print-layout.component";
 import { PasswordDailogComponent } from "../../../@theme/components/password-dailog/password-dailog.component";
+import { InputInvoiceComponent } from "../input-invoice/input-invoice.component";
 
 @Component({
   selector: "ngx-add-edit-invoice",
@@ -273,6 +274,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           userHeadId: this.userHeadId,
           cgst: null,
           sgst: null,
+          igst:null,
           percentageDiscount: this.discountChange,
           discount: null,
           taxAmt: null,
@@ -300,6 +302,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                 if (result) {
                   obj.cgst = result.cgst;
                   obj.sgst = result.sgst;
+                  obj.igst = result.igst;
                   obj.discount = result.discount;
                   obj.netAmt = Math.round(result.netAmt);
                   obj.taxAmt = result.taxAmt;
@@ -360,6 +363,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             if (result) {
               obj.cgst = result.cgst;
               obj.sgst = result.sgst;
+              obj.igst = result.igst;
               obj.discount = result.discount;
               obj.netAmt = Math.round(result.netAmt);
               obj.taxAmt = result.taxAmt;
@@ -448,6 +452,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         invoiceNo: this.currentInvoiceId,
         cgst: null,
         sgst: null,
+        igst:null,
         percentageDiscount: this.discountChange,
         discount: null,
         taxAmt: null,
@@ -475,6 +480,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               if (result) {
                 obj.cgst = result.cgst;
                 obj.sgst = result.sgst;
+                obj.igst = result.igst;
                 obj.discount = result.discount;
                 obj.netAmt = Math.round(result.netAmt);
                 obj.taxAmt = result.taxAmt;
@@ -535,6 +541,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           if (result) {
             obj.cgst = result.cgst;
             obj.sgst = result.sgst;
+            obj.igst = result.igst;
             obj.discount = result.discount;
             obj.netAmt = Math.round(result.netAmt);
             obj.taxAmt = result.taxAmt;
@@ -640,6 +647,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.route.navigate(["/pages/generate_invoice/sign"]);
     } else if(event == 'received'){
       this.route.navigate(["/pages/generate_invoice/sign/view"]);
+    }else if(event == 'print'){
+      const modalRef = this.modalService.open(InputInvoiceComponent);
     }
   }
 

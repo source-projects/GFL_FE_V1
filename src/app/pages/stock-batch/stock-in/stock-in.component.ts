@@ -14,8 +14,8 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'ngx-stock-in',
-  templateUrl: './stock-in.component.html',
-  styleUrls: ['./stock-in.component.scss']
+  templateUrl: 'stock-in.component.html',
+  styleUrls: ['stock-in.component.scss']
 })
 export class StockInComponent implements OnInit, OnDestroy {
 
@@ -170,6 +170,17 @@ export class StockInComponent implements OnInit, OnDestroy {
               x.controlId
             )
           );
+
+          let totatmtr = 0;
+          let totalwt = 0;
+          batch.batchMW.forEach((item,con) => {
+            totatmtr += item.mtr;
+            totalwt += item.wt;
+            item.sequence = con + 1;
+            item["pchallanRef"] = x.pchallanRef;
+          });
+          batch["totalMtr"] = totatmtr;
+          batch["totalWt"] = totalwt;
           batch.batchMW[batch.batchMW.length - 1]['batchId'] = x.batchId;
           batch.batchMW[batch.batchMW.length - 1]['pchallanRef'] = x.pchallanRef;
           if (x.isProductionPlanned)
@@ -197,6 +208,14 @@ export class StockInComponent implements OnInit, OnDestroy {
             element.id,
             element.controlId
           ));
+          let totatmtr = 0;
+          let totalwt = 0;
+          this.finalStockDataValues[index].batchMW.forEach(item => {
+            totatmtr += item.mtr;
+            totalwt += item.wt;
+          });
+          this.finalStockDataValues[index]["totalMtr"] = totatmtr;
+          this.finalStockDataValues[index]["totalWt"] = totalwt;
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['batchId'] = element.batchId;
           this.finalStockDataValues[index].batchMW[this.finalStockDataValues[index].batchMW.length - 1]['pchallanRef'] = element.pchallanRef;
           let i = this.stockDataValues.findIndex(f => f.batchMW.filter(m => m.id == element.id && m.pchallanRef == element.pchallanRef && !m.color).length);
@@ -328,6 +347,19 @@ export class StockInComponent implements OnInit, OnDestroy {
       this.stockDataValues[idx].batchMW[value].color = '';
       this.stockDataValues[idx].batchMW[value].batchId = null;
       this.finalStockDataValues[this.selectedBatchIndex].batchMW = [...this.finalStockDataValues[this.selectedBatchIndex].batchMW];
+      let temp = {};
+      let sumMtr = 0;
+      let sumWt = 0;
+      let count = 0;
+      this.finalStockDataValues[this.selectedBatchIndex].batchMW.forEach(element => {
+        sumMtr += element.mtr;
+        sumWt += element.wt;
+        count = count + 1;
+      });
+      temp["mtr"] = sumMtr;
+      temp["wt"] = sumWt;
+      temp["pcs"] = count;
+      this.totalObj[this.selectedBatch] = temp;
       this.cdr.detectChanges();
     }
   }
@@ -353,6 +385,9 @@ export class StockInComponent implements OnInit, OnDestroy {
     this.selectedBatchIndex = -1;
   }
 
+  transferedMtr = null;
+  transferedWt = null;
+  totalObj = {};
   transferClicked() {
     if (this.selectedBatch) {
       let batch = this.finalStockDataValues.filter(v => v.batchId == this.selectedBatch);
@@ -365,6 +400,8 @@ export class StockInComponent implements OnInit, OnDestroy {
             if (this.finalStockDataValues.length && this.selectedBatch) {
               let index = this.finalStockDataValues.findIndex(f => f.batchId == this.selectedBatch);
               let invalid = false;
+              let temp = {};
+
               this.checkedChallanList.forEach(e => {
                 if (e.color) {
                   invalid = true;
@@ -376,7 +413,20 @@ export class StockInComponent implements OnInit, OnDestroy {
                   let rowindex = this.stockDataValues[i].batchMW.findIndex(val => val.id == e.id);
                   this.stockDataValues[i].batchMW[rowindex].batchId = this.selectedBatch;
                   this.stockDataValues[i].batchMW[rowindex].color = this.finalStockDataValues[index].backColor;
-                  this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW]
+                  this.finalStockDataValues[index].batchMW = [...this.finalStockDataValues[index].batchMW];
+                  let sumMtr = 0;
+                  let sumWt = 0;
+                  let count = 0;
+                  this.finalStockDataValues[index].batchMW.forEach(element => {
+                    sumMtr += element.mtr;
+                    sumWt += element.wt;
+                    count = count + 1;
+                  });
+                  temp["mtr"] = sumMtr;
+                  temp["wt"] = sumWt;
+                  temp["pcs"]=count;
+                  this.totalObj[this.selectedBatch] = temp;
+
                 }
               });
               if (invalid) {
@@ -392,7 +442,7 @@ export class StockInComponent implements OnInit, OnDestroy {
         }
       }
     }
-    else{
+    else {
       this.toastr.error("Select Batch first");
     }
 

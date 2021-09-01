@@ -8,6 +8,9 @@ import { FinishedMeterService } from "../../../@theme/services/finished-meter.se
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { ToastrService } from "ngx-toastr";
+import { NgModel } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: "ngx-add-edit-finished-meter",
@@ -31,6 +34,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   sequenceArray: Array<number> = [];
   public totalFinishMeter: number = 0;
   public totalGrMeter: number = 0;
+  public totalWeight:number = 0;
   public selectedBatch: string = "";
   public searchBatchString: string = "";
   public batchListCopy: Array<any> = [];
@@ -48,7 +52,8 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     private partyService: PartyService,
     private qualityService: QualityService,
     private toastr: ToastrService,
-    private finishedMeterService: FinishedMeterService
+    private finishedMeterService: FinishedMeterService,
+    private modalService:NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -308,8 +313,10 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   CalculateTotalGrMtr() {
     this.totalGrMeter = 0;
+    this.totalWeight = 0;
     this.finishedMeterForm.batchData.forEach((element) => {
       this.totalGrMeter += Number(element.mtr ? element.mtr : 0);
+      this.totalWeight += Number(element.wt ? element.wt : 0);
     });
   }
 
@@ -548,5 +555,25 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       this.indexOfBatchData++;
       if (isFirstTime) e.sequenceId = e.id;
     });
+  }
+
+  remove(batch){
+    const modelRef = this.modalService.open(ConfirmationDialogComponent);
+    modelRef.result
+      .then((result) => {
+        if (result) {
+          this.finishedMeterService.removeBatch(batch.productionId).pipe(takeUntil(this.destroy$))
+          .subscribe(
+            (data) => {
+              this.finishedMeterForm.batchId = null;
+              this.toastr.success(errorData.Delete);
+              this.getAllBatchForFinishMtr();
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+            }
+          );
+        }
+      })
   }
 }

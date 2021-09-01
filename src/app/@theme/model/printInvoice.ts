@@ -15,6 +15,8 @@ export class PrintInvoiceData {
     sgst: number
     netAmt: number
     percentageDiscount:number
+    igst:number
+    state:string
   }
   
   export class BatchWithGrList {
