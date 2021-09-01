@@ -302,13 +302,16 @@ export class PartyComponent implements OnInit, OnDestroy {
   }
 
   open() {
+    let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
     this.flag = true;
     let headerArray = Object.keys(this.party[0]);
-    headerArray.forEach(ele => {
-      ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
+    let finalHeader = [];
+    headerArray.forEach((ele,i) => {
+      finalHeader.push(ele.replace(rex,'$1$4 $2$3$5'));
+      finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
     });
     const modalRef = this.modalService.open(ExportPopupComponent);
-    modalRef.componentInstance.headers = headerArray;
+    modalRef.componentInstance.headers = finalHeader;
     modalRef.componentInstance.list = this.party;
     modalRef.componentInstance.moduleName = this.module;
   }
