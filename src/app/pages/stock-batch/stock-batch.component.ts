@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
@@ -13,6 +13,13 @@ import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { JobCardComponent } from "./job-card/job-card.component";
 import { cloneDeep } from 'lodash';
+import { RequestData } from '../../@theme/model/request-data.model';
+import { ResponseData } from '../../@theme/model/response-data.model';
+import { PageData } from '../../@theme/model/page-data.model';
+import { DataFilter } from '../../@theme/model/datafilter.model';
+import { NbPopoverDirective } from '@nebular/theme';
+import { FilterParameter } from '../../@theme/model/filterparameter.model';
+import { StockBatch } from '../../@theme/model/stock-batch';
 
 @Component({
   selector: "ngx-stock-batch",
@@ -60,12 +67,17 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   ownEdit = true;
   allEdit = true;
   groupEdit = true;
-  
-  public tableHeaders = ["stockInType","partyName", "qualityName", "batchList","chlNo"];
-  searchStr = "";
-  searchANDCondition = false;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public tableHeaders = ["stockInType", "partyName", "qualityName", "batchList", "chlNo"];
+  searchStr = "";
+  requestData: RequestData = new RequestData();
+  filter = new StockBatch();
+
+  private destroy$: Subject<void> = new Subject<void>();
+
+  @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -79,9 +91,10 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     private commonService: CommonService,
     private exportService: ExportService,
     private jwtToken: JwtTokenService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -93,25 +106,63 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     this.getEditAccess();
     this.getEditAccess1();
     if (this.stockBatchGuard.accessRights("view all")) {
-      this.getStockBatchList(0, "all");
-      this.hidden = this.allDelete;
-      this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.stockBatchGuard.accessRights("view group")) {
-      this.getStockBatchList(this.userId, "group");
-      this.hidden = this.groupDelete;
-      this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else if (this.stockBatchGuard.accessRights("view")) {
-      this.getStockBatchList(this.userId, "own");
-      this.hidden = this.ownDelete;
-      this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
+    }
+
+    this.onChange(this.radioSelect);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onCLick(event) {
+
+    // var but = document.getElementById('filterButton');
+    const container = document.getElementById('filterDiv');
+    if (!container) {
+      return;
+    }
+
+    if (!container.contains(event.target)) {
+      this.popover.hide();
     }
   }
 
-  conditionChanged(){
-    this.filter();
+  onOpenFilter() {
+    this.popover.show();
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const properties = Object.keys(this.filter);
+    for (let property of properties) {
+      let index = this.requestData.data.parameters.findIndex(o => o.field.find(x => x == property));
+      if (index != -1) {
+        if (this.filter[property] != '') {
+          this.requestData.data.parameters[index].value = this.filter[property];
+        } else {
+          delete this.requestData.data.parameters[index];
+        }
+      } else if (this.filter[property] != '') {
+        let parameter = new FilterParameter();
+        parameter.field = [property];
+        parameter.value = this.filter[property];
+        parameter.operator = "LIKE";
+        this.requestData.data.parameters.push(parameter);
+      }
+    }
+
+    this.getStockBatchList();
+  }
+
+  onClearFilter() {
+    if (this.requestData.data.parameters.length > 0) {
+      this.filter = new StockBatch();
+      this.requestData.data.parameters = [];
+      this.getStockBatchList();
+    }
   }
 
   getAddAcess() {
@@ -121,23 +172,27 @@ export class StockBatchComponent implements OnInit, OnDestroy {
       this.disabled = true;
     }
   }
+
   onChange(event) {
     this.stockList = [];
     switch (event) {
       case 1:
-        this.getStockBatchList(this.userId, "own");
+        this.requestData.getBy = "own";
+        this.getStockBatchList();
         this.hidden = this.ownDelete;
         this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
-        this.getStockBatchList(this.userId, "group");
+        this.requestData.getBy = "group";
+        this.getStockBatchList();
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
-        this.getStockBatchList(0, "all");
+        this.requestData.getBy = "all";
+        this.getStockBatchList();
         this.hidden = this.allDelete;
         this.hiddenEdit = this.allEdit;
         break;
@@ -153,80 +208,103 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  filter() {
-    const val = this.searchStr.toString().toLowerCase().trim();
-    const searchStrings = val.split("+").map(m => ({matched: false, val: m})); 
-    if(val){
-      this.stockList = this.copyStockList.filter( f=>
-        {
-          let hit = 0;
-          for(let v of searchStrings){
-            if(
-              this.matchString(f, 'partyName', v.val) ||
-              this.matchString(f, 'qualityName', v.val) ||
-              this.matchString(f, 'chlNo', v.val) ||
-              this.matchString(f, 'batchId', v.val) ||
-              this.matchString(f, 'stockInType', v.val)
-            ){
-              v.matched = true;
-              hit++;
-              if(!this.searchANDCondition){
-                return true; 
-              }
-            }
-          }
-          if(this.searchANDCondition && hit == searchStrings.length){
-            return true;
-          }
-        }
-      );
-      
-    }else{
-      this.stockList = cloneDeep(this.copyStockList); 
-    }
-  }
+  // filter() {
+  //   const val = this.searchStr.toString().toLowerCase().trim();
+  //   const searchStrings = val.split("+").map(m => ({ matched: false, val: m }));
+  //   if (val) {
+  //     this.stockList = this.copyStockList.filter(f => {
+  //       let hit = 0;
+  //       for (let v of searchStrings) {
+  //         if (
+  //           this.matchString(f, 'partyName', v.val) ||
+  //           this.matchString(f, 'qualityName', v.val) ||
+  //           this.matchString(f, 'chlNo', v.val) ||
+  //           this.matchString(f, 'batchId', v.val) ||
+  //           this.matchString(f, 'stockInType', v.val)
+  //         ) {
+  //           v.matched = true;
+  //           hit++;
+  //           if (!this.searchANDCondition) {
+  //             return true;
+  //           }
+  //         }
+  //       }
+  //       if (this.searchANDCondition && hit == searchStrings.length) {
+  //         return true;
+  //       }
+  //     }
+  //     );
 
-  matchString(item, key, searchString){
-    if(key == 'batchId'){
+  //   } else {
+  //     this.stockList = cloneDeep(this.copyStockList);
+  //   }
+  // }
+
+  matchString(item, key, searchString) {
+    if (key == 'batchId') {
       return item['batchData'].filter(f => f.batchId.toLowerCase().includes(searchString)).length > 0
-    }else{
+    } else {
       return item[key].toLowerCase().includes(searchString);
     }
   }
 
-  getStockBatchList(id, getBy) {
-    this.loading = true;
-    this.stockBatchService.getAllStockBatchList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.stockList = data["data"];
-          let index = 0;
-          this.stockList.forEach((element) => {
-            if(element.batchData && element.batchData.length ){
-              element.batchData.forEach(e => {
-                if(e.batchId){
-                  element['showPrint'] = true;
-                }
-              });
-            }
-            
-            this.stockList[index].billDate = new Date(
-              element.billDate
-            ).toDateString();
-            this.stockList[index].chlDate = new Date(
-              element.chlDate
-            ).toDateString();
-            index++;
-          });
-          this.copyStockList = cloneDeep(this.stockList);
-        }
+  // getStockBatchList(id, getBy) {
+  //   this.loading = true;
+  //   this.stockBatchService.getAllStockBatchList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
+  //     (data) => {
+  //   if(data["success"]) {
+  //   this.stockList = data["data"];
+  //   let index = 0;
+  //   this.stockList.forEach((element) => {
+  //     if (element.batchData && element.batchData.length) {
+  //       element.batchData.forEach(e => {
+  //         if (e.batchId) {
+  //           element['showPrint'] = true;
+  //         }
+  //       });
+  //     }
 
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+  //     this.stockList[index].billDate = new Date(
+  //       element.billDate
+  //     ).toDateString();
+  //     this.stockList[index].chlDate = new Date(
+  //       element.chlDate
+  //     ).toDateString();
+  //     index++;
+  //   });
+  //   this.copyStockList = cloneDeep(this.stockList);
+  // }
+
+  //       this.loading = false;
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getStockBatchList();
+  }
+
+  getStockBatchList() {
+    this.loading = true;
+    this.stockBatchService.getAllStockBatchList1(this.requestData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (response: ResponseData) => {
+          if (response.success) {
+            const pageData = response.data as PageData;
+            this.stockList = pageData.data;
+            this.requestData.data.total = pageData.total;
+          }
+
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        });
   }
 
   deleteStockBatch(id) {
@@ -310,9 +388,9 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     }
   }
 
-  printJobCard(data){
+  printJobCard(data) {
     const modalRef = this.modalService.open(JobCardComponent);
-    modalRef.componentInstance.isDirectPrintFlag=true
+    modalRef.componentInstance.isDirectPrintFlag = true
     modalRef.componentInstance.stockBatchData = data;
     modalRef.componentInstance.stockId = Number(data.id);
     modalRef.result

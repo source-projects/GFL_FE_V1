@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CommonService } from "./common.service";
+import { RequestData } from "../model/request-data.model";
 
 @Injectable({
   providedIn: "root",
@@ -51,6 +52,13 @@ export class StockBatchService {
   getAllStockBatchList(id, getBy): any {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/stockBatch/all/" + getBy + "/" + id
+    );
+  }
+
+  getAllStockBatchList1(data: RequestData) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/allpaginated",
+      data
     );
   }
 
@@ -137,22 +145,22 @@ export class StockBatchService {
   }
 
   //lot return...
-  returnLotPost(body){
+  returnLotPost(body) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/stockBatch/add/returnBatch", body
     );
   }
 
-  returnLotgetById(id){
+  returnLotgetById(id) {
     return this.httpClient.get(
-      this.commonService.envUrl() + "api/stockBatch/get/returnBatch?chlNo="+id
+      this.commonService.envUrl() + "api/stockBatch/get/returnBatch?chlNo=" + id
     );
   }
 
-  returnLotgetAll(){
+  returnLotgetAll() {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/stockBatch/all/returnBatch"
     );
   }
-  
+
 }

@@ -1,0 +1,13 @@
+.filter-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.nb-icon-filter {
+    font-size: 15px;
+}
+
+::ng-deep .ng-dropdown-panel{
+    z-index: 9999999 !important;
+}

@@ -4,7 +4,6 @@ import { Angular2Txt } from 'angular2-txt/Angular2-txt';
 import * as FileSaver from 'file-saver';
 import { FileSaverOptions } from 'file-saver';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { CommonService } from './common.service';
 
@@ -15,11 +14,11 @@ import { CommonService } from './common.service';
 export class ExportService {
   [x: string]: any;
 
-  constructor( private httpClient: HttpClient, private commonService: CommonService ) { }
+  constructor(private httpClient: HttpClient, private commonService: CommonService) { }
 
-  fileType:string;
-  fileExtension:string;
-  templateToFile:any[];
+  fileType: string;
+  fileExtension: string;
+  templateToFile: any[];
   options: FileSaverOptions = {
     autoBom: false,
   };
@@ -66,14 +65,14 @@ export class ExportService {
     })
     doc.save(fileName + '.pdf');
   }
- 
+
   private saveFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: this.fileType });
     FileSaver.saveAs(data, fileName + this.fileExtension);
   }
 
-  public sendMail(documentModal){
-    return this.httpClient.post(this.commonService.envUrl()+'api/Document', documentModal);
+  public sendMail(documentModal) {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/Document', documentModal);
   }
 }
 

@@ -1,7 +1,5 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
