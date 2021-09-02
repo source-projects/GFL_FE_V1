@@ -72,7 +72,9 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   searchStr = "";
   requestData: RequestData = new RequestData();
   filter = new StockBatch();
-
+  filterWord: string = '';
+  selectedColumnForFilter = null;
+  operatorSelected: string = '';
   private destroy$: Subject<void> = new Subject<void>();
 
   @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
@@ -115,51 +117,71 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
     this.onChange(this.radioSelect);
   }
+  onOpenFilter(column) {
 
-  @HostListener('document:click', ['$event'])
-  onCLick(event) {
-
-    // var but = document.getElementById('filterButton');
-    const container = document.getElementById('filterDiv');
-    if (!container) {
-      return;
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
     }
-
-    if (!container.contains(event.target)) {
-      this.popover.hide();
+    else{
+      this.filterWord = '';
+      this.operatorSelected = '';
     }
-  }
-
-  onOpenFilter() {
+    this.selectedColumnForFilter = column;
     this.popover.show();
   }
 
   onApplyFilter() {
     this.popover.hide();
-    const properties = Object.keys(this.filter);
-    for (let property of properties) {
-      let index = this.requestData.data.parameters.findIndex(o => o.field.find(x => x == property));
-      if (index != -1) {
-        if (this.filter[property] != '') {
-          this.requestData.data.parameters[index].value = this.filter[property];
-        } else {
-          delete this.requestData.data.parameters[index];
-        }
-      } else if (this.filter[property] != '') {
-        let parameter = new FilterParameter();
-        parameter.field = [property];
-        parameter.value = this.filter[property];
-        parameter.operator = "LIKE";
-        this.requestData.data.parameters.push(parameter);
-      }
-    }
+    // const properties = Object.keys(this.filter);
+    // for (let property of properties) {
+    //   let index = this.requestData.data.parameters.findIndex(o => o.field.find(x => x == property));
+    //   if (index != -1) {
+    //     if (this.filter[property] != '') {
+    //       this.requestData.data.parameters[index].value = this.filter[property];
+    //     } else {
+    //       delete this.requestData.data.parameters[index];
+    //     }
+    //   } else if (this.filter[property] != '') {
+    //     let parameter = new FilterParameter();
+    //     parameter.field = [property];
+    //     parameter.value = this.filter[property];
+    //     parameter.operator = "LIKE";
+    //     this.requestData.data.parameters.push(parameter);
+    //   }
+    // }
 
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
     this.getStockBatchList();
   }
 
+  onClear(){
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters.splice(index,1);
+      this.getStockBatchList();
+    } 
+   
+  }
+
+  closeFilterPopover(){
+    this.popover.hide();
+  }
+
   onClearFilter() {
+    this.popover.hide();
     if (this.requestData.data.parameters.length > 0) {
-      this.filter = new StockBatch();
       this.requestData.data.parameters = [];
       this.getStockBatchList();
     }
