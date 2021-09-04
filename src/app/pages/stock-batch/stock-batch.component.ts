@@ -73,8 +73,11 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   requestData: RequestData = new RequestData();
   filter = new StockBatch();
   filterWord: string = '';
-  selectedColumnForFilter = null;
-  operatorSelected: string = '';
+  selectedColumnForFilter:string = '';
+  operatorSelected = null;
+  tagList = [];
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
   @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
@@ -119,14 +122,24 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   }
   onOpenFilter(column) {
 
+    if (column == "stockInType" || column == "partyName" || column == "qualityName") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    } else {
+      if (column == "chlNo" || column == "batchList") {
+        this.numberFlag = true;
+        this.stringFlag = false;
+      }
+    }
+
     const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
     if (indexForOpen > -1) {
       this.filterWord = this.requestData.data.parameters[indexForOpen].value;
       this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
     }
-    else{
+    else {
       this.filterWord = '';
-      this.operatorSelected = '';
+      this.operatorSelected = null;
     }
     this.selectedColumnForFilter = column;
     this.popover.show();
@@ -134,24 +147,6 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
   onApplyFilter() {
     this.popover.hide();
-    // const properties = Object.keys(this.filter);
-    // for (let property of properties) {
-    //   let index = this.requestData.data.parameters.findIndex(o => o.field.find(x => x == property));
-    //   if (index != -1) {
-    //     if (this.filter[property] != '') {
-    //       this.requestData.data.parameters[index].value = this.filter[property];
-    //     } else {
-    //       delete this.requestData.data.parameters[index];
-    //     }
-    //   } else if (this.filter[property] != '') {
-    //     let parameter = new FilterParameter();
-    //     parameter.field = [property];
-    //     parameter.value = this.filter[property];
-    //     parameter.operator = "LIKE";
-    //     this.requestData.data.parameters.push(parameter);
-    //   }
-    // }
-
     const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
     if (index > -1) {
       this.requestData.data.parameters[index].operator = this.operatorSelected;
@@ -163,19 +158,30 @@ export class StockBatchComponent implements OnInit, OnDestroy {
       parameter.operator = this.operatorSelected;
       this.requestData.data.parameters.push(parameter);
     }
+    this.requestData.data.pageIndex = 0;
     this.getStockBatchList();
   }
 
-  onClear(){
-    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
     if (index > -1) {
-      this.requestData.data.parameters.splice(index,1);
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
       this.getStockBatchList();
-    } 
-   
+    }
+
   }
 
-  closeFilterPopover(){
+  closeFilterPopover() {
     this.popover.hide();
   }
 
@@ -325,6 +331,12 @@ export class StockBatchComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         (error) => {
+          const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+          if (index > -1) {
+            this.filterWord = '';
+            this.operatorSelected = null;
+            this.requestData.data.parameters.splice(index, 1);
+          }
           this.loading = false;
         });
   }
@@ -418,5 +430,13 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((result) => {
       })
+  }
+
+  createTagList() {
+    if (this.requestData.data.parameters && this.requestData.data.parameters.length) {
+      this.requestData.data.parameters.forEach(ele => {
+        
+      });
+    }
   }
 }
