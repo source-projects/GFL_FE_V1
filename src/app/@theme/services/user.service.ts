@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { id } from "@swimlane/ngx-charts";
 import { CommonService } from "./common.service";
 
 @Injectable({
@@ -55,11 +54,6 @@ export class UserService {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/user/designation",
       desiData
-    );
-  }
-  getDesignationById(): any {
-    return this.httpClient.get(
-      this.commonService.envUrl() + "api/user/designation/" + id
     );
   }
   getAllCompanyData() {
