@@ -122,11 +122,11 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   }
   onOpenFilter(column) {
 
-    if (column == "stockInType" || column == "partyName" || column == "qualityName") {
+    if (column == "stockInType" || column == "partyName" || column == "qualityName" || column == "chlNo") {
       this.stringFlag = true;
       this.numberFlag = false;
     } else {
-      if (column == "chlNo" || column == "batchList") {
+      if (column == "batchList") {
         this.numberFlag = true;
         this.stringFlag = false;
       }

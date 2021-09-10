@@ -166,7 +166,8 @@
                 </ng-container>
                 <ng-container *ngIf="numberFlag">
                     <ng-select appendTo="body" class="popup-select" placeholder="Select Filter"
-                        (change)="onChangeFilterNumberSettings($event)" [(ngModel)]="selectedFilter2">
+                        [(ngModel)]="operatorSelected">
+                        <!-- (change)="onChangeFilterNumberSettings($event)"  -->
                         <ng-option value="GREATER_THAN">Greater Than</ng-option>
                         <ng-option value="LESS_THAN">Less Than</ng-option>
                         <ng-option value="EQUALS">Equals</ng-option>
