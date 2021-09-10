@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -9,6 +9,12 @@ import * as errorData from "../../@theme/json/error.json";
 import { ColorService } from "../../@theme/services/color.service";
 import { CommonService } from "../../@theme/services/common.service";
 import { ToastrService } from "ngx-toastr";
+import { NbPopoverDirective } from '@nebular/theme';
+import { RequestData } from '../../@theme/model/request-data.model';
+import { FilterParameter } from '../../@theme/model/filterparameter.model';
+import { DataFilter } from '../../@theme/model/datafilter.model';
+import { PageData } from '../../@theme/model/page-data.model';
+import { ResponseData } from '../../@theme/model/response-data.model';
 
 @Component({
   selector: "ngx-color",
@@ -32,6 +38,9 @@ export class ColorComponent implements OnInit, OnDestroy {
     "Challan Date",
   ];
   module = "color";
+
+  @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
   radioSelect = 0;
   flag = false;
@@ -61,6 +70,13 @@ export class ColorComponent implements OnInit, OnDestroy {
   searchStr = "";
   searchANDCondition = false;
 
+  selectedColumnForFilter:string = '';
+  requestData: RequestData = new RequestData();
+  filterWord: string = '';
+  operatorSelected = null;
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
+
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -77,6 +93,7 @@ export class ColorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -89,17 +106,20 @@ export class ColorComponent implements OnInit, OnDestroy {
     this.getEditAccess();
     this.getEditAccess1();
     if (this.colorGuard.accessRights("view all")) {
-      this.getColor(0, "all");
+      this.requestData.getBy = "all";
+      this.getColor();
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.colorGuard.accessRights("view group")) {
-      this.getColor(this.userId, "group");
+      this.requestData.getBy = "group";
+      this.getColor();
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else if (this.colorGuard.accessRights("view")) {
-      this.getColor(this.userId, "own");
+      this.requestData.getBy = "own";
+      this.getColor();
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
@@ -116,19 +136,22 @@ export class ColorComponent implements OnInit, OnDestroy {
     this.colorList = [];
     switch (event) {
       case 1:
-        this.getColor(this.userId, "own");
+        this.requestData.getBy = "own";
+        this.getColor();
         this.hidden = this.ownDelete;
         this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
-        this.getColor(this.userId, "group");
+        this.requestData.getBy = "group";
+        this.getColor();
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
-        this.getColor(0, "all");
+        this.requestData.getBy = "all";
+        this.getColor();
         this.hidden = this.allDelete;
         this.hiddenEdit = this.allEdit;
         break;
@@ -142,6 +165,84 @@ export class ColorComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.headers = this.headers;
     modalRef.componentInstance.list = this.color;
     modalRef.componentInstance.moduleName = this.module;
+  }
+
+  closeFilterPopover() {
+    this.popover.hide();
+  }
+
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
+    if (index > -1) {
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
+      this.getColor();
+    }
+
+  }
+
+  onOpenFilter(column) {
+
+    if (column != "billAmount") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    } else {
+      if (column) {
+        this.numberFlag = true;
+        this.stringFlag = false;
+      }
+    }
+
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
+    }
+    else {
+      this.filterWord = '';
+      this.operatorSelected = null;
+    }
+    this.selectedColumnForFilter = column;
+    this.popover.show();
+  }
+
+  onClearFilter() {
+    this.popover.hide();
+    if (this.requestData.data.parameters.length > 0) {
+      this.requestData.data.parameters = [];
+      this.getColor();
+    }
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getColor()
+  }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getColor()
   }
 
   // filter() {
@@ -175,12 +276,15 @@ export class ColorComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  getColor(id, getBy) {
+  getColor() {
     this.loading = true;
-    this.colorService.getColor(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
+    this.colorService.getColorPaginated(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
+      (data: ResponseData) => {
         if (data["success"]) {
-          this.colorList = data["data"];
+          const pageData = data.data as PageData;
+          this.colorList = pageData.data;
+          this.requestData.data.total = pageData.total;
+
           this.color = this.colorList.map((element) => ({
             id: element.id,
             supplierName: element.supplierName,
@@ -191,7 +295,7 @@ export class ColorComponent implements OnInit, OnDestroy {
             billAmount: element.billAmount,
           }));
 
-          this.colorList = data["data"];
+          // this.colorList = data["data"];
           let index = 0;
           this.colorList.forEach((element) => {
             this.colorList[index].billDate = new Date(
@@ -217,6 +321,12 @@ export class ColorComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       (error) => {
+        const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+          if (index > -1) {
+            this.filterWord = '';
+            this.operatorSelected = null;
+            this.requestData.data.parameters.splice(index, 1);
+          }
         this.loading = false;
       }
     );
