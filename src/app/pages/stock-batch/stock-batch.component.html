@@ -157,11 +157,11 @@
                     <ng-select [(ngModel)]="operatorSelected" appendTo="body" class="popup-select"
                         placeholder="Select Filter">
                         <ng-option value="LIKE">Conatins</ng-option>
-                        <ng-option value="NOT_CONTAINS">Not Contains</ng-option>
+                        <!-- <ng-option value="NOT_CONTAINS">Not Contains</ng-option> -->
                         <ng-option value="EQUALS">Equals</ng-option>
                         <ng-option value="NOT_EQUALS">Not Equals</ng-option>
-                        <ng-option value="STARTS_WITH">Starts With</ng-option>
-                        <ng-option value="ENDS_WITH">Ends With</ng-option>
+                        <ng-option value="START_WITH">Starts With</ng-option>
+                        <ng-option value="END_WITH">Ends With</ng-option>
                     </ng-select>
                 </ng-container>
                 <ng-container *ngIf="numberFlag">
