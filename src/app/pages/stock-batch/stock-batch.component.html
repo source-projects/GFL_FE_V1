@@ -131,8 +131,13 @@
                             </div>
                         </ng-template>
                     </ngx-datatable-column>
-
                 </ngx-datatable>
+                <div class="page-sizer d-flex">
+                    <span>Page Size: </span>
+                    <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">
+                        <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+                    </select>
+                </div>
             </nb-card-body>
         </nb-card>
     </div>

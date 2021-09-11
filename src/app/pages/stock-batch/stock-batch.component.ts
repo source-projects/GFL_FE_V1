@@ -12,7 +12,6 @@ import { ExportService } from "../../@theme/services/export.service";
 import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { JobCardComponent } from "./job-card/job-card.component";
-import { cloneDeep } from 'lodash';
 import { RequestData } from '../../@theme/model/request-data.model';
 import { ResponseData } from '../../@theme/model/response-data.model';
 import { PageData } from '../../@theme/model/page-data.model';
@@ -78,6 +77,8 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   tagList = [];
   numberFlag: boolean = false;
   stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
   private destroy$: Subject<void> = new Subject<void>();
 
   @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
@@ -120,6 +121,12 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
     this.onChange(this.radioSelect);
   }
+
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getStockBatchList();
+  }
+
   onOpenFilter(column) {
 
     if (column == "stockInType" || column == "partyName" || column == "qualityName" || column == "chlNo") {

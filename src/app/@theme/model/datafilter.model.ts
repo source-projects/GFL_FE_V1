@@ -5,7 +5,7 @@ export class DataFilter {
     sortBy: string;
     sortOrder: string;
     pageIndex: number = 0;
-    pageSize: number = 25;
+    pageSize: number = 20;
     isAnd: boolean = false;
 
     // this property used in only UI 

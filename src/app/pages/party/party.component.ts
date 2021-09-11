@@ -87,6 +87,9 @@ export class PartyComponent implements OnInit, OnDestroy {
   operatorSelected = null;
   numberFlag: boolean = false;
   stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -366,6 +369,10 @@ export class PartyComponent implements OnInit, OnDestroy {
     });
   }
 
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getAllParty();
+  }
 
   setPage(pageInfo) {
     this.requestData.data.pageIndex = pageInfo.offset;

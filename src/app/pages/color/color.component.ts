@@ -76,7 +76,9 @@ export class ColorComponent implements OnInit, OnDestroy {
   operatorSelected = null;
   numberFlag: boolean = false;
   stringFlag: boolean = false;
-
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+  
   public destroy$ : Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -275,6 +277,10 @@ export class ColorComponent implements OnInit, OnDestroy {
   //     return false;
   //   }
   // }
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getColor();
+  }
 
   getColor() {
     this.loading = true;
