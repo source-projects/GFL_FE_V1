@@ -15,7 +15,7 @@ import { FilterParameter } from '../../@theme/model/filterparameter.model';
 import { DataFilter } from '../../@theme/model/datafilter.model';
 import { PageData } from '../../@theme/model/page-data.model';
 import { ResponseData } from '../../@theme/model/response-data.model';
-
+import { cloneDeep } from 'lodash';
 @Component({
   selector: "ngx-color",
   templateUrl: "./color.component.html",
@@ -284,11 +284,12 @@ export class ColorComponent implements OnInit, OnDestroy {
 
   getColor() {
     this.loading = true;
+    this.colorList = [];
     this.colorService.getColorPaginated(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
       (data: ResponseData) => {
         if (data["success"]) {
           const pageData = data.data as PageData;
-          this.colorList = pageData.data;
+          this.colorList = cloneDeep(pageData.data);
           this.requestData.data.total = pageData.total;
 
           this.color = this.colorList.map((element) => ({

@@ -1,6 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfirmationDialogComponent } from "../../@theme/components/confirmation-dialog/confirmation-dialog.component";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
@@ -9,7 +9,10 @@ import * as errorData from "../../@theme/json/error.json";
 import { CommonService } from "../../@theme/services/common.service";
 import { ShadeService } from "../../@theme/services/shade.service";
 import { ToastrService } from "ngx-toastr";
-import { CdkRow } from '@angular/cdk/table';
+import { RequestData } from '../../@theme/model/request-data.model';
+import { DataFilter } from '../../@theme/model/datafilter.model';
+import { NbPopoverDirective } from '@nebular/theme';
+import { FilterParameter } from '../../@theme/model/filterparameter.model';
 
 @Component({
   selector: "ngx-shade",
@@ -81,6 +84,17 @@ export class ShadeComponent implements OnInit, OnDestroy {
   averageFlag: boolean = false;
   totalAmount;
 
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+  requestData: RequestData = new RequestData();
+  filterWord: string = '';
+  selectedColumnForFilter:string = '';
+  operatorSelected = null;
+  @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+
   public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -97,6 +111,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -109,17 +124,20 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.getEditAccess();
     this.getEditAccess1();
     if (this.shadeGuard.accessRights("view all")) {
-      this.getallShades(0, "all");
+      this.requestData.getBy = "all";
+        this.getallShades();
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.shadeGuard.accessRights("view group")) {
-      this.getallShades(this.userId, "group");
+      this.requestData.getBy = "group";
+        this.getallShades();
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else if (this.shadeGuard.accessRights("view")) {
-      this.getallShades(this.userId, "own");
+      this.requestData.getBy = "own";
+        this.getallShades();
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
@@ -136,19 +154,22 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.shadeList = [];
     switch (event) {
       case 1:
-        this.getallShades(this.userId, "own");
+        this.requestData.getBy = "own";
+        this.getallShades();
         this.hidden = this.ownDelete;
         this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
-        this.getallShades(this.userId, "group");
+        this.requestData.getBy = "group";
+        this.getallShades();
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
-        this.getallShades(0, "all");
+        this.requestData.getBy = "all";
+        this.getallShades();
         this.hidden = this.allDelete;
         this.hiddenEdit = this.allEdit;
         break;
@@ -164,9 +185,9 @@ export class ShadeComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  getallShades(id, getBy) {
+  getallShades() {
     this.loading = true;
-    this.shadeService.getShadeMastList(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
+    this.shadeService.getShadeMastListV1(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           if (data["data"].length > 0) {
@@ -382,5 +403,89 @@ export class ShadeComponent implements OnInit, OnDestroy {
       this.searchANDCondition = false;
     }
     this.filter();
+  }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getallShades();
+  }
+
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getallShades();
+  }
+
+  onOpenFilter(column) {
+
+    if (true) {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    }
+    // else {
+    //   if (column == "batchList") {
+    //     this.numberFlag = true;
+    //     this.stringFlag = false;
+    //   }
+    // }
+
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
+    }
+    else {
+      this.filterWord = '';
+      this.operatorSelected = null;
+    }
+    this.selectedColumnForFilter = column;
+    this.popover.show();
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getallShades();
+  }
+
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
+    if (index > -1) {
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
+      this.getallShades();
+    }
+
+  }
+
+  closeFilterPopover() {
+    this.popover.hide();
+  }
+
+  onClearFilter() {
+    this.popover.hide();
+    if (this.requestData.data.parameters.length > 0) {
+      this.requestData.data.parameters = [];
+      this.getallShades();
+    }
   }
 }

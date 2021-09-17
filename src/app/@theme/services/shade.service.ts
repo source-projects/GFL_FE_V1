@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RequestData } from '../model/request-data.model';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -32,6 +33,9 @@ export class ShadeService {
    }*/
   getShadeMastList(id, getBy): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/shade/all/' + getBy + '/' + id);
+  }
+  getShadeMastListV1(data: RequestData): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/shade/allPaginated', data);
   }
   getQualityFromParty(id): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/Quality/ByParty/' + id);

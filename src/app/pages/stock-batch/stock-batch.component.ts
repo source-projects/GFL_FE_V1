@@ -19,6 +19,7 @@ import { DataFilter } from '../../@theme/model/datafilter.model';
 import { NbPopoverDirective } from '@nebular/theme';
 import { FilterParameter } from '../../@theme/model/filterparameter.model';
 import { StockBatch } from '../../@theme/model/stock-batch';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: "ngx-stock-batch",
@@ -95,8 +96,6 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     public stockBatchGuard: StockBatchGuard,
     private stockBatchService: StockBatchService,
     private commonService: CommonService,
-    private exportService: ExportService,
-    private jwtToken: JwtTokenService
   ) { }
 
   ngOnInit(): void {
@@ -325,13 +324,14 @@ export class StockBatchComponent implements OnInit, OnDestroy {
 
   getStockBatchList() {
     this.loading = true;
+    this.stockList = [];
     this.stockBatchService.getAllStockBatchList1(this.requestData)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (response: ResponseData) => {
           if (response.success) {
             const pageData = response.data as PageData;
-            this.stockList = pageData.data;
+            this.stockList = cloneDeep(pageData.data);
             this.requestData.data.total = pageData.total;
           }
 

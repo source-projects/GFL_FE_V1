@@ -15,6 +15,7 @@ import { DataFilter } from '../../@theme/model/datafilter.model';
 import { FilterParameter } from '../../@theme/model/filterparameter.model';
 import { NbPopoverDirective } from '@nebular/theme';
 import { PageData } from '../../@theme/model/page-data.model';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: "ngx-quality",
   templateUrl: "./quality.component.html",
@@ -213,11 +214,13 @@ export class QualityComponent implements OnInit, OnDestroy {
 
   getQualityList() {
     this.loading = true;
+    this.quality = [];
+    this.copyQualityList = [];
     this.qualityService.getallQualityPaginated(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           const pageData = data.data as PageData;
-            this.qualityList = pageData.data;
+            this.qualityList = cloneDeep(pageData.data);
             this.requestData.data.total = pageData.total;
 
           this.quality = this.qualityList.map((element) => ({
