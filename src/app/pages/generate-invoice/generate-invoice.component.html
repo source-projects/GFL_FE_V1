@@ -66,9 +66,6 @@
             <ngx-datatable-column name="Total Finish Mtr" prop="finishMtr" [maxWidth]="500"></ngx-datatable-column>
             <ngx-datatable-column name="Net Amt" prop="netAmt" [maxWidth]="500"></ngx-datatable-column>
             <ngx-datatable-column name="Created Date" prop="date" [maxWidth]="200">
-                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{row.date | date:'fullDate'}}
-                </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
     </nb-card-body>

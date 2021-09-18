@@ -48,7 +48,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel" [(ngModel)]="invoiceReportRequest.partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)" >
+                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+                            [(ngModel)]="invoiceReportRequest.partyId" #partyName1="ngModel"
+                            (change)="getQualityFromParty($event)">
                             <ng-option disabled="true">
                                 <div class="row">
                                     <div class="col-md-6 col-6">
@@ -86,11 +88,12 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>Quality
                             Id</label>
-                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId" [(ngModel)]="invoiceReportRequest.qualityEntryId" #qualityId1="ngModel">
+                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId"
+                            [(ngModel)]="invoiceReportRequest.qualityEntryId" #qualityId1="ngModel">
                             <ng-option disabled="true">
                                 <div class="row">
                                     <div class="col-md-6 col-6">
@@ -122,26 +125,26 @@
                             </ng-option>
                         </ng-select>
 
-                        
+
                     </div>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label>Master Name</label>
                     <ng-select name="userHeadId" appendTo="body" id="userHeadId" name="userHeadId"
-                    placeholder="Select Master" [(ngModel)]="invoiceReportRequest.userHeadId">
+                        placeholder="Select Master" [(ngModel)]="invoiceReportRequest.userHeadId">
                         <div>
                             <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
                         </div>
                     </ng-select>
-                    
+
                 </div>
 
-                <div class="form-group col-md-4">
-                    
-                    <label >Quality Name</label>
-                    <ng-select name="qualityName" appendTo="body" id="qualityName" 
-                        placeholder="Quality Name" [(ngModel)]="invoiceReportRequest.qualityNameId">
+                <div class="form-group col-md-3">
+
+                    <label>Quality Name</label>
+                    <ng-select name="qualityName" appendTo="body" id="qualityName" placeholder="Quality Name"
+                        [(ngModel)]="invoiceReportRequest.qualityNameId">
                         <ng-option disabled="true">
                             <div class="row">
                                 <div class="col-md-6 col-6">
@@ -159,6 +162,12 @@
                         </ng-option>
                     </ng-select>
                 </div>
+
+                <div class="form-group col-md-2" style="top: 35px;display: flex;
+                justify-content: space-around;">
+                    <nb-checkbox [(ngModel)]="invoiceReportRequest.signByParty" name="signByParty"></nb-checkbox>
+                    <label>  Signed By Party  </label>
+                </div>
             </div>
 
             <div class="row">
@@ -172,7 +181,7 @@
                 <div class="col-md-6 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
                         <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="downLoadExcel(invoiceForm)" >Get Excel</button>
+                            (click)="downLoadExcel(invoiceForm)">Get Excel</button>
                     </div>
                 </div>
             </div>
@@ -238,7 +247,7 @@
                                 <td>{{invoice.sharinkage}}</td>
                                 <td>{{invoice.rate}}</td>
                                 <td>{{invoice.taxAmt}}</td>
-                            </tr>   
+                            </tr>
                         </table>
                     </div>
                 </div><br><br>

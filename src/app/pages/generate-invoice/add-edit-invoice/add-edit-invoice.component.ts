@@ -106,6 +106,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               this.discountFlag = true;
               this.discountChange = data["data"].percentageDiscount;
               this.remark = data["data"].remark;
+              this.deliveryMode = data["data"].deliveryMode;
               this.flag = data["data"].isSendToParty;
               this.batch = data["data"].batchWithControlIdList;
               this.finalbatch = [...this.batch];
@@ -443,6 +444,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.toastr.error("Gr limit exceeds");
       return;
     }
+    if(!this.deliveryMode){
+      this.toastr.error("Delivery Mode required");
+      return;
+    }
     let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.disableButton = true;
@@ -665,6 +670,8 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.route.navigate(["/pages/generate_invoice/sign/view"]);
     }else if(event == 'print'){
       const modalRef = this.modalService.open(InputInvoiceComponent);
+    }else if(event == "return"){
+      this.route.navigate(['/pages/stock-batch/return-lot'])
     }
   }
 

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PasswordDailogComponent } from '../../@theme/components';
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
-
+import { DatePipe } from "@angular/common";
 // import { Invoice } from "app/@theme/model/invoice";
 
 @Component({
@@ -41,6 +41,7 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
+    private datePipe:DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -87,6 +88,7 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
           this.InvoiceList = data["data"];
           this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
+            ele.date = this.datePipe.transform(ele.date,"dd/MM/yyyy");
           })
           this.copyInvoiceList = data["data"];
           this.copyInvoiceList.forEach(ele => {

@@ -147,7 +147,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
   open() {
     let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
     this.flag = true;
-    let headerArray = Object.keys(this.stock[0]);
+    let headerArray = Object.keys(this.stockList[0]);
     let finalHeader = [];
     headerArray.forEach((ele,i) => {
       finalHeader.push(ele.replace(rex,'$1$4 $2$3$5'));
@@ -155,7 +155,7 @@ export class StockBatchComponent implements OnInit, OnDestroy {
     });
     const modalRef = this.modalService.open(ExportPopupComponent);
     modalRef.componentInstance.headers = finalHeader;
-    modalRef.componentInstance.list = this.stock;
+    modalRef.componentInstance.list = this.stockList;
     modalRef.componentInstance.moduleName = this.module;
   }
 
