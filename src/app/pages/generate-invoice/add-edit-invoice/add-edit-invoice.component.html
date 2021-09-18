@@ -23,7 +23,7 @@
     <nb-card-body>
         <form #invoiceForm="ngForm">
             <div class="row" class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label class="required">Party Name</label>
                         <ng-select name="partyId" appendTo="body" [(ngModel)]='invoiceValues.partyId' required
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-4" *ngIf="discountFlag">
+                <div class="form-group col-md-3" *ngIf="discountFlag">
                     <label class="required">Discount %</label>
                     <input type="number" id="percentageDiscount" class="form-control size-small" nbinput fullwidth
                         fieldsize="small" name="percentageDiscount" [(ngModel)]="discountChange" placeholder="Discount"
@@ -53,10 +53,28 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-4" *ngIf="discountFlag">
+                <div class="form-group col-md-3" *ngIf="discountFlag">
                     <label>Remark</label>
                     <input type="text" id="remark" class="form-control size-small" nbinput fullwidth fieldsize="small"
                         name="remark" [(ngModel)]="remark" placeholder="Remark" #remarkInvoice="ngModel" />
+                </div>
+
+                <div class="col-md-3" *ngIf="discountFlag">
+                    <div class="form-group">
+                        <label class="required">Delivery Mode</label>
+                        <ng-select name="delivery" appendTo="body" [(ngModel)]='deliveryMode' required
+                            #delivery1="ngModel"
+                            [ngClass]="{'is-invalid': (delivery1.invalid)&&(formSubmitted || delivery1.touched)}"
+                            (change)="getPChallanList($event)" placeholder="Delivery Mode"
+                            class="required-error-dropdown dropdown-name">
+                            <ng-option *ngFor="let del of deliveryList" [value]="del.value">{{del.name}}</ng-option>
+                        </ng-select>
+
+                        <div class="input-required"
+                            *ngIf="(formSubmitted && delivery1.invalid) || (delivery1.invalid && delivery1.touched)">
+                            <span>Delivery Mode is required</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>

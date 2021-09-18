@@ -23,6 +23,7 @@ import { InputInvoiceComponent } from "../input-invoice/input-invoice.component"
 export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   flag: any;
   discountChange;
+  deliveryMode = null;
   remark;
   discountFlag: boolean = false;
   obj = {
@@ -40,6 +41,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
   batch: any[];
   finalbatch = [];
   mtrList: any[];
+  deliveryList = [
+    {name:"Hand Delivery",value:"hand"},
+    {name:"Tempo Delivery",value:"tempo"}
+  ];
   public disableButton = false;
   public updateFlag;
   public errorData: any = (errorData as any).default;
@@ -256,6 +261,11 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       this.toastr.error("Gr limit exceeds");
       return;
     }
+
+    if(!this.deliveryMode){
+      this.toastr.error("Delivery Mode required");
+      return;
+    }
     let temp = this.party.filter((f) => f.id == this.invoiceValues.partyId);
     if (this.finalcheckedrows.length <= 4) {
       this.formSubmitted = true;
@@ -276,6 +286,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           sgst: null,
           igst:null,
           percentageDiscount: this.discountChange,
+          deliveryMode:this.deliveryMode,
           discount: null,
           taxAmt: null,
           netAmt: null,
@@ -356,6 +367,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           modalRef.componentInstance.finalInvoice = obj;
           modalRef.componentInstance.previewFlag = true;
           modalRef.componentInstance.discount = this.discountChange;
+          modalRef.componentInstance.deliveryMode = this.deliveryMode;
           modalRef.componentInstance.remark = this.remark;
           modalRef.componentInstance.updateFlag = false;
 
@@ -454,6 +466,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         sgst: null,
         igst:null,
         percentageDiscount: this.discountChange,
+        deliveryMode:this.deliveryMode,
         discount: null,
         taxAmt: null,
         netAmt: null,
@@ -473,6 +486,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
             modalRef.componentInstance.finalInvoice = obj;
             modalRef.componentInstance.previewFlag = true;
             modalRef.componentInstance.discount = this.discountChange;
+            modalRef.componentInstance.deliveryMode = this.deliveryMode;
             modalRef.componentInstance.remark = this.remark;
             modalRef.componentInstance.updateFlag = true;
 
