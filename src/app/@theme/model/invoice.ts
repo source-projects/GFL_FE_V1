@@ -46,6 +46,7 @@ export class DispatchData {
 
 export class invoiceobj {
 
+  batchId:Number;
   pchallanRef: Number; //changed from batchId to pchallanRef
   stockId: Number;
   rate: number;
