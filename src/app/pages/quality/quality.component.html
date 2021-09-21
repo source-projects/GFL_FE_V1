@@ -25,7 +25,8 @@
                     <div class="col-md-4">
                         <div style="display: flex;">
                             <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                            <nb-toggle status="primary" labelPosition="start" name="shift"
+                            [(ngModel)]="requestData.data.isAnd" (ngModelChange)="getQualityList()"></nb-toggle>
                             <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                         </div>
                     </div>
@@ -57,25 +58,6 @@
             </ng-container>
         </div>
 
-        <div class="row">
-            <ng-container *ngIf="requestData.data.parameters && requestData.data.parameters.length">
-                <div class="filter-by-row">
-                    <label for="">Filter By : </label>
-                    <div class="filter-by-col">
-                        <div class="tag-style-con">
-                            <div class="tag-style" *ngFor="let field of requestData.data.parameters">
-                                <span class="filter-by-title">{{field.field[0]}}</span> :
-                                <span class="filter-by-val">{{field.value}}</span>
-                                <span (click)="onClear(field.field[0])" style="cursor: pointer;">
-                                    <strong>x</strong>
-                                </span>
-                            </div>
-                            <div class="filter-by-clear-all" (click)="onClearFilter()">Clear All</div>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
         <ngx-datatable [rows]="qualityList | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
             [ngClass]="'bootstrap'" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
             [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
@@ -96,7 +78,7 @@
             <ngx-datatable-column name="Quality Name" prop="qualityName">
                 <ng-template ngx-datatable-header-template let-value="value">Quality Name
                     <div class="filter-icon">
-                        <nb-icon icon="menu-outline" (click)="onOpenFilter('qualirtName')" class="nb-icon-filter"
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('qualityName')" class="nb-icon-filter"
                             [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
                     </div>
                 </ng-template>
