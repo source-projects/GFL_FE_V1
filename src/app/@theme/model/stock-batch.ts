@@ -16,8 +16,10 @@ export class StockBatch {
   userHeadId: Number;
   batchData: BatchData[];
   isProductionPlanned: boolean;
+  partyName: string;
+  qualityName: string;
 
-  constructor(){
+  constructor() {
     this.stockInType = "Fabric";
   }
 }
@@ -29,25 +31,25 @@ export class BatchData {
   totalMt: number;
   batchId: number;
   pchallanRef: number;
-  isProductionPlanned:boolean;
+  isProductionPlanned: boolean;
 }
 
 export class BatchMrtWt {
-  id:number;
+  id: number;
   mtr: number;
   wt: number;
   isProductionPlanned: boolean;
-  controlId:number;
-  batchId:number;
-  color:string;
-  sequence:number;
+  controlId: number;
+  batchId: number;
+  color: string;
+  sequence: number;
 
-  constructor(m?, w?, d?,id?,controlId?) {
+  constructor(m?, w?, d?, id?, controlId?) {
     controlId ? (this.controlId = controlId) : this.controlId = null;
     id ? (this.id = id) : (this.id = null);
     m ? (this.mtr = m) : null;
     w ? (this.wt = w) : null;
-    d? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
+    d ? (this.isProductionPlanned = d) : this.isProductionPlanned = false;
     this.batchId = null;
     this.color = '';
     this.sequence = null;
@@ -61,8 +63,8 @@ export class BatchCard {
   totalMt: number;
   isNotUnique: boolean;
   batchMW: BatchMrtWt[];
-  isProductionPlanned:boolean;
-  backColor:string
+  isProductionPlanned: boolean;
+  backColor: string
 
   constructor(batchId?) {
     this.isNotUnique = false;

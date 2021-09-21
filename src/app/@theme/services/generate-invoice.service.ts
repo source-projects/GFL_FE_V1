@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommonService } from './common.service';
 import { HttpClient } from '@angular/common/http';
+import { RequestData } from '../model/request-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,17 @@ export class GenerateInvoiceService {
       getBy = 'false';
     }
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getAll?signByParty='+getBy);
+  }
+
+  getAllDipatchV1(data: RequestData, by?: string){
+    let getBy = '';
+    if(by == "signed"){
+      getBy = 'true';
+    }else if(by == "unsigned"){
+      getBy = 'false';
+    }
+    data['signByParty']=getBy;
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/allPaginated', data);
   }
   getBatchByParty(id){
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getBatchByParty/'+id);

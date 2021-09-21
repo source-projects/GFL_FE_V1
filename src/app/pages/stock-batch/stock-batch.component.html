@@ -33,19 +33,45 @@
                             <div class="col-md-4">
                                 <div style="display: flex;">
                                     <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                                    <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                                    <nb-toggle status="primary" labelPosition="start" name="shift"
+                                        [(ngModel)]="requestData.data.isAnd" (ngModelChange)="getStockBatchList()">
+                                    </nb-toggle>
                                     <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                            aria-describedby="basic-addon1" [(ngModel)]="searchStr">
+                                <div class="d-flex">
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                                        aria-describedby="basic-addon1" [(ngModel)]="searchStr">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ngx-datatable [rows]="stockList | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tablestyle" [headerHeight]="31"
-                    class="material  table-responsive" [footerHeight]="40">
+
+                <div class="row">
+                    <ng-container *ngIf="requestData.data.parameters && requestData.data.parameters.length">
+                        <div class="filter-by-row">
+                            <label for="">Filter By : </label>
+                            <div class="filter-by-col">
+                                <div class="tag-style-con">
+                                    <div class="tag-style" *ngFor="let field of requestData.data.parameters">
+                                        <span class="filter-by-title">{{field.field[0]}}</span> :
+                                        <span class="filter-by-val">{{field.value}}</span>
+                                        <span (click)="onClear(field.field[0])" style="cursor: pointer;">
+                                            <strong>x</strong>
+                                        </span>
+                                    </div>
+                                    <div class="filter-by-clear-all" (click)="onClearFilter()">Clear All</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <ngx-datatable [rows]="stockList | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
+                    [ngClass]="tablestyle" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
+                    [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
+                    [limit]="requestData.data.pageSize" (page)="setPage($event)">
                     <ngx-datatable-column name="Actions" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id"
                         [maxWidth]="90">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -54,25 +80,182 @@
                             <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
                                 (click)="deleteStockBatch(row.id)" [hidden]="hidden || (row | disableStockBatchPipe)">
                             </nb-icon>
-                            <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger" *ngIf="row.showPrint"
-                                (click)="printJobCard(row)" [hidden]="(row | disableStockBatchPipe)" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                            <nb-icon icon="clipboard" nbTooltip="Print" nbTooltipStatus="primary" status="danger"
+                                *ngIf="row.showPrint" (click)="printJobCard(row)"
+                                [hidden]="(row | disableStockBatchPipe)" [options]="{ animation: { type: 'zoom' } }">
+                            </nb-icon>
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Stock In Type" props="stockInType" [maxWidth]="130">
+                        <ng-template ngx-datatable-header-template let-value="value">Stock In Type
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('stockInType')"
+                                    class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Party Name" props="partyName"></ngx-datatable-column>
-                    <ngx-datatable-column name="Quality Name" props="qualityName"></ngx-datatable-column>
+                    <ngx-datatable-column name="Party Name" props="partyName">
+                        <ng-template ngx-datatable-header-template let-value="value">Party Name
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('partyName')" class="nb-icon-filter"
+                                    [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Quality Name" props="qualityName">
+                        <ng-template ngx-datatable-header-template let-value="value">Quality Name
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('qualityName')"
+                                    class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
                     <ngx-datatable-column name="Batch" prop="batchList">
+                        <ng-template ngx-datatable-header-template let-value="value">Batch
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('batchList')" class="nb-icon-filter"
+                                    [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <ng-container *ngFor="let batch of row.batchList">
                                 <span class="invpice-batch-style">{{batch.batchId}} </span>
                             </ng-container>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Chl No" props="chlNo" [maxWidth]="130"></ngx-datatable-column>
-
+                    <ngx-datatable-column name="Chl No" props="chlNo" [maxWidth]="130">
+                        <ng-template ngx-datatable-header-template let-value="value">Chl No
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('chlNo')" class="nb-icon-filter"
+                                    [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
                 </ngx-datatable>
+                <div class="page-sizer d-flex">
+                    <span>Page Size: </span>
+                    <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">
+                        <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+                    </select>
+                </div>
             </nb-card-body>
         </nb-card>
     </div>
 </div>
+
+<ng-template #templateRef>
+    <div id="filterDiv" style="padding: 2px 14px; width: 250px;">
+        <div class="row" style="background-color: #aa3634;">
+            <div class="col-md-10">
+                <span style="color: white;">Filter</span>
+            </div>
+            <div class="col-md-2" style="margin-top: 3px;color: white;">
+                <div (click)="closeFilterPopover()" style="cursor: pointer;text-align: center;">
+                    <strong>X</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+
+            <div class="col-md-12 mb-1">
+                <ng-container *ngIf="stringFlag">
+                    <ng-select [(ngModel)]="operatorSelected" appendTo="body" class="popup-select"
+                        placeholder="Select Filter">
+                        <ng-option value="LIKE">Conatins</ng-option>
+                        <!-- <ng-option value="NOT_CONTAINS">Not Contains</ng-option> -->
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                        <ng-option value="START_WITH">Starts With</ng-option>
+                        <ng-option value="END_WITH">Ends With</ng-option>
+                    </ng-select>
+                </ng-container>
+                <ng-container *ngIf="numberFlag">
+                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter"
+                        [(ngModel)]="operatorSelected">
+                        <!-- (change)="onChangeFilterNumberSettings($event)"  -->
+                        <ng-option value="GREATER_THAN">Greater Than</ng-option>
+                        <ng-option value="LESS_THAN">Less Than</ng-option>
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                    </ng-select>
+                </ng-container>
+
+            </div>
+            <div class="col-md-12 mb-1">
+                <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterWord">
+            </div>
+        </div>
+        <button nbButton status="primary" style="margin-right: 5px;" (click)="onApplyFilter()">Apply</button>
+        <button nbButton status="danger" (click)="closeFilterPopover()">Close</button>
+    </div>
+</ng-template>
+
+<!-- <div *ngIf="filterDivFlag" class="ng-filter-main-popup">
+
+    <div class="popup-ng">
+        <div class="popup-header text-center" (click)="outside()" y>
+            <nb-icon icon="funnel-outline" class="nb-icon-fil"></nb-icon>
+        </div>
+        <div class="popup-body">
+            <div class="section-1-popup">
+                
+
+                <div class="filter-input">
+                    <input type="text" class="form-control" placeholder="Filter..." (keyup)="keyUpFilter($event.target.value)" [(ngModel)]="filterWord">
+                </div>
+
+                <div class="fil-border-top"></div>
+
+                 <div *ngIf="filterAndOrFlag">
+                                    <div class="radio-popup">
+                                        <div class="rd-1">
+                                            <input type="radio" id="and" name="select" class="radio-btn"><label for="and">AND</label>
+                                        </div>
+                                        <div class="rd-2">
+                                            <input type="radio" id="or" name="select" class="radio-btn"><label for="or">OR</label>
+                                        </div>
+    
+                                    </div>
+    
+                                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter">
+                                        <ng-option [value]="1">Conatins</ng-option>
+                                        <ng-option [value]="2">Not Contains</ng-option>
+                                        <ng-option [value]="3">Equals</ng-option>
+                                        <ng-option [value]="4">Not Equals</ng-option>
+                                        <ng-option [value]="5">Starts With</ng-option>
+                                        <ng-option [value]="6">Ends With</ng-option>
+                                    </ng-select>    
+    
+                                    <div class="filter-input">
+                                        <input type="text" class="form-control" placeholder="Filter...">
+                                    </div>
+                                </div>
+
+            </div>
+
+
+            <div class="section-1-popup">
+                <div class="filter-input">
+                    <input type="text" class="form-control" placeholder="Search..." (keyup)="searchFilterList($event.target.value)">
+                </div>
+
+            </div>
+            <div class="list-popup">
+                <ul class="list-type-none">
+                    <li *ngFor="let list of columnFilter; let i = index" class="name">
+                        <input type="checkbox" (change)="checked($event.target.checked,i)" class="in-checkbox selector" name="{{list}}" checked>{{list}}
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <button (click)="outside()">
+                    OK
+                </button>
+                <button (click)="clear()">
+                    Clear All
+                </button>
+            </div>
+        </div>
+    </div>
+</div> -->
