@@ -193,8 +193,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: "Report",
     icon: "pie-chart-outline",
-    link: "/pages/report",
-    hidden: false,
+    children: [
+      {
+        title: "Sales Report",
+        link: "/pages/sales-report",
+      },
+      {
+        title: "Payment Report",
+        link: "/pages/payment-report",
+      },
+      {
+        title: "Others",
+        link: "/pages/report",
+      },
+    ],
   },
   {
     title: "FEATURES",

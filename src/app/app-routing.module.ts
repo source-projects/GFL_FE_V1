@@ -217,6 +217,26 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "sales-report",
+        loadChildren: () =>
+          import("./pages/sales-report/sales-report.module").then(
+            (m) => m.SalesReportModule
+          ),
+        canActivate: [ReportGuard],
+        canLoad: [ReportGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "payment-report",
+        loadChildren: () =>
+          import("./pages/payment-report/payment-report.module").then(
+            (m) => m.PaymentReportModule
+          ),
+        canActivate: [ReportGuard],
+        canLoad: [ReportGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
         path: "issue-color-box",
         loadChildren: () =>
           import("./pages/color/issue-color-box/issue-color-box.module").then(

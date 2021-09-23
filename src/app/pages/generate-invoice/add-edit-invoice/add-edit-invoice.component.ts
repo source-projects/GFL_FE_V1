@@ -263,6 +263,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       if (this.finalcheckedrows.length > 0) {
         this.finalcheckedrows.map((ele) => {
           let obj: invoiceobj = new invoiceobj();
+          obj.batchId = ele.batchId;
           obj.pchallanRef = ele.pchallanRef;
           obj.stockId = ele.controlId;
           obj.rate = ele.rate;
@@ -439,6 +440,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
       this.finalcheckedrows.map((ele, i) => {
         let obj: invoiceobj = new invoiceobj();
+        obj.batchId = ele.batchId;
         obj.pchallanRef = ele.pchallanRef;
         obj.stockId = ele.controlId;
         obj.rate = ele.rate;
