@@ -15,7 +15,6 @@ import {
   NbUserModule
 } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SharedModule } from '../../@theme/shared.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ChartsModule } from 'ng2-charts';
@@ -40,7 +39,6 @@ import { ThermopackReportComponent } from './thermopack-report/thermopack-report
     NbListModule,
     ChartsModule,
     NbProgressBarModule,
-    NgxChartsModule,
     NgSelectModule,
     SharedModule,
     OwlDateTimeModule,

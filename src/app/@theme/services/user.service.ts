@@ -9,7 +9,7 @@ export class UserService {
   constructor(
     private httpClient: HttpClient,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   checkUser(userData): any {
     return this.httpClient.post(

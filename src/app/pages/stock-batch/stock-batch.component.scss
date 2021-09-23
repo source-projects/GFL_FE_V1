@@ -1,0 +1,97 @@
+.filter-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.nb-icon-filter {
+    font-size: 15px;
+}
+
+::ng-deep .ng-dropdown-panel {
+    z-index: 9999999 !important;
+}
+
+.filter-by-row {
+    padding-bottom: 22px;
+    display: block;
+    height: auto;
+    overflow: hidden;
+}
+
+.tag-style-con {
+    float: left;
+    width: 100%;
+}
+
+.filter-by-row .tag-style {
+    font-size: 14px;
+    font-family: "DM Sans";
+    color: #aa3634;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 5px 12px !important;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    float: left;
+    border-radius: 24px;
+    border: 2px #aa3634 solid;
+    background-color: white;
+}
+
+.filter-by-col {
+    float: left;
+    width: calc(100% - 71px);
+    border: 0px solid;
+}
+
+.filter-by-row label {
+    float: left;
+    margin-right: 12px;
+    font-family: "DM Sans";
+    font-size: 14px;
+    color: #aa3634;
+    margin-top: 5px;
+}
+
+.filter-clear-all {
+    float: left;
+    margin-top: 6px;
+}
+
+span.filter-by-val {
+    font-weight: 400;
+    color: #aa3634;
+    margin-right: 5px;
+}
+
+.filter-label span.filter-clear-all a {
+    padding: 0 !important;
+}
+
+.filter-by-clear-all {
+    font-size: 14px;
+    color: #aa3634;
+    opacity: 0.5;
+    text-decoration: underline;
+    font-family: "DM Sans";
+    font-weight: 500;
+    float: left;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.filter-by-clear-all:hover {
+    text-decoration: none;
+}
+
+.filter-by-row .tag-style img {
+    /* float: right; */
+    margin: 5px 0 0 3px;
+    cursor: pointer;
+    vertical-align: top;
+    /* position: absolute; */
+    /* right: 3px; */
+    /* top: 23%; */
+    display: inline-block;
+}
