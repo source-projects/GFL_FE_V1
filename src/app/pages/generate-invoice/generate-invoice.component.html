@@ -106,18 +106,10 @@
 
             <ngx-datatable-column name="Total Mtr" prop="totalMtr" [maxWidth]="500">
                 <ng-template ngx-datatable-header-template let-value="value">Total Mtr
-                    <div class="filter-icon">
-                        <nb-icon icon="menu-outline" (click)="onOpenFilter('totalMtr')"
-                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
-                    </div>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Total Finish Mtr" prop="finishMtr" [maxWidth]="500">
                 <ng-template ngx-datatable-header-template let-value="value">Total Finish Mtr
-                    <div class="filter-icon">
-                        <nb-icon icon="menu-outline" (click)="onOpenFilter('finishMtr')"
-                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
-                    </div>
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Net Amt" prop="netAmt" [maxWidth]="500">
