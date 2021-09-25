@@ -13,6 +13,8 @@ import { RequestData } from '../../@theme/model/request-data.model';
 import { DataFilter } from '../../@theme/model/datafilter.model';
 import { NbPopoverDirective } from '@nebular/theme';
 import { FilterParameter } from '../../@theme/model/filterparameter.model';
+import { ResponseData } from '../../@theme/model/response-data.model';
+import { PageData } from '../../@theme/model/page-data.model';
 
 @Component({
   selector: "ngx-shade",
@@ -188,10 +190,12 @@ export class ShadeComponent implements OnInit, OnDestroy {
   getallShades() {
     this.loading = true;
     this.shadeService.getShadeMastListV1(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
+      (data: ResponseData) => {
         if (data["success"]) {
-          if (data["data"].length > 0) {
-            this.shadeList = data["data"];
+            const pageData = data.data as PageData;
+          this.shadeList = pageData.data;
+          this.requestData.data.total = pageData.total;
+            // this.shadeList = data["data"];
             this.shadeList.forEach(ele => {
               this.totalAmount = 0;
               if (ele.shadeDataList && ele.shadeDataList.length) {
@@ -238,7 +242,6 @@ export class ShadeComponent implements OnInit, OnDestroy {
               costPerWeight: element.costPerWeight,
               costPerMeter: element.costPerMeter
             }));
-          }
         }
         this.loading = false;
       },

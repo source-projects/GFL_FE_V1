@@ -27,7 +27,8 @@
                     <div class="col-md-4">
                         <div style="display: flex;">
                             <p style="margin-top: 4px;margin-right: 2px;">OR</p>
-                            <nb-toggle status="primary" labelPosition="start" name="shift" [(ngModel)]="searchANDCondition"></nb-toggle>
+                            <nb-toggle status="primary" labelPosition="start" name="shift"
+                            (checkedChange)="getSupplierList()" [(ngModel)]="requestData.data.isAnd"></nb-toggle>
                             <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                         </div>
                     </div>
@@ -38,7 +39,30 @@
                 </div>
             </div>
         </div>
-        <ngx-datatable [rows]="supplierList | searchInTable : searchStr : searchANDCondition : tableHeaders" [ngClass]="tableStyle" [headerHeight]="31" class="material" [footerHeight]="31">
+        <div class="row">
+            <ng-container *ngIf="requestData.data.parameters && requestData.data.parameters.length">
+                <div class="filter-by-row">
+                    <label for="">Filter By : </label>
+                    <div class="filter-by-col">
+                        <div class="tag-style-con">
+                            <div class="tag-style" *ngFor="let field of requestData.data.parameters">
+                                <span class="filter-by-title">{{field.field[0]}}</span> :
+                                <span class="filter-by-val">{{field.value}}</span>
+                                <span (click)="onClear(field.field[0])" style="cursor: pointer;">
+                                    <strong>x</strong>
+                                </span>
+                            </div>
+                            <div class="filter-by-clear-all" (click)="onClearFilter()">Clear All</div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <ngx-datatable [rows]="supplierList | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
+            [ngClass]="'bootstrap'" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
+            [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
+            [limit]="requestData.data.pageSize" (page)="setPage($event)">
             <ngx-datatable-column name="Action" *ngIf="!hiddenEdit || !hidden" sortable="false" prop="id">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     <nb-icon ngbTooltip="Tooltip on bottom" status="primary" [options]="{animation:{type:'zoom'}}" [hidden]="hiddenEdit" [routerLink]="['/pages/supplier/edit',row.id]" icon="edit"></nb-icon>&nbsp;&nbsp;
@@ -47,12 +71,99 @@
                     </button>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Supplier Name" prop="supplierName"></ngx-datatable-column>
-            <ngx-datatable-column name="Discount %" prop="discountPercentage"></ngx-datatable-column>
-            <ngx-datatable-column name="GST %" prop="gstPercentage"></ngx-datatable-column>
-            <ngx-datatable-column name="Payment Terms" prop="paymentTerms"></ngx-datatable-column>
-            <ngx-datatable-column name="Remark" prop="remark"></ngx-datatable-column>
-
+            <ngx-datatable-column name="Supplier Name" prop="supplierName">
+                <ng-template ngx-datatable-header-template let-value="value">Supplier Name
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('supplierName')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Discount %" prop="discountPercentage">
+                <ng-template ngx-datatable-header-template let-value="value">Discount %
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('discountPercentage')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="GST %" prop="gstPercentage">
+                <ng-template ngx-datatable-header-template let-value="value">GST %
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('gstPercentage')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Payment Terms" prop="paymentTerms">
+                <ng-template ngx-datatable-header-template let-value="value">Payment Terms
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('paymentTerms')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Remark" prop="remark">
+                <ng-template ngx-datatable-header-template let-value="value">Remark
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('remark')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
         </ngx-datatable>
+        <div class="page-sizer d-flex">
+            <span>Page Size: </span>
+            <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">
+                <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+            </select>
+        </div>
     </nb-card-body>
 </nb-card>
+
+<ng-template #templateRef>
+    <div id="filterDiv" style="padding: 2px 14px; width: 250px;">
+        <div class="row" style="background-color: #aa3634;">
+            <div class="col-md-10">
+                <span style="color: white;">Filter</span>
+            </div>
+            <div class="col-md-2" style="margin-top: 3px;color: white;">
+                <div (click)="closeFilterPopover()" style="cursor: pointer;text-align: center;">
+                    <strong>X</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+
+            <div class="col-md-12 mb-1">
+                <ng-container *ngIf="stringFlag">
+                    <ng-select [(ngModel)]="operatorSelected" appendTo="body" class="popup-select"
+                        placeholder="Select Filter">
+                        <ng-option value="LIKE">Conatins</ng-option>
+                        <!-- <ng-option value="NOT_CONTAINS">Not Contains</ng-option> -->
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                        <ng-option value="START_WITH">Starts With</ng-option>
+                        <ng-option value="END_WITH">Ends With</ng-option>
+                    </ng-select>
+                </ng-container>
+                <ng-container *ngIf="numberFlag">
+                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter"
+                        [(ngModel)]="operatorSelected">
+                        <!-- (change)="onChangeFilterNumberSettings($event)"  -->
+                        <ng-option value="GREATER_THAN">Greater Than</ng-option>
+                        <ng-option value="LESS_THAN">Less Than</ng-option>
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                    </ng-select>
+                </ng-container>
+
+            </div>
+            <div class="col-md-12 mb-1">
+                <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterWord">
+            </div>
+        </div>
+        <button nbButton status="primary" style="margin-right: 5px;" (click)="onApplyFilter()">Apply</button>
+        <button nbButton status="danger" (click)="closeFilterPopover()">Close</button>
+    </div>
+</ng-template>
