@@ -27,6 +27,7 @@ import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
 import { AddShadeComponent } from "./add-shade/add-shade.component";
 import { ChangeJetComponent } from "../production-planning/change-jet/change-jet.component";
+import { title } from 'process';
 
 @Component({
   selector: "ngx-production-planning",
@@ -464,13 +465,17 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   currentBatchSequence;
   setIndexForSlip(index, j, idx) {
     //on click set batchId stockId to get print-slip data
+    this.items = this.items.filter(f => f.title != "SCO");
+    this.items = this.items.filter(f => f.title != "Dose Nylon");
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
     this.sendJetId = j.id;
     this.currentBatchSequence = idx;
     if (index.status === 'start') {
-      this.items = this.items.filter(f => f.title != "Start")
+      this.items = this.items.filter(f => f.title != "Start");
+      this.items.push({title:"SCO"});
+      this.items.push({title:"Dose Nylon"});
     } else {
       let itm = this.items.filter(f => f.title == "Start");
       if (!itm || !itm.length) {
