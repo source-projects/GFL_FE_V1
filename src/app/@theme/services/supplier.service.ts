@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RequestData } from '../model/request-data.model';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -22,6 +23,9 @@ export class SupplierService {
   }
   getAllSupplier(id, getBy): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
+  }
+  getAllSupplierV1(data: RequestData): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/supplier/allPaginated', data);
   }
   editSupplierInfo(supplierData) {
     return this.httpClient.put(this.commonService.envUrl() + 'api/supplier', supplierData);

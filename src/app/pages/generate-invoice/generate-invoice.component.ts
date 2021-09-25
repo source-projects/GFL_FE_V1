@@ -10,6 +10,8 @@ import { RequestData } from "../../@theme/model/request-data.model";
 import { PasswordDailogComponent } from '../../@theme/components';
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
 import { FilterParameter } from "../../@theme/model/filterparameter.model";
+import { PageData } from "../../@theme/model/page-data.model";
+import { ResponseData } from "../../@theme/model/response-data.model";
 
 // import { Invoice } from "app/@theme/model/invoice";
 
@@ -99,13 +101,16 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.generateInvoiceService.getAllDipatchV1(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
+      (data: ResponseData) => {
         if (data["success"]) {
-          this.InvoiceList = data["data"];
+          // this.InvoiceList = data["data"];
+          const pageData = data.data as PageData;
+          this.InvoiceList = pageData.data;
+          this.requestData.data.total = pageData.total;
           this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
           })
-          this.copyInvoiceList = data["data"];
+          this.copyInvoiceList = pageData.data;
           this.copyInvoiceList.forEach(ele => {
             ele.netAmt = Number(ele.netAmt).toFixed(2);
           })
@@ -210,14 +215,12 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
 
   onOpenFilter(column) {
 
-    if (column == "stockInType" || column == "partyName" || column == "qualityName" || column == "chlNo") {
+    if (column == "invoiceNo" || column == "partyName" || column == "createdAt") {
       this.stringFlag = true;
       this.numberFlag = false;
     } else {
-      if (column == "batchList") {
-        this.numberFlag = true;
-        this.stringFlag = false;
-      }
+      this.numberFlag = true;
+      this.stringFlag = false;
     }
 
     const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
