@@ -163,4 +163,10 @@ export class StockBatchService {
     );
   }
 
+  returnLotgetAllPaginated(data: RequestData) {
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/all/returnBatch/allPaginated", data
+    );
+  }
+
 }
