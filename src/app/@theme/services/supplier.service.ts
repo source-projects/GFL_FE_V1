@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { RequestData } from '../model/request-data.model';
 import { CommonService } from './common.service';
 
@@ -52,6 +53,10 @@ export class SupplierService {
 
   getSupplierName(id, getBy): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/all/' + getBy + '/' + id);
+  }
+
+  getSupplierNameV1(): Observable<any>{
+    return this.httpClient.get(this.commonService.envUrl() + 'api/supplier/all');
   }
 
   getSupplierItemWithRateById(id) {

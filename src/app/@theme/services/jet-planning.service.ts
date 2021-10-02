@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { RequestData } from "../model/request-data.model";
 import { CommonService } from "./common.service";
 
 @Injectable({
@@ -47,6 +48,12 @@ export class JetPlanningService {
   getAllProductionWithoutJetPlan() {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/productionPlan/all"
+    );
+  }
+
+  getProductionNonProdBatchList(data: RequestData, productionPlanned: boolean){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/batch/allPaginated/"+productionPlanned, data
     );
   }
 
