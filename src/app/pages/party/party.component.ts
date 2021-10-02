@@ -384,16 +384,14 @@ export class PartyComponent implements OnInit, OnDestroy {
 
   onOpenFilter(column) {
 
-    if (column) {
+    if (column != "percentageDiscount") {
       this.stringFlag = true;
       this.numberFlag = false;
     } 
-    // else {
-    //   if (column == "batchList") {
-    //     this.numberFlag = true;
-    //     this.stringFlag = false;
-    //   }
-    // }
+    else {
+        this.numberFlag = true;
+        this.stringFlag = false;
+    }
 
     const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
     if (indexForOpen > -1) {

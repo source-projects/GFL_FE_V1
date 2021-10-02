@@ -112,15 +112,29 @@
                             </div>
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Master Name" props="masterName">
+                    <ngx-datatable-column name="Master Name" props="userHeadData">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <ng-container >
+                                <span >{{row.userHeadData.userName}} </span>
+                            </ng-container>
+                        </ng-template>
                         <ng-template ngx-datatable-header-template let-value="value">Master Name
                             <div class="filter-icon">
-                                <nb-icon icon="menu-outline" (click)="onOpenFilter('masterName')"
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('userHeadName')"
+                                    class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Percentage Discount" props="percentageDiscount">
+                        <ng-template ngx-datatable-header-template let-value="value">Percentage Discount
+                            <div class="filter-icon">
+                                <nb-icon icon="menu-outline" (click)="onOpenFilter('percentageDiscount')"
                                     class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
                             </div>
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>
+                
                 <div class="page-sizer d-flex">
                     <span>Page Size: </span>
                     <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">

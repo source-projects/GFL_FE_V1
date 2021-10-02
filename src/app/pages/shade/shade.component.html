@@ -26,7 +26,7 @@
                         <div style="display: flex;">
                             <p style="margin-top: 4px;margin-right: 2px;">OR</p>
                             <nb-toggle status="primary" labelPosition="start" name="shift" 
-                            (checkedChange)="getallShades()" [(ngModel)]="requestData.data.isAnd"></nb-toggle>
+                            (ngModelChange)="getallShades()" [(ngModel)]="requestData.data.isAnd"></nb-toggle>
                             <p style="margin-top: 4px;margin-left: 2px;">AND</p>
                         </div>
                     </div>
