@@ -143,7 +143,7 @@ export class AddEditColorComponent implements OnInit, OnDestroy {
 
   getSupplierList() {
     this.loading = true;
-    this.supplierService.getSupplierName(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
+    this.supplierService.getSupplierNameV1().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplierList = data["data"];
