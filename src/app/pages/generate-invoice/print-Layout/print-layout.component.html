@@ -172,10 +172,10 @@
                                                     <b>{{quality.hsn}}</b>
                                                 </td>
                                                 <td>
-                                                    <b>{{quality.pchalNo}}</b>
+                                                    <b>{{quality.pchallanRef}}</b>
                                                 </td>
                                                 <td>
-                                                    <b>{{quality.pchallanRef}}</b>
+                                                    <b>{{quality.batchId}}</b>
                                                 </td>
                                                 <td class="text-right">
                                                     <b>{{quality.totalMtr | number : '1.2-2'}}</b>
@@ -350,7 +350,7 @@
                                                 <table class="table lot-border">
                                                     <tr>
                                                         <th class="text-left">
-                                                            <b>LOT NO: {{lots.pchallanRef}}</b>
+                                                            <b>LOT NO: {{lots.pchallanRef}} --- {{lots.batchId}}</b>
                                                         </th>
                                                     </tr>
                                                 </table>
@@ -408,7 +408,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="footer-border">
+                                    <div style="margin-top: 3px;" class="footer-border">
                                         <div class="row">
                                             <div class="col-sm-7">
                                                 <div class="footer-bottom">
@@ -476,6 +476,7 @@
                                                             carrier.
                                                         </li>
                                                         <li> 3. GST Payable on Reverse Charge : No</li>
+                                                        <li> 4. If any complaint regarding Goods/Bill kindly contact within 7 days, after that we are not responsible for anything.</li>
                                                     </ul>
 
                                                 </div>
@@ -688,10 +689,10 @@
                                             {{quality.hsn}}
                                         </td>
                                         <td>
-                                            {{quality.pchalNo}}
+                                            {{quality.pchallanRef}}
                                         </td>
                                         <td>
-                                            {{quality.pchallanRef}}
+                                            {{quality.batchId}}
                                         </td>
                                         <td>
                                             {{quality.totalMtr | number : '1.2-2'}}
@@ -866,7 +867,7 @@
                                         <table class="table lot-border">
                                             <tr>
                                                 <th class="text-left">
-                                                    <b>LOT NO: {{lots.pchallanRef}}</b>
+                                                    <b>LOT NO: {{lots.pchallanRef}} --- {{lots.batchId}}</b>
                                                 </th>
                                             </tr>
                                         </table>
@@ -920,7 +921,7 @@
 
                             <!-- Footer -->
 
-                            <div class="footer-border">
+                            <div style="margin-top: 3px;" class="footer-border">
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="footer-bottom">
@@ -987,6 +988,7 @@
                                                     carrier.
                                                 </li>
                                                 <li> 3. GST Payable on Reverse Charge : No</li>
+                                                <li> 4. If any complaint regarding Goods/Bill kindly contact within 7 days, after that we are not responsible for anything.</li>
                                             </ul>
 
                                         </div>

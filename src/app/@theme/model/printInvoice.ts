@@ -23,6 +23,7 @@ export class PrintInvoiceData {
     batchDataList: BatchDataList[]
     pchallanRef: string //changed batchId with pchallanRef
     controlId: number
+    batchId:number
     totalMtr:any = 0
     totalFMtr:any = 0
     shrinkage:any = 0
