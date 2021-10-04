@@ -26,10 +26,11 @@ export class InvoiceReportRequest {
   partyId: any;
   qualityNameId: any;
   qualityEntryId: any;
-
+  signByParty:any;
   constructor() {
     this.from = "";
     this.to = "";
+    this.signByParty = false;
   }
 }
 export class DispatchData {

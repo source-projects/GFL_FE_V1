@@ -9,11 +9,12 @@ import { AddShadeComponent } from './add-shade/add-shade.component';
 import { JetPlanningModule } from '../jet-planning/jet-planning.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ThemeModule } from 'app/@theme/theme.module';
+import { ChangeJetComponent } from './change-jet/change-jet.component';
 
 
 
 @NgModule({
-  declarations: [ProductionPlanningComponent, AddShadeComponent],
+  declarations: [ProductionPlanningComponent, AddShadeComponent, ChangeJetComponent],
   imports: [
     CommonModule,
     ProductionPlanningRoutingModule,

@@ -26,6 +26,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
   @Input() finalInvoice: any;
   @Input() previewFlag = false;
   @Input() discount;
+  @Input() deliveryMode;
   @Input() remark: any;
   @Input() updateFlag;
 
