@@ -222,46 +222,32 @@ export class ReportComponent implements OnInit,OnDestroy {
           .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"] && data["data"]) {
-                let excelData = data["data"];
-                this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
-                "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
-                "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
-              "C_GST","S_GST","GST_Amt","Total_Amt"]
-                let list = [];
-                excelData.forEach(ele => {
-                  ele.consolidatedBillDataList.forEach(col => {
-                    let latest_date =this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
-                    let y = {
-                      Invoice_No:col.invoiceNo,
-                      InvoiceDate:latest_date,
-                      PartyName:col.partyName,
-                      PartyAddress1:col.partyAddress1,
-                      PartyAddress2:col.partyAddress2,
-                      City:col.city,
-                      State:col.state,
-                      GSTIN:col.gstin,
-                      PhoneNumber:col.contactNo,
-                      BatchId: col.batchId,
-                      Total_Meter: col.totalMtr,
-                      Total_Pcs: col.greyPcs,
-                      Total_Finish_Meter: col.totalFinishMtr,
-                      Total_Finish_Pcs:col.pcs,
-                      Rate: col.rate,
-                      Amount: col.amt,
-                      Discount_Percentage: col.percentageDiscount,
-                      Discount_Amt: col.discountAmt,
-                      Taxable_Amt: col.taxAmt,
-                      C_GST: col.cgst,
-                      S_GST: col.sgst,
-                      GST_Amt: col.gstAmt,
-                      Total_Amt: col.netAmt
-                    }
-                    list.push(y);
-                  })
-  
-  
-                })
-                this.exportService.exportExcel(list, "Invoice Report", this.headers)
+                const excelData = data["data"];
+              //   this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
+              //   "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
+              //   "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
+              // "C_GST","S_GST","GST_Amt","Total_Amt"]
+              let data1 = [];
+              for(let item of excelData){
+                if(item && item.pendingBatchDataList && item.pendingBatchDataList.length){
+                  let list = item.pendingBatchDataList.map(m => ({
+                    ...m,
+                    partyName: item.partyName,
+                    partyCode: item.partyCode
+                  }));
+                  data1.push(...list);
+                }
+              }
+
+              this.headers = [];
+              let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+              let headerArray = Object.keys(data1[0]);
+              headerArray.forEach((ele,i) => {
+                this.headers.push(ele.replace(rex,'$1$4 $2$3$5'));
+                this.headers[i] = this.headers[i].charAt(0).toUpperCase() + this.headers[i].slice(1);
+              });
+
+                this.exportService.exportExcel(data1, "Pending Stock Report_"+moment(new Date()).format('ll'), this.headers)
               }
             },
             (error) => { }
