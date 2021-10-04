@@ -4,17 +4,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DisableStockBatchPipe implements PipeTransform {
   planned = false
-  transform(row: any ) {
-    row.batchData.forEach(element => {
-      if(element.isProductionPlanned){
-        this.planned = true;
-      }
-    })
+  transform(row: any) {
+    if (row.batchData && row.batchData.length) {
+      row.batchData.forEach(element => {
+        if (element.isProductionPlanned) {
+          this.planned = true;
+        }
+      });
+    }
 
-    if(this.planned){
+    if (this.planned) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }

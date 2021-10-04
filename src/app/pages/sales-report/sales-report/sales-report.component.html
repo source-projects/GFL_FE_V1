@@ -1,0 +1,284 @@
+<nb-card>
+    <nb-card-header class="nb-header">
+        <div class="row">
+            <div class="col-md-10 col-6">
+                <h2 class="nb-text">Sales Report</h2>
+            </div>
+
+            <!-- <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
+                <button class="btn btn-md btn-design" [routerLink]="['/pages/generate_invoice/view']">View
+                    Table</button>
+            </div> -->
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form #invoiceForm="ngForm">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="required">Report Type</label>
+                    <ng-select name="report" appendTo="body" id="report" placeholder="Select Report"
+                        [(ngModel)]="reportType">
+                        <div>
+                            <ng-option *ngFor="let report of reportList" [value]="report.value">{{report.name}}
+                            </ng-option>
+                        </div>
+                    </ng-select>
+
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="required">From date</label>
+                        <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
+                            [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1"
+                            [owlDateTime]="dtFrom1" placeholder="Select Date"
+                            [ngClass]="{'is-invalid':(from.invalid)&&(formSubmitted || from.touched)}">
+                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
+                        </owl-date-time>
+                    </div>
+                    <div class="input-required" *ngIf="(from.invalid)&&(formSubmitted || from.touched)">
+                        <span>From date is required.</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="required">To date</label>
+                        <input class="form-control" #to="ngModel" required name="toDate" [max]="maxDate"
+                            [disabled]="!invoiceReportRequest.from" [(ngModel)]="invoiceReportRequest.to"
+                            [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1" placeholder="Select Date"
+                            [min]="invoiceReportRequest.from"
+                            [ngClass]="{'is-invalid': (to.invalid)&&(formSubmitted || to.touched)}">
+                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtTo1>
+                        </owl-date-time>
+                    </div>
+                    <div class="input-required" *ngIf="(to.invalid)&&(formSubmitted || to.touched)">
+                        <span>To date is required.</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Party Name</label>
+                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+                            [(ngModel)]="invoiceReportRequest.partyId" #partyName1="ngModel"
+                            (change)="getQualityFromParty($event)">
+                            <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips">
+                                            Party Name
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips">
+                                            Party Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-option>
+                            <ng-option *ngFor="let p of partyList" [value]="p.id">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips">
+                                            {{ p.partyName }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right
+                                            txt-ov-elips">
+                                            {{ p.partyCode }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Quality
+                            Id</label>
+                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId"
+                            [(ngModel)]="invoiceReportRequest.qualityEntryId" #qualityId1="ngModel">
+                            <ng-option disabled="true">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips">
+                                            Quality Id
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right txt-ov-elips">
+                                            Party Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-option>
+                            <ng-option *ngFor="let q of qualityList" [value]="q.qualityEntryId">
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-left txt-ov-elips">
+                                            {{ q.qualityId }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="text-right
+                                            txt-ov-elips">
+                                            {{ q.partyName }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-option>
+                        </ng-select>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Master Name</label>
+                    <ng-select name="userHeadId" appendTo="body" id="userHeadId" name="userHeadId"
+                        placeholder="Select Master" [(ngModel)]="invoiceReportRequest.userHeadId">
+                        <div>
+                            <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
+                        </div>
+                    </ng-select>
+
+                </div>
+
+                <div class="form-group col-md-4">
+
+                    <label>Quality Name</label>
+                    <ng-select name="qualityName" appendTo="body" id="qualityName" placeholder="Quality Name"
+                        [(ngModel)]="invoiceReportRequest.qualityNameId">
+                        <ng-option disabled="true">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="text-left txt-ov-elips">Quality Name
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-option>
+                        <ng-option *ngFor="let p of qualityNameList" [value]="p.id">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="text-left txt-ov-elips"> {{p.qualityName}}</div>
+                                </div>
+                            </div>
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="col-md-6 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="getShortReport(invoiceForm)" [disabled]="disableButton">Get
+                            Report</button>
+                    </div>
+                </div> -->
+                <div class="col-md-6 mobile-btn-center text-btn-right">
+                    <div class="padding-bt-tp">
+                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="downLoadExcel(invoiceForm)">Get Excel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
+                <div class="row report-header">
+                    <div class="col-md-12 print-layout-report">
+                        <span>
+                            <h3>INVOICE REPORT</h3><span class="font-20">{{currentDate | date : 'dd/MM/yyyy'}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row align-item-right justify-content-end mr-5">
+                    <div class="justify-content-space-between">
+                        <div class="col-sm-3"></div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Grey Meter - {{totalGrayMeter | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Finished Meter - {{totalFinishedMeter | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Amount - {{totalAmount | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let report of shortReport" class="mb-5">
+                    <div class="print-body">
+                       
+                        <div class="invoice-no-heading" style="width: fit-content;">
+                            <h5 class="bold-invoice" style="font-size: 18px;"> Invoice No: {{report.invoiceNo}},
+                                {{report.createdDate | date : 'dd/MM/yyyy'}}</h5>
+                        </div>
+                        <table style="font-size: large;"
+                            class="print-layout-report table-bordered table-striped table-process-fnt width-100">
+                            <tr>
+                                <th>Lot No</th>
+                                <th>Master</th>
+                                <th>Party</th>
+                                <th>Quality Id</th>
+                                <th>Pcs</th>
+                                <th>Grey Mtr</th>
+                                <th>Finish Mtr</th>
+                                <th>Rate</th>
+                                <th>Total Amount</th>
+                            </tr>
+                            <tr *ngFor="let invoice of report.consolidatedBillDataList; let i = index"
+                                [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
+                                <td>{{invoice.batchId}}</td>
+                                <td>{{invoice.headName}}</td>
+                                <td> {{invoice.partyName}}</td>
+                                <td>{{invoice.qualityId}}</td>
+                                <td>{{invoice.pcs}}</td>
+                                <td>{{invoice.totalMtr}}</td>
+                                <td>{{invoice.totalFinishMtr}}</td>
+                                <td>{{invoice.rate}}</td>
+                                <td>{{invoice.taxAmt}}</td>
+                            </tr>   
+                        </table>
+                    </div>
+                </div><br><br>
+                <div class="row align-item-right justify-content-end mr-5">
+                    <div class="justify-content-space-between">
+                        <div class="col-sm-3"></div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Grey Meter - {{totalGrayMeter | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Finished Meter - {{totalFinishedMeter | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                        <div class="text-right table-bordered">
+                            <span style="font-size: large;">
+                                <h3>Total Amount - {{totalAmount | number : '1.2-2'}}</h3>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </form>
+    </nb-card-body>
+</nb-card>

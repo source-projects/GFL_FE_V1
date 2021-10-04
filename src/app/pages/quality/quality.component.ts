@@ -1,24 +1,31 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
-import { ToastrService } from "ngx-toastr";
 import { ExportPopupComponent } from "../../@theme/components/export-popup/export-popup.component";
 import { QualityGuard } from "../../@theme/guards/quality.guard";
 import * as errorData from "../../@theme/json/error.json";
 import { Page } from "../../@theme/model/page";
 import { CommonService } from "../../@theme/services/common.service";
-import { JwtTokenService } from "../../@theme/services/jwt-token.service";
 import { QualityService } from "../../@theme/services/quality.service";
-import { StoreTokenService } from "../../@theme/services/store-token.service";
+import { RequestData } from '../../@theme/model/request-data.model';
+import { DataFilter } from '../../@theme/model/datafilter.model';
+import { FilterParameter } from '../../@theme/model/filterparameter.model';
+import { NbPopoverDirective } from '@nebular/theme';
+import { PageData } from '../../@theme/model/page-data.model';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: "ngx-quality",
   templateUrl: "./quality.component.html",
   styleUrls: ["./quality.component.scss"],
 })
 export class QualityComponent implements OnInit, OnDestroy {
+
+  @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+
   public loading = false;
   public errorData: any = (errorData as any).default;
   permissions: Number;
@@ -70,17 +77,24 @@ export class QualityComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  selectedColumnForFilter:string = '';
+  requestData: RequestData = new RequestData();
+  filterWord: string = '';
+  operatorSelected = null;
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+
   constructor(
     private commonService: CommonService,
     public qualityGuard: QualityGuard,
     private qualityService: QualityService,
-    private toastr: ToastrService,
-    private jwtToken: JwtTokenService,
-    private storeTokenService: StoreTokenService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -92,17 +106,20 @@ export class QualityComponent implements OnInit, OnDestroy {
     this.getEditAccess();
     this.getEditAccess1();
     if (this.qualityGuard.accessRights("view all")) {
-      this.getQualityList(0, "all");
+      this.requestData.getBy = "all";
+      this.getQualityList();
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.qualityGuard.accessRights("view group")) {
-      this.getQualityList(this.userId, "group");
+      this.requestData.getBy = "group";
+      this.getQualityList();
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else if (this.qualityGuard.accessRights("view")) {
-      this.getQualityList(this.userId, "own");
+      this.requestData.getBy = "own";
+      this.getQualityList();
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
@@ -164,19 +181,22 @@ export class QualityComponent implements OnInit, OnDestroy {
     this.qualityList = [];
     switch (event) {
       case 1:
-        this.getQualityList(this.userId, "own");
+        this.requestData.getBy = "own";
+        this.getQualityList();
         this.hidden = this.ownDelete;
         this.hiddenEdit = this.ownEdit;
         break;
 
       case 2:
-        this.getQualityList(this.userId, "group");
+        this.requestData.getBy = "group";
+        this.getQualityList();
         this.hidden = this.groupDelete;
         this.hiddenEdit = this.groupEdit;
         break;
 
       case 3:
-        this.getQualityList(0, "all");
+        this.requestData.getBy = "all";
+        this.getQualityList();
         this.hidden = this.allDelete;
         this.hiddenEdit = this.allEdit;
         break;
@@ -184,25 +204,37 @@ export class QualityComponent implements OnInit, OnDestroy {
   }
 
   open() {
+    let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
     this.flag = true;
-
+    let headerArray = Object.keys(this.quality[0]);
+    let finalHeader = [];
+    headerArray.forEach((ele,i) => {
+      finalHeader.push(ele.replace(rex,'$1$4 $2$3$5'));
+      finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+    });
     const modalRef = this.modalService.open(ExportPopupComponent);
-    modalRef.componentInstance.headers = this.headers;
+    modalRef.componentInstance.headers = finalHeader;
     modalRef.componentInstance.list = this.quality;
     modalRef.componentInstance.moduleName = this.module;
   }
 
-  getQualityList(id, getBy) {
+  getQualityList() {
     this.loading = true;
-    this.qualityService.getallQuality(id, getBy).pipe(takeUntil(this.destroy$)).subscribe(
+    this.quality = [];
+    this.copyQualityList = [];
+    this.qualityService.getallQualityPaginated(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
-          this.qualityList = data["data"];
+          const pageData = data.data as PageData;
+            this.qualityList = cloneDeep(pageData.data);
+            this.requestData.data.total = pageData.total;
+
           this.quality = this.qualityList.map((element) => ({
             id: element.id,
             qualityId: element.qualityId,
             qualityName: element.qualityName,
             partyName: element.partyName,
+            userHeadName:element.userHeadName,
             wtPer100m: element.wtPer100m,
             rate: element.rate,
             partyCode: element.partyCode,
@@ -212,6 +244,7 @@ export class QualityComponent implements OnInit, OnDestroy {
             qualityId: element.qualityId,
             qualityName: element.qualityName,
             partyName: element.partyName,
+            userHeadName:element.userHeadName,
             wtPer100m: element.wtPer100m,
             rate: element.rate,
             partyCode: element.partyCode,
@@ -222,6 +255,12 @@ export class QualityComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
+        const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+          if (index > -1) {
+            this.filterWord = '';
+            this.operatorSelected = null;
+            this.requestData.data.parameters.splice(index, 1);
+          }
         this.loading = false;
       }
     );
@@ -282,6 +321,87 @@ export class QualityComponent implements OnInit, OnDestroy {
       this.hiddenEdit = this.ownEdit;
     } else {
       this.hiddenEdit = true;
+    }
+  }
+
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getQualityList();
+  }
+
+  onOpenFilter(column) {
+
+    if (column != "wtPer100m") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    } else {
+        this.numberFlag = true;
+        this.stringFlag = false;
+    }
+
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
+    }
+    else {
+      this.filterWord = '';
+      this.operatorSelected = null;
+    }
+    this.selectedColumnForFilter = column;
+    this.popover.show();
+  }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getQualityList();
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getQualityList();
+  }
+
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
+    if (index > -1) {
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
+      this.getQualityList();
+    }
+
+  }
+
+  closeFilterPopover() {
+    this.popover.hide();
+  }
+
+  onClearFilter() {
+    this.popover.hide();
+    if (this.requestData.data.parameters.length > 0) {
+      this.requestData.data.parameters = [];
+      this.getQualityList();
     }
   }
 

@@ -26,6 +26,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
   @Input() finalInvoice: any;
   @Input() previewFlag = false;
   @Input() discount;
+  @Input() deliveryMode;
   @Input() remark: any;
   @Input() updateFlag;
 
@@ -150,7 +151,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
               //calculating shrinkage, total mtr, total finish mtr...
               this.printInvoiceData[index].batchWithGrList.forEach(element => {
-                let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.pchallanRef == element.pchallanRef && !f.calculationDone)
+                let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.batchId == element.batchId && !f.calculationDone)
                 if (list.length > 1) {
                   let totalMtr = 0;
                   let totalFMtr = 0;
@@ -292,7 +293,7 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
 
       //calculating shrinkage, total mtr, total finish mtr...
       this.printInvoiceData[index].batchWithGrList.forEach(element => {
-        let list = this.printInvoiceData[index].batchWithGrList.filter(f => f.pchallanRef == element.pchallanRef && !f.calculationDone)
+        let list = this.printInvoiceData[index].batchWithGrList.filter(f => (f.batchId == element.batchId) && (f.pchallanRef == element.pchallanRef) && !f.calculationDone)
         if (list.length > 1) {
           let totalMtr = 0;
           let totalFMtr = 0;

@@ -16,6 +16,7 @@ import { ExportService } from '../../../@theme/services/export.service';
 import { sortBy as _sortBy } from 'lodash';
 import { DatePipe } from '@angular/common'
 import * as moment from 'moment';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-invoice-report",
@@ -51,7 +52,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     private shadeService: ShadeService,
     private adminService: AdminService,
     private exportService: ExportService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private toastr: ToastrService
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }
@@ -168,7 +170,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
-              if(this.shortReport){
+              if (this.shortReport) {
                 this.shortReport.forEach((element) => {
                   element.consolidatedBillDataList.forEach(billData => {
                     this.totalFinishedMeter += billData.totalFinishMtr;
@@ -176,9 +178,10 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     this.totalAmount += billData.taxAmt;
                   });
                 });
+
+                this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
+                this.printReport(form);
               }
-              this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
-              this.printReport(form);
             }
           },
           (error) => { }
@@ -225,31 +228,31 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
         .getShortInvoiceReport(this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
-            if (data["success"]) {
+            if (data["success"] && data["data"] && data["data"].length) {
               let excelData = data["data"];
-              this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
-              "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
-              "Rate","Amount","Discount_Percentage","Discount_Amt","Taxable_Amt",
-            "C_GST","S_GST","I_GST","GST_Amt","Total_Amt","Billing Unit","Inward Unit","Master"]
+              this.headers = ["Invoice_No", "Invoice Date", "Party Name", "Party Address1", "Party Address2", "City", "State", "GSTIN", "Phone No",
+                "BatchId", "Total_Meter", "Total_Pcs", "Total_Finish_Meter", "Total_Finish_Pcs",
+                "Rate", "Amount", "Discount_Percentage", "Discount_Amt", "Taxable_Amt",
+                "C_GST", "S_GST", "I_GST", "GST_Amt", "Total_Amt", "Billing Unit", "Inward Unit", "Master"]
               let list = [];
               excelData.forEach(ele => {
                 ele.consolidatedBillDataList.forEach(col => {
-                  let latest_date =this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
+                  let latest_date = this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
                   let y = {
-                    Invoice_No:col.invoiceNo,
-                    InvoiceDate:latest_date,
-                    PartyName:col.partyName,
-                    PartyAddress1:col.partyAddress1,
-                    PartyAddress2:col.partyAddress2,
-                    City:col.city,
-                    State:col.state,
-                    GSTIN:col.gstin,
-                    PhoneNumber:col.contactNo,
+                    Invoice_No: col.invoiceNo,
+                    InvoiceDate: latest_date,
+                    PartyName: col.partyName,
+                    PartyAddress1: col.partyAddress1,
+                    PartyAddress2: col.partyAddress2,
+                    City: col.city,
+                    State: col.state,
+                    GSTIN: col.gstin,
+                    PhoneNumber: col.contactNo,
                     BatchId: col.batchId,
                     Total_Meter: col.totalMtr,
                     Total_Pcs: col.greyPcs,
                     Total_Finish_Meter: col.totalFinishMtr,
-                    Total_Finish_Pcs:col.pcs,
+                    Total_Finish_Pcs: col.pcs,
                     Rate: col.rate,
                     Amount: col.amt,
                     Discount_Percentage: col.percentageDiscount,
@@ -260,10 +263,10 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     I_GST: col.igst,
                     GST_Amt: col.gstAmt,
                     Total_Amt: col.netAmt,
-                    BillingUnit:col.billingUnit,
-                    InwardUnit:col.inwardUnit,
-                    Master:col.headName,
-                    
+                    BillingUnit: col.billingUnit,
+                    InwardUnit: col.inwardUnit,
+                    Master: col.headName,
+
                   }
                   list.push(y);
                 })
@@ -271,9 +274,13 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
 
               })
               this.exportService.exportExcel(list, "Invoice Report", this.headers)
+            }else{
+              this.toastr.error(data['msg'])
             }
           },
-          (error) => { }
+          (error) => { 
+            this.toastr.error("Data Not Found..");
+          }
         );
     }
 

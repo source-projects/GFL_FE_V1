@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RequestData } from '../model/request-data.model';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -14,6 +15,10 @@ export class QualityService {
 
   getallQuality(id, getBy): any {
     return this.httpClient.get(this.commonService.envUrl() + 'api/quality/all/' + getBy + '/' + id);
+  }
+
+  getallQualityPaginated(data: RequestData): any {
+    return this.httpClient.post(this.commonService.envUrl() + 'api/quality/allPaginated', data);
   }
 
   getAllQualityWithNameOnly(){

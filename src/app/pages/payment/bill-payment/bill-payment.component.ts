@@ -51,7 +51,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   // advancePaymentList: AdvancePayment = new AdvancePayment();
   paymentDataList: PaymentData = new PaymentData();
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -82,7 +82,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
   }
 
-  getBillBank(){
+  getBillBank() {
     this.loading = true;
     this.paymentService.getAllBillBank().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
@@ -212,30 +212,31 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.paymentValues.gstAmt = this.gstAmount;
     this.paymentValues.amtToPay = this.paymentValues.totalBill;
     this.paymentValues.taxAmt = this.taxAmount;
-
-  } 
+    this.paymentValues.tdsAmt = (this.paymentValues.taxAmt * 2)/100;
+    this.paymentValues.amtToPay = this.paymentValues.amtToPay - this.paymentValues.tdsAmt;
+  }
 
   advancePaymentSelected(event) {
-    if(event.selected){
+    if (event.selected) {
       let selected = event.selected;
       let advance = [];
       selected.forEach(element => {
         advance.push(element.id);
       })
-  
+
       this.paymentValues.advancePayList = advance;
-  
+
       this.totalCredit = 0;
       event.selected.forEach(element => {
         this.totalCredit = this.totalCredit + element.amt;
       });
       if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
         this.paymentValues.amtPaid = this.totalCredit + this.totalCurrentPayment;
-      }else{
+      } else {
         this.paymentValues.amtPaid = 0;
       }
     }
-    
+
   }
 
 
@@ -313,7 +314,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
           id: null,
         };
         let list = this.paymentValues.paymentData;
-        
+
         list.push(obj);
         this.paymentValues.paymentData = [...list];
 
@@ -352,14 +353,14 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   }
 
   amountObj = {};
-  currentPaymentAdded(event,index) {
+  currentPaymentAdded(event, index) {
     let curPay = Number(event.target.value);
     this.amountObj[index] = {
       curPay
     }
     this.totalCurrentPayment = 0;
-    Object.keys(this.amountObj).forEach(ele=>{
-      this.totalCurrentPayment += this.amountObj[ele].curPay; 
+    Object.keys(this.amountObj).forEach(ele => {
+      this.totalCurrentPayment += this.amountObj[ele].curPay;
     })
     this.paymentValues.amtPaid = 0;
     if (this.totalCredit != 0 || this.totalCurrentPayment != 0) {
@@ -371,10 +372,10 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
   cdSelected(event) {
     let val = Number(event.target.value);
-    this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff);
+    this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff + this.paymentValues.tdsAmt);
   }
 
-  reset(paymentForm){
+  reset(paymentForm) {
     paymentForm.reset();
     this.formSubmitted = false;
     this.paymentValues.rdAmt = 0;
@@ -420,15 +421,15 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     }
   }
 
-  bankSelected(value,index,colName){
-    
-    if(colName == "bank"){
+  bankSelected(value, index, colName) {
+
+    if (colName == "bank") {
       this.paymentValues.paymentData[index].bank = value.label;
     }
-    this.billBanks.push({name:value.label});
+    this.billBanks.push({ name: value.label });
   }
 
-  tableChange(event){
+  tableChange(event) {
     if (event === "view table") {
       this.route.navigate(['/pages/payment/payment']);
     }

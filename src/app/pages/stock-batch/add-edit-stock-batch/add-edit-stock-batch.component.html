@@ -10,7 +10,11 @@
                     <ng-option value="pending">Pending batches</ng-option>
                     <ng-option value="view table">View Table</ng-option>
                     <ng-option value="job card">Job Card</ng-option>
+<<<<<<< HEAD
+=======
                     <ng-option value="return">Lot return</ng-option>
+                    <ng-option value="report">Report</ng-option>
+>>>>>>> 4ef7085ed446b3fbeff3cc966bb638e6216c9945
                 </ng-select>
                 <!-- <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
                     Table</button> -->
@@ -206,7 +210,7 @@
                                         <div class="row">
                                             <div class="col-md-6 col-8">
                                                 <label>PChallan No</label>
-                                                <input [attr.id]="'pchallanRef'+i" required type="number"
+                                                <input [attr.id]="'pchallanRef'+i" required type="text"
                                                     [(ngModel)]='block.pchallanRef' [disabled]="!addFlag && block.old"
                                                     (change)="checkPChallanUniq(i)"
                                                     class="form-control size-small" fieldsize="small" nbinput

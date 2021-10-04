@@ -73,20 +73,24 @@
             <td>
                 <div class="row">
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
-                        <div class="col-sm-6">Sr.</div>
-                        <div class="col-sm-6">Meters.</div>
+                        <div class="col-sm-4">Sr.</div>
+                        <div class="col-sm-4">BatchId.</div>
+                        <div class="col-sm-4">Meters.</div>
                     </div>
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
-                        <div class="col-sm-6">Sr.</div>
-                        <div class="col-sm-6">Meters.</div>
+                        <div class="col-sm-4">Sr.</div>
+                        <div class="col-sm-4">BatchId.</div>
+                        <div class="col-sm-4">Meters.</div>
                     </div>
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
-                        <div class="col-sm-6">Sr.</div>
-                        <div class="col-sm-6">Meters.</div>
+                        <div class="col-sm-4">Sr.</div>
+                        <div class="col-sm-4">BatchId.</div>
+                        <div class="col-sm-4">Meters.</div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="col-sm-6">Sr.</div>
-                        <div class="col-sm-6">Meters.</div>
+                        <div class="col-sm-4">Sr.</div>
+                        <div class="col-sm-4">BatchId.</div>
+                        <div class="col-sm-4">Meters.</div>
                     </div>
                 </div>
             </td>
@@ -96,26 +100,30 @@
                 <div class="row">
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
                         <ng-container *ngFor="let m of list1; let i=index;">
-                            <div class="col-sm-6">{{m.idx}}</div>
-                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                            <div class="col-sm-4">{{m.idx}}</div>
+                            <div class="col-sm-4">{{m.batchId}}</div>
+                            <div class="col-sm-4">{{m.mtr | number : '1.2-2'}}</div>
                         </ng-container>
                     </div>
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
                         <ng-container *ngFor="let m of list2; let i=index;">
-                            <div class="col-sm-6">{{m.idx}}</div>
-                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                            <div class="col-sm-4">{{m.idx}}</div>
+                            <div class="col-sm-4">{{m.batchId}}</div>
+                            <div class="col-sm-4">{{m.mtr | number : '1.2-2'}}</div>
                         </ng-container>
                     </div>
                     <div class="col-sm-3" style="border-right: 1px solid rgb(143, 143, 143);">
                         <ng-container *ngFor="let m of list3; let i=index;">
-                            <div class="col-sm-6">{{m.idx}}</div>
-                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                            <div class="col-sm-4">{{m.idx}}</div>
+                            <div class="col-sm-4">{{m.batchId}}</div>
+                            <div class="col-sm-4">{{m.mtr | number : '1.2-2'}}</div>
                         </ng-container>
                     </div>
                     <div class="col-sm-3">
                         <ng-container *ngFor="let m of list4; let i=index;">
-                            <div class="col-sm-6">{{m.idx}}</div>
-                            <div class="col-sm-6">{{m.mtr | number : '1.2-2'}}</div>
+                            <div class="col-sm-4">{{m.idx}}</div>
+                            <div class="col-sm-4">{{m.batchId}}</div>
+                            <div class="col-sm-4">{{m.mtr | number : '1.2-2'}}</div>
                         </ng-container>
                     </div>
                 </div>

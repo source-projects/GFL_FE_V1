@@ -26,10 +26,11 @@ export class InvoiceReportRequest {
   partyId: any;
   qualityNameId: any;
   qualityEntryId: any;
-
+  signByParty:any;
   constructor() {
     this.from = "";
     this.to = "";
+    this.signByParty = false;
   }
 }
 export class DispatchData {
@@ -46,6 +47,7 @@ export class DispatchData {
 
 export class invoiceobj {
 
+  batchId:Number;
   pchallanRef: Number; //changed from batchId to pchallanRef
   stockId: Number;
   rate: number;

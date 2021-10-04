@@ -93,6 +93,7 @@ const NB_MODULES = [
   //NgbModal
   NbAccordionModule,
   NbToggleModule,
+  NbPopoverModule
 ];
 
 @NgModule({
@@ -137,4 +138,4 @@ const NB_MODULES = [
   providers: [ExportService, DatePipe, NgxImageCompressService],
   entryComponents: [ExportPopupComponent, WarningPopupComponent],
 })
-export class SharedModule {}
+export class SharedModule { }

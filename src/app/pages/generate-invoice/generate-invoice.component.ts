@@ -1,12 +1,19 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
+import { NbPopoverDirective } from "@nebular/theme";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DataFilter } from "../../@theme/model/datafilter.model";
+import { RequestData } from "../../@theme/model/request-data.model";
 import { PasswordDailogComponent } from '../../@theme/components';
 import { GenerateInvoiceService } from "../../@theme/services/generate-invoice.service";
+import { FilterParameter } from "../../@theme/model/filterparameter.model";
+import { PageData } from "../../@theme/model/page-data.model";
+import { ResponseData } from "../../@theme/model/response-data.model";
 
+import { DatePipe } from "@angular/common";
 // import { Invoice } from "app/@theme/model/invoice";
 
 @Component({
@@ -27,6 +34,17 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   hiddenEdit: boolean = true;
   hiddenView: boolean = true;
 
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+  requestData: RequestData = new RequestData();
+  filterWord: string = '';
+  selectedColumnForFilter:string = '';
+  operatorSelected = null;
+  @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+
   public tableHeaders = ["invoiceNo", "partyName", "batchList", "totalMtr", "finishMtr","netAmt","date"];
   searchStr = "";
   searchANDCondition = false;
@@ -41,9 +59,12 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
+    private datePipe:DatePipe
   ) { }
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
+    this.requestData.getBy = "all";
     this.getAllInvoice();
   }
 
@@ -81,14 +102,18 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
   getAllInvoice() {
     this.loading = true;
 
-    this.generateInvoiceService.getAllDipatch().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
+    this.generateInvoiceService.getAllDipatchV1(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
+      (data: ResponseData) => {
         if (data["success"]) {
-          this.InvoiceList = data["data"];
+          // this.InvoiceList = data["data"];
+          const pageData = data.data as PageData;
+          this.InvoiceList = pageData.data;
+          this.requestData.data.total = pageData.total;
           this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
+            ele.date = this.datePipe.transform(ele.date,"dd/MM/yyyy");
           })
-          this.copyInvoiceList = data["data"];
+          this.copyInvoiceList = pageData.data;
           this.copyInvoiceList.forEach(ele => {
             ele.netAmt = Number(ele.netAmt).toFixed(2);
           })
@@ -179,5 +204,86 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getAllInvoice();
+  }
+
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getAllInvoice()
+  }
+
+  onOpenFilter(column) {
+
+    if (column == "invoiceNo" || column == "partyName" || column == "createdAt") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    } else {
+      this.numberFlag = true;
+      this.stringFlag = false;
+    }
+
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
+    }
+    else {
+      this.filterWord = '';
+      this.operatorSelected = null;
+    }
+    this.selectedColumnForFilter = column;
+    this.popover.show();
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getAllInvoice();
+  }
+
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
+    if (index > -1) {
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
+      this.getAllInvoice();
+    }
+
+  }
+
+  closeFilterPopover() {
+    this.popover.hide();
+  }
+
+  onClearFilter() {
+    this.popover.hide();
+    if (this.requestData.data.parameters.length > 0) {
+      this.requestData.data.parameters = [];
+      this.getAllInvoice();
+    }
   }
 }
