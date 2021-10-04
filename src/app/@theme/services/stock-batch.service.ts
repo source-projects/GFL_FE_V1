@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { CommonService } from "./common.service";
 import { RequestData } from "../model/request-data.model";
 
+import { BatchFilterRequest } from "../../@theme/model/stock-batch";
+
 @Injectable({
   providedIn: "root",
 })
@@ -67,6 +69,15 @@ export class StockBatchService {
       this.commonService.envUrl() + "api/stockBatch/pending/all/" + getBy + "/" + id
     );
   }
+
+  getShortStockReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/report/forConslidateBill',obj);
+  }
+
+  getDetailedStockReport(obj):any{
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/filter/getBill',obj);
+  }
+
 
   addStockBatch(myForm) {
     return this.httpClient.post(
@@ -169,4 +180,10 @@ export class StockBatchService {
     );
   }
 
+  getConslidateBatchResponse(data: BatchFilterRequest){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/pending/forConslidateBatchResponse", data
+    )
+  }
+  
 }

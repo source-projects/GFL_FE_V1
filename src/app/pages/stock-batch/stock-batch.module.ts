@@ -13,8 +13,9 @@ import { LotReturnComponent } from './lot-return/lot-return.component';
 import { PrintLotReturnComponent } from './print-lot-return/print-lot-return.component';
 import { LotReturnViewComponent } from './lot-return-view/lot-return-view.component';
 import { StockInComponent } from './stock-in/stock-in.component';
+import { ReportComponent } from './report/report.component';
 @NgModule({
-  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent, AvailableBatchesComponent, LotReturnComponent, PrintLotReturnComponent, LotReturnViewComponent, StockInComponent],
+  declarations: [StockBatchComponent, AddEditStockBatchComponent, JobCardComponent, InputBatchComponent, AvailableBatchesComponent, LotReturnComponent, PrintLotReturnComponent, LotReturnViewComponent, ReportComponent, StockInComponent],
   imports: [
     CommonModule,
     StockBatchRoutingModule,

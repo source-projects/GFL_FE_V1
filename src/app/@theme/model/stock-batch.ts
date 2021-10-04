@@ -73,3 +73,47 @@ export class BatchCard {
     this.backColor = '';
   }
 }
+
+export class StockShortReport {
+  partyName: string;
+  partyCode: String;
+  consolidatedBillDataList: ConsolidatedBillDataList[]
+}
+
+export class StockDetailedReport {
+  headName: string;
+  invoiceNo: string;
+  partyId: number;
+  partyName: string;
+  qualityList: QualityList[];
+  userHeadId: number;
+}
+
+export class QualityList {
+  amt: number;
+  batchId: string;
+  qualityEntryId: number;
+  qulityId: string;
+  rate: number;
+  totalFinishMtr: number;
+  totalMtr: number;
+}
+
+
+export class ConsolidatedBillDataList {
+  pchallanRef: string;
+  batchId: string
+  qualityName: string;
+  pcs: number;
+  greyMtr: number;
+  greyWt: number;
+  receiveDate: string;
+}
+
+export class BatchFilterRequest {
+  from: string;
+  to: string;
+  partyId: number;
+  qualityEntryId: number;
+  qualityNameId: number;
+}
