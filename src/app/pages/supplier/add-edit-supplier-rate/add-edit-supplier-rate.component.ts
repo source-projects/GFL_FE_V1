@@ -152,7 +152,7 @@ export class AddEditSupplierRateComponent implements OnInit, OnDestroy {
 
   public getSupplierName() {
     this.user = this.commonService.getUser();
-    this.supplierService.getAllSupplier(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
+    this.supplierService.getSupplierNameV1().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplier = data["data"];
