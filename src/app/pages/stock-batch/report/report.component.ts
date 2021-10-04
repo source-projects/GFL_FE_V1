@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { StockDetailedReport, StockReportRequest, StockShortReport } from '../../../@theme/model/stock-batch';
+import { BatchFilterRequest, StockDetailedReport, StockShortReport } from '../../../@theme/model/stock-batch';
 import { AdminService } from '../../../@theme/services/admin.service';
 import { ExportService } from '../../../@theme/services/export.service';
 import { PartyService } from '../../../@theme/services/party.service';
@@ -11,6 +11,7 @@ import { QualityService } from '../../../@theme/services/quality.service';
 import { ShadeService } from '../../../@theme/services/shade.service';
 import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 import * as wijmo from "@grapecity/wijmo";
+import { sortBy as _sortBy } from 'lodash';
 
 @Component({
   selector: 'ngx-report',
@@ -19,7 +20,7 @@ import * as wijmo from "@grapecity/wijmo";
 })
 export class ReportComponent implements OnInit,OnDestroy {
 
-  public stockReportRequest: StockReportRequest;
+  public stockReportRequest: BatchFilterRequest;
   public maxDate: any;
   public currentDate = new Date();
   public disableButton: boolean = false;
@@ -50,7 +51,7 @@ export class ReportComponent implements OnInit,OnDestroy {
     private adminService: AdminService,
     private exportService: ExportService,
     public datepipe: DatePipe) { 
-      this.stockReportRequest = new StockReportRequest();
+      this.stockReportRequest = new BatchFilterRequest();
     }
 
     ngOnDestroy(): void {
@@ -159,10 +160,10 @@ export class ReportComponent implements OnInit,OnDestroy {
         this.stockReportRequest.from = moment(this.stockReportRequest.from).format();
         this.stockReportRequest.to = moment(this.stockReportRequest.to).format();
         this.stockService
-          .getShortStockReport(this.stockReportRequest)
+          .getConslidateBatchResponse(this.stockReportRequest)
           .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
-              if (data["success"]) {
+              if (data["success"] && data["data"]) {
                 this.shortReport = data["data"];
                 // if(this.shortReport){
                 //   this.shortReport.forEach((element) => {
@@ -204,7 +205,7 @@ export class ReportComponent implements OnInit,OnDestroy {
             doc.print();
             this.shortReport = [];
             this.detailedReport = [];
-            this.stockReportRequest = new StockReportRequest();
+            this.stockReportRequest = new BatchFilterRequest();
             this.formSubmitted = false;
           }, 1000)
         }
@@ -217,10 +218,10 @@ export class ReportComponent implements OnInit,OnDestroy {
         this.stockReportRequest.from = moment(this.stockReportRequest.from).format();
         this.stockReportRequest.to = moment(this.stockReportRequest.to).format();
         this.stockService
-          .getShortStockReport(this.stockReportRequest)
+          .getConslidateBatchResponse(this.stockReportRequest)
           .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
-              if (data["success"]) {
+              if (data["success"] && data["data"]) {
                 let excelData = data["data"];
                 this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
                 "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
@@ -270,28 +271,25 @@ export class ReportComponent implements OnInit,OnDestroy {
   
     }
 
-    onChange(value){
+    // onChange(value){
 
-      if(value == 1){
-        this.stockReportRequest.isBillGenerated = true;
-        this.stockReportRequest.isFinishMeterSaved = false;
-        this.stockReportRequest.isProductionPlanned = false;
-      }
-      else if(value == 2){
-        this.stockReportRequest.isBillGenerated = false;
-        this.stockReportRequest.isFinishMeterSaved = true;
-        this.stockReportRequest.isProductionPlanned = false;
-      }
-      else if(value == 3){
-        this.stockReportRequest.isBillGenerated = false;
-        this.stockReportRequest.isFinishMeterSaved = false;
-        this.stockReportRequest.isProductionPlanned = true;
-      }
+    //   if(value == 1){
+    //     this.stockReportRequest.isBillGenerated = true;
+    //     this.stockReportRequest.isFinishMeterSaved = false;
+    //     this.stockReportRequest.isProductionPlanned = false;
+    //   }
+    //   else if(value == 2){
+    //     this.stockReportRequest.isBillGenerated = false;
+    //     this.stockReportRequest.isFinishMeterSaved = true;
+    //     this.stockReportRequest.isProductionPlanned = false;
+    //   }
+    //   else if(value == 3){
+    //     this.stockReportRequest.isBillGenerated = false;
+    //     this.stockReportRequest.isFinishMeterSaved = false;
+    //     this.stockReportRequest.isProductionPlanned = true;
+    //   }
 
-    }
+    // }
 
-}
-function _sortBy(shortReport: StockShortReport[], arg1: string): StockShortReport[] {
-  throw new Error('Function not implemented.');
 }
 

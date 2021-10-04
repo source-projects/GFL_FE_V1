@@ -19,8 +19,8 @@
                     <div class="form-group">
                         <label class="required">From date</label>
                         <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
-                            [(ngModel)]="stockReportRequest.from" [owlDateTimeTrigger]="dtFrom1"
-                            [owlDateTime]="dtFrom1" placeholder="Select Date"
+                            [(ngModel)]="stockReportRequest.from" [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1"
+                            placeholder="Select Date"
                             [ngClass]="{'is-invalid':(from.invalid)&&(formSubmitted || from.touched)}">
                         <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
                         </owl-date-time>
@@ -48,7 +48,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel" [(ngModel)]="stockReportRequest.partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)" >
+                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+                            [(ngModel)]="stockReportRequest.partyId" #partyName1="ngModel"
+                            (change)="getQualityFromParty($event)">
                             <ng-option disabled="true">
                                 <div class="row">
                                     <div class="col-md-6 col-6">
@@ -90,7 +92,8 @@
                     <div class="form-group">
                         <label>Quality
                             Id</label>
-                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId" [(ngModel)]="stockReportRequest.qualityEntryId" #qualityId1="ngModel">
+                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId"
+                            [(ngModel)]="stockReportRequest.qualityEntryId" #qualityId1="ngModel">
                             <ng-option disabled="true">
                                 <div class="row">
                                     <div class="col-md-6 col-6">
@@ -122,11 +125,11 @@
                             </ng-option>
                         </ng-select>
 
-                        
+
                     </div>
                 </div>
 
-                <div class="form-group col-md-4">
+                <!-- <div class="form-group col-md-4">
                     <label>Master Name</label>
                     <ng-select name="userHeadId" appendTo="body" id="userHeadId" name="userHeadId"
                     placeholder="Select Master" [(ngModel)]="stockReportRequest.userHeadId">
@@ -135,13 +138,13 @@
                         </div>
                     </ng-select>
                     
-                </div>
+                </div> -->
 
                 <div class="form-group col-md-4">
-                    
-                    <label >Quality Name</label>
-                    <ng-select name="qualityName" appendTo="body" id="qualityName" 
-                        placeholder="Quality Name" [(ngModel)]="stockReportRequest.qualityNameId">
+
+                    <label>Quality Name</label>
+                    <ng-select name="qualityName" appendTo="body" id="qualityName" placeholder="Quality Name"
+                        [(ngModel)]="stockReportRequest.qualityNameId">
                         <ng-option disabled="true">
                             <div class="row">
                                 <div class="col-md-6 col-6">
@@ -160,7 +163,7 @@
                     </ng-select>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
 
                 <div class="col-md-8">
                     <nb-radio-group class="nb-radio">
@@ -169,7 +172,7 @@
                             {{radio.name}}</nb-radio>
                     </nb-radio-group>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="col-md-6 mobile-btn-center text-btn-right">
@@ -182,7 +185,7 @@
                 <div class="col-md-6 mobile-btn-center text-btn-right">
                     <div class="padding-bt-tp">
                         <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="downLoadExcel(stockReportForm)" >Get Excel</button>
+                            (click)="downLoadExcel(stockReportForm)">Get Excel</button>
                     </div>
                 </div>
             </div>
@@ -195,57 +198,35 @@
                         </span>
                     </div>
                 </div>
-                <div *ngFor="let report of shortReport" class="mb-5">
-                    <div class="print-body">
-                        <!-- print-layout-report -->
-                        <div class="invoice-no-heading" style="width: fit-content;">
-                            <h5 class="bold-invoice" style="font-size: 18px;"> Party NAME : {{report.partyName}},
-                                 Party Code : {{report.partyCode}}</h5>
-                        </div>
-                        <table style="font-size: large;"
-                            class="print-layout-report table-bordered table-striped table-process-fnt width-100">
-                            <tr>
-                                <th>PChallanRef</th>
-                                <th>Lot No</th>
-                                <th>Quality Name</th>
-                                <th>Pcs</th>
-                                <th>Grey Mtr</th>
-                                <th>Grey Wt</th>
-                                <th>Recieve Date</th>
-                            </tr>
-                            <tr *ngFor="let invoice of report.consolidatedBillDataList; let i = index"
-                                [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
-                                <td>{{invoice.pchallanRef}}</td>
-                                <td>{{invoice.batchId}}</td>
-                                <td>{{invoice.qualityName}}</td>
-                                <td>{{invoice.pcs}}</td>
-                                <td>{{invoice.greyMtr}}</td>
-                                <td>{{invoice.greyWt}}</td>
-                                <td>{{invoice.receiveDate}}</td>
-                            </tr>   
-                        </table>
-                    </div>
-                </div><br><br>
-                <!-- <div class="row align-item-right justify-content-end mr-5">
-                    <div class="justify-content-space-between">
-                        <div class="col-sm-3"></div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Grey Meter - {{totalGrayMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Finished Meter - {{totalFinishedMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Amount - {{totalAmount | number : '1.2-2'}}</h3>
-                            </span>
+                <ng-container *ngFor="let report of shortReport">
+                    <div *ngIf="report.pendingBatchDataList && report.pendingBatchDataList.length" class="mb-5">
+                        <div class="print-body">
+                            <!-- print-layout-report -->
+                            <div class="invoice-no-heading" style="width: fit-content;">
+                                <h5 class="bold-invoice" style="font-size: 18px;"> Party NAME : {{report.partyName}},
+                                    Party Code : {{report.partyCode}}</h5>
+                            </div>
+                            <table style="font-size: large;margin-right:18px"
+                                class="print-layout-report table-bordered table-striped table-process-fnt width-100">
+                                <tr>
+                                    <th>PChallanRef</th>
+                                    <th>Lot No</th>
+                                    <th>Grey Mtr</th>
+                                    <th>Grey Wt</th>
+                                    <th>Recieve Date</th>
+                                </tr>
+                                <tr *ngFor="let invoice of report.pendingBatchDataList; let i = index"
+                                    [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'" class="trs">
+                                    <td>{{invoice.pchallanRef}}</td>
+                                    <td>{{invoice.batchId}}</td>
+                                    <td>{{invoice.totalBatchMtr | number : '1.2-2'}}</td>
+                                    <td>{{invoice.totalBatchWt | number : '1.2-2'}}</td>
+                                    <td>{{invoice.receiveDate | date : 'fullDate'}}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                </div> -->
+                </ng-container><br><br>
             </div>
 
         </form>

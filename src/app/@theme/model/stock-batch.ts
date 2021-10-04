@@ -63,27 +63,6 @@ export class BatchCard {
   }
 }
 
-
-export class StockReportRequest {
-  from: any;
-  to: any;
-  userHeadId: any;
-  partyId: any;
-  qualityNameId: any;
-  qualityEntryId: any;
-  isProductionPlanned: any;
-  isFinishMeterSaved: any;
-  isBillGenerated: any;
-
-  constructor() {
-    this.from = null;
-    this.to = null;
-    this.isProductionPlanned = false;
-    this.isFinishMeterSaved = false;
-    this.isBillGenerated = false;
-  }
-}
-
 export class StockShortReport {
   partyName: string;
   partyCode: String;
@@ -118,4 +97,12 @@ export class ConsolidatedBillDataList {
   greyMtr: number;
   greyWt: number;
   receiveDate: string;
+}
+
+export class BatchFilterRequest {
+  from: string;
+  to: string;
+  partyId: number;
+  qualityEntryId: number;
+  qualityNameId: number;
 }

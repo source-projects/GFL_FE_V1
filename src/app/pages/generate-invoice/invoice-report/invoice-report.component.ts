@@ -16,6 +16,7 @@ import { ExportService } from '../../../@theme/services/export.service';
 import { sortBy as _sortBy } from 'lodash';
 import { DatePipe } from '@angular/common'
 import * as moment from 'moment';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-invoice-report",
@@ -51,7 +52,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
     private shadeService: ShadeService,
     private adminService: AdminService,
     private exportService: ExportService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private toastr: ToastrService
   ) {
     this.invoiceReportRequest = new InvoiceReportRequest();
   }
@@ -176,9 +178,10 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
                     this.totalAmount += billData.taxAmt;
                   });
                 });
+
+                this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
+                this.printReport(form);
               }
-              this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
-              this.printReport(form);
             }
           },
           (error) => { }
@@ -225,7 +228,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
         .getShortInvoiceReport(this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
-            if (data["success"]) {
+            if (data["success"] && data["data"] && data["data"].length) {
               let excelData = data["data"];
               this.headers = ["Invoice_No","Invoice Date","Party Name","Party Address1","Party Address2","City","State","GSTIN","Phone No",
               "BatchId","Total_Meter","Total_Pcs","Total_Finish_Meter","Total_Finish_Pcs",
@@ -266,6 +269,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
 
               })
               this.exportService.exportExcel(list, "Invoice Report", this.headers)
+            }else{
+              this.toastr.error(data['msg'])
             }
           },
           (error) => { }

@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CommonService } from "./common.service";
 
+import { BatchFilterRequest } from "../../@theme/model/stock-batch";
+
 @Injectable({
   providedIn: "root",
 })
@@ -141,6 +143,12 @@ export class StockBatchService {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/stockBatch/all/returnBatch"
     );
+  }
+
+  getConslidateBatchResponse(data: BatchFilterRequest){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/stockBatch/pending/forConslidateBatchResponse", data
+    )
   }
   
 }
