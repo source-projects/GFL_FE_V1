@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
 import { Router } from '@angular/router';
 import { InputBatchComponent } from '../input-batch/input-batch.component';
+import { ExportPopupComponent } from '../../../@theme/components/export-popup/export-popup.component';
 
 @Component({
   selector: 'ngx-available-batches',
@@ -111,6 +112,22 @@ export class AvailableBatchesComponent implements OnInit {
       this.disabled = true;
     }
   }
+
+  open() {
+    let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+    this.flag = true;
+    let headerArray = Object.keys(this.stockList[0]);
+    let finalHeader = [];
+    headerArray.forEach((ele,i) => {
+      finalHeader.push(ele.replace(rex,'$1$4 $2$3$5'));
+      finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+    });
+    const modalRef = this.modalService.open(ExportPopupComponent);
+    modalRef.componentInstance.headers = finalHeader;
+    modalRef.componentInstance.list = this.stockList;
+    modalRef.componentInstance.moduleName = this.module;
+  }
+
   onChange(event) {
     this.stockList = [];
     switch (event) {
@@ -184,6 +201,14 @@ export class AvailableBatchesComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.stockList = data["data"];
+          this.stockList = this.stockList.map((element) => ({
+            id: element.id,
+            stockInType: element.stockInType,
+            partyName: element.partyName,
+            qualityName: element.qualityName,
+            batchList: element.batchList,
+            chlNo: element.chlNo,
+          }));
           let index = 0;
           this.stockList.forEach((element) => {
             this.stockList[index].billDate = new Date(

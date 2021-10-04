@@ -13,6 +13,7 @@ import { FilterParameter } from "../../@theme/model/filterparameter.model";
 import { PageData } from "../../@theme/model/page-data.model";
 import { ResponseData } from "../../@theme/model/response-data.model";
 
+import { DatePipe } from "@angular/common";
 // import { Invoice } from "app/@theme/model/invoice";
 
 @Component({
@@ -58,6 +59,7 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
+    private datePipe:DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -109,6 +111,7 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
           this.requestData.data.total = pageData.total;
           this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
+            ele.date = this.datePipe.transform(ele.date,"dd/MM/yyyy");
           })
           this.copyInvoiceList = pageData.data;
           this.copyInvoiceList.forEach(ele => {

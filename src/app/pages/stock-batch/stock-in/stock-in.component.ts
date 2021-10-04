@@ -173,7 +173,7 @@ export class StockInComponent implements OnInit, OnDestroy {
 
           let totatmtr = 0;
           let totalwt = 0;
-          batch.batchMW.forEach((item,con) => {
+          batch.batchMW.forEach((item, con) => {
             totatmtr += item.mtr;
             totalwt += item.wt;
             item.sequence = con + 1;
@@ -260,6 +260,7 @@ export class StockInComponent implements OnInit, OnDestroy {
         element['isProductionPlanned'] = true;
       }
     });
+
   }
 
   batchPChallanSelected(pchallanRef) {
@@ -271,6 +272,19 @@ export class StockInComponent implements OnInit, OnDestroy {
   batchSelected(batchId, i) {
     this.selectedBatch = batchId;
     this.selectedBatchIndex = i;
+    let temp = {};
+    let sumMtr = 0;
+    let sumWt = 0;
+    let count = 0;
+    this.finalStockDataValues[this.selectedBatchIndex].batchMW.forEach(element => {
+      sumMtr += element.mtr;
+      sumWt += element.wt;
+      count = count + 1;
+    });
+    temp["mtr"] = sumMtr;
+    temp["wt"] = sumWt;
+    temp["pcs"] = count;
+    this.totalObj[this.selectedBatch] = temp;
   }
 
   addBatch(e) {
@@ -424,7 +438,7 @@ export class StockInComponent implements OnInit, OnDestroy {
                   });
                   temp["mtr"] = sumMtr;
                   temp["wt"] = sumWt;
-                  temp["pcs"]=count;
+                  temp["pcs"] = count;
                   this.totalObj[this.selectedBatch] = temp;
 
                 }

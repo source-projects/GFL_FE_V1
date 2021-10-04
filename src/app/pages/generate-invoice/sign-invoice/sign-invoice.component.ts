@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -22,6 +23,7 @@ export class SignInvoiceComponent implements OnInit {
     private route: Router,
     private generateInvoiceService: GenerateInvoiceService,
     private toastr: ToastrService,
+    private datePipe:DatePipe
   ) { }
 
   ngOnDestroy(): void {
@@ -83,6 +85,7 @@ export class SignInvoiceComponent implements OnInit {
           this.InvoiceList = data["data"];
           this.InvoiceList.forEach(ele => {
             ele.netAmt = ele.netAmt.toFixed(2);
+            ele.date = this.datePipe.transform(ele.date,"dd/MM/yyyy");
           })
           this.copyInvoiceList = cloneDeep(this.InvoiceList);
         } else {

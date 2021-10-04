@@ -822,8 +822,6 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       const modalRef = this.modalService.open(InputBatchComponent)
     } else if(event === "pending"){
       this.route.navigate(['/pages/stock-batch/pending'])
-    } else if(event == "return"){
-      this.route.navigate(['/pages/stock-batch/return-lot'])
     }
   }
 

@@ -1,0 +1,29 @@
+<div>
+
+    <div class="modal-header nb-header">
+        <h4 class="modal-title nb-text">Change Jet</h4>
+        <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
+            <span aria-hidden="true" class="close-icon">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body mb-4">
+        <div class="form-group">
+            <label class="required">Select Jet: </label>
+            <ng-select name="jet" [(ngModel)]='newJetId' required #jet1="ngModel" (change)="jetSelected($event)"
+                placeholder="Jet Number">
+                <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
+                </ng-option>
+            </ng-select>
+            <div class="required-class" *ngIf="jetCapacity && newJetId">
+                <span>Weight is greater than selected jet capacity</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onOkClick()">Ok</button>
+
+        <button type="button" class="btn btn-primary btn-sm btn-design-save"
+            (click)="activeModal.close(false);">Cancel</button>
+    </div>
+
+</div>
