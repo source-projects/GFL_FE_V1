@@ -209,6 +209,8 @@
                             <table style="font-size: large;margin-right:18px"
                                 class="print-layout-report table-bordered table-striped table-process-fnt width-100">
                                 <tr>
+                                    <th>Quality ID</th>
+                                    <th>Quality Name</th>
                                     <th>PChallanRef</th>
                                     <th>Lot No</th>
                                     <th>Grey Mtr</th>
@@ -217,11 +219,13 @@
                                 </tr>
                                 <tr *ngFor="let invoice of report.pendingBatchDataList; let i = index"
                                     [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'" class="trs">
+                                    <td>{{invoice.qualityId}}</td>
+                                    <td>{{invoice.qualityName}}</td>
                                     <td>{{invoice.pchallanRef}}</td>
                                     <td>{{invoice.batchId}}</td>
                                     <td>{{invoice.totalBatchMtr | number : '1.2-2'}}</td>
                                     <td>{{invoice.totalBatchWt | number : '1.2-2'}}</td>
-                                    <td>{{invoice.receiveDate | date : 'fullDate'}}</td>
+                                    <td>{{invoice.receiveDate | date : 'MMMM d, y'}}</td>
                                 </tr>
                             </table>
                         </div>
