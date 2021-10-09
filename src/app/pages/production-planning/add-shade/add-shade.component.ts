@@ -162,7 +162,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
 
   getAllJets() {
     this.jetList = [];
-    this.jetPlanningService.getAllJetData().pipe(takeUntil(this.destroy$)).subscribe(
+    this.jetPlanningService.getAllJetDataV1().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];

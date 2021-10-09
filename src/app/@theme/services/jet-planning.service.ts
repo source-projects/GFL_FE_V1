@@ -18,6 +18,12 @@ export class JetPlanningService {
     );
   }
 
+  getAllJetDataV1() {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/jet/getAllJetMast"
+    );
+  }
+
   getAllStatuses() {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/jet/getJet/allStatusList"
