@@ -161,7 +161,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
 
   getAllSupplier() {
     this.loading = true;
-    this.supplierService.getAllSupplier(0, "all").pipe(takeUntil(this.destroy$)).subscribe(
+    this.supplierService.getSupplierNameV1().pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
         if (data["success"]) {
           this.supplierListRate = data["data"];
