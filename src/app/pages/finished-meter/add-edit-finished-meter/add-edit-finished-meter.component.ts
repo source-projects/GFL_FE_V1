@@ -1,5 +1,5 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import * as errorData from "../../../@theme/json/error.json";
 import { BatchData, FinishedMeter } from "../../../@theme/model/finished-meter";
@@ -8,9 +8,13 @@ import { FinishedMeterService } from "../../../@theme/services/finished-meter.se
 import { PartyService } from "../../../@theme/services/party.service";
 import { QualityService } from "../../../@theme/services/quality.service";
 import { ToastrService } from "ngx-toastr";
-import { NgModel } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogComponent } from '../../../@theme/components/confirmation-dialog/confirmation-dialog.component';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ConfirmationDialogComponent } from "../../../@theme/components/confirmation-dialog/confirmation-dialog.component";
+import { RequestData } from "../../../@theme/model/request-data.model";
+import { DataFilter } from "../../../@theme/model/datafilter.model";
+import { ResponseData } from "../../../@theme/model/response-data.model";
+import { PageData } from "../../../@theme/model/page-data.model";
+import { FilterParameter } from "../../../@theme/model/filterparameter.model";
 
 @Component({
   selector: "ngx-add-edit-finished-meter",
@@ -34,10 +38,12 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   sequenceArray: Array<number> = [];
   public totalFinishMeter: number = 0;
   public totalGrMeter: number = 0;
-  public totalWeight:number = 0;
+  public totalWeight: number = 0;
   public selectedBatch: string = "";
   public searchBatchString: string = "";
   public batchListCopy: Array<any> = [];
+  requestData: RequestData = new RequestData();
+  currentPage: number = 0;
 
   finishedMeterForm: FinishedMeter = new FinishedMeter();
 
@@ -53,10 +59,13 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     private qualityService: QualityService,
     private toastr: ToastrService,
     private finishedMeterService: FinishedMeterService,
-    private modalService:NgbModal
-  ) { }
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
+    this.requestData.getBy = "all";
+    this.requestData.data = new DataFilter();
+    this.requestData.data.isAnd = true;
     this.getData();
     this.getAllParty();
     this.getAllQuality();
@@ -73,6 +82,11 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     myForm.reset();
   }
 
+  pageChanged(event) {
+    this.requestData.data.pageIndex = event -1;
+    this.getAllBatchForFinishMtr();
+  }
+
   //get userId and userHeadId of logged in user and get current finishedMeter id from url
   getData() {
     this.user = this.commonService.getUser();
@@ -81,58 +95,74 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
   //getAll party list
   getAllParty() {
-    this.partyService.getAllPartyWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.partyList = data["data"];
-        } //else this.toastr.error(data["msg"]);
-      },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
-    );
+    this.partyService
+      .getAllPartyWithNameOnly()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.partyList = data["data"];
+          } //else this.toastr.error(data["msg"]);
+        },
+        (error) => {
+          //this.toastr.error(errorData.Internal_Error);
+        }
+      );
   }
 
   //getAll quality list
   getAllQuality() {
-    this.qualityService.getAllQualityWithNameOnly().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.qualityList = data["data"];
-        } //else this.toastr.error(data["msg"]);
-      },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
-    );
+    this.qualityService
+      .getAllQualityWithNameOnly()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.qualityList = data["data"];
+          } //else this.toastr.error(data["msg"]);
+        },
+        (error) => {
+          //this.toastr.error(errorData.Internal_Error);
+        }
+      );
   }
 
   //getAll master list
   getAllMasters() {
-    this.finishedMeterService.getAllUserHeads().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.masterList = data["data"];
-        } //else this.toastr.error(data["msg"]);
-      },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
-    );
+    this.finishedMeterService
+      .getAllUserHeads()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.masterList = data["data"];
+          } //else this.toastr.error(data["msg"]);
+        },
+        (error) => {
+          //this.toastr.error(errorData.Internal_Error);
+        }
+      );
   }
 
   getAllBatchForFinishMtr() {
-    this.finishedMeterService.getAllBatchForFinishMeter().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.batchList = data["data"];
-          this.batchListCopy = data["data"];
-        } //else this.toastr.error(data["msg"]);
-      },
-      (error) => {
-        //this.toastr.error(errorData.Internal_Error);
-      }
-    );
+    this.batchList = [];
+    this.batchListCopy = [];
+    this.finishedMeterService
+      .getAllBatchForFinishMeterPaginated(this.requestData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: ResponseData) => {
+          if (data["success"]) {
+            const pageData = data.data as PageData;
+            this.batchList = pageData.data;
+            this.requestData.data.total = pageData.total;
+            this.batchListCopy = pageData.data;
+          } //else this.toastr.error(data["msg"]);
+        },
+        (error) => {
+          //this.toastr.error(errorData.Internal_Error);
+        }
+      );
   }
 
   //Party change event | get quality by partyId
@@ -142,7 +172,8 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     if (event != undefined) {
       this.finishedMeterService
         .getAllQualityByParty(this.finishedMeterForm.partyId)
-        .pipe(takeUntil(this.destroy$)).subscribe(
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           (data) => {
             if (data["success"]) {
               this.qualityList = data["data"].qualityDataList;
@@ -159,18 +190,71 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
       //clear master list
       this.finishedMeterForm.masterId = null;
+
+      //get Finish-meter list FilterSelectedBatchPipe...
+      this.requestData.data.parameters =
+        this.requestData.data.parameters.filter(
+          (f) => f.field[0] != "userHeadId" && f.field[0] != "qualityEntryId"
+        );
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "partyId")
+      );
+      if (index > -1) {
+        this.requestData.data.parameters[index].field = ["partyId"];
+        this.requestData.data.parameters[index].operator = "EQUALS";
+        this.requestData.data.parameters[index].value = String(
+          this.finishedMeterForm.partyId
+        );
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["partyId"];
+        parameter.value = String(this.finishedMeterForm.partyId);
+        parameter.operator = "EQUALS";
+        this.requestData.data.parameters.push(parameter);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     } else {
       this.batchList = [];
       this.batchListCopy = [];
-      this.getAllBatchForFinishMtr();
+      // this.getAllBatchForFinishMtr();
       this.getAllParty();
       this.getAllQuality();
+      this.requestData.data.parameters =
+        this.requestData.data.parameters.filter(
+          (f) => f.field[0] != "userHeadId" && f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
+        );
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     }
   }
 
   filterBySearchBatches() {
     this.finishedMeterForm.batchId = null;
-    this.batchList = this.batchListCopy.filter(f => f.batchId.toString().includes(this.searchBatchString));
+
+    //get Finish-meter list FilterSelectedBatchPipe...
+    if (this.searchBatchString) {
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "batchId")
+      );
+      if (index > -1) {
+        this.requestData.data.parameters[index].field = ["batchId"];
+        this.requestData.data.parameters[index].operator = "LIKE";
+        this.requestData.data.parameters[index].value = this.searchBatchString;
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["batchId"];
+        parameter.value = this.searchBatchString;
+        parameter.operator = "LIKE";
+        this.requestData.data.parameters.push(parameter);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
+    }else{
+      this.requestData.data.pageIndex = 0;
+      this.requestData.data.parameters = this.requestData.data.parameters.filter(f => f.field[0] != "batchId");
+      this.getAllBatchForFinishMtr();
+    }
   }
 
   //get batch data from batchId...
@@ -196,7 +280,8 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
       this.finishedMeterService
         .getBatchDataBybatchNo(this.finishedMeterForm.batchId, controlId)
-        .pipe(takeUntil(this.destroy$)).subscribe(
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           (data) => {
             if (data["success"]) {
               this.finishedMeterForm.batchData = data["data"];
@@ -244,25 +329,57 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.finishedMeterService.getBatchesByPartyQuality(qid, pid).pipe(takeUntil(this.destroy$)).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.batchList = data["data"];
-            this.batchListCopy = data['data'];
-          } //else this.toastr.error(data["msg"]);
-        },
-        (error) => {
-          //this.toastr.error(errorData.Internal_Error);
-        }
-      );
+      // this.finishedMeterService
+      //   .getBatchesByPartyQuality(qid, pid)
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe(
+      //     (data) => {
+      //       if (data["success"]) {
+      //         this.batchList = data["data"];
+      //         this.batchListCopy = data["data"];
+      //       } //else this.toastr.error(data["msg"]);
+      //     },
+      //     (error) => {
+      //       //this.toastr.error(errorData.Internal_Error);
+      //     }
+      //   );
 
       //clear master list
       this.finishedMeterForm.masterId = null;
+
+      //get Finish-meter list FilterSelectedBatchPipe...
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "qualityEntryId")
+      );
+      if (index > -1) {
+        this.requestData.data.parameters[index].field = ["qualityEntryId"];
+        this.requestData.data.parameters[index].operator = "EQUALS";
+        this.requestData.data.parameters[index].value = String(
+          this.finishedMeterForm.qualityId
+        );
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["qualityEntryId"];
+        parameter.value = String(this.finishedMeterForm.qualityId);
+        parameter.operator = "EQUALS";
+        this.requestData.data.parameters.push(parameter);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     } else {
       this.finishedMeterForm.batchId = null;
       this.batchList = [];
       this.batchListCopy = [];
       this.getAllQuality();
+
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "qualityEntryId")
+      );
+      if (index > -1) {
+        let removed = this.requestData.data.parameters.splice(index, 1);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     }
   }
 
@@ -279,23 +396,53 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       });
 
       //get batch by masterId
-      this.finishedMeterService
-        .getBatchByMasterId(this.finishedMeterForm.masterId)
-        .pipe(takeUntil(this.destroy$)).subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.batchList = data["data"];
-              this.batchListCopy = data['data']
-            } else this.toastr.error(data["msg"]);
-          },
-          (error) => { }
-        );
+      // this.finishedMeterService
+      //   .getBatchByMasterId(this.finishedMeterForm.masterId)
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe(
+      //     (data) => {
+      //       if (data["success"]) {
+      //         this.batchList = data["data"];
+      //         this.batchListCopy = data["data"];
+      //       } else this.toastr.error(data["msg"]);
+      //     },
+      //     (error) => {}
+      //   );
 
       //clear party and quality
       this.finishedMeterForm.qualityId = null;
       this.finishedMeterForm.partyId = null;
+      this.requestData.data.parameters =
+      this.requestData.data.parameters.filter(
+        (f) => f.field[0] != "partyId" && f.field[0] != "qualityEntryId"
+      );
+      //get Finish-meter list FilterSelectedBatchPipe...
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "userHeadId")
+      );
+      if (index > -1) {
+        this.requestData.data.parameters[index].field = ["userHeadId"];
+        this.requestData.data.parameters[index].operator = "EQUALS";
+        this.requestData.data.parameters[index].value = String(
+          this.finishedMeterForm.masterId
+        );
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["userHeadId"];
+        parameter.value = String(this.finishedMeterForm.masterId);
+        parameter.operator = "EQUALS";
+        this.requestData.data.parameters.push(parameter);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     } else {
       this.getAllParty();
+      this.requestData.data.parameters =
+        this.requestData.data.parameters.filter(
+          (f) => f.field[0] != "partyId" && f.field[0] != "qualityEntryId" && f.field[0] != "userHeadId"
+        );
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchForFinishMtr();
     }
   }
 
@@ -323,7 +470,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
   onKeyUpMeter(e?, rowIndex?, colIndex?, colName?) {
     this.CalculateTotalGrMtr();
     var keyCode = e.keyCode ? e.keyCode : e.which;
-    if (keyCode == 13 && (colIndex == 2)) {
+    if (keyCode == 13 && colIndex == 2) {
       if (this.finishedMeterForm.batchData.length > rowIndex + 1) {
         this.index = "batchData" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
@@ -334,12 +481,12 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
             clearInterval(interval);
             let objDiv = document.getElementById(this.index);
             if (objDiv) {
-              objDiv.scrollIntoView(true)
+              objDiv.scrollIntoView(true);
             }
-          }else{
-            let objDiv = document.querySelector('datatable-scroller');
-            if(objDiv){
-              objDiv.scrollBy(0, 10)
+          } else {
+            let objDiv = document.querySelector("datatable-scroller");
+            if (objDiv) {
+              objDiv.scrollBy(0, 10);
             }
           }
         }, 10);
@@ -375,12 +522,12 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
             clearInterval(interval);
             let objDiv = document.getElementById(this.index);
             if (objDiv) {
-              objDiv.scrollIntoView(true)
+              objDiv.scrollIntoView(true);
             }
-          }else{
-            let objDiv = document.querySelector('datatable-scroller');
-            if(objDiv){
-              objDiv.scrollBy(0, 10)
+          } else {
+            let objDiv = document.querySelector("datatable-scroller");
+            if (objDiv) {
+              objDiv.scrollBy(0, 10);
             }
           }
         }, 10);
@@ -491,7 +638,8 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
 
           this.finishedMeterService
             .addFinishedMeter(this.finishedMeterForm.batchData)
-            .pipe(takeUntil(this.destroy$)).subscribe(
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
               (data) => {
                 if (data["success"]) {
                   this.toastr.success(data["msg"]);
@@ -557,12 +705,13 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     });
   }
 
-  remove(batch){
+  remove(batch) {
     const modelRef = this.modalService.open(ConfirmationDialogComponent);
-    modelRef.result
-      .then((result) => {
-        if (result) {
-          this.finishedMeterService.removeBatch(batch.productionId).pipe(takeUntil(this.destroy$))
+    modelRef.result.then((result) => {
+      if (result) {
+        this.finishedMeterService
+          .removeBatch(batch.productionId)
+          .pipe(takeUntil(this.destroy$))
           .subscribe(
             (data) => {
               this.finishedMeterForm.batchId = null;
@@ -573,7 +722,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
               this.toastr.error(errorData.Serever_Error);
             }
           );
-        }
-      })
+      }
+    });
   }
 }
