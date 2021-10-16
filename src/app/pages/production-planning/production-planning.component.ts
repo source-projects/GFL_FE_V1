@@ -215,54 +215,69 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public partySelected(event) {
     if (!this.flipped) {
       //get Finish-meter list FilterSelectedBatchPipe...
-
-      //for !production
+      if(event){
+        //for !production
       this.requestData.data.parameters =
-        this.requestData.data.parameters.filter(
-          (f) => f.field[0] != "qualityEntryId"
-        );
-      const index = this.requestData.data.parameters.findIndex((v) =>
-        v.field.find((o) => o == "partyId")
+      this.requestData.data.parameters.filter(
+        (f) => f.field[0] != "qualityEntryId"
       );
-      if (index > -1) {
-        this.requestData.data.parameters[index].field = ["partyId"];
-        this.requestData.data.parameters[index].operator = "EQUALS";
-        this.requestData.data.parameters[index].value = String(
-          this.productionPlanning.partyId
+    const index = this.requestData.data.parameters.findIndex((v) =>
+      v.field.find((o) => o == "partyId")
+    );
+    if (index > -1) {
+      this.requestData.data.parameters[index].field = ["partyId"];
+      this.requestData.data.parameters[index].operator = "EQUALS";
+      this.requestData.data.parameters[index].value = String(
+        this.productionPlanning.partyId
+      );
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = ["partyId"];
+      parameter.value = String(this.productionPlanning.partyId);
+      parameter.operator = "EQUALS";
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getAllBatchData();
+
+    //for production
+    this.prodRequestData.data.parameters =
+      this.prodRequestData.data.parameters.filter(
+        (f) => f.field[0] != "qualityEntryId"
+      );
+    const index1 = this.prodRequestData.data.parameters.findIndex((v) =>
+      v.field.find((o) => o == "partyId")
+    );
+    if (index1 > -1) {
+      this.prodRequestData.data.parameters[index1].field = ["partyId"];
+      this.prodRequestData.data.parameters[index1].operator = "EQUALS";
+      this.prodRequestData.data.parameters[index1].value = String(
+        this.productionPlanning.partyId
+      );
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = ["partyId"];
+      parameter.value = String(this.productionPlanning.partyId);
+      parameter.operator = "EQUALS";
+      this.prodRequestData.data.parameters.push(parameter);
+    }
+    this.prodRequestData.data.pageIndex = 0;
+    this.plannedProductionListForDataTable();
+      }else{
+        this.requestData.data.parameters =
+        this.requestData.data.parameters.filter(
+          (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
         );
-      } else {
-        let parameter = new FilterParameter();
-        parameter.field = ["partyId"];
-        parameter.value = String(this.productionPlanning.partyId);
-        parameter.operator = "EQUALS";
-        this.requestData.data.parameters.push(parameter);
-      }
       this.requestData.data.pageIndex = 0;
       this.getAllBatchData();
 
-      //for production
       this.prodRequestData.data.parameters =
         this.prodRequestData.data.parameters.filter(
-          (f) => f.field[0] != "qualityEntryId"
+          (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
         );
-      const index1 = this.prodRequestData.data.parameters.findIndex((v) =>
-        v.field.find((o) => o == "partyId")
-      );
-      if (index1 > -1) {
-        this.prodRequestData.data.parameters[index1].field = ["partyId"];
-        this.prodRequestData.data.parameters[index1].operator = "EQUALS";
-        this.prodRequestData.data.parameters[index1].value = String(
-          this.productionPlanning.partyId
-        );
-      } else {
-        let parameter = new FilterParameter();
-        parameter.field = ["partyId"];
-        parameter.value = String(this.productionPlanning.partyId);
-        parameter.operator = "EQUALS";
-        this.prodRequestData.data.parameters.push(parameter);
-      }
       this.prodRequestData.data.pageIndex = 0;
       this.plannedProductionListForDataTable();
+      }
     }
 
     this.loading = true;
@@ -325,19 +340,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       this.getPartyList();
       this.getQualityList();
       // this.getAllBatchData();
-      this.requestData.data.parameters =
-        this.requestData.data.parameters.filter(
-          (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
-        );
-      this.requestData.data.pageIndex = 0;
-      this.getAllBatchData();
-
-      this.prodRequestData.data.parameters =
-        this.prodRequestData.data.parameters.filter(
-          (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
-        );
-      this.prodRequestData.data.pageIndex = 0;
-      this.plannedProductionListForDataTable();
       this.loading = false;
     }
   }
