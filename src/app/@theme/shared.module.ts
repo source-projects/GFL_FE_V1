@@ -42,13 +42,12 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ColorPickerModule } from "ngx-color-picker";
 import { ToastrModule } from "ngx-toastr/toastr/toastr.module";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDatepickerModule, NgbModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 //import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { ExportService } from "./services/export.service";
 import { ExportPopupComponent } from "./components/export-popup/export-popup.component";
 
 import { WarningPopupComponent } from "./components/warning-popup/warning-popup.component";
-import { BtnCellRenderer } from "./renderer/button-cell-renderer.component";
 import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
 import { SliderModule } from "angular-image-slider";
 import { NgCircleProgressModule } from "ng-circle-progress";
@@ -109,6 +108,7 @@ const NB_MODULES = [
     NgxCheckboxModule,
     NgxQRCodeModule,
     SliderModule,
+    NgbPaginationModule,
     NgCircleProgressModule.forRoot({
       radius: 60,
       outerStrokeWidth: 10,
@@ -122,6 +122,7 @@ const NB_MODULES = [
   exports: [
     ...NB_MODULES,
     NgxLoadingModule,
+    NgbPaginationModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     ZXingScannerModule,

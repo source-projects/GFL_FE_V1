@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProductionPlanningGuard } from 'app/@theme/guards/production-planning.guard';
+import { ProductionPlanningGuard } from '../../@theme/guards/production-planning.guard';
 import { ProductionPlanningComponent } from "./production-planning.component";
 
 const routes: Routes = [
