@@ -26,7 +26,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   public maxDate: any;
   public currentDate = new Date();
   public disableButton: boolean = false;
-  public shortReport: StockShortReport[] = [];
+  public shortReport = [];
   public masterList = [];
   userHeadId;
   qualityList: any[];
@@ -158,7 +158,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         (error) => {}
       );
   }
-
+  headerArray = [];
   getShortReport(form) {
     this.shortReport = [];
     this.formSubmitted = true;
@@ -175,6 +175,15 @@ export class ReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"] && data["data"]) {
               this.shortReport = data["data"];
+              let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+                  this.headerArray = Object.keys(this.shortReport[0].pendingBatchDataList[0]);
+                  let finalHeader = [];
+                  this.headerArray.forEach((ele, i) => {
+                    finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+                    finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+                  });
+                  this.headers = [...finalHeader];
+                  
               this.shortReport = _sortBy(this.shortReport, "invoiceNo");
               this.printReport(form);
             }

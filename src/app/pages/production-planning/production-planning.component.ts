@@ -600,7 +600,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   public plannedProductionListForDataTable(): any {
     this.plannedProductionList = [];
     this.productionPlanningService
-      .getAllBatchListForProdV1(this.prodRequestData, true)
+      .getAllBatchForProd(this.prodRequestData)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {

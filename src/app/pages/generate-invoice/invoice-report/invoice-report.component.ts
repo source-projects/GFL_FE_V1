@@ -28,7 +28,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public maxDate: any;
   public currentDate = new Date();
   public disableButton: boolean = false;
-  public shortReport: InvoiceShortReport[] = [];
+  public shortReport = [];
   public detailedReport: InvoiceDetailedReport[] = [];
   public masterList = [];
   userHeadId;
@@ -153,7 +153,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+headerArray = []
   getShortReport(form) {
     this.totalAmount = 0;
     this.totalFinishedMeter = 0;
@@ -170,15 +170,26 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
-              if (this.shortReport) {
-                this.shortReport.forEach((element) => {
-                  element.consolidatedBillDataList.forEach(billData => {
-                    this.totalFinishedMeter += billData.totalFinishMtr;
-                    this.totalGrayMeter += billData.totalMtr;
-                    this.totalAmount += billData.taxAmt;
+              if (this.shortReport && this.shortReport.length) {
+                if(this.shortReport[0].consolidatedBillDataForPDFS && this.shortReport[0].consolidatedBillDataForPDFS.length){
+                  let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+                  this.headerArray = Object.keys(this.shortReport[0].consolidatedBillDataForPDFS[0]);
+                  let finalHeader = [];
+                  this.headerArray.forEach((ele, i) => {
+                    finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+                    finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
                   });
-                });
-
+                  this.headers = [...finalHeader];
+                  this.shortReport.forEach((element) => {
+                    element.consolidatedBillDataForPDFS.forEach(billData => {
+                      this.totalFinishedMeter += billData.totalFinishMtr;
+                      this.totalGrayMeter += billData.totalMtr;
+                      this.totalAmount += billData.taxAmt;
+                    });
+                  });
+  
+                }
+                
                 this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
                 this.printReport(form);
               }
@@ -225,60 +236,65 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
       this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format();
       this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format();
       this.invoiceService
-        .getShortInvoiceReport(this.invoiceReportRequest)
+        .getShortInvoiceExcel(this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"] && data["data"] && data["data"].length) {
               let excelData = data["data"];
-              this.headers = ["Invoice_No", "Invoice Date", "Party Name", "Party Address1", "Party Address2", "City", "State", "GSTIN", "Phone No",
-                "BatchId", "Total_Meter", "Total_Pcs", "Total_Finish_Meter", "Total_Finish_Pcs",
-                "Rate", "Amount", "Discount_Percentage", "Discount_Amt", "Taxable_Amt",
-                "C_GST", "S_GST", "I_GST", "GST_Amt", "Total_Amt", "Billing Unit", "Inward Unit", "Master"]
+              this.headers = [];
+              let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+              let headerArray = Object.keys(excelData[0]);
+              let finalHeader = [];
+              headerArray.forEach((ele, i) => {
+                finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+                finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+              });
+              this.headers = [...finalHeader];
               let list = [];
-              excelData.forEach(ele => {
-                ele.consolidatedBillDataList.forEach(col => {
-                  let latest_date = this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
-                  let y = {
-                    Invoice_No: col.invoiceNo,
-                    InvoiceDate: latest_date,
-                    PartyName: col.partyName,
-                    PartyAddress1: col.partyAddress1,
-                    PartyAddress2: col.partyAddress2,
-                    City: col.city,
-                    State: col.state,
-                    GSTIN: col.gstin,
-                    PhoneNumber: col.contactNo,
-                    BatchId: col.batchId,
-                    Total_Meter: col.totalMtr,
-                    Total_Pcs: col.greyPcs,
-                    Total_Finish_Meter: col.totalFinishMtr,
-                    Total_Finish_Pcs: col.pcs,
-                    Rate: col.rate,
-                    Amount: col.amt,
-                    Discount_Percentage: col.percentageDiscount,
-                    Discount_Amt: col.discountAmt,
-                    Taxable_Amt: col.taxAmt,
-                    C_GST: col.cgst,
-                    S_GST: col.sgst,
-                    I_GST: col.igst,
-                    GST_Amt: col.gstAmt,
-                    Total_Amt: col.netAmt,
-                    BillingUnit: col.billingUnit,
-                    InwardUnit: col.inwardUnit,
-                    Master: col.headName,
+              // excelData.forEach(ele => {
+              //   ele.consolidatedBillDataList.forEach(col => {
+              //     let latest_date = this.datepipe.transform(col.invoiceDate, 'dd/MM/yyyy');
+              //     let y = {
+              //       Invoice_No: col.invoiceNo,
+              //       InvoiceDate: latest_date,
+              //       PartyName: col.partyName,
+              //       PartyAddress1: col.partyAddress1,
+              //       PartyAddress2: col.partyAddress2,
+              //       City: col.city,
+              //       State: col.state,
+              //       GSTIN: col.gstin,
+              //       PhoneNumber: col.contactNo,
+              //       BatchId: col.batchId,
+              //       Total_Meter: col.totalMtr,
+              //       Total_Pcs: col.greyPcs,
+              //       Total_Finish_Meter: col.totalFinishMtr,
+              //       Total_Finish_Pcs: col.pcs,
+              //       Rate: col.rate,
+              //       Amount: col.amt,
+              //       Discount_Percentage: col.percentageDiscount,
+              //       Discount_Amt: col.discountAmt,
+              //       Taxable_Amt: col.taxAmt,
+              //       C_GST: col.cgst,
+              //       S_GST: col.sgst,
+              //       I_GST: col.igst,
+              //       GST_Amt: col.gstAmt,
+              //       Total_Amt: col.netAmt,
+              //       BillingUnit: col.billingUnit,
+              //       InwardUnit: col.inwardUnit,
+              //       Master: col.headName,
 
-                  }
-                  list.push(y);
-                })
+              //     }
+              //     list.push(y);
+              //   })
 
 
-              })
-              this.exportService.exportExcel(list, "Invoice Report", this.headers)
-            }else{
+              // })
+              this.exportService.exportExcel(excelData, "Invoice Report", this.headers)
+            } else {
               this.toastr.error(data['msg'])
             }
           },
-          (error) => { 
+          (error) => {
             this.toastr.error("Data Not Found..");
           }
         );

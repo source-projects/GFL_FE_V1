@@ -42,6 +42,13 @@ export class ProductionPlanningService {
         "api/stockBatch/batch/allPaginated/"+isProd, data
     );
   }
+
+  getAllBatchForProd(data: RequestData): Observable<any>{
+    return this.httpClient.post(
+      this.commonService.envUrl() +
+        "api/productionPlan/allPaginated", data
+    );
+  }
   getWeightByStockIdAndBatchId(id, id1): any {
     return this.httpClient.get(
       this.commonService.envUrl() +
