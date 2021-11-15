@@ -17,9 +17,9 @@
                 <div class="form-group col-md-4">
                     <label class="required">Report Type</label>
                     <ng-select name="report" appendTo="body" id="report" placeholder="Select Report"
-                        [(ngModel)]="reportType">
+                        [(ngModel)]="reportType" (change)="selectedReport($event)">
                         <div>
-                            <ng-option *ngFor="let report of reportList" [value]="report.value">{{report.name}}
+                            <ng-option *ngFor="let report of reportList" [value]="report">{{report.name}}
                             </ng-option>
                         </div>
                     </ng-select>

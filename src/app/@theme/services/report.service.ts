@@ -56,4 +56,21 @@ export class ReportService {
         quality
     );
   }
+
+
+  getAllReportType(){
+    let response = this._http.get(
+      this.commonService.envUrl() + "api/report/all"
+    );
+    return response;
+  }
+
+  getReportForExcel(obj,data){
+    let response = this._http.post(
+      this.commonService.envUrl() + obj.apiForExcel,data
+    );
+    return response;
+  }
 }
+
+

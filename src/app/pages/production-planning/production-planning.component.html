@@ -22,7 +22,7 @@
                                             <div class="col-md-9 col-12">
                                                 <ng-select name="partyId" appendTo="body"
                                                     [(ngModel)]='productionPlanning.partyId' required
-                                                    placeholder="Party Name" (change)=partySelected($event)>
+                                                    placeholder="Party Name" (change)="partySelected($event)">
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -59,7 +59,7 @@
                                             <div class="col-md-9 col-12">
                                                 <ng-select name="qualityId" appendTo="body"
                                                     [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID"
-                                                    (change)=qualitySelected($event)>
+                                                    (change)="qualitySelected($event)">
                                                     <ng-option disabled="true">
                                                         <div class="row">
                                                             <div class="col-md-6 col-6">
@@ -255,7 +255,14 @@
                                                     (mouseout)="resetDetailsOfBatch($event)"
                                                     (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
-
+                                                <ngb-pagination id="custom-pagination"  *ngIf="requestData.data.total"
+                                                    class="d-flex justify-content-end"
+                                                    [pageSize]="requestData.data.pageSize"
+                                                    [maxSize]="5"
+                                                    [collectionSize]="requestData.data.total"
+                                                    [page]="requestData.data.pageIndex"
+                                                    (pageChange)="pageChanged($event)">
+                                                </ngb-pagination>
                                             </div>
 
                                         </div>
@@ -280,20 +287,26 @@
                                             <div class="form-group batch-list-3line">
                                                 <ng-container *ngFor="let b of plannedProductionList">
                                                     <button nbButton size="small"
-                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius" style="border: 1px solid black;"
-                                                        [value]="b.id" (mouseenter)="getAllDetailsOfBatch($event,b)"
+                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius"
+                                                        style="border: 1px solid black;" [value]="b.id"
+                                                        (mouseenter)="getAllDetailsOfBatch($event,b)"
                                                         (mouseout)="resetDetailsOfBatch($event)"
                                                         [style.background]="b.colorTone"
                                                         class="p-badge-design-production jet-popup-display"
                                                         (click)="batchSelectedFromProductionList($event)">
                                                         {{b.batchId}}
-                                                        <nb-icon class="icon-pposition" (click)="remove(b)" icon="close-circle-outline"></nb-icon>
-
+                                                        <nb-icon class="icon-pposition" (click)="remove(b)"
+                                                            icon="close-circle-outline"></nb-icon>
                                                     </button>
-
-
                                                 </ng-container>
-
+                                                <ngb-pagination id="custom-pagination" *ngIf="prodRequestData.data.total"
+                                                    class="d-flex justify-content-end"
+                                                    [pageSize]="prodRequestData.data.pageSize"
+                                                    [maxSize]="5"
+                                                    [collectionSize]="prodRequestData.data.total"
+                                                    [page]="prodRequestData.data.pageIndex"
+                                                    (pageChange)="prodPageChanged($event)">
+                                                </ngb-pagination>
                                             </div>
                                         </div>
                                     </div>

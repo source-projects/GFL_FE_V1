@@ -30,7 +30,7 @@ export class InvoiceReportRequest {
   constructor() {
     this.from = "";
     this.to = "";
-    this.signByParty = false;
+    this.signByParty = "";
   }
 }
 export class DispatchData {
@@ -94,4 +94,24 @@ export class ConsolidatedBillDataList {
   amt: number;
   discountAmt:number;
   taxAmt:number;
+}
+
+
+
+// For Sales Report
+
+export class SalesReportRequest {
+  from: any;
+  to: any;
+  userHeadId: any;
+  partyId: any;
+  qualityNameId: any;
+  qualityEntryId: any;
+  signByParty:any;
+  reportType:any;
+  constructor() {
+    this.from = "";
+    this.to = "";
+    this.signByParty = false;
+  }
 }

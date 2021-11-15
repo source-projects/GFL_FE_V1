@@ -3794,3 +3794,41 @@ ng-select .ng-clear-wrapper {
 .chip-svg:hover {
   color: #666666;
 }
+
+.pagination{
+  margin-bottom: 0;
+
+  .page-item{
+    margin: 0 4px;
+  }
+
+  .page-item .page-link{
+    border: none;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .page-item .page-link{
+    background-color: #EDF1F7;
+    color: #000;
+  }
+
+  .page-item.active .page-link{
+    background-color: #aa3634;
+    color: #fff;
+  }
+
+  .page-item .page-link {
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 4px;
+    padding-right: 0px;
+    padding-left: 0px;
+    font-size: 13px;
+    .sr-only {
+      display: none;
+    }
+  }
+}

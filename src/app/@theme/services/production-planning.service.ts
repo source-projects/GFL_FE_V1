@@ -1,6 +1,8 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CommonService } from "./common.service";
+import { RequestData } from "../model/request-data.model";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -31,6 +33,20 @@ export class ProductionPlanningService {
     return this.httpClient.get(
       this.commonService.envUrl() +
         "api/productionPlan/allProductionWithoutFilter"
+    );
+  }
+
+  getAllBatchListForProdV1(data: RequestData, isProd): Observable<any>{
+    return this.httpClient.post(
+      this.commonService.envUrl() +
+        "api/stockBatch/batch/allPaginated/"+isProd, data
+    );
+  }
+
+  getAllBatchForProd(data: RequestData): Observable<any>{
+    return this.httpClient.post(
+      this.commonService.envUrl() +
+        "api/productionPlan/allPaginated", data
     );
   }
   getWeightByStockIdAndBatchId(id, id1): any {

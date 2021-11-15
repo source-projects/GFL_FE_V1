@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FinishedMeterRoutingModule } from './finished-meter-routing.module';
 import { FinishedMeterComponent } from './finished-meter.component';
 import { AddEditFinishedMeterComponent } from './add-edit-finished-meter/add-edit-finished-meter.component';
-import { SharedModule } from 'app/@theme/shared.module';
+import { SharedModule } from '../../@theme/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NbCheckboxModule } from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';

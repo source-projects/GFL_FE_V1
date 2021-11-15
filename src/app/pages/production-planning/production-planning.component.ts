@@ -27,7 +27,10 @@ import { StockBatchService } from "../../@theme/services/stock-batch.service";
 import { PlanningSlipComponent } from "../jet-planning/planning-slip/planning-slip.component";
 import { AddShadeComponent } from "./add-shade/add-shade.component";
 import { ChangeJetComponent } from "../production-planning/change-jet/change-jet.component";
-import { title } from 'process';
+import { RequestData } from "../../@theme/model/request-data.model";
+import { DataFilter } from "../../@theme/model/datafilter.model";
+import { PageData } from "../../@theme/model/page-data.model";
+import { FilterParameter } from "../../@theme/model/filterparameter.model";
 
 @Component({
   selector: "ngx-production-planning",
@@ -84,7 +87,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     { title: "Remove" },
     { title: "Print" },
     { title: "Edit And Print" },
-    { title: "Change Jet" }
+    { title: "Change Jet" },
   ];
   color = "red";
   allBatchList: any[] = [];
@@ -93,6 +96,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     productionId: null,
     sequence: null,
   };
+
+  //Pagination..
+  requestData: RequestData = new RequestData();
+  prodRequestData: RequestData = new RequestData();
 
   constructor(
     private partyService: PartyService,
@@ -125,6 +132,14 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.requestData.getBy = "all";
+    this.requestData.data = new DataFilter();
+    this.requestData.data.isAnd = true;
+
+    this.prodRequestData.getBy = "all";
+    this.prodRequestData.data = new DataFilter();
+    this.prodRequestData.data.isAnd = true;
+
     this.getCurrentId();
     this.getPartyList();
     this.getQualityList();
@@ -179,14 +194,16 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public getAllBatchData() {
     this.batchList = [];
-    this.stockBatchService
-      .getAllBatch()
+    this.productionPlanningService
+      .getAllBatchListForProdV1(this.requestData, false)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.batchList = data["data"];
-            this.batchListCopy = data["data"];
+            const pageData = data.data as PageData;
+            this.batchList = pageData.data;
+            this.requestData.data.total = pageData.total;
+            this.batchListCopy = pageData.data;
           }
         },
         (error) => {
@@ -196,6 +213,73 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   public partySelected(event) {
+    if (!this.flipped) {
+      //get Finish-meter list FilterSelectedBatchPipe...
+      if (event) {
+        //for !production
+        this.requestData.data.parameters =
+          this.requestData.data.parameters.filter(
+            (f) => f.field[0] != "qualityEntryId"
+          );
+        const index = this.requestData.data.parameters.findIndex((v) =>
+          v.field.find((o) => o == "partyId")
+        );
+        if (index > -1) {
+          this.requestData.data.parameters[index].field = ["partyId"];
+          this.requestData.data.parameters[index].operator = "EQUALS";
+          this.requestData.data.parameters[index].value = String(
+            this.productionPlanning.partyId
+          );
+        } else {
+          let parameter = new FilterParameter();
+          parameter.field = ["partyId"];
+          parameter.value = String(this.productionPlanning.partyId);
+          parameter.operator = "EQUALS";
+          this.requestData.data.parameters.push(parameter);
+        }
+        this.requestData.data.pageIndex = 0;
+        this.getAllBatchData();
+
+        //for production
+        this.prodRequestData.data.parameters =
+          this.prodRequestData.data.parameters.filter(
+            (f) => f.field[0] != "qualityEntryId"
+          );
+        const index1 = this.prodRequestData.data.parameters.findIndex((v) =>
+          v.field.find((o) => o == "partyId")
+        );
+        if (index1 > -1) {
+          this.prodRequestData.data.parameters[index1].field = ["partyId"];
+          this.prodRequestData.data.parameters[index1].operator = "EQUALS";
+          this.prodRequestData.data.parameters[index1].value = String(
+            this.productionPlanning.partyId
+          );
+        } else {
+          let parameter = new FilterParameter();
+          parameter.field = ["partyId"];
+          parameter.value = String(this.productionPlanning.partyId);
+          parameter.operator = "EQUALS";
+          this.prodRequestData.data.parameters.push(parameter);
+        }
+        this.prodRequestData.data.pageIndex = 0;
+        this.plannedProductionListForDataTable();
+      } else {
+        this.requestData.data.parameters =
+          this.requestData.data.parameters.filter(
+            (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
+          );
+        this.requestData.data.pageIndex = 0;
+        this.getAllBatchData();
+
+        this.prodRequestData.data.parameters =
+          this.prodRequestData.data.parameters.filter(
+            (f) => f.field[0] != "qualityEntryId" && f.field[0] != "partyId"
+          );
+        this.prodRequestData.data.pageIndex = 0;
+        this.plannedProductionListForDataTable();
+      }
+    }
+
     this.loading = true;
     this.productionPlanning.qualityId = null;
     if (event) {
@@ -221,32 +305,32 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       }
     }
     if (event) {
-      this.batchList = [];
-      this.batchListCopy = [];
-      if (this.productionPlanning.partyId) {
-        this.programService
-          .getBatchByParty(this.productionPlanning.partyId)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.batchList = data["data"];
-                this.batchListCopy = data["data"];
-                if (this.batchList) {
-                  this.batchList = this.batchList.filter(
-                    (v) => !v.productionPlanned
-                  );
-                }
-                this.loading = false;
-              } else {
-                this.loading = false;
-              }
-            },
-            (error) => {
-              this.loading = false;
-            }
-          );
-      }
+      // this.batchList = [];
+      // this.batchListCopy = [];
+      // if (this.productionPlanning.partyId) {
+      //   this.programService
+      //     .getBatchByParty(this.productionPlanning.partyId)
+      //     .pipe(takeUntil(this.destroy$))
+      //     .subscribe(
+      //       (data) => {
+      //         if (data["success"]) {
+      //           this.batchList = data["data"];
+      //           this.batchListCopy = data["data"];
+      //           if (this.batchList) {
+      //             this.batchList = this.batchList.filter(
+      //               (v) => !v.productionPlanned
+      //             );
+      //           }
+      //           this.loading = false;
+      //         } else {
+      //           this.loading = false;
+      //         }
+      //       },
+      //       (error) => {
+      //         this.loading = false;
+      //       }
+      //     );
+      // }
     } else {
       this.batchList = [];
       this.batchListCopy = [];
@@ -255,7 +339,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
       this.getPartyList();
       this.getQualityList();
-      this.getAllBatchData();
+      // this.getAllBatchData();
       this.loading = false;
     }
   }
@@ -270,51 +354,176 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             this.productionPlanning.qualityEntryId = e.id || e.qualityEntryId;
           }
         });
+
+        if (!this.flipped) {
+          //get Finish-meter list FilterSelectedBatchPipe...
+
+          //for !production
+          const index = this.requestData.data.parameters.findIndex((v) =>
+            v.field.find((o) => o == "qualityEntryId")
+          );
+          if (index > -1) {
+            this.requestData.data.parameters[index].field = ["qualityEntryId"];
+            this.requestData.data.parameters[index].operator = "EQUALS";
+            this.requestData.data.parameters[index].value = String(
+              this.productionPlanning.qualityEntryId
+            );
+          } else {
+            let parameter = new FilterParameter();
+            parameter.field = ["qualityEntryId"];
+            parameter.value = String(this.productionPlanning.qualityEntryId);
+            parameter.operator = "EQUALS";
+            this.requestData.data.parameters.push(parameter);
+          }
+          this.requestData.data.pageIndex = 0;
+          this.getAllBatchData();
+
+          //for production
+          const index1 = this.prodRequestData.data.parameters.findIndex((v) =>
+            v.field.find((o) => o == "qualityEntryId")
+          );
+          if (index1 > -1) {
+            this.prodRequestData.data.parameters[index1].field = [
+              "qualityEntryId",
+            ];
+            this.prodRequestData.data.parameters[index1].operator = "EQUALS";
+            this.prodRequestData.data.parameters[index1].value = String(
+              this.productionPlanning.qualityEntryId
+            );
+          } else {
+            let parameter = new FilterParameter();
+            parameter.field = ["qualityEntryId"];
+            parameter.value = String(this.productionPlanning.qualityEntryId);
+            parameter.operator = "EQUALS";
+            this.prodRequestData.data.parameters.push(parameter);
+          }
+          this.prodRequestData.data.pageIndex = 0;
+          this.plannedProductionListForDataTable();
+        } else {
+          this.requestData.data.parameters =
+            this.requestData.data.parameters.filter(
+              (f) => f.field[0] != "qualityEntryId"
+            );
+          this.requestData.data.pageIndex = 0;
+          this.getAllBatchData();
+
+          this.prodRequestData.data.parameters =
+            this.prodRequestData.data.parameters.filter(
+              (f) => f.field[0] != "qualityEntryId"
+            );
+          this.prodRequestData.data.pageIndex = 0;
+          this.plannedProductionListForDataTable();
+        }
       }
       if (this.productionPlanning.qualityEntryId) {
-        this.batchList = [];
-        this.batchListCopy = [];
-        this.programService
-          .getBatchByQuality(this.productionPlanning.qualityEntryId)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.batchList = data["data"];
-                this.batchListCopy = data["data"];
-                if (this.batchList) {
-                  this.batchList = this.batchList.filter(
-                    (v) => !v.productionPlanned
-                  );
-                }
-                this.loading = false;
-              } else {
-                this.loading = false;
-              }
-            },
-            (error) => {
-              this.loading = false;
-            }
-          );
+        // this.batchList = [];
+        // this.batchListCopy = [];
+        // this.programService
+        //   .getBatchByQuality(this.productionPlanning.qualityEntryId)
+        //   .pipe(takeUntil(this.destroy$))
+        //   .subscribe(
+        //     (data) => {
+        //       if (data["success"]) {
+        //         this.batchList = data["data"];
+        //         this.batchListCopy = data["data"];
+        //         if (this.batchList) {
+        //           this.batchList = this.batchList.filter(
+        //             (v) => !v.productionPlanned
+        //           );
+        //         }
+        //         this.loading = false;
+        //       } else {
+        //         this.loading = false;
+        //       }
+        //     },
+        //     (error) => {
+        //       this.loading = false;
+        //     }
+        //   );
       }
+    } else {
+      this.requestData.data.parameters =
+        this.requestData.data.parameters.filter(
+          (f) => f.field[0] != "qualityEntryId"
+        );
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchData();
+
+      this.prodRequestData.data.parameters =
+        this.prodRequestData.data.parameters.filter(
+          (f) => f.field[0] != "qualityEntryId"
+        );
+      this.prodRequestData.data.pageIndex = 0;
+      this.plannedProductionListForDataTable();
     }
   }
 
   filter(event: any) {
-    let filterNumber = event.target.value;
-    if (filterNumber == "") {
-      this.batchList = [...this.batchListCopy];
+    // let filterNumber = event.target.value;
+    // if (filterNumber == "") {
+    //   this.batchList = [...this.batchListCopy];
+    // } else {
+    //   let displayArray = this.batchListCopy.filter((item) => {
+    //     if (item.batchId.indexOf(filterNumber) !== -1 || !filterNumber) {
+    //       return true;
+    //     }
+    //   });
+    //   this.batchList = displayArray;
+    // }
+    if (!this.batch) {
+      this.requestData.data.parameters =
+        this.requestData.data.parameters.filter((f) => f.field[0] != "batchId");
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchData();
+
+      this.prodRequestData.data.parameters =
+        this.prodRequestData.data.parameters.filter(
+          (f) => f.field[0] != "batchId"
+        );
+      this.prodRequestData.data.pageIndex = 0;
+      this.plannedProductionListForDataTable();
     } else {
-      let displayArray = this.batchListCopy.filter((item) => {
-        if (item.batchId.indexOf(filterNumber) !== -1 || !filterNumber) {
-          return true;
-        }
-      });
-      this.batchList = displayArray;
+      //get Finish-meter list FilterSelectedBatchPipe...
+
+      //for !production
+      const index = this.requestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "batchId")
+      );
+      if (index > -1) {
+        this.requestData.data.parameters[index].field = ["batchId"];
+        this.requestData.data.parameters[index].operator = "LIKE";
+        this.requestData.data.parameters[index].value = String(this.batch);
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["batchId"];
+        parameter.value = String(this.batch);
+        parameter.operator = "LIKE";
+        this.requestData.data.parameters.push(parameter);
+      }
+      this.requestData.data.pageIndex = 0;
+      this.getAllBatchData();
+
+      //for production
+      const index1 = this.prodRequestData.data.parameters.findIndex((v) =>
+        v.field.find((o) => o == "batchId")
+      );
+      if (index1 > -1) {
+        this.prodRequestData.data.parameters[index1].field = ["batchId"];
+        this.prodRequestData.data.parameters[index1].operator = "LIKE";
+        this.prodRequestData.data.parameters[index1].value = String(this.batch);
+      } else {
+        let parameter = new FilterParameter();
+        parameter.field = ["batchId"];
+        parameter.value = String(this.batch);
+        parameter.operator = "LIKE";
+        this.prodRequestData.data.parameters.push(parameter);
+      }
+      this.prodRequestData.data.pageIndex = 0;
+      this.plannedProductionListForDataTable();
     }
   }
 
-  public onBatchSelect(batch_id, id) {
+  public onBatchSelect(batch_id) {
     let b_controlId;
     let party, quality, shadeId, colorTone;
     if (this.editProductionPlanFlag) {
@@ -365,7 +574,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           this.editProductionPlanFlag = false;
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }
 
   updateProduction(result) {
@@ -390,21 +599,23 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
 
   public plannedProductionListForDataTable(): any {
     this.plannedProductionList = [];
-    this.jetService
-      .getAllProductionWithoutJetPlan()
+    this.productionPlanningService
+      .getAllBatchForProd(this.prodRequestData)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
           if (data["success"]) {
-            this.plannedProductionList = data["data"];
+            const pageData = data.data as PageData;
+            this.plannedProductionList = pageData.data;
+            this.prodRequestData.data.total = pageData.total;
           }
         },
-        (error) => { }
+        (error) => {}
       );
   }
   editProductionPlan(production): any {
     this.editProductionPlanFlag = true;
-    this.onBatchSelect(production.batchId, production.id);
+    this.onBatchSelect(production.batchId);
   }
   removeItem(index) {
     //remove row
@@ -421,7 +632,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             this.toastr.success("Deleted Successfully");
           }
         },
-        (error) => { }
+        (error) => {}
       );
   }
 
@@ -435,6 +646,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       //clear party and quality on flip
       this.productionPlanning.partyId = null;
       this.productionPlanning.qualityId = null;
+
+      this.requestData.data.pageIndex = 0;
+      this.prodRequestData.data.pageIndex = 0;
+
       this.getAllBatchData();
       this.plannedProductionListForDataTable();
     }
@@ -465,19 +680,19 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   currentBatchSequence;
   setIndexForSlip(index, j, idx) {
     //on click set batchId stockId to get print-slip data
-    this.items = this.items.filter(f => f.title != "SCO");
-    this.items = this.items.filter(f => f.title != "Dose Nylon");
+    this.items = this.items.filter((f) => f.title != "SCO");
+    this.items = this.items.filter((f) => f.title != "Dose Nylon");
     this.sendBatchId = index.batchId;
     this.sendSotckId = index.productionId;
     this.sendControlId = index.controlId;
     this.sendJetId = j.id;
     this.currentBatchSequence = idx;
-    if (index.status === 'start') {
-      this.items = this.items.filter(f => f.title != "Start");
-      this.items.push({title:"SCO"});
-      this.items.push({title:"Dose Nylon"});
+    if (index.status === "start") {
+      this.items = this.items.filter((f) => f.title != "Start");
+      this.items.push({ title: "SCO" });
+      this.items.push({ title: "Dose Nylon" });
     } else {
-      let itm = this.items.filter(f => f.title == "Start");
+      let itm = this.items.filter((f) => f.title == "Start");
       if (!itm || !itm.length) {
         this.items.splice(0, 0, { title: "Start" });
       }
@@ -516,7 +731,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         if (result) {
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }
 
   ngOnDestroy() {
@@ -553,10 +768,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           if (res["success"]) {
-            this.toastr.success(res['msg']);
+            this.toastr.success(res["msg"]);
             this.getJetData();
           } else {
-            this.toastr.error(res['msg']);
+            this.toastr.error(res["msg"]);
           }
           this.loading = false;
         },
@@ -597,7 +812,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             });
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }
 
   changeJetStatusApiCall(data: any) {
@@ -613,7 +828,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             this.toastr.error(data["msg"]);
           }
         },
-        (error) => { }
+        (error) => {}
       );
   }
   showMenu() {
@@ -642,7 +857,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             );
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }
 
   getAllBatchWithShade() {
@@ -667,7 +882,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   batchSelectedFromProductionList(event) {
-    let p_id, selectedBatchID, selectedStockId;
+    let p_id;
     if (event.target) {
       p_id = Number(event.target.value);
     } else {
@@ -677,7 +892,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       (f) => f.id == Number(event.target.value)
     );
     if (production.length) {
-      const modalRef = this.modalService.open(AddShadeComponent, { size: "lg" });
+      const modalRef = this.modalService.open(AddShadeComponent, {
+        size: "lg",
+      });
       modalRef.componentInstance.productionId1 = production[0].id;
       modalRef.componentInstance.productionBatchDetail =
         this.productionBatchDetail;
@@ -695,7 +912,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             this.editProductionPlanFlag = false;
           }
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   }
 
@@ -783,23 +1000,33 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   }
 
   remove(batch) {
-
     const modelRef = this.modalService.open(ConfirmationDialogComponent);
-    modelRef.result
-      .then((result) => {
-        if (result) {
-          this.jetService.removeBatchFromList(batch.batchId).pipe(takeUntil(this.destroy$))
-            .subscribe(
-              (data) => {
-                this.toastr.success(errorData.Delete);
-                this.plannedProductionListForDataTable();
-                this.getAllBatchData();
-              },
-              (error) => {
-                this.toastr.error(errorData.Serever_Error);
-              }
-            );
-        }
-      })
+    modelRef.result.then((result) => {
+      if (result) {
+        this.jetService
+          .removeBatchFromList(batch.batchId)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            (data) => {
+              this.toastr.success(errorData.Delete);
+              this.plannedProductionListForDataTable();
+              this.getAllBatchData();
+            },
+            (error) => {
+              this.toastr.error(errorData.Serever_Error);
+            }
+          );
+      }
+    });
+  }
+
+  pageChanged(event) {
+    this.requestData.data.pageIndex = event - 1;
+    this.getAllBatchData();
+  }
+
+  prodPageChanged(event) {
+    this.prodRequestData.data.pageIndex = event - 1;
+    this.plannedProductionListForDataTable();
   }
 }

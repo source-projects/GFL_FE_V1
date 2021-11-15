@@ -85,6 +85,7 @@
                     </div>
                 </div>
 
+
             </div>
 
             <div class="row">
@@ -163,10 +164,14 @@
                     </ng-select>
                 </div>
 
-                <div class="form-group col-md-2" style="top: 35px;display: flex;
+                <div class="form-group col-md-3" style="top: 35px;display: flex;
                 justify-content: space-around;">
-                    <nb-checkbox [(ngModel)]="invoiceReportRequest.signByParty" name="signByParty"></nb-checkbox>
-                    <label>  Signed By Party  </label>
+                    <label> Signed By Party : </label>
+                      <nb-radio-group [(ngModel)]="invoiceReportRequest.signByParty">
+                        <nb-radio *ngFor="let option of options" [value]="option.value">
+                            {{ option.label }}
+                        </nb-radio>
+                    </nb-radio-group>
                 </div>
             </div>
 
@@ -224,29 +229,11 @@
                         <table style="font-size: large;"
                             class="print-layout-report table-bordered table-striped table-process-fnt width-100">
                             <tr>
-                                <th>Lot No</th>
-                                <th>Master</th>
-                                <th>Party</th>
-                                <th>Quality Id</th>
-                                <th>Pcs</th>
-                                <th>Grey Mtr</th>
-                                <th>Finish Mtr</th>
-                                <th>Sh_% </th>
-                                <th>Rate</th>
-                                <th>Total Amount</th>
+                                <th *ngFor="let head of headers">{{head}}</th>
                             </tr>
-                            <tr *ngFor="let invoice of report.consolidatedBillDataList; let i = index"
+                            <tr *ngFor="let invoice of report.consolidatedBillDataForPDFS; let i = index"
                                 [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
-                                <td>{{invoice.batchId}}</td>
-                                <td>{{invoice.headName}}</td>
-                                <td> {{invoice.partyName}}</td>
-                                <td>{{invoice.qualityId}}</td>
-                                <td>{{invoice.pcs}}</td>
-                                <td>{{invoice.totalMtr}}</td>
-                                <td>{{invoice.totalFinishMtr}}</td>
-                                <td>{{invoice.sharinkage}}</td>
-                                <td>{{invoice.rate}}</td>
-                                <td>{{invoice.taxAmt}}</td>
+                                <td *ngFor="let item of headerArray">{{invoice[item]}}</td>
                             </tr>
                         </table>
                     </div>
