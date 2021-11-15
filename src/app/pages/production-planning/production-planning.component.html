@@ -258,6 +258,7 @@
                                                 <ngb-pagination id="custom-pagination"  *ngIf="requestData.data.total"
                                                     class="d-flex justify-content-end"
                                                     [pageSize]="requestData.data.pageSize"
+                                                    [maxSize]="5"
                                                     [collectionSize]="requestData.data.total"
                                                     [page]="requestData.data.pageIndex"
                                                     (pageChange)="pageChanged($event)">
@@ -301,6 +302,7 @@
                                                 <ngb-pagination id="custom-pagination" *ngIf="prodRequestData.data.total"
                                                     class="d-flex justify-content-end"
                                                     [pageSize]="prodRequestData.data.pageSize"
+                                                    [maxSize]="5"
                                                     [collectionSize]="prodRequestData.data.total"
                                                     [page]="prodRequestData.data.pageIndex"
                                                     (pageChange)="prodPageChanged($event)">

@@ -45,6 +45,11 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   totalGrayMeter: number;
   totalAmount: number;
 
+  options = [
+    { value: 'true', label: 'Yes' },
+    { value: 'false', label: 'No' },
+  ];
+
   constructor(
     private invoiceService: GenerateInvoiceService,
     private partyService: PartyService,

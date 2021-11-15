@@ -112,7 +112,7 @@
                                                 icon="close-circle-outline"></nb-icon>
                                         </button>
                                     </div>
-                                    <ngb-pagination class="d-flex justify-content-end" [pageSize]="requestData.data.pageSize"
+                                    <ngb-pagination class="d-flex justify-content-end" [pageSize]="requestData.data.pageSize" [maxSize]="5"
                                     [collectionSize]="requestData.data.total" [page]="requestData.data.pageIndex" (pageChange)="pageChanged($event)">
                                     </ngb-pagination>
                                 </div>

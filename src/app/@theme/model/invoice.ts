@@ -30,7 +30,7 @@ export class InvoiceReportRequest {
   constructor() {
     this.from = "";
     this.to = "";
-    this.signByParty = false;
+    this.signByParty = "";
   }
 }
 export class DispatchData {
