@@ -315,13 +315,24 @@
                         </nb-card-front>
                         <nb-card-back>
                             <nb-card class="pd-left-15" style="height: 400px;overflow-y: auto;">
+                                
                                 <div id="jetList">
                                     <div class="title-with-btn">
                                         <div class="row">
-                                            <div class="col-md-9 col-5">
+                                            <div class="col-md-2 col-5">
                                                 <div class="batch-list-production">
                                                     <h2 class="nb-text font-14 batch-mr-0">Jet List:</h2>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <ng-select id="jetSelected" name="jetSelected" multiple="true"  placeholder="Select Jets" (change)="jetsSelected($event)" [(ngModel)]="selectedJets">
+                                                    <ng-option *ngFor="let j of jetList" [value]="j.id">
+                                                        {{j.name}}
+                                                    </ng-option>
+                                                </ng-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                
                                             </div>
                                             <div class="col-md-3 col-7 display-flex-end">
                                                 <div class="jet-btn-production">
@@ -330,7 +341,6 @@
                                                             (click)="toggleView()" type="button">Production
                                                             Plan</button>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
