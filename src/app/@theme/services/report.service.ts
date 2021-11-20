@@ -58,9 +58,9 @@ export class ReportService {
   }
 
 
-  getAllReportType(){
+  getAllReportType(type){
     let response = this._http.get(
-      this.commonService.envUrl() + "api/report/all"
+      this.commonService.envUrl() + "api/report/all?type=" + type
     );
     return response;
   }

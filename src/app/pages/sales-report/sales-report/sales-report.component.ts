@@ -86,7 +86,7 @@ export class SalesReportComponent implements OnInit {
 
   getReportList() {
     this.reportService
-      .getAllReportType()
+      .getAllReportType("sales")
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data) => {
