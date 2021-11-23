@@ -92,5 +92,11 @@ export class JetPlanningService {
     );
   }
 
+  getJetDataById(jetIds){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/jet/getAllJetMastDetailByIds",jetIds
+    );
+  }
+
 
 }
