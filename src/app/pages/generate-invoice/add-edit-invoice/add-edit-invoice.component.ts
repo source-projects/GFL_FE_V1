@@ -663,7 +663,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     if (event === "view table") {
       this.route.navigate(["/pages/generate_invoice/view"]);
     } else if (event === "report") {
-      this.route.navigate(["/pages/generate_invoice/report"]);
+      this.route.navigate(["/pages/all-report"]);
     } else if(event == 'sign'){
       this.route.navigate(["/pages/generate_invoice/sign"]);
     } else if(event == 'received'){

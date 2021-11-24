@@ -21,6 +21,7 @@ import { ReportComponent } from './report/report.component';
     StockBatchRoutingModule,
     SharedModule,
     ThemeModule
-  ]
+  ],
+  exports:[ReportComponent]
 })
 export class StockBatchModule { }

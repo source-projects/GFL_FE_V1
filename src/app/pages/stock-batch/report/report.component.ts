@@ -1,65 +1,27 @@
-import { DatePipe } from "@angular/common";
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import * as moment from "moment";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import {
-  BatchFilterRequest,
-  StockShortReport,
-} from "../../../@theme/model/stock-batch";
-import { AdminService } from "../../../@theme/services/admin.service";
-import { ExportService } from "../../../@theme/services/export.service";
-import { PartyService } from "../../../@theme/services/party.service";
-import { QualityService } from "../../../@theme/services/quality.service";
-import { ShadeService } from "../../../@theme/services/shade.service";
-import { StockBatchService } from "../../../@theme/services/stock-batch.service";
-import * as wijmo from "@grapecity/wijmo";
-import { sortBy as _sortBy } from "lodash";
+import { DatePipe } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import * as wijmo from '@grapecity/wijmo';
+import { sortBy as _sortBy } from 'lodash';
+
+import { ExportService } from '../../../@theme/services/export.service';
+import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 
 @Component({
   selector: "ngx-report",
   templateUrl: "./report.component.html",
   styleUrls: ["./report.component.scss"],
 })
-export class ReportComponent implements OnInit, OnDestroy {
-  public stockReportRequest: BatchFilterRequest;
+export class ReportComponent implements OnInit {
   public maxDate: any;
   public currentDate = new Date();
-  public disableButton: boolean = false;
-  public shortReport = [];
-  public masterList = [];
-  userHeadId;
-  qualityList: any[];
-  qualityEntryId;
-  public partyList = [];
-  qualityNameList = [];
-  partyId;
-  qualityName;
+  @Input() shortReport = [];
   headers;
-  private destroy$ = new Subject<void>();
-  public formSubmitted: boolean = false;
-  totalGrayMeter: number;
-  totalGrayWt: number;
-  radioArray = [
-    { id: 1, name: "Bill Generated" },
-    { id: 2, name: "Finish Meter Save" },
-    { id: 3, name: "Is Production Planned" },
-  ];
   constructor(
     private stockService: StockBatchService,
-    private partyService: PartyService,
-    private qualityService: QualityService,
-    private shadeService: ShadeService,
-    private adminService: AdminService,
     private exportService: ExportService,
     public datepipe: DatePipe
   ) {
-    this.stockReportRequest = new BatchFilterRequest();
-  }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -70,130 +32,45 @@ export class ReportComponent implements OnInit, OnDestroy {
       23,
       59
     );
-    this.getAllMasters();
-    this.getAllParties();
-    this.getQualityList();
-    this.getQualityNameList();
+
+    this.getShortReport();
   }
 
-  getQualityNameList() {
-    this.adminService
-      .getAllQualityData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.qualityNameList = data["data"];
-          }
-        },
-        (error) => {}
-      );
-  }
-
-  getAllMasters() {
-    this.partyService
-      .getAllMaster()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.masterList = data["data"];
-          }
-        },
-        (error) => {}
-      );
-  }
-
-  getAllParties() {
-    this.partyService
-      .getAllPartyList(0, "all")
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.partyList = data["data"];
-          }
-        },
-        (error) => {}
-      );
-  }
-
-  async getQualityList() {
-    return await new Promise((resolve, reject) => {
-      this.qualityService
-        .getQualityNameData()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          (data) => {
-            if (data["success"]) {
-              this.qualityList = data["data"] || [];
-              if (this.qualityList && this.qualityList.length) {
-                this.qualityList.forEach((ele) => {
-                  ele["qualityEntryId"] = ele.id;
-                });
-              }
-            } else {
-            }
-          },
-          (error) => {}
-        );
-    });
-  }
-
-  getQualityFromParty(event) {
-    this.shadeService
-      .getQualityFromParty(this.stockReportRequest.partyId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.qualityList = data["data"].qualityDataList;
-            this.qualityList.forEach((e) => {
-              e.partyName = data["data"].partyName;
-            });
-          } else {
-            this.qualityList = null;
-          }
-        },
-        (error) => {}
-      );
-  }
   headerArray = [];
-  getShortReport(form) {
-    this.shortReport = [];
-    this.formSubmitted = true;
+  headerKeys = [];
+  copyHeaderKeys = [];
+  getShortReport() {
 
-    if (form.valid) {
-      this.stockReportRequest.from = moment(
-        this.stockReportRequest.from
-      ).format();
-      this.stockReportRequest.to = moment(this.stockReportRequest.to).format();
-      this.stockService
-        .getConslidateBatchResponse(this.stockReportRequest)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          (data) => {
-            if (data["success"] && data["data"]) {
-              this.shortReport = data["data"];
-              let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
-                  this.headerArray = Object.keys(this.shortReport[0].pendingBatchDataList[0]);
-                  let finalHeader = [];
-                  this.headerArray.forEach((ele, i) => {
-                    finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
-                    finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
-                  });
-                  this.headers = [...finalHeader];
-                  
-              this.shortReport = _sortBy(this.shortReport, "invoiceNo");
-              this.printReport(form);
-            }
-          },
-          (error) => {}
-        );
+    if(this.shortReport && this.shortReport.length){
+      let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+      this.copyHeaderKeys = Object.keys(this.shortReport[0]);
+      let finalHeader = [];
+      this.copyHeaderKeys.forEach((ele, i) => {
+        finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+        finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+      });
+      finalHeader = finalHeader.filter(v => v !== "List");
+      this.copyHeaderKeys = this.copyHeaderKeys.filter(v => v !== "list");
+      this.headerKeys = [...finalHeader];
+
+      if(this.shortReport[0].list && this.shortReport[0].list.length){
+        let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+        this.headerArray = Object.keys(this.shortReport[0].list[0]);
+        let finalHeader = [];
+        this.headerArray.forEach((ele, i) => {
+          finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+          finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+        });
+        this.headers = [...finalHeader];
+    
+      }
     }
+  
+    this.printReport();
+
   }
 
-  printReport(form) {
+  printReport() {
     let doc = new wijmo.PrintDocument({
       title: "",
     });
@@ -214,63 +91,10 @@ export class ReportComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           doc.print();
           this.shortReport = [];
-          this.stockReportRequest = new BatchFilterRequest();
-          this.formSubmitted = false;
+          
         }, 1000);
       }
     }, 10);
   }
 
-  downLoadExcel(form) {
-    if (form.valid) {
-      this.stockReportRequest.from = moment(
-        this.stockReportRequest.from
-      ).format();
-      this.stockReportRequest.to = moment(this.stockReportRequest.to).format();
-      this.stockService
-        .getConslidateBatchResponse(this.stockReportRequest)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          (data) => {
-            if (data["success"] && data["data"]) {
-              const excelData = data["data"];
-              let data1 = [];
-              for (let item of excelData) {
-                if (
-                  item &&
-                  item.pendingBatchDataList &&
-                  item.pendingBatchDataList.length
-                ) {
-                  let list = item.pendingBatchDataList.map((m) => ({
-                    ...m,
-                    partyName: item.partyName,
-                    partyCode: item.partyCode,
-                  }));
-                  data1.push(...list);
-                }
-              }
-
-              this.headers = [];
-              let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
-              let headerArray = Object.keys(data1[0]);
-              headerArray.forEach((ele, i) => {
-                this.headers.push(ele.replace(rex, "$1$4 $2$3$5"));
-                this.headers[i] =
-                  this.headers[i].charAt(0).toUpperCase() +
-                  this.headers[i].slice(1);
-              });
-
-              this.exportService.exportExcel(
-                data1,
-                "Pending Stock Report_" + moment(new Date()).format("ll"),
-                this.headers
-              );
-              this.stockReportRequest = new BatchFilterRequest();
-              this.formSubmitted = false;
-            }
-          },
-          (error) => {}
-        );
-    }
-  }
 }

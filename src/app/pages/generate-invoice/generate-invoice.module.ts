@@ -24,7 +24,8 @@ import { InputInvoiceComponent } from './input-invoice/input-invoice.component';
   ],
   providers: [
     NgbActiveModal,
-  ]
+  ],
+  exports:[InvoiceReportComponent]
 
 })
 export class GenerateInvoiceModule { }

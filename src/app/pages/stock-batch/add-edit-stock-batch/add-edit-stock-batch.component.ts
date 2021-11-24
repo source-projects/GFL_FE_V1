@@ -823,7 +823,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     } else if(event === "pending"){
       this.route.navigate(['/pages/stock-batch/pending'])
     }else if(event == "report"){
-      this.route.navigate(['/pages/stock-batch/report'])
+      this.route.navigate(["/pages/all-report"]);
     }
   }
 
