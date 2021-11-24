@@ -32,6 +32,7 @@ import { PurchaseGuard } from "./@theme/guards/purchase.guard";
 import { MergeBatchGuard } from "./@theme/guards/merge-batch.guard";
 import { ReportGuard } from "./@theme/guards/report.guard";
 import { TaskGuard } from "./@theme/guards/task.guard";
+import { AllReportsModule } from './pages/all-reports/all-reports.module';
 
 export const routes: Routes = [
   {
@@ -204,6 +205,16 @@ export const routes: Routes = [
           ),
         canActivate: [MergeBatchGuard],
         canLoad: [MergeBatchGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
+        path: "all-report",
+        loadChildren: () =>
+          import("./pages/all-reports/all-reports.module").then(
+            (m) => m.AllReportsModule
+          ),
+        canActivate: [ReportGuard],
+        canLoad: [ReportGuard],
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {

@@ -57,17 +57,30 @@ export class ReportService {
     );
   }
 
+  getAllModules(){
+    let response = this._http.get(
+      this.commonService.envUrl() + "api/report/all/type"
+    );
+    return response;
+  }
 
   getAllReportType(type){
     let response = this._http.get(
-      this.commonService.envUrl() + "api/report/all?type=" + type
+      this.commonService.envUrl() + "api/report/all/byType?name=" + type
     );
     return response;
   }
 
   getReportForExcel(obj,data){
     let response = this._http.post(
-      this.commonService.envUrl() + obj.apiForExcel,data
+      this.commonService.envUrl() + "api" + obj.apiForExcel,data
+    );
+    return response;
+  }
+
+  getReportForPdf(obj,data){
+    let response = this._http.post(
+      this.commonService.envUrl() + "api" + obj.apiForReport,data
     );
     return response;
   }

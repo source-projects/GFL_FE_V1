@@ -1,194 +1,6 @@
 <nb-card>
-    <nb-card-header class="nb-header">
-        <div class="row">
-            <div class="col-md-10 col-6">
-                <h2 class="nb-text">Pending Report</h2>
-            </div>
-
-            <div class="col-md-2 col-6 display-flex-start desktop-justify-flexend">
-                <button class="btn btn-md btn-design" [routerLink]="['/pages/stock-batch/view']">View
-                    Table</button>
-            </div>
-        </div>
-    </nb-card-header>
     <nb-card-body>
         <form #stockReportForm="ngForm">
-            <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="required">From date</label>
-                        <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
-                            [(ngModel)]="stockReportRequest.from" [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1"
-                            placeholder="Select Date"
-                            [ngClass]="{'is-invalid':(from.invalid)&&(formSubmitted || from.touched)}">
-                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtFrom1>
-                        </owl-date-time>
-                    </div>
-                    <div class="input-required" *ngIf="(from.invalid)&&(formSubmitted || from.touched)">
-                        <span>From date is required.</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="required">To date</label>
-                        <input class="form-control" #to="ngModel" required name="toDate" [max]="maxDate"
-                            [disabled]="!stockReportRequest.from" [(ngModel)]="stockReportRequest.to"
-                            [owlDateTimeTrigger]="dtTo1" [owlDateTime]="dtTo1" placeholder="Select Date"
-                            [min]="stockReportRequest.from"
-                            [ngClass]="{'is-invalid': (to.invalid)&&(formSubmitted || to.touched)}">
-                        <owl-date-time (afterPickerClosed)="null" [pickerType]="'calendar'" #dtTo1>
-                        </owl-date-time>
-                    </div>
-                    <div class="input-required" *ngIf="(to.invalid)&&(formSubmitted || to.touched)">
-                        <span>To date is required.</span>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Party Name</label>
-                        <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel"
-                            [(ngModel)]="stockReportRequest.partyId" #partyName1="ngModel"
-                            (change)="getQualityFromParty($event)">
-                            <ng-option disabled="true">
-                                <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-left txt-ov-elips">
-                                            Party Name
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-right txt-ov-elips">
-                                            Party Code
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-option>
-                            <ng-option *ngFor="let p of partyList" [value]="p.id">
-                                <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-left txt-ov-elips">
-                                            {{ p.partyName }}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-right
-                                            txt-ov-elips">
-                                            {{ p.partyCode }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-option>
-                        </ng-select>
-
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Quality
-                            Id</label>
-                        <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId"
-                            [(ngModel)]="stockReportRequest.qualityEntryId" #qualityId1="ngModel">
-                            <ng-option disabled="true">
-                                <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-left txt-ov-elips">
-                                            Quality Id
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-right txt-ov-elips">
-                                            Party Name
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-option>
-                            <ng-option *ngFor="let q of qualityList" [value]="q.qualityEntryId">
-                                <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-left txt-ov-elips">
-                                            {{ q.qualityId }}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="text-right
-                                            txt-ov-elips">
-                                            {{ q.partyName }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-option>
-                        </ng-select>
-
-
-                    </div>
-                </div>
-
-                <!-- <div class="form-group col-md-4">
-                    <label>Master Name</label>
-                    <ng-select name="userHeadId" appendTo="body" id="userHeadId" name="userHeadId"
-                    placeholder="Select Master" [(ngModel)]="stockReportRequest.userHeadId">
-                        <div>
-                            <ng-option *ngFor="let m of masterList" [value]="m.id">{{m.userName}}</ng-option>
-                        </div>
-                    </ng-select>
-                    
-                </div> -->
-
-                <div class="form-group col-md-4">
-
-                    <label>Quality Name</label>
-                    <ng-select name="qualityName" appendTo="body" id="qualityName" placeholder="Quality Name"
-                        [(ngModel)]="stockReportRequest.qualityNameId">
-                        <ng-option disabled="true">
-                            <div class="row">
-                                <div class="col-md-6 col-6">
-                                    <div class="text-left txt-ov-elips">Quality Name
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-option>
-                        <ng-option *ngFor="let p of qualityNameList" [value]="p.id">
-                            <div class="row">
-                                <div class="col-md-6 col-6">
-                                    <div class="text-left txt-ov-elips"> {{p.qualityName}}</div>
-                                </div>
-                            </div>
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <!-- <div class="row">
-
-                <div class="col-md-8">
-                    <nb-radio-group class="nb-radio">
-                        <nb-radio *ngFor="let radio of radioArray" [value]=radio.id
-                            (valueChange)="onChange($event)">
-                            {{radio.name}}</nb-radio>
-                    </nb-radio-group>
-                </div>
-            </div> -->
-
-            <div class="row">
-                <div class="col-md-6 mobile-btn-center text-btn-right">
-                    <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="getShortReport(stockReportForm)" [disabled]="disableButton">Get
-                            Report</button>
-                    </div>
-                </div>
-                <div class="col-md-6 mobile-btn-center text-btn-right">
-                    <div class="padding-bt-tp">
-                        <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                            (click)="downLoadExcel(stockReportForm)">Get Excel</button>
-                    </div>
-                </div>
-            </div>
 
             <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
                 <div class="row report-header">
@@ -199,7 +11,7 @@
                     </div>
                 </div>
                 <ng-container *ngFor="let report of shortReport">
-                    <div *ngIf="report.pendingBatchDataList && report.pendingBatchDataList.length" class="mb-5">
+                    <div *ngIf="report.list && report.list.length" class="mb-5">
                         <div class="print-body">
                             <!-- print-layout-report -->
                             <div class="invoice-no-heading" style="width: fit-content;">
@@ -212,35 +24,12 @@
 
                                     <th *ngFor="let head of headers">{{head}}</th>
                                 </tr>
-                                <tr *ngFor="let invoice of report.pendingBatchDataList; let i = index"
+                                <tr *ngFor="let invoice of report.list; let i = index"
                                     [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
                                     <td *ngFor="let item of headerArray">{{invoice[item]}}</td>
                                 </tr>
                             </table>
-                            <!-- <table style="font-size: large;margin-right:18px"
-                                class="print-layout-report table-bordered table-striped table-process-fnt width-100">
-                                <tr>
-                                    <th>Quality ID</th>
-                                    <th>Quality Name</th>
-                                    <th>PChallanRef</th>
-                                    <th>Lot No</th>
-                                    <th>Total PCs</th>
-                                    <th>Grey Mtr</th>
-                                    <th>Grey Wt</th>
-                                    <th>Recieve Date</th>
-                                </tr>
-                                <tr *ngFor="let invoice of report.pendingBatchDataList; let i = index"
-                                    [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'" class="trs">
-                                    <td>{{invoice.qualityId}}</td>
-                                    <td>{{invoice.qualityName}}</td>
-                                    <td>{{invoice.pchallanRef}}</td>
-                                    <td>{{invoice.batchId}}</td>
-                                    <td>{{invoice.totalPcs}}</td>
-                                    <td>{{invoice.totalBatchMtr | number : '1.2-2'}}</td>
-                                    <td>{{invoice.totalBatchWt | number : '1.2-2'}}</td>
-                                    <td>{{invoice.receiveDate | date : 'MMM d, y'}}</td>
-                                </tr>
-                            </table> -->
+                            
                         </div>
                     </div>
                 </ng-container><br><br>

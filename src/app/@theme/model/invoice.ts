@@ -109,6 +109,7 @@ export class SalesReportRequest {
   qualityEntryId: any;
   signByParty:any;
   reportType:any;
+  moduleType:any;
   constructor() {
     this.from = "";
     this.to = "";
