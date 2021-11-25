@@ -1,12 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import * as wijmo from '@grapecity/wijmo';
-import { sortBy as _sortBy } from 'lodash';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ReportService } from '../../../@theme/services/report.service';
 
 import { SalesReportRequest } from '../../../@theme/model/invoice';
 import { AdminService } from '../../../@theme/services/admin.service';
@@ -14,14 +12,15 @@ import { ExportService } from '../../../@theme/services/export.service';
 import { GenerateInvoiceService } from '../../../@theme/services/generate-invoice.service';
 import { PartyService } from '../../../@theme/services/party.service';
 import { QualityService } from '../../../@theme/services/quality.service';
+import { ReportService } from '../../../@theme/services/report.service';
 import { ShadeService } from '../../../@theme/services/shade.service';
 
 @Component({
-  selector: 'ngx-sales-report',
-  templateUrl: './sales-report.component.html',
-  styleUrls: ['./sales-report.component.scss']
+  selector: 'ngx-all-reports',
+  templateUrl: './all-reports.component.html',
+  styleUrls: ['./all-reports.component.scss']
 })
-export class SalesReportComponent implements OnInit {
+export class AllReportsComponent implements OnInit {
 
   public invoiceReportRequest: SalesReportRequest;
   public maxDate: any;
@@ -38,11 +37,19 @@ export class SalesReportComponent implements OnInit {
   qualityName;
   headers;
   reportType = null;
+  allReports = [];
+  moduleType = null;
+  allModules = [];
   private destroy$ = new Subject<void>();
   public formSubmitted: boolean = false;
   totalFinishedMeter: number;
   totalGrayMeter: number;
   totalAmount: number;
+
+  options = [
+    { value: 'true', label: 'Yes' },
+    { value: 'false', label: 'No' },
+  ];
 
   reportList = [
     { name: "Sales Report", value: "salesReport" },
@@ -69,7 +76,6 @@ export class SalesReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getReportList()
     this.maxDate = new Date(
       this.currentDate.getFullYear(),
       this.currentDate.getMonth(),
@@ -81,21 +87,22 @@ export class SalesReportComponent implements OnInit {
     this.getAllParties();
     this.getQualityList();
     this.getQualityNameList();
+    this.getAllModules();
+
   }
 
-
-  getReportList() {
+  getAllModules(){
     this.reportService
-      .getAllReportType("sales")
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.reportList = data["data"];
-          }
-        },
-        (error) => { }
-      );
+    .getAllModules()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.allModules = data["data"];
+        }
+      },
+      (error) => { }
+    );
   }
 
   getQualityNameList() {
@@ -175,6 +182,9 @@ export class SalesReportComponent implements OnInit {
     );
   }
 
+  headerArray = [];
+  headerKeys = [];
+  copyHeaderKeys = [];
   getShortReport(form) {
     this.totalAmount = 0;
     this.totalFinishedMeter = 0;
@@ -185,35 +195,34 @@ export class SalesReportComponent implements OnInit {
     if (form.valid) {
       this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format();
       this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format();
-      this.invoiceService
-        .getShortInvoiceReport(this.invoiceReportRequest)
+      this.reportService
+        .getReportForPdf(this.apiObject,this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
-              if (this.shortReport && this.shortReport.length) {
-                if (this.shortReport[0].consolidatedBillDataList && this.shortReport[0].consolidatedBillDataList.length) {
-                  let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
-                  let headerArray = Object.keys(this.shortReport[0].consolidatedBillDataList[0]);
-                  let finalHeader = [];
-                  headerArray.forEach((ele, i) => {
-                    finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
-                    finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
-                  });
-                  this.headers = [...finalHeader];
-                  this.shortReport.forEach((element) => {
-                    element.consolidatedBillDataList.forEach(billData => {
-                      this.totalFinishedMeter += billData.totalFinishMtr;
-                      this.totalGrayMeter += billData.totalMtr;
-                      this.totalAmount += billData.taxAmt;
-                    });
-                  });
-
-                }
-
-                this.shortReport = _sortBy(this.shortReport, 'invoiceNo');
-                this.printReport(form);
-              }
+              // if (this.shortReport && this.shortReport.length) {
+              //   let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+              //     this.copyHeaderKeys = Object.keys(this.shortReport[0]);
+              //     let finalHeader = [];
+              //     this.copyHeaderKeys.forEach((ele, i) => {
+              //       finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+              //       finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+              //     });
+              //     finalHeader = finalHeader.filter(v => v !== "List");
+              //     this.copyHeaderKeys = this.copyHeaderKeys.filter(v => v !== "list");
+              //     this.headerKeys = [...finalHeader];
+              //   if (this.shortReport[0].list && this.shortReport[0].list.length) {
+              //     let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+              //     this.headerArray = Object.keys(this.shortReport[0].list[0]);
+              //     let finalHeader = [];
+              //     this.headerArray.forEach((ele, i) => {
+              //       finalHeader.push(ele.replace(rex, '$1$4 $2$3$5'));
+              //       finalHeader[i] = finalHeader[i].charAt(0).toUpperCase() + finalHeader[i].slice(1);
+              //     });
+              //     this.headers = [...finalHeader];
+              //   }
+              // }
             }
           },
           (error) => { }
@@ -263,18 +272,18 @@ export class SalesReportComponent implements OnInit {
           this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format();
 
 
-        this.invoiceService
-          .getShortInvoiceReport(this.invoiceReportRequest)
+        this.reportService
+          .getReportForExcel(this.apiObject, this.invoiceReportRequest)
           .pipe(takeUntil(this.destroy$)).subscribe(
             (data) => {
               if (data["success"]) {
                 let excelData = data["data"];
-                this.headers = Object.keys(excelData);
+                this.headers = Object.keys(excelData[0]);
                 this.formSubmitted = false;
                 this.headers.forEach(ele => {
                   ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
                 });
-                this.exportService.exportExcel(excelData, "Sales Report", this.headers)
+                this.exportService.exportExcel(excelData, this.reportName, this.headers)
               }
             },
             (error) => { }
@@ -294,7 +303,9 @@ export class SalesReportComponent implements OnInit {
     apiForExcel: '',
     apiForReport: ''
   }
+  reportName;
   selectedReport(value) {
+    this.reportName = value.name;
 
     this.apiObject = {
       reportId: '',
@@ -307,4 +318,22 @@ export class SalesReportComponent implements OnInit {
     this.invoiceReportRequest.reportType = value.id;
   }
 
+  selectedModule(value) {
+    this.reportService
+    .getAllReportType(value)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.allReports = data["data"];
+        }
+      },
+      (error) => { }
+    );
+  }
+
 }
+function _sortBy(shortReport: any[], arg1: string): any[] {
+  throw new Error('Function not implemented.');
+}
+

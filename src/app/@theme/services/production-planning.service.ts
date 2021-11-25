@@ -70,4 +70,10 @@ export class ProductionPlanningService {
       this.commonService.envUrl() + "api/updateProductionPlan/", productionData
     );
   }
+
+  writeModBust(id){
+    return this.httpClient.get(
+      this.commonService.plcUrl() + "api/hmi/get/latest/" + id
+    );
+  }
 }

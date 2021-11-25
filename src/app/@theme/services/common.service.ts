@@ -54,6 +54,24 @@ export class CommonService {
 
   }
 
+  plcUrl(){
+    let url = "";
+    let location = window.location;
+    const hostName = location["hostname"];
+
+    if (hostName == "192.168.1.103") {
+      url = "http://192.168.1.103:9000/";
+    } else if (hostName.includes("dyeingerp.gloryautotech.com")) {
+      url = "https://api.dyeingerp.gloryautotech.com/";
+    } else if (hostName == "15.206.179.225" || hostName == "localhost") {
+      url = "https://api.dyeingerp.gloryautotech.com/";
+    }
+    else {
+      url = "http://103.137.194.167:9000/";
+    }
+    return  "http://192.168.29.228:9000/";
+  }
+
   decToBin(n): any {
     var bin = (+n).toString(2);
     let count = 10 - bin.length;

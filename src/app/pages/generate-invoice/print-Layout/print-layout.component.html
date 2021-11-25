@@ -376,11 +376,11 @@
                                                         <tbody>
 
                                                             <tr *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                                <td class="pd-top-bottom-1 text-right"> {{grs.srNo?
+                                                                <td class="pd-top-1 text-right"> {{grs.srNo?
                                                                     grs.srNo : i + 1}}</td>
-                                                                <td class="pd-top-bottom-1 text-right">{{(grs.mtr ==
+                                                                <td class="pd-top-1 text-right">{{(grs.mtr ==
                                                                     '-')? '-' : grs.mtr | number : '1.2-2'}}</td>
-                                                                <td class="pd-top-bottom-1 text-right">
+                                                                <td class="pd-top-1 text-right">
                                                                     {{grs.finishMtr | number : '1.2-2'}}</td>
                                                             </tr>
                                                         </tbody>
@@ -892,10 +892,10 @@
                                                 <tbody style="height: 184mm;">
 
                                                     <tr *ngFor="let grs of lots.batchDataList;let i = index;">
-                                                        <td class="pd-top-bottom-1 text-right"> {{grs.srNo? grs.srNo : i
+                                                        <td class="pd-top-1 text-right"> {{grs.srNo? grs.srNo : i
                                                             + 1}}</td>
-                                                        <td class="pd-top-bottom-1 text-right">{{grs.mtr}}</td>
-                                                        <td class="pd-top-bottom-1 text-right">{{grs.finishMtr}}</td>
+                                                        <td class="pd-top-1 text-right">{{grs.mtr}}</td>
+                                                        <td class="pd-top-1 text-right">{{grs.finishMtr}}</td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot class="table-footer">

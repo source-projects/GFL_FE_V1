@@ -2,7 +2,7 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-10 col-6">
-                <h2 class="nb-text">Payment Report</h2>
+                <h2 class="nb-text">All Reports</h2>
             </div>
         </div>
     </nb-card-header>
@@ -10,15 +10,33 @@
         <form #invoiceForm="ngForm">
             <div class="row">
                 <div class="form-group col-md-4">
+                    <label class="required">Module Type</label>
+                    <ng-select name="module" appendTo="body" id="module" placeholder="Select Report"
+                        [(ngModel)]="moduleType" (change)="selectedModule($event)">
+                        <div>
+                            <ng-option *ngFor="let module of allModules" [value]="module">{{module}}
+                            </ng-option>
+                        </div>
+                    </ng-select>
+                </div>
+                <div class="form-group col-md-4">
                     <label class="required">Report Type</label>
                     <ng-select name="report" appendTo="body" id="report" placeholder="Select Report"
                         [(ngModel)]="reportType" (change)="selectedReport($event)">
                         <div>
-                            <ng-option *ngFor="let report of reportList" [value]="report">{{report.name}}
+                            <ng-option *ngFor="let report of allReports" [value]="report">{{report.name}}
                             </ng-option>
                         </div>
                     </ng-select>
-
+                </div>
+                <div class="form-group col-md-3" style="top: 35px;display: flex;
+                justify-content: space-around;">
+                    <label> Signed By Party : </label>
+                      <nb-radio-group [(ngModel)]="invoiceReportRequest.signByParty">
+                        <nb-radio *ngFor="let option of options" [value]="option.value">
+                            {{ option.label }}
+                        </nb-radio>
+                    </nb-radio-group>
                 </div>
             </div>
             <div class="row">
@@ -189,7 +207,17 @@
                 </div>
             </div>
 
-            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
+            <ng-container *ngIf="moduleType == 'invoice'">
+
+                <ngx-invoice-report *ngIf="shortReport && shortReport.length > 0" [shortReport]="shortReport">
+                </ngx-invoice-report>
+            </ng-container>
+            <ng-container *ngIf="moduleType == 'stockBatch'">
+
+                <ngx-report *ngIf="shortReport && shortReport.length > 0" [shortReport]="shortReport">
+                </ngx-report>
+            </ng-container>
+            <div *ngIf="shortReport && shortReport.length == 1000" id="shortReport" class="print-body">
                 <div class="row report-header">
                     <div class="col-md-12 print-layout-report">
                         <span>
@@ -197,7 +225,7 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <div *ngFor="let report of shortReport" class="mb-5">
                     <div class="print-body">
 
@@ -209,8 +237,13 @@
                             <div class="print-body">
                                 <!-- print-layout-report -->
                                 <div class="invoice-no-heading" style="width: fit-content;">
-                                    <h5 class="bold-invoice" style="font-size: 18px;"> Invoice No: {{report.invoiceNo}},
-                                        {{report.createdDate | date : 'dd/MM/yyyy'}}</h5>
+                                    <h5 class="bold-invoice" style="font-size: 18px;">
+                                        <span *ngFor="let head of headerKeys;let i=index">
+                                            {{head}} : {{copyHeaderKeys[i]}} ,
+                                        </span>
+                                        <!-- Invoice No: {{report.invoiceNo}},
+                                        {{report.createdDate | date : 'dd/MM/yyyy'}} -->
+                                    </h5>
                                 </div>
                                 <table style="font-size: large;"
                                     class="print-layout-report table-bordered table-striped table-process-fnt width-100">
@@ -227,10 +260,10 @@
                                 </table>
                             </div>
                         </div><br><br>
-                        
+
                     </div>
                 </div><br><br>
-                
+
             </div>
 
         </form>

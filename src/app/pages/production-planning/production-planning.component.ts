@@ -96,7 +96,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     productionId: null,
     sequence: null,
   };
-
+  selectedJets = [];
   //Pagination..
   requestData: RequestData = new RequestData();
   prodRequestData: RequestData = new RequestData();
@@ -128,6 +128,9 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();
         else if (title == "Change Jet") this.changeJet();
+        else if (title == "Write") this.writeClick();
+        else if (title == "SCO") this.SCOClick();
+        else if (title == "Dose Nylon") this.doseNylonClick();
       });
   }
 
@@ -641,7 +644,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   toggleView() {
     this.flipped = !this.flipped;
     if (this.flipped) {
-      this.getJetData();
+      // this.getJetData();
+      this.getAllJets();
     } else {
       //clear party and quality on flip
       this.productionPlanning.partyId = null;
@@ -653,6 +657,19 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       this.getAllBatchData();
       this.plannedProductionListForDataTable();
     }
+  }
+
+  jetList = [];
+  getAllJets() {
+    this.jetList = [];
+    this.jetService.getAllJetDataV1().pipe(takeUntil(this.destroy$)).subscribe(
+      (data) => {
+        if (data["success"]) {
+          this.jetList = data["data"];
+        }
+      },
+      (error) => { }
+    );
   }
 
   //jet functions......
@@ -680,6 +697,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   currentBatchSequence;
   setIndexForSlip(index, j, idx) {
     //on click set batchId stockId to get print-slip data
+    this.items = this.items.filter((f) => f.title != "Write");
     this.items = this.items.filter((f) => f.title != "SCO");
     this.items = this.items.filter((f) => f.title != "Dose Nylon");
     this.sendBatchId = index.batchId;
@@ -691,6 +709,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       this.items = this.items.filter((f) => f.title != "Start");
       this.items.push({ title: "SCO" });
       this.items.push({ title: "Dose Nylon" });
+      this.items.push({ title: "Write" });
     } else {
       let itm = this.items.filter((f) => f.title == "Start");
       if (!itm || !itm.length) {
@@ -769,7 +788,36 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         (res) => {
           if (res["success"]) {
             this.toastr.success(res["msg"]);
-            this.getJetData();
+            // this.getJetData();
+            this.jetsSelected();
+          } else {
+            this.toastr.error(res["msg"]);
+          }
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
+  }
+
+  SCOClick(){
+
+  }
+
+  doseNylonClick(){
+
+  }
+
+  writeClick(){
+    this.loading = true;
+    this.productionPlanningService
+      .writeModBust(this.sendControlId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (res) => {
+          if (res["success"]) {
+            this.toastr.success(res["msg"]);
           } else {
             this.toastr.error(res["msg"]);
           }
@@ -807,7 +855,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             .subscribe((data) => {
               if (data["success"]) {
                 this.toastr.success(errorData.Add_Success);
-                this.getJetData();
+                // this.getJetData();
+                this.jetsSelected();
               }
             });
         }
@@ -823,7 +872,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         (data) => {
           if (data["success"]) {
             this.toastr.success(data["msg"]);
-            this.getJetData();
+            // this.getJetData();
+            this.jetsSelected();
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -848,7 +898,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             .subscribe(
               (data) => {
                 this.toastr.success(errorData.Delete);
-                this.getJetData();
+                // this.getJetData();
+                this.jetsSelected();
                 this.getAllBatchWithShade();
               },
               (error) => {
@@ -1028,5 +1079,27 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   prodPageChanged(event) {
     this.prodRequestData.data.pageIndex = event - 1;
     this.plannedProductionListForDataTable();
+  }
+
+  jetsSelected(event?){
+
+    if(event && event.length){
+      this.selectedJets = event;
+    } else{
+      this.selectedJets = this.selectedJets;
+    }
+
+    let obj = {
+      array:this.selectedJets
+    }
+    console.log(this.selectedJets);
+    this.jetService
+        .getJetDataById(obj)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.jet = data['data'];
+          }
+        });
   }
 }
