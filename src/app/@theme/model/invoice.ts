@@ -113,6 +113,6 @@ export class SalesReportRequest {
   constructor() {
     this.from = "";
     this.to = "";
-    this.signByParty = false;
+    this.signByParty = "";
   }
 }
