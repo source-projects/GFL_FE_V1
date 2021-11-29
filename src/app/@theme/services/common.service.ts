@@ -37,12 +37,22 @@ export class CommonService {
     let url = "";
     let location = window.location;
     const hostName = location["hostname"];
-
+    console.log(hostName)
     if (hostName == "192.168.1.103") {
       url = "http://192.168.1.103:8080/";
-    } else if (hostName.includes("dyeingerp.gloryautotech.com")) {
+    }
+    else if(hostName.includes("192.168.1.112")){
+      url = "http://192.168.1.112:8080/";
+    }
+    else if(hostName.includes("192.168.29.229")){
+      url = "http://192.168.29.229:8080/";
+    }
+    else if(hostName.includes("localhost")){
+      url = "http://localhost:8080/";
+    }
+     else if (hostName.includes("dyeingerp.gloryautotech.com")) {
       url = "https://api.dyeingerp.gloryautotech.com/";
-    } else if (hostName == "15.206.179.225" || hostName == "localhost") {
+    } else if (hostName == "15.206.179.225") {
       url = "https://api.dyeingerp.gloryautotech.com/";
     }
     else {
