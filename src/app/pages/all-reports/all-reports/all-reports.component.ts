@@ -305,6 +305,7 @@ export class AllReportsComponent implements OnInit {
   }
   reportName;
   selectedReport(value) {
+    this.shortReport = [];
     this.reportName = value.name;
 
     this.apiObject = {
