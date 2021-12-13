@@ -1,40 +1,60 @@
 <nb-card>
-    <nb-card-body>
-        <form #stockReportForm="ngForm">
-
-            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
-                <div class="row report-header">
-                    <div class="col-md-12 print-layout-report">
-                        <span>
-                            <h3>PENDING REPORT</h3><span class="font-20">{{currentDate | date : 'dd/MM/yyyy'}}</span>
-                        </span>
-                    </div>
-                </div>
-                <ng-container *ngFor="let report of shortReport">
-                    <div *ngIf="report.list && report.list.length" class="mb-5">
-                        <div class="print-body">
-                            <!-- print-layout-report -->
-                            <div class="invoice-no-heading" style="width: fit-content;">
+  <nb-card-body>
+    <form #stockReportForm="ngForm">
+      <div
+        *ngIf="shortReport && shortReport.length > 0"
+        id="shortReport"
+        class="print-body"
+      >
+        <div class="row report-header">
+          <div class="col-md-12 print-layout-report">
+            <span>
+              <h3>PENDING REPORT</h3>
+              <span class="font-20">{{
+                currentDate | date: "dd/MM/yyyy"
+              }}</span>
+            </span>
+          </div>
+        </div>
+        <ng-container *ngFor="let report of shortReport">
+          <div *ngIf="report.list && report.list.length" class="mb-5">
+            <div class="print-body">
+              <!-- print-layout-report -->
+              <!-- <div class="invoice-no-heading" style="width: fit-content;">
                                 <h5 class="bold-invoice" style="font-size: 18px;"> Party NAME : {{report.partyName}},
                                     Party Code : {{report.partyCode}}</h5>
-                            </div>
-                            <table style="font-size: large;"
-                                class="print-layout-report table-bordered table-striped table-process-fnt width-100">
-                                <tr>
-
-                                    <th *ngFor="let head of headers">{{head}}</th>
-                                </tr>
-                                <tr *ngFor="let invoice of report.list; let i = index"
-                                    [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
-                                    <td *ngFor="let item of headerArray">{{invoice[item]}}</td>
-                                </tr>
-                            </table>
-                            
-                        </div>
-                    </div>
-                </ng-container><br><br>
+                            </div> -->
+              <div class="invoice-no-heading" style="width: fit-content">
+                <h5 class="bold-invoice" style="font-size: 18px">
+                  <span *ngFor="let head of headerKeys; let i = index">
+                    {{ head }} : {{ report[copyHeaderKeys[i]] }} ,
+                  </span>
+                  <!-- Invoice No: {{report.invoiceNo}},
+                                    {{report.createdDate | date : 'dd/MM/yyyy'}} -->
+                </h5>
+              </div>
+              <table
+                style="font-size: large"
+                class="
+                  print-layout-report
+                  table-bordered table-striped table-process-fnt
+                  width-100
+                "
+              >
+                <tr>
+                  <th *ngFor="let head of headers">{{ head }}</th>
+                </tr>
+                <tr
+                  *ngFor="let invoice of report.list; let i = index"
+                  [style.background]="i % 2 == 0 ? '#ffffff' : '#f2f2f2'"
+                >
+                  <td *ngFor="let item of headerArray">{{ invoice[item] }}</td>
+                </tr>
+              </table>
             </div>
-
-        </form>
-    </nb-card-body>
+          </div> </ng-container
+        ><br /><br />
+      </div>
+    </form>
+  </nb-card-body>
 </nb-card>
