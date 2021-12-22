@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RequestData } from '../model/request-data.model';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -20,6 +21,10 @@ export class MergeBatchService {
   getAllMergeBatch(){
     return this.httpClient.get(this.commonService.envUrl() +"api/stockBatch/get/mergeBatchList" );
 
+  }
+
+  getAllMergeBatchV1(data: RequestData){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/stockBatch/get/mergeBatchList/allPaginated', data);
   }
 
   getMergeBatchById(id){

@@ -20,8 +20,10 @@
             </div>
         </div>
         <!--  ngx- DataTable -->
-        <ngx-datatable [rows]="mergeList" [ngClass]="tableStyle" [headerHeight]="31" class="material"
-            [footerHeight]="40">
+        <ngx-datatable [rows]="mergeList  | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
+        [ngClass]="'bootstrap'" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
+        [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
+        [limit]="requestData.data.pageSize" (page)="setPage($event)" [selectionType]="'checkbox'" let index>
             <ngx-datatable-column name="Action"  sortable="false" prop="id"
                 [maxWidth]="90">
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -33,12 +35,94 @@
                     </ng-container>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Mergeed Batch Id" prop="mergeBatchId"></ngx-datatable-column>
-            <ngx-datatable-column name="Party Name" prop="partyName" ></ngx-datatable-column>
-            <ngx-datatable-column name="Quality Name" prop="qualityName"></ngx-datatable-column>
-            <ngx-datatable-column name="Batch Id" prop="batchId"></ngx-datatable-column>
+            <ngx-datatable-column name="Mergeed Batch Id" prop="mergeBatchId">
+                <ng-template ngx-datatable-header-template let-value="value">Mergeed Batch Id
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('mergeBatchId')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Party Name" prop="partyName" >
+                <ng-template ngx-datatable-header-template let-value="value">Party Name
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('partyName')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Quality Name" prop="qualityName">
+                <ng-template ngx-datatable-header-template let-value="value">Quality Name
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('qualityName')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Batch Id" prop="batchId">
+                <ng-template ngx-datatable-header-template let-value="value">Batch Id
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('batchId')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
             
         </ngx-datatable>
 
+        <div class="page-sizer d-flex">
+            <span>Page Size: </span>
+            <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">
+                <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+            </select>
+        </div>
+
     </nb-card-body>
 </nb-card>
+
+<ng-template #templateRef>
+    <div id="filterDiv" style="padding: 2px 14px; width: 250px;">
+        <div class="row" style="background-color: #aa3634;">
+            <div class="col-md-10">
+                <span style="color: white;">Filter</span>
+            </div>
+            <div class="col-md-2" style="margin-top: 3px;color: white;">
+                <div (click)="closeFilterPopover()" style="cursor: pointer;text-align: center;">
+                    <strong>X</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+
+            <div class="col-md-12 mb-1">
+                <ng-container *ngIf="stringFlag">
+                    <ng-select [(ngModel)]="operatorSelected" appendTo="body" class="popup-select"
+                        placeholder="Select Filter">
+                        <ng-option value="LIKE">Conatins</ng-option>
+                        <!-- <ng-option value="NOT_CONTAINS">Not Contains</ng-option> -->
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                        <ng-option value="START_WITH">Starts With</ng-option>
+                        <ng-option value="END_WITH">Ends With</ng-option>
+                    </ng-select>
+                </ng-container>
+                <ng-container *ngIf="numberFlag">
+                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter"
+                        [(ngModel)]="operatorSelected">
+                        <!-- (change)="onChangeFilterNumberSettings($event)"  -->
+                        <ng-option value="GREATER_THAN">Greater Than</ng-option>
+                        <ng-option value="LESS_THAN">Less Than</ng-option>
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                    </ng-select>
+                </ng-container>
+
+            </div>
+            <div class="col-md-12 mb-1">
+                <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterWord">
+            </div>
+        </div>
+        <button nbButton status="primary" style="margin-right: 5px;" (click)="onApplyFilter()">Apply</button>
+        <button nbButton status="danger" (click)="closeFilterPopover()">Close</button>
+    </div>
+</ng-template>
