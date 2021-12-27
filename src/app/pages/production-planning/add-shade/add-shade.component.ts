@@ -26,6 +26,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
   @Input("jetid") jetid: number;
   @Input("productionId1") productionId1: number;
+  @Input("fromJetComp") fromJetComp:boolean = false;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];

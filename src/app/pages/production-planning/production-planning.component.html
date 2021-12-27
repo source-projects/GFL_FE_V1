@@ -255,10 +255,9 @@
                                                     (mouseout)="resetDetailsOfBatch($event)"
                                                     (click)="onBatchSelect(b.batchId)" class="p-badge-design">
                                                     {{b.batchId}} </button>
-                                                <ngb-pagination id="custom-pagination"  *ngIf="requestData.data.total"
+                                                <ngb-pagination id="custom-pagination" *ngIf="requestData.data.total"
                                                     class="d-flex justify-content-end"
-                                                    [pageSize]="requestData.data.pageSize"
-                                                    [maxSize]="5"
+                                                    [pageSize]="requestData.data.pageSize" [maxSize]="5"
                                                     [collectionSize]="requestData.data.total"
                                                     [page]="requestData.data.pageIndex"
                                                     (pageChange)="pageChanged($event)">
@@ -299,10 +298,10 @@
                                                             icon="close-circle-outline"></nb-icon>
                                                     </button>
                                                 </ng-container>
-                                                <ngb-pagination id="custom-pagination" *ngIf="prodRequestData.data.total"
+                                                <ngb-pagination id="custom-pagination"
+                                                    *ngIf="prodRequestData.data.total"
                                                     class="d-flex justify-content-end"
-                                                    [pageSize]="prodRequestData.data.pageSize"
-                                                    [maxSize]="5"
+                                                    [pageSize]="prodRequestData.data.pageSize" [maxSize]="5"
                                                     [collectionSize]="prodRequestData.data.total"
                                                     [page]="prodRequestData.data.pageIndex"
                                                     (pageChange)="prodPageChanged($event)">
@@ -315,26 +314,45 @@
                         </nb-card-front>
                         <nb-card-back>
                             <nb-card class="pd-left-15" style="height: 400px;overflow-y: auto;">
-                                
+
                                 <div id="jetList">
                                     <div class="title-with-btn">
                                         <div class="row">
-                                            <div class="col-md-2 col-5">
+                                            <div class="col-md-1 col-5">
                                                 <div class="batch-list-production">
                                                     <h2 class="nb-text font-14 batch-mr-0">Jet List:</h2>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <ng-select id="jetSelected" name="jetSelected" multiple="true"  placeholder="Select Jets" (change)="jetsSelected($event)" [(ngModel)]="selectedJets">
+                                            <div class="col-md-3 jet-display-center">
+                                                <ng-select id="jetSelected" name="jetSelected" multiple="true"
+                                                    placeholder="Select Jets" (change)="jetsSelected($event)"
+                                                    [(ngModel)]="selectedJets">
                                                     <ng-option *ngFor="let j of jetList" [value]="j.id">
                                                         {{j.name}}
                                                     </ng-option>
                                                 </ng-select>
                                             </div>
-                                            <div class="col-md-4">
-                                                
+                                            <div class="col-md-3 jet-display-center"
+                                                *ngIf="selectedBatchForPrint.length > 0">
+                                                <ng-select id="printOption" name="printOption"
+                                                    placeholder="Select Print Option" [(ngModel)]="selectedPrintOption">
+                                                    <ng-option value="all"> All</ng-option>
+                                                    <ng-option value="color"> Color</ng-option>
+                                                    <ng-option value="chemical"> Chemical</ng-option>
+                                                </ng-select>
                                             </div>
-                                            <div class="col-md-3 col-7 display-flex-end">
+                                            <div class="col-md-3 jet-display-center">
+                                                <button *ngIf="selectedPrintOption == 'color'"
+                                                    class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                    (click)="callPrintSlipApi()" type="button">Print Color</button>
+                                                <button *ngIf="selectedPrintOption == 'chemical'"
+                                                    class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                    (click)="callPrintSlipApi()" type="button">Print Chemical</button>
+                                                <button *ngIf="selectedPrintOption == 'all'"
+                                                    class="btn btn-md btn-design-save font-14 btn-plan mr-2"
+                                                    (click)="callPrintSlipApi()" type="button">Print Both</button>
+                                            </div>
+                                            <div class="col-md-2 col-7 display-flex-end">
                                                 <div class="jet-btn-production">
                                                     <div class="jet-btn-production text-right">
                                                         <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
@@ -351,12 +369,18 @@
                                         <tr width="100%">
                                             <th width="5%">Jet</th>
                                             <th width="8%">Capacity</th>
+                                            <th width="8%">Enter Lot No.</th>
                                             <th width="82%">Sequence</th>
                                         </tr>
 
                                         <tr *ngFor="let j of jet;let i=index">
                                             <td>{{j.name}}</td>
                                             <td>{{j.capacity}}</td>
+                                            <td style="display: revert !important;">
+                                                <input style="width:150px" class="form-control"
+                                                    placeholder="Enter Lol No" type="text" min="0" name="lotNo-{{i}}"
+                                                    [(ngModel)]="j.lotNo" (keypress)="lotNoEntered($event,j);">
+                                            </td>
                                             <td>
                                                 <div cdkDropList [cdkDropListData]="j.jetDataList"
                                                     cdkDropListOrientation="horizontal"
@@ -365,12 +389,33 @@
                                                     <div class="example-box trans-box-drop-1 border-jet"
                                                         *ngFor="let index of j.jetDataList;let idx = index;"
                                                         [style.background]="index.colorTone?index.colorTone:'#ffffff'"
-                                                        (click)="setIndexForSlip(index,j,idx)" cdkDrag>
-                                                        <button nbContextMenuTag="my-context-menu"
+                                                        (click)="setIndexForSlip(index,j,idx)" cdkDrag
+                                                        style="display: flex;justify-content: left;">
+                                                        <nb-checkbox *ngIf="index.shadeId || index.isDirect" (checkedChange)="selectedBatches($event,index,j)"
+                                                            name="check-{{idx}}" [(ngModel)]="index.isChecked">
+                                                        </nb-checkbox>
+                                                        <button *ngIf="index.shadeId" nbContextMenuTag="my-context-menu"
                                                             [style.color]="index.colorTone?'#ffffff':'#000000'"
                                                             (mouseenter)="getAllDetailsOfBatch($event,index)"
                                                             (mouseout)="resetDetailsOfBatch($event)"
                                                             [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                                            class="jet-btn-changes btn-changes-jet ">
+                                                            {{index.batchId}}
+                                                        </button>
+                                                        <button *ngIf="!index.shadeId && index.isDirect"
+                                                            nbContextMenuTag="my-context-menu"
+                                                            [style.color]="index.colorTone?'#ffffff':'#000000'"
+                                                            (mouseenter)="getAllDetailsOfBatch($event,index)"
+                                                            (mouseout)="resetDetailsOfBatch($event)"
+                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
+                                                            class="jet-btn-changes btn-changes-jet ">
+                                                            {{index.batchId}}
+                                                        </button>
+                                                        <button *ngIf="!index.shadeId && !index.isDirect"
+                                                            [style.color]="index.colorTone?'#ffffff':'#000000'"
+                                                            (mouseenter)="getAllDetailsOfBatch($event,index)"
+                                                            (mouseout)="resetDetailsOfBatch($event)"
+                                                            (click)="openShadeModal(j,index)"
                                                             class="jet-btn-changes btn-changes-jet ">
                                                             {{index.batchId}}
                                                         </button>
