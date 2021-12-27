@@ -29,6 +29,7 @@ import {
   NbTabsetModule,
   NbPopoverModule,
   NbToggleModule,
+  NbSpinnerModule,
 } from "@nebular/theme";
 
 import { NbSecurityModule } from "@nebular/security";
@@ -92,7 +93,8 @@ const NB_MODULES = [
   //NgbModal
   NbAccordionModule,
   NbToggleModule,
-  NbPopoverModule
+  NbPopoverModule,
+  NbSpinnerModule
 ];
 
 @NgModule({
