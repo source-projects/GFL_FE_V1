@@ -1222,16 +1222,16 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data["success"]) {
           this.jet = data['data'];
-          if(this.jet && this.jet.length){
+          if (this.jet && this.jet.length) {
             this.jet.forEach(element => {
               element["lotNo"] = "";
-              if(element.jetDataList && element.jetDataList.length){
+              if (element.jetDataList && element.jetDataList.length) {
                 element.jetDataList.forEach(item => {
                   item["isChecked"] = false;
                 });
               }
             });
-          } else{
+          } else {
             this.jet = [];
           }
           this.cdr.detectChanges();
@@ -1242,15 +1242,25 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
   lotNoEntered(event, jet) {
     if (event.key == "Enter") {
 
-      let production = this.batchList.filter(v => v.batchId == jet.lotNo);
-      if (production && production.length) {
+      // let production;
+      // this.productionPlanningService.
+      // checkBatchExistOrNot.(jet.lotNo)
+      //   .pipe(takeUntil(this.destroy$)).subscribe(
+      //     (data) => {
+      //       if (data["success"]) {
+      //         production = data.data; 
+      //       } else {
+      //         this.toastr.error(data["msg"]);
+      //       }
+      //     },
+      //     (error) => {
+      //       this.loading = false;
+      //     }
+      //   );
 
         this.productionData.productionId = null;
-        this.productionData.batchId = production[0].batchId;
-        this.productionData.partyId = production[0].partyId;
-        this.productionData.qualityEntryId = production[0].qualityEntryId;
+        this.productionData.batchId = jet.lotNo;
         this.productionData.shadeId = null;
-        this.productionData.stockId = production[0].stockId;
         this.productionData.jetId = jet.id;
         this.productionPlanningService
           .saveProductionPlan(this.productionData)
@@ -1260,7 +1270,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
                 // this.productionId = data["data"];
                 this.jetsSelected();
                 this.toastr.success(data["msg"]);
-                
+
               } else {
                 this.toastr.error(data["msg"]);
               }
@@ -1269,9 +1279,6 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
               this.loading = false;
             }
           );
-      } else {
-        this.toastr.warning("No batch found")
-      }
       event.preventDefault();
     }
 
@@ -1306,7 +1313,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectedBatches(checked,data,jet){
+  selectedBatches(checked, data, jet) {
 
     this.selectedBatchForPrint = [];
     data.isChecked = checked;
@@ -1314,31 +1321,31 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     let batches = [];
     allJetData.forEach(element => {
       element.forEach(ele => {
-        if(ele.isChecked){
+        if (ele.isChecked) {
           batches.push(ele);
         }
       });
     });
-    console.log("batched : ",batches);
-    if(batches && batches.length){
+    console.log("batched : ", batches);
+    if (batches && batches.length) {
       batches.forEach(element => {
         let obj = {
-          batchId:element.batchId,
-          productionId:element.productionId
+          batchId: element.batchId,
+          productionId: element.productionId
         }
         this.selectedBatchForPrint.push(obj)
       });
     }
 
     console.log(this.selectedBatchForPrint)
-    
+
   }
 
-  callPrintSlipApi(){
-     
+  callPrintSlipApi() {
+
     let obj = {
-      type:this.selectedPrintOption,
-      list:this.selectedBatchForPrint
+      type: this.selectedPrintOption,
+      list: this.selectedBatchForPrint
     }
 
     const modalRef = this.modalService.open(SlipFromJetComponent);
@@ -1354,5 +1361,30 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       })
       .catch((err) => { });
 
+  }
+
+  removeBatchFromJetManually(index){
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      size: "sm",
+    });
+    modalRef.result
+      .then((result) => {
+        if (result) {
+          this.jetService
+            .removeProductionFromJet(index.controlId, index.productionId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              (data) => {
+                this.toastr.success(errorData.Delete);
+                // this.getJetData();
+                this.jetsSelected();
+              },
+              (error) => {
+                this.toastr.error(errorData.Serever_Error);
+              }
+            );
+        }
+      })
+      .catch((err) => { });
   }
 }
