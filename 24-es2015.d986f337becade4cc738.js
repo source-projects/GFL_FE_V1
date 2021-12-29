@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[24],{"8tQ5":function(n,t,s){"use strict";s.d(t,"a",(function(){return c})),s.d(t,"c",(function(){return o})),s.d(t,"b",(function(){return i}));class c{}class o{}class i{constructor(){this.from="",this.to="",this.signByParty=""}}}}]);
