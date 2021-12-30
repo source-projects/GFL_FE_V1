@@ -25,7 +25,7 @@
         <ngx-datatable [rows]="InvoiceList  | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
             [ngClass]="'bootstrap'" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
             [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
-            [limit]="requestData.data.pageSize" (page)="setPage($event)" [selectionType]="'checkbox'" let index>
+            [limit]="requestData.data.pageSize" (page)="setPage($event)" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
 
             <ngx-datatable-column name="Invoice No" prop="invoiceNo" [headerCheckboxable]="true" [checkboxable]="true"
                 [maxWidth]="110">
