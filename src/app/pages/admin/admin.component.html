@@ -1,392 +1,819 @@
 <nb-card class="nb-style">
-    <nb-card-body>
-        <nb-tabset fullWidth class="boiler-thermopack-tabheader fn-tab-title" (changeTab)="onTabClick($event.tabTitle)">
-            <nb-tab tabTitle="Jet">
-                <!-- <form #advancePaymentForm="ngForm"> -->
-                <form #addJetData="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Jet Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Jet Name"
-                                    [(ngModel)]="addJet.name" #jetName1="ngModel"
-                                    [ngClass]="{'is-invalid':(jetName1.invalid) &&(formSubmitted || jetName1.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(jetName1.invalid) && (formSubmitted || jetName1.touched)">
-                                    Jet name is required.
-                                </div>
-                            </div>
-                        </div>
+  <nb-card-body>
+    <nb-tabset
+      fullWidth
+      class="boiler-thermopack-tabheader fn-tab-title"
+      (changeTab)="onTabClick($event.tabTitle)"
+    >
+      <nb-tab tabTitle="Jet">
+        <!-- <form #advancePaymentForm="ngForm"> -->
+        <form #addJetData="ngForm">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Jet Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Jet Name"
+                  [(ngModel)]="addJet.name"
+                  #jetName1="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      jetName1.invalid && (formSubmitted || jetName1.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    jetName1.invalid && (formSubmitted || jetName1.touched)
+                  "
+                >
+                  Jet name is required.
+                </div>
+              </div>
+            </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Jet Capacity</label>
-                                <input name="capacity" type="number" class="form-control"
-                                    placeholder="Enter Jet Capacity" [(ngModel)]="addJet.capacity"
-                                    #jetCapacity1="ngModel"
-                                    [ngClass]="{'is-invalid':(jetCapacity1.invalid) &&(formSubmitted || jetCapacity1.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(jetCapacity1.invalid) && (formSubmitted || jetCapacity1.touched)">
-                                    Capacity is required.
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Jet Capacity</label>
+                <input
+                  name="capacity"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Jet Capacity"
+                  [(ngModel)]="addJet.capacity"
+                  #jetCapacity1="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      jetCapacity1.invalid &&
+                      (formSubmitted || jetCapacity1.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    jetCapacity1.invalid &&
+                    (formSubmitted || jetCapacity1.touched)
+                  "
+                >
+                  Capacity is required.
+                </div>
+              </div>
+            </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Liquor Ratio</label>
-                                <input name="liquorRatio" type="number" class="form-control"
-                                    placeholder="Enter Liquor Ratio" [(ngModel)]="addJet.liquorRatio"
-                                    #jetLiquor1="ngModel"
-                                    [ngClass]="{'is-invalid':(jetLiquor1.invalid) &&(formSubmitted || jetLiquor1.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(jetLiquor1.invalid) && (formSubmitted || jetLiquor1.touched)">
-                                    Liquor ratio is required.
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Liquor Ratio</label>
+                <input
+                  name="liquorRatio"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Liquor Ratio"
+                  [(ngModel)]="addJet.liquorRatio"
+                  #jetLiquor1="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      jetLiquor1.invalid &&
+                      (formSubmitted || jetLiquor1.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    jetLiquor1.invalid && (formSubmitted || jetLiquor1.touched)
+                  "
+                >
+                  Liquor ratio is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    </div>
+          <div class="row">
+            <div class="col-md-12 mobile-btn-center text-btn-right">
+              <button
+                class="btn btn-primary btn-sm btn-design-cancel"
+                type="reset"
+                (click)="onCancelJet()"
+              >
+                CANCEL
+              </button>
+              <button
+                type="button"
+                class="
+                  btn btn-primary btn-sm btn-design-save
+                  button-base
+                  ripple
+                "
+                (click)="saveJet(addJetData)"
+                [disabled]="disabled"
+                [disabled]="disabled"
+              >
+                SAVE
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- </form> -->
 
-                    <div class="row">
-                        <div class="col-md-12 mobile-btn-center text-btn-right">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)=" onCancelJet()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveJet(addJetData)" [disabled]="disabled" [disabled]="disabled">SAVE</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- </form> -->
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="jetList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeJet(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getjetEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Name"
+            prop="name"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Capacity"
+            prop="capacity"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="100"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Liquor Ratio"
+            prop="liquorRatio"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="120"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="jetList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeJet(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getjetEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Capacity" prop="capacity" [sortable]="false" [width]="300"
-                        [maxWidth]="100">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Liquor Ratio" prop="liquorRatio" [sortable]="false" [width]="300"
-                        [maxWidth]="120">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </nb-tab>
+      <nb-tab tabTitle="Company">
+        <form #addCompanyData="ngForm">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label>Company Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Company Name."
+                  [(ngModel)]="addCompany.name"
+                  #companyName="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      companyName.invalid &&
+                      (formSubmitted || companyName.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    companyName.invalid &&
+                    (formSubmitted || companyName.touched)
+                  "
+                >
+                  Company name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="mobile-btn-center text-btn-right">
+                <button
+                  class="btn btn-primary btn-sm btn-design-cancel"
+                  type="reset"
+                  (click)="onCancelCompany()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  class="
+                    btn btn-primary btn-sm btn-design-save
+                    button-base
+                    ripple
+                  "
+                  (click)="saveCompany(addCompanyData)"
+                  [disabled]="disabled"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
 
-            <nb-tab tabTitle="Company">
-                <form #addCompanyData="ngForm">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label>Company Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Company Name."
-                                    [(ngModel)]="addCompany.name" #companyName="ngModel"
-                                    [ngClass]="{'is-invalid':(companyName.invalid) &&(formSubmitted || companyName.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(companyName.invalid) && (formSubmitted || companyName.touched)">
-                                    Company name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                    (click)="onCancelCompany()">CANCEL</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="saveCompany(addCompanyData)" [disabled]="disabled">SAVE</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="row">
+          <!-- <div class="row">
                         <div class="col-md-12 mobile-btn-center text-btn-right">
                             <button class="btn btn-primary btn-sm btn-design-cancel" type="reset" (click)="onCancelCompany()">CANCEL</button>
                             <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple" (click)="saveCompany(addCompanyData)" [disabled]="disabled">SAVE</button>
                         </div>
                     </div> -->
-                </form>
+        </form>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="companyList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeCompany(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getcompanyEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="companyList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeCompany(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getcompanyEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </nb-tab>
-            <!--Department-->
-            <nb-tab tabTitle="Department">
-                <form #addDepartmentData="ngForm">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label>Department Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Department Name."
-                                    [(ngModel)]="addDepartment.name" #DepartmentName="ngModel"
-                                    [ngClass]="{'is-invalid':(DepartmentName.invalid) &&(formSubmitted || DepartmentName.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(DepartmentName.invalid) && (formSubmitted || DepartmentName.touched)">
-                                    Department name is required.
-                                </div>
-                                <nb-checkbox [disabled]="departmentEditFlag" [(ngModel)]="addDepartment.isMaster"
-                                    name="isMasterGrp">Is Master Group</nb-checkbox>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                    (click)="onCancelDepartment()">CANCEL</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="saveDepartment(addDepartmentData)" [disabled]="disabled">SAVE</button>
-                            </div>
+          <ngx-datatable-column
+            name="Name"
+            prop="name"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
+      <!--Department-->
+      <nb-tab tabTitle="Department">
+        <form #addDepartmentData="ngForm">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label>Department Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Department Name."
+                  [(ngModel)]="addDepartment.name"
+                  #DepartmentName="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      DepartmentName.invalid &&
+                      (formSubmitted || DepartmentName.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    DepartmentName.invalid &&
+                    (formSubmitted || DepartmentName.touched)
+                  "
+                >
+                  Department name is required.
+                </div>
+                <nb-checkbox
+                  [disabled]="departmentEditFlag"
+                  [(ngModel)]="addDepartment.isMaster"
+                  name="isMasterGrp"
+                  >Is Master Group</nb-checkbox
+                >
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="mobile-btn-center text-btn-right">
+                <button
+                  class="btn btn-primary btn-sm btn-design-cancel"
+                  type="reset"
+                  (click)="onCancelDepartment()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  class="
+                    btn btn-primary btn-sm btn-design-save
+                    button-base
+                    ripple
+                  "
+                  (click)="saveDepartment(addDepartmentData)"
+                  [disabled]="disabled"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
 
-                        </div>
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="departmentList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <!-- <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeDepartment(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp; -->
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getdepartmentEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Name"
+            prop="name"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Is master group"
+            prop="isMaster"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
 
-                    </div>
+      <!--Quality-->
+      <nb-tab tabTitle="Quality">
+        <form #addQualityData="ngForm">
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label>Quality Name</label>
+                <input
+                  name="qualityName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Quality Name."
+                  [(ngModel)]="addQuality.qualityName"
+                  #qualityName="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      qualityName.invalid &&
+                      (formSubmitted || qualityName.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    qualityName.invalid &&
+                    (formSubmitted || qualityName.touched)
+                  "
+                >
+                  Quality name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label>Quality Rate</label>
+                <input
+                  name="rate"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Quality Rate."
+                  [(ngModel)]="addQuality.rate"
+                  #rate="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      rate.invalid && (formSubmitted || rate.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="rate.invalid && (formSubmitted || rate.touched)"
+                >
+                  Quality rate is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label>Supplier Name</label>
+              <ng-select
+                id="supplierName1"
+                name="supplierName1"
+                multiple="true"
+                placeholder="Select supplier name"
+                (change)="supplierChange($event)"
+                [(ngModel)]="selectedSupplier"
+                [closeOnSelect]="false"
+              >
+                <ng-option *ngFor="let s of supplierList" [value]="s.id">
+                  {{ s.supplierName }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="mobile-btn-center text-btn-right">
+                <button
+                  class="btn btn-primary btn-sm btn-design-cancel"
+                  type="reset"
+                  (click)="onCancelQuality()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  class="
+                    btn btn-primary btn-sm btn-design-save
+                    button-base
+                    ripple
+                  "
+                  (click)="saveQuality(addQualityData)"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
 
-                </form>
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="qualityList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeQuality(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getQualityEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="departmentList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <!-- <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }" (click)="removeDepartment(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp; -->
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getdepartmentEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Is master group" prop="isMaster" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </nb-tab>
+          <ngx-datatable-column
+            name="Name"
+            prop="qualityName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Rate"
+            prop="rate"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
 
-            <!--Quality-->
-            <nb-tab tabTitle="Quality">
-                <form #addQualityData="ngForm">
-                    <div class="row">
-                        <div class="col-md-4 col-12">
-                            <div class="form-group">
-                                <label>Quality Name</label>
-                                <input name="qualityName" type="text" class="form-control"
-                                    placeholder="Enter Quality Name." [(ngModel)]="addQuality.qualityName"
-                                    #qualityName="ngModel"
-                                    [ngClass]="{'is-invalid':(qualityName.invalid) &&(formSubmitted || qualityName.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(qualityName.invalid) && (formSubmitted || qualityName.touched)">
-                                    Quality name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group">
-                                <label>Quality Rate</label>
-                                <input name="rate" type="number" class="form-control"
-                                    placeholder="Enter Quality Rate." [(ngModel)]="addQuality.rate"
-                                    #rate="ngModel"
-                                    [ngClass]="{'is-invalid':(rate.invalid) &&(formSubmitted || rate.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(rate.invalid) && (formSubmitted || rate.touched)">
-                                    Quality rate is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Supplier Name</label>
-                            <ng-select id="supplierName1" name="supplierName1" multiple="true"  placeholder="Select supplier name" (change)="supplierChange($event)" [(ngModel)]="selectedSupplier">
-                                <ng-option *ngFor="let s of supplierList" [value]="s.id">
-                                    {{s.supplierName}}
-                                </ng-option>
-                            </ng-select>
-                        </div>
-                        
-                    </div>
-                    <div class="row">
-                            
-                            <div class="col-md-4 col-12">
-                                <div class="mobile-btn-center text-btn-right">
-                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                        (click)="onCancelQuality()">CANCEL</button>
-                                    <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                        (click)="saveQuality(addQualityData)">SAVE</button>
-                                </div>
-                            </div>
-    
-                        </div>
+      <!--Machine-->
+      <nb-tab tabTitle="Machine">
+        <form #addMachineData="ngForm">
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label>Machine Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Machine Name"
+                  [(ngModel)]="addMachine.machineName"
+                  #machineName="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      machineName.invalid &&
+                      (formSubmitted || machineName.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    machineName.invalid &&
+                    (formSubmitted || machineName.touched)
+                  "
+                >
+                  Machine name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label>Machine Category</label>
+                <ng-select
+                  name="category"
+                  class="dropdown-name"
+                  placeholder="select Machine Category"
+                  [(ngModel)]="addMachine.controlId"
+                  #machineCategory1="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      machineCategory1.invalid &&
+                      (formSubmitted || machineCategory1.touched)
+                  }"
+                  required
+                >
+                  <ng-option
+                    *ngFor="let mc of machineCategoryList"
+                    [value]="mc.id"
+                  >
+                    {{ mc.name }}
+                  </ng-option>
+                </ng-select>
+                <div
+                  class="input-required"
+                  *ngIf="
+                    machineCategory1.invalid &&
+                    (formSubmitted || machineCategory1.touched)
+                  "
+                >
+                  Machine category is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="mobile-btn-center text-btn-right">
+                <button
+                  class="btn btn-primary btn-sm btn-design-cancel"
+                  type="reset"
+                  (click)="onCancelMachine()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  class="
+                    btn btn-primary btn-sm btn-design-save
+                    button-base
+                    ripple
+                  "
+                  (click)="saveMachine(addMachineData)"
+                  [disabled]="disabled"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
 
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="machineList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeMachine(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getMachineEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
 
-                </form>
+          <ngx-datatable-column
+            name="Machine Name"
+            prop="machineName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Machine Category"
+            prop="categoryName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
 
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="qualityList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeQuality(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getQualityEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
+      <!--Machine Category-->
+      <nb-tab tabTitle="Machine Category">
+        <form #addMachineCategoryData="ngForm">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label>Machine Category</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Machine Category"
+                  [(ngModel)]="addMachineCategory.name"
+                  #machineCategoryName="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      machineCategoryName.invalid &&
+                      (formSubmitted || machineCategoryName.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="
+                    machineCategoryName.invalid &&
+                    (formSubmitted || machineCategoryName.touched)
+                  "
+                >
+                  Machine category name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="mobile-btn-center text-btn-right">
+                <button
+                  class="btn btn-primary btn-sm btn-design-cancel"
+                  type="reset"
+                  (click)="onCancelMachineCategory()"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  class="
+                    btn btn-primary btn-sm btn-design-save
+                    button-base
+                    ripple
+                  "
+                  (click)="saveMachineCategory(addMachineCategoryData)"
+                  [disabled]="disabled"
+                >
+                  SAVE
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
 
-                    <ngx-datatable-column name="Name" prop="qualityName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column> 
-                    <ngx-datatable-column name="Rate" prop="rate" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="machineCategoryList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeMachineCategory(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getMachineCategoryEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
 
-                </ngx-datatable>
-            </nb-tab>
+          <ngx-datatable-column
+            name="Name"
+            prop="name"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
 
-            <!--Machine-->
-            <nb-tab tabTitle="Machine">
-                <form #addMachineData="ngForm">
-                    <div class="row">
-                        <div class="col-md-4 col-12">
-                            <div class="form-group">
-                                <label>Machine Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Name"
-                                    [(ngModel)]="addMachine.machineName" #machineName="ngModel"
-                                    [ngClass]="{'is-invalid':(machineName.invalid) &&(formSubmitted || machineName.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(machineName.invalid) && (formSubmitted || machineName.touched)">
-                                    Machine name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group">
-                                <label>Machine Category</label>
-                                <ng-select name="category" class="dropdown-name" placeholder="select Machine Category"
-                                    [(ngModel)]="addMachine.controlId" #machineCategory1="ngModel"
-                                    [ngClass]="{'is-invalid':(machineCategory1.invalid) &&(formSubmitted || machineCategory1.touched) }"
-                                    required>
-                                    <ng-option *ngFor="let mc of machineCategoryList" [value]="mc.id">
-                                        {{mc.name}}
-                                    </ng-option>
-                                </ng-select>
-                                <div class="input-required"
-                                    *ngIf="(machineCategory1.invalid) && (formSubmitted || machineCategory1.touched)">
-                                    Machine category is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                    (click)="onCancelMachine()">CANCEL</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="saveMachine(addMachineData)" [disabled]="disabled">SAVE</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeMachine(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getMachineEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-
-                        </ng-template>
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Machine Name" prop="machineName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Machine Category" prop="categoryName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-
-                </ngx-datatable>
-            </nb-tab>
-
-
-            <!--Machine Category-->
-            <nb-tab tabTitle="Machine Category">
-                <form #addMachineCategoryData="ngForm">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label>Machine Category</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Machine Category"
-                                    [(ngModel)]="addMachineCategory.name" #machineCategoryName="ngModel"
-                                    [ngClass]="{'is-invalid':(machineCategoryName.invalid) &&(formSubmitted || machineCategoryName.touched) }"
-                                    required>
-                                <div class="input-required"
-                                    *ngIf="(machineCategoryName.invalid) && (formSubmitted || machineCategoryName.touched)">
-                                    Machine category name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="mobile-btn-center text-btn-right">
-                                <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                    (click)="onCancelMachineCategory()">CANCEL</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="saveMachineCategory(addMachineCategoryData)"
-                                    [disabled]="disabled">SAVE</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="machineCategoryList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeMachineCategory(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getMachineCategoryEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-
-                        </ng-template>
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </nb-tab>
-
-
-
-            <!-- <nb-tab tabTitle="Designation">
+      <!-- <nb-tab tabTitle="Designation">
                 <form #addDesignationData="ngForm">
                     <div class="row">
                         <div class="col-md-6 col-12">
@@ -433,106 +860,203 @@
                 </ngx-datatable>
             </nb-tab> -->
 
-            <!--Authorized-->
-            <nb-tab tabTitle="Authorized">
-                <form #approveReceiveForm="ngForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input name="name" type="text" class="form-control" placeholder="Enter Name"
-                                    [(ngModel)]="addApproveReceive.name" #name1="ngModel"
-                                    [ngClass]="{'is-invalid':(name1.invalid) &&(formSubmitted || name1.touched) }"
-                                    required>
-                                <div class="input-required" *ngIf="(name1.invalid) && (formSubmitted || name1.touched)">
-                                    Name is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Contact No</label>
-                                <input name="contactNo" type="number" class="form-control"
-                                    placeholder="Enter Contact No." [(ngModel)]="addApproveReceive.contact"
-                                    #contactNo1="ngModel" pattern="[6-9]{1}[0-9]{9}"
-                                    [ngClass]="{'is-invalid':(contactNo1.invalid)}">
-                                <div class="input-required" *ngIf="(contactNo1.invalid)">
-                                    Enter Valid 10 digit number
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input name="email" type="text" class="form-control" placeholder="Enter Email"
-                                    [(ngModel)]="addApproveReceive.email" #email1="ngModel"
-                                    [ngClass]="{'is-invalid':(email1.invalid)}"
-                                    pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}">
-                                <div class="input-required" *ngIf="(email1.invalid)">
-                                    Enter Valid Email
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Select Authorization</label>
-                                <ng-select name="type" appendTo="body" placeholder="Select ApprovedBy or RecievedBy"
-                                    [(ngModel)]="addApproveReceive.type">
-                                    <ng-option *ngFor="let by of items" [value]="by.id">
-                                        {{by.name}}
-                                    </ng-option>
-                                </ng-select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Department</label>
-                                <ng-select name="department" appendTo="body"
-                                    [(ngModel)]="addApproveReceive.departmentId" [items]="departmentList" bindLabel="name" bindValue="id"
-                                    placeholder="Select Department" 
-                                    class="required-error-dropdown dropdown-name">
-                                </ng-select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mobile-btn-center text-btn-right">
-                            <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                (click)="onCancelApproveReceiveBy()">CANCEL</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                (click)="saveApproveReceiveBy(approveReceiveForm)" [disabled]="disabled">SAVE</button>
-                        </div>
-                    </div>
+      <!--Authorized-->
+      <nb-tab tabTitle="Authorized">
+        <form #approveReceiveForm="ngForm">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Name"
+                  [(ngModel)]="addApproveReceive.name"
+                  #name1="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      name1.invalid && (formSubmitted || name1.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="name1.invalid && (formSubmitted || name1.touched)"
+                >
+                  Name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Contact No</label>
+                <input
+                  name="contactNo"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Contact No."
+                  [(ngModel)]="addApproveReceive.contact"
+                  #contactNo1="ngModel"
+                  pattern="[6-9]{1}[0-9]{9}"
+                  [ngClass]="{ 'is-invalid': contactNo1.invalid }"
+                />
+                <div class="input-required" *ngIf="contactNo1.invalid">
+                  Enter Valid 10 digit number
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  name="email"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Email"
+                  [(ngModel)]="addApproveReceive.email"
+                  #email1="ngModel"
+                  [ngClass]="{ 'is-invalid': email1.invalid }"
+                  pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}"
+                />
+                <div class="input-required" *ngIf="email1.invalid">
+                  Enter Valid Email
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Select Authorization</label>
+                <ng-select
+                  name="type"
+                  appendTo="body"
+                  placeholder="Select ApprovedBy or RecievedBy"
+                  [(ngModel)]="addApproveReceive.type"
+                >
+                  <ng-option *ngFor="let by of items" [value]="by.id">
+                    {{ by.name }}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Department</label>
+                <ng-select
+                  name="department"
+                  appendTo="body"
+                  [(ngModel)]="addApproveReceive.departmentId"
+                  [items]="departmentList"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Select Department"
+                  class="required-error-dropdown dropdown-name"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mobile-btn-center text-btn-right">
+              <button
+                class="btn btn-primary btn-sm btn-design-cancel"
+                type="reset"
+                (click)="onCancelApproveReceiveBy()"
+              >
+                CANCEL
+              </button>
+              <button
+                type="button"
+                class="
+                  btn btn-primary btn-sm btn-design-save
+                  button-base
+                  ripple
+                "
+                (click)="saveApproveReceiveBy(approveReceiveForm)"
+                [disabled]="disabled"
+              >
+                SAVE
+              </button>
+            </div>
+          </div>
+        </form>
 
-
-                </form>
-
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="approveReceiveByList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="!hiddenEdit || !hiddenDelete">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="removeApproveReceiveBy(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                (click)="getApproveReceiveByEdit(row.id)" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" prop="name" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Contact No" prop="contact" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Email" prop="email" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Authorized" prop="type" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Department" prop="departmentName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                </ngx-datatable>
-                <!-- <ng-select appendTo="body" placeholder="Select ApprovedBy or RecievedBy" (change)="getApprovedOrRecieved($event)">
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="approveReceiveByList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="!hiddenEdit || !hiddenDelete"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="removeApproveReceiveBy(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                (click)="getApproveReceiveByEdit(row.id)"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Name"
+            prop="name"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Contact No"
+            prop="contact"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Email"
+            prop="email"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Authorized"
+            prop="type"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Department"
+            prop="departmentName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <!-- <ng-select appendTo="body" placeholder="Select ApprovedBy or RecievedBy" (change)="getApprovedOrRecieved($event)">
                                 <ng-option *ngFor="let by of items" [value]="by.id">
                                     {{by.name}}
                                 </ng-option>
@@ -651,177 +1175,315 @@
     
 
                 </ng-container> -->
-            </nb-tab>
+      </nb-tab>
 
-            <nb-tab tabTitle="Sequence">
-                <div class="row">
-                    <div class="col-md-6">
-                        <form #addInvoiceSequence1="ngForm">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Invoice Sequence</label>
-                                        <div class="row">
-                                            <div class="col-md-10 col-11">
-                                                <input [disabled]="saveHidden" name="name" type="text"
-                                                    class="form-control" placeholder="Enter Invoice Sequence"
-                                                    [(ngModel)]="addInvoiceSequence.sequence"
-                                                    #invoiceSequence1="ngModel"
-                                                    [ngClass]="{'is-invalid':(invoiceSequence1.invalid) &&(formSubmitted || invoiceSequence1.touched) }"
-                                                    required>
-                                            </div>
-                                            <div class="col-md-2 col-1">
-                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
-                                                    icon="edit" (click)="onEdit()" [hidden]="hiddenEdit"></nb-icon>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="input-required"
-                                            *ngIf="(invoiceSequence1.invalid) && (formSubmitted || invoiceSequence1.touched)">
-                                            Invoice Sequence is required.
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-11 col-12">
-                                    <div class="mobile-btn-center text-btn-right">
-                                        <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                            (click)="onCancelSequence()" [hidden]="saveHidden">CANCEL</button>
-                                        <button type="button"
-                                            class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                            (click)="saveInvoiceSequence(addInvoiceSequence1)" [disabled]="disabled"
-                                            [hidden]="saveHidden">SAVE</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                    <div class="col-md-6">
-                        <form #addBatchSequence1="ngForm">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Batch Sequence</label>
-                                        <div class="row">
-                                            <div class="col-md-10 col-11">
-                                                <input [disabled]="batchSaveHidden" name="name" type="text"
-                                                    class="form-control" placeholder="Enter batch sequence"
-                                                    [(ngModel)]="addBatchSequence.sequence" #batchSequence1="ngModel"
-                                                    [ngClass]="{'is-invalid':(batchSequence1.invalid) &&(formSubmitted || batchSequence1.touched) }"
-                                                    required>
-                                            </div>
-                                            <div class="col-md-2 col-1">
-                                                <nb-icon status="primary" [options]="{animation:{type:'zoom'}}"
-                                                    icon="edit" (click)="onBatchEdit()" [hidden]="batchHiddenEdit">
-                                                </nb-icon>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="input-required"
-                                            *ngIf="(batchSequence1.invalid) && (formSubmitted || batchSequence1.touched)">
-                                            Batch Sequence is required.
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-11 col-12 mobile-btn-center text-btn-right">
-                                    <button class="btn btn-primary btn-sm btn-design-cancel" type="reset"
-                                        (click)="onBatchCancelSequence()" [hidden]="batchSaveHidden">CANCEL</button>
-                                    <button type="button"
-                                        class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                        (click)="saveBatchSequence(addBatchSequence1)" [disabled]="disabled"
-                                        [hidden]="batchSaveHidden">SAVE</button>
-                                </div>
-                            </div>
-                        </form>
+      <nb-tab tabTitle="Sequence">
+        <div class="row">
+          <div class="col-md-6">
+            <form #addInvoiceSequence1="ngForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Invoice Sequence</label>
+                    <div class="row">
+                      <div class="col-md-10 col-11">
+                        <input
+                          [disabled]="saveHidden"
+                          name="name"
+                          type="text"
+                          class="form-control"
+                          placeholder="Enter Invoice Sequence"
+                          [(ngModel)]="addInvoiceSequence.sequence"
+                          #invoiceSequence1="ngModel"
+                          [ngClass]="{
+                            'is-invalid':
+                              invoiceSequence1.invalid &&
+                              (formSubmitted || invoiceSequence1.touched)
+                          }"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-2 col-1">
+                        <nb-icon
+                          status="primary"
+                          [options]="{ animation: { type: 'zoom' } }"
+                          icon="edit"
+                          (click)="onEdit()"
+                          [hidden]="hiddenEdit"
+                        ></nb-icon>
+                      </div>
                     </div>
 
+                    <div
+                      class="input-required"
+                      *ngIf="
+                        invoiceSequence1.invalid &&
+                        (formSubmitted || invoiceSequence1.touched)
+                      "
+                    >
+                      Invoice Sequence is required.
+                    </div>
+                  </div>
                 </div>
-
-
-            </nb-tab>
-
-            <nb-tab tabTitle="Purchase">
-
-                <div class="row">
-                    <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
-                        <nb-checkbox [(ngModel)]="approved" [name]="approved" (change)="getApproved()">Approved
-                        </nb-checkbox>
-                    </div>
+              </div>
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="mobile-btn-center text-btn-right">
+                    <button
+                      class="btn btn-primary btn-sm btn-design-cancel"
+                      type="reset"
+                      (click)="onCancelSequence()"
+                      [hidden]="saveHidden"
+                    >
+                      CANCEL
+                    </button>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-primary btn-sm btn-design-save
+                        button-base
+                        ripple
+                      "
+                      (click)="saveInvoiceSequence(addInvoiceSequence1)"
+                      [disabled]="disabled"
+                      [hidden]="saveHidden"
+                    >
+                      SAVE
+                    </button>
+                  </div>
                 </div>
-                <ngx-datatable #table class="material common-table datatable-auto-height" [rows]="purchaseList"
-                    [headerHeight]="31" [footerHeight]="31">
-                    <ngx-datatable-column name="Action" [sortable]="false" [width]="300" [maxWidth]="90"
-                        *ngIf="(!hiddenEdit || !hiddenDelete) && !approved">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-                            <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                (click)="deletePurchase(row.id)" [hidden]="hiddenDelete"></nb-icon>&nbsp;&nbsp;
-                            <nb-icon status="primary" [options]="{animation:{type:'zoom'}}" icon="edit"
-                                [routerLink]="['/pages/purchase/edit',row.id]" [hidden]="hiddenEdit"></nb-icon>
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Bill" [maxWidth]="300">
-                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
-                            ngx-datatable-cell-template>
-                            <div class="row width-100">
-                                <div class="col-md-3">
-                                    <ng-container *ngIf="billImages && billImages[rowIndex] && billImages[rowIndex][0]">
-                                        <img [src]="billImages[rowIndex][0].picUrl" class="imageURL"
-                                            (click)="onBillClick(row.materialPhotosList)">
-                                    </ng-container>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <form #addBatchSequence1="ngForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Batch Sequence</label>
+                    <div class="row">
+                      <div class="col-md-10 col-11">
+                        <input
+                          [disabled]="batchSaveHidden"
+                          name="name"
+                          type="text"
+                          class="form-control"
+                          placeholder="Enter batch sequence"
+                          [(ngModel)]="addBatchSequence.sequence"
+                          #batchSequence1="ngModel"
+                          [ngClass]="{
+                            'is-invalid':
+                              batchSequence1.invalid &&
+                              (formSubmitted || batchSequence1.touched)
+                          }"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-2 col-1">
+                        <nb-icon
+                          status="primary"
+                          [options]="{ animation: { type: 'zoom' } }"
+                          icon="edit"
+                          (click)="onBatchEdit()"
+                          [hidden]="batchHiddenEdit"
+                        >
+                        </nb-icon>
+                      </div>
+                    </div>
 
-                                </div>
-                            </div>
+                    <div
+                      class="input-required"
+                      *ngIf="
+                        batchSequence1.invalid &&
+                        (formSubmitted || batchSequence1.touched)
+                      "
+                    >
+                      Batch Sequence is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Material" [maxWidth]="300">
-                        <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
-                            ngx-datatable-cell-template>
-                            <div class="row width-100">
-                                <div class="col-md-3">
-                                    <ng-container
-                                        *ngIf="materialImages && materialImages[rowIndex] && materialImages[rowIndex][0]">
-                                        <img [src]="materialImages[rowIndex][0].picUrl" class="imageURL"
-                                            (click)="onMaterialClick(row.materialPhotosList)">
-                                    </ng-container>
-                                </div>
-                            </div>
+              <div class="row">
+                <div class="col-md-11 col-12 mobile-btn-center text-btn-right">
+                  <button
+                    class="btn btn-primary btn-sm btn-design-cancel"
+                    type="reset"
+                    (click)="onBatchCancelSequence()"
+                    [hidden]="batchSaveHidden"
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    type="button"
+                    class="
+                      btn btn-primary btn-sm btn-design-save
+                      button-base
+                      ripple
+                    "
+                    (click)="saveBatchSequence(addBatchSequence1)"
+                    [disabled]="disabled"
+                    [hidden]="batchSaveHidden"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </nb-tab>
 
-                        </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Amount" prop="amt" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Approve By" prop="approvedName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Department" prop="departmentName" [sortable]="false" [width]="300">
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Status" prop="checked" [sortable]="false" [width]="300">
-                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                            let-rowIndex="rowIndex">
-
-                            <nb-checkbox class="status-basic nb-transition" id="approved" name="approved"
-                                [disabled]="row.checked" (change)="updatePurchaseStatus(row , $event.target.checked)"
-                                [checked]="row.checked">
-                                <span *ngIf="row.checked" class="text cr-txt">Approved</span>
-                                <span *ngIf="!row.checked" class="text cr-txt">Not Approved</span>
-
-                            </nb-checkbox>
-                        </ng-template>
-                    </ngx-datatable-column>
-                </ngx-datatable>
-            </nb-tab>
-        </nb-tabset>
-    </nb-card-body>
+      <nb-tab tabTitle="Purchase">
+        <div class="row">
+          <div class="col-md-12 col-12 mobile-btn-center text-btn-right">
+            <nb-checkbox
+              [(ngModel)]="approved"
+              [name]="approved"
+              (change)="getApproved()"
+              >Approved
+            </nb-checkbox>
+          </div>
+        </div>
+        <ngx-datatable
+          #table
+          class="material common-table datatable-auto-height"
+          [rows]="purchaseList"
+          [headerHeight]="31"
+          [footerHeight]="31"
+        >
+          <ngx-datatable-column
+            name="Action"
+            [sortable]="false"
+            [width]="300"
+            [maxWidth]="90"
+            *ngIf="(!hiddenEdit || !hiddenDelete) && !approved"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-icon
+                icon="trash"
+                status="danger"
+                [options]="{ animation: { type: 'zoom' } }"
+                (click)="deletePurchase(row.id)"
+                [hidden]="hiddenDelete"
+              ></nb-icon
+              >&nbsp;&nbsp;
+              <nb-icon
+                status="primary"
+                [options]="{ animation: { type: 'zoom' } }"
+                icon="edit"
+                [routerLink]="['/pages/purchase/edit', row.id]"
+                [hidden]="hiddenEdit"
+              ></nb-icon>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Bill" [maxWidth]="300">
+            <ng-template
+              let-row="row"
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+            >
+              <div class="row width-100">
+                <div class="col-md-3">
+                  <ng-container
+                    *ngIf="
+                      billImages &&
+                      billImages[rowIndex] &&
+                      billImages[rowIndex][0]
+                    "
+                  >
+                    <img
+                      [src]="billImages[rowIndex][0].picUrl"
+                      class="imageURL"
+                      (click)="onBillClick(row.materialPhotosList)"
+                    />
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Material" [maxWidth]="300">
+            <ng-template
+              let-row="row"
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+            >
+              <div class="row width-100">
+                <div class="col-md-3">
+                  <ng-container
+                    *ngIf="
+                      materialImages &&
+                      materialImages[rowIndex] &&
+                      materialImages[rowIndex][0]
+                    "
+                  >
+                    <img
+                      [src]="materialImages[rowIndex][0].picUrl"
+                      class="imageURL"
+                      (click)="onMaterialClick(row.materialPhotosList)"
+                    />
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Amount"
+            prop="amt"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Approve By"
+            prop="approvedName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Department"
+            prop="departmentName"
+            [sortable]="false"
+            [width]="300"
+          >
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            name="Status"
+            prop="checked"
+            [sortable]="false"
+            [width]="300"
+          >
+            <ng-template
+              let-row="row"
+              let-value="value"
+              ngx-datatable-cell-template
+              let-rowIndex="rowIndex"
+            >
+              <nb-checkbox
+                class="status-basic nb-transition"
+                id="approved"
+                name="approved"
+                [disabled]="row.checked"
+                (change)="updatePurchaseStatus(row, $event.target.checked)"
+                [checked]="row.checked"
+              >
+                <span *ngIf="row.checked" class="text cr-txt">Approved</span>
+                <span *ngIf="!row.checked" class="text cr-txt"
+                  >Not Approved</span
+                >
+              </nb-checkbox>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
 </nb-card>
