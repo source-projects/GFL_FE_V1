@@ -32,7 +32,7 @@
         <div class="form-group col-md-3" style="top: 35px; display: flex; justify-content: space-around">
           <label> Signed By Party : </label>
            
-          <nb-radio-group [(ngModel)]="invoiceReportRequest.signByParty">
+          <nb-radio-group [(ngModel)]="invoiceReportRequest.signByParty" name="signByParty">
             <nb-radio *ngFor="let option of options" [value]="option.value">
               {{ option.label }}
             </nb-radio>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BatchShuffleRoutingModule } from './batch-shuffle-routing.module';
 import { ShuffleComponent } from './shuffle/shuffle.component';
-import { SharedModule } from 'app/@theme/shared.module';
+import { SharedModule } from '../../@theme/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NbCardModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';

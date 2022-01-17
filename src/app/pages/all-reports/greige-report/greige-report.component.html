@@ -50,9 +50,10 @@
 
                 </div>
                 <br><br>
-                <div *ngFor="let report of shortReport" style="border: 1px solid black;margin: 115px 0px;" class="mb-5"
-                    [ngStyle]="{ background : report.masterName.toString().toLowerCase() == 'brijesh' ? '#fcc201' : 
-                (report.masterName.toString().toLowerCase() == 'manish' ? '#FFB6C1' : (report.masterName.toString().toLowerCase() == 'glory' ? '#90EE90' : ''))}">
+                <div *ngFor="let report of shortReport" style="border: 1px solid black;margin: 0px 0px 115px 0px;" class="mb-5"
+                    [ngClass]="{ 'brijesh' : report.masterName.toString().toLowerCase() == 'brijesh', 
+                    'manish' : report.masterName.toString().toLowerCase() == 'manish',
+                    'glory' : report.masterName.toString().toLowerCase() == 'glory'}">
                     <div class="print-body">
                         <!-- print-layout-report -->
                         <div class="invoice-no-heading" style="width: fit-content">
@@ -81,27 +82,14 @@
                                     <tr>
                                         <th *ngFor="let head of subHeaderKeys">{{ head }}</th>
                                     </tr>
-                                    <tr *ngFor="let sub of qual.value; let i = index" [style.background]="(sub.billingValue >= 0 && sub.billingValue <= 10000) ? '#ff0000' 
-                                    : (sub.billingValue > 10000 && sub.billingValue <= 12500) ? '#ffff00' 
-                                    : (sub.billingValue > 12500 && sub.billingValue <= 18000) ? '#008000' : ''">
+                                    <tr *ngFor="let sub of qual.value; let i = index" [ngClass]="{ 'redRecord' : (sub.billingValue >= 0 && sub.billingValue <= 10000), 
+                    'yellowRecord' :(sub.billingValue > 10000 && sub.billingValue <= 12500),
+                    'greenRecord' : (sub.billingValue > 12500 && sub.billingValue <= 18000)}">
                                         <td *ngFor="let item of subHeaderArray">{{ sub[item] }}</td>
                                     </tr>
                                 </table>
                             </div>
 
-                            <!-- <div style="padding: 15px;">
-                                <table style="font-size: large;text-align: center;border: 1px solid black;"
-                                    class="table-striped table-process-fnt width-100">
-                                    <tr>
-                                        <th *ngFor="let head of subHeaderKeys">{{ head }}</th>
-                                    </tr>
-                                    <tr *ngFor="let sub of invoice.list; let i = index" [style.background]="(sub.billingValue >= 0 && sub.billingValue <= 10000) ? '#ff0000' 
-                                        : (sub.billingValue > 10000 && sub.billingValue <= 12500) ? '#ffff00' 
-                                        : (sub.billingValue > 12500 && sub.billingValue <= 18000) ? '#008000' : ''">
-                                        <td *ngFor="let item of subHeaderArray">{{ sub[item] }}</td>
-                                    </tr>
-                                </table>
-                            </div> -->
                             <br>
                             <br>
                         </div>
