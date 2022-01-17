@@ -82,9 +82,9 @@ export class GreigeReportComponent implements OnInit {
         }
       });
 
-      this.takkaTotal = this.brijeshTakka + this.manishTakka + this.gloryTakka;
-      this.mtrTotal = this.brijeshMtr + this.manishMtr + this.gloryMtr;
-      this.bValTotal = this.brijeshBVal + this.manishBVal + this.gloryBVal;
+      this.takkaTotal = Number((this.brijeshTakka + this.manishTakka + this.gloryTakka).toFixed(2));
+      this.mtrTotal = Number((this.brijeshMtr + this.manishMtr + this.gloryMtr).toFixed(2));
+      this.bValTotal = Number((this.brijeshBVal + this.manishBVal + this.gloryBVal).toFixed(2));
 
       let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
       this.copyHeaderKeys = Object.keys(this.shortReport[0]);
@@ -116,14 +116,7 @@ export class GreigeReportComponent implements OnInit {
 
 
         if (this.shortReport[0].list[0].list && this.shortReport[0].list[0].list.length) {
-
-          this.shortReport.forEach(ele => {
-            ele.list.forEach(element => {
-              element['qualityObject'] = this.groupBy(element.list,'qualityId')
-            });
-          })
-          
-          
+                    
           let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
           this.subHeaderArray = Object.keys(this.shortReport[0].list[0].list[0]);
 
@@ -137,8 +130,37 @@ export class GreigeReportComponent implements OnInit {
           this.subHeaderArray = this.subHeaderArray.filter(v => v !== "list");
           this.subHeaderKeys = [...finalHeader];
 
+          this.shortReport.forEach(ele => {
+            ele.list.forEach(element => {
+              element['qualityObject'] = this.groupBy(element.list,'qualityId');
+              let keys = Object.keys(element['qualityObject']);
+              if(keys && keys.length){
+                keys.forEach(val => {
+                  let pcs = 0;
+                  let mtr = 0;
+                  let wt = 0;
+                  let bVal = 0;
+                  element['qualityObject'][val].forEach(value => {
+                    pcs = pcs + value.totalPcs;
+                    mtr = mtr + value.totalMtr;
+                    bVal = bVal + value.billingValue;
+                    wt = wt + value.totalWt;
+                  });
+                  let obj = {
+                    data:element['qualityObject'][val]
+                  }
+                  element['qualityObject'][val].forEach(value => {
+                    obj['pcs'] = pcs.toFixed(2);
+                    obj['mtr'] = mtr.toFixed(2);
+                    obj['bVal'] = bVal.toFixed(2);
+                    obj['wt'] = wt.toFixed(2);
+                  });
+                  element['qualityObject'][val] = obj;
+                })
+              }
+            });
+          })
         }
-
       }
 
       this.printReport();
