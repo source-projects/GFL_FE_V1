@@ -1,0 +1,114 @@
+<nb-card>
+    <nb-card-body>
+        <form #invoiceForm="ngForm">
+            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
+                <div class="row report-header">
+                    <div class="col-md-12" style="display: flex;">
+                        <div class="col-md-4">
+                            <h3>DAILY GREIGE INWARD REPORT</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="fromDate">From Date :</label>
+                            <span>{{fromDate | date : 'dd/MM/yyyy'}}</span><br>
+                            <label for="fromDate">To Date :</label>
+                            <span>{{toDate | date : 'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div class="col-md-5">
+                            <table class="table-bordered table-striped width-100"
+                                style="text-align: center;font-size: 12px;">
+                                <tr style="padding: 5px;">
+                                    <td></td>
+                                    <td>Brijesh</td>
+                                    <td>Manish</td>
+                                    <td>Glory</td>
+                                    <td>Total</td>
+                                </tr>
+                                <tr style="padding: 5px;">
+                                    <td>GREIGR TAKKA</td>
+                                    <td>{{brijeshTakka}}</td>
+                                    <td>{{manishTakka}}</td>
+                                    <td>{{gloryTakka}}</td>
+                                    <td>{{takkaTotal}}</td>
+                                </tr>
+                                <tr style="padding: 5px;">
+                                    <td>GREIGR MTR</td>
+                                    <td>{{brijeshMtr}}</td>
+                                    <td>{{manishMtr}}</td>
+                                    <td>{{gloryMtr}}</td>
+                                    <td>{{mtrTotal}}</td>
+                                </tr>
+                                <tr style="padding: 5px;">
+                                    <td>BILLING VALUE</td>
+                                    <td>{{brijeshBVal}}</td>
+                                    <td>{{manishBVal}}</td>
+                                    <td>{{gloryBVal}}</td>
+                                    <td>{{bValTotal}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <br><br>
+                <div *ngFor="let report of shortReport" style="border: 1px solid black;margin: 115px 0px;" class="mb-5"
+                    [ngStyle]="{ background : report.masterName.toString().toLowerCase() == 'brijesh' ? '#fcc201' : 
+                (report.masterName.toString().toLowerCase() == 'manish' ? '#FFB6C1' : (report.masterName.toString().toLowerCase() == 'glory' ? '#90EE90' : ''))}">
+                    <div class="print-body">
+                        <!-- print-layout-report -->
+                        <div class="invoice-no-heading" style="width: fit-content">
+                            <h5 class="bold-invoice" style="font-size: 22px">
+                                <span>
+                                    Master Name : {{ report.masterName }}
+                                </span>
+                            </h5>
+                        </div>
+                        <br><br>
+                        <div *ngFor="let invoice of report.list" class="mb-5">
+                            <table style="font-size: large;padding: 10px;text-align: center;border: 1px solid black;"
+                                class="table-striped table-process-fnt width-100">
+                                <tr>
+                                    <th *ngFor="let head of headers">{{ head }}</th>
+                                </tr>
+                                <tr>
+                                    <td *ngFor="let item of headerArray">{{ invoice[item] }}</td>
+                                </tr>
+                            </table>
+                            <br>
+
+                            <div *ngFor="let qual of invoice.qualityObject | keyvalue" style="padding: 15px;">
+                                <table style="font-size: large;text-align: center;border: 1px solid black;"
+                                    class="table-striped table-process-fnt width-100">
+                                    <tr>
+                                        <th *ngFor="let head of subHeaderKeys">{{ head }}</th>
+                                    </tr>
+                                    <tr *ngFor="let sub of qual.value; let i = index" [style.background]="(sub.billingValue >= 0 && sub.billingValue <= 10000) ? '#ff0000' 
+                                    : (sub.billingValue > 10000 && sub.billingValue <= 12500) ? '#ffff00' 
+                                    : (sub.billingValue > 12500 && sub.billingValue <= 18000) ? '#008000' : ''">
+                                        <td *ngFor="let item of subHeaderArray">{{ sub[item] }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- <div style="padding: 15px;">
+                                <table style="font-size: large;text-align: center;border: 1px solid black;"
+                                    class="table-striped table-process-fnt width-100">
+                                    <tr>
+                                        <th *ngFor="let head of subHeaderKeys">{{ head }}</th>
+                                    </tr>
+                                    <tr *ngFor="let sub of invoice.list; let i = index" [style.background]="(sub.billingValue >= 0 && sub.billingValue <= 10000) ? '#ff0000' 
+                                        : (sub.billingValue > 10000 && sub.billingValue <= 12500) ? '#ffff00' 
+                                        : (sub.billingValue > 12500 && sub.billingValue <= 18000) ? '#008000' : ''">
+                                        <td *ngFor="let item of subHeaderArray">{{ sub[item] }}</td>
+                                    </tr>
+                                </table>
+                            </div> -->
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-3" *ngIf="discountFlag">
+                <div class="form-group col-md-2" *ngIf="discountFlag">
                     <label class="required">Discount %</label>
                     <input type="number" id="percentageDiscount" class="form-control size-small" nbinput fullwidth
                         fieldsize="small" name="percentageDiscount" [(ngModel)]="discountChange" placeholder="Discount"
@@ -60,14 +60,13 @@
                         name="remark" [(ngModel)]="remark" placeholder="Remark" #remarkInvoice="ngModel" />
                 </div>
 
-                <div class="col-md-3" *ngIf="discountFlag">
+                <div class="col-md-2" *ngIf="discountFlag">
                     <div class="form-group">
                         <label class="required">Delivery Mode</label>
                         <ng-select name="delivery" appendTo="body" [(ngModel)]='deliveryMode' required
                             #delivery1="ngModel"
                             [ngClass]="{'is-invalid': (delivery1.invalid)&&(formSubmitted || delivery1.touched)}"
-                            placeholder="Delivery Mode"
-                            class="required-error-dropdown dropdown-name">
+                            placeholder="Delivery Mode" class="required-error-dropdown dropdown-name">
                             <ng-option *ngFor="let del of deliveryList" [value]="del.value">{{del.name}}</ng-option>
                         </ng-select>
 
@@ -76,6 +75,12 @@
                             <span>Delivery Mode is required</span>
                         </div>
                     </div>
+                </div>
+                <div *ngIf="discountFlag" style="display: flex;align-items: center;justify-content: center;" class="col-md-2">
+                    <nb-checkbox style="margin-right: 5px;" class="status-basic nb-transition"
+                    (checkedChange)="onChangeOfRF($event)" id="isRF" [(ngModel)]="invoiceValues.rfInvoiceFlag" name="isRF">
+                    </nb-checkbox>
+                    <label> is RF</label>
                 </div>
 
             </div>
@@ -95,7 +100,7 @@
                 <ngx-datatable-column name="Rate" prop="rate">
                     <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                         <input type="number" #rateChnage="ngModel" name="rateChnage{{ rowIndex }}"
-                            class="tableForm line-height-subtable" id="rateChnage" [(ngModel)]="row.rate" [id]="'invoice' + rowIndex +
+                            class="tableForm line-height-subtable" id="rateChnage" [(ngModel)]="row.rate" [disabled]="invoiceValues.rfInvoiceFlag" [id]="'invoice' + rowIndex +
                             '-rateChange'" min="0" (keyup)="enterClicked(rowIndex, $event)" />
 
                         <div class="input-required display-inlineblock" *ngIf="formSubmitted &&

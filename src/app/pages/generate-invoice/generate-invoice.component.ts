@@ -125,7 +125,8 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
             isSendToParty: element.isSendToParty,
             netAmt: element.netAmt,
             totalMtr: element.totalMtr,
-            finishMtr: element.finishMtr
+            finishMtr: element.finishMtr,
+            isRfInvoice:element.isRfInvoice
           }));
           this.copyInvoiceList = this.InvoiceList.map((element) => ({
             id: element.id,
@@ -135,8 +136,8 @@ export class GenerateInvoiceComponent implements OnInit, OnDestroy {
             isSendToParty: element.isSendToParty,
             netAmt: element.netAmt,
             totalMtr: element.totalMtr,
-            finishMtr: element.finishMtr
-
+            finishMtr: element.finishMtr,
+            isRfInvoice:element.isRfInvoice
           }));
         } else {
         }

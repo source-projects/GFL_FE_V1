@@ -6,6 +6,7 @@ export class DyeingProcess {
     updatedBy: number;
     updatedDate: string;
     userHeadId: number;
+    scb:boolean = false;
     dyeingProcessData: DyeingProcessData[];
   }
   

@@ -17,6 +17,11 @@ export class Invoice {
   sequencedId: Number;
   wt: Number;
   invoiceNo: string;
+  rfInvoiceFlag:boolean;
+
+  constructor(){
+    this.rfInvoiceFlag = false
+  }
 }
 
 export class InvoiceReportRequest {

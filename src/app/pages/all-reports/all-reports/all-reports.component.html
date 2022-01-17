@@ -11,42 +11,25 @@
       <div class="row">
         <div class="form-group col-md-4">
           <label class="required">Module Type</label>
-          <ng-select
-            name="module"
-            appendTo="body"
-            id="module"
-            placeholder="Select Report"
-            [(ngModel)]="moduleType"
-            (change)="selectedModule($event)"
-          >
+          <ng-select name="module" appendTo="body" id="module" placeholder="Select Report" [(ngModel)]="moduleType"
+            (change)="selectedModule($event)">
             <div>
-              <ng-option *ngFor="let module of allModules" [value]="module"
-                >{{ module }}
+              <ng-option *ngFor="let module of allModules" [value]="module">{{ module }}
               </ng-option>
             </div>
           </ng-select>
         </div>
         <div class="form-group col-md-4">
           <label class="required">Report Type</label>
-          <ng-select
-            name="report"
-            appendTo="body"
-            id="report"
-            placeholder="Select Report"
-            [(ngModel)]="reportType"
-            (change)="selectedReport($event)"
-          >
+          <ng-select name="report" appendTo="body" id="report" placeholder="Select Report" [(ngModel)]="reportType"
+            (change)="selectedReport($event)">
             <div>
-              <ng-option *ngFor="let report of allReports" [value]="report"
-                >{{ report.name }}
+              <ng-option *ngFor="let report of allReports" [value]="report">{{ report.name }}
               </ng-option>
             </div>
           </ng-select>
         </div>
-        <div
-          class="form-group col-md-3"
-          style="top: 35px; display: flex; justify-content: space-around"
-        >
+        <div class="form-group col-md-3" style="top: 35px; display: flex; justify-content: space-around">
           <label> Signed By Party : </label>
            
           <nb-radio-group [(ngModel)]="invoiceReportRequest.signByParty">
@@ -60,64 +43,30 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="required">From date</label>
-            <input
-              class="form-control"
-              #from="ngModel"
-              required
-              name="fromDate"
-              [max]="maxDate"
-              [(ngModel)]="invoiceReportRequest.from"
-              [owlDateTimeTrigger]="dtFrom1"
-              [owlDateTime]="dtFrom1"
-              placeholder="Select Date"
-              [ngClass]="{
+            <input class="form-control" #from="ngModel" required name="fromDate" [max]="maxDate"
+              [(ngModel)]="invoiceReportRequest.from" [owlDateTimeTrigger]="dtFrom1" [owlDateTime]="dtFrom1"
+              placeholder="Select Date" [ngClass]="{
                 'is-invalid': from.invalid && (formSubmitted || from.touched)
-              }"
-            />
-            <owl-date-time
-              (afterPickerClosed)="(null)"
-              [pickerType]="'calendar'"
-              #dtFrom1
-            >
+              }" />
+            <owl-date-time (afterPickerClosed)="(null)" [pickerType]="'calendar'" #dtFrom1>
             </owl-date-time>
           </div>
-          <div
-            class="input-required"
-            *ngIf="from.invalid && (formSubmitted || from.touched)"
-          >
+          <div class="input-required" *ngIf="from.invalid && (formSubmitted || from.touched)">
             <span>From date is required.</span>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label class="required">To date</label>
-            <input
-              class="form-control"
-              #to="ngModel"
-              required
-              name="toDate"
-              [max]="maxDate"
-              [disabled]="!invoiceReportRequest.from"
-              [(ngModel)]="invoiceReportRequest.to"
-              [owlDateTimeTrigger]="dtTo1"
-              [owlDateTime]="dtTo1"
-              placeholder="Select Date"
-              [min]="invoiceReportRequest.from"
-              [ngClass]="{
+            <input class="form-control" #to="ngModel" required name="toDate" [max]="maxDate"
+              [disabled]="!invoiceReportRequest.from" [(ngModel)]="invoiceReportRequest.to" [owlDateTimeTrigger]="dtTo1"
+              [owlDateTime]="dtTo1" placeholder="Select Date" [min]="invoiceReportRequest.from" [ngClass]="{
                 'is-invalid': to.invalid && (formSubmitted || to.touched)
-              }"
-            />
-            <owl-date-time
-              (afterPickerClosed)="(null)"
-              [pickerType]="'calendar'"
-              #dtTo1
-            >
+              }" />
+            <owl-date-time (afterPickerClosed)="(null)" [pickerType]="'calendar'" #dtTo1>
             </owl-date-time>
           </div>
-          <div
-            class="input-required"
-            *ngIf="to.invalid && (formSubmitted || to.touched)"
-          >
+          <div class="input-required" *ngIf="to.invalid && (formSubmitted || to.touched)">
             <span>To date is required.</span>
           </div>
         </div>
@@ -125,15 +74,8 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Party Name</label>
-            <ng-select
-              appendTo="body"
-              placeholder="Select Party Name"
-              name="partyName"
-              partyName1="ngModel"
-              [(ngModel)]="invoiceReportRequest.partyId"
-              #partyName1="ngModel"
-              (change)="getQualityFromParty($event)"
-            >
+            <ng-select appendTo="body" placeholder="Select Party Name" name="partyName" partyName1="ngModel"
+              [(ngModel)]="invoiceReportRequest.partyId" #partyName1="ngModel" (change)="getQualityFromParty($event)">
               <ng-option disabled="true">
                 <div class="row">
                   <div class="col-md-6 col-6">
@@ -167,13 +109,8 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Quality Id</label>
-            <ng-select
-              appendTo="body"
-              placeholder="Select Quality Id"
-              name="qualityId"
-              [(ngModel)]="invoiceReportRequest.qualityEntryId"
-              #qualityId1="ngModel"
-            >
+            <ng-select appendTo="body" placeholder="Select Quality Id" name="qualityId"
+              [(ngModel)]="invoiceReportRequest.qualityEntryId" #qualityId1="ngModel">
               <ng-option disabled="true">
                 <div class="row">
                   <div class="col-md-6 col-6">
@@ -184,10 +121,7 @@
                   </div>
                 </div>
               </ng-option>
-              <ng-option
-                *ngFor="let q of qualityList"
-                [value]="q.qualityEntryId"
-              >
+              <ng-option *ngFor="let q of qualityList" [value]="q.qualityEntryId">
                 <div class="row">
                   <div class="col-md-6 col-6">
                     <div class="text-left txt-ov-elips">
@@ -207,31 +141,20 @@
 
         <div class="form-group col-md-4">
           <label>Master Name</label>
-          <ng-select
-            name="userHeadId"
-            appendTo="body"
-            id="userHeadId"
-            name="userHeadId"
-            placeholder="Select Master"
-            [(ngModel)]="invoiceReportRequest.userHeadId"
-          >
+          <ng-select name="userHeadId" appendTo="body" id="userHeadId" name="userHeadId" placeholder="Select Master"
+            [(ngModel)]="invoiceReportRequest.userHeadId">
             <div>
               <ng-option *ngFor="let m of masterList" [value]="m.id">{{
                 m.userName
-              }}</ng-option>
+                }}</ng-option>
             </div>
           </ng-select>
         </div>
 
         <div class="form-group col-md-4">
           <label>Quality Name</label>
-          <ng-select
-            name="qualityName"
-            appendTo="body"
-            id="qualityName"
-            placeholder="Quality Name"
-            [(ngModel)]="invoiceReportRequest.qualityNameId"
-          >
+          <ng-select name="qualityName" appendTo="body" id="qualityName" placeholder="Quality Name"
+            [(ngModel)]="invoiceReportRequest.qualityNameId">
             <ng-option disabled="true">
               <div class="row">
                 <div class="col-md-6 col-6">
@@ -253,23 +176,16 @@
       <div class="row">
         <div class="col-md-6 mobile-btn-center text-btn-right">
           <div class="padding-bt-tp">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm btn-design-save button-base ripple"
-              (click)="getShortReport(invoiceForm)"
-              [disabled]="disableButton"
-            >
+            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+              (click)="getShortReport(invoiceForm)" [disabled]="disableButton">
               Get Report
             </button>
           </div>
         </div>
         <div class="col-md-6 mobile-btn-center text-btn-right">
           <div class="padding-bt-tp">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm btn-design-save button-base ripple"
-              (click)="downLoadExcel(invoiceForm)"
-            >
+            <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
+              (click)="downLoadExcel(invoiceForm)">
               Get Excel
             </button>
           </div>
@@ -277,41 +193,32 @@
       </div>
 
       <ng-container *ngIf="moduleType == 'invoice'">
-        <ngx-invoice-report
-          *ngIf="shortReport && shortReport.length > 0"
-          [shortReport]="shortReport"
-        >
+        <ngx-invoice-report *ngIf="shortReport && shortReport.length > 0" [shortReport]="shortReport">
         </ngx-invoice-report>
       </ng-container>
-      <ng-container *ngIf="moduleType == 'stockBatch'">
-        <ngx-report
-          *ngIf="shortReport && shortReport.length > 0"
-          [shortReport]="shortReport"
-        >
+      <ng-container *ngIf="moduleType == 'stockBatch' && reportName == 'Fabric In Detailed'">
+        <ngx-greige-report *ngIf="shortReport && shortReport.length > 0" [toDate]="invoiceReportRequest.to" [fromDate]="invoiceReportRequest.from" [shortReport]="shortReport">
+        </ngx-greige-report>
+      </ng-container>
+      <ng-container *ngIf="moduleType == 'stockBatch' && reportName == 'Pending Batch'">
+        <ngx-report *ngIf="shortReport && shortReport.length > 0" [shortReport]="shortReport">
         </ngx-report>
       </ng-container>
-      <div
-        *ngIf="shortReport && shortReport.length == 1000"
-        id="shortReport"
-        class="print-body"
-      >
+      <div *ngIf="shortReport && shortReport.length == 1000" id="shortReport" class="print-body">
         <div class="row report-header">
           <div class="col-md-12 print-layout-report">
             <span>
               <h3>{{ reportName }}</h3>
               <span class="font-20">{{
                 currentDate | date: "dd/MM/yyyy"
-              }}</span>
+                }}</span>
             </span>
           </div>
         </div>
 
         <div *ngFor="let report of shortReport" class="mb-5">
           <div class="print-body">
-            <!-- <div class="invoice-no-heading" style="width: fit-content;">
-                            <h5 class="bold-invoice" style="font-size: 18px;"> Invoice No: {{report.invoiceNo}},
-                                {{report.createdDate | date : 'dd/MM/yyyy'}}</h5>
-                        </div> -->
+
             <div *ngFor="let report of shortReport" class="mb-5">
               <div class="print-body">
                 <!-- print-layout-report -->
@@ -320,31 +227,24 @@
                     <span *ngFor="let head of headerKeys; let i = index">
                       {{ head }} : {{ copyHeaderKeys[i] }} ,
                     </span>
-                    <!-- Invoice No: {{report.invoiceNo}},
-                                        {{report.createdDate | date : 'dd/MM/yyyy'}} -->
+
                   </h5>
                 </div>
-                <table
-                  style="font-size: large"
-                  class="
+                <table style="font-size: large" class="
                     print-layout-report
                     table-bordered table-striped table-process-fnt
                     width-100
-                  "
-                >
+                  ">
                   <tr>
                     <th *ngFor="let head of headerKeys">{{ head }}</th>
                   </tr>
                   <tr>
                     <th *ngFor="let head of headers">{{ head }}</th>
                   </tr>
-                  <tr
-                    *ngFor="
+                  <tr *ngFor="
                       let invoice of report.consolidatedBillDataForPDFS;
                       let i = index
-                    "
-                    [style.background]="i % 2 == 0 ? '#ffffff' : '#f2f2f2'"
-                  >
+                    " [style.background]="i % 2 == 0 ? '#ffffff' : '#f2f2f2'">
                     <td *ngFor="let item of headerArray">
                       {{ invoice[item] }}
                     </td>
