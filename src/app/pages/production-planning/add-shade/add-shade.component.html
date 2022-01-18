@@ -169,7 +169,7 @@
             <span>Shade Id is required</span>
         </div>
     </div>
-    <div *ngIf="showJetListFlag" class="modal-body mb-4">
+    <div *ngIf="showJetListFlag && !fromJetComp" class="modal-body mb-4">
         <div class="form-group">
             <label class="required">Select Jet: </label>
             <ng-select name="jet" [(ngModel)]='jetid' required #jet1="ngModel" (change)="jetSelected($event)"
@@ -177,7 +177,7 @@
                 <ng-option *ngFor="let jet of jetList" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
                 </ng-option>
             </ng-select>
-            <div class="required-class" *ngIf="jetCapacity && jetId">
+            <div class="required-class" *ngIf="jetCapacity && jetid">
                 <span>Weight is greater than selected jet capacity</span>
             </div>
         </div>

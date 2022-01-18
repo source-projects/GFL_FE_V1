@@ -4,7 +4,7 @@ import { NgxLoadingModule } from "ngx-loading";
 import { NgxCheckboxModule } from "ngx-checkbox";
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
-import { ZXingScannerModule } from "@zxing/ngx-scanner";
+// import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import {
   NbLayoutModule,
   NbMenuModule,
@@ -29,6 +29,7 @@ import {
   NbTabsetModule,
   NbPopoverModule,
   NbToggleModule,
+  NbSpinnerModule,
 } from "@nebular/theme";
 
 import { NbSecurityModule } from "@nebular/security";
@@ -92,7 +93,8 @@ const NB_MODULES = [
   //NgbModal
   NbAccordionModule,
   NbToggleModule,
-  NbPopoverModule
+  NbPopoverModule,
+  NbSpinnerModule
 ];
 
 @NgModule({
@@ -103,7 +105,7 @@ const NB_MODULES = [
     ...NB_MODULES,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    ZXingScannerModule,
+    // ZXingScannerModule,
     NgbModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
@@ -125,7 +127,7 @@ const NB_MODULES = [
     NgbPaginationModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    ZXingScannerModule,
+    // ZXingScannerModule,
     NgxCheckboxModule,
     NgxQRCodeModule,
     SliderModule,

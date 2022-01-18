@@ -50,8 +50,8 @@ export class GenerateInvoiceService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getBatchByParty/'+id);
   }
   // GET PCHALLAN BY PARTY ID
-  getPChallanByParty(id){
-    return this.httpClient.get(this.commonService.envUrl() + 'api/dispatch/getPChallanByParty/'+id);
+  getPChallanByParty(obj){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dispatch/getPChallanByParty' ,obj);
   }
 
   addInvoicedata(invoiceData): any {

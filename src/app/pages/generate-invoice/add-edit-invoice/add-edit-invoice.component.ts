@@ -32,7 +32,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
     invoiceNo: null,
     userHeadId: null,
   };
-
+  isRF:boolean = false;
   invoiceObj = {
     batchAndStockIdList: [],
   };
@@ -223,9 +223,13 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
 
     this.loading = true;
     if (event != undefined) {
+      let obj = {
+        partyId:this.invoiceValues.partyId,
+        rfInvoiceFlag:this.invoiceValues.rfInvoiceFlag
+      }
       if (this.invoiceValues.partyId) {
         this.generateInvoiceService
-          .getPChallanByParty(this.invoiceValues.partyId)
+          .getPChallanByParty(obj)
           .pipe(takeUntil(this.destroy$))
           .subscribe(
             (data) => {
@@ -296,6 +300,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           passwordFlag: null,
           remark: this.remark,
           createFlag: true,
+          rfInvoiceFlag:this.invoiceValues.rfInvoiceFlag
         };
 
         if (temp[0].pendingAmt > temp[0].creditLimit) {
@@ -481,6 +486,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         passwordFlag: null,
         remark: this.remark,
         createFlag: false,
+        rfInvoiceFlag:this.invoiceValues.rfInvoiceFlag
       };
 
       if (temp[0].pendingAmt > temp[0].creditLimit) {
@@ -689,6 +695,46 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           }
         });
       }
+    }
+  }
+
+  onChangeOfRF(value){
+
+    this.invoiceValues.rfInvoiceFlag = value;
+    let obj = {
+      partyId:this.invoiceValues.partyId,
+      rfInvoiceFlag:this.invoiceValues.rfInvoiceFlag
+    }
+    if (this.invoiceValues.partyId) {
+      this.generateInvoiceService
+        .getPChallanByParty(obj)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.finalbatch = data["data"];
+              this.finalbatch.forEach((ele) => {
+                ele.wt = ele.wt.toFixed(2);
+              });
+              this.merge = this.finalbatch;
+              if(this.invoiceValues.rfInvoiceFlag){
+                this.merge.forEach(ele => {
+                  ele.rate = 0;
+                })
+              }
+              this.finalcheckedrows = [];
+              this.selected = [];
+              this.loading = false;
+            } else {
+              this.loading = false;
+              this.merge = [];
+            }
+          },
+          (error) => {
+            this.loading = false;
+            this.merge = [];
+          }
+        );
     }
   }
 }

@@ -185,7 +185,9 @@ export class AllReportsComponent implements OnInit {
   headerArray = [];
   headerKeys = [];
   copyHeaderKeys = [];
+  greigrFlag =false;
   getShortReport(form) {
+    this.greigrFlag = true;
     this.totalAmount = 0;
     this.totalFinishedMeter = 0;
     this.totalGrayMeter = 0;
@@ -305,6 +307,7 @@ export class AllReportsComponent implements OnInit {
   }
   reportName;
   selectedReport(value) {
+    this.shortReport = [];
     this.reportName = value.name;
 
     this.apiObject = {
@@ -319,6 +322,8 @@ export class AllReportsComponent implements OnInit {
   }
 
   selectedModule(value) {
+    this.shortReport = [];
+    this.reportType = null;
     this.reportService
     .getAllReportType(value)
     .pipe(takeUntil(this.destroy$))

@@ -16,6 +16,10 @@ export class PlanningSlipService {
     return this.httpClient.get(this.commonService.envUrl() + 'api/dyeingSlip/'+bId+'/'+sId);
   }
 
+  getAllSlipDataByBatchStockId(obj){
+    return this.httpClient.post(this.commonService.envUrl() + 'api/dyeingSlip/printDyeingSlipBy',obj);
+  }
+
   updateSlipData(obj){
     return this.httpClient.put(this.commonService.envUrl() + 'api/dyeingSlip',obj);
   }

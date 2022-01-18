@@ -131,6 +131,14 @@
                     {{row.date}}
                 </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column name="Is RF" prop="isRfInvoice" [maxWidth]="500">
+                <ng-template ngx-datatable-header-template let-value="value">is RF
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('isRfInvoice')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
         </ngx-datatable>
         <div class="page-sizer d-flex">
             <span>Page Size: </span>

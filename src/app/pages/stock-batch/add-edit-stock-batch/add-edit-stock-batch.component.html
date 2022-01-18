@@ -5,8 +5,8 @@
 
         <div class="row">
             <div class="col-md-5 col-6 display-flex-start max-width-device">
-                <ng-select class="btn btn-md" (change)="setViewJobValue($event)"
-                    placeholder="Select" [(ngModel)]="selectedTableChange">
+                <ng-select class="btn btn-md" (change)="setViewJobValue($event)" placeholder="Select"
+                    [(ngModel)]="selectedTableChange">
                     <ng-option value="pending">Pending batches</ng-option>
                     <ng-option value="view table">View Table</ng-option>
                     <ng-option value="job card">Job Card</ng-option>
@@ -36,16 +36,14 @@
                     <div class="row">
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Stock In Type</label>
-                            <input type="text" name="stockInType"
-                                class="form-control size-small" fieldsize="small" nbinput
-                                 value="Fabric" required readonly>
+                            <input type="text" name="stockInType" class="form-control size-small" fieldsize="small"
+                                nbinput value="Fabric" required readonly>
                         </div>
                         <div class="col-md-4 mobile-mr-bt">
                             <label class="required">Party Name</label>
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
-                                (change)="setQualityByParty($event)" required
-                                [disabled]="stockDataValues && stockDataValues[0]">
+                                (change)="setQualityByParty($event)" required [disabled]="stockDataValues && stockDataValues[0]">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -78,8 +76,7 @@
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
                                 #qualityId1="ngModel"
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
-                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name"
-                                [disabled]="stockDataValues && stockDataValues[0]">
+                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name" [disabled]="stockDataValues && stockDataValues[0]">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -156,22 +153,30 @@
                 <div class="form-group">
                     <div class="row">
 
-                        <div class="col-md-4 mobile-mr-bt">
+                        <div class="col-md-3 mobile-mr-bt">
                             <label>Unit:</label>
                             <input type="text" name="unit" class="form-control size-small" fieldsize="small" nbinput
                                 readonly #unit1="ngModel" [(ngModel)]='stockBatch.unit'>
 
                         </div>
-                        <div class="col-md-4 mobile-mr-bt">
+                        <div class="col-md-3 mobile-mr-bt">
                             <label>Wt / 100 mtrs:</label>
                             <input type="text" name="wtPer100M" class="form-control size-small" fieldsize="small"
-                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m' [readOnly]="stockDataValues && stockDataValues[0]">
+                                nbinput #wtPer100M1="ngModel" [(ngModel)]='stockBatch.wtPer100m'
+                                [readOnly]="stockDataValues && stockDataValues[0]">
 
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>Remark</label>
                             <input type="text" name="remark" class="form-control" #remark1="ngModel"
                                 [(ngModel)]='stockBatch.remark'>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: center;" class="col-md-3">
+                            <nb-checkbox style="margin-right: 5px;" class="status-basic
+                                nb-transition" id="isRF" [(ngModel)]="stockBatch.isRfInvoice" name="isRF">
+                            </nb-checkbox>
+                            <label>  is RF</label>
+                            
                         </div>
                     </div>
                 </div>
@@ -183,7 +188,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row totals">
-                                    <div class="col-md-4 pt-2" >
+                                    <div class="col-md-4 pt-2">
                                         <h6 style="color: white;">Total Mtr: {{totalMeters | number : '1.2-2'}}</h6>
                                     </div>
                                     <div class="col-md-4 pt-2">
@@ -195,8 +200,8 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </header>
                     <div class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
@@ -209,9 +214,9 @@
                                                 <label>PChallan No</label>
                                                 <input [attr.id]="'pchallanRef'+i" required type="text"
                                                     [(ngModel)]='block.pchallanRef' [disabled]="!addFlag && block.old"
-                                                    (change)="checkPChallanUniq(i)"
-                                                    class="form-control size-small" fieldsize="small" nbinput
-                                                    name="pchallanRef{{i}}" min="0" (click)="batchInsertCheck()">
+                                                    (change)="checkPChallanUniq(i)" class="form-control size-small"
+                                                    fieldsize="small" nbinput name="pchallanRef{{i}}" min="0"
+                                                    (click)="batchInsertCheck()">
                                                 <div class="input-required" style="display: block !important;"
                                                     *ngIf="block.isNotUnique">
                                                     <span>Pchallan already exists</span>
@@ -355,7 +360,7 @@
                                 class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="addUpdateStockBatch(myForm, true)" [disabled]="disableButton">SAVE &
                                 NEXT</button>
-                                <button type="button" *ngIf="!addFlag"
+                            <button type="button" *ngIf="!addFlag"
                                 class="btn btn-primary btn-sm btn-design-save mob-stock button-base ripple"
                                 (click)="gotoNextPage()" [disabled]="disableButton">NEXT</button>
 

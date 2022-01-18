@@ -18,9 +18,11 @@ export class StockBatch {
   isProductionPlanned: boolean;
   partyName: string;
   qualityName: string;
+  isRfInvoice:boolean;
 
   constructor() {
     this.stockInType = "Fabric";
+    this.isRfInvoice = false;
   }
 }
 export class BatchData {

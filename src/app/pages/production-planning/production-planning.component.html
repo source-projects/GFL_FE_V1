@@ -1,391 +1,571 @@
 <div id="target"></div>
 <nb-card class="nb-style">
-    <nb-card-header class="nb-header">
-
-        <h2 class="nb-text">Production Planning</h2>
-
-    </nb-card-header>
-    <nb-card-body class="batch-pd-top-16">
-        <div>
-            <form #myForm="ngForm">
-                <div class="batch-mb">
-                    <div class="mr-bt-5">
-                        <div class="row">
-                            <!-- Party name -->
-                            <div class="col-md-5">
-                                <div class="border-right-batch">
-                                    <div class="form-group mb-1">
-                                        <div class="row">
-                                            <div class="col-md-3 col-12 display-flex-start label-0">
-                                                <label>Party</label>
-                                            </div>
-                                            <div class="col-md-9 col-12">
-                                                <ng-select name="partyId" appendTo="body"
-                                                    [(ngModel)]='productionPlanning.partyId' required
-                                                    placeholder="Party Name" (change)="partySelected($event)">
-                                                    <ng-option disabled="true">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips">Party Name</div>
-                                                            </div>
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips">Party Code</div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-option>
-                                                    <ng-option *ngFor="let p of partyList" [value]="p.id">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips"> {{p.partyName}}
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips"> {{p.partyCode}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="form-group mb-1">
-                                        <div class="row">
-                                            <div class="col-md-3 col-12 display-flex-start label-0">
-                                                <label>Quality</label>
-                                            </div>
-                                            <div class="col-md-9 col-12">
-                                                <ng-select name="qualityId" appendTo="body"
-                                                    [(ngModel)]='productionPlanning.qualityId' placeholder="Quality ID"
-                                                    (change)="qualitySelected($event)">
-                                                    <ng-option disabled="true">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips">Quality Id</div>
-                                                            </div>
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips">Party Name</div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-option>
-                                                    <ng-option *ngFor="let q of qualityList" [value]="q.qualityId">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-left txt-ov-elips"> {{q.qualityId}}
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-6">
-                                                                <div class="text-right txt-ov-elips"> {{q.partyName}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="form-group mb-1">
-                                        <div class="row">
-                                            <div class="col-md-3 col-12 display-flex-start label-0">
-                                                <label>Batch</label>
-                                            </div>
-                                            <div class="col-md-9 col-12">
-                                                <input type="text" #batchFilter1="ngModel"
-                                                    class="form-control size-small" fieldsize="small" nbinput
-                                                    name="batch" [(ngModel)]='batch' (keyup)="filter($event)" required
-                                                    placeholder="Enter Batch">
-                                            </div>
-                                        </div>
-
-                                    </div>
+  <nb-card-header class="nb-header">
+    <h2 class="nb-text">Production Planning</h2>
+  </nb-card-header>
+  <nb-card-body class="batch-pd-top-16">
+    <div>
+      <form #myForm="ngForm">
+        <div class="batch-mb">
+          <div class="mr-bt-5">
+            <div class="row">
+              <!-- Party name -->
+              <div class="col-md-5">
+                <div class="border-right-batch">
+                  <div class="form-group mb-1">
+                    <div class="row">
+                      <div class="col-md-3 col-12 display-flex-start label-0">
+                        <label>Party</label>
+                      </div>
+                      <div class="col-md-9 col-12">
+                        <ng-select
+                          name="partyId"
+                          appendTo="body"
+                          [(ngModel)]="productionPlanning.partyId"
+                          required
+                          placeholder="Party Name"
+                          (change)="partySelected($event)"
+                        >
+                          <ng-option disabled="true">
+                            <div class="row">
+                              <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                  Party Name
                                 </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto">
-                                    <div class="col-md-7 col-12 pd-0">
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0">
-                                                <label>Party Name</label>
-                                            </div>
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.partyName}}
-                                                </h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Quality Name</label>
-                                            </div>
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class=" batch-p-color label-0 text-Left">
-                                                <label>Quality Id</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Process Name</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.processName}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4 col-12 pd-0">
-
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Party Shade No.</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}
-                                                </h6>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Lot Weight</label>
-                                            </div>
-
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.totalWt}}</h6>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Lot Meter</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
-                                            </div>
-                                        </div>
-                                        <div class="display-flex mr-0">
-
-
-                                            <div class="batch-p-color label-0 text-Left">
-                                                <label>Batch ID</label>
-                                            </div>
-
-                                            <div class="party-name-text text-center">
-                                                <h6 class="production-plan-text">{{productionBatchDetail.batchId}}</h6>
-                                            </div>
-                                        </div>
-                                    </div>
+                              </div>
+                              <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                  Party Code
                                 </div>
+                              </div>
                             </div>
-
-                        </div>
+                          </ng-option>
+                          <ng-option *ngFor="let p of partyList" [value]="p.id">
+                            <div class="row">
+                              <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                  {{ p.partyName }}
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                  {{ p.partyCode }}
+                                </div>
+                              </div>
+                            </div>
+                          </ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-1">
+                    <div class="row">
+                      <div class="col-md-3 col-12 display-flex-start label-0">
+                        <label>Quality</label>
+                      </div>
+                      <div class="col-md-9 col-12">
+                        <ng-select
+                          name="qualityId"
+                          appendTo="body"
+                          [(ngModel)]="productionPlanning.qualityId"
+                          placeholder="Quality ID"
+                          (change)="qualitySelected($event)"
+                        >
+                          <ng-option disabled="true">
+                            <div class="row">
+                              <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                  Quality Id
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                  Party Name
+                                </div>
+                              </div>
+                            </div>
+                          </ng-option>
+                          <ng-option
+                            *ngFor="let q of qualityList"
+                            [value]="q.qualityId"
+                          >
+                            <div class="row">
+                              <div class="col-md-6 col-6">
+                                <div class="text-left txt-ov-elips">
+                                  {{ q.qualityId }}
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-6">
+                                <div class="text-right txt-ov-elips">
+                                  {{ q.partyName }}
+                                </div>
+                              </div>
+                            </div>
+                          </ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-1">
+                    <div class="row">
+                      <div class="col-md-3 col-12 display-flex-start label-0">
+                        <label>Batch</label>
+                      </div>
+                      <div class="col-md-9 col-12">
+                        <input
+                          type="text"
+                          #batchFilter1="ngModel"
+                          class="form-control size-small"
+                          fieldsize="small"
+                          nbinput
+                          name="batch"
+                          [(ngModel)]="batch"
+                          (keyup)="filter($event)"
+                          required
+                          placeholder="Enter Batch"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div
+                  class="jus-con-flex-start scroll-auto-transition"
+                  id="scroll-auto"
+                >
+                  <div class="col-md-7 col-12 pd-0">
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0">
+                        <label>Party Name</label>
+                      </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.partyName }}
+                        </h6>
+                      </div>
                     </div>
 
-                    <nb-flip-card [showToggleButton]="false" [flipped]="flipped" class="overflow-hidden">
-                        <nb-card-front>
-                            <nb-card class="pd-left-15">
-                                <div class="title-with-btn">
-                                    <div class="row">
-                                        <div class="col-md-9 col-5">
-                                            <div class="batch-list-production">
-                                                <h2 class="nb-text font-14 batch-mr-0">Batch List:</h2>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-7 display-flex-end">
-                                            <div class="jet-btn-production">
-                                                <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
-                                                    type="button" (click)="toggleView()">Jet planning</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Quality Name</label>
+                      </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.qualityName }}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Quality Id</label>
+                      </div>
 
-                                </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.qualityId }}
+                        </h6>
+                      </div>
+                    </div>
 
-                                <div class="production-btn-list" style="height: 225px">
-                                    <div class="row h-100">
-                                        <div class="col-md-12 h-100">
-                                            <div class="batch-list-3line h-100">
-                                                <button nbButton size="small" *ngFor="let b of batchList"
-                                                    (mouseenter)="getAllDetailsOfBatch($event,b)"
-                                                    (mouseout)="resetDetailsOfBatch($event)"
-                                                    (click)="onBatchSelect(b.batchId)" class="p-badge-design">
-                                                    {{b.batchId}} </button>
-                                                <ngb-pagination id="custom-pagination"  *ngIf="requestData.data.total"
-                                                    class="d-flex justify-content-end"
-                                                    [pageSize]="requestData.data.pageSize"
-                                                    [maxSize]="5"
-                                                    [collectionSize]="requestData.data.total"
-                                                    [page]="requestData.data.pageIndex"
-                                                    (pageChange)="pageChanged($event)">
-                                                </ngb-pagination>
-                                            </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Process Name</label>
+                      </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border-bt-after"></div>
-                                <div class="title-with-btn">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="batch-list-production">
-                                                <h2 class="nb-text font-14 batch-mr-0">Production Plan List:</h2>
-                                            </div>
-                                        </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.processName }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12 pd-0">
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Party Shade No.</label>
+                      </div>
 
-                                    </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.partyShadeNo }}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Lot Weight</label>
+                      </div>
 
-                                </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.totalWt }}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Lot Meter</label>
+                      </div>
 
-                                <div class="production-btn-list">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group batch-list-3line">
-                                                <ng-container *ngFor="let b of plannedProductionList">
-                                                    <button nbButton size="small"
-                                                        class="jet-popup-box production-list-popup mr-left-10 border-radius"
-                                                        style="border: 1px solid black;" [value]="b.id"
-                                                        (mouseenter)="getAllDetailsOfBatch($event,b)"
-                                                        (mouseout)="resetDetailsOfBatch($event)"
-                                                        [style.background]="b.colorTone"
-                                                        class="p-badge-design-production jet-popup-display"
-                                                        (click)="batchSelectedFromProductionList($event)">
-                                                        {{b.batchId}}
-                                                        <nb-icon class="icon-pposition" (click)="remove(b)"
-                                                            icon="close-circle-outline"></nb-icon>
-                                                    </button>
-                                                </ng-container>
-                                                <ngb-pagination id="custom-pagination" *ngIf="prodRequestData.data.total"
-                                                    class="d-flex justify-content-end"
-                                                    [pageSize]="prodRequestData.data.pageSize"
-                                                    [maxSize]="5"
-                                                    [collectionSize]="prodRequestData.data.total"
-                                                    [page]="prodRequestData.data.pageIndex"
-                                                    (pageChange)="prodPageChanged($event)">
-                                                </ngb-pagination>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </nb-card>
-                        </nb-card-front>
-                        <nb-card-back>
-                            <nb-card class="pd-left-15" style="height: 400px;overflow-y: auto;">
-                                
-                                <div id="jetList">
-                                    <div class="title-with-btn">
-                                        <div class="row">
-                                            <div class="col-md-2 col-5">
-                                                <div class="batch-list-production">
-                                                    <h2 class="nb-text font-14 batch-mr-0">Jet List:</h2>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <ng-select id="jetSelected" name="jetSelected" multiple="true"  placeholder="Select Jets" (change)="jetsSelected($event)" [(ngModel)]="selectedJets">
-                                                    <ng-option *ngFor="let j of jetList" [value]="j.id">
-                                                        {{j.name}}
-                                                    </ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                
-                                            </div>
-                                            <div class="col-md-3 col-7 display-flex-end">
-                                                <div class="jet-btn-production">
-                                                    <div class="jet-btn-production text-right">
-                                                        <button class="btn btn-md btn-design-save font-14 btn-plan mr-2"
-                                                            (click)="toggleView()" type="button">Production
-                                                            Plan</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.totalMtr }}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="display-flex mr-0">
+                      <div class="batch-p-color label-0 text-Left">
+                        <label>Batch ID</label>
+                      </div>
 
-                                    </div>
-
-                                    <table class="user-per-table table-jet">
-                                        <tr width="100%">
-                                            <th width="5%">Jet</th>
-                                            <th width="8%">Capacity</th>
-                                            <th width="82%">Sequence</th>
-                                        </tr>
-
-                                        <tr *ngFor="let j of jet;let i=index">
-                                            <td>{{j.name}}</td>
-                                            <td>{{j.capacity}}</td>
-                                            <td>
-                                                <div cdkDropList [cdkDropListData]="j.jetDataList"
-                                                    cdkDropListOrientation="horizontal"
-                                                    class="example-list main-table-drag"
-                                                    (cdkDropListDropped)="drop($event,i)">
-                                                    <div class="example-box trans-box-drop-1 border-jet"
-                                                        *ngFor="let index of j.jetDataList;let idx = index;"
-                                                        [style.background]="index.colorTone?index.colorTone:'#ffffff'"
-                                                        (click)="setIndexForSlip(index,j,idx)" cdkDrag>
-                                                        <button nbContextMenuTag="my-context-menu"
-                                                            [style.color]="index.colorTone?'#ffffff':'#000000'"
-                                                            (mouseenter)="getAllDetailsOfBatch($event,index)"
-                                                            (mouseout)="resetDetailsOfBatch($event)"
-                                                            [nbContextMenu]="items" nbContextMenuTrigger="click"
-                                                            class="jet-btn-changes btn-changes-jet ">
-                                                            {{index.batchId}}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                    </table>
-                                </div>
-                            </nb-card>
-                        </nb-card-back>
-                    </nb-flip-card>
+                      <div class="party-name-text text-center">
+                        <h6 class="production-plan-text">
+                          {{ productionBatchDetail.batchId }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </form>
+              </div>
+            </div>
+          </div>
+
+          <nb-flip-card
+            [showToggleButton]="false"
+            [flipped]="flipped"
+            class="overflow-hidden"
+          >
+            <nb-card-front>
+              <nb-card class="pd-left-15">
+                <div class="title-with-btn">
+                  <div class="row">
+                    <div class="col-md-9 col-5">
+                      <div class="batch-list-production">
+                        <h2 class="nb-text font-14 batch-mr-0">Batch List:</h2>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-7 display-flex-end">
+                      <div class="jet-btn-production">
+                        <button
+                          class="
+                            btn btn-md btn-design-save
+                            font-14
+                            btn-plan
+                            mr-2
+                          "
+                          type="button"
+                          (click)="toggleView()"
+                        >
+                          Jet planning
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="production-btn-list" style="height: 225px">
+                  <div class="row h-100">
+                    <div class="col-md-12 h-100">
+                      <div class="batch-list-3line h-100">
+                        <button
+                          nbButton
+                          size="small"
+                          *ngFor="let b of batchList"
+                          (mouseenter)="getAllDetailsOfBatch($event, b)"
+                          (mouseout)="resetDetailsOfBatch($event)"
+                          (click)="onBatchSelect(b.batchId)"
+                          class="p-badge-design"
+                        >
+                          {{ b.batchId }}
+                        </button>
+                        <ngb-pagination
+                          id="custom-pagination"
+                          *ngIf="requestData.data.total"
+                          class="d-flex justify-content-end"
+                          [pageSize]="requestData.data.pageSize"
+                          [maxSize]="5"
+                          [collectionSize]="requestData.data.total"
+                          [page]="requestData.data.pageIndex"
+                          (pageChange)="pageChanged($event)"
+                        >
+                        </ngb-pagination>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-bt-after"></div>
+                <div class="title-with-btn">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="batch-list-production">
+                        <h2 class="nb-text font-14 batch-mr-0">
+                          Production Plan List:
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="production-btn-list">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group batch-list-3line">
+                        <ng-container *ngFor="let b of plannedProductionList">
+                          <button
+                            nbButton
+                            size="small"
+                            class="
+                              jet-popup-box
+                              production-list-popup
+                              mr-left-10
+                              border-radius
+                            "
+                            style="border: 1px solid black"
+                            [value]="b.id"
+                            (mouseenter)="getAllDetailsOfBatch($event, b)"
+                            (mouseout)="resetDetailsOfBatch($event)"
+                            [style.background]="b.colorTone"
+                            class="p-badge-design-production jet-popup-display"
+                            (click)="batchSelectedFromProductionList($event)"
+                          >
+                            {{ b.batchId }}
+                            <nb-icon
+                              class="icon-pposition"
+                              (click)="remove(b)"
+                              icon="close-circle-outline"
+                            ></nb-icon>
+                          </button>
+                        </ng-container>
+                        <ngb-pagination
+                          id="custom-pagination"
+                          *ngIf="prodRequestData.data.total"
+                          class="d-flex justify-content-end"
+                          [pageSize]="prodRequestData.data.pageSize"
+                          [maxSize]="5"
+                          [collectionSize]="prodRequestData.data.total"
+                          [page]="prodRequestData.data.pageIndex"
+                          (pageChange)="prodPageChanged($event)"
+                        >
+                        </ngb-pagination>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-card>
+            </nb-card-front>
+            <nb-card-back>
+              <nb-card
+                class="pd-left-15"
+                style="height: 400px; overflow-y: auto"
+              >
+                <div id="jetList">
+                  <div class="title-with-btn">
+                    <div class="row">
+                      <div class="col-md-1 col-5">
+                        <div class="batch-list-production">
+                          <h2 class="nb-text font-14 batch-mr-0">Jet List:</h2>
+                        </div>
+                      </div>
+                      <div class="col-md-3 jet-display-center">
+                        <ng-select
+                          id="jetSelected"
+                          name="jetSelected"
+                          multiple="true"
+                          placeholder="Select Jets"
+                          (change)="jetsSelected($event)"
+                          [(ngModel)]="selectedJets"
+                          [closeOnSelect]="false"
+                        >
+                          <ng-option *ngFor="let j of jetList" [value]="j.id">
+                            {{ j.name }}
+                          </ng-option>
+                        </ng-select>
+                      </div>
+                      <div
+                        class="col-md-3 jet-display-center"
+                        *ngIf="selectedBatchForPrint.length > 0"
+                      >
+                        <ng-select
+                          id="printOption"
+                          name="printOption"
+                          placeholder="Select Print Option"
+                          [(ngModel)]="selectedPrintOption"
+                        >
+                          <ng-option value="all"> All</ng-option>
+                          <ng-option value="color"> Color</ng-option>
+                          <ng-option value="chemical"> Chemical</ng-option>
+                        </ng-select>
+                      </div>
+                      <div
+                        class="col-md-3 jet-display-center"
+                        *ngIf="selectedBatchForPrint.length == 0"
+                      ></div>
+                      <div class="col-md-3 jet-display-center">
+                        <button
+                          *ngIf="selectedPrintOption == 'color'"
+                          class="
+                            btn btn-md btn-design-save
+                            font-14
+                            btn-plan
+                            mr-2
+                          "
+                          (click)="callPrintSlipApi()"
+                          type="button"
+                        >
+                          Print Color
+                        </button>
+                        <button
+                          *ngIf="selectedPrintOption == 'chemical'"
+                          class="
+                            btn btn-md btn-design-save
+                            font-14
+                            btn-plan
+                            mr-2
+                          "
+                          (click)="callPrintSlipApi()"
+                          type="button"
+                        >
+                          Print Chemical
+                        </button>
+                        <button
+                          *ngIf="selectedPrintOption == 'all'"
+                          class="
+                            btn btn-md btn-design-save
+                            font-14
+                            btn-plan
+                            mr-2
+                          "
+                          (click)="callPrintSlipApi()"
+                          type="button"
+                        >
+                          Print Both
+                        </button>
+                      </div>
+                      <div class="col-md-2 col-7 display-flex-end">
+                        <div class="jet-btn-production">
+                          <div class="jet-btn-production text-right">
+                            <button
+                              class="
+                                btn btn-md btn-design-save
+                                font-14
+                                btn-plan
+                                mr-2
+                              "
+                              (click)="toggleView()"
+                              type="button"
+                            >
+                              Production Plan
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <table class="user-per-table table-jet">
+                    <tr width="100%">
+                      <th width="5%">Jet</th>
+                      <th width="8%">Capacity</th>
+                      <th width="8%">Enter Lot No.</th>
+                      <th width="82%">Sequence</th>
+                    </tr>
+
+                    <tr *ngFor="let j of jet; let i = index">
+                      <td>{{ j.name }}</td>
+                      <td>{{ j.capacity }}</td>
+                      <td style="display: revert !important">
+                        <input
+                          style="width: 150px"
+                          class="form-control"
+                          placeholder="Enter Lol No"
+                          type="text"
+                          min="0"
+                          name="lotNo-{{ i }}"
+                          [(ngModel)]="j.lotNo"
+                          (keypress)="lotNoEntered($event, j)"
+                        />
+                      </td>
+                      <td>
+                        <div
+                          cdkDropList
+                          [cdkDropListData]="j.jetDataList"
+                          cdkDropListOrientation="horizontal"
+                          class="example-list main-table-drag"
+                          (cdkDropListDropped)="drop($event, i)"
+                        >
+                          <div
+                            class="example-box trans-box-drop-1 border-jet"
+                            *ngFor="let index of j.jetDataList; let idx = index"
+                            [style.background]="
+                              index.colorTone ? index.colorTone : '#ffffff'
+                            "
+                            (click)="setIndexForSlip(index, j, idx)"
+                            cdkDrag
+                            style="display: flex; justify-content: left"
+                          >
+                            <nb-checkbox
+                              *ngIf="index.shadeId || index.isDirect"
+                              (checkedChange)="
+                                selectedBatches($event, index, j)
+                              "
+                              name="check-{{ idx }}"
+                              [(ngModel)]="index.isChecked"
+                            >
+                            </nb-checkbox>
+                            <button
+                              *ngIf="index.shadeId"
+                              nbContextMenuTag="my-context-menu"
+                              [style.color]="
+                                index.colorTone ? '#ffffff' : '#000000'
+                              "
+                              (mouseenter)="getAllDetailsOfBatch($event, index)"
+                              (mouseout)="resetDetailsOfBatch($event)"
+                              [nbContextMenu]="items"
+                              nbContextMenuTrigger="click"
+                              class="jet-btn-changes btn-changes-jet"
+                            >
+                              {{ index.batchId }}
+                            </button>
+                            <button
+                              *ngIf="!index.shadeId && index.isDirect"
+                              nbContextMenuTag="my-context-menu"
+                              [style.color]="
+                                index.colorTone ? '#ffffff' : '#000000'
+                              "
+                              (mouseenter)="getAllDetailsOfBatch($event, index)"
+                              (mouseout)="resetDetailsOfBatch($event)"
+                              [nbContextMenu]="items"
+                              nbContextMenuTrigger="click"
+                              class="jet-btn-changes btn-changes-jet"
+                            >
+                              {{ index.batchId }}
+                            </button>
+                            <button
+                              *ngIf="!index.shadeId && !index.isDirect"
+                              [style.color]="
+                                index.colorTone ? '#ffffff' : '#000000'
+                              "
+                              (mouseenter)="getAllDetailsOfBatch($event, index)"
+                              (mouseout)="resetDetailsOfBatch($event)"
+                              (click)="openShadeModal(j, index)"
+                              class="jet-btn-changes btn-changes-jet"
+                            >
+                              {{ index.batchId }}
+                              <!-- <nb-icon class="icon-pposition" (click)="removeBatchFromJetManually(index)"
+                                                            icon="close-circle-outline"></nb-icon> -->
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </nb-card>
+            </nb-card-back>
+          </nb-flip-card>
         </div>
-    </nb-card-body>
+      </form>
+    </div>
+  </nb-card-body>
 </nb-card>

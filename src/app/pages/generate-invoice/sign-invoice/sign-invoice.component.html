@@ -2,10 +2,10 @@
     <nb-card-header class="nb-header">
         <div class="row">
             <div class="col-md-2 col-3 display-flex-start max-width-device">
-                    <ng-select class="btn btn-md" (change)="tableChange($event)" placeholder="Select">
-                        <ng-option value="received">View Signed Invoices</ng-option>
-                        <ng-option value="generate">Generate Invoice</ng-option>
-                    </ng-select>
+                <ng-select class="btn btn-md" (change)="tableChange($event)" placeholder="Select">
+                    <ng-option value="received">View Signed Invoices</ng-option>
+                    <ng-option value="generate">Generate Invoice</ng-option>
+                </ng-select>
             </div>
             <div class="col-md-5 col-3 display-flex-start max-width-device">
                 <h2 class="nb-text txt-ov-elips">Sign Invoice</h2>
@@ -17,16 +17,47 @@
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="basic-addon1" (keyup)="filter($event.target.value)">
             </div>
         </div>
 
-        <ngx-datatable [rows]="InvoiceList" class="material" [headerHeight]="31" [footerHeight]="31" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
+        <ngx-datatable [rows]="InvoiceList  | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"
+            [ngClass]="'bootstrap'" [headerHeight]="31" class="material  table-responsive" [footerHeight]="40"
+            [externalPaging]="true" [count]="requestData.data.total" [offset]="requestData.data.pageIndex"
+            [limit]="requestData.data.pageSize" (page)="setPage($event)" [selectionType]="'checkbox'" (select)="onSelect($event)" let index>
 
-            <ngx-datatable-column name="Invoice No" prop="invoiceNo" [headerCheckboxable]="true" [checkboxable]="true"  [maxWidth]="110"></ngx-datatable-column>
-            <ngx-datatable-column name="Party Name" prop="partyName" [maxWidth]="500"></ngx-datatable-column>
+            <ngx-datatable-column name="Invoice No" prop="invoiceNo" [headerCheckboxable]="true" [checkboxable]="true"
+                [maxWidth]="110">
+                <ng-template ngx-datatable-header-template let-value="value">Invoice No
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('invoiceNo')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Party Name" prop="partyName" [maxWidth]="500">
+                <ng-template ngx-datatable-header-template let-value="value">Party Name
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('partyName')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Batch" prop="batchList" [maxWidth]="200">
+                <ng-template ngx-datatable-header-template let-value="value">Batch
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('batchList')" class="nb-icon-filter"
+                            [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <ng-template ngx-datatable-header-template let-value="value">Batch
+                        <div class="filter-icon">
+                            <nb-icon icon="menu-outline" (click)="onOpenFilter('batchList')" class="nb-icon-filter"
+                                [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                        </div>
+                    </ng-template>
                     <ng-container *ngFor="let batch of row.batchList">
                         <span class="invpice-batch-style">{{batch.batchId}} </span>
                     </ng-container>
@@ -34,20 +65,86 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Total Mtr" prop="totalMtr" [maxWidth]="500"></ngx-datatable-column>
             <ngx-datatable-column name="Total Finish Mtr" prop="finishMtr" [maxWidth]="500"></ngx-datatable-column>
-            <ngx-datatable-column name="Net Amt" prop="netAmt" [maxWidth]="500"></ngx-datatable-column>
+            <ngx-datatable-column name="Net Amt" prop="netAmt" [maxWidth]="500">
+                <ng-template ngx-datatable-header-template let-value="value">Net Amt
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('netAmt')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Created Date" prop="date" [maxWidth]="200">
+                <ng-template ngx-datatable-header-template let-value="value">Created Date
+                    <div class="filter-icon">
+                        <nb-icon icon="menu-outline" (click)="onOpenFilter('date')"
+                            class="nb-icon-filter" [nbPopover]="templateRef" nbPopoverTrigger="noop"></nb-icon>
+                    </div>
+                </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
+
+        <div class="page-sizer d-flex">
+            <span>Page Size: </span>
+            <select name="pageSizer" [(ngModel)]="selectedPageSize" (change)="pageSizeChanged()">
+                <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+            </select>
+        </div>
 
         <div class="row">
             <div class="col-md-12 mobile-btn-center text-btn-right">
                 <div class="padding-bt-tp">
                     <button type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                        style="margin-right:20px"
-                        (click)="signNewInvoice()">Sign</button>
+                        style="margin-right:20px" (click)="signNewInvoice()">Sign</button>
                 </div>
             </div>
         </div>
-        
+
     </nb-card-body>
 </nb-card>
+
+<ng-template #templateRef>
+    <div id="filterDiv" style="padding: 2px 14px; width: 250px;">
+        <div class="row" style="background-color: #aa3634;">
+            <div class="col-md-10">
+                <span style="color: white;">Filter</span>
+            </div>
+            <div class="col-md-2" style="margin-top: 3px;color: white;">
+                <div (click)="closeFilterPopover()" style="cursor: pointer;text-align: center;">
+                    <strong>X</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+
+            <div class="col-md-12 mb-1">
+                <ng-container *ngIf="stringFlag">
+                    <ng-select [(ngModel)]="operatorSelected" appendTo="body" class="popup-select"
+                        placeholder="Select Filter">
+                        <ng-option value="LIKE">Conatins</ng-option>
+                        <!-- <ng-option value="NOT_CONTAINS">Not Contains</ng-option> -->
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                        <ng-option value="START_WITH">Starts With</ng-option>
+                        <ng-option value="END_WITH">Ends With</ng-option>
+                    </ng-select>
+                </ng-container>
+                <ng-container *ngIf="numberFlag">
+                    <ng-select appendTo="body" class="popup-select" placeholder="Select Filter"
+                        [(ngModel)]="operatorSelected">
+                        <!-- (change)="onChangeFilterNumberSettings($event)"  -->
+                        <ng-option value="GREATER_THAN">Greater Than</ng-option>
+                        <ng-option value="LESS_THAN">Less Than</ng-option>
+                        <ng-option value="EQUALS">Equals</ng-option>
+                        <ng-option value="NOT_EQUALS">Not Equals</ng-option>
+                    </ng-select>
+                </ng-container>
+
+            </div>
+            <div class="col-md-12 mb-1">
+                <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterWord">
+            </div>
+        </div>
+        <button nbButton status="primary" style="margin-right: 5px;" (click)="onApplyFilter()">Apply</button>
+        <button nbButton status="danger" (click)="closeFilterPopover()">Close</button>
+    </div>
+</ng-template>

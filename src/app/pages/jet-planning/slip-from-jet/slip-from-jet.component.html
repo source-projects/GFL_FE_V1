@@ -1,0 +1,158 @@
+
+
+<nb-card [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="nb-header">
+        <h2 class="nb-text">Generate slip</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div *ngFor="let ele of allData;let i = index;">
+            <div id="print-slip{{i}}" class="jet-slip size-A5">
+                <nb-card-body *ngIf="directPrintFromJet">
+                    <div *ngIf="ele != null || ele != undefined">
+                        <div *ngIf="ele.dyeingSlipDataList != null">
+                            <div class="container print-container mr-top-30 mr-bottom-30
+                                border-style-solid pd-top-10">
+                                <div class="mb-1 print-text-center pd-bt-25">
+                                    <div class="row">
+                                        <div class="col-md-4 wth-50">
+                                            <label class="font-25">Lot No:</label> <span style="color: red !important;"
+                                                class="slip-value rd-color">{{ele.batchId}}</span>
+                                        </div>
+                                        <div class="col-md-8 wth-50">
+                                            <label class="font-25">Mc No:</label> <span style="color: red !important;"
+                                                class="slip-value rd-color">{{ele.jetName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+            
+                                <div class="mb-1 print-text-center pd-bt-25">
+                                    <div class="row">
+                                        <div class="col-md-4 wth-50">
+                                            <label class="font-25">Lot Meter :</label> <span
+                                                class="slip-value">{{ele.totalMeter | number : '1.2-2'}}</span>
+                                        </div>
+                                        <div class="col-md-8 wth-50">
+                                            <label class="font-25">Date:</label> <span class="slip-value">{{myDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-1 print-text-center pd-bt-25">
+                                    <div class="row">
+                                        <div class="col-md-4 wth-50">
+                                            <label class="font-25">Lot Wt:</label> <span
+                                                class="slip-value">{{ele.totalWt | number : '1.2-2'}}</span>
+                                        </div>
+                                        <div class="col-md-8 wth-50">
+                                            <label class="font-25">Party Name:</label> <span class="slip-value">{{ele.partyName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="mb-1 print-text-center pd-bt-25">
+                                    <div class="row">
+                                        <div class="col-md-4 wth-50">
+                                            <label class="font-25">QualityId:</label>
+                                            <span class="slip-value">{{ele.qualityId}}</span>
+                                        </div>
+                                        <div class="col-md-8 wth-50">
+                                            <label class="font-25">Party Shade No:</label>
+                                            <span class="slip-value">{{ele.partyShadeNo}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="mb-1 print-text-center pd-bt-25">
+                                    <div class="row">
+                                        <div class="col-md-4 wth-50">
+                                            <label class="font-25">Taka/Cone:</label>
+                                            <span class="slip-value">{{ele.batchCount}}</span>
+                                        </div>
+                                        <div class="col-md-8 wth-50">
+                                            <label class="font-25">Color Name:</label>
+                                            <span class="slip-value">{{ele.colorName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+            
+                            </div>
+            
+                            <div *ngFor="let process of ele.dyeingSlipDataList; let
+                                i=index;" style="background-color: rgb(144, 179, 212) !important;" class="container print-container mr-bt-50 width-100
+                                main-jet-p-changes">
+                                <div class="row print-wth-100">
+                                    <div class="col-md-12 width-100 pd-15">
+                                        <div class="form-group col-md-3 width-20
+                                            form-style-print">
+                                            <h3 class="font-40" *ngIf="process.processType !=
+                                                'directDyeing'">
+                                                {{process.processType}}</h3>
+                                            <h3 class="font-40" *ngIf="process.processType ==
+                                                'directDyeing'">Direct</h3>
+                                        </div>
+                                        <div class="form-group col-md-3 width-28
+                                            form-style-print">
+                                            <label class="mr-right font-25
+                                                font-weight-bold">Temperature:</label>&nbsp;
+                                            <div class="print-data print-text-center
+                                                print-color-media">
+                                                {{process.temp}}</div>
+            
+                                        </div>
+                                        <div class="form-group col-md-3 width-25
+                                            form-style-print">
+                                            <label class="mr-righ font-25
+                                                font-weight-boldt">Hold
+                                                Time:</label>&nbsp;
+                                            <div class="print-data print-text-center
+                                                print-color-media">
+                                                {{process.holdTime}}</div>
+            
+                                        </div>
+                                        <div class="form-group col-md-3 width-27
+                                            form-style-print">
+                                            <label class="mr-right font-25
+                                                font-weight-bold">Liquor
+                                                Ratio:</label>&nbsp;
+                                            <div class="print-data print-text-center
+                                                print-color-media border-left-1px">
+                                                {{process.liquerRation}}</div>
+            
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group col-md-12 wth-100">
+                                        <table class="table table-bordered
+                                            table-process-fnt text-center wth-100" style="border-radius: 5px;">
+                                            <tr>
+                                                <th class="font-25">Item name</th>
+                                                <th class="font-25">Quantity</th>
+                                                <th class="font-25">Supplier name</th>
+                                            </tr>
+            
+                                            <tr *ngFor='let dc of
+                                                process.dyeingSlipItemData;let
+                                                i1=index;'>
+                                                <td class="pd-bt mr-top-5">
+                                                    <p class="font-25">{{dc.itemName}}</p>
+                                                </td>
+                                                <td class="pd-bt mr-top-5">
+                                                    <p class="font-25">{{dc.qty | number : '1.3-3'}}</p>
+                                                </td>
+                                                <td class="pd-bt mr-top-5">
+                                                    <p class="font-25">{{dc.supplierName}}</p>
+                                                </td>
+            
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

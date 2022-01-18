@@ -1,0 +1,135 @@
+.print-slip {
+    width: 100%;
+    height: 100%;
+    padding-top: 10%;
+}
+
+@page {
+    /* dimensions for the whole page */
+    size: A5;
+    margin: 0;
+}
+
+.wth-50 {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pd-bt {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.slip-value {
+    border-style: groove;
+    width: 150px;
+}
+
+.slip-background {
+    display: flex;
+    background-color: cadetblue !important;
+}
+
+.print-data {
+    color: #aa3634 !important;
+    border-style: groove;
+    width: 50px;
+}
+
+.pick-color-row{
+    width: 100%  !important;
+}
+
+@media print {
+    .size-A5 {
+        size: A5;
+    }
+    .mr-top-30 {
+        margin-top: 30px;
+    }
+    .mr-bottom-30 {
+        margin-bottom: 30px;
+    }
+    .border-style-solid {
+        border-style: solid;
+    }
+    .pd-top-10 {
+        padding-top: 10px;
+    }
+    .slip-value {
+        width: 60%;
+    }
+    .rd-color {
+        color: #ff0000;
+    }
+    .jet-print-style-changes {
+        width: 100% !important;
+        border-style: solid;
+        background-color: c6daf0;
+        margin: 0 !important;
+    }
+    .main-jet-p-changes {
+        width: 100% !important;
+        border-style: solid;
+        background-color: c6daf0;
+        margin-bottom: 20px !important;
+    }
+    .width-100 {
+        width: 100% !important
+    }
+    .width-20 {
+        width: 20%!important;
+    }
+    .width-28 {
+        width: 28%!important;
+    }
+    .width-25 {
+        width: 25%!important;
+    }
+    .width-27 {
+        width: 27% !important
+    }
+    .width-30 {
+        width: 30% !important
+    }
+    .color-000 {
+        color: #000!important;
+    }
+    .form-style-print {
+        padding: 0px;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .pd-15 {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .font-25 {
+        font-size: 25px !important;
+    }
+    .mr-top-bottom-15 {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .font-weight-bold {
+        font-weight: bold;
+    }
+    .font-30 {
+        font-size: 30px;
+    }
+    .border-left-1px {
+        border-left: 1px solid;
+    }
+    .print-bg-transperent {
+        background-color: transparent;
+    }
+    .print-color-media {
+        width: auto;
+        color: #000!important;
+    }
+    .font-40 {
+        font-size: 40px;
+    }
+}

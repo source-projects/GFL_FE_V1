@@ -1,75 +1,96 @@
 <nb-card>
-    <nb-card-body>
-        <form #invoiceForm="ngForm">
-
-            <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
-                <div class="row report-header">
-                    <div class="col-md-12 print-layout-report">
-                        <span>
-                            <h3>INVOICE REPORT</h3><span class="font-20">{{currentDate | date : 'dd/MM/yyyy'}}</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="row align-item-right justify-content-end mr-5">
-                    <div class="justify-content-space-between">
-                        <div class="col-sm-3"></div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Grey Meter - {{totalGrayMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Finished Meter - {{totalFinishedMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Amount - {{totalAmount | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div *ngFor="let report of shortReport" class="mb-5">
-                    <div class="print-body">
-                        <!-- print-layout-report -->
-                        <div class="invoice-no-heading" style="width: fit-content;">
-                            <h5 class="bold-invoice" style="font-size: 18px;"> Invoice No: {{report.invoiceNo}},
-                                {{report.createdDate | date : 'dd/MM/yyyy'}}</h5>
-                        </div>
-                        <table style="font-size: large;"
-                            class="print-layout-report table-bordered table-striped table-process-fnt width-100">
-                            <tr>
-                                <th *ngFor="let head of headers">{{head}}</th>
-                            </tr>
-                            <tr *ngFor="let invoice of report.list; let i = index"
-                                [style.background]="(i%2 == 0)? '#ffffff' : '#f2f2f2'">
-                                <td *ngFor="let item of headerArray">{{invoice[item]}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div><br><br>
-                <div class="row align-item-right justify-content-end mr-5">
-                    <div class="justify-content-space-between">
-                        <div class="col-sm-3"></div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Grey Meter - {{totalGrayMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Finished Meter - {{totalFinishedMeter | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                        <div class="text-right table-bordered">
-                            <span style="font-size: large;">
-                                <h3>Total Amount - {{totalAmount | number : '1.2-2'}}</h3>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+  <nb-card-body>
+    <form #invoiceForm="ngForm">
+      <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
+        <div class="row report-header">
+          <div class="col-md-12 print-layout-report">
+            <span>
+              <h3>INVOICE REPORT</h3>
+              <span class="font-20">{{
+                currentDate | date: "dd/MM/yyyy"
+                }}</span>
+            </span>
+          </div>
+        </div>
+        <div class="row align-item-right justify-content-end mr-5">
+          <div class="justify-content-space-between">
+            <div class="col-sm-3"></div>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>
+                  Total Grey Meter - {{ totalGrayMeter | number: "1.2-2" }}
+                </h3>
+              </span>
             </div>
-        </form>
-    </nb-card-body>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>
+                  Total Finished Meter -
+                  {{ totalFinishedMeter | number: "1.2-2" }}
+                </h3>
+              </span>
+            </div>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>Total Amount - {{ totalAmount | number: "1.2-2" }}</h3>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let report of shortReport" class="mb-5">
+          <div class="print-body">
+            <!-- print-layout-report -->
+            <div class="invoice-no-heading" style="width: fit-content">
+              <h5 class="bold-invoice" style="font-size: 18px">
+                <span *ngFor="let head of headerKeys; let i = index">
+                  {{ head }} : {{ report[copyHeaderKeys[i]] }} ,
+                </span>
+                <!-- Invoice No: {{report.invoiceNo}},
+                                {{report.createdDate | date : 'dd/MM/yyyy'}} -->
+              </h5>
+            </div>
+            <table style="font-size: large" class="
+                print-layout-report
+                table-bordered table-striped table-process-fnt
+                width-100
+              ">
+              <tr>
+                <th *ngFor="let head of headers">{{ head }}</th>
+              </tr>
+              <tr *ngFor="let invoice of report.list; let i = index"
+                [style.background]="i % 2 == 0 ? '#ffffff' : '#f2f2f2'">
+                <td *ngFor="let item of headerArray">{{ invoice[item] }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br /><br />
+        <div class="row align-item-right justify-content-end mr-5">
+          <div class="justify-content-space-between">
+            <div class="col-sm-3"></div>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>
+                  Total Grey Meter - {{ totalGrayMeter | number: "1.2-2" }}
+                </h3>
+              </span>
+            </div>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>
+                  Total Finished Meter -
+                  {{ totalFinishedMeter | number: "1.2-2" }}
+                </h3>
+              </span>
+            </div>
+            <div class="text-right table-bordered">
+              <span style="font-size: large">
+                <h3>Total Amount - {{ totalAmount | number: "1.2-2" }}</h3>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
 </nb-card>

@@ -1,0 +1,109 @@
+.font-styles {
+    font-size: large;
+}
+
+.report-header {
+    background: #c6d9f1;
+    color: #4f6072;
+}
+
+.invoice-no-heading {
+    padding: 0px 2px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.print-body {
+    margin: 10px;
+}
+.bold-invoice {
+    padding: 2px;
+    font-weight: 700;
+}
+
+.tr:nth-child(even) {
+    background-color: Lightgreen;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+@media print {
+    .font-styles {
+        font-size: large;
+    }
+    
+    .report-header {
+        background: #c6d9f1;
+        color: #4f6072;
+    }
+    
+    .invoice-no-heading {
+        padding: 0px 2px;
+        width: 100%;
+        border-bottom: 1px solid black;
+    }
+    
+    .print-body {
+        margin: 10px;
+    }
+    .bold-invoice {
+        padding: 2px;
+        font-weight: 700;
+    }
+    
+    .tr:nth-child(even) {
+        background-color: Lightgreen;
+    }
+    
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .brijesh{
+        background-color: #fcbb08 !important;
+    }
+    .manish{
+        background-color: lightpink !important;
+    }
+    .glory{
+        background-color: lightgreen !important;
+    }
+    .redRecord{
+        background-color: red !important;
+    }
+    .yellowRecord{
+        background-color: yellow !important;
+    }
+    .greenRecord{
+        background-color: green !important;
+    }
+    
+}
+
+.brijesh{
+    background-color: #fcbb08 !important;
+}
+.manish{
+    background-color: lightpink !important;
+}
+.glory{
+    background-color: lightgreen !important;
+}
+
+.redRecord{
+    background-color: red;
+}
+.yellowRecord{
+    background-color: yellow;
+}
+.greenRecord{
+    background-color: green;
+}

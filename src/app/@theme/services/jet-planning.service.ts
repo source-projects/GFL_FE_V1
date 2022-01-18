@@ -37,6 +37,13 @@ export class JetPlanningService {
     );
   }
 
+  updateSCOandDoseNylon(obj){
+    return this.httpClient.post(
+      this.commonService.envUrl() + "api/jet/updateJetDataForHmi",
+      obj
+    );
+  }
+
   saveJetData(jetData) {
     return this.httpClient.post(
       this.commonService.envUrl() + "api/jet/addJetData",

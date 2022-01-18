@@ -37,16 +37,16 @@ export class ScanQRComponent implements OnInit, OnDestroy {
 //  .catch((error) => {
 //  })
 
- navigator.permissions.query({name: 'camera'})
- .then((permissionObj) => {
-  if(permissionObj.state === 'denied'){
-    this.permissionDenied=true
-  }else{
-    this.permissionDenied=false
-  }
- })
- .catch((error) => {
- })
+//  navigator.permissions.query({name: 'camera'})
+//  .then((permissionObj) => {
+//   if(permissionObj.state === 'denied'){
+//     this.permissionDenied=true
+//   }else{
+//     this.permissionDenied=false
+//   }
+//  })
+//  .catch((error) => {
+//  })
   }
 
   qrResultString: string;
