@@ -213,7 +213,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.paymentValues.amtToPay = this.paymentValues.totalBill;
     this.paymentValues.taxAmt = this.taxAmount;
     this.paymentValues.tdsAmt = (this.paymentValues.taxAmt * 2)/100;
-    this.paymentValues.amtToPay = this.paymentValues.amtToPay - this.paymentValues.tdsAmt;
+    this.paymentValues.amtToPay = Math.ceil(this.paymentValues.amtToPay - this.paymentValues.tdsAmt);
   }
 
   advancePaymentSelected(event) {
@@ -245,6 +245,12 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
       (data) => {
         if (data["success"]) {
           this.paymentTypeList = data["data"];
+          this.paymentValues.paymentData.forEach((e) => {
+            let ele = this.paymentTypeList.find(v => v.paymentType == "Cheque");
+            if(ele){
+              e.payTypeId = ele.id;
+            }
+          });
           this.loading = false;
         } else {
           this.loading = false;
@@ -303,7 +309,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
           }
         }
         let obj = {
-          payTypeId: null,
+          payTypeId: 3548230,
           payAmt: null,
           chequeDate: null,
           chequeNo: null,
@@ -372,7 +378,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
   cdSelected(event) {
     let val = Number(event.target.value);
-    this.paymentValues.amtToPay = this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff + this.paymentValues.tdsAmt);
+    this.paymentValues.amtToPay = Math.ceil(this.totalInvoice - (this.paymentValues.cdAmt + this.paymentValues.rdAmt + this.paymentValues.otherDiff + this.paymentValues.tdsAmt));
   }
 
   reset(paymentForm) {

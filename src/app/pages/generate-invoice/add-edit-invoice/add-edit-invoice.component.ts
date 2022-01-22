@@ -109,27 +109,10 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
               this.deliveryMode = data["data"].deliveryMode;
               this.flag = data["data"].isSendToParty;
               this.batch = data["data"].batchWithControlIdList;
+              this.invoiceValues.rfInvoiceFlag = data["data"].rfInvoiceFlag;
               this.finalbatch = [...this.batch];
               this.merge = [...this.finalbatch];
-              // this.generateInvoiceService
-              //   .getBatchByParty(this.invoiceValues.partyId)
-              //   .pipe(takeUntil(this.destroy$)).subscribe(
-              //     (data) => {
-              //       if (data["success"]) {
-              //         data["data"].forEach((element) => {
-              //           this.finalbatch.push(element);
-              //         });
-              //         this.merge = this.finalbatch;
-              //         this.loading = false;
-              //       } else {
-              //         this.loading = false;
-              //       }
-              //     },
-              //     (error) => {
-              //       this.loading = false;
-              //       this.merge = [];
-              //     }
-              //   );
+              
               this.loading = false;
               this.disableButton = false;
               this.selected = data["data"].batchWithControlIdList;
@@ -170,47 +153,6 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
       );
   }
 
-  // getBatchList(event) {
-  //   this.party.forEach((ele) => {
-  //     if (ele.id == this.invoiceValues.partyId) {
-  //       this.discountChange = ele.percentageDiscount;
-  //     }
-  //   });
-  //   this.discountFlag = true;
-
-  //   this.loading = true;
-  //   if (event != undefined) {
-  //     if (this.invoiceValues.partyId) {
-  //       this.generateInvoiceService
-  //         .getBatchByParty(this.invoiceValues.partyId)
-  //         .pipe(takeUntil(this.destroy$))
-  //         .subscribe(
-  //           (data) => {
-  //             if (data["success"]) {
-  //               this.finalbatch = data["data"];
-  //               this.finalbatch.forEach((ele) => {
-  //                 ele.wt = ele.wt.toFixed(2);
-  //               });
-  //               this.merge = this.finalbatch;
-  //               this.finalcheckedrows = [];
-  //               this.selected = [];
-  //               this.loading = false;
-  //             } else {
-  //               this.loading = false;
-  //               this.merge = [];
-  //             }
-  //           },
-  //           (error) => {
-  //             this.loading = false;
-  //             this.merge = [];
-  //           }
-  //         );
-  //     }
-  //   } else {
-  //     this.loading = false;
-  //   }
-  // }
-
   //changing batchList with pchallan No
 
   getPChallanList(event) {
@@ -239,6 +181,11 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
                   ele.wt = ele.wt.toFixed(2);
                 });
                 this.merge = this.finalbatch;
+                if(this.invoiceValues.rfInvoiceFlag){
+                  this.merge.forEach(ele => {
+                    ele.rate = 0;
+                  })
+                }
                 this.finalcheckedrows = [];
                 this.selected = [];
                 this.loading = false;
@@ -281,7 +228,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
           obj.batchId = ele.batchId;
           obj.pchallanRef = ele.pchallanRef;
           obj.stockId = ele.controlId;
-          obj.rate = ele.rate;
+          obj.rate = this.invoiceValues.rfInvoiceFlag ? 0 : ele.rate;
           this.final.push(obj);
         });
         let obj = {
@@ -465,7 +412,7 @@ export class AddEditInvoiceComponent implements OnInit, OnDestroy {
         obj.batchId = ele.batchId;
         obj.pchallanRef = ele.pchallanRef;
         obj.stockId = ele.controlId;
-        obj.rate = ele.rate;
+        obj.rate = this.invoiceValues.rfInvoiceFlag ? 0 : ele.rate;
         this.final.push(obj);
       });
 

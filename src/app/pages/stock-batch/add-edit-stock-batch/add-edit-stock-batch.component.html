@@ -207,7 +207,7 @@
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
                             class="col-md-6">
                             <fieldset [disabled]="production_flag[i]">
-                                <nb-card [attr.id]="'new'+i" class="padding-box">
+                                <nb-card [attr.id]="'new'+i" class="padding-box-stock-batch">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6 col-8">
@@ -242,8 +242,18 @@
                                                             [rows]="block.batchMW" [headerHeight]="31"
                                                             [footerHeight]="50" [scrollbarV]="true">
 
+                                                            <ngx-datatable-column name="Sr No."
+                                                                [sortable]="false" class="table-row">
+                                                                <ng-template let-row="row" ngx-datatable-cell-template
+                                                                    let-rowIndex="rowIndex">
+                                                                    <div style="width: 100%;text-align: center;">
+                                                                        <span>{{rowIndex + 1}}</span>
+                                                                    </div>
+                                                                    
+                                                                </ng-template>
+                                                            </ngx-datatable-column>
                                                             <ngx-datatable-column name="Meter" prop="mtr"
-                                                                [sortable]="false" [width]="300" class="table-row">
+                                                                [sortable]="false" class="table-row">
                                                                 <ng-template let-row="row" ngx-datatable-cell-template
                                                                     let-rowIndex="rowIndex">
                                                                     <input class="tableForm" type="number"
@@ -265,7 +275,7 @@
                                                             </ngx-datatable-column>
 
                                                             <ngx-datatable-column name="Weight" prop="wt"
-                                                                [sortable]="false" [width]="300">
+                                                                [sortable]="false">
                                                                 <ng-template let-row="row" ngx-datatable-cell-template
                                                                     let-rowIndex="rowIndex">
                                                                     <input class="tableForm" type="number"
@@ -288,11 +298,13 @@
                                                             <ngx-datatable-column name="Action" sortable="false">
                                                                 <ng-template let-row="row" let-value="value"
                                                                     ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                                                    <nb-icon icon="trash" status="danger"
+                                                                    <div style="text-align: center;width: 100%;">
+                                                                        <nb-icon icon="trash" status="danger"
                                                                         [hidden]=" flag || row.isProductionPlanned"
                                                                         [options]="{ animation: { type: 'zoom' } }"
                                                                         (click)="removeItem(rowIndex,i)">
                                                                     </nb-icon>
+                                                                    </div>
                                                                 </ng-template>
                                                             </ngx-datatable-column>
                                                             <ngx-datatable-footer>
