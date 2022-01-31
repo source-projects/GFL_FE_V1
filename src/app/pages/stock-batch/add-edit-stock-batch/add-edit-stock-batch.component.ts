@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -444,6 +445,12 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       this.reCalcMTWTValue();
     }
   }
+
+  @HostListener('document:keydown.alt.shift', ['$event'])
+  showBatch(event: KeyboardEvent) {
+    this.addNewBatch(event);
+  }
+
 
   addNewBatch(e) {
     if (!this.stockBatch.qualityId) {

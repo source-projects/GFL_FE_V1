@@ -92,7 +92,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
   selectedPageSize: number = 20;
   requestData: RequestData = new RequestData();
   filterWord: string = '';
-  selectedColumnForFilter:string = '';
+  selectedColumnForFilter: string = '';
   operatorSelected = null;
   @ViewChild('searchfilter', { static: true }) filterTextBox!: ElementRef;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -127,19 +127,19 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.getEditAccess1();
     if (this.shadeGuard.accessRights("view all")) {
       this.requestData.getBy = "all";
-        this.getallShades();
+      this.getallShades();
       this.hidden = this.allDelete;
       this.hiddenEdit = this.allEdit;
       this.radioSelect = 3;
     } else if (this.shadeGuard.accessRights("view group")) {
       this.requestData.getBy = "group";
-        this.getallShades();
+      this.getallShades();
       this.hidden = this.groupDelete;
       this.hiddenEdit = this.groupEdit;
       this.radioSelect = 2;
     } else if (this.shadeGuard.accessRights("view")) {
       this.requestData.getBy = "own";
-        this.getallShades();
+      this.getallShades();
       this.hidden = this.ownDelete;
       this.hiddenEdit = this.ownEdit;
       this.radioSelect = 1;
@@ -192,56 +192,81 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.shadeService.getShadeMastListV1(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
       (data: ResponseData) => {
         if (data["success"]) {
-            const pageData = data.data as PageData;
+          const pageData = data.data as PageData;
           this.shadeList = pageData.data;
           this.requestData.data.total = pageData.total;
-            // this.shadeList = data["data"];
-            this.shadeList.forEach(ele => {
-              this.totalAmount = 0;
-              if (ele.shadeDataList && ele.shadeDataList.length) {
-                ele.shadeDataList.forEach((e) => {
-                  if (e.amount) this.totalAmount += e.amount;
-                });
-                let costKg = null;
-                let costMtr = null;
-                // this.totalAmount = this.totalAmount.toFixed(2);
-                if (ele.wtPer100m) {
-                  if (ele.qualityId) {
-                    costKg = (this.totalAmount / 100).toFixed(2);
-                    let A = 100 / ele.wtPer100m;
-                    costMtr = (costKg / A).toFixed(2);
-                    ele["costPerWeight"] = costKg;
-                    ele["costPerMeter"] = costMtr;
-                  }
+          // this.shadeList = data["data"];
+          this.shadeList.forEach(ele => {
+            this.totalAmount = 0;
+            if (ele.shadeDataList && ele.shadeDataList.length) {
+              ele.shadeDataList.forEach((e) => {
+                if (e.amount) this.totalAmount += e.amount;
+              });
+              let costKg = null;
+              let costMtr = null;
+              // this.totalAmount = this.totalAmount.toFixed(2);
+              if (ele.wtPer100m) {
+                if (ele.qualityId) {
+                  costKg = (this.totalAmount / 100).toFixed(2);
+                  let A = 100 / ele.wtPer100m;
+                  costMtr = (costKg / A).toFixed(2);
+                  ele["costPerWeight"] = costKg;
+                  ele["costPerMeter"] = costMtr;
                 }
               }
-            })
+            }
+          });
 
-            this.shade = this.shadeList.map((element) => ({
-              id: element.id,
-              partyShadeNo: element.partyShadeNo,
-              processName: element.processName,
-              qualityId: element.qualityId,
-              qualityName: element.qualityName,
-              partyName: element.partyName,
-              colorTone: element.colorTone,
-              colorName: element.colorName,
-              costPerWeight: element.costPerWeight,
-              costPerMeter: element.costPerMeter
-            }));
-            this.copyShadeList = this.shadeList.map((element) => ({
-              id: element.id,
-              partyShadeNo: element.partyShadeNo,
-              processName: element.processName,
-              qualityId: element.qualityId,
-              qualityName: element.qualityName,
-              partyId: element.partyId,
-              colorTone: element.colorTone,
-              partyName: element.partyName,
-              colorName: element.colorName,
-              costPerWeight: element.costPerWeight,
-              costPerMeter: element.costPerMeter
-            }));
+          let sumWeight = 0;
+          let sumMeter = 0;
+          let count = 0;
+          if (this.shadeList && this.shadeList.length) {
+            this.shadeList.forEach((ele, i) => {
+              sumWeight = sumWeight + Number(ele.costPerWeight);
+              sumMeter = sumMeter + Number(ele.costPerMeter);
+              count++;
+
+            });
+            if (count == 0) {
+              this.avgCostPerWeight = sumWeight.toFixed(2);
+              this.avgCostPerMeter = sumMeter.toFixed(2);
+            }
+            else {
+              this.avgCostPerWeight = (sumWeight / count).toFixed(2);
+              this.avgCostPerMeter = (sumMeter / count).toFixed(2);
+            }
+            this.averageFlag = true;
+          }
+          else {
+            this.avgCostPerMeter = 0;
+            this.avgCostPerWeight = 0;
+          }
+
+          this.shade = this.shadeList.map((element) => ({
+            id: element.id,
+            partyShadeNo: element.partyShadeNo,
+            processName: element.processName,
+            qualityId: element.qualityId,
+            qualityName: element.qualityName,
+            partyName: element.partyName,
+            colorTone: element.colorTone,
+            colorName: element.colorName,
+            costPerWeight: element.costPerWeight,
+            costPerMeter: element.costPerMeter
+          }));
+          this.copyShadeList = this.shadeList.map((element) => ({
+            id: element.id,
+            partyShadeNo: element.partyShadeNo,
+            processName: element.processName,
+            qualityId: element.qualityId,
+            qualityName: element.qualityName,
+            partyId: element.partyId,
+            colorTone: element.colorTone,
+            partyName: element.partyName,
+            colorName: element.colorName,
+            costPerWeight: element.costPerWeight,
+            costPerMeter: element.costPerMeter
+          }));
         }
         this.loading = false;
       },
@@ -398,11 +423,11 @@ export class ShadeComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleChange(value){
-    if(value){
+  toggleChange(value) {
+    if (value) {
       this.searchANDCondition = true;
     }
-    else{
+    else {
       this.searchANDCondition = false;
     }
     this.filter();
@@ -413,7 +438,7 @@ export class ShadeComponent implements OnInit, OnDestroy {
     this.getallShades();
   }
 
-  pageSizeChanged(){
+  pageSizeChanged() {
     this.requestData.data.pageSize = Number(this.selectedPageSize);
     this.getallShades();
   }
@@ -464,12 +489,12 @@ export class ShadeComponent implements OnInit, OnDestroy {
   onClear(column?) {
 
     let index;
-    if(column){
+    if (column) {
       index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
-    } else{
+    } else {
       index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
     }
-    
+
     if (index > -1) {
       this.filterWord = '';
       this.operatorSelected = null;

@@ -43,7 +43,8 @@
                             <label class="required">Party Name</label>
                             <ng-select name="partyId" [(ngModel)]='stockBatch.partyId' #partyId1="ngModel"
                                 [ngClass]="{'is-invalid':(partyId1.invalid)&&(formSubmitted || partyId1.touched) }"
-                                (change)="setQualityByParty($event)" required [disabled]="stockDataValues && stockDataValues[0]">
+                                (change)="setQualityByParty($event)" required
+                                [disabled]="stockBatch.isProductionPlanned">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -76,7 +77,8 @@
                             <ng-select name="qualityId" [(ngModel)]='stockBatch.qualityId' required
                                 #qualityId1="ngModel"
                                 [ngClass]="{'is-invalid':(qualityId1.invalid)&&(formSubmitted || qualityId1.touched)}"
-                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name" [disabled]="stockDataValues && stockDataValues[0]">
+                                (change)="getUnit($event)" class="required-error-dropdown dropdown-name"
+                                [disabled]="stockBatch.isProductionPlanned">
                                 <ng-option disabled="true">
                                     <div class="row">
                                         <div class="col-md-6 col-6">
@@ -175,8 +177,8 @@
                             <nb-checkbox style="margin-right: 5px;" class="status-basic
                                 nb-transition" id="isRF" [(ngModel)]="stockBatch.isRfInvoice" name="isRF">
                             </nb-checkbox>
-                            <label>  is RF</label>
-                            
+                            <label> is RF</label>
+
                         </div>
                     </div>
                 </div>
@@ -205,33 +207,33 @@
                     </header>
                     <div class="row">
                         <div *ngFor="let block of stockDataValues; let i=index " [attr.id]="'repeat'+i"
-                            class="col-md-6">
+                            class="col-md-4">
                             <fieldset [disabled]="production_flag[i]">
                                 <nb-card [attr.id]="'new'+i" class="padding-box-stock-batch">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6 col-8">
-                                                <label>PChallan No</label>
-                                                <input [attr.id]="'pchallanRef'+i" required type="text"
-                                                    [(ngModel)]='block.pchallanRef' [disabled]="!addFlag && block.old"
-                                                    (change)="checkPChallanUniq(i)" class="form-control size-small"
-                                                    fieldsize="small" nbinput name="pchallanRef{{i}}" min="0"
-                                                    (click)="batchInsertCheck()">
-                                                <div class="input-required" style="display: block !important;"
-                                                    *ngIf="block.isNotUnique">
-                                                    <span>Pchallan already exists</span>
-                                                </div>
-                                                <div class="input-required" style="display: block !important;"
-                                                    *ngIf="formSubmitted && !block.pchallanRef">
-                                                    <span>Pchallan is required</span>
-                                                </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-8">
+                                            <label>PChallan No</label>
+                                            <input [attr.id]="'pchallanRef'+i" required type="text"
+                                                [(ngModel)]='block.pchallanRef' [disabled]="!addFlag && block.old"
+                                                (change)="checkPChallanUniq(i)" class="form-control size-small"
+                                                fieldsize="small" nbinput name="pchallanRef{{i}}" min="0"
+                                                (click)="batchInsertCheck()">
+                                            <div class="input-required" style="display: block !important;"
+                                                *ngIf="block.isNotUnique">
+                                                <span>Pchallan already exists</span>
                                             </div>
-                                            <div class="col-md-6 col-4 display-flex-end" *ngIf="!production_flag[i]">
-                                                <nb-icon status="danger" [options]="{animation:{type:'zoom'}}"
-                                                    icon="trash" (click)="removeBatch(i);"></nb-icon>
+                                            <div class="input-required" style="display: block !important;"
+                                                *ngIf="formSubmitted && !block.pchallanRef">
+                                                <span>Pchallan is required</span>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-4 display-flex-end" *ngIf="!production_flag[i]">
+                                            <nb-icon status="danger" [options]="{animation:{type:'zoom'}}" icon="trash"
+                                                (click)="removeBatch(i);"></nb-icon>
+                                        </div>
                                     </div>
+
                                     <div class="form-group mr-0">
                                         <div class="row">
                                             <div class="col-md-12 col-12">
@@ -242,16 +244,21 @@
                                                             [rows]="block.batchMW" [headerHeight]="31"
                                                             [footerHeight]="50" [scrollbarV]="true">
 
-                                                            <ngx-datatable-column name="Sr No."
-                                                                [sortable]="false" class="table-row">
-                                                                <ng-template let-row="row" ngx-datatable-cell-template
-                                                                    let-rowIndex="rowIndex">
-                                                                    <div style="width: 100%;text-align: center;">
+                                                            <ngx-datatable-column name="Sr No." sortable="false">
+                                                                <ng-template let-row="row" let-value="value"
+                                                                    ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                                                    <div style="text-align: center;width: 100%;">
                                                                         <span>{{rowIndex + 1}}</span>
+                                                                        <nb-icon style="margin-left: 5px;" icon="trash"
+                                                                            status="danger"
+                                                                            [hidden]=" flag || row.isProductionPlanned"
+                                                                            [options]="{ animation: { type: 'zoom' } }"
+                                                                            (click)="removeItem(rowIndex,i)">
+                                                                        </nb-icon>
                                                                     </div>
-                                                                    
                                                                 </ng-template>
                                                             </ngx-datatable-column>
+
                                                             <ngx-datatable-column name="Meter" prop="mtr"
                                                                 [sortable]="false" class="table-row">
                                                                 <ng-template let-row="row" ngx-datatable-cell-template
@@ -295,18 +302,7 @@
                                                                 </ng-template>
                                                             </ngx-datatable-column>
 
-                                                            <ngx-datatable-column name="Action" sortable="false">
-                                                                <ng-template let-row="row" let-value="value"
-                                                                    ngx-datatable-cell-template let-rowIndex="rowIndex">
-                                                                    <div style="text-align: center;width: 100%;">
-                                                                        <nb-icon icon="trash" status="danger"
-                                                                        [hidden]=" flag || row.isProductionPlanned"
-                                                                        [options]="{ animation: { type: 'zoom' } }"
-                                                                        (click)="removeItem(rowIndex,i)">
-                                                                    </nb-icon>
-                                                                    </div>
-                                                                </ng-template>
-                                                            </ngx-datatable-column>
+                                                            
                                                             <ngx-datatable-footer>
                                                                 <ng-template ngx-datatable-footer-template
                                                                     let-rowCount="rowCount" let-row="row">
