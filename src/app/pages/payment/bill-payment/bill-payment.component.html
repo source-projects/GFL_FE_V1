@@ -65,7 +65,8 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <label>Pending Invoices:</label>
-                            <ngx-datatable [rows]="invoiceList" class="material" [headerHeight]="31" [footerHeight]="31"
+                            <ngx-datatable style="height: 425px !important;
+                            overflow-y: auto;" [rows]="invoiceList" class="material" [headerHeight]="31" [footerHeight]="31"
                                 [selectionType]="'checkbox'" [selected]="selected" (select)="invoiceSelected($event)">
                                 <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true"
                                     [checkboxable]="true">

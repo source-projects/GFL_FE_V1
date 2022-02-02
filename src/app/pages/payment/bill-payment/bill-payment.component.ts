@@ -406,9 +406,10 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
   onAddPayment(paymentForm) {
     if (this.paymentValues.amtToPay != this.paymentValues.amtPaid) {
-      this.toastr.error("amount to pay and amount paid are not equal");
-    }
-    else {
+      this.toastr.error("Amount to pay and Amount paid are not equal");
+    } else if (this.paymentValues.amtToPay == 0 && this.paymentValues.amtPaid == 0){
+      this.toastr.error("No Invoices are selected");
+    } else {
       this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
         data => {
           if (data['success']) {
