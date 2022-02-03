@@ -67,7 +67,7 @@
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Created Date" prop="createdDate">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                            {{row.createdDate | date : 'shortDate'}}
+                            {{row.createdDate | date : 'dd-MMM-yyyy'}}
                         </ng-template>
                         <!-- <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <ng-container *ngFor="let batch of row.batchList">

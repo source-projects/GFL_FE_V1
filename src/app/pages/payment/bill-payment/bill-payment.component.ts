@@ -1,3 +1,4 @@
+import { keys } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
@@ -212,7 +213,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     this.paymentValues.gstAmt = this.gstAmount;
     this.paymentValues.amtToPay = this.paymentValues.totalBill;
     this.paymentValues.taxAmt = this.taxAmount;
-    this.paymentValues.tdsAmt = (this.paymentValues.taxAmt * 2)/100;
+    this.paymentValues.tdsAmt = (this.paymentValues.taxAmt * 2) / 100;
     this.paymentValues.amtToPay = Math.ceil(this.paymentValues.amtToPay - this.paymentValues.tdsAmt);
   }
 
@@ -247,7 +248,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
           this.paymentTypeList = data["data"];
           this.paymentValues.paymentData.forEach((e) => {
             let ele = this.paymentTypeList.find(v => v.paymentType == "Cheque");
-            if(ele){
+            if (ele) {
               e.payTypeId = ele.id;
             }
           });
@@ -263,7 +264,7 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   }
 
 
-  typeSelected(rowIndex, row, elementId) {
+  typeSelected(rowIndex) {
     let id = this.paymentValues.paymentData[rowIndex].payTypeId;
     let flag = false;
     let count = 0;
@@ -405,11 +406,68 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   }
 
   onAddPayment(paymentForm) {
+
+    let valid = true;
+
     if (this.paymentValues.amtToPay != this.paymentValues.amtPaid) {
       this.toastr.error("Amount to pay and Amount paid are not equal");
-    } else if (this.paymentValues.amtToPay == 0 && this.paymentValues.amtPaid == 0){
+      valid = false;
+      return;
+    }
+
+    if (this.paymentValues.amtToPay == 0 && this.paymentValues.amtPaid == 0) {
       this.toastr.error("No Invoices are selected");
-    } else {
+      valid = false;
+      return;
+    }
+
+
+    this.paymentValues.paymentData.forEach(item => {
+      let keys = Object.keys(item);
+      keys.forEach(colName => {
+        if (colName == "payType") {
+          if (!item.payTypeId) {
+            this.toastr.error("Enter payment type", "payment type required");
+            valid = false;
+            return;
+          }
+        } else if (colName == "payAmt") {
+          if (!item.payAmt) {
+            this.toastr.error("Enter amount", "amount required");
+            valid = false;
+            return;
+          }
+        } else if (colName == "chequeDate") {
+          if (!item.chequeDate) {
+            this.toastr.error("Enter date", "date required");
+            valid = false;
+            return;
+          }
+        } else if (colName == "chequeNo") {
+          if (item.payTypeId == 3548230 && !item.chequeNo) {
+            this.toastr.error("Enter Cheque No", "Checque No required");
+            valid = false;
+            return;
+          }
+        }
+         else if (colName == "remark") {
+          if (!item.remark) {
+            this.toastr.error("Enter remark", "remark is required");
+            valid = false;
+            return;
+          }
+        } else if (colName == "bank") {
+          if (!item.bank) {
+            this.toastr.error("Enter bank", "bank is required");
+            valid = false;
+            return;
+          }
+        }
+      })
+    });
+
+    
+    if (valid) {
       this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
         data => {
           if (data['success']) {
@@ -431,9 +489,9 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   bankSelected(value, index, colName) {
 
     if (colName == "bank") {
-      this.paymentValues.paymentData[index].bank = value.label;
+      this.paymentValues.paymentData[index].bank = value.name;
     }
-    this.billBanks.push({ name: value.label });
+    this.billBanks.push({ name: value.name });
   }
 
   tableChange(event) {

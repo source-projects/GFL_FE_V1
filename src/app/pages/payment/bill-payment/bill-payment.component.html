@@ -376,7 +376,7 @@
                             <ngx-datatable-column name="Type" prop="payType" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
 
-                                    <ng-select #data (change)="typeSelected(rowIndex,row)" #payType1="ngModel"
+                                    <ng-select #data (change)="typeSelected(rowIndex)" #payType1="ngModel"
                                         name='payType{{rowIndex}}' class="tableForm" id="payType"
                                         [(ngModel)]="row.payTypeId" required
                                         (keyup)="onKeyUp($event,rowIndex,0,'payType')"
@@ -436,7 +436,7 @@
                                         [id]="'paymentDetailsList'+rowIndex+'-bank'"
                                         (change)="bankSelected($event,rowIndex,'bank')">
 
-                                        <ng-option *ngFor="let bank of billBanks" [value]="bank.name">
+                                        <ng-option *ngFor="let bank of billBanks" [value]="bank">
                                             {{bank.name}}
                                         </ng-option>
                                     </ng-select>
@@ -458,7 +458,7 @@
 
                                     <div class="col-md-12">
                                         <div class="toal-finish-mtr">
-                                            Amount Paid: {{paymentValues.amtPaid}}
+                                            Current Total: {{totalCurrentPayment}}
                                         </div>
                                     </div>
                                 </ng-template>
@@ -493,12 +493,12 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="form-group center-txt-title">
-                                        <label>Current Payment Total:</label>
+                                        <label>Amount Paid:</label>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group center-txt-title">
-                                        {{totalCurrentPayment}}
+                                        {{paymentValues.amtPaid}}
                                     </div>
                                 </div>
                             </div>
