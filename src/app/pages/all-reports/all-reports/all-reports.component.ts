@@ -203,6 +203,11 @@ export class AllReportsComponent implements OnInit {
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
+
+              if(this.reportName == 'Fabric In Detailed downloadBase64'){
+                this.onClickDownloadPdf(this.shortReport)
+              }
+             
               // if (this.shortReport && this.shortReport.length) {
               //   let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
               //     this.copyHeaderKeys = Object.keys(this.shortReport[0]);
@@ -231,6 +236,30 @@ export class AllReportsComponent implements OnInit {
         );
     }
 
+  }
+
+  downloadPdf(base64String, fileName) {
+    const source = `data:application/pdf;base64,${base64String}`;
+    const link = document.createElement("a");
+    link.href = source;
+    link.download = `${fileName}.pdf`
+    link.click();
+  }
+  onClickDownloadPdf(string){
+    let base64String = string;
+    this.downloadPdf(base64String,"sample");
+  }
+
+  downloadXLS(base64String, fileName) {
+    const source = `data:application/xlsx;base64,${base64String}`;
+    const link = document.createElement("a");
+    link.href = source;
+    link.download = `${fileName}.xlsx`
+    link.click();
+  }
+  onClickDownloadXLS(string,fileName){
+    let base64String = string;
+    this.downloadXLS(base64String,fileName);
   }
 
   printReport(form) {
@@ -280,12 +309,20 @@ export class AllReportsComponent implements OnInit {
             (data) => {
               if (data["success"]) {
                 let excelData = data["data"];
-                this.headers = Object.keys(excelData[0]);
-                this.formSubmitted = false;
-                this.headers.forEach(ele => {
-                  ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
-                });
-                this.exportService.exportExcel(excelData, this.reportName, this.headers)
+
+                if(this.reportName == "Payment OutStanding MasterWise"){
+                  this.onClickDownloadXLS(excelData,"Payment OutStanding MasterWise");
+                } else if(this.reportName == "Payment OutStanding Bill Wise"){
+                  this.onClickDownloadXLS(excelData,"Payment OutStanding Bill Wise");
+                } else{
+                  this.headers = Object.keys(excelData[0]);
+                  this.formSubmitted = false;
+                  this.headers.forEach(ele => {
+                    ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
+                  });
+                  this.exportService.exportExcel(excelData, this.reportName, this.headers)
+                }
+                
               }
             },
             (error) => { }

@@ -41,8 +41,8 @@ export class AdvancePayList {
     id: Number;
 }
 export class PaymentData {
-    chequeDate;
-    chequeNo: string;
+    paymentDate;
+    no: string;
     chequeStatus: string;
     controlId: Number;
     id: Number;
@@ -52,8 +52,8 @@ export class PaymentData {
     bank;
 
     constructor() {
-        this.chequeDate = null;
-        this.chequeNo = '';
+        this.paymentDate = null;
+        this.no = '';
         this.chequeStatus = '';
         this.remark = '';
         this.bank = null;

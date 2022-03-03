@@ -1206,7 +1206,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .toal-finish-mtr {
   color: #5e5b5e;
-  font-size: 13px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .table-input-width tr td input {

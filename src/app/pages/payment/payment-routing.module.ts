@@ -15,6 +15,13 @@ const routes: Routes = [
     
   },
   {
+    path: 'edit/:id',
+    component: BillPaymentComponent,
+    canActivate: [PaymentGuard],
+    canLoad: [PaymentGuard],
+    data: { PermissionName: ['edit','edit group','edit all']}
+  },
+  {
     path: 'advance-payment',
     component: AdvancePaymentComponent,
     canActivate:[PaymentGuard],
