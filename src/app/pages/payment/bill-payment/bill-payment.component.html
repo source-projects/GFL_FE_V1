@@ -321,7 +321,7 @@
                         <div class="form-group">
                             <label>Advance Payments:</label>
                             <ngx-datatable [rows]="advancePaymentList" class="material" [headerHeight]="31"
-                                [footerHeight]="31" [selectionType]="'checkbox'"
+                                [footerHeight]="31" [selectionType]="'checkbox'" [selected]="advanceSelected"
                                 (select)="advancePaymentSelected($event)">
                                 <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true"
                                     [checkboxable]="true" [width]="5">
@@ -406,23 +406,23 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Date" prop="chequeDate" [sortable]="false" [width]="300">
+                            <ngx-datatable-column name="Date" prop="paymentDate" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" #chequeDate1="ngModel"
-                                        name='chequeDate{{rowIndex}}' placeholder="MM-DD-YYYY" [(ngModel)]="row.chequeDate"
+                                        name='paymentDate{{rowIndex}}' placeholder="MM-DD-YYYY" [(ngModel)]="row.paymentDate"
                                         [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
-                                        (keyup)="onKeyUp($event,rowIndex,2,'chequeDate')"
-                                        [id]="'paymentDetailsList'+rowIndex+'-chequeDate'">
+                                        (keyup)="onKeyUp($event,rowIndex,2,'paymentDate')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-paymentDate'">
                                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Cheque No." prop="chequeNo" [sortable]="false" [width]="300">
+                            <ngx-datatable-column name="Cheque No." prop="no" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" type="text" #chequeNo1="ngModel"
-                                        name='chequeNo{{rowIndex}}' [(ngModel)]="row.chequeNo"
-                                        (keyup)="onKeyUp($event,rowIndex,3,'chequeNo')"
-                                        [id]="'paymentDetailsList'+rowIndex+'-chequeNo'">
+                                        name='no{{rowIndex}}' [(ngModel)]="row.no"
+                                        (keyup)="onKeyUp($event,rowIndex,3,'no')"
+                                        [id]="'paymentDetailsList'+rowIndex+'-no'">
                                 </ng-template>
                             </ngx-datatable-column>
 

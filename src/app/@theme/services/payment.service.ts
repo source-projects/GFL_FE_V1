@@ -40,8 +40,8 @@ export class PaymentService {
   }
 
 
-  getPaymentDetailById(partyId) {
-    return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPaymentDetailById/" + partyId);
+  getPaymentDetailById(paymentId) {
+    return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getPaymentDetailById?paymentBunchId=" + paymentId);
 
   }
   savePayment(paymentData) {
