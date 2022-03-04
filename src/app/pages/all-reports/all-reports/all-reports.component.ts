@@ -15,6 +15,7 @@ import { QualityService } from '../../../@theme/services/quality.service';
 import { ReportService } from '../../../@theme/services/report.service';
 import { ShadeService } from '../../../@theme/services/shade.service';
 
+
 @Component({
   selector: 'ngx-all-reports',
   templateUrl: './all-reports.component.html',
