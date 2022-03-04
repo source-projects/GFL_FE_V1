@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node 12.x
+      - name: Use Node 14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
@@ -20,7 +20,7 @@ jobs:
           npm install
           npm run build
           #npm run build --prod --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer
-          ls -l    
+        
           
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
