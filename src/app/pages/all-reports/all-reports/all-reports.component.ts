@@ -247,6 +247,7 @@ export class AllReportsComponent implements OnInit {
 
     // var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,' +
     //   'resizable,screenX=50,screenY=50,width=850,height=1050';
+    
 
     var htmlPop = '<embed width=100% height=100%'
       + ' type="application/pdf"'
