@@ -17,6 +17,7 @@ jobs:
           node-version: 'v14.x'
       - name: Install dependencies
         run: |
+          rm -rf node_modules
           npm install
           npm run build
           #npm run build --prod --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer
