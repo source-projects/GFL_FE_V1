@@ -514,21 +514,41 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
 
     if (valid) {
-      this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
-        data => {
-          if (data['success']) {
-            this.route.navigate(["/pages/payment/bill-payment"]);
-            this.reset(paymentForm);
-            this.toastr.success(errorData.Add_Success);
+
+      if (!this.currentPaymentId) {
+        this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
+          data => {
+            if (data['success']) {
+              this.route.navigate(["/pages/payment/bill-payment"]);
+              this.reset(paymentForm);
+              this.toastr.success(errorData.Add_Success);
+            }
+            else {
+              this.toastr.error(errorData.Add_Error)
+            }
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error)
           }
-          else {
-            this.toastr.error(errorData.Add_Error)
+        )
+      }
+      else {
+        this.paymentService.updatePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
+          data => {
+            if (data['success']) {
+              this.route.navigate(["/pages/payment/bill-payment"]);
+              this.reset(paymentForm);
+              this.toastr.success(errorData.Update_Success);
+            }
+            else {
+              this.toastr.error(errorData.Update_Error)
+            }
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error)
           }
-        },
-        error => {
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
+        )
+      }
     }
   }
 
