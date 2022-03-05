@@ -458,9 +458,10 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
             parentDataIndex
           ].dyeingSlipItemData.push(obj);
           let interval = setInterval(() => {
-            let field = document.getElementById(this.index);
+            let field = document.getElementById(this.index) as any;;
             if (field != null) {
               field.focus();
+              field.select();
               clearInterval(interval);
             }
           }, 10);
@@ -471,9 +472,10 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
         this.index =
           "itemList" + parentDataIndex + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
           }
         }, 10);
@@ -491,9 +493,10 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
           let obj = new DyeingChemicalData();
           this.itemList.push(obj);
           let interval = setInterval(() => {
-            let field = document.getElementById(this.index);
+            let field = document.getElementById(this.index) as any;;
             if (field != null) {
               field.focus();
+              field.select();
               clearInterval(interval);
             }
           }, 10);
@@ -503,9 +506,10 @@ export class PlanningSlipComponent implements OnInit, OnDestroy {
       } else {
         this.index = "itemList" + (rowIndex + 1) + "-" + colIndex;
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
           }
         }, 10);
