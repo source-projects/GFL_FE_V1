@@ -406,9 +406,10 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         this.stockDataValues[idx].batchMW = [...this.stockDataValues[idx].batchMW,]
         this.ckd.detectChanges();
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
           }
           let objDiv = document.querySelectorAll('.datatable-body');
@@ -418,9 +419,10 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         }, 10);
       } else {
         let interval = setInterval(() => {
-          let field = document.getElementById(this.index);
+          let field = document.getElementById(this.index) as any;
           if (field != null) {
             field.focus();
+            field.select();
             clearInterval(interval);
           }
         }, 10);
