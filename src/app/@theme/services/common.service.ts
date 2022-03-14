@@ -60,7 +60,7 @@ export class CommonService {
     }
 
 
-    return url;
+    return 'https://api.dyeingerp.gloryautotech.com/';
 
   }
 

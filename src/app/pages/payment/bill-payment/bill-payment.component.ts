@@ -109,12 +109,37 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
           console.log(this.selected);
 
           if (this.paymentValues.advancePayList && this.paymentValues.advancePayList.length) {
-
+            
             this.paymentValues.advancePayList.forEach(ele => {
               this.advanceSelected.push(this.advancePaymentList.find(a => a.id == ele.id));
             });
           }
+          let event = {
+            selected:[]
+          }
+          this.advanceSelected.forEach(element => {
+            event.selected.push(element);
+          })
+          this.advancePaymentSelected(event);
+          this.totalInvoice = 0;
+          this.gstAmount = 0;
+          this.netAmount = 0;
+          this.taxAmount = 0;
+          this.selected.forEach(element => {
+            this.totalInvoice = this.totalInvoice + element.netAmt;
+            this.gstAmount = this.gstAmount + element.cgst + element.sgst;
+            this.taxAmount = this.taxAmount + element.taxAmt;
+          });
+          this.paymentValues.totalBill = this.totalInvoice;
+          this.paymentValues.gstAmt = this.gstAmount;
+          this.paymentValues.amtToPay = this.paymentValues.totalBill;
+          this.paymentValues.taxAmt = this.taxAmount;
+          this.paymentValues.tdsAmt = (this.paymentValues.taxAmt * 2) / 100;
+          this.paymentValues.amtToPay = Math.ceil(this.paymentValues.amtToPay - this.paymentValues.tdsAmt);
           console.log(this.advanceSelected);
+          this.paymentValues.paymentData.forEach((element, index) => {
+            this.currentPaymentAdded('', index, element.payAmt);
+          });
           this.loading = false;
         } else {
           this.loading = false;
@@ -386,7 +411,11 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeItem(id) {
+  removeItem(id,row?) {
+    console.log(row)
+    if(row){
+      this.totalCurrentPayment = this.totalCurrentPayment - row.payAmt;
+    }
     //remove row
     let idCount = this.paymentValues.paymentData.length;
     let item = this.paymentValues.paymentData;
@@ -406,8 +435,10 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
   }
 
   amountObj = {};
-  currentPaymentAdded(event, index) {
-    let curPay = Number(event.target.value);
+  currentPaymentAdded(event, index, amt?) {
+    let curPay
+    amt ? curPay = amt :
+      curPay = Number(event.target.value);
     this.amountObj[index] = {
       curPay
     }
@@ -514,21 +545,41 @@ export class BillPaymentComponent implements OnInit, OnDestroy {
 
 
     if (valid) {
-      this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
-        data => {
-          if (data['success']) {
-            this.route.navigate(["/pages/payment/bill-payment"]);
-            this.reset(paymentForm);
-            this.toastr.success(errorData.Add_Success);
+
+      if (!this.currentPaymentId) {
+        this.paymentService.savePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
+          data => {
+            if (data['success']) {
+              this.route.navigate(["/pages/payment/bill-payment"]);
+              this.reset(paymentForm);
+              this.toastr.success(errorData.Add_Success);
+            }
+            else {
+              this.toastr.error(errorData.Add_Error)
+            }
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error)
           }
-          else {
-            this.toastr.error(errorData.Add_Error)
+        )
+      }
+      else {
+        this.paymentService.updatePayment(this.paymentValues).pipe(takeUntil(this.destroy$)).subscribe(
+          data => {
+            if (data['success']) {
+              this.route.navigate(["/pages/payment/bill-payment"]);
+              this.reset(paymentForm);
+              this.toastr.success(errorData.Update_Success);
+            }
+            else {
+              this.toastr.error(errorData.Update_Error)
+            }
+          },
+          error => {
+            this.toastr.error(errorData.Serever_Error)
           }
-        },
-        error => {
-          this.toastr.error(errorData.Serever_Error)
-        }
-      )
+        )
+      }
     }
   }
 
