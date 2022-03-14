@@ -66,16 +66,17 @@
                         <div class="form-group">
                             <label>Pending Invoices:</label>
                             <ngx-datatable style="height: 425px !important;
-                            overflow-y: auto;" [rows]="invoiceList" class="material" [headerHeight]="31" [footerHeight]="31"
-                                [selectionType]="'checkbox'" [selected]="selected" (select)="invoiceSelected($event)">
+                            overflow-y: auto;" [rows]="invoiceList" class="material" [headerHeight]="31"
+                                [footerHeight]="31" [selectionType]="'checkbox'" [selected]="selected"
+                                (select)="invoiceSelected($event)">
                                 <ngx-datatable-column name="Action" sortable="false" [headerCheckboxable]="true"
                                     [checkboxable]="true">
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Sr. No" sortable="false">
                                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
-                                    let-rowIndex="rowIndex">
-                                   <span>{{rowIndex + 1}}</span>
-                                </ng-template>
+                                        let-rowIndex="rowIndex">
+                                        <span>{{rowIndex + 1}}</span>
+                                    </ng-template>
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Invoice No" prop="invoicNo">
                                 </ngx-datatable-column>
@@ -369,7 +370,7 @@
                                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template
                                     let-rowIndex="rowIndex">
                                     <nb-icon icon="trash" status="danger" [options]="{ animation: { type: 'zoom' } }"
-                                        (click)="removeItem(rowIndex)"></nb-icon>
+                                        (click)="removeItem(rowIndex,row)"></nb-icon>
                                 </ng-template>
                             </ngx-datatable-column>
 
@@ -409,8 +410,8 @@
                             <ngx-datatable-column name="Date" prop="paymentDate" [sortable]="false" [width]="300">
                                 <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
                                     <input class="tableForm line-height-subtable" #chequeDate1="ngModel"
-                                        name='paymentDate{{rowIndex}}' placeholder="MM-DD-YYYY" [(ngModel)]="row.paymentDate"
-                                        [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+                                        name='paymentDate{{rowIndex}}' placeholder="MM-DD-YYYY"
+                                        [(ngModel)]="row.paymentDate" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
                                         (keyup)="onKeyUp($event,rowIndex,2,'paymentDate')"
                                         [id]="'paymentDetailsList'+rowIndex+'-paymentDate'">
                                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -519,6 +520,9 @@
                         <button *ngIf="this.currentPaymentId == null" type="button"
                             class="btn btn-primary btn-sm btn-design-save button-base ripple"
                             (click)="onAddPayment(paymentForm)">SAVE</button>
+                        <button *ngIf="this.currentPaymentId != null" type="button"
+                            class="btn btn-primary btn-sm btn-design-save button-base ripple"
+                            (click)="onAddPayment(paymentForm)">UPDATE</button>
                     </div>
 
                 </div>

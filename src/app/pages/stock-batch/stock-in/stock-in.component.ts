@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sortBy } from 'lodash';
 import { Subject } from 'rxjs';
@@ -563,25 +563,40 @@ export class StockInComponent implements OnInit, OnDestroy {
   count = 0;
   prevIndex = null;
   newIndex = null;
-  onRecodCheckboxChangeFilter(e, data,value,row) {
+  onRecodCheckboxChangeFilter(e, data, value, row,tableIndex) {
 
-    if(this.count == 1){
-      data.checked = data.filter;
-      data.filter = false;
-      value.batchMW.forEach(element => {
-        element['filter'] = false;
-      });
+    if (this.count == 1) {
 
-     for(let i = this.prevIndex ; i <= row ; i++){
-       value.batchMW[i].checked = true;
-       this.checkedChallanList.push(value.batchMW[i]);
-     }
+      if(this.prevIndex < row){
+
+        for (let i = this.prevIndex; i <= row; i++) {
+          value.batchMW[i].checked = true;
+          value.batchMW[i].filter = false;
+          this.checkedChallanList.push(value.batchMW[i]);
+        }
+      } else if(this.prevIndex > row){
+
+        for (let i = row; i <= this.prevIndex; i++) {
+          value.batchMW[i].checked = true;
+          value.batchMW[i].filter = false;
+          this.checkedChallanList.push(value.batchMW[i]);
+        }
+      }
+
+      const ele = document.getElementById("filterRecordCheckbox-" + tableIndex + "-" + row);
+      if(ele){
+        ele['checked'] = false;
+      }
+
       this.count = 0;
-    } else{
-      data.checked = data.filter;
+      this.prevIndex = null;
+      this.cdr.detectChanges();
+    } else {
+      data.checked = true;
       this.count++;
       this.prevIndex = row;
     }
+
     this.cdr.detectChanges();
   }
 }

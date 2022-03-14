@@ -48,6 +48,9 @@ export class PaymentService {
     return this.httpClient.post(this.commonService.envUrl() + "api/paymentTerm/", paymentData);
 
   }
+  updatePayment(paymentData) {
+    return this.httpClient.put(this.commonService.envUrl() + "api/paymentTerm/update", paymentData);
+  }
 
   getAllPayment() {
     return this.httpClient.get(this.commonService.envUrl() + "api/paymentTerm/getAllPayment");
