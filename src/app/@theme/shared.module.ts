@@ -118,7 +118,7 @@ const NB_MODULES = [
       showBackground: false,
       startFromZero: false,
     }),
-    NgxDropzoneModule,
+    // NgxDropzoneModule,
   ],
 
   exports: [
@@ -132,7 +132,7 @@ const NB_MODULES = [
     NgxQRCodeModule,
     SliderModule,
     NgCircleProgressModule,
-    NgxDropzoneModule,
+    // NgxDropzoneModule,
     // NgQrScannerModule,
     //  NgQRCodeReaderModule,
     //   ZXingScannerModule,
