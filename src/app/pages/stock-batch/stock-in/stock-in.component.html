@@ -28,19 +28,19 @@
                                         <table style="margin-top: 15px" class="table table-responsive table-striped">
                                             <thead>
                                                 <tr>
-                                                    <td style="font-size: 20px;font-weight: bold;text-align: center;">Sr
+                                                    <td style="font-size: 12px;font-weight: bold;text-align: center;">Sr
                                                         No.
                                                         <input style="height: 20px;width: 20px;" type="checkbox"
                                                             name="allCheckbox{{i}}" id="recordCheckbox{{i}}"
                                                             [(ngModel)]="value.allChecked"
                                                             (change)="allRecordChecked($event,i);$event.stopPropagation()">
                                                     </td>
-                                                    <td style="font-size: 20px;font-weight: bold;text-align: center;">
+                                                    <td style="font-size: 15px;font-weight: bold;text-align: center;">
                                                         Mtr</td>
-                                                    <td style="font-size: 20px;font-weight: bold;text-align: center;">
+                                                    <td style="font-size: 15px;font-weight: bold;text-align: center;">
                                                         Wt</td>
-                                                    <!-- <td style="font-size: 20px;font-weight: bold;text-align: center;width: 45px;">
-                                                        ...</td> -->
+                                                    <td style="font-size: 20px;font-weight: bold;text-align: center;width: 45px;">
+                                                        ...</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -72,12 +72,12 @@
                                                             {{data.wt}}
                                                         </div>
                                                     </td>
-                                                    <!-- <td style="width: 45px;">
+                                                    <td style="width: 45px;">
                                                         <input style="height: 20px;width: 20px;" type="checkbox"
                                                             name="filterRecordCheckbox-{{i}}-{{rowIndex}}"
                                                             id="filterRecordCheckbox-{{i}}-{{rowIndex}}" [disabled]="data.color !== ''" [(ngModel)]="data.filter"
-                                                            (change)="onRecodCheckboxChangeFilter($event,data,value,rowIndex)">
-                                                    </td> -->
+                                                            (change)="onRecodCheckboxChangeFilter($event,data,value,rowIndex,i)">
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -99,7 +99,7 @@
                                                             '1.2-2'}}
                                                         </div>
                                                     </td>
-                                                    <!-- <td style="width: 45px;"></td> -->
+                                                    <td style="width: 45px;"></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
