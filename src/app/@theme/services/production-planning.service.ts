@@ -32,30 +32,30 @@ export class ProductionPlanningService {
   getAllPlannedProductionList(): any {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/productionPlan/allProductionWithoutFilter"
+      "api/productionPlan/allProductionWithoutFilter"
     );
   }
 
-  getAllBatchListForProdV1(data: RequestData, isProd): Observable<any>{
+  getAllBatchListForProdV1(data: RequestData, isProd): Observable<any> {
     return this.httpClient.post(
       this.commonService.envUrl() +
-        "api/stockBatch/batch/allPaginated/"+isProd, data
+      "api/stockBatch/batch/allPaginated/" + isProd, data
     );
   }
 
-  getAllBatchForProd(data: RequestData): Observable<any>{
+  getAllBatchForProd(data: RequestData): Observable<any> {
     return this.httpClient.post(
       this.commonService.envUrl() +
-        "api/productionPlan/allPaginated", data
+      "api/productionPlan/allPaginated", data
     );
   }
   getWeightByStockIdAndBatchId(id, id1): any {
     return this.httpClient.get(
       this.commonService.envUrl() +
-        "api/stockBatch/getWtByStockIdAndBatchId/" +
-        id +
-        "/" +
-        id1
+      "api/stockBatch/getWtByStockIdAndBatchId/" +
+      id +
+      "/" +
+      id1
     );
   }
 
@@ -65,15 +65,20 @@ export class ProductionPlanningService {
     );
   }
 
-  updateProductionPlan(productionData){
+  updateProductionPlan(productionData) {
     return this.httpClient.put(
       this.commonService.envUrl() + "api/updateProductionPlan/", productionData
     );
   }
 
-  writeModBust(id){
+  writeModBust(id) {
     return this.httpClient.get(
       this.commonService.plcUrl() + "api/hmi/get/latest/" + id
     );
+  }
+
+  validateUniqueShadeNo(shadeNo) {
+    return this.httpClient.get(
+      this.commonService.envUrl() + "api/shade/getShadeByFactoryShadeNo?factoryShadeNo=" + shadeNo);
   }
 }

@@ -1,5 +1,5 @@
 <div *ngIf="!editDyeingSlipFlag">
-    
+
     <div class="modal-header nb-header">
         <h4 class="modal-title nb-text">Choose Shade</h4>
         <button class="close btn-foucs-none" aria-label="Close" (click)="activeModal.close(false)">
@@ -12,106 +12,106 @@
                 <div class="jus-con-flex-start">
                     <div class="col-md-5 col-12 pd-0">
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0">
                                 <label>Party Name</label>
                             </div>
-                        
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.partyName}}</h6>
                             </div>
-    
-    
-    
-    
+
+
+
+
                         </div>
-    
+
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0 text-Left">
                                 <label>Quality Name</label>
                             </div>
-    
-                           
+
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityName}}</h6>
                             </div>
-    
-    
-    
+
+
+
                         </div>
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class=" batch-p-color label-0 text-Left">
                                 <label>Quality Id</label>
                             </div>
-    
-                           
+
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.qualityId}}</h6>
                             </div>
-    
-    
-    
+
+
+
                         </div>
-    
+
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0 text-Left">
                                 <label>Process Name</label>
                             </div>
-    
-    
+
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.processName}}</h6>
                             </div>
-    
-    
-    
+
+
+
                         </div>
-    
+
                     </div>
                     <div class="col-md-4 col-12 pd-0">
-    
+
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0 text-Left">
                                 <label>Party Shade No.</label>
                             </div>
-    
-    
+
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.partyShadeNo}}</h6>
                             </div>
-    
-    
-    
+
+
+
                         </div>
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0 text-Left">
                                 <label>Lot Weight</label>
                             </div>
-    
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.totalWt}}</h6>
                             </div>
-    
-    
+
+
                         </div>
                         <div class="display-flex mr-0">
-    
-    
+
+
                             <div class="batch-p-color label-0 text-Left">
                                 <label>Lot Meter</label>
                             </div>
-    
+
                             <div class="party-name-text text-center">
                                 <h6 class="production-plan-text">{{productionBatchDetail.totalMtr}}</h6>
                             </div>
@@ -120,10 +120,10 @@
                 </div>
             </div>
         </div>
-        <label class="required mt-3" >Shade</label>
+        <label class="required mt-3">Shade</label>
         <ng-select name="shadeId" [(ngModel)]='shadeId' (change)="showJetList($event)" required #shadeId1="ngModel"
             [ngClass]="{'is-invalid': (shadeId1.invalid)&&(formSubmitted || shadeId1.touched)}"
-            placeholder="Select Shade" class="required-error-dropdown">
+            placeholder="Select Shade" class="required-error-dropdown" [disabled]="uniqueShadeFlag">
             <ng-option disabled="true">
                 <div class="row">
                     <div class="col-md-3 col-3">
@@ -168,6 +168,20 @@
             *ngIf="(formSubmitted && shadeId1.invalid) || (shadeId1.invalid && shadeId1.touched)">
             <span>Shade Id is required</span>
         </div>
+
+        <div class="w-100 mt-3 ml-2 fw-500">
+            <span>OR</span>
+        </div>
+        <div class="d-flex w-100">
+            <div class="w-100">
+                <label class="mt-3">Unique Shade No</label>
+                <input type="text" #batchFilter1="ngModel" class="form-control size-small" fieldsize="small" nbinput
+                    (blur)="validateUniqueShadeNo()" name="uniqueShade" [(ngModel)]="uniqueShadeNo" required
+                    placeholder="Enter Unique Shade" style="max-width: 50% !important" />
+            </div>
+            <input *ngIf="uniqueShadeColor" [(colorPicker)]="uniqueShadeColor" [style.background]="uniqueShadeColor"
+                [value]="uniqueShadeColor" disabled="true" class="width-100" />
+        </div>
     </div>
     <div *ngIf="showJetListFlag && !fromJetComp" class="modal-body mb-4">
         <div class="form-group">
@@ -186,10 +200,11 @@
                 <div class="form-group mb-0">
                     <div cdkDropList [cdkDropListData]="selectedJetData" cdkDropListOrientation="horizontal"
                         class="example-list main-table-drag jet-plan">
-                        <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag 
-                        [style.background]="jetData.colorTone?jetData.colorTone:'#ffffff'" [style.color]="jetData.colorTone?'#ffffff':'#000000'">
-                            <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click"
-                                class="btn-bg-color" [style.color]="jetData.colorTone?'#ffffff':'#000000'">
+                        <div class="example-box trans-box-drop jet-box" *ngFor="let jetData of selectedJetData" cdkDrag
+                            [style.background]="jetData.colorTone?jetData.colorTone:'#ffffff'"
+                            [style.color]="jetData.colorTone?'#ffffff':'#000000'">
+                            <button nbContextMenuTag="my-context-menu" nbContextMenuTrigger="click" class="btn-bg-color"
+                                [style.color]="jetData.colorTone?'#ffffff':'#000000'">
                                 {{jetData.batchId}}
                             </button>
                         </div>
@@ -203,7 +218,8 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="onOkClick()">Ok</button>
 
-        <button type="button" class="btn btn-primary btn-sm btn-design-save" (click)="activeModal.close(false);">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm btn-design-save"
+            (click)="activeModal.close(false);">Cancel</button>
     </div>
 
 </div>
