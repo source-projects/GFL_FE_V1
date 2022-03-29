@@ -1,6 +1,7 @@
 export class Shade {
   pending: Boolean;
   partyShadeNo: string;
+  factoryShadeNo:string;
   processName: string;
   qualityId: string;
   qualityEntryId: number;
@@ -26,6 +27,7 @@ export class Shade {
   constructor() {
     this.pending = false;
     this.partyShadeNo = null;
+    this.factoryShadeNo = null;
     this.isExtraRate = false;
     this.extraRate = 0;
     this.id = null;
