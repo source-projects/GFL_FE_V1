@@ -102,7 +102,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
   totalMeters = 0;
   totalWeights = 0;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -245,8 +245,8 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
               this.weightFlag = false;
             }
             this.wtPer100mtrCopy = element.wtPer100m;
-            if(this.addFlag)
-            this.stockBatch.wtPer100m = element.wtPer100m;
+            if (this.addFlag)
+              this.stockBatch.wtPer100m = element.wtPer100m;
           }
         });
 
@@ -329,7 +329,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       this.qualityList.forEach((element) => {
         if (element.id == this.stockBatch.qualityId) {
           this.wtPer100mtrCopy = element.wtPer100m;
-          if(this.addFlag)
+          if (this.addFlag)
             this.stockBatch.wtPer100m = element.wtPer100m;
           this.stockBatch.unit = element.unit;
           if (this.stockBatch.unit === "weight") {
@@ -413,9 +413,9 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
             clearInterval(interval);
           }
           let objDiv = document.querySelectorAll('.datatable-body');
-          if(objDiv && objDiv.length){
+          if (objDiv && objDiv.length) {
             objDiv[idx].scrollTop = objDiv[idx].scrollHeight;
-          }          
+          }
         }, 10);
       } else {
         let interval = setInterval(() => {
@@ -472,21 +472,21 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         let nextBatchId = itemList[itemList.length - 1].batchId;
         //call update sequence api.....
         this.wtArray = [];
-            this.mtArray = [];
-            this.stockDataValues.push({ ...ob });
-            const className = "collapsible-panel--expanded";
-            if (e.target.classList.contains(className)) {
-              e.target.classList.remove(className);
-            } else {
-              e.target.classList.add(className);
-            }
+        this.mtArray = [];
+        this.stockDataValues.push({ ...ob });
+        const className = "collapsible-panel--expanded";
+        if (e.target.classList.contains(className)) {
+          e.target.classList.remove(className);
+        } else {
+          e.target.classList.add(className);
+        }
         // this.stockBatchService.getBatchSequence(true).pipe(takeUntil(this.destroy$)).subscribe((data) => {
         //   if (data["success"]) {
         //     ob.batchId = data["data"].sequence;
         //     if (ob.batchId < this.currentBatchSequence) {
         //       ob.batchId = this.currentBatchSequence;
         //     }
-            
+
         //   }
         // });
       }
@@ -522,7 +522,7 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         Number(this.totalMtr).toFixed(2)
       );
       this.stockDataValues[i].totalWt = Number(Number(this.totalWt).toFixed(2));
-    
+
     } else {
       this.MtWtIndex = i;
       this.weight[j] = {
@@ -537,14 +537,6 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         Number(this.totalWt).toFixed(2)
       );
     }
-    this.totalGrs = 0;
-      this.totalMeters = 0;
-      this.totalWeights = 0;
-      this.stockDataValues.forEach(element => {
-        this.totalMeters += element.totalMt;
-        this.totalWeights += element.totalWt;
-        this.totalGrs += element.batchMW.length;
-      });
   }
   calculateTotalMtrWt(MW, batchCard?): any {
     this.totalWt = 0;
@@ -598,13 +590,13 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
       );
     }
     this.totalGrs = 0;
-      this.totalMeters = 0;
-      this.totalWeights = 0;
-      this.stockDataValues.forEach(element => {
-        this.totalMeters += element.totalMt;
-        this.totalWeights += element.totalWt;
-        this.totalGrs += element.batchMW.length;
-      });
+    this.totalMeters = 0;
+    this.totalWeights = 0;
+    this.stockDataValues.forEach(element => {
+      this.totalMeters += element.totalMt;
+      this.totalWeights += element.totalWt;
+      this.totalGrs += element.batchMW.length;
+    });
   }
 
   checkValidation(myForm) {
@@ -696,25 +688,25 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     this.stockBatch.stockInType = "Fabric";
   }
 
-  checkPChallanUniq(i){
+  checkPChallanUniq(i) {
     let checked = false;
     this.stockDataValues.forEach((element, index) => {
-      if(index != i && this.stockDataValues[i].pchallanRef == element.pchallanRef){
+      if (index != i && this.stockDataValues[i].pchallanRef == element.pchallanRef) {
         this.stockDataValues[i].isNotUnique = true;
         checked = true;
       }
     });
-    if(!checked){
+    if (!checked) {
       this.stockBatchService.isPchallanExists(this.stockBatch.partyId, this.stockDataValues[i].pchallanRef).pipe(takeUntil(this.destroy$)).subscribe(
         res => {
-          if(res['success']){
+          if (res['success']) {
             this.stockDataValues[i].isNotUnique = res['data'];
           }
-        }, err=> {
-  
+        }, err => {
+
         }
       )
-    }    
+    }
   }
 
   addUpdateStockBatch(myForm, next?) {
@@ -761,62 +753,62 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
         }
       });
       this.stockBatch.batchData = this.stockBatchArray;
-        if (this.addFlag) {
-          this.stockBatchService.addPchallan(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.loading = false;
-                this.reset(myForm);
-                this.stockDataValues = [];
-                this.disableButton = false;
-                this.toastr.success(data["msg"]);
-                if (next) {
-                  //this.printJobCard(myForm, data["data"]);
-                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
-                }
-              } else {
-                this.loading = false;
-                this.disableButton = false;
-                this.stockBatchArray = [];
+      if (this.addFlag) {
+        this.stockBatchService.addPchallan(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.loading = false;
+              this.reset(myForm);
+              this.stockDataValues = [];
+              this.disableButton = false;
+              this.toastr.success(data["msg"]);
+              if (next) {
+                //this.printJobCard(myForm, data["data"]);
+                this.route.navigate(["/pages/stock-batch/stock-in"], { queryParams: { id: data['data'] } });
               }
-            },
-            (error) => {
+            } else {
               this.loading = false;
               this.disableButton = false;
               this.stockBatchArray = [];
             }
-          );
-        } else {
-          this.stockBatch.updatedBy = this.user.userId;
-          this.stockBatchService.updatePchallan(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
-            (data) => {
-              if (data["success"]) {
-                this.toastr.success(data["msg"]);
-                if (next) {
-                  // localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
-                  this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:data['data']}});
-                }else{
-                  this.route.navigate(["/pages/stock-batch"]);
-                }
-                
+          },
+          (error) => {
+            this.loading = false;
+            this.disableButton = false;
+            this.stockBatchArray = [];
+          }
+        );
+      } else {
+        this.stockBatch.updatedBy = this.user.userId;
+        this.stockBatchService.updatePchallan(this.stockBatch).pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(data["msg"]);
+              if (next) {
+                // localStorage.setItem('stockdata', JSON.stringify({batchData: this.stockDataValues, commonData: this.stockBatch}));
+                this.route.navigate(["/pages/stock-batch/stock-in"], { queryParams: { id: data['data'] } });
               } else {
-                this.disableButton = false;
-                this.stockBatchArray = [];
-                // this.toastr.error(data["msg"]);
+                this.route.navigate(["/pages/stock-batch"]);
               }
-              this.loading = false;
-            },
 
-            (error) => {
-              this.stockBatchArray = [];
-              this.toastr.error(errorData.Update_Error);
-              this.loading = false;
+            } else {
               this.disableButton = false;
-              this.loading = false;
+              this.stockBatchArray = [];
+              // this.toastr.error(data["msg"]);
             }
-          );
-          this.loading = false;
-        
+            this.loading = false;
+          },
+
+          (error) => {
+            this.stockBatchArray = [];
+            this.toastr.error(errorData.Update_Error);
+            this.loading = false;
+            this.disableButton = false;
+            this.loading = false;
+          }
+        );
+        this.loading = false;
+
       }
     } else {
       this.disableButton = false;
@@ -829,16 +821,16 @@ export class AddEditStockBatchComponent implements OnInit, OnDestroy {
     } else if (event === "job card") {
       this.selectedTableChange = null;
       const modalRef = this.modalService.open(InputBatchComponent)
-    } else if(event === "pending"){
+    } else if (event === "pending") {
       this.route.navigate(['/pages/stock-batch/pending'])
-    }else if(event == "report"){
+    } else if (event == "report") {
       this.route.navigate(["/pages/all-report"]);
     }
   }
 
-  gotoNextPage(){
-    if(this.currentStockBatchId){
-      this.route.navigate(["/pages/stock-batch/stock-in"], {queryParams: {id:this.currentStockBatchId}});
+  gotoNextPage() {
+    if (this.currentStockBatchId) {
+      this.route.navigate(["/pages/stock-batch/stock-in"], { queryParams: { id: this.currentStockBatchId } });
     }
   }
 

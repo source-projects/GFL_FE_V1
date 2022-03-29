@@ -151,7 +151,7 @@
                             <div class="col-md-3">
                                 <div class="nb-icon-add">
                                     <nb-icon icon="plus-circle" status="primary" [options]="{ animation: { type: 'zoom' }
-                                        }" (click)="addNew($event)" class="plus-add add-modal width-40
+                                        }" (click)="addNew()" class="plus-add add-modal width-40
                                         height-100"></nb-icon>
                                     <div class="tooltip">Add Process</div>
                                 </div>
@@ -308,7 +308,7 @@
                     <div class="col-md-12 mobile-btn-center text-btn-right">
                         <button class="btn btn-primary btn-sm btn-design-cancel" type="button"
                             (click)="activeModal.close(false)">CANCEL</button>
-                        <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData();"
+                        <button *ngIf="" type="button" (click)="saveClicked=true;saveSlipData(myForm);"
                             class="btn btn-primary btn-sm btn-design-save" [disabled]="disableButton">UPDATE</button>
 
                         <button type="button" class="btn btn-primary btn-sm

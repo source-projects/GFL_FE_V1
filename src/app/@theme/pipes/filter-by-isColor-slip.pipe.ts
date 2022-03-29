@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({ name: "filterByIsColor",pure:true })
 export class FilterByIsColorPipe implements PipeTransform {
-  transform(processList: any, color, flag:boolean) {
+  transform(processList: any, color, flag:any) {
     if (processList && processList.length && color==true) {
       if(flag == false){
         return processList = processList.filter(
@@ -15,7 +15,7 @@ export class FilterByIsColorPipe implements PipeTransform {
       else{
         return processList = processList.filter(
           a=> {
-            if(a.itemType == "Color"){
+            if(a.isColor == false){
               return true;
             }
           });

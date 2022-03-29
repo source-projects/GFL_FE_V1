@@ -71,6 +71,10 @@ export class ShadeService {
     return this.httpClient.get(`${this.commonService.envUrl()}api/shade/exist?shadeId=${id}&qualityEntryId=${qualityENtryId}&partyShadeNo=${partyShadeNo}`);
   }
 
+  factoryShadeNoCheck(id,factoryShadeNo){
+    return this.httpClient.get(`${this.commonService.envUrl()}api/shade/existWithFactoryShadeNo?shadeId=${id}&factoryShadeNo=${factoryShadeNo}`);
+  }
+
 
   getItemListFromQuality(qualityNameId){
     return this.httpClient.get(`${this.commonService.envUrl()}api/supplier/rates/byQualityNameId?qualityNameId=${qualityNameId}&type=color`);

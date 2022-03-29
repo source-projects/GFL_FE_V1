@@ -12,9 +12,13 @@ export class ProductionBatchDetail {
     qualityId: string;
     processName: string;
     partyShadeNo: string;
+    factoryShadeNo:string;
+    colorName:string;
+    colorTone:string;
     totalWt: string;
     totalMtr: string;
     batchId: string;
+    jetId:any;
   
     constructor() {
       this.partyName = "-";
@@ -25,5 +29,8 @@ export class ProductionBatchDetail {
       this.totalWt = "-";
       this.totalMtr = "-";
       this.batchId= "-";
+      this.factoryShadeNo = "-"
+      this.colorName = "-";
+      this.colorTone = "-";
     }
   }

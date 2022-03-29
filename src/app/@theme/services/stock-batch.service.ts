@@ -185,5 +185,11 @@ export class StockBatchService {
       this.commonService.envUrl() + "api/stockBatch/pending/forConslidateBatchResponse", data
     )
   }
+
+  updateGrFromSlip(data){
+    return this.httpClient.put(
+      this.commonService.envUrl() + "api/stockBatch/batch/updateBatch", data
+    )
+  }
   
 }

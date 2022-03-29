@@ -179,8 +179,11 @@
                     (blur)="validateUniqueShadeNo()" name="uniqueShade" [(ngModel)]="uniqueShadeNo" required
                     placeholder="Enter Unique Shade" style="max-width: 50% !important" />
             </div>
+
             <input *ngIf="uniqueShadeColor" [(colorPicker)]="uniqueShadeColor" [style.background]="uniqueShadeColor"
-                [value]="uniqueShadeColor" disabled="true" class="width-100" />
+                [value]="uniqueShadeName" disabled="true" class="width-100" style="color: white;text-align: center;" />
+
+
         </div>
     </div>
     <div *ngIf="showJetListFlag && !fromJetComp" class="modal-body mb-4">

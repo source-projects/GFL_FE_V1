@@ -38,7 +38,7 @@
         <div>
             <form #shadeForm="ngForm" (keydown.enter)="$event.preventDefault()">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="required">Party Name</label>
                             <ng-select placeholder="Select Party Name" name="partyName" partyName1="ngModel" [(ngModel)]="shadeObj.partyId" #partyName1="ngModel" required (change)="getQualityFromParty($event)" [ngClass]="{
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="required">Party Shade No</label>
                             <input type="text" class="form-control size-small" 
@@ -111,7 +111,20 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Factory Shade No</label>
+                            <input type="text" class="form-control size-small" 
+                            fieldsize="small" nbinput name="factoryShadeNo" [(ngModel)]="shadeObj.factoryShadeNo"
+                            placeholder="Factory Shade No" (change)="checkFactoryShadeNo()"/>
+
+                            <div class="input-required" *ngIf="factoryShadeNoExist">
+                                <span>Factory Shade No is already Exist </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="required">Process Name</label>
                             <ng-select aria-placeholder="Select process name" name="process_name" [(ngModel)]="shadeObj.processId" (change)="setProcessName(shadeObj.processId)" #processName1="ngModel" name="processName" required [ngClass]="{

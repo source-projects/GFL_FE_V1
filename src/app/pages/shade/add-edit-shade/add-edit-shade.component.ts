@@ -1,6 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -44,6 +45,7 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
   //Form Validation
   formSubmitted: boolean = false;
   partyShadeNoExist:boolean = false;
+  factoryShadeNoExist:boolean = false;
   index: any;
   //to Store UserId
   user: any;
@@ -86,7 +88,8 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
     private route: Router,
     public vcRef: ViewContainerRef,
     private toastr: ToastrService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cdr:ChangeDetectorRef
   ) {
     this.apcFlag = this.route.getCurrentNavigation().extras.state;
   }
@@ -773,6 +776,26 @@ export class AddEditShadeComponent implements OnInit, OnDestroy {
           (error) => { }
         );
     }
+
+  }
+
+  checkFactoryShadeNo(){
+    this.factoryShadeNoExist = false;
+    let id = 0;
+    if (this.shadeObj.factoryShadeNo) {
+      
+      if (this.currentShadeId) id = this.currentShadeId;
+      this.shadeService
+        .factoryShadeNoCheck(id,this.shadeObj.factoryShadeNo)
+        .pipe(takeUntil(this.destroy$)).subscribe(
+          (data) => {
+            this.factoryShadeNoExist = data["data"];
+          },
+          (error) => { }
+        );
+    }
+
+    this.cdr.detectChanges();
 
   }
 }

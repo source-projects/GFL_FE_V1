@@ -9,11 +9,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
  import { PlanningSlipComponent } from './planning-slip/planning-slip.component';
 import { SharedModule } from '../../@theme/shared.module';
 import { SlipFromJetComponent } from './slip-from-jet/slip-from-jet.component';
+import { NewSlipComponent } from './new-slip/new-slip.component';
 
 
 
 @NgModule({
-  declarations: [JetPlanningComponent,ShadeWithBatchComponent, PlanningSlipComponent, SlipFromJetComponent ],
+  declarations: [JetPlanningComponent, PlanningSlipComponent, SlipFromJetComponent, NewSlipComponent ],
   imports: [
     CommonModule,
     JetPlanningRoutingModule,
