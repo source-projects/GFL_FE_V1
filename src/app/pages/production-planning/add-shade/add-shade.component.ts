@@ -26,7 +26,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   @Input("editProductionPlanFlag") editProductionPlanFlag: boolean;
   @Input("jetid") jetid: number;
   @Input("productionId1") productionId1: number;
-  @Input("fromJetComp") fromJetComp:boolean = false;
+  @Input("fromJetComp") fromJetComp: boolean = false;
   @Output() action = new EventEmitter();
   @Output() addToJetClicked = new EventEmitter();
   shadeList: any[];
@@ -38,6 +38,9 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   productionList: any[] = [];
   jetList: any[] = [];
   productionId: any;
+  uniqueShadeNo: any;
+  uniqueShadeColor: any;
+  uniqueShadeFlag: boolean = false;
   addToJetFlag: boolean = false;
   public errorData: any = (errorData as any).default;
   public showJetListFlag: boolean = false;
@@ -47,7 +50,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   public selectedJetData: any = [];
 
   productionData = {
-    productionId:null,
+    productionId: null,
     batchId: null,
     partyId: null,
     qualityEntryId: null,
@@ -56,8 +59,8 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     jetId: 0,
   };
 
-  public destroy$ : Subject<void> = new Subject<void>();
-  ngOnDestroy(): void {
+  public destroy$: Subject<void> = new Subject<void>();
+  ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -69,7 +72,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     private productionPlanningService: ProductionPlanningService,
     private toastr: ToastrService,
     private jetPlanningService: JetPlanningService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.editDyeingSlipFlag) {
@@ -77,7 +80,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     } else {
       this.getShadeList();
       this.getAllJets();
-      if(this.editProductionPlanFlag){
+      if (this.editProductionPlanFlag) {
         this.showJetListFlag = true;
       }
     }
@@ -85,6 +88,34 @@ export class AddShadeComponent implements OnInit, OnDestroy {
 
   get activeModal() {
     return this._NgbActiveModal;
+  }
+
+  validateUniqueShadeNo() {
+    this.loading = true;
+    if (this.uniqueShadeNo) {
+      this.productionPlanningService.validateUniqueShadeNo(this.uniqueShadeNo).subscribe(
+        data => {
+          if (data['data']) {
+            this.uniqueShadeColor = data['data']['colorTone'];
+            this.uniqueShadeFlag = true;
+            this.loading = false;
+          } else {
+            this.uniqueShadeColor = '';
+            this.uniqueShadeNo=''
+            this.uniqueShadeFlag = false;
+            this.toastr.error(data['msg']);
+            this.loading = false;
+            
+          }
+        }, error => {
+          this.toastr.error(error.error.msg);
+          this.loading = false;
+        }
+      )
+    } else {
+      this.uniqueShadeFlag = false;
+      this.uniqueShadeColor = '';
+    }
   }
 
   public getShadeList() {
@@ -123,15 +154,15 @@ export class AddShadeComponent implements OnInit, OnDestroy {
     this.activeModal.close(this.approveBy);
   }
   onOkClick() {
-    if(this.productionId1)
-    this.productionData.productionId = this.productionId1;  
+    if (this.productionId1)
+      this.productionData.productionId = this.productionId1;
     this.productionData.batchId = this.batch;
     this.productionData.partyId = this.party;
     this.productionData.qualityEntryId = this.quality;
-    this.productionData.shadeId = this.shadeId;
+    this.productionData.shadeId = this.uniqueShadeNo ? this.uniqueShadeNo : this.shadeId;
     this.productionData.stockId = this.batchControl;
     if (this.jetid) this.productionData.jetId = this.jetid;
-    if (this.shadeId) {
+    if (this.shadeId || this.uniqueShadeNo) {
       this.productionPlanningService
         .saveProductionPlan(this.productionData)
         .pipe(takeUntil(this.destroy$)).subscribe(
@@ -169,7 +200,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
           this.jetList = data["data"];
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
