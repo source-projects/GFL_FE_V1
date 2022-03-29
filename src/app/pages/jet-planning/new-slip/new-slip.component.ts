@@ -165,7 +165,7 @@ export class NewSlipComponent implements OnInit {
 
               this.slipData.dyeingSlipDataList.forEach((element) => {
                 let list = element.dyeingSlipItemData.filter((element1) => {
-                  if(element1.isColor == false){
+                  if (element1.isColor == false) {
                     return true;
                   }
                 });
@@ -326,53 +326,16 @@ export class NewSlipComponent implements OnInit {
       } else {
         this.index = "grData" + (rowIndex + 1) + "-" + 0;
       }
-      if (rowIndex === this.batchDetail.batchDataList.length - 1) {
-        let item = this.batchDetail.batchDataList[rowIndex];
-        if (colName == "mtr") {
-          if (!item.mtr) {
-            this.toastr.error("Enter Meter", "Meter Field required");
-            return;
-          }
-        } else if (colName == "wt") {
-          if (!item.wt) {
-            this.toastr.error("Enter Weight", "Weight Field required");
-            return;
-          }
+
+      let interval = setInterval(() => {
+        let field = document.getElementById(this.index) as any;
+        if (field != null) {
+          field.focus();
+          field.select();
+          clearInterval(interval);
         }
-        let obj = {
-          id: null,
-          controlId: null,
-          mtr: null,
-          wt: null,
-          isProductionPlanned: false,
-        };
-        let list = this.batchDetail.batchDataList;
-        list.push({ ...obj });
-        this.batchDetail.batchDataList = [...list];
-        this.batchDetail.batchDataList = [...this.batchDetail.batchDataList,]
-        // this..detectChanges();
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index) as any;
-          if (field != null) {
-            field.focus();
-            field.select();
-            clearInterval(interval);
-          }
-          let objDiv = document.querySelectorAll('.datatable-body');
-          if (objDiv && objDiv.length) {
-            objDiv[idx].scrollTop = objDiv[idx].scrollHeight;
-          }
-        }, 10);
-      } else {
-        let interval = setInterval(() => {
-          let field = document.getElementById(this.index) as any;
-          if (field != null) {
-            field.focus();
-            field.select();
-            clearInterval(interval);
-          }
-        }, 10);
-      }
+      }, 10);
+
     } else {
       //count total mtr wt...
     }

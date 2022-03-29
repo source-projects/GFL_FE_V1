@@ -196,6 +196,7 @@
                                                         <ng-template let-row="row" ngx-datatable-cell-template
                                                             let-rowIndex="rowIndex">
                                                             <input class="tableForm" type="number" [(ngModel)]="row.mtr"
+                                                                (keyup)="onKeyUpForGR($event,rowIndex,0,'mtr')"
                                                                 [id]="'grData'+rowIndex+'-0'" #forFocus
                                                                 #meter1="ngModel" name="mtr{{rowIndex}}" required
                                                                 (input)="calculateWt(meter1.value,rowIndex,0);"
@@ -208,6 +209,7 @@
                                                         <ng-template let-row="row" ngx-datatable-cell-template
                                                             let-rowIndex="rowIndex">
                                                             <input class="tableForm" type="number" #weight1="ngModel"
+                                                                (keyup)="onKeyUpForGR($event,rowIndex,1,'wt')"
                                                                 name="wt{{rowIndex}}" [(ngModel)]="row.wt" required
                                                                 [id]="'grData'+rowIndex+'-1'"
                                                                 (input)="calculateMtr(weight1.value,rowIndex,1);"
@@ -271,8 +273,8 @@
                 </div>
                 <div *ngIf="slipData != null || slipData != undefined">
                     <div *ngIf="slipData.dyeingSlipDataList != null && showProcessPreview">
-                        <div>
-                            <nb-icon (click)="approveByFlag = true" icon="edit-outline"></nb-icon>
+                        <div style="display: flex;justify-content: end;">
+                            <nb-icon style="font-size: 25px;cursor: pointer;" (click)="approveByFlag = true" icon="edit-outline"></nb-icon>
                         </div>
 
 

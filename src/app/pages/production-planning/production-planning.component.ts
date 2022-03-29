@@ -1025,7 +1025,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             // this.getJetData();
             let temp = [];
             temp.push(this.productionBatchDetail.jetId);
-            this.jetsSelected(temp);
+            this.jetsSelected();
           } else {
             this.toastr.error(data["msg"]);
           }
@@ -1053,7 +1053,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
                 let temp = [];
                 temp.push(this.productionBatchDetail.jetId);
                 // this.getJetData();
-                this.jetsSelected(temp);
+                this.jetsSelected();
                 this.getAllBatchWithShade();
               },
               (error) => {
@@ -1266,7 +1266,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
                 element = singleJet[0];
               }
             });
-            this.cdr.detectChanges();
+            this.cdr.detach();
+            setInterval(() => {
+              this.cdr.detectChanges();
+            }, 5000);
           } else {
             this.jet = data['data'];
           }

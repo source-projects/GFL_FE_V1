@@ -40,6 +40,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   productionId: any;
   uniqueShadeNo: any;
   uniqueShadeColor: any;
+  uniqueShadeName:any;
   uniqueShadeFlag: boolean = false;
   addToJetFlag: boolean = false;
   public errorData: any = (errorData as any).default;
@@ -97,6 +98,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
         data => {
           if (data['data']) {
             this.uniqueShadeColor = data['data']['colorTone'];
+            this.uniqueShadeName = data['data']['colorName'];
             this.uniqueShadeFlag = true;
             this.loading = false;
           } else {
