@@ -1,3 +1,4 @@
+import { ShadeService } from './../../../@theme/services/shade.service';
 import { filter } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
@@ -65,7 +66,8 @@ export class NewSlipComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private DyeingProcessService: DyeingProcessService,
     private toastr: ToastrService,
-    private stockBatchService: StockBatchService) {
+    private stockBatchService: StockBatchService,
+    private shadeService:ShadeService) {
 
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd/MM/yyyy");
@@ -78,6 +80,7 @@ export class NewSlipComponent implements OnInit {
 
     if (this.productionBatchDetail.batchId) {
       this.getGRForBatch();
+      this.getShadeList();
     }
 
     this.getItemData();
@@ -87,11 +90,62 @@ export class NewSlipComponent implements OnInit {
     }
   }
 
+  validateUniqueShadeNo() {
+    
+    if (this.uniqueShadeNo) {
+      this.productionPlanningService.validateUniqueShadeNo(this.uniqueShadeNo).subscribe(
+        data => {
+          if (data['data']) {
+            this.uniqueShadeColor = data['data']['colorTone'];
+            this.uniqueShadeName = data['data']['colorName'];
+            this.uniqueShadeFlag = true;
+          } else {
+            this.uniqueShadeColor = '';
+            this.uniqueShadeNo=''
+            this.uniqueShadeFlag = false;
+            this.toastr.error(data['msg']);
+            
+          }
+        }, error => {
+          this.toastr.error(error.error.msg);
+        }
+      )
+    } else {
+      this.uniqueShadeFlag = false;
+      this.uniqueShadeColor = '';
+    }
+  }
+
+  shadeList = [];
+  shadeId: Number;
+  uniqueShadeNo: any;
+  uniqueShadeColor: any;
+  uniqueShadeName:any;
+  uniqueShadeFlag: boolean = false;
+
+  public getShadeList() {
+
+    this.shadeService
+      .getShadesByQualityAndPartyId(this.productionBatchDetail.partyId, this.productionBatchDetail.qualityEntryId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.shadeList = data["data"];
+           
+          } else {
+            
+          }
+        },
+        (error) => {
+          
+        }
+      );
+  }
+
   batchDetail;
   getGRForBatch() {
 
     this.stockBatchService
-      .getJobCardData(this.productionBatchDetail.batchId).subscribe((data) => {
+      .getBatchByOnlyId(this.productionBatchDetail.batchId).subscribe((data) => {
         if (data["success"]) {
           this.batchDetail = data["data"];
           let totalMtrl1 = 0;

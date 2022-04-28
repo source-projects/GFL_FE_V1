@@ -89,7 +89,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     { title: "Complete" },
     { title: "Remove" },
     { title: "Print" },
-    { title: "Edit And Print" },
+    { title: "Generate Slip" },
     { title: "Change Jet" },
   ];
   color = "red";
@@ -137,7 +137,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       )
       .subscribe((title) => {
         if (title === "Print") this.generateSlip(true);
-        else if (title === "Edit And Print") this.generateSlip(false);
+        else if (title === "Generate Slip") this.generateSlip(false);
         else if (title === "Start") this.startJet();
         else if (title === "Complete") this.completeChangeStatus();
         else if (title === "Remove") this.removeBatchFromJet();

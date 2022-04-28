@@ -405,7 +405,7 @@
                             <button *ngIf="!index.shadeId && !index.isDirect" [style.color]="
                                 index.colorTone ? '#ffffff' : '#000000'
                               " (mouseenter)="getAllDetailsOfBatch($event, index)"
-                              (click)="openShadeModal(j, index)"
+                              (click)="generateSlip(false)"
                               class="jet-btn-changes btn-changes-jet">
                               {{ index.batchId }}
                               <!-- <nb-icon class="icon-pposition" (click)="removeBatchFromJetManually(index)"

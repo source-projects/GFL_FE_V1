@@ -126,6 +126,12 @@ export class StockBatchService {
     );
   }
 
+  getBatchByOnlyId(batchId) {
+    return this.httpClient.get(
+      `${this.commonService.envUrl()}api/stockBatch/batch/getBatchByBatchId?batchId=${batchId}`
+    );
+  }
+
   getBatchSequence(id) {
     return this.httpClient.get(
       this.commonService.envUrl() + "api/admin/get/batchSequence?update=" + id
