@@ -1,3 +1,4 @@
+import { StockDetailedReport } from './stock-batch';
 export class ProductionPlanning{
     partyId:Number;
     qualityId:Number;
@@ -14,6 +15,7 @@ export class ProductionBatchDetail {
     qualityEntryId:any;
     processName: string;
     partyShadeNo: string;
+    productionId:string;
     factoryShadeNo:string;
     colorName:string;
     colorTone:string;
@@ -22,6 +24,7 @@ export class ProductionBatchDetail {
     batchId: string;
     jetId:any;
     shadeId:any;
+    stockId:string;
   
     constructor() {
       this.partyName = "-";
@@ -37,6 +40,8 @@ export class ProductionBatchDetail {
       this.colorTone = "-";
       this.shadeId = null;
       this.partyId = null;
+      this.productionId = null;
+      this.stockId = null;
       this.qualityEntryId = null;
     }
   }

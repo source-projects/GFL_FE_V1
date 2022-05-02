@@ -40,7 +40,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   productionId: any;
   uniqueShadeNo: any;
   uniqueShadeColor: any;
-  uniqueShadeName:any;
+  uniqueShadeName: any;
   uniqueShadeFlag: boolean = false;
   addToJetFlag: boolean = false;
   public errorData: any = (errorData as any).default;
@@ -103,11 +103,11 @@ export class AddShadeComponent implements OnInit, OnDestroy {
             this.loading = false;
           } else {
             this.uniqueShadeColor = '';
-            this.uniqueShadeNo=''
+            this.uniqueShadeNo = ''
             this.uniqueShadeFlag = false;
             this.toastr.error(data['msg']);
             this.loading = false;
-            
+
           }
         }, error => {
           this.toastr.error(error.error.msg);
@@ -158,6 +158,7 @@ export class AddShadeComponent implements OnInit, OnDestroy {
   onOkClick() {
     if (this.productionId1)
       this.productionData.productionId = this.productionId1;
+
     this.productionData.batchId = this.batch;
     this.productionData.partyId = this.party;
     this.productionData.qualityEntryId = this.quality;
