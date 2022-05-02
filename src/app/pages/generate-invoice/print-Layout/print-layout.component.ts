@@ -71,10 +71,11 @@ export class PrintLayoutComponent implements OnInit, OnDestroy {
           if (data["success"]) {
             this.printInvoiceData = data["data"];
             this.start();
+          } else{
+            this.toastr.error(data["message"]);
           }
         },
         (error) => {
-
         }
       )
     } else {
