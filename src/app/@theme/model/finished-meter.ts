@@ -7,6 +7,7 @@ export class FinishedMeter {
     qualityId:Number;
     masterId:Number;
     batchId:Number = null;
+    avoidCommission:boolean = false;
     batchData: BatchData[];
 }
 
