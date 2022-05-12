@@ -276,6 +276,16 @@ export const routes: Routes = [
         data: { PermissionName: ["view", "view group", "view all"] },
       },
       {
+        path: "direct-production",
+        loadChildren: () =>
+          import("./pages/direct-production/direct-production.module").then(
+            (m) => m.DirectProductionModule
+          ),
+        canActivate: [ProductionPlanningGuard],
+        canLoad: [ProductionPlanningGuard],
+        data: { PermissionName: ["view", "view group", "view all"] },
+      },
+      {
         path: "jet-planning",
         loadChildren: () =>
           import("./pages/jet-planning/jet-planning.module").then(

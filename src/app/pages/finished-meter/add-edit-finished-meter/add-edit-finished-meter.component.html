@@ -233,12 +233,11 @@
 
                 <div *ngIf="finishedMeterForm.batchId" class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
-                        <!-- <div class="form-group">
-                            <nb-checkbox class="status-basic nb-transition" id="avoidCommission"
-                                [(ngModel)]="finishedMeterForm.avoidCommission">
+                        <div class="form-group">
+                            <nb-checkbox class="status-basic nb-transition" id="avoidCommission" (checkedChange)="avoidCommissionChange($event)">
                                 <span class="text cr-txt">Avoid Commission</span>
                             </nb-checkbox>
-                        </div> -->
+                        </div>
                         <div class="mobile-pad-top-15">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
                                 (click)="resetAll(myForm)" type="button"

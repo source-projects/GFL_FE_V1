@@ -73,6 +73,20 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     this.getAllBatchForFinishMtr();
   }
 
+  avoidCommissionChange(event){
+
+    if(event){
+      this.finishedMeterForm.batchData.forEach(ele => {
+        ele.avoidCommission = true;
+      });
+    } else{
+      this.finishedMeterForm.batchData.forEach(ele => {
+        ele.avoidCommission = false;
+      });
+    }
+    
+  }
+
   //resetForm..
   resetAll(myForm) {
     this.batchList = [];
