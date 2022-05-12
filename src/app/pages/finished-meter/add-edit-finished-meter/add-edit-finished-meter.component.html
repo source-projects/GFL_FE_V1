@@ -108,12 +108,15 @@
                                             (click)="batchSelected($event)" class="p-badge-design"
                                             [disabled]="!b.productionPlanned" [value]="b.batchId">
                                             {{b.batchId}}
-                                            <nb-icon class="icon-pposition" (click)="remove(b);$event.stopPropagation();"
+                                            <nb-icon class="icon-pposition"
+                                                (click)="remove(b);$event.stopPropagation();"
                                                 icon="close-circle-outline"></nb-icon>
                                         </button>
                                     </div>
-                                    <ngb-pagination class="d-flex justify-content-end" [pageSize]="requestData.data.pageSize" [maxSize]="5"
-                                    [collectionSize]="requestData.data.total" [page]="requestData.data.pageIndex" (pageChange)="pageChanged($event)">
+                                    <ngb-pagination class="d-flex justify-content-end"
+                                        [pageSize]="requestData.data.pageSize" [maxSize]="5"
+                                        [collectionSize]="requestData.data.total" [page]="requestData.data.pageIndex"
+                                        (pageChange)="pageChanged($event)">
                                     </ngb-pagination>
                                 </div>
                             </div>
@@ -228,8 +231,14 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div *ngIf="finishedMeterForm.batchId" class="row">
                     <div class="col-md-12 mobile-btn-center text-btn-right">
+                        <!-- <div class="form-group">
+                            <nb-checkbox class="status-basic nb-transition" id="avoidCommission"
+                                [(ngModel)]="finishedMeterForm.avoidCommission">
+                                <span class="text cr-txt">Avoid Commission</span>
+                            </nb-checkbox>
+                        </div> -->
                         <div class="mobile-pad-top-15">
                             <button type="button" class="btn btn-primary btn-sm btn-design-cancel"
                                 (click)="resetAll(myForm)" type="button"
