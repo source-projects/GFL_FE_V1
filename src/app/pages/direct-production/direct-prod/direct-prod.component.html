@@ -8,18 +8,26 @@
             </div>
         </div>
     </nb-card-header>
-    <nb-card-body  [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-body [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
         <div class="row">
 
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="required">Select Jet: </label>
-                    <ng-select name="jet" [(ngModel)]="jetSelected" required #jet1="ngModel" 
-                        placeholder="Jet Number">
+                    <ng-select name="jet" [(ngModel)]="jetSelected" required #jet1="ngModel" placeholder="Jet Number"
+                        appendTo="body">
                         <ng-option *ngFor="let jet of jet" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
                         </ng-option>
                     </ng-select>
+                </div>
+            </div>
+
+            <div *ngIf="jetSelected" class="col-md-4">
+                <div class="form-group">
+                    <label class="required">Enter Batch Id: </label>
+                    <input class="form-control" placeholder="Enter Batch Id" type="text" min="0"
+                        name="batchId" [(ngModel)]="batchId" pattern="[0-9]+" (keypress)="lotNoEntered($event)" />
                 </div>
             </div>
 

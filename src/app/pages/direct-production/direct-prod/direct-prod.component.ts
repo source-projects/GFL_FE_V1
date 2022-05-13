@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { ProductionPlanningService } from './../../../@theme/services/production-planning.service';
 import { Component, OnInit } from '@angular/core';
 import { JetPlanningService } from '../../../@theme/services/jet-planning.service';
 
@@ -10,9 +12,12 @@ export class DirectProdComponent implements OnInit {
 
   jet = [];
   jetSelected = null;
+  batchId = null;
   loading = false;
   constructor(
     private jetService: JetPlanningService,
+    private productionPlanningService:ProductionPlanningService,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +32,7 @@ export class DirectProdComponent implements OnInit {
       (data) => {
         if (data["success"]) {
           this.jet = data["data"];
+          this.loading = false;
         } else {
           this.loading = false;
         }
@@ -35,6 +41,34 @@ export class DirectProdComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  lotNoEntered(event) {
+    
+    if (event.key == "Enter") {
+
+      this.loading = true;
+      let obj = {};
+      obj['productionId'] = null;
+      obj['batchId'] = this.batchId;
+      obj['shadeId'] = null;
+      obj['jetId'] = this.jetSelected;
+      this.productionPlanningService
+        .saveProductionPlan(obj).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.toastr.success(data["msg"]);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
+      event.preventDefault();
+    }
+
   }
 
 }
