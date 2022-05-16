@@ -1,16 +1,16 @@
-import { filter } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import * as wijmo from "@grapecity/wijmo";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { sortBy as _sortBy } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { DyeingChemicalData, DyeingProcessData } from '../../../@theme/model/dyeing-process';
+import { ProductionBatchDetail } from '../../../@theme/model/production-planning';
 import { DyeingProcessService } from "../../../@theme/services/dyeing-process.service";
 import { PlanningSlipService } from "../../../@theme/services/planning-slip.service";
 import { ProductionPlanningService } from "../../../@theme/services/production-planning.service";
-import * as wijmo from "@grapecity/wijmo";
-import { ProductionBatchDetail } from '../../../@theme/model/production-planning';
 import { StockBatchService } from '../../../@theme/services/stock-batch.service';
+import { ShadeService } from './../../../@theme/services/shade.service';
 
 @Component({
   selector: 'ngx-new-slip',
@@ -26,6 +26,8 @@ export class NewSlipComponent implements OnInit {
   @Input() productionBatchDetail: ProductionBatchDetail;
 
   public slipData: any;
+  public copySlipData:any;
+  public slipDataForRecipe: any;
   public myDate: any;
   public itemListArray: any = [];
   public itemListArrayCopy: any = [];
@@ -65,7 +67,9 @@ export class NewSlipComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private DyeingProcessService: DyeingProcessService,
     private toastr: ToastrService,
-    private stockBatchService: StockBatchService) {
+    private stockBatchService: StockBatchService,
+    private shadeService: ShadeService,
+    private cdr: ChangeDetectorRef) {
 
     this.myDate = new Date();
     this.myDate = this.datePipe.transform(this.myDate, "dd/MM/yyyy");
@@ -76,22 +80,76 @@ export class NewSlipComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.productionBatchDetail.batchId) {
+    if (this.batchId) {
       this.getGRForBatch();
+      this.getShadeList();
     }
 
     this.getItemData();
     if (this.batchId && this.stockId) {
-      this.getSlipDataFromBatch();
+      if (this.productionBatchDetail.shadeId) {
+        this.getSlipDataFromBatch(false);
+      }
       this.getWeightByStockAndBatch();
     }
+  }
+
+  validateUniqueShadeNo() {
+
+    if (this.uniqueShadeNo) {
+      this.productionPlanningService.validateUniqueShadeNo(this.uniqueShadeNo).subscribe(
+        data => {
+          if (data['data']) {
+            this.uniqueShadeColor = data['data']['colorTone'];
+            this.uniqueShadeName = data['data']['colorName'];
+            this.uniqueShadeFlag = true;
+          } else {
+            this.uniqueShadeColor = '';
+            this.uniqueShadeNo = ''
+            this.uniqueShadeFlag = false;
+            this.toastr.error(data['msg']);
+
+          }
+        }, error => {
+          this.toastr.error(error.error.msg);
+        }
+      )
+    } else {
+      this.uniqueShadeFlag = false;
+      this.uniqueShadeColor = '';
+    }
+  }
+
+  shadeList = [];
+  shadeId: Number;
+  uniqueShadeNo: any;
+  uniqueShadeColor: any;
+  uniqueShadeName: any;
+  uniqueShadeFlag: boolean = false;
+
+  public getShadeList() {
+
+    this.shadeService
+      .getShadesByQualityAndPartyId(this.productionBatchDetail.partyId, this.productionBatchDetail.qualityEntryId).subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.shadeList = data["data"];
+
+          } else {
+
+          }
+        },
+        (error) => {
+
+        }
+      );
   }
 
   batchDetail;
   getGRForBatch() {
 
     this.stockBatchService
-      .getJobCardData(this.productionBatchDetail.batchId).subscribe((data) => {
+      .getBatchByOnlyId(this.productionBatchDetail.batchId).subscribe((data) => {
         if (data["success"]) {
           this.batchDetail = data["data"];
           let totalMtrl1 = 0;
@@ -113,9 +171,49 @@ export class NewSlipComponent implements OnInit {
       });
   }
 
+  // removeItemForGr(row) {
+    
+  //     item.splice(id, 1);
+      
+  //     this.reCalcMTWTValue();
+  //   }
+  // }
+
   confirmShade = false;
   confirmShadeFn() {
     this.confirmShade = true;
+  }
+
+  shadeSaved = false;
+  saveShade() {
+
+    let obj = {
+      productionId: this.productionBatchDetail.productionId,
+      batchId: this.productionBatchDetail.batchId,
+      partyId: this.productionBatchDetail.partyId,
+      qualityEntryId: this.productionBatchDetail.qualityEntryId,
+      shadeId: this.shadeId,
+      stockId: this.stockId,
+      jetId: this.productionBatchDetail.jetId
+    }
+
+    if (this.shadeId || this.uniqueShadeNo) {
+      this.productionPlanningService
+        .saveProductionPlan(obj).subscribe(
+          (data) => {
+            if (data["success"]) {
+              this.getSlipDataFromBatch(true);
+              // this.getWeightByStockAndBatch(); 
+              this.toastr.success(data["msg"]);
+            } else {
+              this.toastr.error(data["msg"]);
+            }
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
+    }
   }
 
   showProcessPreview = false;
@@ -135,9 +233,9 @@ export class NewSlipComponent implements OnInit {
         if (data["success"]) {
           this.itemListArray = data["data"];
 
-          this.itemListArray = this.itemListArray.filter(v => v.itemType !== "Color");
+          this.itemListArrayCopy = this.itemListArray.filter(v => v.itemType !== "Color");
 
-          this.itemListArrayCopy = this.itemListArray;
+          // this.itemListArrayCopy = this.itemListArray;
         } else {
         }
       },
@@ -145,38 +243,83 @@ export class NewSlipComponent implements OnInit {
     );
   }
 
-  getSlipDataFromBatch() {
-    this.planningSlipService
-      .getSlipDataByBatchStockId(this.batchId, this.stockId).subscribe(
-        (data) => {
-          if (data["success"]) {
-            this.slipData = data["data"];
-            if (this.slipData) {
-              this.slipData.dyeingSlipDataList.forEach((element) => {
-                element.dyeingSlipItemData.forEach((element1) => {
-                  element1.qty = element1.qty
-                    ? element1.qty.toFixed(3)
-                    : element1.qty;
-                });
-                console.log(this.slipData)
-                this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence')
-                this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
-              });
+  loading = false;
+  getSlipDataFromBatch(forRecipe) {
 
-              this.slipData.dyeingSlipDataList.forEach((element) => {
-                let list = element.dyeingSlipItemData.filter((element1) => {
-                  if (element1.isColor == false) {
-                    return true;
-                  }
-                });
-                element.dyeingSlipItemData = list;
-              });
-              // if (this.isPrintDirect) this.printNOW();
+    if (forRecipe) {
+
+      this.slipDataForRecipe = Object.assign({},this.copySlipData);
+      if (this.slipDataForRecipe) {
+
+        this.slipDataForRecipe.dyeingSlipDataList = [...this.slipDataForRecipe.dyeingSlipDataList.filter(v => v.processType == "Dyeing")];
+
+        this.slipDataForRecipe.dyeingSlipDataList.forEach((element) => {
+          element.dyeingSlipItemData.forEach((element1) => {
+            element1.qty = element1.qty
+              ? Number(element1.qty).toFixed(3)
+              : element1.qty;
+          });
+     
+          this.slipDataForRecipe.dyeingSlipDataList = _sortBy(this.slipDataForRecipe.dyeingSlipDataList, 'sequence')
+          this.slipDataForRecipe.totalWt = Number(this.slipDataForRecipe.totalWt).toFixed(3);
+        });
+
+        for(let element of this.slipDataForRecipe.dyeingSlipDataList){
+          element = Object.assign({},element);
+          let list1 = element.dyeingSlipItemData.filter((element1) => {
+            if (element1.isColor == true) {
+              return true;
             }
-          }
-        },
-        (error) => { }
-      );
+          });
+          element.dyeingSlipItemData = [...list1];
+        }
+      }
+      this.shadeSaved = true;
+    } else {
+      this.planningSlipService
+        .getSlipDataByBatchStockId(this.batchId, this.stockId).subscribe(
+          (data) => {
+            if (data["success"]) {
+
+              this.slipData = data["data"];
+              this.copySlipData = Object.assign({},this.slipData);
+              
+              if (this.slipData) {
+                this.slipData.dyeingSlipDataList.forEach((element) => {
+                  element.dyeingSlipItemData.forEach((element1) => {
+                    element1.qty = element1.qty
+                      ? Number(element1.qty).toFixed(3)
+                      : element1.qty;
+                  });
+
+                  this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence')
+                  this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
+                });
+
+                this.slipData.dyeingSlipDataList.forEach((element2) => {
+                  let list = element2.dyeingSlipItemData.filter((element1) => {
+                    if (element1.isColor == false) {
+                      return true;
+                    }
+                  });
+                  element2.dyeingSlipItemData = [...list];
+                });
+              }
+
+              if (this.productionBatchDetail.shadeId)
+                this.getSlipDataFromBatch(true);
+
+              this.cdr.detectChanges();
+
+            } else {
+              this.loading = false;
+            }
+
+          },
+          (error) => { }
+        );
+    }
+
   }
 
   getWeightByStockAndBatch() {
