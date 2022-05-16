@@ -26,6 +26,7 @@ export class NewSlipComponent implements OnInit {
   @Input() productionBatchDetail: ProductionBatchDetail;
 
   public slipData: any;
+  public copySlipData:any;
   public slipDataForRecipe: any;
   public myDate: any;
   public itemListArray: any = [];
@@ -79,7 +80,7 @@ export class NewSlipComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.productionBatchDetail.batchId) {
+    if (this.batchId) {
       this.getGRForBatch();
       this.getShadeList();
     }
@@ -170,6 +171,14 @@ export class NewSlipComponent implements OnInit {
       });
   }
 
+  // removeItemForGr(row) {
+    
+  //     item.splice(id, 1);
+      
+  //     this.reCalcMTWTValue();
+  //   }
+  // }
+
   confirmShade = false;
   confirmShadeFn() {
     this.confirmShade = true;
@@ -237,38 +246,35 @@ export class NewSlipComponent implements OnInit {
   loading = false;
   getSlipDataFromBatch(forRecipe) {
 
-    this.loading = true;
-
     if (forRecipe) {
 
-      this.slipDataForRecipe = this.slipData;
+      this.slipDataForRecipe = Object.assign({},this.copySlipData);
       if (this.slipDataForRecipe) {
 
-        this.slipDataForRecipe.dyeingSlipDataList = this.slipDataForRecipe.dyeingSlipDataList.filter(v => v.processType == "Dyeing");
+        this.slipDataForRecipe.dyeingSlipDataList = [...this.slipDataForRecipe.dyeingSlipDataList.filter(v => v.processType == "Dyeing")];
 
         this.slipDataForRecipe.dyeingSlipDataList.forEach((element) => {
           element.dyeingSlipItemData.forEach((element1) => {
             element1.qty = element1.qty
-              ? element1.qty.toFixed(3)
+              ? Number(element1.qty).toFixed(3)
               : element1.qty;
           });
-          console.log(this.slipDataForRecipe)
+     
           this.slipDataForRecipe.dyeingSlipDataList = _sortBy(this.slipDataForRecipe.dyeingSlipDataList, 'sequence')
           this.slipDataForRecipe.totalWt = Number(this.slipDataForRecipe.totalWt).toFixed(3);
         });
 
-        this.slipDataForRecipe.dyeingSlipDataList.forEach((element) => {
-          let list = element.dyeingSlipItemData.filter((element1) => {
+        for(let element of this.slipDataForRecipe.dyeingSlipDataList){
+          element = Object.assign({},element);
+          let list1 = element.dyeingSlipItemData.filter((element1) => {
             if (element1.isColor == true) {
               return true;
             }
           });
-          element.dyeingSlipItemData = list;
-        });
-        // if (this.isPrintDirect) this.printNOW();
+          element.dyeingSlipItemData = [...list1];
+        }
       }
       this.shadeSaved = true;
-      this.loading = false;
     } else {
       this.planningSlipService
         .getSlipDataByBatchStockId(this.batchId, this.stockId).subscribe(
@@ -276,32 +282,33 @@ export class NewSlipComponent implements OnInit {
             if (data["success"]) {
 
               this.slipData = data["data"];
+              this.copySlipData = Object.assign({},this.slipData);
+              
               if (this.slipData) {
                 this.slipData.dyeingSlipDataList.forEach((element) => {
                   element.dyeingSlipItemData.forEach((element1) => {
                     element1.qty = element1.qty
-                      ? element1.qty.toFixed(3)
+                      ? Number(element1.qty).toFixed(3)
                       : element1.qty;
                   });
-                  console.log(this.slipData)
+
                   this.slipData.dyeingSlipDataList = _sortBy(this.slipData.dyeingSlipDataList, 'sequence')
                   this.slipData.totalWt = Number(this.slipData.totalWt).toFixed(3);
                 });
 
-                this.slipData.dyeingSlipDataList.forEach((element) => {
-                  let list = element.dyeingSlipItemData.filter((element1) => {
+                this.slipData.dyeingSlipDataList.forEach((element2) => {
+                  let list = element2.dyeingSlipItemData.filter((element1) => {
                     if (element1.isColor == false) {
                       return true;
                     }
                   });
-                  element.dyeingSlipItemData = list;
+                  element2.dyeingSlipItemData = [...list];
                 });
-                // if (this.isPrintDirect) this.printNOW();
               }
+
               if (this.productionBatchDetail.shadeId)
                 this.getSlipDataFromBatch(true);
 
-              this.loading = false;
               this.cdr.detectChanges();
 
             } else {

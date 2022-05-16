@@ -141,7 +141,7 @@
                                                                     <span>{{rowIndex + 1}}</span>
                                                                     <nb-icon style="margin-left: 5px;" icon="trash"
                                                                         status="danger"
-                                                                        [hidden]=" row.isProductionPlanned"
+                                                                        
                                                                         [options]="{ animation: { type: 'zoom' } }">
                                                                     </nb-icon>
                                                                 </div>
@@ -219,8 +219,8 @@
                             </div>
 
                         </div>
-                        <button nbButton disabled nbStepperNext>prev</button>
-                        <button nbButton nbStepperNext>next</button>
+                        <!-- <button nbButton disabled nbStepperNext>prev</button> -->
+                        <button *ngIf="confirmGr" nbButton nbStepperNext>next</button>
                     </nb-step>
                     <nb-step [label]="labelTwo">
                         <ng-template #labelTwo>Shade Data</ng-template>
@@ -363,7 +363,7 @@
                                         </div>
                                     </div>
 
-                                    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"
+                                    <div [nbSpinner]="slipDataForRecipe == null" nbSpinnerSize="large" nbSpinnerStatus="primary"
                                         style="width: 50%;overflow-y: auto;">
                                         <div *ngIf="slipDataForRecipe != null || slipDataForRecipe != undefined">
                                             <div *ngIf="slipDataForRecipe.dyeingSlipDataList != null">
@@ -521,15 +521,6 @@
                         <div style="border: 2px solid;padding: 5px;height: 440px;overflow-y: auto;margin: 0px -20px 10px;"
                             *ngIf="!additionSlipFlag" id="editable-slip">
 
-                            <!-- <div style="display: flex;justify-content: center;flex-direction: column;">
-                                <button style="border-radius: 20px;" *ngIf="!showProcessPreview && !verfiedProcess"
-                                    type="button" class="btn btn-primary btn-sm btn-design-save button-base ripple"
-                                    (click)="showPreviewToVerify()">Verify</button>
-                                <button *ngIf="verfiedProcess"
-                                    [ngStyle]="verfiedProcess && {'background-color': 'green'}" style="color: white;"
-                                    type="button"
-                                    class="btn btn-primary btn-sm btn-design-save button-base ripple">Verified</button>
-                            </div> -->
                             <div [nbSpinner]="slipData == null" nbSpinnerSize="large" nbSpinnerStatus="primary"
                                 *ngIf="slipData != null || slipData != undefined">
                                 <div *ngIf="slipData.dyeingSlipDataList != null">

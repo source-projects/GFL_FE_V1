@@ -60,7 +60,7 @@ export class CommonService {
     }
 
 
-    return "http://192.168.29.228:8080/";
+    return "https://api.dyeingerp.gloryautotech.com/";
 
   }
 
