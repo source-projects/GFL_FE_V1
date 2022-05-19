@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { CommonService } from 'app/@theme/services/common.service';
-import { StoreTokenService } from 'app/@theme/services/store-token.service';
+import { CommonService } from '../../services/common.service';
+import { StoreTokenService } from '../../services/store-token.service';
 import { title } from 'process';
 import { Subject, Subscription } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';

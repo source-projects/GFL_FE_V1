@@ -4,18 +4,18 @@
             <div *ngIf="shortReport && shortReport.length > 0" id="shortReport" class="print-body">
                 <div class="row report-header">
                     <div class="col-md-12" style="display: flex;margin: 15px 0px;">
-                        <div class="col-md-4">
-                            <h3>DAILY GREIGE INWARD REPORT</h3>
+                        <div class="col-md-2">
+                            <h2>DAILY GREIGE INWARD REPORT</h2>
                         </div>
-                        <div class="col-md-3" style="font-size: 15px;">
+                        <div class="col-md-2" style="font-size: 18px;">
                             <label for="fromDate">From Date :</label>
                             <span>{{fromDate | date : 'dd/MM/yyyy'}}</span><br>
                             <label for="fromDate">To Date :</label>
                             <span>{{toDate | date : 'dd/MM/yyyy'}}</span>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <table class="table-bordered table-striped width-100"
-                                style="text-align: center;font-size: 15px;text-align: center;">
+                                style="text-align: center;font-size: 18px;text-align: center;">
                                 <tr style="padding: 5px;">
                                     <td></td>
                                     <td>Brijesh</td>
@@ -51,9 +51,7 @@
                 </div>
                 <br><br>
                 <div *ngFor="let report of shortReport" style="border: 1px solid black;margin: 0px 0px 115px 0px;"
-                    class="mb-5" [ngClass]="{ 'brijesh' : report.masterName.toString().toLowerCase() == 'brijesh', 
-                    'manish' : report.masterName.toString().toLowerCase() == 'manish',
-                    'glory' : report.masterName.toString().toLowerCase() == 'glory'}">
+                    class="mb-5">
                     <div class="print-body">
                         <!-- print-layout-report -->
                         <div class="invoice-no-heading" style="width: fit-content">
@@ -64,7 +62,9 @@
                             </h5>
                         </div>
                         <br><br>
-                        <div *ngFor="let invoice of report.list" class="mb-5">
+                        <div [ngClass]="{ 'brijesh' : report.masterName.toString().toLowerCase() == 'brijesh', 
+                        'manish' : report.masterName.toString().toLowerCase() == 'manish',
+                        'glory' : report.masterName.toString().toLowerCase() == 'glory'}" *ngFor="let invoice of report.list" class="mb-5">
                             <table style="font-size: large;padding: 10px;text-align: center;border: 1px solid black;"
                                 class="table-striped table-process-fnt width-100">
                                 <tr>
@@ -90,8 +90,7 @@
                                         <th>Billing Value</th>
                                     </tr>
                                     <tr *ngFor="let sub of qual.value.data; let i = index" [ngClass]="{ 'redRecord' : (sub.billingValue >= 0 && sub.billingValue <= 10000), 
-                    'yellowRecord' :(sub.billingValue > 10000 && sub.billingValue <= 12500),
-                    'greenRecord' : (sub.billingValue > 12500 && sub.billingValue <= 18000)}">
+                    'yellowRecord' :(sub.billingValue > 10000 && sub.billingValue <= 12500)}">
                                         <td *ngFor="let item of subHeaderArray">{{ sub[item] }}</td>
                                     </tr>
                                     <tr style="font-weight: bold;">

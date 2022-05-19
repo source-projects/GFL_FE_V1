@@ -76,6 +76,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     { id: "19", name: "West Bengal" },
   ];
   creditor: boolean = false;
+  blockBilling:boolean = false;
   debtor: boolean = false;
   partyAdressSetFlag: boolean = false;
   partyAdressSetFlag1: boolean = false;
@@ -88,7 +89,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
   masterList = [];
   logInUserDetail: any;
 
-  public destroy$ : Subject<void> = new Subject<void>();
+  public destroy$: Subject<void> = new Subject<void>();
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -152,6 +153,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
       ]),
       creditor: new FormControl(false),
       debtor: new FormControl(false),
+      blockBilling:new FormControl(false),
       createdBy: new FormControl(null),
       updatedBy: new FormControl(null),
       userHeadId: new FormControl(null, Validators.required),
@@ -180,32 +182,41 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.partyService.getPartyDetailsById(this.currentPartyId).pipe(takeUntil(this.destroy$)).subscribe(
       (data) => {
-        this.currentParty = data["data"];
 
-        this.partyForm.patchValue({
-          id: this.currentParty.id,
-          userHeadId: this.currentParty.userHeadId,
-          partyName: this.currentParty.partyName,
-          partyAddress1: this.currentParty.partyAddress1,
-          partyAddress2: this.currentParty.partyAddress2,
-          contactNo: this.currentParty.contactNo,
-          city: this.currentParty.city,
-          state: this.currentParty.state,
-          pincode: this.currentParty.pincode,
-          mailId: this.currentParty.mailId,
-          gstin: this.currentParty.gstin,
-          creditor: this.currentParty.creditor,
-          debtor: this.currentParty.debtor,
-          createdBy: this.currentParty.createdBy.id,
-          updatedBy: this.currentParty.updatedBy.id,
-          partyCode: this.currentParty.partyCode,
-          creditLimit: this.currentParty.creditLimit,
-          percentageDiscount: this.currentParty.percentageDiscount,
-          paymentDays: this.currentParty.paymentDays,
-        });
-        this.creditor = this.partyForm.get("creditor").value;
-        this.debtor = this.partyForm.get("debtor").value;
-        this.loading = false;
+        if (data["success"]) {
+          this.currentParty = data["data"];
+
+          this.partyForm.patchValue({
+            id: this.currentParty.id,
+            userHeadId: this.currentParty.userHeadId,
+            partyName: this.currentParty.partyName,
+            partyAddress1: this.currentParty.partyAddress1,
+            partyAddress2: this.currentParty.partyAddress2,
+            contactNo: this.currentParty.contactNo,
+            city: this.currentParty.city,
+            state: this.currentParty.state,
+            pincode: this.currentParty.pincode,
+            mailId: this.currentParty.mailId,
+            gstin: this.currentParty.gstin,
+            creditor: this.currentParty.creditor,
+            blockBilling:this.currentParty.blockBilling,
+            debtor: this.currentParty.debtor,
+            createdBy: this.currentParty.createdBy.id,
+            updatedBy: this.currentParty.updatedBy.id,
+            partyCode: this.currentParty.partyCode,
+            creditLimit: this.currentParty.creditLimit,
+            percentageDiscount: this.currentParty.percentageDiscount,
+            paymentDays: this.currentParty.paymentDays,
+          });
+          this.creditor = this.partyForm.get("creditor").value;
+          this.blockBilling = this.partyForm.get("blockBilling").value;
+          this.debtor = this.partyForm.get("debtor").value;
+          this.loading = false;
+        } else {
+          this.toastr.error(data["message"], "Error");
+          this.loading = false;
+        }
+
       },
       (error) => {
         this.loading = false;
@@ -238,7 +249,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     if (this.partyForm.valid) {
       if (
         (this.creditor || this.debtor) &&
-        !this.partyNameExist 
+        !this.partyNameExist
         // && this.partyCodeExist
       ) {
         this.partyForm.value.createdBy = this.user.userId;
@@ -294,7 +305,7 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     if (this.partyForm.valid) {
       if (
         (this.creditor || this.debtor) &&
-        !this.partyNameExist 
+        !this.partyNameExist
         // && this.partyCodeExist
       ) {
         if (
@@ -345,6 +356,13 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     this.creditor = checked;
     this.partyForm.patchValue({
       creditor: this.creditor,
+    });
+  }
+
+  setCheckedBlockBilling(checked) {
+    this.blockBilling = checked;
+    this.partyForm.patchValue({
+      blockBilling: this.blockBilling,
     });
   }
 
@@ -411,13 +429,13 @@ export class AddEditPartyComponent implements OnInit, OnDestroy {
     }
   }
 
-  tableChange(event){
+  tableChange(event) {
     if (event === "view table") {
       this.route.navigate(['/pages/party/view']);
     }
   }
 
-  stateChange(){
+  stateChange() {
     this.partyForm.get("gstin").value == "";
   }
 }

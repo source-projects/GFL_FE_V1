@@ -73,6 +73,20 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
     this.getAllBatchForFinishMtr();
   }
 
+  avoidCommissionChange(event){
+
+    if(event){
+      this.finishedMeterForm.batchData.forEach(ele => {
+        ele.avoidCommission = true;
+      });
+    } else{
+      this.finishedMeterForm.batchData.forEach(ele => {
+        ele.avoidCommission = false;
+      });
+    }
+    
+  }
+
   //resetForm..
   resetAll(myForm) {
     this.batchList = [];
@@ -604,7 +618,7 @@ export class AddEditFinishedMeterComponent implements OnInit, OnDestroy {
       let f = false;
       this.finishedMeterForm.batchData.forEach((e) => {
         if (!e.mtr || e.mtr)
-          if ((!e.finishMtr || e.finishMtr <= "0") && e.sequenceId) f = true;
+          if ((!e.finishMtr || e.finishMtr <= "0" || e.finishMtr <= "00" || e.finishMtr <= "000") && e.sequenceId) f = true;
       });
       if (f) {
         this.isAddButtonClicked = false;

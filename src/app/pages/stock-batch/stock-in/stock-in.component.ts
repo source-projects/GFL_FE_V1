@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { sortBy } from 'lodash';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { BatchCard, BatchMrtWt, StockBatch } from '../../../@theme/model/stock-batch';
 import { StockBatchService } from '../../../@theme/services/stock-batch.service';
 import { PartyService } from '../../../@theme/services/party.service';
@@ -178,9 +178,13 @@ export class StockInComponent implements OnInit, OnDestroy {
             totalwt += item.wt;
             item.sequence = con + 1;
             item["pchallanRef"] = x.pchallanRef;
+            item['checked'] = false;
+            item['filter'] = false;
+            item['color'] = '';
           });
           batch["totalMtr"] = totatmtr;
           batch["totalWt"] = totalwt;
+          batch['allChecked'] = false;
           batch.batchMW[batch.batchMW.length - 1]['batchId'] = x.batchId;
           batch.batchMW[batch.batchMW.length - 1]['pchallanRef'] = x.pchallanRef;
           if (x.isProductionPlanned)
@@ -447,6 +451,13 @@ export class StockInComponent implements OnInit, OnDestroy {
                 this.toastr.error("Selected GR already exist in batch");
               }
               this.checkedChallanList = [];
+              this.stockDataValues.forEach(element => {
+                element.allChecked = false;
+                element.batchMW.forEach(ele => {
+                  ele.checked = false;
+                  ele.filter = false;
+                });
+              })
             } else {
               this.toastr.error("Select Batch first");
             }
@@ -515,4 +526,77 @@ export class StockInComponent implements OnInit, OnDestroy {
   }
 
 
+  // Manual transfer using checkbox
+
+  onRecodCheckboxChange(e, data) {
+
+    let index = this.checkedChallanList.findIndex(ele => ele.id == data.id);
+    if (index > -1) {
+      if (!e.target.checked) {
+        this.checkedChallanList.splice(index, 1);
+      }
+    } else {
+      this.checkedChallanList.push(data);
+    }
+
+    console.log("check", this.checkedChallanList);
+  }
+
+  allRecordChecked(e, index) {
+
+    if (e.target.checked) {
+      this.stockDataValues[index].batchMW.forEach(element => {
+        element.checked = true;
+        this.checkedChallanList.push(element);
+      });
+    } else {
+      this.stockDataValues[index].batchMW.forEach(element => {
+        element.checked = false;
+        let ind = this.checkedChallanList.findIndex(ele => ele.id == element.id);
+        if (ind > -1) {
+          this.checkedChallanList.splice(ind, 1);
+        }
+      });
+    }
+  }
+
+  count = 0;
+  prevIndex = null;
+  newIndex = null;
+  onRecodCheckboxChangeFilter(e, data, value, row,tableIndex) {
+
+    if (this.count == 1) {
+
+      if(this.prevIndex < row){
+
+        for (let i = this.prevIndex; i <= row; i++) {
+          value.batchMW[i].checked = true;
+          value.batchMW[i].filter = false;
+          this.checkedChallanList.push(value.batchMW[i]);
+        }
+      } else if(this.prevIndex > row){
+
+        for (let i = row; i <= this.prevIndex; i++) {
+          value.batchMW[i].checked = true;
+          value.batchMW[i].filter = false;
+          this.checkedChallanList.push(value.batchMW[i]);
+        }
+      }
+
+      const ele = document.getElementById("filterRecordCheckbox-" + tableIndex + "-" + row);
+      if(ele){
+        ele['checked'] = false;
+      }
+
+      this.count = 0;
+      this.prevIndex = null;
+      this.cdr.detectChanges();
+    } else {
+      data.checked = true;
+      this.count++;
+      this.prevIndex = row;
+    }
+
+    this.cdr.detectChanges();
+  }
 }

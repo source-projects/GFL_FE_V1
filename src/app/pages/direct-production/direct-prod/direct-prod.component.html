@@ -1,0 +1,28 @@
+<nb-card class="nb-style">
+    <nb-card-header class="nb-header">
+        <div>
+            <div class="row">
+                <div class="col-md-11 col-10">
+                    <h2 class="nb-text">Direct Production Planning</h2>
+                </div>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body  [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="required">Select Jet: </label>
+                    <ng-select name="jet" [(ngModel)]="jetSelected" required #jet1="ngModel" 
+                        placeholder="Jet Number">
+                        <ng-option *ngFor="let jet of jet" [value]="jet.id">{{jet.name}} - {{jet.capacity}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+
+        </div>
+    </nb-card-body>
+</nb-card>

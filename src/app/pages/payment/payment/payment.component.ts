@@ -1,9 +1,17 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NbPopoverDirective } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { cloneDeep } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { PaymentGuard } from '../../../@theme/guards/payment.guard';
+import { FilterParameter } from '../../../@theme/model/filterparameter.model';
+import { PageData } from '../../../@theme/model/page-data.model';
+import { DataFilter } from '../../../@theme/model/datafilter.model';
+import { RequestData } from '../../../@theme/model/request-data.model';
+import { ResponseData } from '../../../@theme/model/response-data.model';
 import { CommonService } from '../../../@theme/services/common.service';
 import { PaymentService } from '../../../@theme/services/payment.service';
 
@@ -49,6 +57,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public tableHeaders = ["id","partyName", "amtPaid", "createdDate", "aadhaar"];
   searchStr = "";
   searchANDCondition = false;
+
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  selectedColumnForFilter:string = '';
+  requestData: RequestData = new RequestData();
+  filterWord: string = '';
+  operatorSelected = null;
+  numberFlag: boolean = false;
+  stringFlag: boolean = false;
+  pageSizes: number[] = [10, 20, 50, 100];
+  selectedPageSize: number = 20;
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -63,6 +82,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.requestData.data = new DataFilter();
     this.userId = this.commonService.getUser();
     this.userId = this.userId["userId"];
     this.userHeadId = this.commonService.getUserHeadId();
@@ -148,10 +168,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   getAllPaymentList() {
     this.loading = true;
-    this.payment.getAllPayment().pipe(takeUntil(this.destroy$)).subscribe(
-      (data) => {
+    this.payment.getAllPaymentPaginated(this.requestData).pipe(takeUntil(this.destroy$)).subscribe(
+      (data: ResponseData) => {
         if (data["success"]) {
-          this.paymentList = data["data"];
+          const pageData = data.data as PageData;
+          this.paymentList = cloneDeep(pageData.data);
+          this.requestData.data.total = pageData.total;
             this.copyPaymentList = this.paymentList.map((element)=>({id:element.id,partyName:element.partyName, amtPaid: element.amtPaid,
               createdDate: element.createdDate}))
         }
@@ -236,5 +258,87 @@ export class PaymentComponent implements OnInit, OnDestroy {
   //     this.hiddenEdit = true;
   //   }
   // }
+
+  pageSizeChanged(){
+    this.requestData.data.pageSize = Number(this.selectedPageSize);
+    this.getAllPaymentList();
+  }
+
+  setPage(pageInfo) {
+    this.requestData.data.pageIndex = pageInfo.offset;
+    this.getAllPaymentList();
+  }
+
+  onOpenFilter(column) {
+
+    if (column != "percentageDiscount") {
+      this.stringFlag = true;
+      this.numberFlag = false;
+    } 
+    else {
+        this.numberFlag = true;
+        this.stringFlag = false;
+    }
+
+    const indexForOpen = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    if (indexForOpen > -1) {
+      this.filterWord = this.requestData.data.parameters[indexForOpen].value;
+      this.operatorSelected = this.requestData.data.parameters[indexForOpen].operator;
+    }
+    else {
+      this.filterWord = '';
+      this.operatorSelected = null;
+    }
+    this.selectedColumnForFilter = column;
+    this.popover.show();
+  }
+
+  onApplyFilter() {
+    this.popover.hide();
+    const index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    if (index > -1) {
+      this.requestData.data.parameters[index].operator = this.operatorSelected;
+      this.requestData.data.parameters[index].value = this.filterWord;
+    } else {
+      let parameter = new FilterParameter();
+      parameter.field = [this.selectedColumnForFilter];
+      parameter.value = this.filterWord;
+      parameter.operator = this.operatorSelected;
+      this.requestData.data.parameters.push(parameter);
+    }
+    this.requestData.data.pageIndex = 0;
+    this.getAllPaymentList();
+  }
+
+  onClear(column?) {
+
+    let index;
+    if(column){
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == column));
+    } else{
+      index = this.requestData.data.parameters.findIndex(v => v.field.find(o => o == this.selectedColumnForFilter));
+    }
+    
+    if (index > -1) {
+      this.filterWord = '';
+      this.operatorSelected = null;
+      this.requestData.data.parameters.splice(index, 1);
+      this.requestData.data.pageIndex = 0;
+      this.getAllPaymentList();
+    }
+
+  }
+
+  closeFilterPopover() {
+    this.popover.hide();
+  }
+
+  onClearFilter() {
+    this.popover.hide();
+    if (this.requestData.data.parameters.length > 0) {
+      this.requestData.data.parameters = [];
+      this.getAllPaymentList();
+    }
+  }
 
 }

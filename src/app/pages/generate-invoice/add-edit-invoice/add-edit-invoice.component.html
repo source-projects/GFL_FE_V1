@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div *ngIf="discountFlag" style="display: flex;align-items: center;justify-content: center;" class="col-md-2">
-                    <nb-checkbox style="margin-right: 5px;" class="status-basic nb-transition"
+                    <nb-checkbox [disabled]="currentInvoiceId" style="margin-right: 5px;" class="status-basic nb-transition"
                     (checkedChange)="onChangeOfRF($event)" id="isRF" [(ngModel)]="invoiceValues.rfInvoiceFlag" name="isRF">
                     </nb-checkbox>
                     <label> is RF</label>

@@ -151,6 +151,13 @@ span.filter-by-val {
   padding-bottom: 17px;
 }
 
+.padding-box-stock-batch {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  margin-bottom: 30px;
+  border-radius: 0 !important;
+  // padding-bottom: 17px;
+}
+
 .padding-btn-box {
   padding: 1rem;
   padding-top: 0;
@@ -1200,6 +1207,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .toal-finish-mtr {
   color: #5e5b5e;
   font-size: 13px;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .table-input-width tr td input {

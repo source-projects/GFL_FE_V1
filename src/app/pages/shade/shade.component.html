@@ -39,21 +39,6 @@
                
 
         </div>
-
-        <div class="row pos-fix" *ngIf="averageFlag">
-            <div class="col-md-6">
-                <label for="avgWeight"><b>Average Costing/weight:</b></label>
-                <span class="value-red">
-                    <b>{{avgCostPerWeight}}</b>
-                </span>
-            </div>
-            <div class="col-md-6">
-                <label for="avgWeight"><b>Average Costing/meter:</b></label>
-                <span class="value-red">
-                    <b>{{avgCostPerMeter}}</b>
-                </span>
-            </div>
-        </div>
         
         <div class="row">
             <ng-container *ngIf="requestData.data.parameters && requestData.data.parameters.length">
@@ -73,6 +58,21 @@
                     </div>
                 </div>
             </ng-container>
+        </div>
+
+        <div class="row pos-fix" *ngIf="averageFlag">
+            <div class="col-md-6">
+                <label for="avgWeight"><b>Average Costing/weight:</b></label>
+                <span class="value-red">
+                    <b>{{avgCostPerWeight}}</b>
+                </span>
+            </div>
+            <div class="col-md-6">
+                <label for="avgWeight"><b>Average Costing/meter:</b></label>
+                <span class="value-red">
+                    <b>{{avgCostPerMeter}}</b>
+                </span>
+            </div>
         </div>
 
         <ngx-datatable [rows]="shadeList | searchInTable : searchStr : requestData.data.isAnd : tableHeaders"

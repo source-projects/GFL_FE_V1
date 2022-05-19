@@ -15,6 +15,7 @@ import { QualityService } from '../../../@theme/services/quality.service';
 import { ReportService } from '../../../@theme/services/report.service';
 import { ShadeService } from '../../../@theme/services/shade.service';
 
+
 @Component({
   selector: 'ngx-all-reports',
   templateUrl: './all-reports.component.html',
@@ -91,18 +92,18 @@ export class AllReportsComponent implements OnInit {
 
   }
 
-  getAllModules(){
+  getAllModules() {
     this.reportService
-    .getAllModules()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.allModules = data["data"];
-        }
-      },
-      (error) => { }
-    );
+      .getAllModules()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.allModules = data["data"];
+          }
+        },
+        (error) => { }
+      );
   }
 
   getQualityNameList() {
@@ -185,7 +186,7 @@ export class AllReportsComponent implements OnInit {
   headerArray = [];
   headerKeys = [];
   copyHeaderKeys = [];
-  greigrFlag =false;
+  greigrFlag = false;
   getShortReport(form) {
     this.greigrFlag = true;
     this.totalAmount = 0;
@@ -198,11 +199,16 @@ export class AllReportsComponent implements OnInit {
       this.invoiceReportRequest.from = moment(this.invoiceReportRequest.from).format();
       this.invoiceReportRequest.to = moment(this.invoiceReportRequest.to).format();
       this.reportService
-        .getReportForPdf(this.apiObject,this.invoiceReportRequest)
+        .getReportForPdf(this.apiObject, this.invoiceReportRequest)
         .pipe(takeUntil(this.destroy$)).subscribe(
           (data) => {
             if (data["success"]) {
               this.shortReport = data["data"];
+
+              if (this.reportName == 'Fabric In Detailed downloadBase64') {
+                this.onClickDownloadPdf(this.shortReport, 'Fabric In Detailed')
+              }
+
               // if (this.shortReport && this.shortReport.length) {
               //   let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
               //     this.copyHeaderKeys = Object.keys(this.shortReport[0]);
@@ -231,6 +237,45 @@ export class AllReportsComponent implements OnInit {
         );
     }
 
+  }
+
+  downloadPdf(base64String, fileName) {
+    // const source = `data:application/pdf;base64,${base64String}`;
+    // const link = document.createElement("a");
+    // link.href = source;
+    // link.download = `${fileName}.pdf`
+    // link.click();
+
+    // var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,' +
+    //   'resizable,screenX=50,screenY=50,width=850,height=1050';
+    
+
+    var htmlPop = '<embed width=100% height=100%'
+      + ' type="application/pdf"'
+      + ' src="data:application/pdf;base64,'
+      + `${base64String}`
+      + '"></embed>';
+
+    // var printWindow = window.open("", "PDF",winparams);
+    var printWindow = window.open("", "PDF");
+    printWindow.document.write(htmlPop);
+    // printWindow.print();
+  }
+  onClickDownloadPdf(string, fileName) {
+    let base64String = string;
+    this.downloadPdf(base64String, fileName);
+  }
+
+  downloadXLS(base64String, fileName) {
+    const source = `data:application/xlsx;base64,${base64String}`;
+    const link = document.createElement("a");
+    link.href = source;
+    link.download = `${fileName}.xlsx`
+    link.click();
+  }
+  onClickDownloadXLS(string, fileName) {
+    let base64String = string;
+    this.downloadXLS(base64String, fileName);
   }
 
   printReport(form) {
@@ -280,12 +325,20 @@ export class AllReportsComponent implements OnInit {
             (data) => {
               if (data["success"]) {
                 let excelData = data["data"];
-                this.headers = Object.keys(excelData[0]);
-                this.formSubmitted = false;
-                this.headers.forEach(ele => {
-                  ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
-                });
-                this.exportService.exportExcel(excelData, this.reportName, this.headers)
+
+                if (this.reportName == "Payment OutStanding MasterWise") {
+                  this.onClickDownloadXLS(excelData, "Payment OutStanding MasterWise");
+                } else if (this.reportName == "Payment OutStanding Bill Wise") {
+                  this.onClickDownloadXLS(excelData, "Payment OutStanding Bill Wise");
+                } else {
+                  this.headers = Object.keys(excelData[0]);
+                  this.formSubmitted = false;
+                  this.headers.forEach(ele => {
+                    ele.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
+                  });
+                  this.exportService.exportExcel(excelData, this.reportName, this.headers)
+                }
+
               }
             },
             (error) => { }
@@ -325,16 +378,16 @@ export class AllReportsComponent implements OnInit {
     this.shortReport = [];
     this.reportType = null;
     this.reportService
-    .getAllReportType(value)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      (data) => {
-        if (data["success"]) {
-          this.allReports = data["data"];
-        }
-      },
-      (error) => { }
-    );
+      .getAllReportType(value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          if (data["success"]) {
+            this.allReports = data["data"];
+          }
+        },
+        (error) => { }
+      );
   }
 
 }

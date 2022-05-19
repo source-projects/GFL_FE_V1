@@ -88,6 +88,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: false,
   },
   {
+    title: "Direct Production",
+    icon: "options-2-outline",
+    link: "/pages/direct-production",
+    hidden: false,
+  },
+  {
     title: "Other Slip",
     icon: "file-text-outline",
     link: "/pages/addition-slip",
