@@ -43,6 +43,8 @@ export class CommonService {
     }
     else if (hostName.includes("192.168.1.112")) {
       url = "http://192.168.1.112:8080/";
+    } else if (hostName.includes("192.168.1.102")) {
+      url = "http://192.168.1.102:8080/";
     }
     else if (hostName.includes("192.168.29.229")) {
       url = "http://192.168.29.229:8080/";
