@@ -23,6 +23,7 @@ export class BatchData{
     sequenceId:number;
     finishMtr:string;
     isBillGenrated:Boolean = false;
+    avoidCommission:boolean = false;
 
     constructor(){
         this.seqNo= 0;
@@ -36,5 +37,6 @@ export class BatchData{
         this.sequenceId=0;
         this.finishMtr='0';
         this.isBillGenrated= false;   
+        this.avoidCommission = false;
     }
 }
