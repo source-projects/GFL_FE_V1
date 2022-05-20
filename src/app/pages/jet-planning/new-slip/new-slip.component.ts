@@ -248,10 +248,10 @@ export class NewSlipComponent implements OnInit {
 
     if (forRecipe) {
 
-      this.slipDataForRecipe = Object.assign({},this.copySlipData);
+      this.slipDataForRecipe = JSON.parse(JSON.stringify(this.copySlipData));
       if (this.slipDataForRecipe) {
 
-        this.slipDataForRecipe.dyeingSlipDataList = [...this.slipDataForRecipe.dyeingSlipDataList.filter(v => v.processType == "Dyeing")];
+        this.slipDataForRecipe.dyeingSlipDataList = this.slipDataForRecipe.dyeingSlipDataList.filter(v => v.processType == "Dyeing");
 
         this.slipDataForRecipe.dyeingSlipDataList.forEach((element) => {
           element.dyeingSlipItemData.forEach((element1) => {
@@ -265,13 +265,16 @@ export class NewSlipComponent implements OnInit {
         });
 
         for(let element of this.slipDataForRecipe.dyeingSlipDataList){
-          element = Object.assign({},element);
+          element = JSON.parse(JSON.stringify(element));
           let list1 = element.dyeingSlipItemData.filter((element1) => {
             if (element1.isColor == true) {
               return true;
             }
           });
-          element.dyeingSlipItemData = [...list1];
+
+          let tempArray = JSON.parse(JSON.stringify(list1));
+          console.log(tempArray)
+          element.dyeingSlipItemData = JSON.parse(JSON.stringify(tempArray));
         }
       }
       this.shadeSaved = true;
@@ -281,8 +284,8 @@ export class NewSlipComponent implements OnInit {
           (data) => {
             if (data["success"]) {
 
-              this.slipData = data["data"];
-              this.copySlipData = Object.assign({},this.slipData);
+              this.slipData = JSON.parse(JSON.stringify(data["data"]));
+              this.copySlipData = JSON.parse(JSON.stringify(this.slipData));
               
               if (this.slipData) {
                 this.slipData.dyeingSlipDataList.forEach((element) => {

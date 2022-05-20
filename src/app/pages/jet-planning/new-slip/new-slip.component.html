@@ -467,7 +467,7 @@
                                                                                             i1=index;trackBy:trackByFn'>
                                                                                         <td>
                                                                                             <select
-                                                                                                name="dcId{{dc._id}}_{{i1}}_{{i}}"
+                                                                                                name="dcId{{dc._id}}_{{i1}}_{{i}}_recipe"
                                                                                                 [(ngModel)]="dc.itemId"
                                                                                                 class="tableForm"
                                                                                                 required
@@ -486,7 +486,7 @@
                                                                                         <td>
                                                                                             <input type="number"
                                                                                                 (keypress)="numberOnly($event)"
-                                                                                                name='dcqty{{dc._id}}_{{i1}}_{{i}}'
+                                                                                                name='dcqty{{dc._id}}_{{i1}}_{{i}}_recipe'
                                                                                                 class="tableForm"
                                                                                                 [(ngModel)]="dc.qty"
                                                                                                 [id]="'itemList'+i+i1+'-'+1"
@@ -621,7 +621,7 @@
                                                                                 i1=index;trackBy:trackByFn'>
                                                                             <td>
                                                                                 <select
-                                                                                    name="dcId{{dc._id}}_{{i1}}_{{i}}"
+                                                                                    name="dcId{{dc._id}}_{{i1}}_{{i}}_slip"
                                                                                     [(ngModel)]="dc.itemId"
                                                                                     class="tableForm" required
                                                                                     (change)="itemSelected($event.target.value,i1,i)"
@@ -639,7 +639,7 @@
                                                                             <td>
                                                                                 <input type="number"
                                                                                     (keypress)="numberOnly($event)"
-                                                                                    name='dcqty{{dc._id}}_{{i1}}_{{i}}'
+                                                                                    name='dcqty{{dc._id}}_{{i1}}_{{i}}_slip'
                                                                                     class="tableForm"
                                                                                     [(ngModel)]="dc.qty"
                                                                                     [id]="'itemList'+i+i1+'-'+1"
