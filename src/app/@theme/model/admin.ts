@@ -34,11 +34,13 @@ export class AddQuality {
   id: number;
   qualityName: string;
   rate:number;
+  value:number;
   supplierList;
   constructor() {
     this.id = 0;
     this.qualityName = null;
     this.rate = null;
+    this.value = null;
     this.supplierList = [];
   }
 }

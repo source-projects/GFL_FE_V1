@@ -7,7 +7,7 @@
     <div>
       <form #myForm="ngForm">
         <div class="batch-mb">
-          <div class="mr-bt-5" *ngIf="!flipped">
+          <div class="mr-bt-5">
             <div class="row">
               <!-- Party name -->
               <div class="col-md-5">
@@ -107,7 +107,7 @@
                 </div>
               </div>
               <div class="col-md-7">
-                <!-- <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto">
+                <div class="jus-con-flex-start scroll-auto-transition" id="scroll-auto">
                   <div class="col-md-7 col-12 pd-0">
                     <div class="display-flex mr-0">
                       <div class="batch-p-color label-0">
@@ -200,7 +200,7 @@
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -291,7 +291,7 @@
               </nb-card>
             </nb-card-front>
             <nb-card-back>
-              <nb-card [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"  class="pd-left-15" style="height: 590px; overflow-y: auto">
+              <nb-card  class="pd-left-15" style="height: 590px; overflow-y: auto">
                 <div id="jetList">
                   <div class="title-with-btn">
                     <div class="row">
@@ -301,12 +301,12 @@
                         </div>
                       </div>
                       <div class="col-md-3 jet-display-center">
-                        <!-- <ng-select id="jetSelected" name="jetSelected" multiple="true" placeholder="Select Jets"
+                        <ng-select id="jetSelected" name="jetSelected" multiple="true" placeholder="Select Jets"
                           (change)="jetsSelected($event)" [(ngModel)]="selectedJets" [closeOnSelect]="false">
                           <ng-option *ngFor="let j of jetList" [value]="j.id">
                             {{ j.name }}
                           </ng-option>
-                        </ng-select> -->
+                        </ng-select>
                       </div>
                       <div class="col-md-3 jet-display-center" *ngIf="selectedBatchForPrint.length > 0">
                         <ng-select style="width: 100%;" id="printOption" name="printOption" placeholder="Select Print Option"

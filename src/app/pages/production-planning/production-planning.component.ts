@@ -685,10 +685,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       (data) => {
         if (data["success"]) {
           this.jetList = data["data"];
-          this.jetList.forEach(ele => {
-            this.allJetId.push(ele.id);
-          });
-          this.jetsSelected();
+          // this.jetList.forEach(ele => {
+          //   this.allJetId.push(ele.id);
+          // });
+          // this.jetsSelected();
         }
       },
       (error) => { }
@@ -779,25 +779,10 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     return this.detailsList;
   }
   generateSlip(directPrint) {
-    // const modalRef = this.modalService.open(PlanningSlipComponent);
-    // modalRef.componentInstance.isPrintDirect = directPrint;
-    // modalRef.componentInstance.batchId = this.sendBatchId;
-    // modalRef.componentInstance.stockId = this.sendSotckId;
-    // modalRef.componentInstance.additionSlipFlag = false;
-
-    // modalRef.result
-    //   .then((result) => {
-    //     if (result) {
-    //     }
-    //   })
-    //   .catch((err) => { });
-
-
-    const modalRef = this.modalService.open(NewSlipComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(PlanningSlipComponent);
     modalRef.componentInstance.isPrintDirect = directPrint;
     modalRef.componentInstance.batchId = this.sendBatchId;
     modalRef.componentInstance.stockId = this.sendSotckId;
-    modalRef.componentInstance.productionBatchDetail = this.productionBatchDetail;
     modalRef.componentInstance.additionSlipFlag = false;
 
     modalRef.result
@@ -806,6 +791,21 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
         }
       })
       .catch((err) => { });
+
+
+    // const modalRef = this.modalService.open(NewSlipComponent, { size: 'xl' });
+    // modalRef.componentInstance.isPrintDirect = directPrint;
+    // modalRef.componentInstance.batchId = this.sendBatchId;
+    // modalRef.componentInstance.stockId = this.sendSotckId;
+    // modalRef.componentInstance.productionBatchDetail = this.productionBatchDetail;
+    // modalRef.componentInstance.additionSlipFlag = false;
+
+    // modalRef.result
+    //   .then((result) => {
+    //     if (result) {
+    //     }
+    //   })
+    //   .catch((err) => { });
 
 
 
@@ -1023,8 +1023,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           if (data["success"]) {
             this.toastr.success(data["msg"]);
             // this.getJetData();
-            let temp = [];
-            temp.push(this.productionBatchDetail.jetId);
+            // let temp = [];
+            // temp.push(this.productionBatchDetail.jetId);
             this.jetsSelected();
           } else {
             this.toastr.error(data["msg"]);
@@ -1050,8 +1050,8 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
             .subscribe(
               (data) => {
                 this.toastr.success(errorData.Delete);
-                let temp = [];
-                temp.push(this.productionBatchDetail.jetId);
+                // let temp = [];
+                // temp.push(this.productionBatchDetail.jetId);
                 // this.getJetData();
                 this.jetsSelected();
                 this.getAllBatchWithShade();
@@ -1236,22 +1236,32 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
     this.plannedProductionListForDataTable();
   }
 
-  jetsSelected(ids?) {
+  jetsSelected(event?) {
 
-    this.loader = true;
-    let obj = {};
+    // this.loader = true;
+    // let obj = {};
 
-    if (ids) {
+    // if (ids) {
 
-      obj = {
-        array: ids
-      }
+    //   obj = {
+    //     array: ids
+    //   }
+    // } else {
+    //   obj = {
+    //     array: this.allJetId
+    //   }
+    // }
+
+
+    if (event && event.length) {
+      this.selectedJets = event;
     } else {
-      obj = {
-        array: this.allJetId
-      }
+      this.selectedJets = this.selectedJets;
     }
 
+    let obj = {
+      array: this.selectedJets
+    }
 
     this.jetService
       .getJetDataById(obj)
@@ -1259,20 +1269,20 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data["success"]) {
 
-          if (ids) {
-            let singleJet = data['data'];
-            this.jet.forEach(element => {
-              if (element.id == singleJet[0].id) {
-                element = singleJet[0];
-              }
-            });
-            this.cdr.detach();
-            setInterval(() => {
-              this.cdr.detectChanges();
-            }, 5000);
-          } else {
+          // if (ids) {
+          //   let singleJet = data['data'];
+          //   this.jet.forEach(element => {
+          //     if (element.id == singleJet[0].id) {
+          //       element = singleJet[0];
+          //     }
+          //   });
+          //   this.cdr.detach();
+          //   setInterval(() => {
+          //     this.cdr.detectChanges();
+          //   }, 5000);
+          // } else {
             this.jet = data['data'];
-          }
+          // }
 
           if (this.jet && this.jet.length) {
             this.jet.forEach(element => {
@@ -1286,7 +1296,7 @@ export class ProductionPlanningComponent implements OnInit, OnDestroy {
           } else {
             this.jet = [];
           }
-          this.loader = false;
+          // this.loader = false;
           this.cdr.detectChanges();
         }
       });
