@@ -970,6 +970,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.addQuality.id = null;
     this.addQuality.qualityName = null;
     this.addQuality.rate = null;
+    this.addQuality.value = null;
     this.addQuality.supplierList = [];
     this.selectedSupplier = null;
     this.qualityEditFlag = false;
@@ -1328,8 +1329,15 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.addQuality.id = element.id;
         this.addQuality.qualityName = element.qualityName;
         this.addQuality.rate = element.rate;
-        this.addQuality.supplierList = element.supplierList;
-        this.selectedSupplier = element.supplierList.map((ele)=>ele.id);
+        this.addQuality.value = element.value;
+        if(element.supplierList && element.supplierList.length){
+          this.addQuality.supplierList = element.supplierList;
+          this.selectedSupplier = element.supplierList.map((ele)=>ele.id);
+        } else{
+          this.addQuality.supplierList = [];
+          this.selectedSupplier = null;
+        }
+        
         console.log(this.selectedSupplier);
       }
     });

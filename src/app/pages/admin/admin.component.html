@@ -410,7 +410,7 @@
       <nb-tab tabTitle="Quality">
         <form #addQualityData="ngForm">
           <div class="row">
-            <div class="col-md-4 col-12">
+            <div class="col-md-3 col-12">
               <div class="form-group">
                 <label>Quality Name</label>
                 <input
@@ -438,7 +438,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4 col-12">
+            <div class="col-md-3 col-12">
               <div class="form-group">
                 <label>Quality Rate</label>
                 <input
@@ -462,7 +462,31 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label>Quality Value</label>
+                <input
+                  name="value"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Quality Value."
+                  [(ngModel)]="addQuality.value"
+                  #value="ngModel"
+                  [ngClass]="{
+                    'is-invalid':
+                      value.invalid && (formSubmitted || value.touched)
+                  }"
+                  required
+                />
+                <div
+                  class="input-required"
+                  *ngIf="value.invalid && (formSubmitted || value.touched)"
+                >
+                  Quality value is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3">
               <label>Supplier Name</label>
               <ng-select
                 id="supplierName1"
